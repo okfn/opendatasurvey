@@ -1,0 +1,179 @@
+{
+  "countries": {
+    "Australia": {
+      "Company Register": {
+        "count": 1
+      }, 
+      "Election Results (national)": {
+        "count": 1
+      }, 
+      "Enviornmental Data on major sources of pollutants (e.g. location, emissions)": {
+        "count": 1
+      }, 
+      "Government Budget (National, high level, not detailed)": {
+        "count": 1
+      }, 
+      "Government Spending (National, transactional level data)": {
+        "count": 1
+      }, 
+      "Legislation (laws and statutes) - National": {
+        "count": 1
+      }, 
+      "National Map (Low resolution: 1:250,000 or better)": {
+        "count": 1
+      }, 
+      "National Postcode/ZIP database": {
+        "count": 1
+      }, 
+      "National Statistical Data (economic and demographic information)": {
+        "count": 1
+      }, 
+      "Public Transport Timetables": {
+        "count": 1
+      }
+    }, 
+    "Brazil": {
+      "Election Results (national)": {
+        "count": 1
+      }, 
+      "Government Budget (high level)": {
+        "count": 1
+      }
+    }, 
+    "Croatia": {
+      "Company Register": {
+        "count": 1
+      }, 
+      "Election Results (national)": {
+        "count": 1
+      }, 
+      "Government Budget (National, high level, not detailed)": {
+        "count": 1
+      }, 
+      "National Statistical Data (economic and demographic information)": {
+        "count": 1
+      }
+    }, 
+    "Czech Republic": {
+      "Company Register": {
+        "count": 1
+      }, 
+      "Election Results (national)": {
+        "count": 1
+      }, 
+      "Government Budget (National, high level, not detailed)": {
+        "count": 1
+      }, 
+      "Government Spending (National, transactional level data)": {
+        "count": 1
+      }, 
+      "Legislation (laws and statutes) - National": {
+        "count": 1
+      }, 
+      "National Map (Low resolution: 1:250,000 or better)": {
+        "count": 1
+      }, 
+      "National Postcode/ZIP database": {
+        "count": 1
+      }, 
+      "National Statistical Data (economic and demographic information)": {
+        "count": 1
+      }, 
+      "Public Transport Timetables": {
+        "count": 1
+      }
+    }, 
+    "Denmark": {
+      "Election Results (national)": {
+        "count": 1
+      }, 
+      "Government Budget (National, high level, not detailed)": {
+        "count": 1
+      }, 
+      "Legislation (laws and statutes) - National": {
+        "count": 1
+      }, 
+      "National Postcode/ZIP database": {
+        "count": 1
+      }, 
+      "National Statistical Data (economic and demographic information)": {
+        "count": 1
+      }
+    }, 
+    "Greece": {
+      "National Statistical Data (economic and demographic information)": {
+        "count": 1
+      }
+    }, 
+    "Iceland": {
+      "Company Register": {
+        "count": 1
+      }, 
+      "Election Results (national)": {
+        "count": 1
+      }, 
+      "Government Budget (National, high level, not detailed)": {
+        "count": 1
+      }, 
+      "Government Spending (National, transactional level data)": {
+        "count": 1
+      }, 
+      "Legislation (laws and statutes) - National": {
+        "count": 1
+      }, 
+      "National Map (Low resolution: 1:250,000 or better)": {
+        "count": 1
+      }, 
+      "National Postcode/ZIP database": {
+        "count": 1
+      }, 
+      "National Statistical Data (economic and demographic information)": {
+        "count": 1
+      }
+    }, 
+    "Netherlands": {
+      "Company Register": {
+        "count": 1
+      }, 
+      "Election Results (national)": {
+        "count": 1
+      }
+    }, 
+    "Norway": {
+      "National Map (Low resolution: 1:250,000 or better)": {
+        "count": 1
+      }
+    }, 
+    "United Kingdom": {
+      "National Map (Low resolution: 1:250,000 or better)": {
+        "count": 1
+      }
+    }, 
+    "United States": {
+      "Government Spending (National, transactional level data)": {
+        "count": 1
+      }, 
+      "Legislation (laws and statutes) - National": {
+        "count": 1
+      }, 
+      "National Map (Low resolution: 1:250,000 or better)": {
+        "count": 1
+      }, 
+      "National Postcode/ZIP database": {
+        "count": 1
+      }
+    }
+  }, 
+  "datasets": [
+    "Election Results (national)", 
+    "Company Register", 
+    "National Map (Low resolution: 1:250,000 or better)", 
+    "Government Budget (high level - spending by sector)", 
+    "Government Budget (detailed - transactional level data)", 
+    "Legislation (laws and statutes)", 
+    "National Statistical Office Data (economic and demographic information)", 
+    "National Postcode/ZIP database", 
+    "Public Transport Timetables", 
+    "Enviornmental Data on major sources of pollutants (e.g. location, emissions)"
+  ]
+}

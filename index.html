@@ -21,6 +21,18 @@
       .recline-graph .graph {
         margin-right: auto;
       }
+
+      table.table td, table.table th {
+        vertical-align: top;
+      }
+
+      table.response-summary td {
+        background-color: #0AB971;
+      }
+
+      table.response-summary td.count-0 {
+        background-color: #B94A48;
+      }
     </style>
   </head>
 
@@ -43,6 +55,13 @@
         </div>
         -->
         <div class="row 2nd">
+          <table class="response-summary table table-bordered">
+            <thead>
+              <tr><th></th></tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -51,12 +70,14 @@
 
     <!-- libraries -->
     <script src="vendor/recline/vendor/jquery/1.7.1/jquery.js"></script>
-    <!-- script src="vendor/recline/vendor/bootstrap/2.0.2/bootstrap.js"></script -->
     <script src="vendor/recline/vendor/underscore/1.1.6/underscore.js"></script>
+    <!-- script src="vendor/recline/vendor/bootstrap/2.0.2/bootstrap.js"></script -->
+    <!--
     <script src="vendor/recline/vendor/backbone/0.5.1/backbone.js"></script>
     <script src="vendor/recline/vendor/jquery.mustache.js"></script>
     <script src="vendor/recline/vendor/jquery.flot/0.7/jquery.flot.js"></script>
     <script src="vendor/recline/recline.js"></script>
+    -->
 
     <script src="src/app.js"></script>
   </body>

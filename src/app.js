@@ -1,5 +1,29 @@
 jQuery(document).ready(function($) {
-  var query = {
+  $.getJSON('data/summary.json', summaryTable);
+});
+
+
+function summaryTable(data) {
+  var table = $('.response-summary');
+  var datasets = data.datasets;
+  _.each(datasets, function(name) {
+    table.find('thead tr').append($('<th />').text(name));
+  });
+  var countries = data.countries;
+  countries['All other countries'] = {};
+  _.each(countries, function(country, name) {
+    var row = $('<tr />');
+    row.append($('<th />').text(name));
+    _.each(datasets, function(dataset) {
+      var count = country[dataset] ? country[dataset].count : 0;
+      row.append($('<td />').text(count).addClass('count-' + count));
+    });
+    table.find('tbody').append(row);
+  });
+}
+
+function graphSummary() {
+    var query = {
         'size': 0,
         'query': {
             'match_all': {}
@@ -44,4 +68,4 @@ jQuery(document).ready(function($) {
         newDataset.query();
       });
     });
-});
+}
