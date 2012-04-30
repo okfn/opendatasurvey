@@ -7,7 +7,7 @@
       "Election Results (national)": {
         "count": 1
       }, 
-      "Enviornmental Data on major sources of pollutants (e.g. location, emissions)": {
+      "Environmental Data on major sources of pollutants (e.g. location, emissions)": {
         "count": 1
       }, 
       "Government Budget (National, high level, not detailed)": {
@@ -131,6 +131,11 @@
         "count": 1
       }
     }, 
+    "India": {
+      "Election Results (national)": {
+        "count": 1
+      }
+    }, 
     "Netherlands": {
       "Company Register": {
         "count": 1
@@ -140,6 +145,9 @@
       }
     }, 
     "Norway": {
+      "Environmental Data on major sources of pollutants (e.g. location, emissions)": {
+        "count": 1
+      }, 
       "National Map (Low resolution: 1:250,000 or better)": {
         "count": 1
       }
@@ -174,6 +182,6 @@
     "National Statistical Data (economic and demographic information)", 
     "National Postcode/ZIP database", 
     "Public Transport Timetables", 
-    "Enviornmental Data on major sources of pollutants (e.g. location, emissions)"
+    "Environmental Data on major sources of pollutants (e.g. location, emissions)"
   ]
 }

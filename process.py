@@ -78,7 +78,7 @@ def summary():
         'National Statistical Data (economic and demographic information)',
         'National Postcode/ZIP database',
         'Public Transport Timetables',
-        'Enviornmental Data on major sources of pollutants (e.g. location, emissions)'
+        'Environmental Data on major sources of pollutants (e.g. location, emissions)'
         ]
     countries = {}
     for row in csv.DictReader(open(fp)):
@@ -95,7 +95,7 @@ def summary():
         }
     json.dump(out, open('data/summary.json', 'w'), indent=2, sort_keys=True)
 
-# getdata()
+getdata()
 # upload()
 # analytics()
 summary()
