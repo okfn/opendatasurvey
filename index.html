@@ -24,14 +24,29 @@
 
       table.table td, table.table th {
         vertical-align: top;
+        text-align: center;
       }
 
-      table.response-summary td {
-        background-color: #0AB971;
+      table.response-summary td,
+      table.response-summary td:hover {
       }
 
       table.response-summary td.count-0 {
-        background-color: #B94A48;
+        background-color: whiteSmoke;
+      }
+
+      table.cell-summary {
+        margin-top: 6px;
+      }
+
+      table.table th.country-name {
+        text-align: left;
+      }
+
+      .loading {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 5px;
       }
     </style>
   </head>
@@ -40,8 +55,9 @@
     <div class="container">
     <div class="content">
       <div class="page-header">
-        <h1>Responses per Dataset and Country (updated daily)</h1>
+        <h1>Responses per Dataset and Country</h1>
       </div>
+      <div class="loading">Loading <img src="http://assets.okfn.org/images/icons/ajaxload-circle.gif" alt="Loading" /></div>
       <div class="row">
         <table class="response-summary table table-bordered">
           <thead>
@@ -58,13 +74,15 @@
     <!-- libraries -->
     <script src="vendor/recline/vendor/jquery/1.7.1/jquery.js"></script>
     <script src="vendor/recline/vendor/underscore/1.1.6/underscore.js"></script>
-    <!-- script src="vendor/recline/vendor/bootstrap/2.0.2/bootstrap.js"></script -->
-    <!--
+    <script src="vendor/recline/vendor/bootstrap/2.0.2/bootstrap.js"></script>
     <script src="vendor/recline/vendor/backbone/0.5.1/backbone.js"></script>
-    <script src="vendor/recline/vendor/jquery.mustache.js"></script>
-    <script src="vendor/recline/vendor/jquery.flot/0.7/jquery.flot.js"></script>
+    <!-- script src="vendor/recline/vendor/jquery.mustache.js"></script-->
+    <!--script src="vendor/recline/vendor/jquery.flot/0.7/jquery.flot.js"></script>
     <script src="vendor/recline/recline.js"></script>
     -->
+    <script src="vendor/recline/src/model.js"></script>
+    <script src="vendor/recline/src/backend/base.js"></script>
+    <script src="vendor/recline/src/backend/gdocs.js"></script>
 
     <script src="src/app.js"></script>
   </body>
