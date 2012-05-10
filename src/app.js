@@ -40,6 +40,10 @@ jQuery(document).ready(function($) {
     },
     backend='gdoc'
   );
+  if (window.location.search.indexOf('embed=1')!=-1) {
+    $('.navbar').hide();
+    $('body').attr('style', 'padding-top: 0');
+  }
   dataset.fetch().done(function() {
     dataset.query().done(function() {
       $('.loading').hide();
@@ -76,12 +80,14 @@ function getSummaryData(data) {
   
   var out = {
       'datasets': censusDatasets,
-      'countries': countries
+      'countries': countries,
+      'total': data.length
       }
   return out;
 }
 
 function summaryTable(data) {
+  $('.total-responses').text(data.total);
   var table = $('.response-summary');
   var datasets = data.datasets;
   _.each(datasets, function(name) {
@@ -114,7 +120,7 @@ function summaryTable(data) {
         var $td = $('<td />').addClass('count-' + count);
         $td.append('<a class="btn short-summary">' + summary + '</a>');
         if (isopen) {
-          $td.append('<a href="http://opendefinition.org/okd/"><img src="http://assets.okfn.org/images/ok_buttons/od_80x15_blue.png" /></a>');
+          $td.append('<div><a href="http://opendefinition.org/okd/"><img src="http://assets.okfn.org/images/ok_buttons/od_80x15_blue.png" /></a></div>');
         }
         $td.find('.short-summary').click(function(e) {
           if ($td.find('.cell-summary').length > 0) {
