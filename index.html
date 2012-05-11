@@ -47,6 +47,29 @@
         text-align: left;
       }
 
+      .modal {
+        width: 800px;
+        margin-left: -400px;
+        margin-right: -400px;
+      }
+
+      button.close {
+        padding: 0;
+        cursor: pointer;
+        background: transparent;
+        border: 0;
+        -webkit-appearance: none;
+      }
+
+      .modal table th {
+        width: 60%;
+      }
+
+      .modal table th,
+      .modal table td {
+        text-align: left;
+      }
+
       .loading {
         text-align: center;
         font-size: 24px;
@@ -80,6 +103,16 @@
         </tbody>
       </table>
     </div> <!-- /container -->
+
+    <div class="modal hide fade" id="cellSummary">
+      <div class="modal-header">
+        <button class="close" data-dismiss="modal">&times;</button>
+        <h3><span class='dataset-name'></span> in <span class='country'></span></h3>
+      </div>
+      <div class="modal-body">
+        <table/>
+      </div>
+    </div>
 
     <!-- libraries -->
     <script src="vendor/recline/vendor/jquery/1.7.1/jquery.js"></script>

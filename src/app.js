@@ -48,6 +48,7 @@ jQuery(document).ready(function($) {
     dataset.query().done(function() {
       $('.loading').hide();
       var data = dataset.currentDocuments.toJSON();
+      console.log(data);
       var summary = getSummaryData(data);
       summaryTable(summary);
     });
@@ -123,11 +124,7 @@ function summaryTable(data) {
           $td.append('<div><a href="http://opendefinition.org/okd/"><img src="http://assets.okfn.org/images/ok_buttons/od_80x15_blue.png" /></a></div>');
         }
         $td.find('.short-summary').click(function(e) {
-          if ($td.find('.cell-summary').length > 0) {
-            $td.find('.cell-summary').toggle();
-          } else {
-            $td.append(cellSummary(country, dataset));
-          }
+          cellSummary(country, dataset);
         });
         row.append($td);
       } else {
@@ -139,16 +136,26 @@ function summaryTable(data) {
 }
 
 function cellSummary(country, dataset) {
-  var resp = $('<table />').addClass('cell-summary').addClass('table').addClass('table-bordered');
+  console.log(country, dataset);
+  var summaryEl = $('#cellSummary');
+  var resp = summaryEl.find('table');
+  resp.empty();
+  var firstResp = country[dataset].responses[0];
+  summaryEl.find('.dataset-name').html(firstResp[gdocsMunge('Dataset')]);
+  summaryEl.find('.country').html(firstResp[gdocsMunge('Census Country')]);
+  resp.addClass('cell-summary').addClass('table').addClass('table-bordered').addClass('table-condensed');
   _.each(censusKeys.slice(1), function(key) {
-    var response = country[dataset].responses[0];
-    var answer = response[gdocsMunge(key)];
-    var $tr = $('<tr />');
-    $tr.append($('<th />').text(key));
-    $tr.append($('<td />').text(answer));
-    resp.append($tr);
+    if (key != 'Dataset' && key != 'Census Country') {
+      var response = country[dataset].responses[0];
+      var answer = response[gdocsMunge(key)];
+      var $tr = $('<tr />');
+      $tr.append($('<th />').text(key));
+      $tr.append($('<td />').text(answer));
+      resp.append($tr);
+    }
   });
-  return $('<div />').append(resp).html();
+  summaryEl.modal({backdrop: false});
+  summaryEl.modal('show');
 }
 
 function graphSummary() {
