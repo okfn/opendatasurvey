@@ -1,3 +1,7 @@
+var countryCodes = {
+  'United Kingdom': 'gb'
+  };
+
 var censusDatasets = [
       'Election Results (national)',
       'Company Register',
@@ -50,7 +54,7 @@ jQuery(document).ready(function($) {
       var data = dataset.currentDocuments.toJSON();
       console.log(data);
       var summary = getSummaryData(data);
-      summaryTable(summary);
+      summaryMap(summary);
     });
   });
 });
@@ -85,6 +89,34 @@ function getSummaryData(data) {
       'total': data.length
       }
   return out;
+}
+
+function summaryMap(data) {
+  $('.total-responses').text(data.total);
+  var map = $K.map('#map', 700);
+  map.loadMap('data/world.svg', function(map) {
+        map.addLayer({
+          id: 'regions',
+          className: 'bg',
+          key: 'iso2'
+        });
+        
+        map.addLayer({
+          id: 'regions',
+          key: 'iso2'
+        });
+  });
+
+  var dsList = $('#datasets-select');
+  _.each(data.datasets, function(dataset) {
+    dsList.append('<li><a href="#"" data-dataset="'+dataset+'">'+dataset+'</a></li>');
+  });
+  dsList.on('click', 'a', function(e) {
+    dsList.find('li').removeClass('active');
+    $(e.currentTarget).parents('li').addClass('active');
+    var dataset = $(e.currentTarget).data('dataset');
+    console.log(dataset);
+  });
 }
 
 function summaryTable(data) {

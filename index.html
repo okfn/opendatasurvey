@@ -15,7 +15,7 @@
     <link href="vendor/recline/css/graph.css" rel="stylesheet" />
     <style type="text/css">
       html, body {
-        background-color: #eee;
+        background-color: #fff;
       }
       body {
         padding-top: 40px;
@@ -45,6 +45,24 @@
 
       table.table th.country-name {
         text-align: left;
+      }
+
+      .nav-tabs {
+        max-width: 250px;
+      }
+
+      .page {
+        padding-top: 2em;
+
+      }
+
+      .tab-content {
+        width: auto;
+        padding-top: 3em;
+      }
+
+      #map path {
+        stroke: #ccc;
       }
 
       .modal {
@@ -93,15 +111,15 @@
   </div>
 </div>
 
-    <div class="container">
+    <div class="container page">
       <div class="loading">Loading <img src="http://assets.okfn.org/images/icons/ajaxload-circle.gif" alt="Loading" /></div>
-      <table class="response-summary table table-bordered">
-        <thead>
-          <tr><th></th></tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
+      <div class="tabbable tabs-left">
+        <ul id='datasets-select' class="nav nav-tabs">  
+        </ul>
+        <div class="tab-content">
+          <div id='map'>
+        </div>
+      </div>
     </div> <!-- /container -->
 
     <div class="modal hide fade" id="cellSummary">
@@ -119,6 +137,9 @@
     <script src="vendor/recline/vendor/underscore/1.1.6/underscore.js"></script>
     <script src="vendor/recline/vendor/bootstrap/2.0.2/bootstrap.js"></script>
     <script src="vendor/recline/vendor/backbone/0.5.1/backbone.js"></script>
+    <script src="vendor/raphael-min.js"></script>
+    <script src="vendor/kartograph.min.js"></script>
+    <script src="vendor/chroma.pack.min.js"></script>
     <!-- script src="vendor/recline/vendor/jquery.mustache.js"></script-->
     <!--script src="vendor/recline/vendor/jquery.flot/0.7/jquery.flot.js"></script>
     <script src="vendor/recline/recline.js"></script>
