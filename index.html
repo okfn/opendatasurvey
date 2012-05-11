@@ -62,7 +62,19 @@
       }
 
       #map path {
-        stroke: #ccc;
+        stroke: #fff;
+        stroke-width: 0.3px;
+      }
+
+      #map svg path.regions:hover {
+        fill: #c00;
+        cursor: pointer;
+      }
+
+      #map svg path.bg {
+        stroke: #d3d0d0;
+        fill: #d3d0d0;
+        opacity: 0.5;
       }
 
       .modal {
@@ -117,7 +129,10 @@
         <ul id='datasets-select' class="nav nav-tabs">  
         </ul>
         <div class="tab-content">
-          <div id='map'>
+          <div id='map' style='display: none;'>
+            <h1>Welcome to the Open Data Census<h1>
+            <h3>Select a dataset on the left to see its availability.</h3>
+          </div>
         </div>
       </div>
     </div> <!-- /container -->
