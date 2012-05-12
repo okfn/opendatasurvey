@@ -15,7 +15,7 @@
     <link href="vendor/recline/css/graph.css" rel="stylesheet" />
     <style type="text/css">
       html, body {
-        background-color: #eee;
+        background-color: #fff;
       }
       body {
         padding-top: 40px;
@@ -47,6 +47,59 @@
         text-align: left;
       }
 
+      .nav-tabs {
+        max-width: 250px;
+      }
+
+      .page {
+        padding-top: 2em;
+
+      }
+
+      .tab-content {
+        width: auto;
+        padding-top: 3em;
+      }
+
+      #map path {
+        stroke: #fff;
+        stroke-width: 0.3px;
+      }
+
+      #map svg path.regions:hover {
+        fill: #c00;
+        cursor: pointer;
+      }
+
+      #map svg path.bg {
+        stroke: #d3d0d0;
+        fill: #d3d0d0;
+        opacity: 0.5;
+      }
+
+      .modal {
+        width: 800px;
+        margin-left: -400px;
+        margin-right: -400px;
+      }
+
+      button.close {
+        padding: 0;
+        cursor: pointer;
+        background: transparent;
+        border: 0;
+        -webkit-appearance: none;
+      }
+
+      .modal table th {
+        width: 60%;
+      }
+
+      .modal table th,
+      .modal table td {
+        text-align: left;
+      }
+
       .loading {
         text-align: center;
         font-size: 24px;
@@ -70,22 +123,38 @@
   </div>
 </div>
 
-    <div class="container">
+    <div class="container page">
       <div class="loading">Loading <img src="http://assets.okfn.org/images/icons/ajaxload-circle.gif" alt="Loading" /></div>
-      <table class="response-summary table table-bordered">
-        <thead>
-          <tr><th></th></tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
+      <div class="tabbable tabs-left">
+        <ul id='datasets-select' class="nav nav-tabs">  
+        </ul>
+        <div class="tab-content">
+          <div id='map' style='display: none;'>
+            <h1>Welcome to the Open Data Census<h1>
+            <h3>Select a dataset on the left to see its availability.</h3>
+          </div>
+        </div>
+      </div>
     </div> <!-- /container -->
+
+    <div class="modal hide fade" id="cellSummary">
+      <div class="modal-header">
+        <button class="close" data-dismiss="modal">&times;</button>
+        <h3><span class='dataset-name'></span> in <span class='country'></span></h3>
+      </div>
+      <div class="modal-body">
+        <table/>
+      </div>
+    </div>
 
     <!-- libraries -->
     <script src="vendor/recline/vendor/jquery/1.7.1/jquery.js"></script>
     <script src="vendor/recline/vendor/underscore/1.1.6/underscore.js"></script>
     <script src="vendor/recline/vendor/bootstrap/2.0.2/bootstrap.js"></script>
     <script src="vendor/recline/vendor/backbone/0.5.1/backbone.js"></script>
+    <script src="vendor/raphael-min.js"></script>
+    <script src="vendor/kartograph.min.js"></script>
+    <script src="vendor/chroma.pack.min.js"></script>
     <!-- script src="vendor/recline/vendor/jquery.mustache.js"></script-->
     <!--script src="vendor/recline/vendor/jquery.flot/0.7/jquery.flot.js"></script>
     <script src="vendor/recline/recline.js"></script>

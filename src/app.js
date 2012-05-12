@@ -1,3 +1,33 @@
+var countryCodes = {
+  'United Kingdom': 'GB',
+  "Brazil": "BR", 
+  "Australia": "AU", 
+  "Netherlands": "NL", 
+  "Iceland": "IS", 
+  "Denmark": "DK", 
+  "Czech Republic": "CZ", 
+  "Norway": "NO", 
+  "Croatia": "CR", 
+  "Greece": "GR", 
+  "United States": "US", 
+  "India": "IN", 
+  "Switzerland": "CH", 
+  "Northern Ireland": "IE", 
+  "Austria": "AT", 
+  "Belgium": "BE", 
+  "Spain": "ES", 
+  "South Africa": "ZA", 
+  "Canada": "CA", 
+  "France": "FR", 
+  "Uruguay": "UY", 
+  "Finland": "FI", 
+  "Belarus": "BY", 
+  "Egypt": "EG", 
+  "Bulgaria": "BG", 
+  "Germany": "DE", 
+  "Italy": "IT"
+  };
+
 var censusDatasets = [
       'Election Results (national)',
       'Company Register',
@@ -10,6 +40,7 @@ var censusDatasets = [
       'Public Transport Timetables',
       'Environmental Data on major sources of pollutants (e.g. location, emissions)'
       ];
+
 var censusKeys = [
   'Timestamp',
   'Census Country',
@@ -48,17 +79,22 @@ jQuery(document).ready(function($) {
     dataset.query().done(function() {
       $('.loading').hide();
       var data = dataset.currentDocuments.toJSON();
+      console.log(data);
       var summary = getSummaryData(data);
-      summaryTable(summary);
+      summaryMapSelect(summary);
     });
   });
 });
 
 function getSummaryData(data) {
-  var countries = {};
-  function makeDatasetDict () {
+  var datasets = {};
+  var countryNames = _.uniq(_.map(data, function(r) {
+    return r['censuscountry'];
+  }));
+  console.log(countryNames);
+  function makeCountryDict () {
     var _out = {};
-    _.each(censusDatasets, function(ds) {
+    _.each(countryNames, function(ds) {
       _out[ds] = {
         count: 0,
         responses: [],
@@ -68,87 +104,128 @@ function getSummaryData(data) {
     return _out;
   }
   _.each(data, function(row) {
-      countries[row['censuscountry']] = makeDatasetDict();
+      datasets[row['dataset']] = makeCountryDict();
   });
   _.each(data, function(row) {
     var c = row['censuscountry'];
     var d = row['dataset'];
-    count = countries[c][d].count || 0;
-    countries[c][d]['count'] = count + 1;
-    countries[c][d].responses.push(row);
+    count = datasets[d][c].count || 0;
+    datasets[d][c]['count'] = count + 1;
+    datasets[d][c].responses.push(row);
   });
   
   var out = {
-      'datasets': censusDatasets,
-      'countries': countries,
+      'datasets': datasets,
+      'countries': countryNames,
       'total': data.length
-      }
+      };
+  console.log(out);
   return out;
 }
 
-function summaryTable(data) {
-  $('.total-responses').text(data.total);
-  var table = $('.response-summary');
-  var datasets = data.datasets;
-  _.each(datasets, function(name) {
-    table.find('thead tr').append($('<th />').text(name));
+function summaryMap(dataset) {
+  var byIso = {};
+  _.each(_.keys(dataset), function(c) {
+    return byIso[countryCodes[c]] = dataset[c];
   });
-  var countries = data.countries;
-  _.each(countries, function(country, name) {
-    var row = $('<tr />');
-    row.append($('<th />').text(name).addClass('country-name'));
-    _.each(datasets, function(dataset) {
-      var count = country[dataset] ? country[dataset].count : 0;
-      if (count) {
-        // just get first response
-        var summary = '';
-        var map = {
-          'Yes': 'Y',
-          'No': 'N',
-          'No ': 'N',
-          'Unsure': '?'
+  var scores = {};
+  _.each(_.keys(byIso), function(country) {
+    var count = byIso[country] ? byIso[country].count : 0;
+    if (count) {
+      // just get first response
+      var summary = 0;
+      var map = {
+        'Yes': 1,
+        'No': 0,
+        'No ': 0,
+        'Unsure': 0
+      };
+      var isopen = true;
+      _.each(censusKeys.slice(3,9), function(key, idx) {
+        var response = byIso[country].responses[0];
+        var answer = response[gdocsMunge(key)];
+        if (answer != 'Yes') {
+          isopen = false;
         }
-        var isopen = true;
-        _.each(censusKeys.slice(3,9), function(key, idx) {
-          var response = country[dataset].responses[0];
-          var answer = response[gdocsMunge(key)];
-          if (answer != 'Yes') {
-            isopen = false;
-          }
-          summary += map[answer];
-        });
-        var $td = $('<td />').addClass('count-' + count);
-        $td.append('<a class="btn short-summary">' + summary + '</a>');
-        if (isopen) {
-          $td.append('<div><a href="http://opendefinition.org/okd/"><img src="http://assets.okfn.org/images/ok_buttons/od_80x15_blue.png" /></a></div>');
-        }
-        $td.find('.short-summary').click(function(e) {
-          if ($td.find('.cell-summary').length > 0) {
-            $td.find('.cell-summary').toggle();
-          } else {
-            $td.append(cellSummary(country, dataset));
-          }
-        });
-        row.append($td);
-      } else {
-        row.append($('<td />').text('No info').addClass('count-' + count));
-      }
+        summary += map[answer];
+      });
+      scores[country] = summary;
+      // TODO: handle isOpen
+    }
+  });
+  var colscale = new chroma.ColorScale({
+    colors: chroma.brewer.Blues,
+    limits: [-2,-1,0,1,2,3,4,5,6,7]
     });
-    table.find('tbody').append(row);
+  $('#map').empty();
+  var map = $K.map('#map', 700);
+  map.loadMap('data/world.svg', function(map) {
+        map.addLayer({
+          id: 'regions',
+          className: 'bg',
+          key: 'iso2',
+          filter: function(d) {
+            return !byIso.hasOwnProperty(d.iso2);
+          }
+        });
+        
+        map.addLayer({
+          id: 'regions',
+          key: 'iso2',
+          filter: function(d) {
+            return byIso.hasOwnProperty(d.iso2);
+          }
+        });
+
+        map.choropleth({
+          data: scores,
+          colors: function(d) {           
+            if (d === null) return '#e3e0e0';
+            return colscale.getColor(d);
+          }
+        });
+
+        map.onLayerEvent('click', function(d) {
+          cellSummary(byIso[d.iso2]);
+        });
   });
 }
 
-function cellSummary(country, dataset) {
-  var resp = $('<table />').addClass('cell-summary').addClass('table').addClass('table-bordered');
-  _.each(censusKeys.slice(1), function(key) {
-    var response = country[dataset].responses[0];
-    var answer = response[gdocsMunge(key)];
-    var $tr = $('<tr />');
-    $tr.append($('<th />').text(key));
-    $tr.append($('<td />').text(answer));
-    resp.append($tr);
+function summaryMapSelect(data) {
+  $('#map').show();
+  $('.total-responses').text(data.total);
+  var dsList = $('#datasets-select');
+  _.each(_.keys(data.datasets), function(dataset) {
+    dsList.append('<li><a href="#"" data-dataset="'+dataset+'">'+dataset+'</a></li>');
   });
-  return $('<div />').append(resp).html();
+  dsList.on('click', 'a', function(e) {
+    dsList.find('li').removeClass('active');
+    $(e.currentTarget).parents('li').addClass('active');
+    var dataset = $(e.currentTarget).data('dataset');
+    summaryMap(data.datasets[dataset]);
+  });
+}
+
+function cellSummary(data) {
+  var summaryEl = $('#cellSummary');
+  var resp = summaryEl.find('table');
+  resp.empty();
+  var firstResp = data.responses[0];
+  summaryEl.find('.dataset-name').html(firstResp[gdocsMunge('Dataset')]);
+  summaryEl.find('.country').html(firstResp[gdocsMunge('Census Country')]);
+  resp.addClass('cell-summary').addClass('table').addClass('table-bordered').addClass('table-condensed');
+  _.each(censusKeys.slice(1), function(key) {
+    if (key != 'Dataset' && key != 'Census Country') {
+      var response = data.responses[0];
+      var answer = response[gdocsMunge(key)];
+      var $tr = $('<tr />');
+      $tr.append($('<th />').text(key));
+      $tr.append($('<td />').text(answer));
+      resp.append($tr);
+    }
+  });
+  summaryEl.modal({backdrop: false});
+  summaryEl.modal('show');
 }
 
 function graphSummary() {
