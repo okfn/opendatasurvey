@@ -79,7 +79,6 @@ jQuery(document).ready(function($) {
     dataset.query().done(function() {
       $('.loading').hide();
       var data = dataset.currentDocuments.toJSON();
-      console.log(data);
       var summary = getSummaryData(data);
       summaryMapSelect(summary);
     });
@@ -91,7 +90,6 @@ function getSummaryData(data) {
   var countryNames = _.uniq(_.map(data, function(r) {
     return r['censuscountry'];
   }));
-  console.log(countryNames);
   function makeCountryDict () {
     var _out = {};
     _.each(countryNames, function(ds) {
@@ -119,7 +117,6 @@ function getSummaryData(data) {
       'countries': countryNames,
       'total': data.length
       };
-  console.log(out);
   return out;
 }
 
