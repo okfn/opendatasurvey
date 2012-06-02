@@ -81,6 +81,8 @@ jQuery(document).ready(function($) {
       var data = dataset.currentDocuments.toJSON();
       var summary = getSummaryData(data);
       summaryMapSelect(summary);
+      var summary = getByDataset(data);
+      summaryTable(summary);
     });
   });
 });
@@ -117,6 +119,38 @@ function getSummaryData(data) {
       'countries': countryNames,
       'total': data.length
       };
+  return out;
+}
+
+function getByDataset(data) {
+  var countries = {};
+  function makeDatasetDict () {
+    var _out = {};
+    _.each(censusDatasets, function(ds) {
+      _out[ds] = {
+        count: 0,
+        responses: [],
+        isopen: false
+      };
+    });
+    return _out;
+  }
+  _.each(data, function(row) {
+      countries[row['censuscountry']] = makeDatasetDict();
+  });
+  _.each(data, function(row) {
+    var c = row['censuscountry'];
+    var d = row['dataset'];
+    count = countries[c][d].count || 0;
+    countries[c][d]['count'] = count + 1;
+    countries[c][d].responses.push(row);
+  });
+  
+  var out = {
+      'datasets': censusDatasets,
+      'countries': countries,
+      'total': data.length
+      }
   return out;
 }
 
@@ -224,6 +258,72 @@ function cellSummary(data) {
   summaryEl.modal({backdrop: false});
   summaryEl.modal('show');
 }
+
+function summaryTable(data) {
+  $('.total-responses').text(data.total);
+  var table = $('.response-summary');
+  var datasets = data.datasets;
+  _.each(datasets, function(name) {
+    table.find('thead tr').append($('<th />').text(name));
+  });
+  var countries = data.countries;
+  _.each(countries, function(country, name) {
+    var row = $('<tr />');
+    row.append($('<th />').text(name).addClass('country-name'));
+    _.each(datasets, function(dataset) {
+      var count = country[dataset] ? country[dataset].count : 0;
+      if (count) {
+        // just get first response
+        var summary = '';
+        var map = {
+          'Yes': 'Y',
+          'No': 'N',
+          'No ': 'N',
+          'Unsure': '?'
+        }
+        var isopen = true;
+        _.each(censusKeys.slice(3,9), function(key, idx) {
+          var response = country[dataset].responses[0];
+          var answer = response[gdocsMunge(key)];
+          if (answer != 'Yes') {
+            isopen = false;
+          }
+          summary += map[answer];
+        });
+        var $td = $('<td />').addClass('count-' + count);
+        $td.append('<a class="btn short-summary">' + summary + '</a>');
+        if (isopen) {
+          $td.append('<div><a href="http://opendefinition.org/okd/"><img src="http://assets.okfn.org/images/ok_buttons/od_80x15_blue.png" /></a></div>');
+        }
+        $td.find('.short-summary').click(function(e) {
+          if ($td.find('.cell-summary').length > 0) {
+            $td.find('.cell-summary').toggle();
+          } else {
+            $td.append(cellSummaryForTable(country, dataset));
+          }
+        });
+        row.append($td);
+      } else {
+        row.append($('<td />').text('No info').addClass('count-' + count));
+      }
+    });
+    table.find('tbody').append(row);
+  });
+}
+
+function cellSummaryForTable(country, dataset) {
+  var resp = $('<table />').addClass('cell-summary').addClass('table').addClass('table-bordered');
+  _.each(censusKeys.slice(1), function(key) {
+    var response = country[dataset].responses[0];
+    var answer = response[gdocsMunge(key)];
+    var $tr = $('<tr />');
+    $tr.append($('<th />').text(key));
+    $tr.append($('<td />').text(answer));
+    resp.append($tr);
+  });
+  return $('<div />').append(resp).html();
+}
+
 
 function graphSummary() {
     var query = {
