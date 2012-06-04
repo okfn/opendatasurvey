@@ -230,6 +230,7 @@ function summaryMapSelect(data) {
     dsList.append('<li><a href="#"" data-dataset="'+dataset+'">'+dataset+'</a></li>');
   });
   dsList.on('click', 'a', function(e) {
+    e.preventDefault();
     dsList.find('li').removeClass('active');
     $(e.currentTarget).parents('li').addClass('active');
     var dataset = $(e.currentTarget).data('dataset');
