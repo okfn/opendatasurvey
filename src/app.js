@@ -268,7 +268,9 @@ function summaryTable(data) {
     table.find('thead tr').append($('<th />').text(name));
   });
   var countries = data.countries;
-  _.each(countries, function(country, name) {
+  var countryNames = _.keys(countries).sort();
+  _.each(countryNames, function(name) {
+    var country = countries[name];
     var row = $('<tr />');
     row.append($('<th />').text(name).addClass('country-name'));
     _.each(datasets, function(dataset) {
