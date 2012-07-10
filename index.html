@@ -13,19 +13,8 @@
     <link href="vendor/recline/vendor/bootstrap/2.0.2/css/bootstrap.css" rel="stylesheet" />
     <link href="vendor/recline/vendor/bootstrap/2.0.2/css/bootstrap-responsive.css" rel="stylesheet" />
     <link href="vendor/recline/css/graph.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
     <style type="text/css">
-      html, body {
-        background-color: #fff;
-      }
-      body {
-        padding-top: 40px;
-      }
-
-      .nav-logo img {
-        margin-top: 4px;
-        margin-right: 8px;
-      }
-
       table.table td, table.table th {
         vertical-align: top;
         text-align: center;
@@ -115,11 +104,12 @@
       <a class="nav-logo pull-left" href="http://okfn.org/" title="An Open Knowledge Foundation Project">
         <img src="http://assets.okfn.org/p/okfn/img/logo_28x30.png" alt="Open Knowledge Foundation logo" />
       </a>
-      <a class="brand" href="http://opengovernmentdata.org/census/">Open Data Census - Response Summary</a>
+      <a class="brand" href="/">Open Data Census</a>
       <ul class="nav">
         <li><a href="#">Total <span class="total-responses"></span></a></li>
-        <li><a href="#map" class="page-switcher">Map</a></li>
         <li><a href="#table">Table</a></li>
+        <li><a href="#map" class="page-switcher">Map</a></li>
+        <li><a href="submit.html">Submit a Response</a></li>
       </ul>
       <ul class="nav pull-right">
         <li><a href="http://datahub.io/dataset/opendatacensus">Source Data</a></li>
@@ -131,6 +121,7 @@
 </div>
 
     <div class="container page">
+      <div class="alert">Want to submit a response to the census? Please go to the <a href="submit.html">submission page &raquo;</a></div>
       <div class="loading">Loading <img src="http://assets.okfn.org/images/icons/ajaxload-circle.gif" alt="Loading" /></div>
       <div class="page table">
         <table class="response-summary table table-bordered">

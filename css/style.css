@@ -1,0 +1,12 @@
+html, body {
+  background-color: #fff;
+}
+body {
+  padding-top: 40px;
+}
+
+.nav-logo img {
+  margin-top: 4px;
+  margin-right: 8px;
+}
+
