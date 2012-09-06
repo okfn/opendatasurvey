@@ -28,7 +28,7 @@ var countryCodes = {
   "Italy": "IT",
   "Taiwan R.O.C.": "TW"
   };
-
+var ds;
 var censusDatasets = [
       'Election Results (national)',
       'Company Register',
@@ -80,7 +80,7 @@ jQuery(document).ready(function($) {
     dataset.query().done(function() {
       $('.loading').hide();
       var data = currentdocuments(dataset); //This is the new currentdocuments
-      console.log(data);
+      ds=dataset;
       var summary = getSummaryData(data);
       summaryMapSelect(summary);
       var summary = getByDataset(data);

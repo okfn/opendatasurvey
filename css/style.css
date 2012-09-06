@@ -88,3 +88,23 @@ table.table td, table.table th {
         margin-bottom: 5px;
       }
 
+SPAN.brand {
+    padding-left: 10px;
+    }
+#pagesel A {
+     color: #ffffff; 
+     margin-top: 5px;
+    }
+#pagesel {
+    background-color: #2C2C2C;
+    font-size: 20px;
+    width: 100px;
+    position: absolute;
+    display: none;
+    padding-left: 10px;
+    }
+#pagesel UL {
+    list-style: none;
+    margin-left: 0px;
+    }
+    
