@@ -81,12 +81,19 @@ jQuery(document).ready(function($) {
       $('.loading').hide();
       var data = dataset.records.toJSON();
       var summary = getSummaryData(data);
-      summaryMap(summary);
-      var summary = getByDataset(data);
       summaryTable(summary);
+      summaryMap(summary);
+      summaryTop(summary);
+      var summary = getByDataset(data);
     });
   });
 });
+
+function summaryTop(summary) {
+  console.log(summary)
+  $("#nc").html(summary.countries.length);
+  $("#nds").html(summary.total);
+  }
 
 function getSummaryData(data) {
   var datasets = {};
@@ -175,7 +182,6 @@ function get_latest_response(responses) {
   }
   
 function summaryMap(dataset) {
-  console.log(dataset)
   var byIso = {};
   _.each(dataset.countries, function (c) {
     return byIso[countryCodes[c]] = {name: c}})
