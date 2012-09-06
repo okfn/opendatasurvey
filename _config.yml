@@ -1,5 +1,6 @@
 exclude : ['README.rst', 'process.py']
 safe: false
+auto: true
 
 JB :
     analytics :
