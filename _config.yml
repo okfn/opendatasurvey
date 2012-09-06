@@ -1,4 +1,5 @@
-exclude : ['README.rst','.gitignore', 'process.py', 'vendor/recline/index.html', 'vendor/recline/library.html']
+exclude : ['README.rst', 'process.py', 'vendor/recline/index.html', 'vendor/recline/library.html']
+safe: false
 
 JB :
     analytics :
