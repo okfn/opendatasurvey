@@ -68,9 +68,9 @@ jQuery(document).ready(function($) {
   var url = 'https://docs.google.com/spreadsheet/ccc?key=0Aon3JiuouxLUdEVnbG5pUFlyUzBpVkFXbXJ2WWpGTUE#gid=0'
   var dataset = new recline.Model.Dataset({
       id: 'opendatacensus',
-      url: url
-    },
-    backend='gdoc'
+      url: url,
+      backend: 'GDocs'
+    }
   );
   if (window.location.search.indexOf('embed=1')!=-1) {
     $('.navbar').hide();
