@@ -209,7 +209,7 @@ function summaryMap(dataset) {
     });
   $('#map').empty();
   var map = $K.map('#map', 700);
-  map.loadMap('/data/world.svg', function(map) {
+  map.loadMap('../data/world.svg', function(map) {
         map.addLayer({
           id: 'regions',
           className: 'bg',
