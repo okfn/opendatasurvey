@@ -1,7 +1,11 @@
 ---
 layout: default
-title: start
+title: Start
 ---
-<div class="container">
 <h1> Welcome to the open government dashboard </h1>
-</div>
+
+<ul>
+{% for p in site.pages %}
+<li>{{p.url}}</li>
+{% endfor %}
+</ul>

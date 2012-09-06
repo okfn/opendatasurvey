@@ -1,4 +1,7 @@
-analytics:
-    provider: google
-    google:
-        tracking_id: 'UA-8271754-48'
+exclude : ['README.rst','.gitignore', 'process.py', 'vendor/recline/index.html', 'vendor/recline/library.html']
+
+JB :
+    analytics :
+        provider : google
+        google :
+            tracking_id : 'UA-8271754-48'
