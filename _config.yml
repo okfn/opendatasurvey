@@ -1,4 +1,4 @@
-exclude : ['README.rst', 'process.py', 'vendor/recline/index.html', 'vendor/recline/library.html']
+exclude : ['README.rst', 'process.py']
 safe: false
 
 JB :

@@ -33,7 +33,7 @@ Front Page: Big numbers!
 * Per country count of open important datasets
 * Per country count of total datasets
 * Per Dataset for Country
-** Per country counts with Y in the census
+    * Per country counts with Y in the census
 
 pages:
 
