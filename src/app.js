@@ -79,7 +79,8 @@ jQuery(document).ready(function($) {
   dataset.fetch().done(function() {
     dataset.query().done(function() {
       $('.loading').hide();
-      var data = dataset.currentDocuments.toJSON();
+      var data = currentdocuments(dataset); //This is the new currentdocuments
+      console.log(data);
       var summary = getSummaryData(data);
       summaryMapSelect(summary);
       var summary = getByDataset(data);
@@ -87,6 +88,11 @@ jQuery(document).ready(function($) {
     });
   });
 });
+
+function currentdocuments(ds) {
+    return ds.records.models.map(function(m) {
+        return (m.attributes);})
+    }
 
 function getSummaryData(data) {
   var datasets = {};
