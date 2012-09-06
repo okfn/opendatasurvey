@@ -36,6 +36,7 @@ Front Page: Big numbers!
 ** Per country counts with Y in the census
 
 pages:
+
 * Choropleth mapof the view above
     * Ability to switch between views
 * Bar graph summary of datasets

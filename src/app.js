@@ -25,7 +25,8 @@ var countryCodes = {
   "Egypt": "EG", 
   "Bulgaria": "BG", 
   "Germany": "DE", 
-  "Italy": "IT"
+  "Italy": "IT",
+  "Taiwan R.O.C.": "TW"
   };
 
 var censusDatasets = [
@@ -190,7 +191,7 @@ function summaryMap(dataset) {
     });
   $('#map').empty();
   var map = $K.map('#map', 700);
-  map.loadMap('data/world.svg', function(map) {
+  map.loadMap('/data/world.svg', function(map) {
         map.addLayer({
           id: 'regions',
           className: 'bg',
