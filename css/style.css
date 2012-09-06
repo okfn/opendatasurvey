@@ -10,6 +10,10 @@ body {
   margin-right: 8px;
 }
 
+div.table {
+  display: none; 
+  }
+
 table.table td, table.table th {
         vertical-align: top;
         text-align: center;
@@ -59,6 +63,7 @@ table.table td, table.table th {
         fill: #d3d0d0;
         opacity: 0.5;
       }
+
 
       .modal {
         width: 800px;

@@ -26,7 +26,8 @@ var countryCodes = {
   "Bulgaria": "BG", 
   "Germany": "DE", 
   "Italy": "IT",
-  "Taiwan R.O.C.": "TW"
+  "Taiwan R.O.C.": "TW",
+  "Slovenia": "SI"
   };
 var censusDatasets = [
       'Election Results (national)',
@@ -80,7 +81,7 @@ jQuery(document).ready(function($) {
       $('.loading').hide();
       var data = dataset.records.toJSON();
       var summary = getSummaryData(data);
-      summaryMapSelect(summary);
+      summaryMap(summary);
       var summary = getByDataset(data);
       summaryTable(summary);
     });
@@ -154,39 +155,57 @@ function getByDataset(data) {
   return out;
 }
 
+function get_all_datasets_by_country(dataset, country) {
+  var ret=[]
+  _.each(_.keys(dataset.datasets), function (d) {
+    ret.push(dataset.datasets[d][country]);
+    })
+  return ret;  
+  }
+
+function get_latest_response(responses) {
+  ret=responses[0]
+  _.each(responses,function(response) {
+      if (ret.timestamp < response.timestamp) {
+        ret=response;
+        }
+      }
+      )
+  return ret;
+  }
+  
 function summaryMap(dataset) {
+  console.log(dataset)
   var byIso = {};
-  _.each(_.keys(dataset), function(c) {
-    return byIso[countryCodes[c]] = dataset[c];
-  });
+  _.each(dataset.countries, function (c) {
+    return byIso[countryCodes[c]] = {name: c}})
   var scores = {};
   _.each(_.keys(byIso), function(country) {
     var count = byIso[country] ? byIso[country].count : 0;
-    if (count) {
-      // just get first response
-      var summary = 0;
-      var map = {
-        'Yes': 1,
-        'No': 0,
-        'No ': 0,
-        'Unsure': 0
-      };
-      var isopen = true;
-      _.each(censusKeys.slice(3,9), function(key, idx) {
-        var response = byIso[country].responses[0];
-        var answer = response[gdocsMunge(key)];
-        if (answer != 'Yes') {
-          isopen = false;
+    byIso[country].datasets=get_all_datasets_by_country(dataset,byIso[country].name);
+    byIso[country].score=0;
+    _.each(byIso[country].datasets,function(dataset) {
+      if (dataset.count) {
+        response=get_latest_response(dataset.responses)
+        _.each(censusKeys.slice(3,9), function(key) {
+            var answer=response[gdocsMunge(key)];
+            if (answer='Yes') {
+              byIso[country].score++;
+              }
+          })
         }
-        summary += map[answer];
       });
-      scores[country] = summary;
-      // TODO: handle isOpen
-    }
+      scores[country]=byIso[country].score;
   });
+  var max=0;
+  _.each(_.keys(scores),function(key) {
+    if (scores[key] > max) {
+      max=scores[key];
+      };
+    })
   var colscale = new chroma.ColorScale({
     colors: chroma.brewer.Blues,
-    limits: [-2,-1,0,1,2,3,4,5,6,7]
+    limits: [-2,max]
     });
   $('#map').empty();
   var map = $K.map('#map', 700);
@@ -220,6 +239,8 @@ function summaryMap(dataset) {
           cellSummary(byIso[d.iso2]);
         });
   });
+  $("#map").css("margin-left",($(window).width()-700)/2+"px");
+  $("#map").show();
 }
 
 function summaryMapSelect(data) {
