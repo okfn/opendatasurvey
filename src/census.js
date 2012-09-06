@@ -77,10 +77,9 @@ jQuery(document).ready(function($) {
     $('body').attr('style', 'padding-top: 0');
   }
   dataset.fetch().done(function() {
-    dataset.query().done(function() {
+    dataset.query({size: dataset.recordCount}).done(function() {
       $('.loading').hide();
-      var data = currentdocuments(dataset); //This is the new currentdocuments
-      ds=dataset;
+      var data = dataset.records.toJSON();
       var summary = getSummaryData(data);
       summaryMapSelect(summary);
       var summary = getByDataset(data);
@@ -88,11 +87,6 @@ jQuery(document).ready(function($) {
     });
   });
 });
-
-function currentdocuments(ds) {
-    return ds.records.models.map(function(m) {
-        return (m.attributes);})
-    }
 
 function getSummaryData(data) {
   var datasets = {};
