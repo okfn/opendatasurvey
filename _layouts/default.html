@@ -10,29 +10,29 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <script src="/vendor/recline/vendor/jquery/1.7.1/jquery.js"></script>
-    <script src="/vendor/recline/vendor/underscore/1.1.6/underscore.js"></script>
+    <script src="{{page.root}}/vendor/recline/vendor/jquery/1.7.1/jquery.js"></script>
+    <script src="{{page.root}}/vendor/recline/vendor/underscore/1.1.6/underscore.js"></script>
 
-<script src="/vendor/recline/vendor/bootstrap/2.0.2/bootstrap.js"></script>
+<script src="{{page.root}}/vendor/recline/vendor/bootstrap/2.0.2/bootstrap.js"></script>
 
-<script src="/vendor/recline/vendor/backbone/0.5.1/backbone.js"></script>
+<script src="{{page.root}}/vendor/recline/vendor/backbone/0.5.1/backbone.js"></script>
 
-<script src="/vendor/raphael-min.js"></script>
+<script src="{{page.root}}/vendor/raphael-min.js"></script>
 
-<script src="/vendor/kartograph.min.js"></script>
+<script src="{{page.root}}/vendor/kartograph.min.js"></script>
 
-<script src="/vendor/chroma.pack.min.js"></script>
+<script src="{{page.root}}/vendor/chroma.pack.min.js"></script>
 
-<script src="/vendor/recline/dist/recline.js"></script>
+<script src="{{page.root}}/vendor/recline/dist/recline.js"></script>
 
-<script src="/vendor/recline/dist/recline.dataset.js"></script>
+<script src="{{page.root}}/vendor/recline/dist/recline.dataset.js"></script>
 
-    <script src="/src/nav.js"></script>
+    <script src="{{page.root}}/src/nav.js"></script>
 
-    <link href="/vendor/recline/vendor/bootstrap/2.0.2/css/bootstrap.css" rel="stylesheet" />
-    <link href="/vendor/recline/vendor/bootstrap/2.0.2/css/bootstrap-responsive.css" rel="stylesheet" />
-    <link href="/vendor/recline/css/graph.css" rel="stylesheet" />
-    <link href="/css/style.css" rel="stylesheet" />
+    <link href="{{page.root}}/vendor/recline/vendor/bootstrap/2.0.2/css/bootstrap.css" rel="stylesheet" />
+    <link href="{{page.root}}/vendor/recline/vendor/bootstrap/2.0.2/css/bootstrap-responsive.css" rel="stylesheet" />
+    <link href="{{page.root}}/vendor/recline/css/graph.css" rel="stylesheet" />
+    <link href="{{page.root}}/css/style.css" rel="stylesheet" />
   </head>
 
   <body>
@@ -44,10 +44,10 @@
       </a>
       <a class="brand" href="/">Open Government Data Dashboard</a> 
       <ul class="nav">
-        <li><a href="/">Home</a></li>
-        <li><a href="/census/index.html">Census</a>
+        <li><a href="{{page.root}}/">Home</a></li>
+        <li><a href="{{page.root}}/census/index.html">Census</a>
           <ul class="subnav">
-            <li><a href="/census/submit.html">Submit a Response</a></li>
+            <li><a href="{{page.root}}/census/submit.html">Submit a Response</a></li>
           </ul>
         </li>
 
@@ -57,15 +57,6 @@
       </ul>
     </div>
   </div>
-</div>
-<div id="pagesel">
-<ul>
-{% for p in site.pages %}
-    {% if p.index %}
-        <li><a href="{{p.url}}">{{p.title}}</a></li>
-    {% endif %}
-{% endfor %}
-</ul>
 </div>
 <div class="container page">
 {{content}}
