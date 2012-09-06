@@ -107,4 +107,34 @@ SPAN.brand {
     list-style: none;
     margin-left: 0px;
     }
-    
+
+ul.nav li span { /*--Drop down trigger styles--*/
+  width: 10px;
+  height: 8px;
+  display: inline-block;
+  float: right;
+  margin-top: 15px;
+  background: url(navpulldown.png) no-repeat center top;
+} 
+ul.nav > li > a {
+  display: inline-block;
+  }
+
+ul.nav li {
+  position: relative;
+  }
+
+ul.subnav {
+  display: none;
+  position: absolute;
+  background-color: #2C2C2C;
+  left: -20px;
+  top: 35px;
+  list-style: none;
+  padding: 5px;
+  border-radius: 0px 0px 5px 5px;
+  width: 150px;
+  }
+ul.subnav li a {
+  color: #999999;
+  }

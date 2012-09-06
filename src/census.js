@@ -28,7 +28,6 @@ var countryCodes = {
   "Italy": "IT",
   "Taiwan R.O.C.": "TW"
   };
-var ds;
 var censusDatasets = [
       'Election Results (national)',
       'Company Register',
