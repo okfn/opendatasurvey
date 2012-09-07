@@ -7,17 +7,36 @@ root: .
 <div class="page-header">
 <h1> Welcome to the open government dashboard </h1>
 </div>
+<script src="src/front.js"></script>
 
 <div class="dashboard">
+  <div class="summary front-summary">
+    <h3>Data Catalogs</h3>
     <dl>
-        <dt>Number of key datasets available</dt>
-        <dd id="numkds"><dd>
-        <dt>Number of key datasets openly available</dt>
-        <dd id="numkdso"></dd>
-        <dt>Number of countries in OGD census</dt>
-        <dd id="numcntrogdcens"></dd>
-        <dt>Number of datacatalogs on datacatalogs.org</dt>
-        <dd id="numdcs"></ds>
+    <dt>Total datastores in catalog</dt>
+    <dd id="tds">0</dd>
+    <dt>Total local datastores in catalog</dt>
+    <dd id="localds">0</dd>
+    <dt>Total regional datastores in catalog</dt>
+    <dd id="regionalds">0</dd>
+    <dt>Total national datastores in catalog</dt>
+    <dd id="nationalds">0</dd>
     </dl>
+    <a href="catalogs/index.html">more...</a>
+  </div>
+  <div class="summary front-summary">
+    <h3>Open Government Data Census</h3>
+        <dl>
+          <dt>Number of countries</dt>
+          <dd id="nc">0</dd>
+          <dt>Number of responses</dt>
+          <dd id="nr">0</dd>
+          <dt>Number of datasets</dt>
+          <dd id="nds">0</dd>
+          <dt>Number of open key datasets</dt>
+          <dd id="nok">0</dd>
+      </dl>
+      <a href="census/index.html">more...</a>
+  </div>
 </div>
 

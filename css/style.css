@@ -28,6 +28,32 @@ div.table {
   height: 1.5em;
   
   }
+.dashboard {
+  width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  }
+.dashboard .summary {
+  width: 300px;
+  float: left;
+  padding: 10px;
+  border: 1px solid #2c2c2c;
+  margin-left: 5px;
+  margin-right: 5px;
+  border-radius: 5px;
+  }
+.dashboard .summary dd, .dashboard .summary dt {
+  margin-bottom: 5px;
+  }
+.dashboard .summary dd {
+  float: right;
+  }
+.dashboard .summary dt {
+  width: 250px;
+  height: 1.5em;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  }
 
 table.table td, table.table th {
         vertical-align: top;
