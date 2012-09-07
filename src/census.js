@@ -89,9 +89,17 @@ jQuery(document).ready(function($) {
   });
 });
 
+function countup(element,to) {
+  var n=element.html();
+  n++;
+  element.html(n);
+  if (n<to) {
+    setTimeout(function() {countup(element,to)},10);
+    }
+  }
 function summaryTop(summary) {
-  $("#nc").html(summary.countries.length);
-  $("#nr").html(summary.total);
+  countup($("#nc"),summary.countries.length);
+  countup($("#nr"),summary.total)
   var nd=0;
   _.each(_.keys(summary.datasets), function (key) {
     var ds=summary.datasets[key]
@@ -121,8 +129,8 @@ function summaryTop(summary) {
 
         });
     });
-  $("#nds").html(nd);  
-  $("#nok").html(free);
+  countup($("#nds"),nd);
+  countup($("#nok"),free);
   }
 
 function getSummaryData(data) {
