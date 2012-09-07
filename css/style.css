@@ -17,7 +17,7 @@ div.table {
 .summary dd, .summary dt {
   display: inline-block;
   }
-.summary dd {
+.summary dd , .summary td.amount  {
   color: white;
   font-weight: bold;
   background: #2c2c2c;
@@ -28,6 +28,13 @@ div.table {
   height: 1.5em;
   
   }
+.summary td.key {
+  width: 250px;
+  }
+.summary td{
+  margin-bottom: 5px;
+  }
+
 .dashboard {
   width: 700px;
   margin-left: auto;
@@ -41,18 +48,6 @@ div.table {
   margin-left: 5px;
   margin-right: 5px;
   border-radius: 5px;
-  }
-.dashboard .summary dd, .dashboard .summary dt {
-  margin-bottom: 5px;
-  }
-.dashboard .summary dd {
-  float: right;
-  }
-.dashboard .summary dt {
-  width: 250px;
-  height: 1.5em;
-  padding-top: 2px;
-  padding-bottom: 2px;
   }
 
 table.table td, table.table th {
