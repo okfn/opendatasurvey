@@ -16,7 +16,6 @@
 <script src="{{page.root}}/vendor/recline/vendor/bootstrap/2.0.2/bootstrap.js"></script>
 
 <script src="{{page.root}}/vendor/recline/vendor/backbone/0.5.1/backbone.js"></script>
-<script src="{{page.root}}/vendor/recline/vendor/backbone/0.5.1/backbone.js"></script>
 <script src="{{page.root}}/vendor/recline/vendor/leaflet/0.3.1/leaflet.js"></script>
 <script type="text/javascript" src="{{page.root}}/vendor/recline/vendor/mustache/0.5.0-dev/mustache.js"></script>
 
@@ -53,9 +52,11 @@
       <a class="brand" href="/">Open Government Data Dashboard</a> 
       <ul class="nav">
         <li><a href="{{page.root}}/">Home</a></li>
-        <li><a href="{{page.root}}/census/index.html">Census</a>
-          <ul class="subnav">
-            <li><a href="{{page.root}}/census/submit.html">Submit a Response</a></li>
+        <li class="dropdown"><a class="dropdown-toggle"
+        data-toggle="dropdown" href="#">Census</a>
+          <ul class="dropdown-menu">
+            <li><a href="{{page.root}}/census/">Census Overview</a></li>
+            <li><a href="{{page.root}}/census/submit/">Submit a Response</a></li>
           </ul>
         </li>
         <li><a href="{{page.root}}/catalogs/index.html">Catalogs</a></li>
