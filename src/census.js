@@ -90,9 +90,39 @@ jQuery(document).ready(function($) {
 });
 
 function summaryTop(summary) {
-  console.log(summary)
   $("#nc").html(summary.countries.length);
-  $("#nds").html(summary.total);
+  $("#nr").html(summary.total);
+  var nd=0;
+  _.each(_.keys(summary.datasets), function (key) {
+    var ds=summary.datasets[key]
+    _.each(_.keys(ds), function(country) {
+      if (ds[country].count>0) {
+        nd++;
+        }
+        });
+    });
+  var free=0;
+  _.each(_.keys(summary.datasets), function (key) {
+    var ds=summary.datasets[key]
+    _.each(_.keys(ds), function(country) {
+      if (ds[country].count>0) {
+        var r=get_latest_response(ds[country].responses)
+        var score=0;
+        _.each(censusKeys.slice(3,9), function(key) {
+          if (r[gdocsMunge(key)]=='Yes') {
+            score++;
+            }
+
+            });
+        if (score==6) {
+          free++;
+          }
+          }
+
+        });
+    });
+  $("#nds").html(nd);  
+  $("#nok").html(free);
   }
 
 function getSummaryData(data) {
