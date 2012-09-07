@@ -90,11 +90,20 @@ jQuery(document).ready(function($) {
 });
 
 function countup(element,to) {
-  var n=element.html();
-  n++;
+  var n=0;
   element.html(n);
   if (n<to) {
-    setTimeout(function() {countup(element,to)},10);
+    n++;
+    element.html(n);
+    setTimeout(function() {_countup(element,to)},10);
+    }
+  }
+function _countup(element,to) {
+  var n=element.html();
+  if (n<to) {
+    n++;
+    element.html(n);
+    setTimeout(function() {_countup(element,to)},10);
     }
   }
 function summaryTop(summary) {
@@ -115,14 +124,7 @@ function summaryTop(summary) {
     _.each(_.keys(ds), function(country) {
       if (ds[country].count>0) {
         var r=get_latest_response(ds[country].responses)
-        var score=0;
-        _.each(censusKeys.slice(3,9), function(key) {
-          if (r[gdocsMunge(key)]=='Yes') {
-            score++;
-            }
-
-            });
-        if (score==6) {
+        if (scoreOpenness(r)==6) {
           free++;
           }
           }
@@ -133,6 +135,14 @@ function summaryTop(summary) {
   countup($("#nok"),free);
   }
 
+function scoreOpenness(response) {
+  var score=0;
+  _.each(censusKeys.slice(3,9), function(key) {
+    if (response[gdocsMunge(key)]=='Yes') {
+      score++;
+      }})
+  return score;    
+  }
 function getSummaryData(data) {
   var datasets = {};
   var countryNames = _.uniq(_.map(data, function(r) {
@@ -280,12 +290,54 @@ function summaryMap(dataset) {
         });
 
         map.onLayerEvent('click', function(d) {
-          cellSummary(byIso[d.iso2]);
+          countrySummary(byIso[d.iso2]);
         });
   });
   $("#map").css("margin-left",($(window).width()-700)/2+"px");
   $("#map").show();
 }
+
+function countrySummary(data) {
+  console.log(data);
+  $("#CountryInfo table").empty();
+  var ds=0;
+  _.each(data.datasets,function(d) {
+    if (d.count>0) {
+      ds++;
+      }
+    });
+  var free=0;
+  _.each(data.datasets,function(d) {
+    if (d.count>0) {
+      var tr=["<tr><td>"];
+      var resp=get_latest_response(d.responses);
+      if (scoreOpenness(resp)==6) {
+        free++;
+        d.isopen=true;
+        }
+      if (resp.locationofdataonline) {
+        tr.push("<a href='"+resp.locationofdataonline+"'>")
+        }
+      tr.push(resp.dataset)
+      if (resp.locationofdataonline) {
+        tr.push("</a>");
+        }
+      tr.push("</td><td>");
+      if (d.isopen) {
+        tr.push("<img src='http://assets.okfn.org/images/ok_buttons/od_80x15_blue.png' />")
+        }
+      tr.push("</td></tr>");
+      console.log(tr.join(""));
+      $("#CountryInfo table").append(tr.join(""));
+      console.log(resp.dataset);
+      };
+      });
+  $("#CountryInfo h3").html(data.name);    
+  $("#CountryInfo").modal({backgrop: false});    
+  $("#CountryInfo").modal('show');
+  countup($("#cnds"),ds);
+  countup($("#cokds"),free);
+  }
 
 function summaryMapSelect(data) {
   $('#map').show();

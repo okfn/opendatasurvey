@@ -107,7 +107,9 @@ table.table td, table.table th {
         font-size: 24px;
         margin-bottom: 5px;
       }
-
+.modal .notice {
+  margin-top: 5px;
+  }
 SPAN.brand {
     padding-left: 10px;
     }
@@ -132,7 +134,6 @@ ul.nav li span { /*--Drop down trigger styles--*/
   width: 10px;
   height: 8px;
   display: inline-block;
-  float: right;
   margin-top: 15px;
   background: url(navpulldown.png) no-repeat center top;
 } 
