@@ -27,7 +27,9 @@ var countryCodes = {
   "Germany": "DE", 
   "Italy": "IT",
   "Taiwan R.O.C.": "TW",
-  "Slovenia": "SI"
+  "Slovenia": "SI",
+  "South Africa": "ZA",
+  "Portugal":"PT"
   };
 var censusDatasets = [
       'Election Results (national)',
@@ -318,8 +320,8 @@ function countrySummary(data) {
   $("#CountryInfo h3").html(data.name);    
   $("#CountryInfo").modal({backgrop: false});    
   $("#CountryInfo").modal('show');
-  countup($("#cnds"),ds);
-  countup($("#cokds"),free);
+  $("#cnds").html(ds);
+  $("#cokds").html(free);
   }
 
 function summaryMapSelect(data) {
