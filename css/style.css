@@ -159,3 +159,18 @@ SPAN.brand {
   color: white;
   width: 100%;
   }
+
+A.control {
+  }
+
+A.control:hover {
+  background: #999999;
+  color: white;
+  }
+
+ul.tab-control {
+  list-style: none;
+  margin-left: 0px;
+  width: 250px;
+  }
+

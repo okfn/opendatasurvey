@@ -62,6 +62,8 @@ var censusKeys = [
   'Link for you (optional)'
   ];
 
+var summary;
+
 function gdocsMunge(str) {
   return str.replace(/[^a-zA-Z0-9_.]/g, '').toLowerCase();
 }
@@ -78,19 +80,25 @@ jQuery(document).ready(function($) {
     $('.navbar').hide();
     $('body').attr('style', 'padding-top: 0');
   }
+  createMapSelector();
   dataset.fetch().done(function() {
     dataset.query({size: dataset.recordCount}).done(function() {
       $('.loading').hide();
       var data = dataset.records.toJSON();
-      var summary = getSummaryData(data);
+      summary = getSummaryData(data);
       summaryTable(summary);
       summaryMap(summary);
       summaryTop(summary);
-      var summary = getByDataset(data);
     });
   });
 });
 
+function createMapSelector() {
+  var el=$("ul.tab-control");
+  _.each(censusDatasets,function(ds) {
+    el.append("<li><a href='#' class='control' onclick='showSelectedMap(this)'>"+ds+"</a></li>");
+    });
+  };
 function summaryTop(summary) {
   $("#nc").html(summary.countries.length);
   $("#nr").html(summary.total)
@@ -215,9 +223,7 @@ function get_latest_response(responses) {
   }
   
 function summaryMap(dataset) {
-  var byIso = {};
-  _.each(dataset.countries, function (c) {
-    return byIso[countryCodes[c]] = {name: c}})
+  var byIso = createByIso(dataset);
   var scores = {};
   _.each(_.keys(byIso), function(country) {
     var count = byIso[country] ? byIso[country].count : 0;
@@ -246,6 +252,105 @@ function summaryMap(dataset) {
     colors: chroma.brewer.Blues,
     limits: [-2,max]
     });
+  
+  showMap(byIso,"score",colscale,countrySummary);
+}; 
+
+function createByIso(dataset) {
+  var ret={};
+  _.each(dataset.countries, function (c) {
+    ret[countryCodes[c]]= {name: c};
+    });
+  return ret;  
+  }
+function showSelectedMap(obj) {
+  var dataset=obj.innerHTML;
+  byIso=createByIso(summary);
+  _.each(_.keys(byIso), function (c) {
+    byIso[c].count=0;
+    });
+  var ds=summary.datasets[dataset];  
+  _.each(_.keys(byIso), function(c) {
+    var cds=ds[byIso[c].name];
+    var r=get_latest_response(cds.responses);
+    if (r) {
+      byIso[c].count=scoreOpenness(r);
+      byIso[c].response=r;
+      }
+    });
+  
+  var colscale= new chroma.ColorScale({
+    colors: chroma.brewer.Blues,
+    limits: [-2,6]
+    });
+  showMap(byIso,"count",colscale,function(d) {
+    $("#CountryDatasetInfo div.modal-header h3").html(d.name);
+    console.log(d);
+    $("#CountryDatasetInfo div.modal-body table").empty();
+    if (d.response) {
+      _.each(censusKeys, function(key) {
+        tr=["<tr><td>"]
+        tr.push(key);
+        tr.push("</td><td>");
+        tr.push(d.response[gdocsMunge(key)]);
+        tr.push("</td></tr>");
+        $("#CountryDatasetInfo div.modal-body table").append(tr.join(""))
+        });
+      }
+    $("#CountryDatasetInfo").modal({backgrop: false});    
+    $("#CountryDatasetInfo").modal('show');
+    }
+    );
+  }
+function showOpenMap() {
+  byIso=createByIso(summary);
+  _.each(_.keys(byIso),function(c) {
+    byIso[c].count=0;
+    byIso[c].datasets=[];
+    });
+  _.each(_.keys(summary.datasets), function (ds) {
+    _.each(_.keys(summary.datasets[ds]), function (country) {
+        var cc=countryCodes[country];
+        var response=get_latest_response(summary.datasets[ds][country].responses);
+        if (response) {
+        if (scoreOpenness(response) ==6) {
+          byIso[cc].count++;
+          byIso[cc].datasets.push(summary.datasets[ds][country]);
+          }}
+      });
+
+  });
+  var colscale= new chroma.ColorScale({
+    colors: chroma.brewer.Blues,
+    limits: [-1,10]
+    });
+
+  showMap(byIso,"count",colscale,function(d) {
+    $("#CountryOpenInfo div.modal-header h3").html(d.name);
+    $("#CountryOpenInfo div.modal-body table").empty();
+    _.each(d.datasets,function(ds) {
+      var r=get_latest_response(ds.responses);
+      var tr=["<tr><td>"];
+      if (r.locationofdataonline) {
+        tr.push("<a href='",r.locationofdataonline,"'>")
+        }
+      tr.push(r.dataset);
+      if (r.locationofdataonline) {
+        tr.push("</a>");
+        }
+      tr.push("</td></tr>");
+      $("#CountryOpenInfo div.modal-body table").append(tr.join(""))
+      })
+    $("#CountryOpenInfo").modal({backgrop: false});    
+    $("#CountryOpenInfo").modal('show');
+    })  
+  
+  };
+function showMap(data,key,colscale,callback) {
+  var values={}
+  _.each(_.keys(data), function(d) {
+    values[d]=data[d][key]
+    })
   $('#map').empty();
   var map = $K.map('#map', 700);
   map.loadMap('../data/world.svg', function(map) {
@@ -254,7 +359,7 @@ function summaryMap(dataset) {
           className: 'bg',
           key: 'iso2',
           filter: function(d) {
-            return !byIso.hasOwnProperty(d.iso2);
+            return !data.hasOwnProperty(d.iso2);
           }
         });
         
@@ -262,12 +367,12 @@ function summaryMap(dataset) {
           id: 'regions',
           key: 'iso2',
           filter: function(d) {
-            return byIso.hasOwnProperty(d.iso2);
+            return data.hasOwnProperty(d.iso2);
           }
         });
 
         map.choropleth({
-          data: scores,
+          data: values,
           colors: function(d) {           
             if (d === null) return '#e3e0e0';
             return colscale.getColor(d);
@@ -275,10 +380,10 @@ function summaryMap(dataset) {
         });
 
         map.onLayerEvent('click', function(d) {
-          countrySummary(byIso[d.iso2]);
+          callback(data[d.iso2]);
         });
   });
-  $("#map").css("margin-left",($(window).width()-700)/2+"px");
+  $("#map").css("margin-left","300px");
   $("#map").show();
 }
 
