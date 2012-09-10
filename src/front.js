@@ -52,8 +52,8 @@ function init() {
   }
  
 function summaryTop(summary) {
-  countup($("#nc"),summary.countries.length);
-  countup($("#nr"),summary.total)
+  $("#nc").html(summary.countries.length);
+  $("#nr").html(summary.total);
   var nd=0;
   _.each(_.keys(summary.datasets), function (key) {
     var ds=summary.datasets[key]
@@ -76,8 +76,8 @@ function summaryTop(summary) {
 
         });
     });
-  countup($("#nds"),nd);
-  countup($("#nok"),free);
+  $("#nds").html(nd);
+  $("#nok").html(free);
   };
 
 function scoreOpenness(response) {
@@ -160,10 +160,10 @@ function get_latest_response(responses) {
   }
 
 function showDcSummary(summary) {
-  countup($("#tds"),summary.total);
-  countup($("#localds"),summary.local);
-  countup($("#regionalds"),summary.regional);
-  countup($("#nationalds"),summary.national);
+  $("#tds").html(summary.total);
+  $("#localds").html(summary.local);
+  $("#regionalds").html(summary.regional);
+  $("#nationalds").html(summary.national);
   }
 
 $(document).ready(init);  

@@ -42,10 +42,10 @@ function getSummary(data) {
 
 function showSummary(summary) {
   console.log(summary);
-  countup($("#tds"),summary.total);
-  countup($("#localds"),summary.local);
-  countup($("#regionalds"),summary.regional);
-  countup($("#nationalds"),summary.national);
+  $("#tds").html(summary.total);
+  $("#localds").html(summary.local);
+  $("#regionalds").html(summary.regional);
+  $("#nationalds").html(summary.national);
   }
 
 $(document).ready(init);  

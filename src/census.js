@@ -90,8 +90,8 @@ jQuery(document).ready(function($) {
 });
 
 function summaryTop(summary) {
-  countup($("#nc"),summary.countries.length);
-  countup($("#nr"),summary.total)
+  $("#nc").html(summary.countries.length);
+  $("#nr").html(summary.total)
   var nd=0;
   _.each(_.keys(summary.datasets), function (key) {
     var ds=summary.datasets[key]
@@ -114,8 +114,8 @@ function summaryTop(summary) {
 
         });
     });
-  countup($("#nds"),nd);
-  countup($("#nok"),free);
+  $("#nds").html(nd);
+  $("#nok").html(free);
   }
 
 function scoreOpenness(response) {
