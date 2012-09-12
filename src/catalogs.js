@@ -7,6 +7,12 @@ function init() {
     dataset.query({size: dataset.recordCount}).done(function () {
       $("div.loading").hide();
       var map=new recline.View.Map({model: dataset})
+       map.infobox=function(d) {
+        var html=["<div class='infobox'>"];
+        html.push(d.attributes.title);
+        html.push["</div>"];
+        return html.join("");
+        } 
       $("#map").append(map.el);
       map.render();
       var summary=getSummary(dataset);
@@ -41,7 +47,6 @@ function getSummary(data) {
 };
 
 function showSummary(summary) {
-  console.log(summary);
   $("#tds").html(summary.total);
   $("#localds").html(summary.local);
   $("#regionalds").html(summary.regional);
