@@ -8,9 +8,15 @@ function init() {
       $("div.loading").hide();
       var map=new recline.View.Map({model: dataset})
        map.infobox=function(d) {
-        var html=["<div class='infobox'>"];
+        var html=["<div class='infobox'><h3>"];
         html.push(d.attributes.title);
-        html.push["</div>"];
+        html.push("</h3>");
+        html.push("<a href='",d.attributes.url,"'>");
+        html.push(d.attributes.url,"</a>");
+        html.push("<div class='description'>");
+        html.push(d.attributes.notes);
+        html.push("</div>");
+        html.push("</div>");
         return html.join("");
         } 
       $("#map").append(map.el);
