@@ -15,6 +15,22 @@ function init() {
         html.push(d.attributes.url,"</a>");
         html.push("<div class='description'>");
         html.push(d.attributes.notes);
+        if (d.attributes.tags) {
+          html.push("<div class='tags'>tags: ")
+          _.each(d.attributes.tags,function(tag) {
+            html.push("<a href='#' onclick=filterBy('",tag,"')>"
+              ,tag,"</a> ");
+            });
+          html.push("</div>");  
+          }
+        if (d.attributes.groups) {
+          html.push("<div class='groups'>groups: ")
+          _.each(d.attributes.groups,function(tag) {
+            html.push("<a href='#' onclick=filterBy('",tag,"')>"
+              ,tag,"</a> ");
+            });
+          html.push("</div>");  
+          }
         html.push("</div>");
         html.push("</div>");
         return html.join("");
@@ -58,6 +74,10 @@ function showSummary(summary) {
   $("#regionalds").html(summary.regional);
   $("#nationalds").html(summary.national);
   }
+function filterBy(term) {
+$("#searchbox").val(term);
+filterResults($("#searchbox")[0]);
+}
 
 function filterResults(obj) {
   var el=$("#"+obj.id);
