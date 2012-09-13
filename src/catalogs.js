@@ -59,4 +59,9 @@ function showSummary(summary) {
   $("#nationalds").html(summary.national);
   }
 
+function filterResults(obj) {
+  var el=$("#"+obj.id);
+  var term=el.val();
+  dataset.query({q:term});
+  };
 $(document).ready(init);  

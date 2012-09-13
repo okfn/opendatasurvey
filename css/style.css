@@ -50,6 +50,10 @@ div.table {
   border-radius: 5px;
   }
 
+input.span2 { 
+  margin-bottom: 0px;
+  }
+
 table.table td, table.table th {
         vertical-align: top;
         text-align: center;
