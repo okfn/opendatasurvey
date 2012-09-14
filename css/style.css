@@ -54,6 +54,9 @@ div.table {
 td.bpvalue {
   text-shadow: 1px 1px #ffffff;
   }
+tr.active > td.bpvalue > div { 
+  background: #ff9900 !important;
+  }
 input.span2 { 
   margin-bottom: 0px;
   }

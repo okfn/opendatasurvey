@@ -1,6 +1,6 @@
 var data;
 
-
+var map;
 
 function rank(parameter) {
   var options={};
@@ -29,6 +29,25 @@ function rank(parameter) {
     limits: [0,options.log?Math.log(get_max(series)):get_max(series)]
     })
   barplots($("#ranks"),series,options);
+
+  function get_path_by_id(event) {
+    var country=event.currentTarget.id.replace("bp-","");
+    country=country.replace("-"," ");
+    var cc=countryCodes[country];
+    if (cc) {
+      path=map.layers.regions.pathsById[cc][0].svgPath.id;
+      return "path_"+path;
+      };
+    };
+  $("#ranks tr").bind("mouseover", function(e) {
+    $("#"+get_path_by_id(e)).trigger("mouseover");
+    $("#"+get_path_by_id(e)).css("fill","#FF9900");
+    })
+  $("#ranks tr").bind("mouseout", function(e) {
+    $("#"+get_path_by_id(e)).trigger("mouseout");
+    var col=$("#"+e.currentTarget.id+" td.bpvalue > div").css("background");
+    $("#"+get_path_by_id(e)).css("fill",col);
+    });
   showMap(byIso,"value",options.colorscale,function(d) { console.log(d) });
   }
 
@@ -39,7 +58,7 @@ function showMap(data,key,colscale,callback) {
     values[d]=data[d][key]
     })
   $('#map').empty();
-  var map = $K.map('#map', 700);
+  map = $K.map('#map', 700);
   map.loadMap('../data/world.svg', function(map) {
         map.addLayer({
           id: 'regions',
@@ -66,8 +85,11 @@ function showMap(data,key,colscale,callback) {
           }
         });
 
-        map.onLayerEvent('click', function(d) {
-          callback(data[d.iso2]);
+        map.onLayerEvent('mouseenter', function(d) {
+          $("#bp-"+idfy(data[d.iso2].name)).addClass("active");
+        });
+        map.onLayerEvent('mouseleave', function(d) {
+          $("#bp-"+idfy(data[d.iso2].name)).removeClass("active");
         });
   });
   $("#map").show();
