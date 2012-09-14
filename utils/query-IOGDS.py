@@ -25,10 +25,16 @@ catalogs="""
 
 service=sparql.Service(logd);
 
+special_cases=[
+  ('http://dbpedia.org/resource/German','http://dbpedia.org/resource/Germany'),
+  ('http://dbpedia.org/resource/United_Kindom','http://dbpedia.org/resource/United_Kingdom'),
+  ('http://dbpedia.org/resource/Non-governmental_organization','http://dbpedia.org/resource/Non-Government'),
+  ]
+
 class Country:
   def __init__(self,uri):
     self.uri=uri
-    self.name=uri.split("/")[-1]
+    self.name=uri.split("/")[-1].replace("_"," ")
     self.catalogs=0
     self.datasets=0
 
@@ -59,13 +65,18 @@ def update_country(countries,entry):
 
 r=service.query(datasets)
 countries=[create_country(i) for i in r.fetchall()]
-print countries
 r=service.query(catalogs)
 for i in r.fetchall():
   update_country(countries,i)
   
+for c in special_cases:
+  w=get_country(countries,c[0])
+  r=get_country(countries,c[1])
+  r.datasets+=w.datasets
+  r.catalogs+=w.catalogs
+  countries.remove(w)
 
-f=open("logd.json","w")
+f=open("../data/logd.json","w")
 json.dump([i.dict() for i in countries],f)
 f.close()
   

@@ -13,10 +13,16 @@ function barplots(el,series,options) {
     return r; 
     }
   
-  options = options || {width: el.width(), min: 0, max:get_max(series) };
+  options = options || {};
   options.width = options.width || el.width();
+  options.log = options.log || false;
   options.min = options.min || 0;
-  options.max = options.max || get_max(series);
+  if (options.log) {
+    options.max = options.max || Math.log(get_max(series));
+    }
+  else {  
+    options.max = options.max || get_max(series);
+    }
   options.colorscale = options.colorscale || new chroma.ColorScale ({colors:
     chroma.brewer.Blues,
     limits: [options.min,options.max]
@@ -25,13 +31,18 @@ function barplots(el,series,options) {
   options.labelwidth = options.labelwidth || options.width/2;
   var html=["<table><tbody>"];
   _.each(series, function(record) {
-    var width=(record.value-options.min)/(options.max-options.min)*100;
+    if (options.log) {
+      var width=Math.log(record.value)/options.max*100;
+      }
+    else {  
+      var width=(record.value-options.min)/(options.max-options.min)*100;
+      }
     width = width>=0? width:0;
 
     html.push("<tr><td width='"+options.labelwidth+
     "px' class='bplabel'>",record.label,"</td><td width='"+
     options.barwidth+"px' class='bpvalue'><div style='width: "+width+
-    "%; background: "+options.colorscale.getColor(record.value)+
+    "%; background: "+options.colorscale.getColor(options.log?Math.log(record.value):record.value)+
     "'>",record.value,"</div></td></tr>")
     });
   html.push("</tbody></table>");  

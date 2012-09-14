@@ -53,13 +53,13 @@ function init() {
     nd.sort(function(a,b) {return b.datasets-a.datasets});
     var series=[];
     _.each(nd.slice(0,5), function(r) {
-      series.push({label:r.name.replace("_"," "), value:r.datasets})
+      series.push({label:r.name, value:r.datasets})
     });
-    barplots($("#rank-datasets"),series)
+    barplots($("#rank-datasets"),series,{log:true})
     nd.sort(function(a,b) {return b.catalogs-a.catalogs});
     var series=[];
     _.each(nd.slice(0,5), function(r) {
-      series.push({label:r.name.replace("_"," "), value:r.catalogs})
+      series.push({label:r.name, value:r.catalogs})
     });
     barplots($("#rank-catalogs"),series)
 
