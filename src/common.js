@@ -51,5 +51,5 @@ function barplots(el,series,options) {
   }
 
 function idfy(str) {
-  return str.replace(" ","-");
+  return str.replace(/ /g,"-");
   }

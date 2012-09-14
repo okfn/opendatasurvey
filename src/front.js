@@ -55,7 +55,7 @@ function init() {
     _.each(nd.slice(0,5), function(r) {
       series.push({label:r.name, value:r.datasets})
     });
-    barplots($("#rank-datasets"),series,{log:true})
+    barplots($("#rank-datasets"),series,{log: true})
     nd.sort(function(a,b) {return b.catalogs-a.catalogs});
     var series=[];
     _.each(nd.slice(0,5), function(r) {

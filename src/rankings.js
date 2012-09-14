@@ -35,7 +35,7 @@ function rank(parameter) {
 
   function get_path_by_id(event) {
     var country=event.currentTarget.id.replace("bp-","");
-    country=country.replace("-"," ");
+    country=country.replace(/-/g," ");
     var cc=countryCodes[country];
     if (cc) {
       path=map.layers.regions.pathsById[cc][0].svgPath.id;
