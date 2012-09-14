@@ -47,7 +47,23 @@ function init() {
      summaryTop(summary);   
     });
   });
+  
+  $.getJSON("data/logd.json", function(data) {
+    var nd=data
+    nd.sort(function(a,b) {return b.datasets-a.datasets});
+    var series=[];
+    _.each(nd.slice(0,5), function(r) {
+      series.push({label:r.name.replace("_"," "), value:r.datasets})
+    });
+    barplots($("#rank-datasets"),series)
+    nd.sort(function(a,b) {return b.catalogs-a.catalogs});
+    var series=[];
+    _.each(nd.slice(0,5), function(r) {
+      series.push({label:r.name.replace("_"," "), value:r.catalogs})
+    });
+    barplots($("#rank-catalogs"),series)
 
+  });
   
   }
  

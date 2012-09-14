@@ -7,7 +7,8 @@ root: .
 <div class="page-header">
 <h1> Welcome to the open government dashboard </h1>
 </div>
-<script src="src/front.js"></script>
+<script src="{{page.root}}/src/front.js"></script>
+<script src="{{page.root}}/src/common.js"></script>
 
 <div class="dashboard">
   <div class="summary front-summary">
@@ -27,7 +28,7 @@ root: .
     <td class='amount'id="nationalds">0</td class='key'>
     </tr>
     </table>
-    <a href="catalogs/">more...</a>
+    <a href="catalogs/">explore this data!</a>
   </div>
   <div class="summary front-summary">
     <h3>Open Government Data Census</h3>
@@ -46,7 +47,17 @@ root: .
           <td class='amount'id="nok">0</td class='key'>
           </tr>
       </table>
-      <a href="census/">more...</a>
+      <a href="census/">explore this data!</a>
+  </div>
+  <div class="summary front-summary">
+    <h3>Most Datasets</h3>
+    <div id="rank-datasets"></div>
+    <a href="ranks/">explore this data!</a>
+  </div>
+  <div class="summary front-summary">
+    <h3>Most Datacatalogs</h3>
+    <div id="rank-catalogs"></div>
+    <a href="/ranks">explore this data!</a>
   </div>
 </div>
 

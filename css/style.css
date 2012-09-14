@@ -47,9 +47,13 @@ div.table {
   border: 1px solid #2c2c2c;
   margin-left: 5px;
   margin-right: 5px;
+  margin-bottom: 5px;
   border-radius: 5px;
   }
 
+td.bpvalue {
+  text-shadow: 1px 1px #ffffff;
+  }
 input.span2 { 
   margin-bottom: 0px;
   }
