@@ -6,7 +6,7 @@ logd="http://logd.tw.rpi.edu/sparql"
 datasets="""
   PREFIX dgtwc: <http://data-gov.tw.rpi.edu/2009/data-gov-twc.rdf#>
   PREFIX conversion: <http://purl.org/twc/vocab/conversion/>
-  SELECT ?country, count(?dataset) as ?datasets
+  SELECT ?country, count(distinct ?dataset) as ?datasets
   WHERE { 
        ?dataset a conversion:CatalogedDataset .
        ?dataset dgtwc:catalog_country ?country.
@@ -16,7 +16,7 @@ datasets="""
 catalogs="""
   PREFIX dgtwc: <http://data-gov.tw.rpi.edu/2009/data-gov-twc.rdf#>
   PREFIX conversion: <http://purl.org/twc/vocab/conversion/>
-  SELECT ?country, count(?catalog) as ?catalogs
+  SELECT ?country, count(distinct ?catalog) as ?catalogs
   WHERE { 
      ?catalog a conversion:DatasetCatalog .
      ?catalog dgtwc:catalog_country ?country.
