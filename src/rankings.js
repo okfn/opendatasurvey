@@ -3,10 +3,13 @@ var data;
 var map;
 
 function rank(parameter) {
+  $(".rankings .selector a").removeClass("active");
+  $("#select-"+parameter).addClass("active");
   var options={};
   if (parameter=="datasets") {
     options.log=true;
     }
+  options.log=true;  
   options.colorscale=new chroma.ColorScale ({
     })
   data.sort(function(a,b) { return b[parameter]-a[parameter]});
@@ -99,6 +102,12 @@ function showMap(data,key,colscale,callback) {
 $(document).ready(function (){
  $.getJSON("../data/logd.json", function(d) {
   data=d;
+  _.each(_.keys(data[0]), function(key) {
+    if ((key !="name") && (key != "uri")) {
+      $(".rankings .selector").append("<a href='#' onclick='rank(\""+
+        key+"\")' class='btn' id='select-"+key+"'>"+key+"</a> ");
+      }
+    })
   rank("datasets");
   });
 });

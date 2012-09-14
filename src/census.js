@@ -96,7 +96,10 @@ jQuery(document).ready(function($) {
 function createMapSelector() {
   var el=$("ul.tab-control");
   _.each(censusDatasets,function(ds) {
-    el.append("<li><a href='#' class='control' onclick='showSelectedMap(this)'>"+ds+"</a></li>");
+    index=ds.indexOf("(");
+    title=index>0?ds.substring(0,ds.indexOf("(")):ds;
+    el.append("<li><a class='btn' id='"+ds+
+    "' href='#' class='control' onclick='showSelectedMap(this)'>"+title+"</a></li>");
     });
   };
 function summaryTop(summary) {
@@ -223,6 +226,8 @@ function get_latest_response(responses) {
   }
   
 function summaryMap(dataset) {
+  $("ul.tab-control > li > a").removeClass("active");
+  $("#overallscore").addClass("active");
   var byIso = createByIso(dataset);
   var scores = {};
   _.each(_.keys(byIso), function(country) {
@@ -264,7 +269,9 @@ function createByIso(dataset) {
   return ret;  
   }
 function showSelectedMap(obj) {
-  var dataset=obj.innerHTML;
+  var dataset=obj.id;
+  $("ul.tab-control > li > a").removeClass("active");
+  obj.className="btn active";
   byIso=createByIso(summary);
   _.each(_.keys(byIso), function (c) {
     byIso[c].count=0;
@@ -303,6 +310,8 @@ function showSelectedMap(obj) {
     );
   }
 function showOpenMap() {
+  $("ul.tab-control > li > a").removeClass("active");
+  $("#opendatasets").addClass("active");
   byIso=createByIso(summary);
   _.each(_.keys(byIso),function(c) {
     byIso[c].count=0;
