@@ -5,14 +5,50 @@ body {
   padding-top: 40px;
 }
 
+.spacer {
+  clear: both;
+  }
+.navbar .nav > li > a {
+  padding-left: 2px;
+  padding-right: 2px;
+  color: white;
+  }
+.navbar-inner {
+  background: #999999;
+  background-image: url("stripes.png");
+  }
 .nav-logo img {
   margin-top: 4px;
   margin-right: 8px;
 }
-
+.navbar-fixed-top {
+  width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  }
+.navbar-fixed-top .container {
+  width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+  }
+.container {
+  width: 800px;
+  }
 div.table {
   display: none; 
+}
+
+div.section-left {
+  float: left;
   }
+.sections > div {
+  width: 380px;
+  padding: 10px;
+  }
+div.section-right {
+  float: right;
+  }
+
 
 .summary dd, .summary dt {
   display: inline-block;
@@ -36,21 +72,32 @@ div.table {
   }
 
 .dashboard {
-  width: 700px;
+  padding-top: 50px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  width: 760px;
+  color: white;
+  font-size: 25px;
   margin-left: auto;
   margin-right: auto;
+  background-image: url("stripes.png");
   }
-.dashboard .summary {
-  width: 300px;
-  float: left;
-  padding: 10px;
-  border: 1px solid #2c2c2c;
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-bottom: 5px;
-  border-radius: 5px;
+.dashboard .bignumber {
+  font-size: 75px;
+  font-weight: bold;
+  color: #FF9900;
   }
-
+.dashboard .small {
+  font-size: 12px;
+  }
+.dashboard .line {
+  margin-bottom: 50px;
+  width: 100%;
+  }
+.dashboard .line-right {
+  text-align: right;
+  }
 td.bpvalue {
   text-shadow: 1px 1px #ffffff;
   }
@@ -87,10 +134,6 @@ table.table td, table.table th {
         max-width: 250px;
       }
 
-      .page {
-        padding-top: 2em;
-
-      }
 
       .tab-content {
         width: auto;
@@ -165,6 +208,8 @@ SPAN.brand {
 .page {
   min-height: 580px;
   padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
   }
 .footer {
   background: #2C2C2C;

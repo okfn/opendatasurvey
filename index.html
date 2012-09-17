@@ -4,60 +4,33 @@ title: Start
 index: true
 root: .
 ---
-<div class="page-header">
-<h1> Welcome to the open government dashboard </h1>
-</div>
 <script src="{{page.root}}/src/front.js"></script>
 <script src="{{page.root}}/src/common.js"></script>
 
 <div class="dashboard">
-  <div class="summary front-summary">
-    <h3>Data Catalogs</h3>
-    <table>
-    <tr>
-    <td class='key'>Total datastores in catalog</td class='key'>
-    <td class='amount'id="tds">0</td class='key'>
-    </tr><tr>
-    <td class='key'>Total local datastores in catalog</td class='key'>
-    <td class='amount'id="localds">0</td class='key'>
-    </tr><tr>
-    <td class='key'>Total regional datastores in catalog</td class='key'>
-    <td class='amount'id="regionalds">0</td class='key'>
-    </tr><tr>
-    <td class='key'>Total national datastores in catalog</td class='key'>
-    <td class='amount'id="nationalds">0</td class='key'>
-    </tr>
-    </table>
-    <a class="btn btn-primary" href="catalogs/">explore this data!</a>
-  </div>
-  <div class="summary front-summary">
-    <h3>Open Government Data Census</h3>
-        <table>
-          <tr>
-          <td class='key'>Number of countries</td class='key'>
-          <td class='amount'id="nc">0</td class='key'>
-          </tr><tr>
-          <td class='key'>Number of responses</td class='key'>
-          <td class='amount'id="nr">0</td class='key'>
-          </tr><tr>
-          <td class='key'>Number of datasets</td class='key'>
-          <td class='amount'id="nds">0</td class='key'>
-          </tr><tr>
-          <td class='key'>Number of open key datasets</td class='key'>
-          <td class='amount'id="nok">0</td class='key'>
-          </tr>
-      </table>
-      <a class="btn btn-primary" href="census/">explore this data!</a>
-  </div>
-  <div class="summary front-summary">
-    <h3>Most Datasets</h3>
-    <div id="rank-datasets"></div>
-    <a class="btn btn-primary" href="rankings/">explore this data!</a>
-  </div>
-  <div class="summary front-summary">
-    <h3>Most Datacatalogs</h3>
-    <div id="rank-catalogs"></div>
-    <a class="btn btn-primary" href="rankings/">explore this data!</a>
-  </div>
+<div class="line">Worldwide there are <span class="bignumber" id="tds">0</span>
+datacatalogs.</div>
+<div class="line line-right">
+<span class="bignumber" id="nok">0</span><span
+class="bignumber" style="color: white;">/</span><span
+class="small">of</span><span
+class="bignumber" id="nds">0</span> key
+datasets in the census are open.</div>
+</div>
+
+<div class="sections">
+<div class="section-left">
+The open government dashboard collects information on the state of open
+government data throughout the world. It combines data from several sources
+and visualizes them in a central place.
+<h3>Explore the data!</h3>
+<ul>
+<li>
+<li>
+</ul>
+</div>
+<div class="section-right">
+<img src="css/map.png" />
+</div>
 </div>
 

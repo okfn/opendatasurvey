@@ -43,6 +43,7 @@
   </head>
 
   <body>
+<div class="wrapper">  
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
@@ -60,23 +61,25 @@
           </ul>
         </li>
         <li><a href="{{page.root}}/catalogs/">Catalogs</a></li>
-        <li><a href="{{page.root}}/rankings/">Rankings</a></li>
+        <!-- <li><a href="{{page.root}}/rankings/">Rankings</a></li> -->
 
       </ul>
       <ul class="nav pull-right">
-        <li><a class="github" href="https://github.com/okfn/ogd-dashboard">Code for this App</a></li>
+        <li><a href="#">About</a></li>
       </ul>
     </div>
   </div>
 </div>
 <div class="container page">
 {{content}}
-</div>
+<div class="spacer"></div>
 <footer class="footer">
 Open Government Data Dashboard is run by the <a href="http://okfn.org">Open
 Knowledge Foundation</a>. <br/>
 <a href="https://github.com/okfn/ogd-dashboard/">Source Code</a>
 </footer>
+</div>
+</div>
 {% include JB/analytics-providers/google %}
   </body>
 </html>
