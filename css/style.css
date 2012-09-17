@@ -1,39 +1,37 @@
 html, body {
-  background-color: #fff;
+  background-color: #eee;
 }
 body {
   padding-top: 40px;
 }
 
-.spacer {
-  clear: both;
-  }
-.navbar .nav > li > a {
-  padding-left: 2px;
-  padding-right: 2px;
-  color: white;
-  }
-.navbar-inner {
-  background: #999999;
-  background-image: url("stripes.png");
-  }
+.content {
+  background-color: #fff;
+  padding: 20px;
+  margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+          box-shadow: 0 1px 2px rgba(0,0,0,.15);
+}
+
+.page-header {
+  background-color: #f5f5f5;
+  padding: 20px 40px 10px;
+  margin: -20px -40px 20px;
+}
+
+footer {
+  background-color: #f5f5f5;
+  padding: 20px 20px 20px;
+  margin: 15px -20px -20px;
+  border-top: solid 1px #eee;
+}
+
 .nav-logo img {
   margin-top: 4px;
   margin-right: 8px;
 }
-.navbar-fixed-top {
-  width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-  }
-.navbar-fixed-top .container {
-  width: 750px;
-  margin-left: auto;
-  margin-right: auto;
-  }
-.container {
-  width: 800px;
-  }
+
 div.table {
   display: none; 
 }
