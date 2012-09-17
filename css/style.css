@@ -59,6 +59,7 @@ tr.active > td.bpvalue > div {
   }
 input.span2 { 
   margin-bottom: 0px;
+  margin-left: -5px;
   }
 
 table.table td, table.table th {
