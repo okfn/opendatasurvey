@@ -38,6 +38,10 @@ div.table {
   display: none; 
 }
 
+.sections ul {
+        margin-left: 0px;
+        list-style: none;
+        }
 div.section-left {
   float: left;
   }
