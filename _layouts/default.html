@@ -31,8 +31,7 @@
 <script src="{{page.root}}/vendor/recline/dist/recline.dataset.js"></script>
 
 
-    <link href="{{page.root}}/vendor/recline/vendor/bootstrap/2.0.2/css/bootstrap.css" rel="stylesheet" />
-    <link href="{{page.root}}/vendor/recline/vendor/bootstrap/2.0.2/css/bootstrap-responsive.css" rel="stylesheet" />
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
     <link href="{{page.root}}/vendor/recline/css/graph.css" rel="stylesheet" />
     <link href="{{page.root}}/vendor/recline/css/map.css" rel="stylesheet" />
     <link href="{{page.root}}/vendor/recline/vendor/leaflet/0.4.4/leaflet.css" rel="stylesheet" />
@@ -70,16 +69,30 @@
     </div>
   </div>
 </div>
-<div class="container page">
-{{content}}
-<div class="spacer"></div>
-<footer class="footer">
-Open Government Data Dashboard is run by the <a href="http://okfn.org">Open
-Knowledge Foundation</a>. <br/>
-<a href="https://github.com/okfn/ogd-dashboard/">Source Code</a>
-</footer>
-</div>
-</div>
+
+<div class="container">
+<div class="content">
+  <div class="page">
+    {{content}}
+  </div>
+
+  <footer>
+    <p>
+      Open Government Data Dashboard is run by the <a href="http://okfn.org">Open
+      Knowledge Foundation</a>. <br/>
+    </p>
+    <p>
+      <a href="https://github.com/okfn/ogd-dashboard/">Source Code</a>
+    </p>
+    <p>
+      <a href="http://opendefinition.org/ossd/" title="Open Online Software Service">
+        <img src="http://assets.okfn.org/images/ok_buttons/os_80x15_orange_grey.png" alt="" border="" />
+      </a>
+    </p>
+  </footer>
+  </div><!-- /content -->
+</div><!-- /container -->
+
 {% include JB/analytics-providers/google %}
-  </body>
+</body>
 </html>
