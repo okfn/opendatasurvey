@@ -392,7 +392,6 @@ function showMap(data,key,colscale,callback) {
           callback(data[d.iso2]);
         });
   });
-  $("#map").css("margin-left","300px");
   $("#map").show();
 }
 

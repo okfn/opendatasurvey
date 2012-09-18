@@ -135,11 +135,6 @@ table.table td, table.table th {
         max-width: 250px;
       }
 
-
-      .tab-content {
-        width: auto;
-        padding-top: 3em;
-      }
       #map path {
         stroke: #fff;
         stroke-width: 0.3px;
@@ -216,7 +211,8 @@ SPAN.brand {
   background: #2C2C2C;
   color: white;
   width: 100%;
-  }
+  clear: both;
+}
 
 A.control {
   }
@@ -226,7 +222,13 @@ A.control:hover {
   color: white;
   }
 
+
+.tab-content {
+  height: 500px;
+  margin-left: 315px;
+}
 ul.tab-control {
+  float: left;
   list-style: none;
   margin-left: 0px;
   width: 250px;
