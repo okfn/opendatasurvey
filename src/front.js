@@ -24,6 +24,12 @@ function gdocsMunge(str) {
 }
 
 
+function makeNumber(element,number) {
+  element.empty();
+  _.each(number.toString(), function(n){
+    element.append("<span>"+n+"</span>");
+    });
+  }
 
 function init() {
   $.getJSON(dcjson,function(data) {
@@ -48,28 +54,9 @@ function init() {
     });
   });
   
-  $.getJSON("data/logd.json", function(data) {
-    var nd=data
-    nd.sort(function(a,b) {return b.datasets-a.datasets});
-    var series=[];
-    _.each(nd.slice(0,5), function(r) {
-      series.push({label:r.name, value:r.datasets})
-    });
-    barplots($("#rank-datasets"),series,{log: true})
-    nd.sort(function(a,b) {return b.catalogs-a.catalogs});
-    var series=[];
-    _.each(nd.slice(0,5), function(r) {
-      series.push({label:r.name, value:r.catalogs})
-    });
-    barplots($("#rank-catalogs"),series)
-
-  });
-  
   }
  
 function summaryTop(summary) {
-  $("#nc").html(summary.countries.length);
-  $("#nr").html(summary.total);
   var nd=0;
   _.each(_.keys(summary.datasets), function (key) {
     var ds=summary.datasets[key]
@@ -92,8 +79,8 @@ function summaryTop(summary) {
 
         });
     });
-  $("#nds").html(nd);
-  $("#nok").html(free);
+  makeNumber($("#nds"),nd);
+  makeNumber($("#nok"),free);
   };
 
 function scoreOpenness(response) {
@@ -176,10 +163,7 @@ function get_latest_response(responses) {
   }
 
 function showDcSummary(summary) {
-  $("#tds").html(summary.total);
-  $("#localds").html(summary.local);
-  $("#regionalds").html(summary.regional);
-  $("#nationalds").html(summary.national);
+  makeNumber($("#tds"),summary.total);
   }
 
 $(document).ready(init);  
