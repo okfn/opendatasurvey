@@ -72,7 +72,17 @@ div.section-right {
 .summary td{
   margin-bottom: 5px;
   }
+.summary {
+  margin-right: 10px;
+  float:left }
 
+.input-prepend {
+  float: left;
+  margin-top: 12px;}
+
+#spacer {
+  clear: both;
+  }
 .dashboard {
   padding-top: 50px;
   padding-left: 20px;
