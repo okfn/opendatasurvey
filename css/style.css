@@ -24,13 +24,19 @@ body {
 	border:none;
 }
 .navbar .navbar-inner .brand {
-	padding: 0px 10px 0px 26px;
+	padding: 0px 20px 0px 26px;
 	background-image: url(logo-icon.png);
 	background-repeat: no-repeat;
 	background-position: left 18px;
 	margin:0px;
 	color:#2b2a2a;
 	text-shadow:none;
+}
+.navbar .nav > li > a {
+  color: #2b2a2a;
+  padding: 25px 15px;
+	text-shadow:none;
+	border-left: solid 1px #a7a9a4;
 }
 
 .page-header {
