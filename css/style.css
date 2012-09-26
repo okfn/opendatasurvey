@@ -26,6 +26,7 @@ body {
 	-webkit-box-shadow: 0px 0px 0px 0px ;
   box-shadow: 0px 0px 0px 0px ;
 	border:none;
+	filter:none;
 }
 .navbar .navbar-inner .brand {
 	padding: 0px 20px 0px 26px;
@@ -165,7 +166,6 @@ div.section-right {
 	line-height:36px;
 	letter-spacing:5px;
 	text-shadow: 0px 1px 0px #FFF;
-  filter: dropshadow(color=#FFF, offx=0, offy=1); 
 }
 .dashboard .bignumber {
   font-size: 147px;
