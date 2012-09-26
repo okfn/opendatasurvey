@@ -52,6 +52,16 @@ footer {
   padding: 20px 20px 20px;
   margin: 15px -20px -20px;
   border-top: solid 10px #caccc7;
+	font-size:12px;
+}
+footer a,
+footer a:hover {
+	color: #333333;
+	border-bottom: dotted 1px #333333;
+	text-decoration:none;
+}
+footer a:hover {
+	border-bottom:solid 1px #333333;
 }
 
 .nav-logo img {
@@ -204,7 +214,7 @@ div.section-right {
 }
 
 section.home-content {
-	padding:25px 0px;
+	padding-top:25px;
 }
 section.home-content .link.well {
 	height:146px;
