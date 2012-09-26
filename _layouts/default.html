@@ -31,7 +31,8 @@
 <script src="{{page.root}}/vendor/recline/dist/recline.dataset.js"></script>
 
 
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <!--<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{page.root}}/vendor/recline/css/graph.css" rel="stylesheet" />
     <link href="{{page.root}}/vendor/recline/css/map.css" rel="stylesheet" />
     <link href="{{page.root}}/vendor/recline/vendor/leaflet/0.4.4/leaflet.css" rel="stylesheet" />
@@ -60,15 +61,9 @@
         <!-- <li><a href="{{page.root}}/rankings/">Rankings</a></li> -->
 
       </ul>
-      <ul class="nav pull-right">
-        <li><a href="https://github.com/okfn/ogd-dashboard/issues" title="Report Issues">Report Issues</a></li>
-        <li><a href="http://opengovernmentdata.org/" title="Open Government Data Working Group">Working Group Home</a></li>
-        <li>
-          <a class="nav-logo pull-left" href="http://okfn.org/" title="An Open Knowledge Foundation Project">
-            <img src="http://assets.okfn.org/p/okfn/img/logo_28x30.png" alt="Open Knowledge Foundation logo" />
-          </a>
-        </li>
-      </ul>
+      <a class="nav-logo pull-right" href="http://okfn.org/" title="An Open Knowledge Foundation Project">
+        <img src="http://assets.okfn.org/images/logo/okfn-logo-landscape-black.png" alt="Open Knowledge Foundation logo" style="height:30px;" />
+      </a>
     </div>
   </div>
 </div>
@@ -78,9 +73,13 @@
   <div class="page">
     {{content}}
   </div>
-
-  <footer>
-    <p>
+  </div><!-- /content -->
+</div><!-- /container -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="span6">
+        <p>
       Open Government Data Dashboard is run by the <a href="http://opengovernmentdata.org">Open Government Data Working Group of the Open
       Knowledge Foundation</a>. <br/>
     </p>
@@ -92,10 +91,16 @@
         <img src="http://assets.okfn.org/images/ok_buttons/os_80x15_orange_grey.png" alt="" border="" />
       </a>
     </p>
-  </footer>
-  </div><!-- /content -->
-</div><!-- /container -->
-
+      </div>
+      <div class="span6">
+        <ul class="nav pull-right">
+          <li><a href="https://github.com/okfn/ogd-dashboard/issues" title="Report Issues">Report Issues</a></li>
+          <li><a href="http://opengovernmentdata.org/" title="Open Government Data Working Group">Working Group Home</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
 {% include JB/analytics-providers/google %}
 </body>
 </html>
