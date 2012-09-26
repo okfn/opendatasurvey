@@ -1,4 +1,4 @@
-var dcjson="data/datacatalogs.geocoded.json";
+var dcjson="https://api.scraperwiki.com/api/1.0/datastore/sqlite?format=jsondict&name=datacatalogsorg&query=select%20*%20from%20%60swdata%60%20";
 
 
 var censusKeys = [

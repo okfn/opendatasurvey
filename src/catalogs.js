@@ -1,8 +1,20 @@
-var dcjson="../data/datacatalogs.geocoded.json";
+var dcjson="https://api.scraperwiki.com/api/1.0/datastore/sqlite?format=jsondict&name=datacatalogsorg&query=select%20*%20from%20%60swdata%60%20";
+
 
 var dataset;
 function init() {
   $.getJSON(dcjson,function(data) {
+    for (i in data) {
+      data[i].location={lon:data[i].lon, lat:data[i].lat};
+      if (data[i].groups!=undefined) {
+        data[i].groups=data[i].groups.split(" ");
+        console.log(data[i].groups);
+
+      }
+      if (data[i].tags!=undefined) {
+        data[i].tags=data[i].tags.split(" ")
+        };
+      }
     dataset=new recline.Model.Dataset({records: data});
     dataset.query({size: dataset.recordCount}).done(function () {
       $("div.loading").hide();
