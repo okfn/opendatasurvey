@@ -3,39 +3,34 @@ layout: default
 title: Start
 index: true
 root: .
----
-<script src="{{page.root}}/src/front.js"></script>
+--- 
+<script src="{{page.root}}/src/front.js"></script> 
 <script src="{{page.root}}/src/common.js"></script>
-
 <div class="dashboard">
-<div class="line">Worldwide there are <span class="bignumber" id="tds">0</span>
-datacatalogs.</div>
-<div class="line line-right">
-<span class="bignumber" id="nok">0</span><span
-class="bignumber" >/</span><span
-class="small">of</span><span
-class="bignumber" id="nds">0</span> key
-datasets in the census are open.</div>
+  <div class="inner">
+    <div class="row">
+      <div class="span4">
+        <p>There are</p> <span class="bignumber" id="tds">0</span> <p>Datacatalogs<br>worldwide</p>
+      </div>
+      <div class="span8">
+        <p>&nbsp;</p>
+        <span class="bignumber" id="nok">0</span><span class="between-numbers">of</span><span class="bignumber" id="nds">0</span> <p>key datasets in the<br>census are open</p>
+      </div>
+    </div>
+  </div>
 </div>
-
 <div class="sections">
-<div class="section-left">
-The open government dashboard collects information on the state of open
-government data throughout the world. It combines data from several sources
-and visualizes them in a central place.<br/>
-
-The accuracy of the data presented in the open government dashboard
-strongly depends on the accuracy of the data entered in our data sources.
-If you miss some information please enter it in one or more of them.
-<h3>Explore the data!</h3>
-<ul>
-<li><a href="census/">Open Government Data Census</a></li>
-<li><a href="catalogs/">Map of datacatalogs</a></li>
-</ul>
+  <div class="section-left"> The open government dashboard collects information on the state of open
+    government data throughout the world. It combines data from several sources
+    and visualizes them in a central place.<br/>
+    The accuracy of the data presented in the open government dashboard
+    strongly depends on the accuracy of the data entered in our data sources.
+    If you miss some information please enter it in one or more of them.
+    <h3>Explore the data!</h3>
+    <ul>
+      <li><a href="census/">Open Government Data Census</a></li>
+      <li><a href="catalogs/">Map of datacatalogs</a></li>
+    </ul>
+  </div>
+  <div class="section-right"> <a href="catalogs/"> <img src="css/map.png" /></a> </div>
 </div>
-<div class="section-right">
-<a href="catalogs/">
-<img src="css/map.png" /></a>
-</div>
-</div>
-
