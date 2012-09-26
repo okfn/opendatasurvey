@@ -32,12 +32,14 @@ root: ..
           </tbody>
         </table>
       </div>
-      <div class="map">
-        <ul class="tab-control">
-          <li><a class="btn active" href="#" id="overallscore" class="control" onclick="summaryMap(summary)">Overall Score</a></li>
-          <li><a class="btn" href="#" class="control" id="opendatasets" onclick="showOpenMap()">Open Datasets</a></li>
-        </ul>
-        <div class="tab-content">
+      <div class="map row">
+        <div class="span3">
+          <ul class="tab-control">
+            <li><a class="btn active" href="#" id="overallscore" class="control" onclick="summaryMap(summary)">Overall Score</a></li>
+            <li><a class="btn" href="#" class="control" id="opendatasets" onclick="showOpenMap()">Open Datasets</a></li>
+          </ul>
+        </div>
+        <div class="tab-content span9">
           <div id='map' style='display: none;'></div>
         </div>
       </div>

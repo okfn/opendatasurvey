@@ -366,16 +366,14 @@ A.control:hover {
 
 .tab-content {
   height: 500px;
-  margin-left: 315px;
 }
 ul.tab-control {
   float: left;
   list-style: none;
   margin-left: 0px;
-  width: 250px;
   }
 ul.tab-control > li > a {
-  width: 100%
+	display:block;
   }
 .rankings > #map {
     margin-left: 0px;
