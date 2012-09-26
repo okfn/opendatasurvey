@@ -91,7 +91,17 @@ div.section-right {
 .summary td{
   margin-bottom: 5px;
   }
+.summary {
+  margin-right: 10px;
+  float:left }
 
+.input-prepend {
+  float: left;
+  margin-top: 12px;}
+
+#spacer {
+  clear: both;
+  }
 .dashboard {
   position: relative;
 }
@@ -188,7 +198,7 @@ tr.active > td.bpvalue > div {
   }
 input.span2 { 
   margin-bottom: 0px;
-  margin-left: -5px;
+  margin-left: 0px;
   }
 
 table.table td, table.table th {
