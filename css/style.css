@@ -12,6 +12,9 @@ body {
 	background-image: url(stripes.png);
 	background-repeat: repeat;
 	background-position: center top;
+	border-bottom-style:solid;
+	border-bottom-width:2px;
+	border-bottom-color:#2b2a2a;
 }
 .navbar .navbar-inner {
 	background-image: url(header-map.png);
@@ -41,11 +44,8 @@ body {
 }
 
 .page-header {
-  background-color: #f5f5f5;
-  padding: 20px 40px 10px;
-  margin: -20px -40px 20px;
+	margin-bottom:10px;
 }
-
 
 footer {
   background-color: #edeeec;
@@ -365,7 +365,8 @@ A.control:hover {
 
 
 .tab-content {
-  height: 500px;
+  height: 400px;
+	padding-top:20px;
 }
 ul.tab-control {
   float: left;
@@ -374,7 +375,8 @@ ul.tab-control {
   }
 ul.tab-control > li > a {
 	display:block;
-  }
+	margin-bottom:5px;
+}
 .rankings > #map {
     margin-left: 0px;
     }

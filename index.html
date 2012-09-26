@@ -4,6 +4,11 @@ title: Start
 index: true
 root: .
 --- 
+<style type="text/css">
+  .navbar {
+	  border-bottom-style:none;
+  }
+</style>
 <script src="{{page.root}}/src/front.js"></script> 
 <script src="{{page.root}}/src/common.js"></script>
 <div class="dashboard">
@@ -39,3 +44,14 @@ root: .
     </div>
   </div>
 </section>
+<script>
+	$(window).scroll(function(e){
+		$el = $('.navbar');
+		if ($(this).scrollTop() > 1 && $el.css('border-bottom-style') != 'solid'){
+		$('.navbar').css({'border-bottom-style': 'solid'});
+		}
+		if ($(this).scrollTop() < 1 && $el.css('border-bottom-style') == 'solid') {
+		$('.navbar').css({'border-bottom-style': 'none'});
+		}
+	});
+</script>
