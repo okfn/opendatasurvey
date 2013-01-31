@@ -1,8 +1,24 @@
-Open Government Data Dashboard
-==============================
+Open Data Census Dashboard
+==========================
 
-Get an overview of what is happening with release of open government data
-around the world (and initiatives related to it).
+Visualizations and data procesing for the [Open Data Census][].
+
+[Open Data Census]: http://census.okfn.org/
+
+This also includes various ancillary information providing an overview of what
+is happening with release of open government data around the world (and
+initiatives related to it).
+
+Materials
+---------
+
+* [Open Data Census folder in Google Docs](https://drive.google.com/a/okfn.org/#folders/0B6R8dXc6Ji4JTWE0TVhFejYza2c)
+* [Original User Stories][stories]
+* [Census Questions Spreadshet](https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc#gid=0)
+* DataHub Dataset: <http://datahub.io/dataset/open-data-census>
+
+[stories]: https://docs.google.com/document/d/1Ji2pifZYSggdgp0Pe8s_vFNrZIvrgwB1OhYz0AdkGsc/edit
+
 
 Plan
 ----
@@ -30,12 +46,13 @@ Front Page: Big numbers!
 
 /census/
 ........
+
 * Per country count of open important datasets
 * Per country count of total datasets
 * Per Dataset for Country
     * Per country counts with Y in the census
 
-pages:
+Pages:
 
 * Choropleth mapof the view above
     * Ability to switch between views
@@ -48,21 +65,10 @@ Data catalogs /catalogs/
 ........................
 
 * Searchable Map
-* timeline
+* Timeline
 
 Open Government Partnership /ogp/
 .................................
 
 Low priority
-
-
-
-
-
-
-Visualizations and data procesing for the [Open Data Census][].
-
-DataHub Dataset: <http://datahub.io/dataset/open-data-census>
-
-[Open Data Census]: http://opengovernmentdata.org/census/
 
