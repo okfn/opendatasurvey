@@ -40,6 +40,6 @@ The 10 datasets in the country Census are:
 6. Legislation (laws and statutes)
 7. National Statistical Office Data (economic and demographic information)
 8. National Postcode/ZIP database
-9 Public Transport Timetables
+9. Public Transport Timetables
 10. Environmental Data on major sources of pollutants (e.g. location, emissions)
 
