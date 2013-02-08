@@ -34,43 +34,43 @@ root: ../
   <tr>
     <td>Does the data exist?</td>
     <td><input type="radio" name="exists" value="Yes"></td>
-    <td><input type="radio" name="exists" value="No "></td>
+    <td><input type="radio" name="exists" value="No"></td>
     <td><input type="radio" name="exists" value="Unsure"></td>
   </tr>
   <tr>
     <td>Is it publicly available?</td>
     <td><input type="radio" name="public" value="Yes"></td>
-    <td><input type="radio" name="public" value="No "></td>
+    <td><input type="radio" name="public" value="No"></td>
     <td><input type="radio" name="public" value="Unsure"></td>
   </tr>
   <tr>
     <td>Is it in digital form?</td>
     <td><input type="radio" name="digital" value="Yes"></td>
-    <td><input type="radio" name="digital" value="No "></td>
+    <td><input type="radio" name="digital" value="No"></td>
     <td><input type="radio" name="digital" value="Unsure"></td>
   </tr>
   <tr>
     <td>Is it machine readable? (E.g. spreadsheet not PDF)</td>
     <td><input type="radio" name="machine-readable" value="Yes"></td>
-    <td><input type="radio" name="machine-readable" value="No "></td>
+    <td><input type="radio" name="machine-readable" value="No"></td>
     <td><input type="radio" name="machine-readable" value="Unsure"></td>
   </tr>
   <tr>
     <td>Available in bulk? (Can you get the whole dataset easily)</td>
     <td><input type="radio" name="bulk" value="Yes"></td>
-    <td><input type="radio" name="bulk" value="No "></td>
+    <td><input type="radio" name="bulk" value="No"></td>
     <td><input type="radio" name="bulk" value="Unsure"></td>
   </tr>
   <tr>
     <td>Is it openly licensed? (as per the <a href="http://OpenDefinition.org/">http://OpenDefinition.org/</a>)</td>
     <td><input type="radio" name="open-license" value="Yes"></td>
-    <td><input type="radio" name="open-license" value="No "></td>
+    <td><input type="radio" name="open-license" value="No"></td>
     <td><input type="radio" name="open-license" value="Unsure"></td>
   </tr>
   <tr>
     <td>Is it up to date?</td>
     <td><input type="radio" name="up-to-date" value="Yes"></td>
-    <td><input type="radio" name="up-to-date" value="No "></td>
+    <td><input type="radio" name="up-to-date" value="No"></td>
     <td><input type="radio" name="up-to-date" value="Unsure"></td>
   </tr>
 </tbody>
@@ -133,4 +133,23 @@ function gform(fk, val) {
     console.log('submitted ok');
   });
 }
+
+$('input[name="exists"]').change(function(){
+  var input = $(this);
+  if(input.val() !== "Yes") {
+    $.each([
+        "public",
+        "digital",
+        "machine-readable",
+        "bulk",
+        "open-license",
+        "up-to-date"
+      ],
+      function(i, name) {
+        $('input[name="' + name + '"][value="'+ input.val() +'"]')
+          .prop('checked', true);
+      }
+    );
+  }
+});
 </script>
