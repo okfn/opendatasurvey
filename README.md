@@ -19,6 +19,14 @@ Materials
 
 [stories]: https://docs.google.com/document/d/1Ji2pifZYSggdgp0Pe8s_vFNrZIvrgwB1OhYz0AdkGsc/edit
 
+For Developers
+--------------
+
+It's just HTML + JS but you'll need to initialize the submodules to get relevant dependencies:
+
+    git submodule init
+    git submodule update
+
 
 Plan
 ----
