@@ -4,22 +4,31 @@ index: true
 layout: default
 root: ..
 ---
-<script src="../src/catalogs.js"></script>
+
 <div class="page-header">
-<h1>Data Catalogs</h1>
+  <h1>Data Catalogs</h1>
 </div>
+
 <div class="summary">
-<dl>
-<dt>Total datastores in catalog</dt>
-<dd id="tds">0</dd>
-</dl>
+  <dl>
+    <dt>Total datastores in catalog</dt>
+    <dd id="tds">0</dd>
+  </dl>
 </div>
+
 <div class="input-prepend">
-<span class="add-on"><i class="icon-search"></i></span> 
-<input type="text" id="searchbox" onkeyup="filterResults(this)" class="span2"></input></div>
-<div id="spacer"></div>
-<div class="loading">Loading <img
-src="http://assets.okfn.org/images/icons/ajaxload-circle.gif" alt
-="Loading" /></div>
-<div id="map">
+  <span class="add-on"><i class="icon-search"></i></span>
+  <input type="text" id="searchbox" onkeyup="filterResults(this)" class="span2"/>
 </div>
+
+<div id="spacer"></div>
+
+<div class="loading">Loading <img
+  src="http://assets.okfn.org/images/icons/ajaxload-circle.gif" alt
+  ="Loading" />
+</div>
+
+<div id="map"></div>
+
+<script src="{{page.root}}/src/common.js"></script>
+<script src="{{page.root}}/src/catalogs.js"></script>

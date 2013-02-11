@@ -7,8 +7,8 @@ root: ..
 
       <div class="page-header">
         <h1>Open Government Data Census</h1>
-       </div> 
-        <div class="summary">
+      </div>
+      <div class="summary">
         <dl>
           <dt>Number of countries</dt>
           <dd id="nc">0</dd>
@@ -19,9 +19,8 @@ root: ..
           <dt>Number of open key datasets</dt>
           <dd id="nok">0</dd>
         </dl>
-        
-        </div>
-       <div id="spacer"></div>
+      </div>
+      <div id="spacer"></div>
       <div class="loading">Loading <img src="http://assets.okfn.org/images/icons/ajaxload-circle.gif" alt="Loading" /></div>
       <div class="table">
         <table class="response-summary table table-bordered">
@@ -35,8 +34,16 @@ root: ..
       <div class="map row">
         <div class="span3">
           <ul class="tab-control">
-            <li><a class="btn active" href="#" id="overallscore" class="control" onclick="summaryMap(summary)">Overall Score</a></li>
-            <li><a class="btn" href="#" class="control" id="opendatasets" onclick="showOpenMap()">Open Datasets</a></li>
+            <li>
+              <a class="btn active" href="#" id="overallscore" class="control">
+                Overall Score
+              </a>
+            </li>
+            <li>
+              <a class="btn" href="#" class="control" id="opendatasets">
+                Open Datasets
+              </a>
+            </li>
           </ul>
         </div>
         <div class="span9">
