@@ -10,14 +10,15 @@ root: ../
 </div>
 
 <form>
-  <label>City</label>
-  <input type="text" name="city" class="city" placeholder="Enter your city" autocomplete="off"/>
-
-  <label>Dataset</label>
-  <select name="dataset">
-    <option value="budget">City Budget</option>
-    <option value="hygiene">Restaurant Hygiene</option>
-  </select>
+  <label>City<br/>
+    <input type="text" name="city" class="city" placeholder="Enter your city" autocomplete="off"/>
+  </label>
+  <label>Dataset<br/>
+    <select name="dataset">
+      <option value="budget">City Budget</option>
+      <option value="hygiene">Restaurant Hygiene</option>
+    </select>
+  </label>
 
 <label>Data Availability <span class="ss-required-asterisk">*</span></label>
 
@@ -76,27 +77,32 @@ root: ../
 </tbody>
 </table>
 
-  <label>Location of Data Online</label>
-  <label>(Optional) e.g. URL, if available</label>
-  <input type="text" name="url" value="">
-  
-  <label>Date it became available</label>
-  <label>(Optional) yyyy-mm-dd format if possible</label>
-  <input type="text" name="date-available" value="">
+  <label>Location of Data Online<br/>
+    <input type="text" name="url" value="" placeholder="http://">
+    <span class="help-inline">(Optional) e.g. URL, if available</span>
+  </label>
 
-  <label>Details and comments</label>
-  <label>e.g. is the data partially available, are there plans to make it available in the future?</label>
-  <textarea name="details" style="width: 500px"></textarea>
+  <label>Date it became available<br/>
+    <input type="text" name="date-available" value="" placeholder="YYYY-MM-DD">
+    <span class="help-inline">(Optional) yyyy-mm-dd format if possible</span>
+  </label>
 
-  <label>Your name (optional)</label>
-  <label>So we can credit you. This will be public</label>
-  <input type="text" name="submitter" value="">
+  <label>Details and comments<br/>
+    <textarea name="details" class="span6"></textarea>
+    <span class="help-inline">e.g. is the data partially available, are there plans to make it available in the future?</span>
+  </label>
 
-  <label>Link for you (optional)</label>
-  <label>A link to your website, twitter etc. So we can credit you. This will be public</label>
-  <input type="text" name="submitter-url" value="">
+  <label>Your name (optional)<br/>
+    <input type="text" name="submitter" value="">
+    <span class="help-inline">So we can credit you. This will be public.</span>
+  </label>
 
-  <button type="submit">Submit</button>
+  <label>Link for you (optional)<br/>
+    <input type="text" name="submitter-url" value="" placeholder="http://">
+    <span class="help-inline">A link to your website, twitter etc. So we can credit you. This will be public.</span>
+  </label>
+
+  <button type="submit" class="btn">Submit</button>
 </form>
 
 <script type="text/javascript">
