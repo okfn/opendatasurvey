@@ -11,13 +11,16 @@ $(function(){
   }
 
   function filterBy(term) {
-    $("#searchbox").val(term);
-    filterResults($("#searchbox")[0]);
+    return function(e){
+      if(e) {
+        e.preventDefault();
+      }
+      $("#searchbox").val(term);
+      filterResults(term);
+    };
   }
 
-  function filterResults(obj) {
-    var el = $("#"+obj.id);
-    var term = el.val();
+  function filterResults(term) {
     dataset.query({q: term});
     $("#tds").html(dataset.recordCount);
   }
@@ -27,37 +30,41 @@ $(function(){
     url: OpenDataCensus.dataCatalogsUrl
   });
 
+  $('#searchbox').keyup(function(){
+    var term = $(this).val();
+    filterResults(term);
+  });
+
+  $(document).on('click', '.tags a.tag-filter', function(e){
+    e.preventDefault();
+    filterBy($(this).attr('href').substr(1))();
+  });
+
   dataset.fetch().done(function() {
     dataset.query({size: dataset.recordCount}).done(function () {
       $("div.loading").hide();
       var map = new recline.View.Map({model: dataset});
-      map.infobox=function(d) {
-        var html = ["<div class='infobox'><h3>"];
-        html.push(d.attributes.title);
-        html.push("</h3>");
-        html.push("<a href='", d.attributes.url, "'>");
-        html.push(d.attributes.url, "</a>");
-        html.push("<div class='description'>");
-        html.push(d.attributes.notes);
+      map.infobox = function(d) {
+        var html = $('<div>', {'class': 'infobox'})
+          .append('<h3>' + d.attributes.title + '</h3>')
+          .append('<a href="' + d.attributes.url + '">' + d.attributes.url + '</a>');
+
+        var desc = $('<div>', {'class': 'description'})
+          .append(d.attributes.notes);
+
         if (d.attributes.tags) {
-          html.push("<div class='tags'>tags: ");
-          _.each(d.attributes.tags,function(tag) {
-            html.push("<a href='#' onclick=filterBy('", tag, "')>",
-              tag, "</a> ");
-            });
-          html.push("</div>");
-        }
-        if (d.attributes.groups) {
-          html.push("<div class='groups'>groups: ");
-          _.each(d.attributes.groups,function(tag) {
-            html.push("<a href='#' onclick=filterBy('", tag, "')>",
-              tag,"</a> ");
+          var tags = $('<div>', {'class': 'tags'})
+            .append('tags: ');
+          _.each(d.attributes.tags.split(' '), function(tag) {
+            var tagElem = $('<a href="#' + tag + '" class="tag-filter">' +
+              tag + '</a>').click(filterBy(tag))
+              .append(' ');
+            tags.append(tagElem);
           });
-          html.push("</div>");
+          desc.append(tags);
         }
-        html.push("</div>");
-        html.push("</div>");
-        return html.join("");
+        html.append(desc);
+        return html.get(0);
       };
       $("#map").append(map.el);
       map.render();
