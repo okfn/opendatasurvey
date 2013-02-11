@@ -1,7 +1,5 @@
 $(function(){
 
-  var dataset;
-
   function getSummary(data) {
     var summary = {};
     summary.total = dataset.recordCount;
@@ -24,17 +22,12 @@ $(function(){
     $("#tds").html(dataset.recordCount);
   }
 
-  $.getJSON(OpenDataCensus.dataCatalogsUrl, function(data) {
-    for (var i in data) {
-      data[i].location={lon:data[i].lon, lat:data[i].lat};
-      if (!!data[i].groups) {
-        data[i].groups=data[i].groups.split(" ");
-      }
-      if (!!data[i].tags) {
-        data[i].tags = data[i].tags.split(" ");
-      }
-    }
-    dataset = new recline.Model.Dataset({records: data});
+  var dataset = new recline.Model.Dataset({
+    backend: 'gdocs',
+    url: OpenDataCensus.dataCatalogsUrl
+  });
+
+  dataset.fetch().done(function() {
     dataset.query({size: dataset.recordCount}).done(function () {
       $("div.loading").hide();
       var map = new recline.View.Map({model: dataset});
