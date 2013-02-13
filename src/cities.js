@@ -65,7 +65,6 @@ $(function(){
       if (!key) { return; }
       var optgroup = $('<optgroup>', {label: key});
       _.each(group, function(record){
-        console.log(record);
         optgroup.append('<option value="' + record.datasetquestion + '"> ' + record.datasetquestion + '</option>');
       });
       select.append(optgroup);
