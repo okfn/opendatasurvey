@@ -14,16 +14,17 @@ root: ../
     <input type="text" name="city" class="city" placeholder="Enter your city" autocomplete="off"/>
   </label>
   <label>Dataset<br/>
-    <select name="dataset">
-      <option value="budget">City Budget</option>
-      <option value="hygiene">Restaurant Hygiene</option>
+    <select name="dataset" id="dataset-select">
+
     </select>
   </label>
 
-<label>Data Availability <span class="ss-required-asterisk">*</span></label>
+<label>Data Availability</label>
 
 <label>Please answer regarding open data availability *right now*. If data will be released soon you can mention this in the details and comments section below.</label>
 
+<div class="container">
+<div class="span7">
 <table class="table table-striped">
 <thead>
   <tr>
@@ -31,44 +32,44 @@ root: ../
     <td><label>Yes</label></td> <td><label>No </label></td> <td><label>Unsure</label></td>
   </tr>
 </thead>
-<tbody>
+<tbody id="dataset-properties">
   <tr>
     <td>Does the data exist?</td>
     <td><input type="radio" name="exists" value="Yes"></td>
     <td><input type="radio" name="exists" value="No"></td>
     <td><input type="radio" name="exists" value="Unsure"></td>
   </tr>
-  <tr>
+  <tr class="hide">
     <td>Is it publicly available?</td>
     <td><input type="radio" name="public" value="Yes"></td>
     <td><input type="radio" name="public" value="No"></td>
     <td><input type="radio" name="public" value="Unsure"></td>
   </tr>
-  <tr>
+  <tr class="hide">
     <td>Is it in digital form?</td>
     <td><input type="radio" name="digital" value="Yes"></td>
     <td><input type="radio" name="digital" value="No"></td>
     <td><input type="radio" name="digital" value="Unsure"></td>
   </tr>
-  <tr>
+  <tr class="hide">
     <td>Is it machine readable? (E.g. spreadsheet not PDF)</td>
     <td><input type="radio" name="machine-readable" value="Yes"></td>
     <td><input type="radio" name="machine-readable" value="No"></td>
     <td><input type="radio" name="machine-readable" value="Unsure"></td>
   </tr>
-  <tr>
+  <tr class="hide">
     <td>Available in bulk? (Can you get the whole dataset easily)</td>
     <td><input type="radio" name="bulk" value="Yes"></td>
     <td><input type="radio" name="bulk" value="No"></td>
     <td><input type="radio" name="bulk" value="Unsure"></td>
   </tr>
-  <tr>
+  <tr class="hide">
     <td>Is it openly licensed? (as per the <a href="http://OpenDefinition.org/">http://OpenDefinition.org/</a>)</td>
     <td><input type="radio" name="open-license" value="Yes"></td>
     <td><input type="radio" name="open-license" value="No"></td>
     <td><input type="radio" name="open-license" value="Unsure"></td>
   </tr>
-  <tr>
+  <tr class="hide">
     <td>Is it up to date?</td>
     <td><input type="radio" name="up-to-date" value="Yes"></td>
     <td><input type="radio" name="up-to-date" value="No"></td>
@@ -76,18 +77,19 @@ root: ../
   </tr>
 </tbody>
 </table>
-
-  <label>Location of Data Online<br/>
+</div>
+</div>
+  <label>Location of Data online (optional)<br/>
     <input type="text" name="url" value="" placeholder="http://">
-    <span class="help-inline">(Optional) e.g. URL, if available</span>
+    <span class="help-inline">e.g. URL, if available</span>
   </label>
 
-  <label>Date it became available<br/>
+  <label>Date it became available (optional)<br/>
     <input type="text" name="date-available" value="" placeholder="YYYY-MM-DD">
-    <span class="help-inline">(Optional) yyyy-mm-dd format if possible</span>
+    <span class="help-inline">yyyy-mm-dd format if possible</span>
   </label>
 
-  <label>Details and comments<br/>
+  <label>Details and comments (optional)<br/>
     <textarea name="details" class="span6"></textarea>
     <span class="help-inline">e.g. is the data partially available, are there plans to make it available in the future?</span>
   </label>
@@ -102,60 +104,9 @@ root: ../
     <span class="help-inline">A link to your website, twitter etc. So we can credit you. This will be public.</span>
   </label>
 
-  <button type="submit" class="btn">Submit</button>
+  <button type="submit" class="btn btn-large btn-success">Submit</button>
 </form>
 
-<script type="text/javascript">
-$('.city').typeahead({
-source: function(query, process) {
-    var url = 'http://open.mapquestapi.com/search?format=json&q=' + query;
-    $.getJSON(url, function(data) {
-      var out = _.pluck(data, 'display_name');
-      process(out);
-    });
-  },
-  minLength: 2
-});
 
-$('form').submit(function(e) {
-  e.preventDefault();
-  var formKey = 'dEEycENNYXQtU1RIbzRSYVRxLXFOdHc6MQ';
-  var data = $(e.target).serializeArray();
-  console.log(data);
-  data = JSON.stringify(data);
-  gform(formKey, data);
-});
-
-
-function gform(fk, val) {
-  var gurl = "https://docs.google.com/spreadsheet/formResponse?formkey="+ fk +"&ifq";
-  var data = {
-    "entry.0.single": val,
-    "submit": "Submit",
-    "pageNumber":0,
-    "backupCache":undefined
-  };
-  $.post(gurl, data, function(d) {
-    console.log('submitted ok');
-  });
-}
-
-$('input[name="exists"]').change(function(){
-  var input = $(this);
-  if(input.val() !== "Yes") {
-    $.each([
-        "public",
-        "digital",
-        "machine-readable",
-        "bulk",
-        "open-license",
-        "up-to-date"
-      ],
-      function(i, name) {
-        $('input[name="' + name + '"][value="'+ input.val() +'"]')
-          .prop('checked', true);
-      }
-    );
-  }
-});
-</script>
+<script src="{{page.root}}/src/common.js"></script>
+<script src="{{page.root}}/src/cities.js"></script>
