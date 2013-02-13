@@ -15,11 +15,37 @@ $(function(){
     e.preventDefault();
     var formKey = 'dEEycENNYXQtU1RIbzRSYVRxLXFOdHc6MQ';
     var data = $(e.target).serializeArray();
-    console.log(data);
-    data = JSON.stringify(data);
-    gform(formKey, data);
+    var invalid = validateForm(data);
+    if (invalid.length === 0) {
+      data = JSON.stringify(data);
+      gform(formKey, data);
+    } else {
+      alert('Please fill out the following fields:\n' +
+        invalid.join('\n'));
+    }
   });
 
+  function validateForm(data) {
+    var d = {};
+    _.each(data, function(nameValue){
+      d[nameValue.name] = nameValue.value;
+    });
+    var invalid = [];
+    var required = {
+      'city': 'City',
+      'exists': 'Does the data exist?',
+      'pulbic': 'Is it publicly available?',
+      'digital': 'Is it in digital form?',
+      'machine-readable': 'Is it machine readable?',
+      'bulk': 'Available in bulk?',
+      'open-license': 'Is it openly licensed?',
+      'up-to-date': 'Is it up to date?'
+    };
+    _.each(required, function(value, key){
+      if(!d[key]) { invalid.push(value); }
+    });
+    return invalid;
+  }
 
   function gform(fk, val) {
     var gurl = "https://docs.google.com/spreadsheet/formResponse?formkey="+ fk +"&ifq";
