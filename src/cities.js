@@ -50,6 +50,8 @@ $(function(){
             .prop('checked', true);
         }
       );
+    } else {
+      $('#dataset-properties').find('.hide').hide().removeClass('hide').slideDown();
     }
   });
   recline.Backend.GDocs.fetch({
