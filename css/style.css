@@ -70,10 +70,6 @@ footer a:hover {
   margin-right: -4px;
 }
 
-div.table {
-  display: none; 
-}
-
 .sections ul {
         margin-left: 0px;
         list-style: none;
@@ -258,12 +254,50 @@ table.table td, table.table th {
         text-align: center;
       }
 
-      table.response-summary td,
-      table.response-summary td:hover {
+      table.response-summary thead tr th {
+        height: 104px;
+        padding: 8px;
+        padding-bottom: 0px;
+        text-align: center;
+        vertical-align: bottom;
+      }
+
+      table.response-summary thead tr th div {
+        text-align: left;
+        writing-mode: tb-rl;
+        -webkit-transform: rotate(-90deg);
+        -o-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+        vertical-align: middle;
+        padding: 8px 0;
+        height: 68px;
+        width: 64px;
+        /*line-height: */
+      }
+
+      table.response-summary td.unavailable {
+        background-color: #444;
+
+      }
+      table.response-summary td.unavailable > span {
+        color: white;
+      }
+
+      table.response-summary td.unknown {
+        background-color: gray;
+      }
+
+      table.response-summary td {
+        cursor: pointer;
       }
 
       table.response-summary td.count-0 {
         background-color: whiteSmoke;
+        cursor: auto;
+      }
+
+      table.response-summary td,
+      table.response-summary td:hover {
       }
 
       table.cell-summary {
@@ -364,7 +398,7 @@ A.control:hover {
   }
 
 
-.tab-content {
+.map-tab {
   height: 400px;
 	padding-top:20px;
 }

@@ -40,6 +40,7 @@ OpenDataCensus.censusKeys = [
 ];
 
 OpenDataCensus.makeDatasetTitle = function(name) {
+  name = name.replace('on major sources ', '');
   var index = name.indexOf(" (");
   return index > 0 ? name.substring(0, index) : name;
 };

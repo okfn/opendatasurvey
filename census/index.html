@@ -22,37 +22,57 @@ root: ..
       </div>
       <div id="spacer"></div>
       <div class="loading">Loading <img src="http://assets.okfn.org/images/icons/ajaxload-circle.gif" alt="Loading" /></div>
-      <div class="table">
-        <table class="response-summary table table-bordered">
-          <thead>
-            <tr><th></th></tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-      </div>
-      <div class="map row">
-        <div class="span3">
-          <ul class="tab-control">
-            <li>
-              <a class="btn active" href="#" id="overallscore" class="control">
-                Overall Score
-              </a>
-            </li>
-            <li>
-              <a class="btn" href="#" class="control" id="opendatasets">
-                Open Datasets
-              </a>
-            </li>
-          </ul>
+      <div class="tabbable"> <!-- Only required for left/right tabs -->
+        <div class="span3 pull-right">
+          <a class="btn" href="submit/">
+            <i class="icon-plus"></i>
+            Add data to the census!
+            </a>
         </div>
-        <div class="span9">
-          <div class="tab-content">
-            <div id='map' style='display: none;'></div>
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#table-overview" data-toggle="tab">Table</a></li>
+          <li><a href="#map-overview" data-toggle="tab">Map</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="table-overview">
+            <div class="table">
+              <table class="response-summary table table-bordered">
+                <thead>
+                  <tr><th></th></tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
           </div>
-          <p>If you know key datasets from you country: <a href="submit/">submit them to the census!</a></p>
+          <div class="tab-pane" id="map-overview">
+            <div class="map row">
+              <div class="span3">
+                <ul class="tab-control">
+                  <li>
+                    <a class="btn active" href="#" id="overallscore" class="control">
+                      Overall Score
+                    </a>
+                  </li>
+                  <li>
+                    <a class="btn" href="#" class="control" id="opendatasets">
+                      Open Datasets
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="span9">
+                <div class="map-tab tab-content">
+                  <div id='map' style='display: none;'></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+      <p>If you know key datasets from you country:
+        <a href="submit/">submit them to the census!</a>
+      </p>
     <div class="modal hide fade" id="CountryInfo">
       <div class="modal-header">
         <button class="close" data-dismiss="modal">&times;</button>
