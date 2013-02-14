@@ -8,42 +8,15 @@ $(function(){
     });
   }
 
-  function getDcSummary(data) {
-    var summary={};
-    summary.total=data.recordCount;
-    summary.active=0;
-    summary.local=0;
-    summary.regional=0;
-    summary.national=0;
-    _.each(data.records.toJSON(), function(r) {
-      if ($.inArray("level.local",r.tags)>=0) {
-        summary.local++;
-        }
-      if ($.inArray("level.regional",r.tags)>=0) {
-        summary.regional++;
-        }
-      if ($.inArray("level.national",r.tags)>=0) {
-        summary.national++;
-        }
-      if (r.state=="active") {
-        summary.active++;
-      }
-    });
-    return summary;
-  }
+  var catalogs = new recline.Model.Dataset({
+    backend: 'gdocs',
+    url: OpenDataCensus.dataCatalogsUrl
+  });
 
-  function showDcSummary(summary) {
-    makeNumber($("#tds"),summary.total);
-  }
+  catalogs.fetch().done(function() {
+    makeNumber($("#tds"), catalogs.recordCount);
+  });
 
-  $.getJSON(OpenDataCensus.dataCatalogsUrl, function(data) {
-    var dataset=new recline.Model.Dataset({records: data});
-    dataset.query({size: dataset.recordCount}).done(function () {
-      $("div.loading").hide();
-      var summary=getDcSummary(dataset);
-      showDcSummary(summary);
-      });
-    });
   var dataset = new recline.Model.Dataset({
       id: 'opendatacensus',
       url: OpenDataCensus.censusUrl,
