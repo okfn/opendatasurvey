@@ -25,11 +25,6 @@ $(function(){
     $("#tds").html(dataset.recordCount);
   }
 
-  var dataset = new recline.Model.Dataset({
-    backend: 'gdocs',
-    url: OpenDataCensus.dataCatalogsUrl
-  });
-
   $('#searchbox').keyup(function(){
     var term = $(this).val();
     filterResults(term);
@@ -38,6 +33,11 @@ $(function(){
   $(document).on('click', '.tags a.tag-filter', function(e){
     e.preventDefault();
     filterBy($(this).attr('href').substr(1))();
+  });
+
+  var dataset = new recline.Model.Dataset({
+    backend: 'gdocs',
+    url: OpenDataCensus.dataCatalogsUrl
   });
 
   dataset.fetch().done(function() {
