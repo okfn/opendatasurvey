@@ -93,7 +93,7 @@ $(function(){
       if (!key) { return; }
       var optgroup = $('<optgroup>', {label: key});
       _.each(group, function(record){
-        optgroup.append('<option value="' + record.datasetquestion + '"> ' + record.datasetquestion + '</option>');
+        optgroup.append('<option value="' + record.dataset+ '"> ' + record.dataset+ '</option>');
       });
       select.append(optgroup);
     });
