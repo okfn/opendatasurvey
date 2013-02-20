@@ -34,7 +34,7 @@ $(function(){
     var required = {
       'city': 'City',
       'exists': 'Does the data exist?',
-      'pulbic': 'Is it publicly available?',
+      'public': 'Is it publicly available?',
       'digital': 'Is it in digital form?',
       'machine-readable': 'Is it machine readable?',
       'bulk': 'Available in bulk?',
