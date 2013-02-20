@@ -17,6 +17,11 @@ $(document).ready(function($) {
     limits: [1, 7]
   });
 
+  var totalColorScale = new chroma.ColorScale({
+    colors: ['#f00', '#fa0', '#ff0', '#0f0'],
+    limits: [0, 210]
+  });
+
   var dataset = new recline.Model.Dataset({
       id: 'opendatacensus',
       url: OpenDataCensus.censusUrl,
@@ -365,7 +370,7 @@ $(document).ready(function($) {
     var countries = data.countries.sort();
     var cellCount = 0;
     _.each(countries, function(name) {
-      var totalScore = 0, openFactor = 1;
+      var totalScore = 0, totalFactoredScore = 0, openFactor = 1;
       var row = $('<tr />');
       row.data('area', name);
       row.append($('<th />').text(name).addClass('area-name'));
@@ -427,7 +432,8 @@ $(document).ready(function($) {
           } else if (summary[0] === '?') {
             $td.addClass('unknown');
           }
-          totalScore += ycount * openFactor;
+          totalFactoredScore += ycount * openFactor;
+          totalScore += ycount;
           $td.append('<a>' + ycount + '/' + total + '</a>');
           (function(cellid) {
             $td.click(function(e) {
@@ -445,8 +451,10 @@ $(document).ready(function($) {
         }
         cellCount += 1;
       });
-      row.append($('<td>').append($('<a>').text('' + totalScore + '/210')));
-      row.data('score', totalScore);
+      var totalTd = $('<td>').append($('<a>').text('' + totalScore + '/70'));
+      totalTd.css('background-color', totalColorScale.getColor(totalFactoredScore).hex());
+      row.append(totalTd);
+      row.data('score', totalFactoredScore);
       table.find('tbody').append(row);
     });
     $(table.find('thead tr th').get(0)).addClass('sorting')
