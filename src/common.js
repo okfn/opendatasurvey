@@ -21,6 +21,19 @@ OpenDataCensus.censusDatasets = [
   'Environmental Data on major sources of pollutants (e.g. location, emissions)'
 ];
 
+OpenDataCensus.censusDatasetTitles = {
+  'Election Results (national)': 'Election Results',
+  'Company Register': 'Company Register',
+  'National Map (Low resolution: 1:250,000 or better)': 'National Map',
+  'Government Budget (National, high level, not detailed)': 'Government Budget',
+  'Government Spending (National, transactional level data)': 'Government Spending',
+  'Legislation (laws and statutes) - National': 'Legislation',
+  'National Statistical Data (economic and demographic information)': 'National Statistics',
+  'National Postcode/ZIP database': 'Postcode/ZIP database',
+  'Public Transport Timetables': 'Public Transport',
+  'Environmental Data on major sources of pollutants (e.g. location, emissions)': 'Environmental pollutants'
+};
+
 OpenDataCensus.censusKeys = [
   'Timestamp',
   'Census Country',
@@ -40,9 +53,7 @@ OpenDataCensus.censusKeys = [
 ];
 
 OpenDataCensus.makeDatasetTitle = function(name) {
-  name = name.replace('on major sources ', '');
-  var index = name.indexOf(" (");
-  return index > 0 ? name.substring(0, index) : name;
+  return OpenDataCensus.censusDatasetTitles[name];
 };
 
 function gdocsMunge(str) {

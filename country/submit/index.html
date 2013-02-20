@@ -8,7 +8,20 @@ root: ../..
       <div class="page-header">
         <h1>Submit a Response to the Open Data Census</h1>
       </div>
-      <iframe src="https://docs.google.com/spreadsheet/embeddedform?formkey=dEVnbG5pUFlyUzBpVkFXbXJ2WWpGTUE6MA" width="760" height="1311" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+      <iframe id="submit" width="760" height="1311" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
     </div> <!-- /container -->
+    <script>
+    $(function(){
+      // Taken from
+      http://stackoverflow.com/a/8764051/114462
+      function getURLParameter(name) {
+        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+      }
+      var dataset = getURLParameter('dataset') || '';
+      var area = getURLParameter('area') || '';
+      var url = 'https://docs.google.com/spreadsheet/embeddedform?formkey=dEVnbG5pUFlyUzBpVkFXbXJ2WWpGTUE6MA&entry_0=' + encodeURIComponent(area) + '&entry_128=' + encodeURIComponent(dataset);
+      $('#submit').attr('src', url);
+    });
+    </script>
 
 
