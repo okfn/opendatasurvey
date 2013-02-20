@@ -261,6 +261,12 @@ table.table td, table.table th {
         text-align: center;
         vertical-align: bottom;
       }
+      table.response-summary thead tr th.sorting {
+        height: auto;
+        padding: 8px;
+        padding-bottom: auto;
+        text-align: left;
+      }
 
       table.response-summary thead tr th div {
         text-align: left;
@@ -317,7 +323,7 @@ table.table td, table.table th {
         margin-top: 6px;
       }
 
-      table.table th.country-name {
+      table.table th.area-name {
         text-align: left;
       }
 

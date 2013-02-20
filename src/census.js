@@ -361,12 +361,15 @@ $(document).ready(function($) {
     _.each(datasets, function(obj, key) {
       table.find('thead tr').append($('<th>').append('<div>' + OpenDataCensus.makeDatasetTitle(key) + '</div>'));
     });
+    table.find('thead tr').append($('<th>').append('<div><strong>Total Score</strong></div>'));
     var countries = data.countries.sort();
     var cellCount = 0;
     _.each(countries, function(name) {
+      var totalScore = 0, openFactor = 1;
       var row = $('<tr />');
-      row.append($('<th />').text(name).addClass('country-name'));
-      _.each(datasets, function(dataset) {
+      row.data('area', name);
+      row.append($('<th />').text(name).addClass('area-name'));
+      _.each(datasets, function(dataset, datasetName) {
         var count = dataset[name] ? dataset[name].count : 0;
         if (count) {
           // just get first response
@@ -406,14 +409,17 @@ $(document).ready(function($) {
             // Data is exists, is open, and publicly available
             // make it green, anything else is cherry on top
             $td.addClass('open-' + ycount);
+            openFactor = 3;
             $td.css('background-color', openColorScale.getColor(ycount).hex());
-          } else if (summary[0] === 'Y' && summary[4] === 'Y') {
-            // exists, is not open, but freely available
+          } else if (summary[0] === 'Y' && (summary[4] === 'Y' || summary[5] === 'Y')) {
+            // exists, and is either open or freely available
             // make it orange
+            openFactor = 2;
             $td.css('background-color', freeColorScale.getColor(ycount).hex());
             $td.addClass('free-' + ycount);
           } else if (summary[0] === 'Y') {
             // data is neither open nor free
+            openFactor = 1;
             $td.addClass('closed-' + ycount);
             $td.css('background-color', closedColorScale.getColor(ycount).hex());
           } else if (summary[0] === 'N') {
@@ -421,7 +427,8 @@ $(document).ready(function($) {
           } else if (summary[0] === '?') {
             $td.addClass('unknown');
           }
-          $td.append('<span>' + ycount + '/' + total + '</span>');
+          totalScore += ycount * openFactor;
+          $td.append('<a>' + ycount + '/' + total + '</a>');
           (function(cellid) {
             $td.click(function(e) {
               var mod = $('#cellid-' + cellid);
@@ -434,12 +441,40 @@ $(document).ready(function($) {
           }(cellCount));
           row.append($td);
         } else {
-          row.append($('<td />').text('?').addClass('count-' + count));
+          row.append($('<td class="no-data">').html('<a href="submit/?dataset=' + encodeURIComponent(datasetName) + '&area=' + encodeURIComponent(name) + '" data-toggle="tooltip" class="count-' + count + '" title="Click here to add to the census!">?</a>'));
         }
         cellCount += 1;
       });
+      row.append($('<td>').append($('<a>').text('' + totalScore + '/210')));
+      row.data('score', totalScore);
       table.find('tbody').append(row);
     });
+    $(table.find('thead tr th').get(0)).addClass('sorting')
+      .html('' +
+        '<label class="radio">' +
+          '<input type="radio" name="sorttable" class="sort-table" value="alpha" checked>' +
+          'Sort alphabetically' +
+        '</label>' +
+        '<label class="radio">' +
+          '<input type="radio" name="sorttable" class="sort-table" value="score">' +
+          'Sort by score' +
+      '</label>' +
+      '');
+    $('.sort-table').change(function(){
+      var sortFunc;
+      if ($('.sort-table:checked').val() === 'score') {
+        sortFunc = function(a, b) {
+          return parseInt($(b).data('score'), 10) - parseInt($(a).data('score'), 10);
+        };
+      } else {
+        sortFunc = function(a, b) {
+          return $(a).data('area').toUpperCase().localeCompare($(b).data('area').toUpperCase());
+        };
+      }
+      table.find('tbody tr').sort(sortFunc).appendTo(table);
+
+    });
+    $('a[data-toggle="tooltip"]').tooltip();
   }
 
   function cellSummaryForTable(country, dataset, cellid) {
