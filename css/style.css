@@ -255,11 +255,17 @@ table.table td, table.table th {
       }
 
       table.response-summary thead tr th {
-        height: 104px;
+        height: 114px;
         padding: 8px;
         padding-bottom: 0px;
         text-align: center;
         vertical-align: bottom;
+      }
+      table.response-summary thead tr th.sorting {
+        height: auto;
+        padding: 8px;
+        padding-bottom: auto;
+        text-align: left;
       }
 
       table.response-summary thead tr th div {
@@ -270,16 +276,29 @@ table.table td, table.table th {
         transform: rotate(-90deg);
         vertical-align: middle;
         padding: 8px 0;
-        height: 68px;
-        width: 64px;
+        height: 55px;
+        width: 50px;
         /*line-height: */
+      }
+
+      table.response-summary td {
+        padding: 0;
+      }
+      table.response-summary td a {
+        display: block;
+        padding: 8px;
+        color: #333;
+      }
+
+      table.response-summary .no-data a {
+        color: inherit;
       }
 
       table.response-summary td.unavailable {
         background-color: #444;
 
       }
-      table.response-summary td.unavailable > span {
+      table.response-summary td.unavailable > a {
         color: white;
       }
 
@@ -304,7 +323,7 @@ table.table td, table.table th {
         margin-top: 6px;
       }
 
-      table.table th.country-name {
+      table.table th.area-name {
         text-align: left;
       }
 
