@@ -15,7 +15,7 @@ Materials
 * [Open Data Census folder in Google Docs](https://drive.google.com/a/okfn.org/#folders/0B6R8dXc6Ji4JTWE0TVhFejYza2c)
 * [Original User Stories][stories]
 * [Census Questions Spreadshet](https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc#gid=0)
-* DataHub Dataset: <http://datahub.io/dataset/open-data-census>
+* DataHub Dataset: <http://datahub.io/dataset/opendatacensus>
 
 [stories]: https://docs.google.com/document/d/1Ji2pifZYSggdgp0Pe8s_vFNrZIvrgwB1OhYz0AdkGsc/edit
 

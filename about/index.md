@@ -26,7 +26,7 @@ The Census currently operates on two levels:
 
 Currently there are 10 datasets in the country Census and 15 in the City Census but the number and members are subject to revision and extension over time.
 
-<a name="country" id="country">&nbsp;</a>
+<a name="country" id="country"> </a>
 
 ### Country Census
 
@@ -42,4 +42,12 @@ The 10 datasets in the country Census are:
 8. National Postcode/ZIP database
 9. Public Transport Timetables
 10. Environmental Data on major sources of pollutants (e.g. location, emissions)
+
+<a name="data" id="data"> </a>
+
+## Data
+
+Underlying data for the country census is available in bulk as CSV: <http://datahub.io/dataset/opendatacensus>
+
+Underlying data for Data Catalogs: <http://datahub.io/dataset/data-catalogs>
 
