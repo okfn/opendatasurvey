@@ -80,17 +80,17 @@ OpenDataCensus.makeDatasetTitle = function(name) {
 
 OpenDataCensus.colorScale = {
   openColorScale: new chroma.ColorScale({
-    colors: ['#0a0', '#0f0'],
+    colors: ['#0a0', '#0a0'],
     limits: [3, 7]
   }),
 
   freeColorScale: new chroma.ColorScale({
-    colors: ['#fa0', '#ff0'],
+    colors: ['#fa0', '#fa0'],
     limits: [2, 7]
   }),
 
   closedColorScale: new chroma.ColorScale({
-    colors: ['#f00', '#fa0'],
+    colors: ['#f00', '#f00'],
     limits: [1, 7]
   }),
 
