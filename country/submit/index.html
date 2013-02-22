@@ -12,11 +12,6 @@ root: ../..
     </div> <!-- /container -->
     <script>
     $(function(){
-      // Taken from
-      http://stackoverflow.com/a/8764051/114462
-      function getURLParameter(name) {
-        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
-      }
       var dataset = getURLParameter('dataset') || '';
       var area = getURLParameter('area') || '';
       var url = 'https://docs.google.com/spreadsheet/embeddedform?formkey=dEVnbG5pUFlyUzBpVkFXbXJ2WWpGTUE6MA&entry_0=' + encodeURIComponent(area) + '&entry_128=' + encodeURIComponent(dataset);
