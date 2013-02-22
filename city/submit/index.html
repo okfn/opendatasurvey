@@ -1,0 +1,112 @@
+---
+layout: default
+title: Start
+index: true
+root: ../../
+--- 
+
+<div class="page-header">
+  <h1>City Census</h1>
+</div>
+
+<form>
+  <label>City<br/>
+    <input type="text" name="city" id="city" class="city" placeholder="Enter your city" autocomplete="off"/>
+  </label>
+  <label>Dataset<br/>
+    <select name="dataset" id="dataset-select">
+
+    </select>
+  </label>
+
+<label>Data Availability</label>
+
+<label>Please answer regarding open data availability *right now*. If data will be released soon you can mention this in the details and comments section below.</label>
+
+<div class="container">
+<div class="span7">
+<table class="table table-striped">
+<thead>
+  <tr>
+    <td></td>
+    <td><label>Yes</label></td> <td><label>No </label></td> <td><label>Unsure</label></td>
+  </tr>
+</thead>
+<tbody id="dataset-properties">
+  <tr>
+    <td>Does the data exist?</td>
+    <td><input type="radio" name="exists" value="Yes"></td>
+    <td><input type="radio" name="exists" value="No"></td>
+    <td><input type="radio" name="exists" value="Unsure"></td>
+  </tr>
+  <tr class="hide">
+    <td>Is it publicly available?</td>
+    <td><input type="radio" name="public" value="Yes"></td>
+    <td><input type="radio" name="public" value="No"></td>
+    <td><input type="radio" name="public" value="Unsure"></td>
+  </tr>
+  <tr class="hide">
+    <td>Is it in digital form?</td>
+    <td><input type="radio" name="digital" value="Yes"></td>
+    <td><input type="radio" name="digital" value="No"></td>
+    <td><input type="radio" name="digital" value="Unsure"></td>
+  </tr>
+  <tr class="hide">
+    <td>Is it machine readable? (E.g. spreadsheet not PDF)</td>
+    <td><input type="radio" name="machine-readable" value="Yes"></td>
+    <td><input type="radio" name="machine-readable" value="No"></td>
+    <td><input type="radio" name="machine-readable" value="Unsure"></td>
+  </tr>
+  <tr class="hide">
+    <td>Available in bulk? (Can you get the whole dataset easily)</td>
+    <td><input type="radio" name="bulk" value="Yes"></td>
+    <td><input type="radio" name="bulk" value="No"></td>
+    <td><input type="radio" name="bulk" value="Unsure"></td>
+  </tr>
+  <tr class="hide">
+    <td>Is it openly licensed? (as per the <a href="http://OpenDefinition.org/">http://OpenDefinition.org/</a>)</td>
+    <td><input type="radio" name="open-license" value="Yes"></td>
+    <td><input type="radio" name="open-license" value="No"></td>
+    <td><input type="radio" name="open-license" value="Unsure"></td>
+  </tr>
+  <tr class="hide">
+    <td>Is it up to date?</td>
+    <td><input type="radio" name="up-to-date" value="Yes"></td>
+    <td><input type="radio" name="up-to-date" value="No"></td>
+    <td><input type="radio" name="up-to-date" value="Unsure"></td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+  <label>Location of Data online (optional)<br/>
+    <input type="text" name="url" value="" placeholder="http://">
+    <span class="help-inline">e.g. URL, if available</span>
+  </label>
+
+  <label>Date it became available (optional)<br/>
+    <input type="text" name="date-available" value="" placeholder="YYYY-MM-DD">
+    <span class="help-inline">yyyy-mm-dd format if possible</span>
+  </label>
+
+  <label>Details and comments (optional)<br/>
+    <textarea name="details" class="span6"></textarea>
+    <span class="help-inline">e.g. is the data partially available, are there plans to make it available in the future?</span>
+  </label>
+
+  <label>Your name (optional)<br/>
+    <input type="text" name="submitter" value="">
+    <span class="help-inline">So we can credit you. This will be public.</span>
+  </label>
+
+  <label>Link for you (optional)<br/>
+    <input type="text" name="submitter-url" value="" placeholder="http://">
+    <span class="help-inline">A link to your website, twitter etc. So we can credit you. This will be public.</span>
+  </label>
+
+  <button type="submit" class="btn btn-large btn-success">Submit</button>
+</form>
+
+
+<script src="{{page.root}}/src/common.js"></script>
+<script src="{{page.root}}/src/city_submit.js"></script>

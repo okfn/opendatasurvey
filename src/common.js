@@ -60,6 +60,11 @@ function gdocsMunge(str) {
   return str.replace(/[^a-zA-Z0-9_.]/g, '').toLowerCase();
 }
 
+// Taken from http://stackoverflow.com/a/8764051/114462
+function getURLParameter(name) {
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[0,""])[1].replace(/\+/g, '%20'))||null;
+}
+
 
 function barplots(el,series,options) {
   // barplots the series. where series is [{label: "foo",value: 30},]
