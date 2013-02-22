@@ -92,10 +92,19 @@ $(function(){
     _.each(groups, function(group, key){
       if (!key) { return; }
       var optgroup = $('<optgroup>', {label: key});
+      var empty = true;
       _.each(group, function(record){
-        optgroup.append('<option value="' + record.dataset+ '"> ' + record.dataset+ '</option>');
+        if (!record.id) { return; }
+        optgroup.append('<option value="' + record.id + '"> ' + record.dataset+ '</option>');
+        empty = false;
       });
-      select.append(optgroup);
+      if (!empty) {
+        select.append(optgroup);
+      }
     });
+    var dataset = getURLParameter('dataset') || '';
+    var area = getURLParameter('area') || '';
+    $('#dataset-select').val(dataset);
+    $('#city').val(area);
   });
 });

@@ -2,29 +2,31 @@ $(document).ready(function($) {
 
   var summary;
 
-  var openColorScale = new chroma.ColorScale({
-    colors: ['#0a0', '#0f0'],
-    limits: [3, 7]
-  });
+  var cellSummaryForTable = function(response) {
+    var country = response.censuscountry;
+    var resp = $('<table>').addClass('cell-summary').addClass('table').addClass('table-bordered');
+    var title = OpenDataCensus.makeDatasetTitle(response.dataset);
+    _.each(OpenDataCensus.censusKeys.slice(1), function(key) {
+      var answer = response[gdocsMunge(key)];
+      var $tr = $('<tr />');
+      $tr.append($('<th />').text(key));
+      if(answer.indexOf('http://') === 0 || answer.indexOf('https://') === 0) {
+        $tr.append($('<td />').append(
+          $('<a>',{'href': answer}).text(answer)
+        ));
+      } else {
+        $tr.append($('<td />').text(answer));
+      }
+      resp.append($tr);
+    });
 
-  var freeColorScale = new chroma.ColorScale({
-    colors: ['#fa0', '#ff0'],
-    limits: [2, 7]
-  });
+    return ['<h3>' + title + ' in ' + country + '</h3>', resp.html()];
+  };
 
-  var closedColorScale = new chroma.ColorScale({
-    colors: ['#f00', '#fa0'],
-    limits: [1, 7]
-  });
-
-  var totalColorScale = new chroma.ColorScale({
-    colors: ['#f00', '#fa0', '#ff0', '#0f0'],
-    limits: [0, 210]
-  });
 
   var dataset = new recline.Model.Dataset({
       id: 'opendatacensus',
-      url: OpenDataCensus.censusUrl,
+      url: OpenDataCensus.countryCensusURL,
       backend: 'GDocs'
     }
   );
@@ -37,7 +39,7 @@ $(document).ready(function($) {
       $('.loading').hide();
       var data = dataset.records.toJSON();
       summary = getSummaryData(data);
-      summaryTable(summary);
+      OpenDataCensus.summaryTable($('.response-summary'), summary, cellSummaryForTable);
       summaryMap(summary);
       $('#overallscore').click(function(e){
         e.preventDefault();
@@ -48,7 +50,7 @@ $(document).ready(function($) {
         showOpenMap();
       });
       createMapSelector();
-      var top = summaryTop(summary);
+      var top = OpenDataCensus.summaryTop(summary);
       $("#nds").html(top.nd);
       $("#nok").html(top.free);
       $("#nc").html(top.nc);
@@ -358,159 +360,6 @@ $(document).ready(function($) {
     summaryEl.modal({backdrop: false});
     summaryEl.modal('show');
   }
-
-  function summaryTable(data) {
-    $('.total-responses').text(data.total);
-    var table = $('.response-summary');
-    var datasets = data.datasets;
-    _.each(datasets, function(obj, key) {
-      table.find('thead tr').append($('<th>').append('<div>' + OpenDataCensus.makeDatasetTitle(key) + '</div>'));
-    });
-    table.find('thead tr').append($('<th>').append('<div><strong>Total Score</strong></div>'));
-    var countries = data.countries.sort();
-    var cellCount = 0;
-    _.each(countries, function(name) {
-      var totalScore = 0, totalFactoredScore = 0, openFactor = 1;
-      var row = $('<tr />');
-      row.data('area', name);
-      row.append($('<th />').text(name).addClass('area-name'));
-      _.each(datasets, function(dataset, datasetName) {
-        var count = dataset[name] ? dataset[name].count : 0;
-        if (count) {
-          // just get first response
-          var summary = [];
-          var map = {
-            'Yes': 'Y',
-            'No': 'N',
-            'No ': 'N',
-            'Unsure': '?'
-          };
-
-          var isopen = true, ycount = 0, total = 0;
-          _.each(OpenDataCensus.censusKeys, function(key, idx) {
-            if (key.indexOf('Data Availability') === -1) { return; }
-            total += 1;
-            var response = dataset[name].responses[0];
-            var answer = response[gdocsMunge(key)];
-            if (answer !== 'Yes') {
-              isopen = false;
-            }
-            if (answer === 'Yes') {
-              ycount += 1;
-            }
-            summary.push(map[answer]);
-          });
-          var $td = $('<td />').addClass('count-' + count);
-
-          // 0  'Data Availability [Does the data exist?]',
-          // 1  'Data Availability [Is it in digital form?]',
-          // 2  'Data Availability [Is it machine readable? (E.g. spreadsheet not PDF)]',
-          // 3  'Data Availability [Available in bulk?  (Can you get the whole dataset easily)]',
-          // 4  'Data Availability [Is it publicly available, free of charge?]',
-          // 5  'Data Availability [Is it openly licensed? (as per the http://OpenDefinition.org/)]',
-          // 6  'Data Availability [Is it up to date?]',
-
-          if (summary[0] === 'Y' && summary[5] === 'Y' && summary[4] === 'Y') {
-            // Data is exists, is open, and publicly available
-            // make it green, anything else is cherry on top
-            $td.addClass('open-' + ycount);
-            openFactor = 3;
-            $td.css('background-color', openColorScale.getColor(ycount).hex());
-          } else if (summary[0] === 'Y' && (summary[4] === 'Y' || summary[5] === 'Y')) {
-            // exists, and is either open or freely available
-            // make it orange
-            openFactor = 2;
-            $td.css('background-color', freeColorScale.getColor(ycount).hex());
-            $td.addClass('free-' + ycount);
-          } else if (summary[0] === 'Y') {
-            // data is neither open nor free
-            openFactor = 1;
-            $td.addClass('closed-' + ycount);
-            $td.css('background-color', closedColorScale.getColor(ycount).hex());
-          } else if (summary[0] === 'N') {
-            $td.addClass('unavailable');
-          } else if (summary[0] === '?') {
-            $td.addClass('unknown');
-          }
-          totalFactoredScore += ycount * openFactor;
-          totalScore += ycount;
-          $td.append('<a>' + ycount + '/' + total + '</a>');
-          (function(cellid) {
-            $td.click(function(e) {
-              var mod = $('#cellid-' + cellid);
-              if (mod.length === 0) {
-                $('body').append(cellSummaryForTable(name, dataset, cellid));
-                mod = $('#cellid-' + cellid);
-              }
-              mod.modal('toggle');
-            });
-          }(cellCount));
-          row.append($td);
-        } else {
-          row.append($('<td class="no-data">').html('<a href="submit/?dataset=' + encodeURIComponent(datasetName) + '&area=' + encodeURIComponent(name) + '" data-toggle="tooltip" class="count-' + count + '" title="Click here to add to the census!">?</a>'));
-        }
-        cellCount += 1;
-      });
-      var totalTd = $('<td>').append($('<a>').text('' + totalScore + '/70'));
-      totalTd.css('background-color', totalColorScale.getColor(totalFactoredScore).hex());
-      row.append(totalTd);
-      row.data('score', totalFactoredScore);
-      table.find('tbody').append(row);
-    });
-    $(table.find('thead tr th').get(0)).addClass('sorting')
-      .html('' +
-        '<label class="radio">' +
-          '<input type="radio" name="sorttable" class="sort-table" value="alpha" checked>' +
-          'Sort alphabetically' +
-        '</label>' +
-        '<label class="radio">' +
-          '<input type="radio" name="sorttable" class="sort-table" value="score">' +
-          'Sort by score' +
-      '</label>' +
-      '');
-    $('.sort-table').change(function(){
-      var sortFunc;
-      if ($('.sort-table:checked').val() === 'score') {
-        sortFunc = function(a, b) {
-          return parseInt($(b).data('score'), 10) - parseInt($(a).data('score'), 10);
-        };
-      } else {
-        sortFunc = function(a, b) {
-          return $(a).data('area').toUpperCase().localeCompare($(b).data('area').toUpperCase());
-        };
-      }
-      table.find('tbody tr').sort(sortFunc).appendTo(table);
-
-    });
-    $('a[data-toggle="tooltip"]').tooltip();
-  }
-
-  function cellSummaryForTable(country, dataset, cellid) {
-    var resp = $('<table>').addClass('cell-summary').addClass('table').addClass('table-bordered');
-    var response = dataset[country].responses[0];
-    var title = OpenDataCensus.makeDatasetTitle(response.dataset);
-    _.each(OpenDataCensus.censusKeys.slice(1), function(key) {
-      var answer = response[gdocsMunge(key)];
-      var $tr = $('<tr />');
-      $tr.append($('<th />').text(key));
-      if(answer.indexOf('http://') === 0 || answer.indexOf('https://') === 0) {
-        $tr.append($('<td />').append(
-          $('<a>',{'href': answer}).text(answer)
-        ));
-      } else {
-        $tr.append($('<td />').text(answer));
-      }
-      resp.append($tr);
-    });
-    var modalBody = $('<div>', {'class': "modal-body"})
-      .append(resp);
-
-    var modalHeader = $('<div class="modal-header">')
-      .append('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>')
-      .append('<h3>' + title + ' in ' + country + '</h3>');
-    return $('<div>', {'id': 'cellid-' + cellid, 'class': 'modal hide'}).append(modalHeader).append(modalBody);
-  }
-
 
   function graphSummary() {
     var query = {
