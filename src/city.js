@@ -37,7 +37,7 @@ $(document).ready(function($) {
 
     var out, not;
 
-    out = $('<div>').append($('<a>', {href: response['submitter-url']}).text(response.submitter)).html();
+    out = $('<div>').append($('<a>', {href: response['submitter-url']}).text(response.submitter || 'Unknown')).html();
     out += ' submitted:';
     out += '<ul>';
     not = '';
@@ -59,6 +59,9 @@ $(document).ready(function($) {
       out += '<li>Data does not exist</li>';
     }
     out += '</ul>';
+    if (response.url) {
+      out += '<a href="' + response.url + '" target="_blank">Location Online</a>';
+    }
     return [
       summary.datasetDict[response.dataset].dataset +
       ' - ' + OpenDataCensus.getCityName(response.city),
