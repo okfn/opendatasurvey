@@ -135,7 +135,8 @@ OpenDataCensus.summaryTable = (function(){
           var summary = [];
 
           var isopen = true, ycount = 0, total = 0;
-          var response = dataset[name].responses[0];
+          var len = dataset[name].responses.length;
+          var response = dataset[name].responses[len - 1];
           _.each(OpenDataCensus.censusProperties, function(value, key) {
             total += 1;
             var answer = response[gdocsMunge(key)] || response[value];
