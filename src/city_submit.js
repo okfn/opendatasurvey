@@ -19,6 +19,7 @@ $(function(){
     if (invalid.length === 0) {
       data = JSON.stringify(data);
       gform(formKey, data, function() {
+        alert('Thank you!');
         window.location = '/city/';
       });
     } else {
