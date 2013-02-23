@@ -214,11 +214,11 @@ OpenDataCensus.summaryTable = (function(){
     $(table.find('thead tr th').get(0)).addClass('sorting')
       .html('Sort' +
         '<label class="radio">' +
-          '<input type="radio" name="sorttable" class="sort-table" value="alpha" checked>' +
+          '<input type="radio" name="sorttable" class="sort-table" value="alpha">' +
           'alphabetically' +
         '</label>' +
         '<label class="radio">' +
-          '<input type="radio" name="sorttable" class="sort-table" value="score">' +
+          '<input type="radio" name="sorttable" class="sort-table" value="score" checked>' +
           'by score' +
       '</label>' +
       '');
@@ -236,6 +236,7 @@ OpenDataCensus.summaryTable = (function(){
       table.find('tbody tr').sort(sortFunc).appendTo(table);
 
     });
+    $('.sort-table').change();
     $('a[data-toggle="tooltip"]').tooltip();
   };
 
