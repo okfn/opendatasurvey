@@ -121,7 +121,7 @@ $(document).ready(function($) {
     });
 
     var cityNames = _.uniq(_.map(entries, function(r) {
-      return r.city;
+      return OpenDataCensus.getCityName(r.city);
     }));
 
     function makeCityDict (dataset) {
@@ -141,7 +141,7 @@ $(document).ready(function($) {
     });
 
     _.each(entries, function(row) {
-      var c = row.city;
+      var c = OpenDataCensus.getCityName(row.city);
       var d = row.dataset;
       var count = datasets[d][c].count || 0;
       datasets[d][c].count = count + 1;
