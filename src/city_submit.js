@@ -56,7 +56,8 @@ $(function(){
       "backupCache":undefined
     };
     $.post(gurl, data, function(d) {
-      console.log('submitted ok');
+      alert('Thank you!');
+      document.location.reload();
     });
   }
 
