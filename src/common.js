@@ -128,7 +128,9 @@ OpenDataCensus.summaryTable = (function(){
       var row = $('<tr />');
       row.data('area', name);
       row.append($('<th />').text(name.split(',')[0]).addClass('area-name'));
+      var datasetCount = 0;
       _.each(datasets, function(dataset, datasetName) {
+        datasetCount += 1;
         var count = dataset[name] ? dataset[name].count : 0;
         if (count) {
           // just get first response
@@ -202,7 +204,8 @@ OpenDataCensus.summaryTable = (function(){
         }
         cellCount += 1;
       });
-      var totalTd = $('<td>').append($('<a>').text('' + totalScore + '/70'));
+      var totalPossibleScore = datasetCount * 7; // seven properties
+      var totalTd = $('<td>').append($('<a>').text('' + totalScore + '/' + totalPossibleScore));
       totalTd.css('background-color', OpenDataCensus.colorScale.totalColorScale.getColor(totalFactoredScore).hex());
       row.append(totalTd);
       row.data('score', totalFactoredScore);
