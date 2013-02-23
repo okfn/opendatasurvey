@@ -18,7 +18,9 @@ $(function(){
     var invalid = validateForm(data);
     if (invalid.length === 0) {
       data = JSON.stringify(data);
-      gform(formKey, data);
+      gform(formKey, data, function() {
+        window.location = '/city/';
+      });
     } else {
       alert('Please fill out the following fields:\n' +
         invalid.join('\n'));
@@ -47,7 +49,7 @@ $(function(){
     return invalid;
   }
 
-  function gform(fk, val) {
+  function gform(fk, val, cb) {
     var gurl = "https://docs.google.com/spreadsheet/formResponse?formkey="+ fk +"&ifq";
     var data = {
       "entry.0.single": val,
@@ -56,7 +58,7 @@ $(function(){
       "backupCache":undefined
     };
     $.post(gurl, data, function(d) {
-      console.log('submitted ok');
+      cb();
     });
   }
 
