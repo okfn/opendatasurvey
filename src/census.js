@@ -54,7 +54,7 @@ $(document).ready(function($) {
       $("#nds").html(top.nd);
       $("#nok").html(top.free);
       $("#nc").html(top.nc);
-      $("#nr").html(top.nr);
+      $("#nokpercent").html(top.nokpercent + '%');
     });
   });
 

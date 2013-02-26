@@ -368,11 +368,14 @@ OpenDataCensus.summaryTop = function(summary) {
 
         });
     });
+  var nokpercent = 0;
+  nokpercent = Math.round(100 * free / nd);
   return {
     nc: summary.countries.length,
     nr: summary.total,
     nd: nd,
-    free: free
+    free: free,
+    nokpercent: nokpercent
   };
 };
 
