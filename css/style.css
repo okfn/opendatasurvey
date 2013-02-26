@@ -89,6 +89,10 @@ div.section-right {
 .summary dd, .summary dt {
   display: inline-block;
   }
+.summary dd {
+  margin-left: 2px;
+  margin-right: 20px;
+}
 .summary dd , .summary td.amount  {
   color: white;
   font-weight: bold;
