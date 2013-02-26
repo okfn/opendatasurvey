@@ -2,7 +2,7 @@
 layout: default
 title: About the Open Data Census
 index: true
-root: ../../
+root: ../..
 --- 
 
 <div class="page-header">
@@ -43,11 +43,33 @@ The 10 datasets in the country Census are:
 9. Public Transport Timetables
 10. Environmental Data on major sources of pollutants (e.g. location, emissions)
 
+### City Census
+
+1. Transport timetables
+2. Annual Budget
+3. Expenditure (detailed)
+4. Election results
+5. Air quality
+6. Public transport stops
+7. School locations
+8. Crime statistics
+9. Health statistics
+10. Water Quality
+11. Procurement contracts
+12. Restaurant hygiene
+13. Road traffic accidents
+14. Building permits
+15. Government services fees
+
 <a name="data" id="data"> </a>
 
 ## Data
 
-Underlying data for the country census is available in bulk as CSV: <http://datahub.io/dataset/opendatacensus>
+All the data for the Census is available openly and in bulk:
 
-Underlying data for Data Catalogs: <http://datahub.io/dataset/data-catalogs>
+* Underlying data for the country census is available in bulk as CSV: <http://datahub.io/dataset/opendatacensus>
+* Underlying data for Data Catalogs: <http://datahub.io/dataset/data-catalogs>
+* Underlying listing of datasets (including proposals for datasets to be added):
+  * [Country Datasets](https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc#gid=0)
+  * [City Datasets](https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc#gid=0)
 
