@@ -397,3 +397,59 @@ function getLatestReponse(responses) {
   });
   return ret;
 }
+
+OpenDataCensus.popoverBody = function(response) {
+  // bulk: "Yes"
+  // city: "London, Greater London, England, United Kingdom, European Union"
+  // dataset: "budget"
+  // date-available: "2010"
+  // details: "Whatever"
+  // digital: "Yes"
+  // exists: "Yes"
+  // machine-readable: "Yes"
+  // open-license: "Yes"
+  // public: "Yes"
+  // submitter: "Rufus"
+  // submitter-url: "http://rgrp.okfnlabs.org/"
+  // up-to-date: "Unsure"
+  // url: ""
+  var makeNot = function(reply){
+    var not;
+    if (reply === 'Yes'){
+      not = '';
+    } else if (reply === 'No'){
+      not = 'not ';
+    } else {
+      not = 'unclear if it\'s ';
+    }
+    return '<b>' + not + '</b>';
+  };
+
+  var out = '', not;
+  out += '<ul>';
+  not = '';
+  if (response.exists === 'Yes'){
+    out += '<li>Data exists</li>';
+    not = makeNot(response['open-license']);
+    out += '<li>It\'s ' + not + 'openly licensed</li>';
+    not = makeNot(response['public']);
+    out += '<li>It\'s ' + not + 'publicy available</li>';
+    not = makeNot(response['machine-readable']);
+    out += '<li>It\'s ' + not + 'machine-readable</li>';
+    not = makeNot(response['digital']);
+    out += '<li>It\'s ' + not + 'digital</li>';
+    not = makeNot(response['up-to-date']);
+    out += '<li>It\'s ' + not + 'up-to-date</li>';
+    not = makeNot(response['bulk']);
+    out += '<li>It\'s ' + not + ' available in bulk</li>';
+  } else {
+    out += '<li>Data does not exist</li>';
+  }
+  out += '</ul>';
+  if (response.url) {
+    out += '<a href="' + response.url + '" target="_blank">Data Location Online</a>';
+  }
+  var submitter = $('<div class="submitter" />').text('Submitted by ').append($('<a>', {href: response['submitter-url']}).text(response.submitter || 'Unknown'));
+  out += $('<div>').append(submitter).html();
+  return out;
+};

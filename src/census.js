@@ -2,27 +2,42 @@ $(document).ready(function($) {
 
   var summary;
 
-  var cellSummaryForTable = function(response) {
-    var country = response.censuscountry;
-    var resp = $('<table>').addClass('cell-summary').addClass('table').addClass('table-bordered');
+  var popoverContent = function(resp) {
+    var response = normalizeResponse(resp);
     var title = OpenDataCensus.makeDatasetTitle(response.dataset);
-    _.each(OpenDataCensus.censusKeys.slice(1), function(key) {
-      var answer = response[gdocsMunge(key)];
-      var $tr = $('<tr />');
-      $tr.append($('<th />').text(key));
-      if(answer.indexOf('http://') === 0 || answer.indexOf('https://') === 0) {
-        $tr.append($('<td />').append(
-          $('<a>',{'href': answer}).text(answer)
-        ));
-      } else {
-        $tr.append($('<td />').text(answer));
-      }
-      resp.append($tr);
-    });
-
-    return ['<h3>' + title + ' in ' + country + '</h3>', resp.html()];
+    title = '<h3>' + title + ' in ' + response.country + '</h3>';
+    var out = OpenDataCensus.popoverBody(response);
+    return [title, out];
   };
 
+  var normalizeResponse = function(response) {
+    var map = {
+      censuscountry: 'country',
+      dataavailabilityavailableinbulkcanyougetthewholedataseteasily: 'bulk',
+      dataavailabilitydoesthedataexist: 'exists',
+      dataavailabilityisitindigitalform: 'digital',
+      'dataavailabilityisitmachinereadablee.g.spreadsheetnotpdf': 'machine-readable',
+      'dataavailabilityisitopenlylicensedasperthehttpopendefinition.org': 'open-license',
+      dataavailabilityisitpubliclyavailablefreeofcharge: 'public',
+      dataavailabilityisituptodate: 'up-to-date',
+      dataset: 'dataset',
+      dateitbecameavailable: 'date-available',
+      detailsandcomments: 'details',
+      linkforyouoptional: 'submitter-url',
+      locationofdataonline: 'url',
+      timestamp: 'timestamp',
+      yournameoptional: 'submitter'
+    };
+    var out = {};
+    for(key in response) {
+      if (key in map) {
+        out[map[key]] = response[key];
+      } else {
+        out[key] = response[key];
+      }
+    }
+    return out;
+  };
 
   var dataset = new recline.Model.Dataset({
       id: 'opendatacensus',
@@ -39,7 +54,7 @@ $(document).ready(function($) {
       $('.loading').hide();
       var data = dataset.records.toJSON();
       summary = getSummaryData(data);
-      OpenDataCensus.summaryTable($('.response-summary'), summary, cellSummaryForTable);
+      OpenDataCensus.summaryTable($('.response-summary'), summary, popoverContent);
       summaryMap(summary);
       $('#overallscore').click(function(e){
         e.preventDefault();
