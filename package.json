@@ -11,6 +11,7 @@
       "express": "3.x",
       "nunjucks": "0.1.8",
       "marked": "",
+      "csv": "",
       "request": ""
   }
   , "engines": {
