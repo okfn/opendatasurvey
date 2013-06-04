@@ -1,10 +1,10 @@
----
-title: catalogs
-index: true
-layout: default
-root: ..
----
+{% extends "base.html" %}
 
+{% block title %}
+City - Submit
+{% endblock %}
+
+{% block content %}
 <div class="page-header">
   <h1>Data Catalogs</h1>
 </div>
@@ -32,3 +32,4 @@ root: ..
 
 <script src="{{page.root}}/src/common.js"></script>
 <script src="{{page.root}}/src/catalogs.js"></script>
+{% endblock %}

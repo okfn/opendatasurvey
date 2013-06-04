@@ -1,10 +1,10 @@
----
-layout: default
-title: Start
-index: true
-root: .
----
+{% extends "base.html" %}
 
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
 <style type="text/css">
   .navbar {
 	  border-bottom-style:none;
@@ -58,3 +58,4 @@ root: .
 		}
 	});
 </script>
+{% endblock %}

@@ -1,10 +1,10 @@
----
-title: Census
-layout: default
-index: true
-root: ..
----
+{% extends "base.html" %}
 
+{% block title %}
+Countries
+{% endblock %}
+
+{% block content %}
       <div class="page-header">
         <h1>Open Government Data Census</h1>
       </div>
@@ -117,4 +117,4 @@ root: ..
 
     <script src="{{page.root}}/src/common.js"></script>
     <script src="{{page.root}}/src/census.js"></script>
-
+{% endblock %}

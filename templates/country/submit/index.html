@@ -1,10 +1,10 @@
----
-title: Census- submit
-index: false
-layout: default
-root: ../..
----
+{% extends "base.html" %}
 
+{% block title %}
+Country - Submit
+{% endblock %}
+
+{% block content %}
       <div class="page-header">
         <h1>Submit a Response to the Open Data Census</h1>
       </div>
@@ -22,3 +22,4 @@ root: ../..
 
 
 <script src="{{page.root}}/src/common.js"></script>
+{% endblock %}

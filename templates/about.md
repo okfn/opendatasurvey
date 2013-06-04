@@ -1,10 +1,3 @@
----
-layout: default
-title: About the Open Data Census
-index: true
-root: ../..
---- 
-
 <div class="page-header">
   <h1>About the Open Data Census</h1>
 </div>
