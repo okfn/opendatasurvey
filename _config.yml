@@ -1,9 +1,0 @@
-exclude : ['README.rst', 'process.py']
-safe: false
-auto: true
-
-JB :
-    analytics :
-        provider : google
-        google :
-            tracking_id : 'UA-8271754-48'
