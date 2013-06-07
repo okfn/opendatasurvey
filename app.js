@@ -46,6 +46,10 @@ app.get('/country/', function(req, res) {
   res.render('country/index.html', {});
 });
 
+app.get('/country/results.json', function(req, res) {
+  res.json(model.data.country);
+});
+
 app.get('/country/submit/', function(req, res) {
   res.render('country/submit/index.html', {});
 });
@@ -62,16 +66,11 @@ app.get('/catalogs/', function(req, res) {
   res.render('catalogs/index.html', {});
 });
 
-// var model = require('./model.js');
+var model = require('./models/country.js').OpenDataCensus;
 // var url = process.env.CATALOG_URL|| CATALOG_URL_DEFAULT;
 // var catalog = new model.Catalog();
-var url = '';
-var catalog = {};
-catalog.loadUrl = function(url, cb) {
-  cb();
-}
 
-catalog.loadUrl(url, function(err) {
+model.load(function(err) {
   if (err) {
     console.error('Failed to load dataset info');
   }

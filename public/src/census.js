@@ -2,75 +2,34 @@ $(document).ready(function($) {
 
   var summary;
 
-  var popoverContent = function(resp) {
-    var response = normalizeResponse(resp);
+  var popoverContent = function(response) {
     var title = OpenDataCensus.makeDatasetTitle(response.dataset);
     title = '<h3>' + title + ' in ' + response.country + '</h3>';
     var out = OpenDataCensus.popoverBody(response);
     return [title, out];
   };
 
-  var normalizeResponse = function(response) {
-    var map = {
-      censuscountry: 'country',
-      dataavailabilityavailableinbulkcanyougetthewholedataseteasily: 'bulk',
-      dataavailabilitydoesthedataexist: 'exists',
-      dataavailabilityisitindigitalform: 'digital',
-      'dataavailabilityisitmachinereadablee.g.spreadsheetnotpdf': 'machine-readable',
-      'dataavailabilityisitopenlylicensedasperthehttpopendefinition.org': 'open-license',
-      dataavailabilityisitpubliclyavailablefreeofcharge: 'public',
-      dataavailabilityisituptodate: 'up-to-date',
-      dataset: 'dataset',
-      dateitbecameavailable: 'date-available',
-      detailsandcomments: 'details',
-      linkforyouoptional: 'submitter-url',
-      locationofdataonline: 'url',
-      timestamp: 'timestamp',
-      yournameoptional: 'submitter'
-    };
-    var out = {};
-    for(key in response) {
-      if (key in map) {
-        out[map[key]] = response[key];
-      } else {
-        out[key] = response[key];
-      }
-    }
-    return out;
-  };
-
-  var dataset = new recline.Model.Dataset({
-      id: 'opendatacensus',
-      url: OpenDataCensus.countryCensusURL,
-      backend: 'GDocs'
-    }
-  );
   if (window.location.search.indexOf('embed=1')!=-1) {
     $('.navbar').hide();
     $('body').attr('style', 'padding-top: 0');
   }
-  dataset.fetch().done(function() {
-    dataset.query({size: dataset.recordCount}).done(function() {
-      $('.loading').hide();
-      var data = dataset.records.toJSON();
-      summary = getSummaryData(data);
-      OpenDataCensus.summaryTable($('.response-summary'), summary, popoverContent);
-      summaryMap(summary);
-      $('#overallscore').click(function(e){
-        e.preventDefault();
-        summaryMap(summary);
-      });
-      $('#opendatasets').click(function(e){
-        e.preventDefault();
-        showOpenMap();
-      });
-      createMapSelector();
-      var top = OpenDataCensus.summaryTop(summary);
-      $("#nds").html(top.nd);
-      $("#nok").html(top.free);
-      $("#nc").html(top.nc);
-      $("#nokpercent").html(top.nokpercent + '%');
+  $.getJSON('/country/results.json', function(data) {
+    $('.loading').hide();
+    OpenDataCensus.summaryTable($('.response-summary'), data, popoverContent);
+    summaryMap(data);
+    $('#overallscore').click(function(e){
+      e.preventDefault();
+      summaryMap(data);
     });
+    $('#opendatasets').click(function(e){
+      e.preventDefault();
+      showOpenMap();
+    });
+    createMapSelector();
+    $("#nds").html(data.summary.entries);
+    $("#nok").html(data.summary.open);
+    $("#nc").html(data.summary.countries);
+    $("#nokpercent").html(data.summary.open_percent + '%');
   });
 
   function createMapSelector() {
@@ -91,37 +50,6 @@ $(document).ready(function($) {
     });
   }
 
-  function getByDataset(data) {
-    var countries = {};
-    function makeDatasetDict () {
-      var _out = {};
-      _.each(OpenDataCensus.censusDatasets, function(ds) {
-        _out[ds] = {
-          count: 0,
-          responses: [],
-          isopen: false
-        };
-      });
-      return _out;
-    }
-    _.each(data, function(row) {
-        countries[row['censuscountry']] = makeDatasetDict();
-    });
-    _.each(data, function(row) {
-      var c = row['censuscountry'];
-      var d = row['dataset'];
-      count = countries[c][d].count || 0;
-      countries[c][d]['count'] = count + 1;
-      countries[c][d].responses.push(row);
-    });
-
-    return {
-        'datasets': OpenDataCensus.censusDatasets,
-        'countries': countries,
-        'total': data.length
-    };
-  }
-
   function getAllDatasetByCountry(dataset, country) {
     var ret = [];
     _.each(_.keys(dataset.datasets), function (d) {
@@ -130,11 +58,10 @@ $(document).ready(function($) {
     return ret;
   }
 
-
-  function summaryMap(dataset) {
+  function summaryMap(countryInfo) {
     $("ul.tab-control > li > a").removeClass("active");
     $("#overallscore").addClass("active");
-    var byIso = createByIso(dataset);
+    var byIso = createByIso(countryInfo.countries);
     var scores = {};
     _.each(_.keys(byIso), function(country) {
       var count = byIso[country] ? byIso[country].count : 0;

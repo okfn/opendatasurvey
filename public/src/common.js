@@ -101,7 +101,6 @@ OpenDataCensus.colorScale = {
 };
 
 OpenDataCensus.summaryTable = (function(){
-
   var map = {
     'Yes': 'Y',
     'No': 'N',
@@ -110,8 +109,7 @@ OpenDataCensus.summaryTable = (function(){
   };
 
   var summaryTable = function(table, data, displayFunc) {
-    var datasets = data.datasets;
-    _.each(datasets, function(obj, key) {
+    _.each(data.bydataset, function(obj, key) {
       var title;
       if (data.datasetDict) {
         title = OpenDataCensus.uglySpaceHack(data.datasetDict[key].dataset);
@@ -121,6 +119,9 @@ OpenDataCensus.summaryTable = (function(){
       table.find('thead tr').append($('<th>').append('<div>' + title + '</div>'));
     });
     table.find('thead tr').append($('<th>').append('<div><strong>Total Score</strong></div>'));
+
+    // now do the body
+    var totalScorePerDataset = 6;
     var countries = data.countries.sort();
     var cellCount = 0;
     _.each(countries, function(name) {
@@ -129,62 +130,36 @@ OpenDataCensus.summaryTable = (function(){
       row.data('area', name);
       row.append($('<th />').text(name.split(',')[0]).addClass('area-name'));
       var datasetCount = 0;
-      _.each(datasets, function(dataset, datasetName) {
+      _.each(data.bydataset, function(dataset, datasetName) {
         datasetCount += 1;
-        var count = dataset[name] ? dataset[name].count : 0;
-        if (count) {
-          // just get first response
-          var summary = [];
+        if (dataset[name] != null) {
+          var response = dataset[name];
 
-          var isopen = true, ycount = 0, total = 0;
-          var len = dataset[name].responses.length;
-          var response = dataset[name].responses[len - 1];
-          _.each(OpenDataCensus.censusProperties, function(value, key) {
-            total += 1;
-            var answer = response[gdocsMunge(key)] || response[value];
-            if (answer !== 'Yes') {
-              isopen = false;
-            }
-            if (answer === 'Yes') {
-              ycount += 1;
-            }
-            summary.push(map[answer]);
-          });
-          var $td = $('<td />').addClass('count-' + count);
+          var $td = $('<td />');
 
-          // 0  'Data Availability [Does the data exist?]',
-          // 1  'Data Availability [Is it in digital form?]',
-          // 2  'Data Availability [Is it machine readable? (E.g. spreadsheet not PDF)]',
-          // 3  'Data Availability [Available in bulk?  (Can you get the whole dataset easily)]',
-          // 4  'Data Availability [Is it publicly available, free of charge?]',
-          // 5  'Data Availability [Is it openly licensed? (as per the http://OpenDefinition.org/)]',
-          // 6  'Data Availability [Is it up to date?]',
-
-          if (summary[0] === 'Y' && summary[5] === 'Y' && summary[4] === 'Y') {
-            // Data is exists, is open, and publicly available
+          if (response.isopen) {
             // make it green, anything else is cherry on top
-            $td.addClass('open-' + ycount);
+            $td.addClass('open-' + response.ycount);
             openFactor = 3;
-            $td.css('background-color', OpenDataCensus.colorScale.openColorScale.getColor(ycount).hex());
-          } else if (summary[0] === 'Y' && (summary[4] === 'Y' || summary[5] === 'Y')) {
-            // exists, and is either open or freely available
+            $td.css('background-color', OpenDataCensus.colorScale.openColorScale.getColor(response.ycount).hex());
+          } else if (response.exists == 'Y' && (response.public === 'Y' || response['open-license'] === 'Y')) {
             // make it orange
             openFactor = 2;
-            $td.css('background-color', OpenDataCensus.colorScale.freeColorScale.getColor(ycount).hex());
-            $td.addClass('free-' + ycount);
-          } else if (summary[0] === 'Y') {
+            $td.css('background-color', OpenDataCensus.colorScale.freeColorScale.getColor(response.ycount).hex());
+            $td.addClass('free-' + response.ycount);
+          } else if (response.exists === 'Y') {
             // data is neither open nor free
             openFactor = 1;
-            $td.addClass('closed-' + ycount);
-            $td.css('background-color', OpenDataCensus.colorScale.closedColorScale.getColor(ycount).hex());
-          } else if (summary[0] === 'N') {
+            $td.addClass('closed-' + response.ycount);
+            $td.css('background-color', OpenDataCensus.colorScale.closedColorScale.getColor(response.ycount).hex());
+          } else if (response.exists === 'N') {
             $td.addClass('unavailable');
-          } else if (summary[0] === '?') {
+          } else if (response.exists === '?') {
             $td.addClass('unknown');
           }
-          totalFactoredScore += ycount * openFactor;
-          totalScore += ycount;
-          $td.append('<a>' + ycount + '/' + total + '</a>');
+          totalFactoredScore += response.ycount * openFactor;
+          totalScore += response.ycount;
+          $td.append('<a>' + response.ycount + '/' + totalScorePerDataset + '</a>');
           (function(resp) {
             $td.popover({
               html: true,
@@ -200,11 +175,11 @@ OpenDataCensus.summaryTable = (function(){
           }(response));
           row.append($td);
         } else {
-          row.append($('<td class="no-data">').html('<a href="submit/?dataset=' + encodeURIComponent(datasetName) + '&area=' + encodeURIComponent(name) + '" data-toggle="tooltip" class="count-' + count + '" title="Click here to add to the census!">?</a>'));
+          row.append($('<td class="no-data">').html('<a href="submit/?dataset=' + encodeURIComponent(datasetName) + '&area=' + encodeURIComponent(name) + '" data-toggle="tooltip" class="count-0" title="Click here to add to the census!">?</a>'));
         }
         cellCount += 1;
       });
-      var totalPossibleScore = datasetCount * 7; // seven properties
+      var totalPossibleScore = datasetCount * totalScorePerDataset;
       var totalTd = $('<td>').append($('<a>').text('' + totalScore + '/' + totalPossibleScore));
       totalTd.css('background-color', OpenDataCensus.colorScale.totalColorScale.getColor(totalFactoredScore).hex());
       row.append(totalTd);
@@ -313,7 +288,7 @@ function idfy(str) {
 function getSummaryData(data) {
   var datasets = {};
   var countryNames = _.uniq(_.map(data, function(r) {
-    return r['censuscountry'];
+    return r['country'];
   }));
   function makeCountryDict () {
     var _out = {};
@@ -330,7 +305,7 @@ function getSummaryData(data) {
       datasets[row['dataset']] = makeCountryDict();
   });
   _.each(data, function(row) {
-    var c = row['censuscountry'];
+    var c = row['country'];
     var d = row['dataset'];
     var count = datasets[d][c].count || 0;
     datasets[d][c].count = count + 1;

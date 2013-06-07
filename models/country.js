@@ -1,10 +1,29 @@
-var OpenDataCensus = OpenDataCensus || {};
+var _ = require('underscore');
 
-OpenDataCensus.countryCensusURL = 'https://docs.google.com/spreadsheet/ccc?key=0Aon3JiuouxLUdEVnbG5pUFlyUzBpVkFXbXJ2WWpGTUE#gid=0';
-OpenDataCensus.cityCensusURL = 'https://docs.google.com/spreadsheet/ccc?key=0AqR8dXc6Ji4JdEEycENNYXQtU1RIbzRSYVRxLXFOdHc#gid=0';
+var OpenDataCensus = {};
+
+OpenDataCensus.questions =  [
+  'timestamp',
+  'country',
+  'dataset',
+  'exists',
+  'digital',
+  'machine-readable',
+  'bulk',
+  'public',
+  'open-license',
+  'up-to-date',
+  'url',
+  'date-available',
+  'details',
+  'submitter',
+  'submitter-url',
+  'reviewed'
+];
+
+var openQuestions = OpenDataCensus.questions.slice(3,9);
 
 OpenDataCensus.dataCatalogsUrl = "https://docs.google.com/spreadsheet/ccc?key=0Aon3JiuouxLUdE9POFhudGd6NFk0THpxR0NicFViRUE#gid=1";
-
 
 OpenDataCensus.censusDatasets = [
   'Election Results (national)',
@@ -19,51 +38,8 @@ OpenDataCensus.censusDatasets = [
   'Environmental Data on major sources of pollutants (e.g. location, emissions)'
 ];
 
-OpenDataCensus.censusDatasetTitles = {
-  'Election Results (national)': 'Election Results',
-  'Company Register': 'Company Register',
-  'National Map (Low resolution: 1:250,000 or better)': 'National Map',
-  'Government Budget (National, high level, not detailed)': 'Government Budget',
-  'Government Spending (National, transactional level data)': 'Government Spending',
-  'Legislation (laws and statutes) - National': 'Legislation',
-  'National Statistical Data (economic and demographic information)': 'National Statistics',
-  'National Postcode/ZIP database': 'Postcode/ZIP database',
-  'Public Transport Timetables': 'Public Transport',
-  'Environmental Data on major sources of pollutants (e.g. location, emissions)': 'Environmental pollutants'
-};
-
-OpenDataCensus.censusKeys = [
-  'Timestamp',
-  'Census Country',
-  'Dataset',
-  'Data Availability [Does the data exist?]',
-  'Data Availability [Is it in digital form?]',
-  'Data Availability [Is it machine readable? (E.g. spreadsheet not PDF)]',
-  'Data Availability [Available in bulk?  (Can you get the whole dataset easily)]',
-  'Data Availability [Is it publicly available, free of charge?]',
-  'Data Availability [Is it openly licensed? (as per the http://OpenDefinition.org/)]',
-  'Data Availability [Is it up to date?]',
-  'Location of Data Online',
-  'Date it became available',
-  'Details and comments',
-  'Your name (optional)',
-  'Link for you (optional)'
-];
-
-OpenDataCensus.censusProperties = {
-  'Data Availability [Does the data exist?]': "exists",
-  'Data Availability [Is it publicly available, free of charge?]': "public",
-  'Data Availability [Is it in digital form?]': "digital",
-  'Data Availability [Is it machine readable? (E.g. spreadsheet not PDF)]': "machine-readable",
-  'Data Availability [Available in bulk?  (Can you get the whole dataset easily)]': "bulk",
-  'Data Availability [Is it openly licensed? (as per the http://OpenDefinition.org/)]': "open-license",
-  'Data Availability [Is it up to date?]': "up-to-date"
-};
-
 exports.OpenDataCensus = OpenDataCensus;
 
-OpenDataCensus.sources = {
-};
 OpenDataCensus.data = {
   country: {
     datasetsUrl: 'http://docs.google.com/spreadsheet/pub?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&single=true&gid=0&output=csv',
@@ -119,6 +95,11 @@ function getCsvData(url, cb) {
           delete record[key];
         }
       }
+      // weird issues with google docs and newlines resulted in some records getting "wrapped"
+      if (record.dataset.indexOf('http') != -1) {
+        console.error('bad');
+        console.error(record);
+      }
       data.push(record);
     })
     .on('end', function() {
@@ -140,9 +121,16 @@ OpenDataCensus.load = function(cb) {
     done();
   });
   getCsvData(OpenDataCensus.data.country.resultsUrl, function(data) {
-    var results = data.slice(0,10);
-    results = results.map(cleanUpCountryResult);
+    var results = cleanUpCountry(data);
     OpenDataCensus.data.country.results = results;
+    OpenDataCensus.data.country.countries = _.uniq(_.map(results, function(r) {
+      return r['country'];
+    }));
+    var bydataset = byDataset(results);
+    OpenDataCensus.data.country.bydataset = bydataset;
+    var summary = getSummaryData(results);
+    summary.countries = OpenDataCensus.data.country.countries.length;
+    OpenDataCensus.data.country.summary = summary;
     done();
   });
   getCsvData(OpenDataCensus.data.city.datasetsUrl, function(data) {
@@ -155,15 +143,84 @@ OpenDataCensus.load = function(cb) {
   });
 };
 
-cleanUpCountryResult = function(record) {
-  return record;
+// TODO: dedupe etc
+function cleanUpCountry(rawdata) {
+  var correcter = {
+    'Yes': 'Y',
+    'No': 'N',
+    'No ': 'N',
+    'Unsure': '?'
+  };
+  var ynquestions = OpenDataCensus.questions.slice(3, 10);
+  return rawdata.map(function(record) {
+    ynquestions.forEach(function(question) {
+      record[question] = correcter[record[question]]
+      if (record[question] == undefined) {
+        console.error(record);
+      }
+    });
+    record.ycount = scoreOpenness(record);
+    // Data is exists, is open, and publicly available, machine readable etc
+    record.isopen = 
+      (record['exists'] == 'Y') &&
+      (record['open-license'] == 'Y') && 
+      (record.public == 'Y') &&
+      (record['machine-readable'] == 'Y')
+      ;
+    return record;
+  });
+}
+
+// data keyed by dataset then country
+function byDataset(data) {
+  var datasets = {};
+  var countryNames = _.uniq(_.map(data, function(r) {
+    return r['country'];
+  }));
+  function makeCountryDict () {
+    var _out = {};
+    _.each(countryNames, function(ds) {
+      _out[ds] = null;
+    });
+    return _out;
+  }
+  _.each(data, function(row) {
+      datasets[row['dataset']] = makeCountryDict();
+  });
+  _.each(data, function(row) {
+    var c = row['country'];
+    var d = row['dataset'];
+    datasets[d][c] = row;
+  });
+
+  return datasets;
+}
+
+getSummaryData = function(results) {
+  var open = 0;
+  var nokpercent = 0;
+  _.each(results, function (r) {
+    if (r.isopen) {
+      open++;
+    }
+  });
+  nokpercent = Math.round(100 * open / results.length);
+  return {
+    entries: results.length,
+    open: open,
+    open_percent: nokpercent
+  };
 };
 
+function scoreOpenness(response) {
+  var score=0;
+  _.each(openQuestions, function(key) {
+    if (response[key]=='Y') {
+      score++;
+    }
+  });
+  return score;
+}
 
-OpenDataCensus.load(function() {
-  console.log(OpenDataCensus.data.country.datasets.length);
-  console.log(OpenDataCensus.data.country.results.length);
-  console.log(OpenDataCensus.data.country.results[0]);
-  console.log(OpenDataCensus.data.city.datasets.length);
-  console.log(OpenDataCensus.data.city.results.length);
-});
+// OpenDataCensus.load(function() {});
+

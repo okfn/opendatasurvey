@@ -12,7 +12,12 @@
       "nunjucks": "0.1.8",
       "marked": "",
       "csv": "",
-      "request": ""
+      "request": "",
+      "underscore": ""
+  }
+  , "devDependencies": {
+    "supertest": "",
+    "mocha": ""
   }
   , "engines": {
     "node": ">=0.10.x",
