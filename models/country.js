@@ -45,7 +45,7 @@ OpenDataCensus.data = {
   },
   city: {
     datasetsUrl: 'http://docs.google.com/spreadsheet/pub?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&single=true&gid=3&output=csv',
-    resultsUrl: 'https://docs.google.com/spreadsheet/pub?key=0AqR8dXc6Ji4JdEEycENNYXQtU1RIbzRSYVRxLXFOdHc&single=true&gid=0&output=csv',
+    resultsUrl: 'https://docs.google.com/spreadsheet/pub?key=0AqR8dXc6Ji4JdEEycENNYXQtU1RIbzRSYVRxLXFOdHc&single=true&gid=1&output=csv',
     datasets: [],
     results: []
   },
@@ -118,11 +118,27 @@ OpenDataCensus.load = function(cb) {
     done();
   });
   getCsvData(OpenDataCensus.data.city.datasetsUrl, function(data) {
-    OpenDataCensus.data.city.datasets = data.slice(0,15) 
+    var dss = data.slice(0,15);
+    dss = dss.map(function(ds) {
+      // TODO: remove this once fixed in the spreadsheet
+      ds.title = ds.dataset;
+      delete ds.dataset;
+      ds.titleRotated = OpenDataCensus.uglySpaceHack(ds.title);
+      return ds;
+    });
+    OpenDataCensus.data.city.datasets = dss;
     done();
   });
-  getCsvData(OpenDataCensus.data.city.datasetsUrl, function(data) {
-    OpenDataCensus.data.city.results = [];
+  getCsvData(OpenDataCensus.data.city.resultsUrl, function(data) {
+    var results = data;
+    var c = OpenDataCensus.data.city;
+    c.results = results;
+    c.places = _.uniq(_.map(results, function(r) {
+      return r['place'];
+    }));
+    c.byplace = byPlace(results);
+    c.summary = getSummaryData(results);
+    c.summary.places = c.places.length;
     done();
   });
   getCsvData(OpenDataCensus.data.catalogs.url, function(data) {

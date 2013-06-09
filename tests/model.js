@@ -65,7 +65,41 @@ describe('census', function() {
     assert.equal(uk.isopen, true);
   });
 
+  // /////////////////////
+  // City
+
   var city = model.data.city;
+
+  it('city summary is ok', function(){
+    // console.log(city.summary);
+    assert(city.summary.entries >= 300);
+    assert(city.summary.open >= 0 && city.summary.open <= city.summary.entries);
+    assert(city.summary.open_percent >= 0.0);
+  });
+
+  it('city.places is ok ', function(){
+    // test places / countries
+    // console.log(city.places.length);
+    assert(city.places.length >= 40);
+    assert(_.contains(city.places, 'Berlin, Germany'));
+  });
+
+  it('city.datasets is ok ', function(){
+    // test datasets
+    assert.equal(city.datasets.length, 15);
+    assert.equal(city.datasets[0].id, 'timetables');
+  });
+
+  it('city.byplace is ok ', function(){
+    assert.equal(_.keys(city.byplace).length, city.places.length);
+
+    var berlin = city.byplace['Berlin, Germany'];
+    // bad test as number will change over time!!
+    assert.equal(_.keys(berlin.datasets).length, 2);
+  });
+
+  // /////////////////////
+  // Catalogs
 
   it('catalogs is ok ', function(){
     // console.log(model.data.catalogs.records.length);
