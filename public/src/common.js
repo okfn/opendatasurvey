@@ -8,53 +8,6 @@ OpenDataCensus.countryCodes={"Canada": "CA", "Guinea-Bissau": "GW", "Congo, The 
 
 OpenDataCensus.dataCatalogsUrl = "https://docs.google.com/spreadsheet/ccc?key=0Aon3JiuouxLUdE9POFhudGd6NFk0THpxR0NicFViRUE#gid=1";
 
-
-OpenDataCensus.censusDatasetTitles = {
-  'Election Results (national)': 'Election Results',
-  'Company Register': 'Company Register',
-  'National Map (Low resolution: 1:250,000 or better)': 'National Map',
-  'Government Budget (National, high level, not detailed)': 'Government Budget',
-  'Government Spending (National, transactional level data)': 'Government Spending',
-  'Legislation (laws and statutes) - National': 'Legislation',
-  'National Statistical Data (economic and demographic information)': 'National Statistics',
-  'National Postcode/ZIP database': 'Postcode/ZIP database',
-  'Public Transport Timetables': 'Public Transport',
-  'Environmental Data on major sources of pollutants (e.g. location, emissions)': 'Environmental pollutants'
-};
-
-OpenDataCensus.censusKeys = [
-  'Timestamp',
-  'Census Country',
-  'Dataset',
-  'Data Availability [Does the data exist?]',
-  'Data Availability [Is it in digital form?]',
-  'Data Availability [Is it machine readable? (E.g. spreadsheet not PDF)]',
-  'Data Availability [Available in bulk?  (Can you get the whole dataset easily)]',
-  'Data Availability [Is it publicly available, free of charge?]',
-  'Data Availability [Is it openly licensed? (as per the http://OpenDefinition.org/)]',
-  'Data Availability [Is it up to date?]',
-  'Location of Data Online',
-  'Date it became available',
-  'Details and comments',
-  'Your name (optional)',
-  'Link for you (optional)'
-];
-
-OpenDataCensus.uglySpaceHack = function(name){
-  /* Why? Rotated Heading Cells are hard. */
-  var parts = name.split(' ');
-  if (parts.length === 3) {
-    return parts[0] + ' ' + parts.slice(1).join('&nbsp;');
-  } else if (parts.length === 4) {
-    return parts.slice(0, 2).join('&nbsp;'); + ' ' + parts.slice(2).join('&nbsp;');
-  }
-  return name;
-}
-
-OpenDataCensus.makeDatasetTitle = function(name) {
-  return OpenDataCensus.censusDatasetTitles[name];
-};
-
 OpenDataCensus.colorScale = {
   totalColorScale: new chroma.ColorScale({
     colors: ['#f00', '#fa0', '#ff0', '#0f0'],
@@ -120,10 +73,6 @@ OpenDataCensus.summaryTable = (function(){
 
   return summaryTable;
 }());
-
-function gdocsMunge(str) {
-  return str.replace(/[^a-zA-Z0-9_.]/g, '').toLowerCase();
-}
 
 // Taken from http://stackoverflow.com/a/8764051/114462
 function getURLParameter(name) {

@@ -2,13 +2,7 @@ $(document).ready(function($) {
 
   var summary;
 
-  var popoverContent = function(response) {
-    var title = OpenDataCensus.makeDatasetTitle(response.dataset);
-    title = '<h3>' + title + ' in ' + response.country + '</h3>';
-    var out = OpenDataCensus.popoverBody(response);
-    return [title, out];
-  };
-
+  // 2013-06-09 (rgrp) - is anyone using this (do not think so)
   if (window.location.search.indexOf('embed=1')!=-1) {
     $('.navbar').hide();
     $('body').attr('style', 'padding-top: 0');
