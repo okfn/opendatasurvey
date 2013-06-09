@@ -22,9 +22,10 @@ Home
       </div>
       <div class="span8">
         <p>&nbsp;</p>
-        <a href="census/" class="bignumber" id="nok"><span>0</span></a><span
-        class="between-numbers">of</span><a href="census/" class="bignumber"
-        id="nds"><span>0</span></a> <p>key datasets in the<br>census are open</p>
+        <a href="census/" class="bignumber" id="nok">{% for char in country.summary.open.toString() %}<span>{{char}}</span>{% endfor %}</a>
+        <span class="between-numbers">of</span>
+        <a href="census/" class="bignumber"
+          id="nds">{% for char in country.summary.entries.toString() %}<span>{{char}}</span>{% endfor %}</a> <p>key datasets in the<br>census are open</p>
       </div>
     </div>
   </div>

@@ -33,7 +33,7 @@ var env = new nunjucks.Environment(new nunjucks.FileSystemLoader('templates'));
 env.express(app);
 
 app.get('/', function(req, res) {
-  res.render('index.html', {});
+  res.render('index.html', {country: model.data.country});
 })
 
 app.get('/about/', function(req, res) {

@@ -16,20 +16,4 @@ $(function(){
   catalogs.fetch().done(function() {
     makeNumber($("#tds"), catalogs.recordCount);
   });
-
-  var dataset = new recline.Model.Dataset({
-      id: 'opendatacensus',
-      url: OpenDataCensus.countryCensusURL,
-      backend: 'GDocs'
-   });
-  dataset.fetch().done(function() {
-    dataset.query({size: dataset.recordCount}).done(function() {
-      var data=dataset.records.toJSON();
-      var summary = getSummaryData(data);
-      var top = OpenDataCensus.summaryTop(summary);
-      makeNumber($("#nds"), top.nd);
-      makeNumber($("#nok"), top.free);
-    });
-  });
-
 });
