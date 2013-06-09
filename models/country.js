@@ -68,7 +68,7 @@ function getCsvData(url, cb) {
         }
       }
       // weird issues with google docs and newlines resulted in some records getting "wrapped"
-      if (record.dataset.indexOf('http') != -1) {
+      if (record.dataset && record.dataset.indexOf('http') != -1) {
         console.error('bad');
         console.error(record);
       }
@@ -100,6 +100,7 @@ OpenDataCensus.load = function(cb) {
     }));
     var bydataset = byDataset(results);
     OpenDataCensus.data.country.bydataset = bydataset;
+    OpenDataCensus.data.country.byplace = byPlace(results);
     var summary = getSummaryData(results);
     summary.countries = OpenDataCensus.data.country.places.length;
     OpenDataCensus.data.country.summary = summary;
@@ -183,6 +184,30 @@ function byDataset(data) {
   });
 
   return datasets;
+}
+
+// data keyed by place then dataset
+// { 
+//   'United Kingdom': {
+//      datasets: ...
+//      score: 
+//      iso: ... 
+//     }
+function byPlace(results, datasets) {
+  var out = {};
+  var places = _.uniq(_.map(results, function(r) {
+    return r['place'];
+  }));
+  _.each(places, function(place) {
+    out[place] = {
+      datasets: {},
+      score: 0
+    }
+  });
+  _.each(results, function(row) {
+    out[row.place].datasets[row.dataset] = row;
+  });
+  return out;
 }
 
 getSummaryData = function(results) {

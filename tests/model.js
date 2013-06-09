@@ -31,6 +31,15 @@ describe('census', function() {
   it('country.datasets is ok ', function(){
     // test datasets
     assert.equal(c.datasets.length, 10);
+    assert.equal(c.datasets[0].id, 'timetables');
+  });
+
+  it('country.byplace is ok ', function(){
+    assert.equal(_.keys(c.byplace).length, c.places.length);
+
+    var uk = c.byplace['United Kingdom'];
+    assert.equal(_.keys(uk.datasets).length, c.datasets.length);
+    // assert(uk.datasets[
   });
 
   it('country.bydataset is ok ', function(){
@@ -55,4 +64,6 @@ describe('census', function() {
     assert.equal(uk.ycount, 6);
     assert.equal(uk.isopen, true);
   });
+
+  var city = model.data.city;
 });
