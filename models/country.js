@@ -48,6 +48,12 @@ OpenDataCensus.data = {
     resultsUrl: 'https://docs.google.com/spreadsheet/pub?key=0AqR8dXc6Ji4JdEEycENNYXQtU1RIbzRSYVRxLXFOdHc&single=true&gid=0&output=csv',
     datasets: [],
     results: []
+  },
+  catalogs: {
+    // https://docs.google.com/spreadsheet/ccc?key=0Aon3JiuouxLUdE9POFhudGd6NFk0THpxR0NicFViRUE#gid=1
+    url: "https://docs.google.com/spreadsheet/pub?key=0Aon3JiuouxLUdE9POFhudGd6NFk0THpxR0NicFViRUE&single=true&gid=1&output=csv",
+    records: [],
+    fields: []
   }
 }
 
@@ -81,7 +87,7 @@ function getCsvData(url, cb) {
 }
 
 OpenDataCensus.load = function(cb) {
-  var count = 4;
+  var count = 5;
   function done() {
     count -= 1;
     if (count == 0) {
@@ -117,6 +123,10 @@ OpenDataCensus.load = function(cb) {
   });
   getCsvData(OpenDataCensus.data.city.datasetsUrl, function(data) {
     OpenDataCensus.data.city.results = [];
+    done();
+  });
+  getCsvData(OpenDataCensus.data.catalogs.url, function(data) {
+    OpenDataCensus.data.catalogs.records = data;
     done();
   });
 };
@@ -252,7 +262,6 @@ OpenDataCensus.uglySpaceHack = function(name){
   }
   return name;
 }
-
 
 // OpenDataCensus.load(function() {});
 

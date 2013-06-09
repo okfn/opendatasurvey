@@ -66,4 +66,10 @@ describe('census', function() {
   });
 
   var city = model.data.city;
+
+  it('catalogs is ok ', function(){
+    // console.log(model.data.catalogs.records.length);
+    assert(model.data.catalogs.records.length >= 280);
+  });
+
 });
