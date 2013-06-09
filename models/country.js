@@ -89,7 +89,12 @@ OpenDataCensus.load = function(cb) {
     }
   }
   getCsvData(OpenDataCensus.data.country.datasetsUrl, function(data) {
-    OpenDataCensus.data.country.datasets = data.slice(0,10);
+    var dss = data.slice(0,10);
+    dss = dss.map(function(ds) {
+      ds.titleRotated = OpenDataCensus.uglySpaceHack(ds.title);
+      return ds;
+    });
+    OpenDataCensus.data.country.datasets = dss;
     done();
   });
   getCsvData(OpenDataCensus.data.country.resultsUrl, function(data) {
@@ -206,6 +211,7 @@ function byPlace(results, datasets) {
   });
   _.each(results, function(row) {
     out[row.place].datasets[row.dataset] = row;
+    out[row.place].score = out[row.place].score + row.ycount;
   });
   return out;
 }
@@ -235,6 +241,18 @@ function scoreOpenness(response) {
   });
   return score;
 }
+
+OpenDataCensus.uglySpaceHack = function(name){
+  /* Why? Rotated Heading Cells are hard. */
+  var parts = name.split(' ');
+  if (parts.length === 3) {
+    return parts[0] + ' ' + parts.slice(1).join('&nbsp;');
+  } else if (parts.length === 4) {
+    return parts.slice(0, 2).join('&nbsp;'); + ' ' + parts.slice(2).join('&nbsp;');
+  }
+  return name;
+}
+
 
 // OpenDataCensus.load(function() {});
 

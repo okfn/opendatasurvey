@@ -8,6 +8,8 @@ var express = require('express')
 
 var app = express();
 
+var model = require('./models/country.js').OpenDataCensus;
+
 //CORS middleware
 var CORSSupport = function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -43,7 +45,7 @@ app.get('/about/', function(req, res) {
 });
 
 app.get('/country/', function(req, res) {
-  res.render('country/index.html', {});
+  res.render('country/index.html', {info: model.data.country});
 });
 
 app.get('/country/results.json', function(req, res) {
@@ -66,7 +68,6 @@ app.get('/catalogs/', function(req, res) {
   res.render('catalogs/index.html', {});
 });
 
-var model = require('./models/country.js').OpenDataCensus;
 // var url = process.env.CATALOG_URL|| CATALOG_URL_DEFAULT;
 // var catalog = new model.Catalog();
 

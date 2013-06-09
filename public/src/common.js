@@ -56,113 +56,27 @@ OpenDataCensus.makeDatasetTitle = function(name) {
 };
 
 OpenDataCensus.colorScale = {
-  openColorScale: new chroma.ColorScale({
-    colors: ['#0a0', '#0a0'],
-    limits: [3, 7]
-  }),
-
-  freeColorScale: new chroma.ColorScale({
-    colors: ['#fa0', '#fa0'],
-    limits: [2, 7]
-  }),
-
-  closedColorScale: new chroma.ColorScale({
-    colors: ['#f00', '#f00'],
-    limits: [1, 7]
-  }),
-
   totalColorScale: new chroma.ColorScale({
     colors: ['#f00', '#fa0', '#ff0', '#0f0'],
-    limits: [0, 210]
+    limits: [0, 60]
   })
 };
 
 OpenDataCensus.summaryTable = (function(){
-  var map = {
-    'Yes': 'Y',
-    'No': 'N',
-    'No ': 'N',
-    'Unsure': '?'
-  };
-
   var summaryTable = function(table, data, displayFunc) {
-    _.each(data.bydataset, function(obj, key) {
-      var title;
-      if (data.datasetDict) {
-        title = OpenDataCensus.uglySpaceHack(data.datasetDict[key].dataset);
-      } else {
-        title = OpenDataCensus.makeDatasetTitle(key);
-      }
-      table.find('thead tr').append($('<th>').append('<div>' + title + '</div>'));
-    });
-    table.find('thead tr').append($('<th>').append('<div><strong>Total Score</strong></div>'));
-
-    // now do the body
-    var totalScorePerDataset = 6;
-    var countries = data.places.sort();
-    var cellCount = 0;
-    _.each(countries, function(name) {
-      var totalScore = 0, totalFactoredScore = 0, openFactor = 1;
-      var row = $('<tr />');
-      row.data('area', name);
-      row.append($('<th />').text(name.split(',')[0]).addClass('area-name'));
-      var datasetCount = 0;
-      _.each(data.bydataset, function(dataset, datasetName) {
-        datasetCount += 1;
-        if (dataset[name] != null) {
-          var response = dataset[name];
-
-          var $td = $('<td />');
-
-          if (response.isopen) {
-            // make it green, anything else is cherry on top
-            $td.addClass('open-' + response.ycount);
-            openFactor = 3;
-            $td.css('background-color', OpenDataCensus.colorScale.openColorScale.getColor(response.ycount).hex());
-          } else if (response.exists == 'Y' && (response.public === 'Y' || response['openlicense'] === 'Y')) {
-            // make it orange
-            openFactor = 2;
-            $td.css('background-color', OpenDataCensus.colorScale.freeColorScale.getColor(response.ycount).hex());
-            $td.addClass('free-' + response.ycount);
-          } else if (response.exists === 'Y') {
-            // data is neither open nor free
-            openFactor = 1;
-            $td.addClass('closed-' + response.ycount);
-            $td.css('background-color', OpenDataCensus.colorScale.closedColorScale.getColor(response.ycount).hex());
-          } else if (response.exists === 'N') {
-            $td.addClass('unavailable');
-          } else if (response.exists === '?') {
-            $td.addClass('unknown');
-          }
-          totalFactoredScore += response.ycount * openFactor;
-          totalScore += response.ycount;
-          $td.append('<a>' + response.ycount + '/' + totalScorePerDataset + '</a>');
-          (function(resp) {
-            $td.popover({
-              html: true,
-              placement: 'bottom',
-              container: 'body',
-              title: function(){
-                return displayFunc(resp)[0];
-              },
-              content: function(){
-                return displayFunc(resp)[1];
-              }
-            });
-          }(response));
-          row.append($td);
-        } else {
-          row.append($('<td class="no-data">').html('<a href="submit/?dataset=' + encodeURIComponent(datasetName) + '&area=' + encodeURIComponent(name) + '" data-toggle="tooltip" class="count-0" title="Click here to add to the census!">?</a>'));
-        }
-        cellCount += 1;
+    // ycount goes from 0 to 6
+    for (i=1; i<=6; i++) {
+      $(table).find('.ycount-' + i).each(function(idx, item) {
+        $td = $(item);
+        // $td.css('background-color', OpenDataCensus.colorScale.openColorScale.getColor(i).hex());
       });
-      var totalPossibleScore = datasetCount * totalScorePerDataset;
-      var totalTd = $('<td>').append($('<a>').text('' + totalScore + '/' + totalPossibleScore));
-      totalTd.css('background-color', OpenDataCensus.colorScale.totalColorScale.getColor(totalFactoredScore).hex());
-      row.append(totalTd);
-      row.data('score', totalFactoredScore);
-      table.find('tbody').append(row);
+    }
+    $(table).find('.placescore').each(function(idx, td) {
+      var $td = $(td);
+      var score = parseInt($td.data('score'));
+      $td.css('background-color', OpenDataCensus.colorScale.totalColorScale.getColor(score).hex());
     });
+
     $(table.find('thead tr th').get(0)).addClass('sorting')
       .html('Sort' +
         '<label class="radio">' +
@@ -182,6 +96,7 @@ OpenDataCensus.summaryTable = (function(){
         };
       } else {
         sortFunc = function(a, b) {
+          console.log($(a));
           return $(a).data('area').toUpperCase().localeCompare($(b).data('area').toUpperCase());
         };
       }

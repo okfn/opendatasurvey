@@ -482,3 +482,15 @@ ul.tab-control > li > a {
 .rankings > .selector > a {
   text-transform: capitalize;
   }
+
+.ycount-1, .ycount-2, .ycount-3 {
+  background-color: #f00;
+}
+
+.ycount-5, .ycount-4 {
+  background-color: #fa0;
+}
+
+.ycount-6 {
+  background-color: #0a0;
+}
