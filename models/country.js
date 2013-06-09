@@ -25,19 +25,6 @@ var openQuestions = OpenDataCensus.questions.slice(3,9);
 
 OpenDataCensus.dataCatalogsUrl = "https://docs.google.com/spreadsheet/ccc?key=0Aon3JiuouxLUdE9POFhudGd6NFk0THpxR0NicFViRUE#gid=1";
 
-OpenDataCensus.censusDatasets = [
-  'Election Results (national)',
-  'Company Register',
-  'National Map (Low resolution: 1:250,000 or better)',
-  'Government Budget (National, high level, not detailed)',
-  'Government Spending (National, transactional level data)',
-  'Legislation (laws and statutes) - National',
-  'National Statistical Data (economic and demographic information)',
-  'National Postcode/ZIP database',
-  'Public Transport Timetables',
-  'Environmental Data on major sources of pollutants (e.g. location, emissions)'
-];
-
 exports.OpenDataCensus = OpenDataCensus;
 
 OpenDataCensus.data = {
@@ -130,6 +117,18 @@ OpenDataCensus.load = function(cb) {
 
 // TODO: dedupe etc
 function cleanUpCountry(rawdata) {
+  countryDatasetsMap = {
+    'Election Results (national)': 'elections',
+    'Company Register': 'companies',
+    'National Map (Low resolution: 1:250,000 or better)': 'map',
+    'Government Budget (National, high level, not detailed)': 'budget',
+    'Government Spending (National, transactional level data)': 'spending',
+    'Legislation (laws and statutes) - National': 'legislation',
+    'National Statistical Data (economic and demographic information)': 'statistics',
+    'National Postcode/ZIP database': 'postcodes',
+    'Public Transport Timetables': 'timetables',
+    'Environmental Data on major sources of pollutants (e.g. location, emissions)': 'emissions'
+  };
   var correcter = {
     'Yes': 'Y',
     'No': 'N',
@@ -137,7 +136,11 @@ function cleanUpCountry(rawdata) {
     'Unsure': '?'
   };
   var ynquestions = OpenDataCensus.questions.slice(3, 10);
-  return rawdata.map(function(record) {
+  var out = rawdata.map(function(record) {
+    // 2013-06-09 normalize the datasets from a title to the id
+    // (at some point this should be obsolete as we fix at source)
+    record.dataset = countryDatasetsMap[record.dataset];
+    // fix up y/n
     ynquestions.forEach(function(question) {
       record[question] = correcter[record[question]]
       if (record[question] == undefined) {
@@ -154,6 +157,7 @@ function cleanUpCountry(rawdata) {
       ;
     return record;
   });
+  return out;
 }
 
 // data keyed by dataset then country

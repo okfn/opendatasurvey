@@ -37,9 +37,9 @@ describe('census', function() {
     // console.log(_.keys(c.bydataset));
     assert.equal(_.keys(c.bydataset).length, c.datasets.length);
 
-    assert.equal(c.bydataset['Election Results (national)']['Jamaica'], null);
+    assert.equal(c.bydataset['elections']['Jamaica'], null);
 
-    var ds = c.bydataset['Election Results (national)'];
+    var ds = c.bydataset['elections'];
     assert.equal(_.keys(ds).length, c.places.length);
     var uk = ds['United Kingdom'];
     // console.log(uk);
@@ -50,7 +50,7 @@ describe('census', function() {
   });
 
   it('country census item open is ok ', function(){
-    var ds = c.bydataset['National Map (Low resolution: 1:250,000 or better)'];
+    var ds = c.bydataset['map'];
     var uk = ds['United Kingdom'];
     assert.equal(uk.ycount, 6);
     assert.equal(uk.isopen, true);
