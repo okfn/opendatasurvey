@@ -33,7 +33,10 @@ var env = new nunjucks.Environment(new nunjucks.FileSystemLoader('templates'));
 env.express(app);
 
 app.get('/', function(req, res) {
-  res.render('index.html', {country: model.data.country});
+  res.render('index.html', {
+    numberEntries: model.data.country.summary.entries.toString(),
+    numberOpen: model.data.country.summary.open.toString(),
+    numberCatalogs: model.data.catalogs.records.length.toString()});
 })
 
 app.get('/about/', function(req, res) {

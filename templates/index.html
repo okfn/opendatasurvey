@@ -11,21 +11,18 @@ Home
   }
 </style>
 
-<script src="{{page.root}}/src/front.js"></script> 
-<script src="{{page.root}}/src/common.js"></script>
-
 <div class="dashboard">
   <div class="inner">
     <div class="row">
       <div class="span4">
-        <p>There are</p> <a href="catalogs/" class="bignumber" id="tds"><span>0</span></a> <p>Open Data Catalogs</p>
+        <p>There are</p> <a href="catalogs/" class="bignumber" id="tds">{% for char in numberCatalogs %}<span>{{char}}</span>{% endfor %}</a> <p>Open Data Catalogs</p>
       </div>
       <div class="span8">
         <p>&nbsp;</p>
-        <a href="census/" class="bignumber" id="nok">{% for char in country.summary.open.toString() %}<span>{{char}}</span>{% endfor %}</a>
+        <a href="census/" class="bignumber" id="nok">{% for char in numberOpen %}<span>{{char}}</span>{% endfor %}</a>
         <span class="between-numbers">of</span>
         <a href="census/" class="bignumber"
-          id="nds">{% for char in country.summary.entries.toString() %}<span>{{char}}</span>{% endfor %}</a> <p>key datasets in the<br>census are open</p>
+          id="nds">{% for char in numberEntries %}<span>{{char}}</span>{% endfor %}</a> <p>key datasets in the<br>census are open</p>
       </div>
     </div>
   </div>
