@@ -9,19 +9,6 @@ OpenDataCensus.countryCodes={"Canada": "CA", "Guinea-Bissau": "GW", "Congo, The 
 OpenDataCensus.dataCatalogsUrl = "https://docs.google.com/spreadsheet/ccc?key=0Aon3JiuouxLUdE9POFhudGd6NFk0THpxR0NicFViRUE#gid=1";
 
 
-OpenDataCensus.censusDatasets = [
-  'Election Results (national)',
-  'Company Register',
-  'National Map (Low resolution: 1:250,000 or better)',
-  'Government Budget (National, high level, not detailed)',
-  'Government Spending (National, transactional level data)',
-  'Legislation (laws and statutes) - National',
-  'National Statistical Data (economic and demographic information)',
-  'National Postcode/ZIP database',
-  'Public Transport Timetables',
-  'Environmental Data on major sources of pollutants (e.g. location, emissions)'
-];
-
 OpenDataCensus.censusDatasetTitles = {
   'Election Results (national)': 'Election Results',
   'Company Register': 'Company Register',
@@ -52,16 +39,6 @@ OpenDataCensus.censusKeys = [
   'Your name (optional)',
   'Link for you (optional)'
 ];
-
-OpenDataCensus.censusProperties = {
-  'Data Availability [Does the data exist?]': "exists",
-  'Data Availability [Is it publicly available, free of charge?]': "public",
-  'Data Availability [Is it in digital form?]': "digital",
-  'Data Availability [Is it machine readable? (E.g. spreadsheet not PDF)]': "machine-readable",
-  'Data Availability [Available in bulk?  (Can you get the whole dataset easily)]': "bulk",
-  'Data Availability [Is it openly licensed? (as per the http://OpenDefinition.org/)]': "open-license",
-  'Data Availability [Is it up to date?]': "up-to-date"
-};
 
 OpenDataCensus.uglySpaceHack = function(name){
   /* Why? Rotated Heading Cells are hard. */
@@ -142,7 +119,7 @@ OpenDataCensus.summaryTable = (function(){
             $td.addClass('open-' + response.ycount);
             openFactor = 3;
             $td.css('background-color', OpenDataCensus.colorScale.openColorScale.getColor(response.ycount).hex());
-          } else if (response.exists == 'Y' && (response.public === 'Y' || response['open-license'] === 'Y')) {
+          } else if (response.exists == 'Y' && (response.public === 'Y' || response['openlicense'] === 'Y')) {
             // make it orange
             openFactor = 2;
             $td.css('background-color', OpenDataCensus.colorScale.freeColorScale.getColor(response.ycount).hex());
@@ -405,15 +382,15 @@ OpenDataCensus.popoverBody = function(response) {
   not = '';
   if (response.exists === 'Yes'){
     out += '<li>Data exists</li>';
-    not = makeNot(response['open-license']);
+    not = makeNot(response['openlicense']);
     out += '<li>It\'s ' + not + 'openly licensed</li>';
     not = makeNot(response['public']);
     out += '<li>It\'s ' + not + 'publicy available</li>';
-    not = makeNot(response['machine-readable']);
-    out += '<li>It\'s ' + not + 'machine-readable</li>';
+    not = makeNot(response['machinereadable']);
+    out += '<li>It\'s ' + not + 'machine readable</li>';
     not = makeNot(response['digital']);
     out += '<li>It\'s ' + not + 'digital</li>';
-    not = makeNot(response['up-to-date']);
+    not = makeNot(response['uptodate']);
     out += '<li>It\'s ' + not + 'up-to-date</li>';
     not = makeNot(response['bulk']);
     out += '<li>It\'s ' + not + ' available in bulk</li>';
@@ -424,7 +401,7 @@ OpenDataCensus.popoverBody = function(response) {
   if (response.url) {
     out += '<a href="' + response.url + '" target="_blank">Data Location Online</a>';
   }
-  var submitter = $('<div class="submitter" />').text('Submitted by ').append($('<a>', {href: response['submitter-url']}).text(response.submitter || 'Unknown'));
+  var submitter = $('<div class="submitter" />').text('Submitted by ').append($('<a>', {href: response['submitterurl']}).text(response.submitter || 'Unknown'));
   out += $('<div>').append(submitter).html();
   return out;
 };

@@ -8,13 +8,13 @@ OpenDataCensus.questions =  [
   'dataset',
   'exists',
   'digital',
-  'machine-readable',
+  'machinereadable',
   'bulk',
   'public',
-  'open-license',
-  'up-to-date',
+  'openlicense',
+  'uptodate',
   'url',
-  'date-available',
+  'dateavailable',
   'details',
   'submitter',
   'submitter-url',
@@ -53,22 +53,7 @@ OpenDataCensus.data = {
 //    Description: 'Real time usage of energy in city and trends over time.',
 //  }
     datasets: [],
-//{ timestamp: '16/04/2012 20:11:23',
-//  country: 'United Kingdom',
-//  dataset: 'National Map (Low resolution: 1:250,000 or better)',
-//  exists: 'Yes',
-//  digital: 'Yes',
-//  'machine-readable': 'Yes',
-//  bulk: 'Yes',
-//  public: 'Yes',
-//  'open-license': 'Yes',
-//  'up-to-date': 'Yes',
-//  url: 'http://www.ordnancesurvey.co.uk/opendata/',
-//  'date-available': '01/04/2010',
-//  details: 'The Ordnance Survey\'s OpenData product suite includes mapping with better than 1:250,000 resolution (OS Street View) and is released under the OS OpenData Licence, which complies with the Open Definition. The mapping is updated regularly (most recently in May 2012).\n\n',
-//  submitter: 'Rufus Pollock',
-//  'submitter-url': 'http://rufuspollock.org/',
-//  reviewed: '' }
+    // array of hashes each hash having question keys
     results: []
   },
   city: {
@@ -163,9 +148,9 @@ function cleanUpCountry(rawdata) {
     // Data is exists, is open, and publicly available, machine readable etc
     record.isopen = 
       (record['exists'] == 'Y') &&
-      (record['open-license'] == 'Y') && 
+      (record['openlicense'] == 'Y') && 
       (record.public == 'Y') &&
-      (record['machine-readable'] == 'Y')
+      (record['machinereadable'] == 'Y')
       ;
     return record;
   });
