@@ -16,7 +16,7 @@ $(document).ready(function($) {
   $.getJSON('/country/results.json', function(data) {
     $('.loading').hide();
     OpenDataCensus.summaryTable($('.response-summary'), data, popoverContent);
-    summaryMap(data);
+    // summaryMap(data);
     $('#overallscore').click(function(e){
       e.preventDefault();
       summaryMap(data);
@@ -25,10 +25,10 @@ $(document).ready(function($) {
       e.preventDefault();
       showOpenMap();
     });
-    createMapSelector();
+    // createMapSelector();
     $("#nds").html(data.summary.entries);
     $("#nok").html(data.summary.open);
-    $("#nc").html(data.summary.countries);
+    $("#nc").html(data.summary.places);
     $("#nokpercent").html(data.summary.open_percent + '%');
   });
 
@@ -52,8 +52,8 @@ $(document).ready(function($) {
 
   function getAllDatasetByCountry(dataset, country) {
     var ret = [];
-    _.each(_.keys(dataset.datasets), function (d) {
-      ret.push(dataset.datasets[d][country]);
+    _.each(_.keys(dataset.bydataset), function (d) {
+      ret.push(dataset.bydataset[d][country]);
     });
     return ret;
   }
@@ -61,11 +61,11 @@ $(document).ready(function($) {
   function summaryMap(countryInfo) {
     $("ul.tab-control > li > a").removeClass("active");
     $("#overallscore").addClass("active");
-    var byIso = createByIso(countryInfo.countries);
+    var byIso = createByIso(countryInfo.places);
     var scores = {};
     _.each(_.keys(byIso), function(country) {
       var count = byIso[country] ? byIso[country].count : 0;
-      byIso[country].datasets = getAllDatasetByCountry(dataset, byIso[country].name);
+      byIso[country].datasets = getAllDatasetByCountry(countryInfo, byIso[country].name);
       byIso[country].score=0;
       _.each(byIso[country].datasets,function(dataset) {
         if (dataset.count) {
@@ -93,16 +93,16 @@ $(document).ready(function($) {
     showMap(byIso,"score",colscale,countrySummary);
   }
 
-  function createByIso(dataset) {
+  function createByIso(countries) {
     var ret = {};
-    _.each(dataset.countries, function (c) {
+    _.each(countries, function (c) {
       ret[OpenDataCensus.countryCodes[c]]= {name: c};
     });
     return ret;
   }
 
   function showSelectedMap(dataset) {
-    var byIso = createByIso(summary);
+    var byIso = createByIso(dataset.places);
     _.each(_.keys(byIso), function (c) {
       byIso[c].count=0;
       });

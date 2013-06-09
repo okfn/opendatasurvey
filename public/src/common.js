@@ -99,7 +99,7 @@ OpenDataCensus.summaryTable = (function(){
 
     // now do the body
     var totalScorePerDataset = 6;
-    var countries = data.countries.sort();
+    var countries = data.places.sort();
     var cellCount = 0;
     _.each(countries, function(name) {
       var totalScore = 0, totalFactoredScore = 0, openFactor = 1;
@@ -260,94 +260,6 @@ function barplots(el,series,options) {
 
 function idfy(str) {
   return str.replace(/ /g,"-");
-  }
-
-function getSummaryData(data) {
-  var datasets = {};
-  var countryNames = _.uniq(_.map(data, function(r) {
-    return r['country'];
-  }));
-  function makeCountryDict () {
-    var _out = {};
-    _.each(countryNames, function(ds) {
-      _out[ds] = {
-        count: 0,
-        responses: [],
-        isopen: false
-      };
-    });
-    return _out;
-  }
-  _.each(data, function(row) {
-      datasets[row['dataset']] = makeCountryDict();
-  });
-  _.each(data, function(row) {
-    var c = row['country'];
-    var d = row['dataset'];
-    var count = datasets[d][c].count || 0;
-    datasets[d][c].count = count + 1;
-    datasets[d][c].responses.push(row);
-  });
-
-  var out = {
-      'datasets': datasets,
-      'countries': countryNames,
-      'total': data.length
-      };
-  return out;
-}
-
-OpenDataCensus.summaryTop = function(summary) {
-  var nd=0;
-  _.each(_.keys(summary.datasets), function (key) {
-    var ds = summary.datasets[key];
-    _.each(_.keys(ds), function(country) {
-      if (ds[country].count>0) {
-        nd++;
-        }
-        });
-    });
-  var free=0;
-  _.each(_.keys(summary.datasets), function (key) {
-    var ds = summary.datasets[key];
-    _.each(_.keys(ds), function(country) {
-      if (ds[country].count>0) {
-        var r = getLatestReponse(ds[country].responses);
-        if (scoreOpenness(r)==6) {
-          free++;
-          }
-          }
-
-        });
-    });
-  var nokpercent = 0;
-  nokpercent = Math.round(100 * free / nd);
-  return {
-    nc: summary.countries.length,
-    nr: summary.total,
-    nd: nd,
-    free: free,
-    nokpercent: nokpercent
-  };
-};
-
-function scoreOpenness(response) {
-  var score=0;
-  _.each(OpenDataCensus.censusKeys.slice(3,9), function(key) {
-    if (response[gdocsMunge(key)]=='Yes') {
-      score++;
-  }});
-  return score;
-}
-
-function getLatestReponse(responses) {
-  var ret = responses[0];
-  _.each(responses, function(response) {
-    if (ret.timestamp < response.timestamp) {
-      ret = response;
-    }
-  });
-  return ret;
 }
 
 OpenDataCensus.popoverBody = function(response) {

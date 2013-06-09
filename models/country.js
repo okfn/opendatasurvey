@@ -4,7 +4,7 @@ var OpenDataCensus = {};
 
 OpenDataCensus.questions =  [
   'timestamp',
-  'country',
+  'place',
   'dataset',
   'exists',
   'digital',
@@ -108,13 +108,13 @@ OpenDataCensus.load = function(cb) {
   getCsvData(OpenDataCensus.data.country.resultsUrl, function(data) {
     var results = cleanUpCountry(data);
     OpenDataCensus.data.country.results = results;
-    OpenDataCensus.data.country.countries = _.uniq(_.map(results, function(r) {
-      return r['country'];
+    OpenDataCensus.data.country.places = _.uniq(_.map(results, function(r) {
+      return r['place'];
     }));
     var bydataset = byDataset(results);
     OpenDataCensus.data.country.bydataset = bydataset;
     var summary = getSummaryData(results);
-    summary.countries = OpenDataCensus.data.country.countries.length;
+    summary.countries = OpenDataCensus.data.country.places.length;
     OpenDataCensus.data.country.summary = summary;
     done();
   });
@@ -160,7 +160,7 @@ function cleanUpCountry(rawdata) {
 function byDataset(data) {
   var datasets = {};
   var countryNames = _.uniq(_.map(data, function(r) {
-    return r['country'];
+    return r['place'];
   }));
   function makeCountryDict () {
     var _out = {};
@@ -173,7 +173,7 @@ function byDataset(data) {
       datasets[row['dataset']] = makeCountryDict();
   });
   _.each(data, function(row) {
-    var c = row['country'];
+    var c = row['place'];
     var d = row['dataset'];
     datasets[d][c] = row;
   });
