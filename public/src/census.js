@@ -13,6 +13,7 @@ $(document).ready(function($) {
     $('.navbar').hide();
     $('body').attr('style', 'padding-top: 0');
   }
+
   $.getJSON('/country/results.json', function(data) {
     $('.loading').hide();
     OpenDataCensus.summaryTable($('.response-summary'), data, popoverContent);
@@ -26,10 +27,6 @@ $(document).ready(function($) {
       showOpenMap();
     });
     // createMapSelector();
-    $("#nds").html(data.summary.entries);
-    $("#nok").html(data.summary.open);
-    $("#nc").html(data.summary.places);
-    $("#nokpercent").html(data.summary.open_percent + '%');
   });
 
   function createMapSelector() {

@@ -107,7 +107,7 @@ OpenDataCensus.load = function(cb) {
     OpenDataCensus.data.country.bydataset = bydataset;
     OpenDataCensus.data.country.byplace = byPlace(results);
     var summary = getSummaryData(results);
-    summary.countries = OpenDataCensus.data.country.places.length;
+    summary.places = OpenDataCensus.data.country.places.length;
     OpenDataCensus.data.country.summary = summary;
     done();
   });

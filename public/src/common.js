@@ -64,17 +64,29 @@ OpenDataCensus.colorScale = {
 
 OpenDataCensus.summaryTable = (function(){
   var summaryTable = function(table, data, displayFunc) {
-    // ycount goes from 0 to 6
-    for (i=1; i<=6; i++) {
-      $(table).find('.ycount-' + i).each(function(idx, item) {
-        $td = $(item);
-        // $td.css('background-color', OpenDataCensus.colorScale.openColorScale.getColor(i).hex());
-      });
-    }
+    // do gradient on score
     $(table).find('.placescore').each(function(idx, td) {
       var $td = $(td);
       var score = parseInt($td.data('score'));
       $td.css('background-color', OpenDataCensus.colorScale.totalColorScale.getColor(score).hex());
+    });
+
+    $('.showpopover').each(function(idx, td) {
+      var $td = $(td);
+      var record = data.byplace[$td.data('place')].datasets[$td.data('dataset')];
+      var datasetTitle = $td.data('datasettitle');
+      $td.popover({
+        html: true,
+        placement: 'bottom',
+        container: 'body',
+        title: function(e){
+          title = '<h3>' + datasetTitle + ' in ' + record.place + '</h3>';
+          return title;
+        },
+        content: function(){
+          return OpenDataCensus.popoverBody(record);
+        }
+      });
     });
 
     $(table.find('thead tr th').get(0)).addClass('sorting')
@@ -96,7 +108,6 @@ OpenDataCensus.summaryTable = (function(){
         };
       } else {
         sortFunc = function(a, b) {
-          console.log($(a));
           return $(a).data('area').toUpperCase().localeCompare($(b).data('area').toUpperCase());
         };
       }
@@ -194,9 +205,9 @@ OpenDataCensus.popoverBody = function(response) {
   // url: ""
   var makeNot = function(reply){
     var not;
-    if (reply === 'Yes'){
+    if (reply === 'Y'){
       not = '';
-    } else if (reply === 'No'){
+    } else if (reply === 'N'){
       not = 'not ';
     } else {
       not = 'unclear if it\'s ';
@@ -207,7 +218,7 @@ OpenDataCensus.popoverBody = function(response) {
   var out = '', not;
   out += '<ul>';
   not = '';
-  if (response.exists === 'Yes'){
+  if (response.exists === 'Y'){
     out += '<li>Data exists</li>';
     not = makeNot(response['openlicense']);
     out += '<li>It\'s ' + not + 'openly licensed</li>';

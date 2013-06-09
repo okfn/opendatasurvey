@@ -11,13 +11,13 @@ Countries
       <div class="summary">
         <dl>
           <dt>Number of countries</dt>
-          <dd id="nc">0</dd>
+          <dd id="nc">{{info.summary.places}}</dd>
           <dt>Number of datasets</dt>
-          <dd id="nds">0</dd>
+          <dd id="nds">{{info.summary.entries}}</dd>
           <dt>Number of open datasets</dt>
-          <dd id="nok"></dd>
+          <dd id="nok">{{info.summary.open}}</dd>
           <dt>Percentage open</dt>
-          <dd id="nokpercent"></dd>
+          <dd id="nokpercent">{{info.summary.open_percent}}%</dd>
         </dl>
       </div>
       <div id="spacer"></div>
@@ -61,7 +61,11 @@ Countries
                       {% if record.exists == '?' %}unknown{% endif %}
 
                       ycount-{{record.ycount}}
+                      showpopover
                       "
+                      data-place="{{record.place}}"
+                      data-dataset="{{record.dataset}}"
+                      data-datasetTitle="{{dataset.title}}"
                       ><a>{{record.ycount}} / 6</a>
                     </td>
                     {% else %}
