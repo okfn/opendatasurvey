@@ -9,21 +9,98 @@ This also includes various ancillary information providing an overview of what
 is happening with release of open government data around the world (and
 initiatives related to it).
 
-Materials
----------
+Background and Resources
+------------------------
+
+Read the [Project README and Overview][readme].
 
 * [Open Data Census folder in Google Docs](https://drive.google.com/a/okfn.org/#folders/0B6R8dXc6Ji4JTWE0TVhFejYza2c)
 * [Original User Stories][stories]
-* [Census Questions Spreadshet](https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc#gid=0)
-* DataHub Dataset: <http://datahub.io/dataset/opendatacensus>
 
 [stories]: https://docs.google.com/document/d/1Ji2pifZYSggdgp0Pe8s_vFNrZIvrgwB1OhYz0AdkGsc/edit
+[readme]: https://docs.google.com/a/okfn.org/document/d/1gDa98Gz4PtblMYjMzbj2TvBTBsbhdYtJdDSxQLc70Tw/edit
+
+How it works technically
+-------------------------
+
+Census is being performed at 2 different levels:
+
+* Country level
+* City / regional level
+
+The set of datasets asked about for each level are different but the questions asked per dataset are very similar.
+
+We use google spreadsheets as a backend for the Open Data Census. Data is stored in 3 different spreadsheets:
+
+* [Dataset and Questions spreadsheet][questions] - this list the datasets for
+  the country and city census as well as the questions asked for each dataset
+* [Country spreadsheet][country]
+* [City and Region spreadsheet][city]
+
+[questions]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc#gid=0
+[country]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVnbG5pUFlyUzBpVkFXbXJ2WWpGTUE#gid=6
+[city]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdEEycENNYXQtU1RIbzRSYVRxLXFOdHc#gid=1
+
+For historical reasons the raw data from the Country and City census arrive in different forms. We aim to get 
+
+We attempt to have a common form to the results spreadsheet.
+
+1. Submissions - this is raw data from form submissions
+2. Normalized - raw submissions data but in normalized form (standard headings)
+3. Reviewed (not yet used) - reviewed and consolidated data
+
+### Country Spreadsheet
+
+Process
+
+1. Submit via google form
+2. Arrive in submissions tab
+3. Copy to the Normalized tab (which has standard columns)
+4. Review (soon)
+
+### City Spreadsheet
+
+Process
+
+1. Submit via our custom JS form. Data is still submitted to a google spreadsheet with a google form. However we do not use Google's generated form but just submit ourselves using JS. The form therefore only has 1 field "Data") and we store results of form as a JSON blob in this field.
+
+2. Normalized sheet - this is produced from submissions sheet by running the unpack script (go to Open Data Census menu => Unpack)
+
+  * uses this app script https://script.google.com/a/macros/okfn.org/d/M2ShE7x1mR_sRh_6fT27vYhyeNKfa_QZS/edit
+
+3. Reviewed
+
 
 For Developers
 --------------
 
-It's just HTML + JS but you'll need to initialize the submodules to get relevant dependencies:
+The app is a simple Express NodeJS app deployed on Heroku.
 
-    git submodule init
-    git submodule update
+Install
+~~~~~~~
+
+To install do the following:
+
+1. Get the code and init the submodules (for recline vendor library)
+
+
+        git clone https://github.com/okfn/opendatacensus 
+        git submodule init
+        git submodule update
+
+2. Install node dependencies
+        
+        cd opendatacensus
+        npm install .
+
+3. Run the app
+
+        node app.js
+
+4. Should now be running at <http://localhost:5000>
+
+Deployment
+~~~~~~~~~~
+
+App is deployed on Heroku as `opendatacensus`. Do the usual.
 
