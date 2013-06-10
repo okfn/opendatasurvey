@@ -104,6 +104,12 @@ describe('census', function() {
     assert.equal(berlintt.isopen, true);
   });
 
+  it('city score is ok', function(){
+    var berlintt = city.byplace['Berlin'];
+    assert.equal(berlintt.score, 53);
+    assert.equal(berlintt.totalopen, 5);
+  });
+
   // /////////////////////
   // Catalogs
 

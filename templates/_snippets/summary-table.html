@@ -27,13 +27,13 @@
       data-place="{{record.place}}"
       data-dataset="{{record.dataset}}"
       data-datasetTitle="{{dataset.title}}"
-      ><a>{{record.ycount}} / 6</a>
+      ><a>{{record.ycount}} / {{info.summary.maxScorePerRecord}}</a>
     </td>
     {% else %}
     <td class="no-data"><a href="submit/?dataset={{dataset.id}}&area={{place}}" data-toggle="tooltip" class="count-0" title="Click here to add to the census!">?</a>
     {% endif %}
     {% endfor %}
-    <td class="placescore" data-score="{{placeScore}}"><a>{{placeScore}} / 60</a></td>
+    <td class="placescore" data-score="{{placeScore}}"><a>{{placeScore}} / {{info.summary.maxScorePerPlace}}</a></td>
   </tr>
   {% endfor %}
 </tbody>

@@ -263,7 +263,21 @@ function byPlace(results, datasets) {
   });
   _.each(results, function(row) {
     out[row.place].datasets[row.dataset] = row;
-    out[row.place].score = out[row.place].score + row.ycount;
+    // due to dupes cannot do this
+    // out[row.place].score = out[row.place].score + row.ycount;
+  });
+  // due to 
+  _.each(places, function(place) {
+    var score = 0;
+    var totalopen = 0;
+    _.each(out[place].datasets, function(record) {
+      score += record.ycount;
+      if (record.isopen) {
+        totalopen += 1;
+      }
+    });
+    out[place].score = score;
+    out[place].totalopen = totalopen;
   });
   return out;
 }
