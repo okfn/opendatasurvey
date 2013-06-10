@@ -16,6 +16,30 @@ OpenDataCensus.colorScale = {
 };
 
 OpenDataCensus.summaryTable = (function(){
+
+  // Only one popover visible
+  // Adapted from http://stackoverflow.com/a/12119747/114462
+  var $visiblePopover;
+
+  $('body').on('click', 'td.showpopover', function() {
+    var $this = $(this);
+
+    // check if the one clicked is now shown
+    if ($this.data('popover').tip().hasClass('in')) {
+
+      // if another was showing, hide it
+      if ($visiblePopover) {
+        $visiblePopover.popover('hide');
+      }
+
+      // then store reference to current popover
+      $visiblePopover = $this;
+
+    } else { // if it was hidden, then nothing must be showing
+      $visiblePopover = '';
+    }
+  });
+
   var summaryTable = function(table, data) {
     // do gradient on score
     $(table).find('.placescore').each(function(idx, td) {
