@@ -80,8 +80,8 @@ describe('census', function() {
   it('city.places is ok ', function(){
     // test places / countries
     // console.log(city.places.length);
-    assert(city.places.length >= 40);
-    assert(_.contains(city.places, 'Berlin, Germany'));
+    assert(city.places.length >= 34);
+    assert(_.contains(city.places, 'Berlin'));
   });
 
   it('city.datasets is ok ', function(){
@@ -93,9 +93,15 @@ describe('census', function() {
   it('city.byplace is ok ', function(){
     assert.equal(_.keys(city.byplace).length, city.places.length);
 
-    var berlin = city.byplace['Berlin, Germany'];
+    var berlin = city.byplace['Berlin'];
     // bad test as number will change over time!!
-    assert.equal(_.keys(berlin.datasets).length, 2);
+    assert.equal(_.keys(berlin.datasets).length, 14);
+  });
+
+  it('city data is ok', function(){
+    var berlintt = city.byplace['Berlin'].datasets['timetables'];
+    assert.equal(berlintt.ycount, 6);
+    assert.equal(berlintt.isopen, true);
   });
 
   // /////////////////////

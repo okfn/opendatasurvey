@@ -60,7 +60,11 @@ app.get('/country/submit/', function(req, res) {
 });
 
 app.get('/city/', function(req, res) {
-  res.render('city/index.html', {});
+  res.render('city/index.html', {info: model.data.city});
+});
+
+app.get('/city/results.json', function(req, res) {
+  res.json(model.data.city);
 });
 
 app.get('/city/submit/', function(req, res) {

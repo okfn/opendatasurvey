@@ -37,45 +37,7 @@ Countries
           <div class="tab-pane active" id="table-overview">
             <div class="table">
               <table class="response-summary table table-bordered">
-                <thead>
-                  <tr>
-                    <th></th>
-                    {% for dataset in info.datasets %}
-                      <th><div>{{dataset.titleRotated}}</div></th>
-                    {% endfor %}
-                    <th><div><strong>Total Score</strong></div>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for place in info.places %}
-                  {% set placeScore = info.byplace[place].score %}
-                  <tr data-score="{{placeScore}}"  data-area="{{place}}">
-                    <th class="area-name">{{place}}</th>
-                    {% for dataset in info.datasets %}
-                    {% set record = info.byplace[place].datasets[dataset.id] %}
-                    {% if record %}
-                    <td
-                      class="
-                      {% if record.exists == 'N' %}unavailable{% endif %}
-
-                      {% if record.exists == '?' %}unknown{% endif %}
-
-                      ycount-{{record.ycount}}
-                      showpopover
-                      "
-                      data-place="{{record.place}}"
-                      data-dataset="{{record.dataset}}"
-                      data-datasetTitle="{{dataset.title}}"
-                      ><a>{{record.ycount}} / 6</a>
-                    </td>
-                    {% else %}
-                    <td class="no-data"><a href="submit/?dataset={{dataset.id}}&area={{place}}" data-toggle="tooltip" class="count-0" title="Click here to add to the census!">?</a>
-                    {% endif %}
-                    {% endfor %}
-                    <td class="placescore" data-score="{{placeScore}}"><a>{{placeScore}} / 60</a></td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
+                {% include '_snippets/summary-table.html' %}
               </table>
             </div>
           </div>

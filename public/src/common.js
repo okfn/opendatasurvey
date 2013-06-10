@@ -16,7 +16,7 @@ OpenDataCensus.colorScale = {
 };
 
 OpenDataCensus.summaryTable = (function(){
-  var summaryTable = function(table, data, displayFunc) {
+  var summaryTable = function(table, data) {
     // do gradient on score
     $(table).find('.placescore').each(function(idx, td) {
       var $td = $(td);

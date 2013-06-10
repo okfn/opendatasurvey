@@ -10,7 +10,7 @@ $(document).ready(function($) {
 
   $.getJSON('/country/results.json', function(data) {
     $('.loading').hide();
-    OpenDataCensus.summaryTable($('.response-summary'), data, popoverContent);
+    OpenDataCensus.summaryTable($('.response-summary'), data);
     // summaryMap(data);
     $('#overallscore').click(function(e){
       e.preventDefault();

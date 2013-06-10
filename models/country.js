@@ -114,6 +114,9 @@ OpenDataCensus.load = function(cb) {
     OpenDataCensus.data.country.byplace = byPlace(results);
     var summary = getSummaryData(results);
     summary.places = OpenDataCensus.data.country.places.length;
+    summary.maxScorePerRecord = openQuestions.length;
+    // 10 = no of datasets (would use datasets.length but due to async may not have that data yet)
+    summary.maxScorePerPlace = openQuestions.length * 10;
     OpenDataCensus.data.country.summary = summary;
     done();
   });
@@ -130,7 +133,7 @@ OpenDataCensus.load = function(cb) {
     done();
   });
   getCsvData(OpenDataCensus.data.city.resultsUrl, function(data) {
-    var results = data;
+    var results = cleanUpCity(data);
     var c = OpenDataCensus.data.city;
     c.results = results;
     c.places = _.uniq(_.map(results, function(r) {
@@ -139,6 +142,9 @@ OpenDataCensus.load = function(cb) {
     c.byplace = byPlace(results);
     c.summary = getSummaryData(results);
     c.summary.places = c.places.length;
+    c.summary.maxScorePerRecord = openQuestions.length;
+    // 15 = no of datasets (would use datasets.length but due to async may not have that data yet)
+    c.summary.maxScorePerPlace = openQuestions.length * 15;
     done();
   });
   getCsvData(OpenDataCensus.data.catalogs.url, function(data) {
@@ -161,6 +167,17 @@ function cleanUpCountry(rawdata) {
     'Public Transport Timetables': 'timetables',
     'Environmental Data on major sources of pollutants (e.g. location, emissions)': 'emissions'
   };
+  var out = rawdata.map(function(record) {
+    // 2013-06-09 normalize the datasets from a title to the id
+    // (at some point this should be obsolete as we fix at source)
+    record.dataset = countryDatasetsMap[record.dataset];
+    return record;
+  });
+  out = cleanUpCommon(out);
+  return out;
+}
+
+function cleanUpCommon(records) {
   var correcter = {
     'Yes': 'Y',
     'No': 'N',
@@ -168,10 +185,7 @@ function cleanUpCountry(rawdata) {
     'Unsure': '?'
   };
   var ynquestions = OpenDataCensus.questions.slice(3, 10);
-  var out = rawdata.map(function(record) {
-    // 2013-06-09 normalize the datasets from a title to the id
-    // (at some point this should be obsolete as we fix at source)
-    record.dataset = countryDatasetsMap[record.dataset];
+  var out = records.map(function(record) {
     // fix up y/n
     ynquestions.forEach(function(question) {
       record[question] = correcter[record[question]]
@@ -189,6 +203,18 @@ function cleanUpCountry(rawdata) {
       ;
     return record;
   });
+  return out;
+}
+
+function cleanUpCity(records) {
+  var out = records.map(function(record) {
+    record.placeLong = record.place;
+    // TODO: we will run into issues where we do have same first name
+    // e.g. Cambridge (Mass) and Cambridge (UK)
+    record.place = record.place.split(',')[0]
+    return record;
+  });
+  var out = cleanUpCommon(out);
   return out;
 }
 

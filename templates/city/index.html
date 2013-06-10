@@ -11,17 +11,16 @@ Cities
       <div class="summary">
         <dl>
           <dt>Number of cities</dt>
-          <dd id="nc">0</dd>
+          <dd id="nc">{{info.summary.places}}</dd>
           <dt>Number of datasets</dt>
-          <dd id="nds">0</dd>
+          <dd id="nds">{{info.summary.entries}}</dd>
           <dt>Number of open datasets</dt>
-          <dd id="nok">0</dd>
+          <dd id="nok">{{info.summary.open}}</dd>
           <dt>Percentage open</dt>
-          <dd id="nokpercent">0</dd>
+          <dd id="nokpercent">{{info.summary.open_percent}}%</dd>
         </dl>
       </div>
       <div id="spacer"></div>
-      <div class="loading">Loading <img src="http://assets.okfn.org/images/icons/ajaxload-circle.gif" alt="Loading" /></div>
       <div class="tabbable"> <!-- Only required for left/right tabs -->
         <div class="span3 pull-right">
           <a class="btn" href="submit/">
@@ -37,11 +36,7 @@ Cities
           <div class="tab-pane active" id="table-overview">
             <div class="table">
               <table id="city-table" class="response-summary table table-bordered">
-                <thead>
-                  <tr><th></th></tr>
-                </thead>
-                <tbody>
-                </tbody>
+                {% include '_snippets/summary-table.html' %}
               </table>
             </div>
           </div>
