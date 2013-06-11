@@ -42,15 +42,8 @@ describe('census', function() {
     // assert(uk.datasets[
   });
 
-  it('country.bydataset is ok ', function(){
-    console.log(_.keys(c.bydataset));
-    assert.equal(_.keys(c.bydataset).length, c.datasets.length);
-
-    assert.equal(c.bydataset['elections']['Jamaica'], null);
-
-    var ds = c.bydataset['elections'];
-    assert.equal(_.keys(ds).length, c.places.length);
-    var uk = ds['United Kingdom'];
+  it('country item is ok ', function(){
+    var uk = c.byplace['United Kingdom'].datasets['elections'];
     // console.log(uk);
     assert.equal(uk.exists, 'Y');
     assert.equal(uk['uptodate'], 'Y');
@@ -59,8 +52,7 @@ describe('census', function() {
   });
 
   it('country census item open is ok ', function(){
-    var ds = c.bydataset['map'];
-    var uk = ds['United Kingdom'];
+    var uk = c.byplace['United Kingdom'].datasets['map'];
     assert.equal(uk.ycount, 6);
     assert.equal(uk.isopen, true);
   });

@@ -124,8 +124,6 @@ OpenDataCensus.load = function(cb) {
     OpenDataCensus.data.country.places = _.uniq(_.map(results, function(r) {
       return r['place'];
     }));
-    var bydataset = byDataset(results);
-    OpenDataCensus.data.country.bydataset = bydataset;
     OpenDataCensus.data.country.byplace = byPlace(results);
     var summary = getSummaryData(results);
     summary.places = OpenDataCensus.data.country.places.length;
