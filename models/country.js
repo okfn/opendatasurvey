@@ -37,19 +37,23 @@ g8Countries = [
 OpenDataCensus.data = {
   country: {
     datasetsUrl: 'http://docs.google.com/spreadsheet/pub?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&single=true&gid=0&output=csv',
-    // authoratative set
+    // must be the CSV file
     resultsUrl: 'https://docs.google.com/spreadsheet/pub?key=0Aon3JiuouxLUdEVnbG5pUFlyUzBpVkFXbXJ2WWpGTUE&single=true&gid=6&output=csv',
-// dataset info looks like
-// 
-//  { ID: 'energy',
-//    Dataset: 'Energy Consumption ',
-//    Category: 'Energy',
-//    Description: 'Real time usage of energy in city and trends over time.',
-//  }
+    // dataset info looks like
+    // 
+    //  { id: 'energy',
+    //    title: 'Energy Consumption ',
+    //    category: 'Energy',
+    //    description: 'Real time usage of energy in city and trends over time.',
+    //    ...
+    //  }
+    // basically dataset info from https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc#gid=0
+    // cleaned up
     datasets: [],
     // array of hashes each hash having question keys
+    // this is basically the raw results with some cleanup
     results: [],
-    // keyed by place then by dataset
+    // see the docs on byPlace function below
     byplace: {}
   },
   g8: {
@@ -61,7 +65,8 @@ OpenDataCensus.data = {
     datasetsUrl: 'http://docs.google.com/spreadsheet/pub?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&single=true&gid=3&output=csv',
     resultsUrl: 'https://docs.google.com/spreadsheet/pub?key=0AqR8dXc6Ji4JdEEycENNYXQtU1RIbzRSYVRxLXFOdHc&single=true&gid=1&output=csv',
     datasets: [],
-    results: []
+    results: [],
+    byplace: {}
   },
   catalogs: {
     // https://docs.google.com/spreadsheet/ccc?key=0Aon3JiuouxLUdE9POFhudGd6NFk0THpxR0NicFViRUE#gid=1
