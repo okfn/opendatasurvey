@@ -16,9 +16,11 @@ Read the [Project README and Overview][readme].
 
 * [Open Data Census folder in Google Docs](https://drive.google.com/a/okfn.org/#folders/0B6R8dXc6Ji4JTWE0TVhFejYza2c)
 * [Original User Stories][stories]
+* [Data Catalogs Spreadsheet][catalogs]
 
 [stories]: https://docs.google.com/document/d/1Ji2pifZYSggdgp0Pe8s_vFNrZIvrgwB1OhYz0AdkGsc/edit
 [readme]: https://docs.google.com/a/okfn.org/document/d/1gDa98Gz4PtblMYjMzbj2TvBTBsbhdYtJdDSxQLc70Tw/edit
+[catalogs]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdE9POFhudGd6NFk0THpxR0NicFViRUE#gid=1
 
 How it works technically
 -------------------------
@@ -98,6 +100,17 @@ To install do the following:
         node app.js
 
 4. Should now be running at <http://localhost:5000>
+
+Running Tests
+~~~~~~~~~~~~~
+
+Install mocha (see devDependencies in package.json) then do:
+
+    mocha test/
+
+**note** we run off live data yet some expected values are hard-coded. Thus
+tests are likely to break as underlying data changes. We should fix this soon
+by running off mock data.
 
 Deployment
 ~~~~~~~~~~
