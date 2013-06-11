@@ -43,7 +43,7 @@ describe('census', function() {
   });
 
   it('country.bydataset is ok ', function(){
-    // console.log(_.keys(c.bydataset));
+    console.log(_.keys(c.bydataset));
     assert.equal(_.keys(c.bydataset).length, c.datasets.length);
 
     assert.equal(c.bydataset['elections']['Jamaica'], null);
@@ -63,6 +63,18 @@ describe('census', function() {
     var uk = ds['United Kingdom'];
     assert.equal(uk.ycount, 6);
     assert.equal(uk.isopen, true);
+  });
+
+  // /////////////////////
+  // G8
+
+  it('g8 census is ok ', function(){
+    var g8 = model.data.g8;
+    // console.log(g8.results.length);
+    assert.equal(_.keys(g8.datasets).length, 10);
+    assert.equal(g8.results.length, 96);
+    assert.equal(_.keys(g8.byplace).length, 8);
+    assert.equal(g8.summary.open, 35);
   });
 
   // /////////////////////

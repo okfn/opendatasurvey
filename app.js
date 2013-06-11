@@ -4,6 +4,7 @@ var express = require('express')
   , nunjucks = require('nunjucks')
   , request = require('request')
   , csv = require('csv')
+  , _ = require('underscore')
   ;
 
 var app = express();
@@ -57,6 +58,10 @@ app.get('/country/results.json', function(req, res) {
 
 app.get('/country/submit/', function(req, res) {
   res.render('country/submit/index.html', {});
+});
+
+app.get('/g8/', function(req, res) {
+  res.render('g8/index.html', {info: model.data.g8});
 });
 
 app.get('/city/', function(req, res) {

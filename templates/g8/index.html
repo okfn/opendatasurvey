@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}
+G8 Countries
+{% endblock %}
+
+{% block content %}
+      <div class="page-header">
+        <h1>G8 Open Data Census</h1>
+      </div>
+      <div class="summary">
+        <dl>
+          <dt>Number of countries</dt>
+          <dd id="nc">{{info.summary.places}}</dd>
+          <dt>Number of responses</dt>
+          <dd id="nds">{{info.summary.entries}}</dd>
+          <dt>Number of open datasets</dt>
+          <dd id="nok">{{info.summary.open}}</dd>
+          <dt>Percentage open</dt>
+          <dd id="nokpercent">{{info.summary.open_percent}}%</dd>
+        </dl>
+      </div>
+      <div id="spacer"></div>
+      <div class="table">
+        <table class="response-summary table table-bordered">
+          {% include '_snippets/summary-table.html' %}
+        </table>
+      </div>
+    <script src="{{page.root}}/src/common.js"></script>
+    <script src="{{page.root}}/src/census.js"></script>
+{% endblock %}

@@ -23,9 +23,16 @@ OpenDataCensus.questions =  [
 
 var openQuestions = OpenDataCensus.questions.slice(3,9);
 
-OpenDataCensus.dataCatalogsUrl = "https://docs.google.com/spreadsheet/ccc?key=0Aon3JiuouxLUdE9POFhudGd6NFk0THpxR0NicFViRUE#gid=1";
-
-exports.OpenDataCensus = OpenDataCensus;
+g8Countries = [
+    'Canada',
+    'France',
+    'Germany',
+    'Italy',
+    'Japan',
+    'Russian Federation',
+    'United Kingdom',
+    'United States'
+  ];
 
 OpenDataCensus.data = {
   country: {
@@ -41,7 +48,14 @@ OpenDataCensus.data = {
 //  }
     datasets: [],
     // array of hashes each hash having question keys
-    results: []
+    results: [],
+    // keyed by place then by dataset
+    byplace: {}
+  },
+  g8: {
+    datasets: [],
+    results: [],
+    byplace: {}
   },
   city: {
     datasetsUrl: 'http://docs.google.com/spreadsheet/pub?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&single=true&gid=3&output=csv',
@@ -101,6 +115,7 @@ OpenDataCensus.load = function(cb) {
       return ds;
     });
     OpenDataCensus.data.country.datasets = dss;
+    OpenDataCensus.data.g8.datasets = dss;
     done();
   });
   getCsvData(OpenDataCensus.data.country.resultsUrl, function(data) {
@@ -118,6 +133,21 @@ OpenDataCensus.load = function(cb) {
     // 10 = no of datasets (would use datasets.length but due to async may not have that data yet)
     summary.maxScorePerPlace = openQuestions.length * 10;
     OpenDataCensus.data.country.summary = summary;
+  
+    // now do g8
+    var g8 = OpenDataCensus.data.g8;
+    g8.results = _.filter(results, function(item) {
+      return _.contains(g8Countries, item.place);
+    });
+    g8.places = g8Countries;
+    g8.byplace = byPlace(g8.results);
+    g8.summary = getSummaryData(g8.results);
+    g8.summary.places = 8;
+    g8.summary.maxScorePerRecord = openQuestions.length;
+    g8.summary.maxScorePerPlace = openQuestions.length * 10;
+    // hack - we don't dedupe in results yet
+    g8.summary.entries = 80;
+
     done();
   });
   getCsvData(OpenDataCensus.data.city.datasetsUrl, function(data) {
@@ -177,6 +207,8 @@ function cleanUpCountry(rawdata) {
   return out;
 }
 
+// TODO: filter out records where dataset not in our dataset list
+// TODo: ensure we only have one record (latest one) for each place+dataset 
 function cleanUpCommon(records) {
   var correcter = {
     'Yes': 'Y',
@@ -266,7 +298,7 @@ function byPlace(results, datasets) {
     // due to dupes cannot do this
     // out[row.place].score = out[row.place].score + row.ycount;
   });
-  // due to 
+  // avoid dupes
   _.each(places, function(place) {
     var score = 0;
     var totalopen = 0;
@@ -320,4 +352,6 @@ OpenDataCensus.uglySpaceHack = function(name){
 }
 
 // OpenDataCensus.load(function() {});
+
+exports.OpenDataCensus = OpenDataCensus;
 
