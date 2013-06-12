@@ -55,7 +55,21 @@ app.get('/about/', function(req, res) {
   fs.readFile('templates/about.md', 'utf8', function(err, text) {
     var marked = require('marked');
     var content = marked(text);
-    res.render('base.html', {content: content});
+    res.render('base.html', {
+      content: content,
+      title: 'About'
+    });
+  });
+});
+
+app.get('/contribute/', function(req, res) {
+  fs.readFile('templates/contribute.md', 'utf8', function(err, text) {
+    var marked = require('marked');
+    var content = marked(text);
+    res.render('base.html', {
+      content: content,
+      title: 'Contribute'
+    });
   });
 });
 
