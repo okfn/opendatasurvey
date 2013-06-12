@@ -212,7 +212,7 @@ OpenDataCensus.popoverBody = function(response) {
   if (response.url) {
     out += '<a href="' + response.url + '" target="_blank">Data Location Online</a>';
   }
-  var submitter = $('<div class="submitter" />').text('Submitted by ').append($('<a>', {href: response['submitterurl']}).text(response.submitter || 'Unknown'));
-  out += $('<div>').append(submitter).html();
+  // var submitter = $('<div class="submitter" />').text('Submitted by ').append($('<a>', {href: response['submitterurl']}).text(response.submitter || 'Unknown'));
+  // out += $('<div>').append(submitter).html();
   return out;
 };
