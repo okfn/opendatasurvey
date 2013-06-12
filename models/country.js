@@ -215,17 +215,19 @@ function cleanUpCountry(rawdata) {
 // TODo: ensure we only have one record (latest one) for each place+dataset 
 function cleanUpCommon(records) {
   var correcter = {
-    'Yes': 'Y',
-    'No': 'N',
-    'No ': 'N',
-    'Unsure': '?'
+    'yes': 'Y',
+    'yes ': 'Y',
+    'no': 'N',
+    'no ': 'N',
+    'unsure': '?'
   };
   var ynquestions = OpenDataCensus.questions.slice(3, 10);
   var out = records.map(function(record) {
     // fix up y/n
     ynquestions.forEach(function(question) {
-      record[question] = correcter[record[question]]
+      record[question] = correcter[record[question].toLowerCase()]
       if (record[question] == undefined) {
+        console.error('Bad y/n data');
         console.error(record);
       }
     });
