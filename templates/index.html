@@ -14,15 +14,16 @@ Home
 <div class="dashboard">
   <div class="inner">
     <div class="row">
-      <div class="span4">
-        <p>There are</p> <a href="catalogs/" class="bignumber" id="tds">{% for char in numberCatalogs %}<span>{{char}}</span>{% endfor %}</a> <p>Open Data Catalogs</p>
-      </div>
       <div class="span8">
         <p>&nbsp;</p>
         <a href="country/" class="bignumber" id="nok">{% for char in numberOpen %}<span>{{char}}</span>{% endfor %}</a>
         <span class="between-numbers">of</span>
         <a href="country/" class="bignumber"
-          id="nds">{% for char in numberEntries %}<span>{{char}}</span>{% endfor %}</a> <p>key datasets in the<br>census are open</p>
+          id="nds">{% for char in numberEntries %}<span>{{char}}</span>{% endfor %}</a> <p>key datasets in the census<br />are open <a href="/country/">Read more &raquo;</a></p>
+      </div>
+      <div class="span4">
+        <p>&nbsp;</p>
+        <a href="catalogs/" class="bignumber" id="tds">{% for char in numberCatalogs %}<span>{{char}}</span>{% endfor %}</a> <p>Open Data Catalogs</p>
       </div>
     </div>
   </div>
@@ -30,8 +31,7 @@ Home
 <section class="home-content">
   <div class="row">
     <div class="span4">
-      <p><strong>The open data census</strong> assesses the state of <a href="http://okfn.org/opendata/">open data</a> around the world. This site hosts the census and presents the results along with other key facts about the state of open data and especially open government data around the world. <a href="about/">Find out more &raquo;</a></p>
-      <p>The accuracy of the data presented here depends on the accuracy of the data in our sources. If you spot an error or see something you see is incorrect please <a href="http://okfn.org/contact/">let us know</a>.</p>
+      <p><strong>The open data census</strong> is an initiative of the <a href="http://okfn.org/">Open Knowledge Foundation</a> that assesses the <strong>state of <a href="http://okfn.org/opendata/">open data</a> around the world</strong>. This site hosts the census and presents the results along with other key facts about the state of open data and especially open government data. <a href="about/">Find out more &raquo;</a></p>
     </div>
     <div class="span4">
       <a href="country/" class="link well" style="background-image:url(css/census-map.png);">
