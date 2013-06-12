@@ -23,7 +23,7 @@ Contributions to the Census are encouraged. Please visit the <a href="http://cen
   <li>Your submission, subject to review, will soon be visible in the table.</li>
 </ol>
 
-# How to Review Census Submissions
+## How to Review Census Submissions
 
 It is equally important to review submissions to the Census to ensure it is accurate and up-to-date. Review is managed by the Census Editors.
 
