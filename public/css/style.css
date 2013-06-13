@@ -37,11 +37,60 @@ body {
 	color:#2b2a2a;
 	text-shadow:none;
 }
+.navbar .nav > li {
+	border-left: solid 1px #a7a9a4;
+	padding:10px 5px;
+}
 .navbar .nav > li > a {
   color: #2b2a2a;
-  padding: 25px 15px;
+  padding: 15px 10px;
 	text-shadow:none;
-	border-left: solid 1px #a7a9a4;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+}
+.navbar .nav > li > a:hover {
+	background-color:rgb(237,237,236);
+	background-color:rgba(237,237,236,0.3);
+}
+.navbar .nav > li.dropdown > a:hover,
+.navbar .nav > li.dropdown:hover > a {
+  background-color:rgb(237,237,236);
+}
+ul.nav li.dropdown:hover > ul.dropdown-menu {
+  display: block;
+	margin:-12px 0 0 5px;
+	border-color:rgb(237,237,236);
+	border-width:0;
+	border-top-width:3px;	
+	-webkit-border-radius: 0px;
+	-webkit-border-bottom-right-radius: 2px;
+	-webkit-border-bottom-left-radius: 2px;
+	-moz-border-radius: 0px;
+	-moz-border-radius-bottomright: 2px;
+	-moz-border-radius-bottomleft: 2px;
+	border-radius: 0px;
+	border-bottom-right-radius: 2px;
+	border-bottom-left-radius: 2px;
+	-webkit-box-shadow: 0px 3px 3px rgba(50, 50, 50, 0.35);
+	-moz-box-shadow:    0px 3px 3px rgba(50, 50, 50, 0.35);
+	box-shadow:         0px 3px 3px rgba(50, 50, 50, 0.35);
+}
+.navbar .nav > li > .dropdown-menu:before,
+.navbar .nav > li > .dropdown-menu:after {
+	display:none;
+}
+.dropdown-menu > li > a {
+	padding: 3px 10px;
+}
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus,
+.dropdown-submenu:hover > a,
+.dropdown-submenu:focus > a {
+	color:#2B2A2A;
+	background-color:rgb(237,237,236);
+	background-image:none;
+	filter:none;
 }
 
 .page-header {
