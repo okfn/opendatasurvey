@@ -1,0 +1,76 @@
+{% set place = country %}
+<h2><a href="../" data-toggle="tooltip" class="count-0" title="Return to country results overview">Countries:</a> {{place}}</h2>
+
+{% if error %}
+{% if error.value == 0 %}
+<div class="alert alert-success" style="text-align: center;">
+    {% else %}
+    <div class="alert alert-error" style="text-align: center;">
+        {% endif %}   
+        {{error.message}}
+    </div>
+    {% endif %}  
+
+    <h3>Live Entries</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Dataset</th><th>Data Availability</th><th>Location</th><th>Information</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dataset in info.datasets %}
+            <tr>
+                <th><div>{{dataset.title}}</div></th>
+
+        {% set record = info.byplace[place].datasets[dataset.id] %}
+        {% if record %}
+        <td data-place="{{record.place}}"
+            data-dataset="{{record.dataset}}"
+            data-datasetTitle="{{dataset.title}}" >
+
+            {{record.exists}} / {{record.digital}} / {{record.machinereadable}} / {{record.bulk}} / {{record.public}} / {{record.openlicence}} / {{record.uptodate}}
+
+        </td>
+        {% else %}
+        <td class="no-data"><a href="submit/?dataset={{dataset.id}}&area={{place}}" data-toggle="tooltip" class="count-0" title="Click here to add to the census!">?</a></td>
+        {% endif %}
+
+        <td> {% if record %} <a href="{{record.url}}">Link</a> {% else %} ? {% endif %}</td>
+        <td> {% if record %} 
+            {% if record.dateavailable %} {{record.dateavailable}} {% else %} Unknown {% endif %} / 
+            <a data-toggle="tooltip" class="count-0" title="{{record.details}}">i</a> / 
+            <a data-toggle="tooltip" class="count-0" title="{{record.submitter}} ({{record.submitterurl}})">P</a> |
+            <a href="../submit/?dataset={{dataset.id}}&area={{place}}">Suggest Changes (Public)</a>
+            {% else %}
+            ? / ? / ? | <a href="../submit/?dataset={{dataset.id}}&area={{place}}" data-toggle="tooltip" class="count-0" title="Click here to add to the census!">Add data (Public)</a>
+            {% endif %}  
+            </tr>
+
+            {% set record = submissions.byplace[place].datasets[dataset.id] %}
+            {% if record %}
+
+        <tr>
+            <th><div>&#8627; Queued Entry</div></th>
+
+        <td data-place="{{record.place}}"
+            data-dataset="{{record.dataset}}"
+            data-datasetTitle="{{dataset.title}}" >
+
+            {{record.exists}} / {{record.digital}} / {{record.machinereadable}} / {{record.bulk}} / {{record.public}} / {{record.openlicence}} / {{record.uptodate}}
+
+        </td>
+        <td> <a href="{{record.url}}">Link</a> </td>
+        <td> 
+            {% if record.dateavailable %} {{record.dateavailable}} {% else %} Unknown {% endif %} / 
+            <a data-toggle="tooltip" class="count-0" title="{{record.details}}">i</a> / 
+            <a data-toggle="tooltip" class="count-0" title="{{record.submitter}} ({{record.submitterurl}})">P</a> |
+            <a href="../review/?dataset={{record.dataset}}&country={{record.place}}">Review (Country Editor)</a>
+            {% else %}
+
+            </tr>
+            {% endif %}  
+
+            {% endfor %}
+            </tbody>
+    </table>

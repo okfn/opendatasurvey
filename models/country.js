@@ -21,6 +21,43 @@ OpenDataCensus.questions =  [
   'reviewed'
 ];
 
+OpenDataCensus.countryDatasetsMap = {
+    'Election Results (national)': 'elections',
+    'Company Register': 'companies',
+    'National Map (Low resolution: 1:250,000 or better)': 'map',
+    'Government Budget (National, high level, not detailed)': 'budget',
+    'Government Spending (National, transactional level data)': 'spending',
+    'Legislation (laws and statutes) - National': 'legislation',
+    'National Statistical Data (economic and demographic information)': 'statistics',
+    'National Postcode/ZIP database': 'postcodes',
+    'Public Transport Timetables': 'timetables',
+    'Environmental Data on major sources of pollutants (e.g. location, emissions)': 'emissions'
+  };
+  
+  OpenDataCensus.datasetNamesMap = {
+    'elections' : 'Election Results (national)',
+    'companies': 'Company Register',
+    'map' : 'National Map (Low resolution: 1:250,000 or better)',
+    'budget' : 'Government Budget (National, high level, not detailed)',
+    'spending' : 'Government Spending (National, transactional level data)',
+    'legislation' : 'Legislation (laws and statutes) - National',
+    'statistics' : 'National Statistical Data (economic and demographic information)',
+    'postcodes' : 'National Postcode/ZIP database',
+    'timetables' : 'Public Transport Timetables',
+    'emissions': 'Environmental Data on major sources of pollutants (e.g. location, emissions)'
+  };
+  
+  //The IDs are different from those used for publishing, they are ordered by current sheet position, and start at 1
+  OpenDataCensus.sheetsQueryUrlMap = {
+      'submitted' : 'https://spreadsheets.google.com/feeds/list/0Ak6K0pSAyW1gdFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc/1/public/basic?sq=',
+      'archiveKey' : '0Ak6K0pSAyW1gdFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc',
+      'archive' : 'https://spreadsheets.google.com/feeds/list/0Ak6K0pSAyW1gdFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc/5/public/basic?sq=',
+      'archivePost' : 'https://spreadsheets.google.com/feeds/list/0Ak6K0pSAyW1gdFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc/5/public/basic',
+      'live' : 'https://spreadsheets.google.com/feeds/list/0Ak6K0pSAyW1gdFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc/3/public/basic?sq=',
+      'livePost' : 'https://spreadsheets.google.com/feeds/list/0Ak6K0pSAyW1gdFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc/3/public/basic'
+  }
+
+
 var openQuestions = OpenDataCensus.questions.slice(3,9);
 
 g8Countries = [
@@ -36,11 +73,41 @@ g8Countries = [
 
 OpenDataCensus.data = {
   country: {
+    //This is the list of datasets... i.e. a foreign field in the results table
     datasetsUrl: 'http://docs.google.com/spreadsheet/pub?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&single=true&gid=0&output=csv',
+    // Submissions set
+    // must be the CSV file
     // Reviewed set
     // must be the CSV file
-    resultsUrl: 'https://docs.google.com/spreadsheet/pub?key=0Aon3JiuouxLUdEVnbG5pUFlyUzBpVkFXbXJ2WWpGTUE&single=true&gid=7&output=csv',
+    // TODO: Clarify if we want normalized or reviewed. Normalized causes a crash currently.
+    resultsUrl: 'https://docs.google.com/spreadsheet/pub?key=0Ak6K0pSAyW1gdFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc&single=true&gid=7&output=csv',
     // dataset info looks like
+    // 
+    //  { id: 'energy',
+    //    title: 'Energy Consumption ',
+    //    category: 'Energy',
+    //    description: 'Real time usage of energy in city and trends over time.',
+    //    ...
+    //  }
+    // basically dataset info from https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc#gid=0
+    // cleaned up
+    datasets: [],
+    // array of hashes each hash having question keys
+    // this is basically the raw results with some cleanup
+    results: [],
+    // see the docs on byPlace function below
+    byplace: {}
+  },
+  countrysubmissions: {
+    //This is the list of datasets... i.e. a foreign field in the results table
+    datasetsUrl: 'http://docs.google.com/spreadsheet/pub?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&single=true&gid=0&output=csv',
+    // Submissions set
+    // must be the CSV file
+    //The column titles are tied to the form. We have short form titles in the 2nd line to match the final results set TODO: Is that necessary?
+    //TODO: Careful that column mismatches don't cause problems. Additions are usually made by specifying columns, so it shouldn't matter
+    resultsUrl: 'https://docs.google.com/spreadsheet/pub?key=0Ak6K0pSAyW1gdFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc&single=true&gid=0&range=A2%3AP200000&output=csv', 
+    
+// dataset info looks like
     // 
     //  { id: 'energy',
     //    title: 'Energy Consumption ',
@@ -124,6 +191,7 @@ OpenDataCensus.load = function(cb) {
     OpenDataCensus.data.g8.datasets = dss;
     done();
   });
+  
   getCsvData(OpenDataCensus.data.country.resultsUrl, function(data) {
     var results = cleanUpCountry(data);
     OpenDataCensus.data.country.results = results;
@@ -154,6 +222,18 @@ OpenDataCensus.load = function(cb) {
 
     done();
   });
+  
+  //Get the submissions, simpler as we only need the data
+  getCsvData(OpenDataCensus.data.countrysubmissions.resultsUrl, function(data) {
+    var results = cleanUpCountry(data);
+    OpenDataCensus.data.countrysubmissions.results = results;
+    OpenDataCensus.data.countrysubmissions.places = _.uniq(_.map(results, function(r) {
+      return r['place'];
+    }));
+    OpenDataCensus.data.countrysubmissions.byplace = byPlace(results);
+    done();
+  });
+  
   getCsvData(OpenDataCensus.data.city.datasetsUrl, function(data) {
     var dss = data.slice(0,15);
     dss = dss.map(function(ds) {
@@ -189,22 +269,11 @@ OpenDataCensus.load = function(cb) {
 
 // TODO: dedupe etc
 function cleanUpCountry(rawdata) {
-  countryDatasetsMap = {
-    'Election Results (national)': 'elections',
-    'Company Register': 'companies',
-    'National Map (Low resolution: 1:250,000 or better)': 'map',
-    'Government Budget (National, high level, not detailed)': 'budget',
-    'Government Spending (National, transactional level data)': 'spending',
-    'Legislation (laws and statutes) - National': 'legislation',
-    'National Statistical Data (economic and demographic information)': 'statistics',
-    'National Postcode/ZIP database': 'postcodes',
-    'Public Transport Timetables': 'timetables',
-    'Environmental Data on major sources of pollutants (e.g. location, emissions)': 'emissions'
-  };
+  
   var out = rawdata.map(function(record) {
     // 2013-06-09 normalize the datasets from a title to the id
     // (at some point this should be obsolete as we fix at source)
-    record.dataset = countryDatasetsMap[record.dataset];
+    record.dataset = OpenDataCensus.countryDatasetsMap[record.dataset];
     return record;
   });
   out = cleanUpCommon(out);
@@ -221,15 +290,18 @@ function cleanUpCommon(records) {
     'no ': 'N',
     'unsure': '?'
   };
-  var ynquestions = OpenDataCensus.questions.slice(3, 10);
+  //TODO: Why was this 10 and not 9?
+  var ynquestions = OpenDataCensus.questions.slice(3, 9);
   var out = records.map(function(record) {
     // fix up y/n
     ynquestions.forEach(function(question) {
-      record[question] = correcter[record[question].toLowerCase()]
+      
       if (record[question] == undefined) {
         console.error('Bad y/n data');
         console.error(record);
       }
+      else record[question] = correcter[record[question].toLowerCase()]
+      
     });
     record.ycount = scoreOpenness(record);
     // Data is exists, is open, and publicly available, machine readable etc

@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block title %}
+Countries
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+        <h1>Review: <a href="../overview/?country={{ country | urlencode }}">{{ country }}</a>: {{dataset}}</h1>
+      </div>
+
+    
+      <div id="spacer"></div>
+      <div class="tabbable"> <!-- Only required for left/right tabs -->
+        
+        <div class="tab-content">
+          <div class="tab-pane active" id="table-overview">
+              
+              {% set subrecord = submissions.byplace[country].datasets[dataset] %}
+              {% set currrecord = info.byplace[country].datasets[dataset] %}
+              
+            {% if subrecord %}
+              
+              <form action="../update/" method="post">
+            <div class="table" >
+             
+                <table style="width: 95%; ">
+                    <tr><th> </th><th>Yes</th><th>No</th><th>Unsure</th><th>Previous Entry</th>
+                    <tr>
+                        <td style="text-align: left;">
+                            Data exists
+                        </td>
+                        <td><input type="radio" name="yexists" {% if subrecord.exists == 'Y' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="nexists" {% if subrecord.exists == 'N' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="uexists" {% if subrecord.exists == '?' %} checked {% endif %} /></td>
+                        <td>{% if currrecord %} {{currrecord.exists}} {% else %} No record {% endif %}</td>
+                    </tr>
+                    
+                    <tr>
+                        <td style="text-align: left;">
+                            It's openly licensed
+                        </td>
+                        <td><input type="radio" name="yopenlicense" {% if subrecord.openlicense == 'Y' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="nopenlicense" {% if subrecord.openlicense == 'N' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="uopenlicense" {% if subrecord.openlicense == '?' %} checked {% endif %} /></td>
+                        <td>{% if currrecord %} {{currrecord.openlicense}} {% else %} No record {% endif %}</td>
+                    </tr>
+                    
+                    <tr>
+                        <td style="text-align: left;">
+                            It's publicly available
+                        </td>
+                        <td><input type="radio" name="ypublic" {% if subrecord.public == 'Y' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="npublic" {% if subrecord.public == 'N' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="upublic" {% if subrecord.public == '?' %} checked {% endif %} /></td>
+                        <td>{% if currrecord %} {{currrecord.public}} {% else %} No record {% endif %}</td>
+                    </tr>
+                    
+                    <tr>
+                        <td style="text-align: left;">
+                            It's machine readable
+                        </td>
+                        <td><input type="radio" name="ymachinereadable" {% if subrecord.machinereadable == 'Y' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="nmachinereadable" {% if subrecord.machinereadable == 'N' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="umachinereadable" {% if subrecord.machinereadable == '?' %} checked {% endif %} /></td>
+                        <td>{% if currrecord %} {{currrecord.machinereadable}} {% else %} No record {% endif %}</td>
+                    </tr>
+                    
+                    <tr>
+                        <td style="text-align: left;">
+                            It's digital
+                        </td>
+                        <td><input type="radio" name="ydigital" {% if subrecord.digital == 'Y' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="ndigital" {% if subrecord.digital == 'N' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="udigital" {% if subrecord.digital == '?' %} checked {% endif %} /></td>
+                        <td>{% if currrecord %} {{currrecord.digital}} {% else %} No record {% endif %}</td>
+                    </tr>
+                    
+                    <tr>
+                        <td style="text-align: left;">
+                            It's up-to-date
+                        </td>
+                        <td><input type="radio" name="yuptodate" {% if subrecord.uptodate == 'Y' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="nuptodate" {% if subrecord.uptodate == 'N' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="uuptodate" {% if subrecord.uptodate == '?' %} checked {% endif %} /></td>
+                        <td>{% if currrecord %} {{currrecord.uptodate}} {% else %} No record {% endif %}</td>
+                    </tr>
+                    
+                    <tr>
+                        <td style="text-align: left;">
+                            It's available in bulk
+                        </td>
+                        <td><input type="radio" name="ybulk" {% if subrecord.bulk == 'Y' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="nbulk" {% if subrecord.bulk == 'N' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="ubulk" {% if subrecord.bulk == '?' %} checked {% endif %} /></td>
+                        <td>{% if currrecord %} {{currrecord.bulk}} {% else %} No record {% endif %}</td>
+                    </tr>
+                    
+                </table>
+                
+                <table style="width: 95%;">
+                    <tr>
+                        <td style="width: 50%;">
+                            <h3>Location of data online (Optional)</h3>
+                            e.g. URL, if available<br />
+                            <input type="text" name="url" value="{{ subrecord.url }}" /><br />
+                            Previous Entry:<br />
+                            {% if currrecord %} {{currrecord.url}} {% else %} No record {% endif %}
+                        </td>
+                        <td style="width: 50%;">
+                            <h3>Date it became available (Optional)</h3>
+                            yyyy-mm-dd format if possible<br />
+                            <input type="text" name="dateavailable" value="{{ subrecord.dateavailable }}" /><br />
+                            Previous Entry:<br />
+                            {% if currrecord %} {{currrecord.dateavailable}} {% else %} No record {% endif %}
+                        </td>
+                    </tr>                    
+                </table>
+                
+                <h3>Details and comments</h3>
+                e.g. is the data partially available, are there plans to make it available in the future?<br />
+                <textarea name="details" rows="8" style="width: 95%;">{{ subrecord.details }} </textarea>
+                <br />
+                Previous Entry:<br />
+                {% if currrecord %} {{currrecord.details}} {% else %} No record {% endif %}
+                
+                <table style="width: 95%;">
+                    <tr>
+                        <td style="width: 50%;">
+                            <h3>Your details (Optional)</h3>
+                            So we can credit you<br />
+                            Name:<br />
+                            <input type="text" name="submitter" value="{{ subrecord.submitter }}" /><br />
+                            URL (Twitter, Website etc.):<br />
+                            <input type="text" name="submitterurl" value="{{ subrecord.submitterurl }}" /><br />
+                            Previous Entry:<br />
+                            {% if currrecord %} {{currrecord.submitter}} {% else %} No record {% endif %} ({% if currrecord %}{{currrecord.submitterurl}}{% else %}No record{% endif %})
+                        </td>
+                        <td style="width: 50%;">
+                            <h3>Email address</h3>
+                            This is not publicly displayed but helps us clarify unclear data with you<br />
+                            <input type="text" name="email" value="{{ subrecord.email }}"/><br />
+                            Previous Entry:<br />
+                            {% if currrecord %} {{currrecord.email}} {% else %} No record {% endif %}
+                        </td>
+                    </tr>                    
+                </table>
+              
+            </div>
+                  
+                  <input type="hidden" name="country" value="{{country}}" />
+                  <input type="hidden" name="dataset" value="{{dataset}}" />
+                  
+                  <div style="text-align: right;"><input type="submit" value="Reject" />&nbsp; <input type="submit" value="Publish" /></div>
+                  
+                  </form>
+            {% else %}
+            
+            There is no submission for this country and dataset.
+            
+            {% endif %}
+            
+          </div>
+          
+          
+        </div>
+      </div>
+  
+
+    <script src="{{page.root}}/src/common.js"></script>
+    <script src="{{page.root}}/src/census.js"></script>
+{% endblock %}

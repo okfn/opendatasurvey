@@ -12,9 +12,14 @@ Country - Submit
     </div> <!-- /container -->
     <script>
     $(function(){
-      var dataset = getURLParameter('dataset') || '';
+      //Moved dataset to server side to do mapping to internal (long) names
+        //var dataset = getURLParameter('dataset') || '';
       var area = getURLParameter('area') || '';
-      var url = 'https://docs.google.com/spreadsheet/embeddedform?formkey=dEVnbG5pUFlyUzBpVkFXbXJ2WWpGTUE6MA&entry_0=' + encodeURIComponent(area) + '&entry_128=' + encodeURIComponent(dataset);
+      
+      //encodeURIComponent(actualdataset)
+      
+      var url = 'https://docs.google.com/spreadsheet/embeddedform?formkey=dFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc6MA&entry_0=' + encodeURIComponent(area) + '&entry_128=' + "{{ datasetsmap[dataset] | urlencode }}";
+//      var url = 'https://docs.google.com/spreadsheet/embeddedform?formkey=dEVnbG5pUFlyUzBpVkFXbXJ2WWpGTUE6MA&entry_0=' + encodeURIComponent(area) + '&entry_128=' + encodeURIComponent(dataset);
       $('#submit').attr('src', url);
     });
     </script>

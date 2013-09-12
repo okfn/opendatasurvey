@@ -11,7 +11,13 @@
   {% for place in info.places %}
   {% set placeScore = info.byplace[place].score %}
   <tr data-score="{{placeScore}}"  data-area="{{place}}">
-    <th class="area-name">{{place}}</th>
+    <th class="area-name">
+        {% if place %}
+            <a href="/country/overview/?country={{ place | urlencode }}">{{place}}</a>
+        {% else %}
+            <a href="submit/" data-toggle="tooltip" class="unknown no-data count-0" title="Click here to add to the census!">Add new</a>
+        {% endif %}
+    </th>
     {% for dataset in info.datasets %}
     {% set record = info.byplace[place].datasets[dataset.id] %}
     {% if record %}
@@ -30,7 +36,8 @@
       ><a>{{record.ycount}} / {{info.summary.maxScorePerRecord}}</a>
     </td>
     {% else %}
-    <td class="no-data"><a href="submit/?dataset={{dataset.id}}&area={{place}}" data-toggle="tooltip" class="count-0" title="Click here to add to the census!">?</a>
+    <!-- This link gets processed in submit/index.html to generate the correct link for pre-filling the form -->
+    <td class="no-data"><a href="submit/?dataset={{dataset.id}}&area={{place}}" data-toggle="tooltip" class="count-0" title="Click here to add to the census!">?</a></td>
     {% endif %}
     {% endfor %}
     <td class="placescore" data-score="{{placeScore}}"><a>{{placeScore}} / {{info.summary.maxScorePerPlace}}</a></td>
