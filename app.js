@@ -81,6 +81,15 @@ app.get('/country/results.json', function(req, res) {
   res.json(model.data.country);
 });
 
+// TODO: want this at simply /country/{place} but need to make sure we don't
+// interfere with other urls
+app.get('/country/place/{place}/', function(req, res) {
+  res.render('country/place.html', {
+    place: place,
+    info: model.data.country.byplace[place]
+  });
+});
+
 app.get('/country/submit/', function(req, res) {
   res.render('country/submit/index.html', {});
 });
