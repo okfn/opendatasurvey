@@ -49,12 +49,12 @@ OpenDataCensus.countryDatasetsMap = {
   
   //The IDs are different from those used for publishing, they are ordered by current sheet position, and start at 1
   OpenDataCensus.sheetsQueryUrlMap = {
-      'submitted' : 'https://spreadsheets.google.com/feeds/list/0Ak6K0pSAyW1gdFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc/1/public/basic?sq=',
-      'archiveKey' : '0Ak6K0pSAyW1gdFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc',
-      'archive' : 'https://spreadsheets.google.com/feeds/list/0Ak6K0pSAyW1gdFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc/5/public/basic?sq=',
-      'archivePost' : 'https://spreadsheets.google.com/feeds/list/0Ak6K0pSAyW1gdFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc/5/public/basic',
-      'live' : 'https://spreadsheets.google.com/feeds/list/0Ak6K0pSAyW1gdFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc/3/public/basic?sq=',
-      'livePost' : 'https://spreadsheets.google.com/feeds/list/0Ak6K0pSAyW1gdFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc/3/public/basic'
+      'submitted' : 'http://spreadsheets.google.com/feeds/list/0Ak6K0pSAyW1gdFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc/1/public/basic?sq=',
+      'key' : '0Ak6K0pSAyW1gdFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc',
+      'archive' : 'http://spreadsheets.google.com/feeds/list/0Ak6K0pSAyW1gdFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc/5/private/full?sq=',
+      'archivePost' : 'http://spreadsheets.google.com/feeds/list/0Ak6K0pSAyW1gdFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc/5/public/basic',
+      'live' : 'http://spreadsheets.google.com/feeds/list/0Ak6K0pSAyW1gdFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc/3/private/full',
+      'livePost' : 'http://spreadsheets.google.com/feeds/list/0Ak6K0pSAyW1gdFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc/3/public/basic'
   }
 
 
@@ -290,8 +290,7 @@ function cleanUpCommon(records) {
     'no ': 'N',
     'unsure': '?'
   };
-  //TODO: Why was this 10 and not 9?
-  var ynquestions = OpenDataCensus.questions.slice(3, 9);
+  var ynquestions = OpenDataCensus.questions.slice(3, 10);
   var out = records.map(function(record) {
     // fix up y/n
     ynquestions.forEach(function(question) {

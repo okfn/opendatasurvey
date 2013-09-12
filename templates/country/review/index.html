@@ -31,9 +31,9 @@ Countries
                         <td style="text-align: left;">
                             Data exists
                         </td>
-                        <td><input type="radio" name="yexists" {% if subrecord.exists == 'Y' %} checked {% endif %} /></td>
-                        <td><input type="radio" name="nexists" {% if subrecord.exists == 'N' %} checked {% endif %} /></td>
-                        <td><input type="radio" name="uexists" {% if subrecord.exists == '?' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="exists" value="Yes" {% if subrecord.exists == 'Y' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="exists" value="No" {% if subrecord.exists == 'N' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="exists" value="Unsure" {% if subrecord.exists == '?' %} checked {% endif %} /></td>
                         <td>{% if currrecord %} {{currrecord.exists}} {% else %} No record {% endif %}</td>
                     </tr>
                     
@@ -41,9 +41,9 @@ Countries
                         <td style="text-align: left;">
                             It's openly licensed
                         </td>
-                        <td><input type="radio" name="yopenlicense" {% if subrecord.openlicense == 'Y' %} checked {% endif %} /></td>
-                        <td><input type="radio" name="nopenlicense" {% if subrecord.openlicense == 'N' %} checked {% endif %} /></td>
-                        <td><input type="radio" name="uopenlicense" {% if subrecord.openlicense == '?' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="openlicense" value="Yes" {% if subrecord.openlicense == 'Y' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="openlicense" value="No" {% if subrecord.openlicense == 'N' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="openlicense" value="Unsure" {% if subrecord.openlicense == '?' %} checked {% endif %} /></td>
                         <td>{% if currrecord %} {{currrecord.openlicense}} {% else %} No record {% endif %}</td>
                     </tr>
                     
@@ -51,9 +51,9 @@ Countries
                         <td style="text-align: left;">
                             It's publicly available
                         </td>
-                        <td><input type="radio" name="ypublic" {% if subrecord.public == 'Y' %} checked {% endif %} /></td>
-                        <td><input type="radio" name="npublic" {% if subrecord.public == 'N' %} checked {% endif %} /></td>
-                        <td><input type="radio" name="upublic" {% if subrecord.public == '?' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="public" value="Yes" {% if subrecord.public == 'Y' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="public" value="No" {% if subrecord.public == 'N' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="public" value="Unsure" {% if subrecord.public == '?' %} checked {% endif %} /></td>
                         <td>{% if currrecord %} {{currrecord.public}} {% else %} No record {% endif %}</td>
                     </tr>
                     
@@ -61,9 +61,9 @@ Countries
                         <td style="text-align: left;">
                             It's machine readable
                         </td>
-                        <td><input type="radio" name="ymachinereadable" {% if subrecord.machinereadable == 'Y' %} checked {% endif %} /></td>
-                        <td><input type="radio" name="nmachinereadable" {% if subrecord.machinereadable == 'N' %} checked {% endif %} /></td>
-                        <td><input type="radio" name="umachinereadable" {% if subrecord.machinereadable == '?' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="machinereadable" value="Yes" {% if subrecord.machinereadable == 'Y' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="machinereadable" value="No" {% if subrecord.machinereadable == 'N' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="machinereadable" value="Unsure" {% if subrecord.machinereadable == '?' %} checked {% endif %} /></td>
                         <td>{% if currrecord %} {{currrecord.machinereadable}} {% else %} No record {% endif %}</td>
                     </tr>
                     
@@ -71,9 +71,9 @@ Countries
                         <td style="text-align: left;">
                             It's digital
                         </td>
-                        <td><input type="radio" name="ydigital" {% if subrecord.digital == 'Y' %} checked {% endif %} /></td>
-                        <td><input type="radio" name="ndigital" {% if subrecord.digital == 'N' %} checked {% endif %} /></td>
-                        <td><input type="radio" name="udigital" {% if subrecord.digital == '?' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="digital" value="Yes" {% if subrecord.digital == 'Y' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="digital" value="No" {% if subrecord.digital == 'N' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="digital" value="Unsure" {% if subrecord.digital == '?' %} checked {% endif %} /></td>
                         <td>{% if currrecord %} {{currrecord.digital}} {% else %} No record {% endif %}</td>
                     </tr>
                     
@@ -81,9 +81,9 @@ Countries
                         <td style="text-align: left;">
                             It's up-to-date
                         </td>
-                        <td><input type="radio" name="yuptodate" {% if subrecord.uptodate == 'Y' %} checked {% endif %} /></td>
-                        <td><input type="radio" name="nuptodate" {% if subrecord.uptodate == 'N' %} checked {% endif %} /></td>
-                        <td><input type="radio" name="uuptodate" {% if subrecord.uptodate == '?' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="uptodate" value="Yes"  {% if subrecord.uptodate == 'Y' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="uptodate" value="No" {% if subrecord.uptodate == 'N' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="uptodate" value="Unsure" {% if subrecord.uptodate == '?' %} checked {% endif %} /></td>
                         <td>{% if currrecord %} {{currrecord.uptodate}} {% else %} No record {% endif %}</td>
                     </tr>
                     
@@ -91,9 +91,9 @@ Countries
                         <td style="text-align: left;">
                             It's available in bulk
                         </td>
-                        <td><input type="radio" name="ybulk" {% if subrecord.bulk == 'Y' %} checked {% endif %} /></td>
-                        <td><input type="radio" name="nbulk" {% if subrecord.bulk == 'N' %} checked {% endif %} /></td>
-                        <td><input type="radio" name="ubulk" {% if subrecord.bulk == '?' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="bulk" value="Yes" {% if subrecord.bulk == 'Y' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="bulk" value="No" {% if subrecord.bulk == 'N' %} checked {% endif %} /></td>
+                        <td><input type="radio" name="bulk" value="Unsure" {% if subrecord.bulk == '?' %} checked {% endif %} /></td>
                         <td>{% if currrecord %} {{currrecord.bulk}} {% else %} No record {% endif %}</td>
                     </tr>
                     
@@ -151,6 +151,7 @@ Countries
                   
                   <input type="hidden" name="country" value="{{country}}" />
                   <input type="hidden" name="dataset" value="{{dataset}}" />
+                  <input type="hidden" name="timestamp" value="{{subrecord.timestamp}}" />
                   
                   <div style="text-align: right;"><input type="submit" value="Reject" />&nbsp; <input type="submit" value="Publish" /></div>
                   

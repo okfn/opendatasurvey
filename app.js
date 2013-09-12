@@ -105,167 +105,158 @@ app.get('/country/review/', function(req, res) {
 });
 
 app.post('/country/update/', function(req, res) {
-    
-    /* TODO: Only use Google's API where ncessary
-     * TODO: Remove callbacks/error handling once we're certain the whole thing's working well (?)
-     */
 
-    var prevData = model.data.country.byplace[req.body['country']].datasets[req.body['dataset']];
-    //Doing request and processing the body of the return with a callback:
-    //http://www.sitepoint.com/web-scraping-in-node-js/    
+    console.log(req);
+    /* 
+     * This uses the Google-Spreadsheets module
+     * 
+     * We first copy the current data to the archive,
+     * then modify the current data,
+     * then delete the submission.
+     * 
+     */
 
     //The simple dataset names are not used in the spreadsheet: use this to get the complicated name
     var fulldatasetname = model.datasetNamesMap[req.body['dataset']];
 
-    //API URLs
-    //TODO: Remove URL based querying if its simpler and faster to do with the node module
-    var liveUrl = model.sheetsQueryUrlMap['live'];
-    var oldUrl = model.sheetsQueryUrlMap['archive'];
-    var oldKey = model.sheetsQueryUrlMap['archiveKey'];
-    var submitUrl = model.sheetsQueryUrlMap['submitted'];
+    //Key for the spreadsheet (see country.js)
+    var gKey = model.sheetsQueryUrlMap['key'];
 
+    //Feedback
     var returnError = {value: 0, message: ""};
-    
-    var liveRowToRemove = "";
-    var submittedRowToRemove = "";
 
-    //Start by getting current entry ID
-    //TODO: Consider how much better/faster this is than using the node module; this way we let
-    //Google do the filtering
-    var theuri = liveUrl + 'dataset=%22' + fulldatasetname + '%22%20and%20place=%22' + encodeURIComponent(req.body['country']) + '%22';
-
-    request({
-        uri: theuri,
-    }, function(error, response, body) {
-
-        if (response.statusCode !== 200) {
-            returnError = {value: 1, message: "While getting the current entry from the live sheet: " + response.body + "<br />No changes have taken place. You may want to <a href='../sheets/'>resolve the problem manually.</a> This error has been reported."};
-            doneUpdating(returnError, req, res);
-        }
-        else if (body.indexOf('<entry>') === -1) {
-            returnError = {value: 1, message: "There is no entry for " + req.body['dataset'] + "/" + req.body['country'] + "<br />No changes have taken place. You may want to <a href='../sheets/'>resolve the problem manually.</a> This error has been reported."};
-            doneUpdating(returnError, req, res);
-        }
-        else if (body.indexOf('<entry>') !== body.lastIndexOf('<entry>')) {
-            returnError = {value: 1, message: "There is more than one entry for " + req.body['dataset'] + "/" + req.body['country'] + "<br />No changes have taken place. You may want to <a href='../sheets/'>resolve the problem manually.</a> This error has been reported."};
+    var my_sheet = new GoogleSpreadsheet(gKey);
+    //We need authentication to perform edits(?) 
+    //TODO: Create Google account with no user data (sheet is open, but you need to be logged in to add(?)) 
+    my_sheet.setAuth('matt.fullerton', 'r0njasgr8', function(err) {
+        if (err) {
+            returnError = {value: 1, message: "Could not authenticate: " + err + "<br />No changes have taken place. You may want to <a href='../sheets/'>resolve the problem manually.</a> This error has been reported."};
             doneUpdating(returnError, req, res);
         }
         else {
-            //Extract the row ID
-            var entry = body.substr(body.indexOf('<entry>') + 7, (body.indexOf('</entry>') - (body.indexOf('<entry>') + 7)));
-            liveRowToRemove = entry.substr(entry.indexOf('<id>') + 4, (entry.indexOf('</id>') - (entry.indexOf('<id>') + 4))); //Get it
-    
-            var my_sheet = new GoogleSpreadsheet(oldKey);
+            //Start by getting current entry. Module was modified to accept a query so that we don't have to download the whole sheet :)
+            var query = {};
+            query["sq"] = 'dataset="' + fulldatasetname + '" and place="' + encodeURIComponent(req.body['country']) + '"';
 
-            // set auth to be able to edit/add/delete
-            //TODO: Create Google account with no user data (sheet is open, but you need to be logged in to add) 
-            my_sheet.setAuth('matt.fullerton','b0w1s123', function(err) {
-
+            //Get the (unique) row
+            my_sheet.getRows(3, {}, query, function(err, rows) {
                 if (err) {
-                    console.log(response.statusCode);
-                    returnError = {value: 1, message: "While adding the current entry to the archive, could not authenticate: " + err + "<br />No changes have taken place. You may want to <a href='../sheets/'>resolve the problem manually.</a> This error has been reported."};
+                    returnError = {value: 1, message: "While getting the current entry from the live sheet: " + err + "<br />No changes have taken place. You may want to <a href='../sheets/'>resolve the problem manually.</a> This error has been reported."};
+                    doneUpdating(returnError, req, res);
+                }
+                else if (rows.length === 0) {
+                    returnError = {value: 1, message: "There is no entry for " + req.body['dataset'] + "/" + req.body['country'] + "<br />No changes have taken place. You may want to <a href='../sheets/'>resolve the problem manually.</a> This error has been reported."};
+                    doneUpdating(returnError, req, res);
+                }
+                else if (rows.length > 1) {
+                    returnError = {value: 1, message: "There is more than one entry for " + req.body['dataset'] + "/" + req.body['country'] + "<br />No changes have taken place. You may want to <a href='../sheets/'>resolve the problem manually.</a> This error has been reported."};
                     doneUpdating(returnError, req, res);
                 }
                 else {
-                    // column names are set by google based on the first row of your sheet
-                    // TODO: Move the sheet numbers out to the model
-                    my_sheet.addRow( 5, {timestamp: prevData.timestamp, place: prevData.place, dataset: model.datasetNamesMap[prevData.dataset], exists: prevData.exists, digital: prevData.digital, machinereadable: prevData.machinereadable, bulk: prevData.bulk, public: prevData.public, openlicense: prevData.openlicense, uptodate: prevData.uptodate, url: prevData.url, dateavailable: prevData.dateavailable, details: prevData.details, submitter: prevData.submitter, submitterurl: prevData.submitterurl, email: prevData.email} );
-                    
-                    //TODO: API call to remove the row from the live data, using the ID we got earlier
-                    //This is a simple query for now
-                    var theuri = liveUrl + 'dataset=%22' + fulldatasetname + '%22%20and%20place=%22' + encodeURIComponent(req.body['country']) + '%22';
+                    //Copy the data to the archive
+                    my_sheet.addRow(5, {timestamp: rows[0].timestamp, place: rows[0].place, dataset: rows[0].dataset, exists: rows[0].exists, digital: rows[0].digital, machinereadable: rows[0].machinereadable, bulk: rows[0].bulk, public: rows[0].public, openlicense: rows[0].openlicense, uptodate: rows[0].uptodate, url: rows[0].url, dateavailable: rows[0].dateavailable, details: rows[0].details, submitter: rows[0].submitter, submitterurl: rows[0].submitterurl, email: rows[0].email, reviewed: rows[0].reviewed, archived: timeStamp()});
 
-                    request({
-                        uri: theuri,
-                    }, function(error, response, body) {
+                    //Modify the row with the new data
+                    rows[0].timestamp = req.body['timestamp'];
+                    //rows[0].place = //Don't change!
+                    //rows[0].dataset = //Don't change!
+                    rows[0].exists = req.body['exists'];
+                    rows[0].digital = req.body['digital'];
+                    rows[0].machinereadable = req.body['machinereadable'];
+                    rows[0].bulk = req.body['bulk'];
+                    rows[0].public = req.body['public'];
+                    rows[0].openlicense = req.body['openlicense'];
+                    rows[0].uptodate = req.body['uptodate'];
+                    rows[0].url = req.body['url'];
+                    rows[0].dateavailable = req.body['dateavailable'];
+                    rows[0].details = req.body['details'];
+                    rows[0].submitter = req.body['submitter'];
+                    rows[0].submitterurl = req.body['submitterurl'];
+                    rows[0].email = req.body['email'];
+                    rows[0].reviewed = 'Via web interface on ' + timeStamp();
 
-                        if (response.statusCode !== 200) {
-                            returnError = {value: 1, message: "While removing the current entry from the live sheet: " + response.body + "<br />The current entry is still there but has been ERRONEOUSLY copied to the archive. You should <a href='../sheets/'>resolve the problem manually.</a> This error has been reported."};
+                    rows[0].save(function(err) {
+                        if (err) {
+                            returnError = {value: 1, message: "While modifying the current entry in the live sheet: " + err + "<br />The current entry is still there but has been ERRONEOUSLY copied to the archive. You should <a href='../sheets/'>resolve the problem manually.</a> This error has been reported."};
                             doneUpdating(returnError, req, res);
                         }
                         else {
-                            //API call to add a row, data from the form
-                            //This is a simple query for now, and we will probably do it with the node
-                            //module not low level
-                            var theuri = liveUrl + 'dataset=%22' + fulldatasetname + '%22%20and%20place=%22' + encodeURIComponent(req.body['country']) + '%22';
 
-                            request({
-                                uri: theuri,
-                            }, function(error, response, body) {
+                            //Get the row in the submitted sheet
+                            var query = {};
+                            query["sq"] = 'dataset="' + fulldatasetname + '" and censuscountry="' + encodeURIComponent(req.body['country']) + '"';
 
-                                if (response.statusCode !== 200) {
-                                    returnError = {value: 1, message: "While trying to add the submission to the live sheet: " + response.body + "<br />The new entry has NOT been added and the existing data erroneously MOVED to the archive. Please <a href='../sheets/'>resolve manually.</a> This error has been reported."};
+                            //Get the (unique) row
+                            my_sheet.getRows(1, {}, query, function(err, srows) {
+
+                                if (err) {
+                                    returnError = {value: 1, message: "While getting the submission to remove from the submissions sheet: " + err + "<br />The new entry has been added and the submission marked as reviewed but not removed from the submissions sheet. Please <a href='../sheets/'>remove it manually.</a> This error has been reported."};
+                                    doneUpdating(returnError, req, res);
+                                }
+                                else if (srows.length === 0) {
+                                    returnError = {value: 1, message: "There is no submission for " + req.body['dataset'] + "/" + req.body['country'] + "<br />. Your edits have been saved but the submission cannot be altered. Please <a href='../sheets/'>resolve this manually</a>. This error has been reported."};
+                                    doneUpdating(returnError, req, res);
+                                }
+                                else if (srows.length > 1) {
+                                    returnError = {value: 1, message: "There is more than one submission for " + req.body['dataset'] + "/" + req.body['country'] + ". Your edits have been saved but the submission cannot be altered. Please <a href='../sheets/'>resolve this manually</a>. This error has been reported."};
                                     doneUpdating(returnError, req, res);
                                 }
                                 else {
+                                    srows[0].del(function(err) {
 
-                                    //TODO: API call to get the ID in the submitted sheet
-                                    //This is a simple query for now
-                                    var theuri = submitUrl + 'dataset=%22' + fulldatasetname + '%22%20and%20censuscountry=%22' + encodeURIComponent(req.body['country']) + '%22';
-
-                                    request({
-                                        uri: theuri,
-                                    }, function(error, response, body) {
-
-                                        if (response.statusCode !== 200) {
-                                            returnError = {value: 1, message: "While getting the submission to remove from the submissions sheet: " + response.body + "<br />The new entry has been added and the submission marked as reviewed but not removed from the submissions sheet. Please <a href='../sheets/'>remove it manually.</a> This error has been reported."};
-                                            doneUpdating(returnError, req, res);
-                                        }
-                                        else if (body.indexOf('<entry>') === -1) {
-                                            returnError = {value: 1, message: "There is no submission for " + req.body['dataset'] + "/" + req.body['country'] + "<br />. Your edits have been saved but the submission cannot be altered. Please <a href='../sheets/'>resolve this manually</a>. This error has been reported."};
-                                            doneUpdating(returnError, req, res);
-                                        }
-                                        else if (body.indexOf('<entry>') !== body.lastIndexOf('<entry>')) {
-                                            returnError = {value: 1, message: "There is more than one submission for " + req.body['dataset'] + "/" + req.body['country'] + ". Your edits have been saved but the submission cannot be altered. Please <a href='../sheets/'>resolve this manually</a>. This error has been reported."};
+                                        if (err) {
+                                            returnError = {value: 1, message: "While removing the submission from the submissions sheet: " + err + "<br />The new entry has been added and the submission marked as reviewed but not removed from the submissions sheet. Please <a href='../sheets/'>remove it manually.</a> This error has been reported."};
                                             doneUpdating(returnError, req, res);
                                         }
                                         else {
-                                            submittedRowToRemove = ""; //Get it
-                                            
-                                            //TODO: API call to remove that ID from the submissions sheet using the ID we got earlier
-                                            //This is a simple query for now
-                                            var theuri = submitUrl + 'dataset=%22' + fulldatasetname + '%22%20and%20censuscountry=%22' + encodeURIComponent(req.body['country']) + '%22';
-
-                                            request({
-                                                uri: theuri,
-                                            }, function(error, response, body) {
-
-                                                if (response.statusCode !== 200) {
-                                                    returnError = {value: 1, message: "While removing the submission from the submissions sheet: " + response.body + "<br />The new entry has been added and the submission marked as reviewed but not removed from the submissions sheet. Please <a href='../sheets/'>remove it manually.</a> This error has been reported."};
-                                                    doneUpdating(returnError, req, res);
-                                                }
-                                                else {
-                                                    returnError = {value: 0, message: "Entry updated successfully. The old entry has been archived and the submission marked as reviewed. Thank you!"};
-                                                    doneUpdating(returnError, req, res);
-                                                }
-
-                                            });
+                                            returnError = {value: 0, message: "Entry updated successfully. The old entry has been archived and the submission marked as reviewed. Thank you!"};
+                                            doneUpdating(returnError, req, res);
                                         }
-
                                     });
                                 }
-
                             });
                         }
-
                     });
                 }
-
             });
         }
-
     });
-
 });
 
 function doneUpdating(error, req, res) {
     if (error.value === 1) {
-        //TODO: Unpack the body object
-        console.log("ERROR REPORT: " + error.message + ", DATA: " + req.body);
+        console.log("ERROR REPORT: " + error.message + ", DATA: ");
+        console.log(req.body);
     }
 
     res.render('country/overview/index.html', {info: model.data.country, submissions: model.data.countrysubmissions, country: req.body['country'], error: error});
 
+}
+
+/**
+ * Return a timestamp with the format "m/d/yy h:MM:ss TT"
+ * @type {Date}
+ */
+
+function timeStamp() {
+// Create a date object with the current time
+    var now = new Date();
+
+// Create an array with the current month, day and time
+    var date = [now.getDate(), now.getMonth() + 1, now.getFullYear()];
+
+// Create an array with the current hour, minute and second
+    var time = [now.getHours(), now.getMinutes(), now.getSeconds()];
+
+// If seconds and minutes are less than 10, add a zero
+    for (var i = 1; i < 3; i++) {
+        if (time[i] < 10) {
+            time[i] = "0" + time[i];
+        }
+    }
+
+// Return the formatted string
+    return date.join("/") + " " + time.join(":");
 }
 
 app.get('/g8/', function(req, res) {
