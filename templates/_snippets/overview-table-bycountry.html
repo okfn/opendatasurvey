@@ -11,7 +11,10 @@
     </div>
     {% endif %}  
 
-    <h3>Live Entries</h3>
+    <h3>Live and Queued Entries</h3>
+    {% if not loggedin %}
+    <div style="text-align: right">Country reviewer? Log in <a href="../reviewers/">here</a>.</div>
+    {% endif %}
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -41,9 +44,9 @@
             {% if record.dateavailable %} {{record.dateavailable}} {% else %} Unknown {% endif %} / 
             <a data-toggle="tooltip" class="count-0" title="{{record.details}}">i</a> / 
             <a data-toggle="tooltip" class="count-0" title="{{record.submitter}} ({{record.submitterurl}})">P</a> |
-            <a href="../submit/?dataset={{dataset.id}}&area={{place}}">Suggest Changes (Public)</a>
+            <a href="../submit/?dataset={{dataset.id}}&area={{place}}">Submit Changes for review</a>
             {% else %}
-            ? / ? / ? | <a href="../submit/?dataset={{dataset.id}}&area={{place}}" data-toggle="tooltip" class="count-0" title="Click here to add to the census!">Add data (Public)</a>
+            ? / ? / ? | <a href="../submit/?dataset={{dataset.id}}&area={{place}}" data-toggle="tooltip" class="count-0" title="Click here to add to the census!">Submit data for review</a>
             {% endif %}  
             </tr>
 
@@ -51,7 +54,7 @@
             {% if record %}
 
         <tr>
-            <th><div>&#8627; Queued Entry</div></th>
+            <th><div>&#8627; Awaiting review</div></th>
 
         <td data-place="{{record.place}}"
             data-dataset="{{record.dataset}}"
@@ -64,8 +67,8 @@
         <td> 
             {% if record.dateavailable %} {{record.dateavailable}} {% else %} Unknown {% endif %} / 
             <a data-toggle="tooltip" class="count-0" title="{{record.details}}">i</a> / 
-            <a data-toggle="tooltip" class="count-0" title="{{record.submitter}} ({{record.submitterurl}})">P</a> |
-            <a href="../review/?dataset={{record.dataset}}&country={{record.place}}">Review (Country Editor)</a>
+            <a data-toggle="tooltip" class="count-0" title="{{record.submitter}} ({{record.submitterurl}})">P</a>{% if loggedin %} |
+            <a href="../review/?dataset={{record.dataset}}&country={{record.place}}">Review this submission</a>{% endif %}
             {% else %}
 
             </tr>

@@ -12,6 +12,10 @@ var app = express();
 
 var model = require('./models/country.js').OpenDataCensus;
 
+//NODE.JS AND EXPRESS - SESSIONS - http://blog.modulus.io/nodejs-and-express-sessions
+app.use(express.cookieParser());
+app.use(express.session({secret: 'wpbmzky%js,$#jsmdvgas'}));
+
 //CORS middleware
 var CORSSupport = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -96,17 +100,48 @@ app.get('/country/submit/', function(req, res) {
     res.render('country/submit/index.html', {datasetsmap: model.datasetNamesMap, dataset: req.param('dataset')});
 });
 
-app.get('/country/overview/', function(req, res) {
-    res.render('country/overview/index.html', {info: model.data.country, submissions: model.data.countrysubmissions, country: req.param('country')});
+//"Log In" page
+app.get('/country/reviewers/', function(req, res) {
+    res.render('country/reviewers/index.html', {countries: model.data.countrysubmissions.places, country: req.param('country') });
 });
 
+//Show the spreadsheet data, only for reviewers
+app.get('/country/sheets/', function(req, res) {
+    if (req.session.loggedin) res.render('country/sheets/index.html', { });
+    else res.render('country/reviewers/index.html', {countries: model.data.countrysubmissions.places, error: "Only reviewers can access that page" });
+});
+
+//Show details per country. Extra/different functionality for reviewers.
+app.get('/country/overview/', function(req, res) {
+    res.render('country/overview/index.html', {info: model.data.country, submissions: model.data.countrysubmissions, country: req.param('country'), loggedin: req.session.loggedin});
+});
+
+//Compare & update page
 app.get('/country/review/', function(req, res) {
-    res.render('country/review/index.html', {info: model.data.country, submissions: model.data.countrysubmissions, country: req.param('country'), dataset: req.param('dataset')});
+    if (req.session.loggedin) res.render('country/review/index.html', {info: model.data.country, submissions: model.data.countrysubmissions, country: req.param('country'), dataset: req.param('dataset')});
+    else res.render('country/reviewers/index.html', {countries: model.data.countrysubmissions.places, country: req.param('country'), error: "Only reviewers can access that page" });
+});
+
+app.get('/country/logout/', function(req, res) {
+        req.session.loggedin = false;
+        res.render('country/index.html', {info: model.data.country});
+});
+
+app.post('/country/authenticate/', function(req, res) {
+    if (req.body['password'] === "notagoodpassword") {
+        req.session.loggedin = true;
+        res.render('country/overview/index.html', {info: model.data.country, submissions: model.data.countrysubmissions, country: req.body['country']});
+        
+    }
+    else res.render('country/reviewers/index.html', {countries: model.data.countrysubmissions.places, error: "Password incorrect" });
 });
 
 app.post('/country/update/', function(req, res) {
 
-    console.log(req);
+    if (!req.session.loggedin) {
+        res.render('country/reviewers/index.html', {countries: model.data.countrysubmissions.places, country: req.param('country'), error: "Only reviewers can access that page" });
+    return;
+    }
     /* 
      * This uses the Google-Spreadsheets module
      * 
@@ -236,6 +271,7 @@ function doneUpdating(error, req, res) {
 /**
  * Return a timestamp with the format "m/d/yy h:MM:ss TT"
  * @type {Date}
+ * https://gist.github.com/hurjas/2660489
  */
 
 function timeStamp() {

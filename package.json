@@ -13,7 +13,8 @@
       "marked": "",
       "csv": "",
       "request": "",
-      "underscore": ""
+      "underscore": "",
+      "google-spreadsheet": ""
   }
   , "devDependencies": {
     "supertest": "",

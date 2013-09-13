@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}
+Country - Access Data
+{% endblock %}
+
+{% block content %}
+      <div class="page-header">
+        <h1>Reviewers: Start reviewing</h1>
+      </div>
+
+{% if error %}
+    <div class="alert alert-error" style="text-align: center;">
+        {{error}}
+    </div>
+{% endif %}  
+    
+    
+      <div>
+      <p>Please enter the password and select a country</p>
+      <form action='../authenticate/' method='post' >
+      Password: <br />
+      <input type="password" name="password" />
+      <!-- In case they came from the country page -->
+      <br />Country<br />
+      <select name="country">
+      {% for place in countries %}
+        <option value="{{place}}" {% if country and country==place %} selected {% endif %}>{{place}}</option>
+      {% endfor %}
+      </select>
+      <br />
+      <input type="submit" value="Log In" class="btn btn-small" />
+		</form>
+		</div>
+
+
+
+<script src="{{page.root}}/src/common.js"></script>
+{% endblock %}
