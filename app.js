@@ -51,11 +51,13 @@ env.express(app);
  */
 
 app.get('/', function(req, res) {
+    //model.load(function() { //Don't reload for the public
     res.render('index.html', {
         numberEntries: model.data.country.summary.entries.toString(),
         numberOpen: model.data.country.summary.open.toString(),
         numberCatalogs: model.data.catalogs.records.length.toString()});
-})
+//});
+});
 
 app.get('/about/', function(req, res) {
     fs.readFile('templates/about.md', 'utf8', function(err, text) {
@@ -80,11 +82,15 @@ app.get('/contribute/', function(req, res) {
 });
 
 app.get('/country/', function(req, res) {
-    res.render('country/index.html', {info: model.data.country});
-});
+    //model.load(function() { //Don't reload for the public
+        res.render('country/index.html', {info: model.data.country});
+    });
+//});
 
 app.get('/country/results.json', function(req, res) {
-    res.json(model.data.country);
+    model.load(function() { //Get latest data
+        res.json(model.data.country);
+});
 });
 
 //This messes up URL arguments, removing for now
@@ -113,12 +119,18 @@ app.get('/country/sheets/', function(req, res) {
 
 //Show details per country. Extra/different functionality for reviewers.
 app.get('/country/overview/', function(req, res) {
+    model.load(function() { //Get latest data, even for the public; they should see their entries awaiting approval
     res.render('country/overview/index.html', {info: model.data.country, submissions: model.data.countrysubmissions, country: req.param('country'), loggedin: req.session.loggedin});
+});
 });
 
 //Compare & update page
 app.get('/country/review/', function(req, res) {
-    if (req.session.loggedin) res.render('country/review/index.html', {info: model.data.country, submissions: model.data.countrysubmissions, country: req.param('country'), dataset: req.param('dataset')});
+    if (req.session.loggedin) {
+        model.load(function() { //Get latest data
+        res.render('country/review/index.html', {info: model.data.country, submissions: model.data.countrysubmissions, country: req.param('country'), dataset: req.param('dataset')});
+        });
+    }
     else res.render('country/reviewers/index.html', {countries: model.data.countrysubmissions.places, country: req.param('country'), error: "Only reviewers can access that page" });
 });
 
@@ -130,8 +142,9 @@ app.get('/country/logout/', function(req, res) {
 app.post('/country/authenticate/', function(req, res) {
     if (req.body['password'] === "notagoodpassword") {
         req.session.loggedin = true;
+        model.load(function() { //Get latest data
         res.render('country/overview/index.html', {info: model.data.country, submissions: model.data.countrysubmissions, country: req.body['country']});
-        
+        });
     }
     else res.render('country/reviewers/index.html', {countries: model.data.countrysubmissions.places, error: "Password incorrect" });
 });
@@ -263,9 +276,9 @@ function doneUpdating(error, req, res) {
         console.log("ERROR REPORT: " + error.message + ", DATA: ");
         console.log(req.body);
     }
-
+   model.load(function() { //Get latest data
     res.render('country/overview/index.html', {info: model.data.country, submissions: model.data.countrysubmissions, country: req.body['country'], error: error});
-
+     });
 }
 
 /**
@@ -296,7 +309,10 @@ function timeStamp() {
 }
 
 app.get('/g8/', function(req, res) {
+    //model.load(function() { //Don't reload for the public
     res.render('g8/index.html', {info: model.data.g8});
+    
+    //});
 });
 
 app.get('/city/', function(req, res) {

@@ -174,13 +174,14 @@ function getCsvData(url, cb) {
 }
 
 OpenDataCensus.load = function(cb) {
-  var count = 5;
+  var count = 6;
   function done() {
     count -= 1;
     if (count == 0) {
       cb();
     }
-  }
+  } 
+    
   getCsvData(OpenDataCensus.data.country.datasetsUrl, function(data) {
     var dss = data.slice(0,10);
     dss = dss.map(function(ds) {
@@ -428,7 +429,7 @@ OpenDataCensus.uglySpaceHack = function(name){
   return name;
 }
 
-// OpenDataCensus.load(function() {});
+//OpenDataCensus.load(function() {});
 
 exports.OpenDataCensus = OpenDataCensus;
 
