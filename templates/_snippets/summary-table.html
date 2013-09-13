@@ -2,46 +2,51 @@
   <tr>
     <th></th>
     {% for dataset in info.datasets %}
-      <th><div>{{dataset.titleRotated}}</div></th>
+      <th><div>{{ dataset.titleRotated }}</div></th>
     {% endfor %}
     <th><div><strong>Total Score</strong></div>
   </tr>
 </thead>
 <tbody>
   {% for place in info.places %}
-  {% set placeScore = info.byplace[place].score %}
-  <tr data-score="{{placeScore}}"  data-area="{{place}}">
-    <th class="area-name">
+    {% set placeScore = info.byplace[place].score %}
+    <tr data-score="{{placeScore}}"  data-area="{{place}}">
+      <th class="area-name">
         {% if place %}
-            <a href="/country/overview/?country={{ place | urlencode }}">{{place}}</a>
+          <a href="/country/overview/?country={{ place }}">{{place}}</a>
         {% else %}
-            <a href="submit/" data-toggle="tooltip" class="unknown no-data count-0" title="Click here to add to the census!">Add new</a>
+          <a href="submit/" data-toggle="tooltip" class="unknown no-data count-0" title="Click here to add to the census!">Add new</a>
         {% endif %}
-    </th>
+      </th>
     {% for dataset in info.datasets %}
     {% set record = info.byplace[place].datasets[dataset.id] %}
-    {% if record %}
     <td
       class="
-      {% if record.exists == 'N' %}unavailable{% endif %}
-
-      {% if record.exists == '?' %}unknown{% endif %}
-
       ycount-{{record.ycount}}
       showpopover
       "
       data-place="{{record.place}}"
       data-dataset="{{record.dataset}}"
       data-datasetTitle="{{dataset.title}}"
-      ><a>{{record.ycount}} / {{info.summary.maxScorePerRecord}}</a>
+      >
+        <ul class="availability icons mini">
+          {% for field in record_fields %}
+            {% set state = record[field] %}
+            <li class="{% if state == 'Y' %}yes{% elif state == 'N' %}no{% elif state == '?' %}maybe{% endif %}" data-toggle="tooltip" title="{{ field.label }}">
+              <i class="icon-{{ field.icon }}"></i>
+              <span class="text">{{ state }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+        {#{% for field in record_fields %}
+          {% set state = record[field.id] %}
+
+        {% endfor %}
+        {{ record }}
+        <a>{{record.ycount}} / {{info.summary.maxScorePerRecord}}</a>#}
     </td>
-    {% else %}
-    <!-- This link gets processed in submit/index.html to generate the correct link for pre-filling the form -->
-    <td class="no-data"><a href="submit/?dataset={{dataset.id}}&area={{place}}" data-toggle="tooltip" class="count-0" title="Click here to add to the census!">?</a></td>
-    {% endif %}
     {% endfor %}
     <td class="placescore" data-score="{{placeScore}}"><a>{{placeScore}} / {{info.summary.maxScorePerPlace}}</a></td>
   </tr>
   {% endfor %}
 </tbody>
-
