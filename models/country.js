@@ -56,6 +56,9 @@ OpenDataCensus.countryDatasetsMap = {
       'live' : 'http://spreadsheets.google.com/feeds/list/0Ak6K0pSAyW1gdFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc/3/private/full',
       'livePost' : 'http://spreadsheets.google.com/feeds/list/0Ak6K0pSAyW1gdFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc/3/public/basic'
   }
+  
+  OpenDataCensus.gUser = 'altwire.munich';
+  OpenDataCensus.gPass = 'altw!re!';
 
 
 var openQuestions = OpenDataCensus.questions.slice(3,9);
