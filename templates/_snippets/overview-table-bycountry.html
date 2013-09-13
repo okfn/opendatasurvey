@@ -12,7 +12,7 @@
     {% endif %}  
 
     <h3>Live and Queued Entries</h3>
-    {% if not loggedin %}
+    {% if loggedin != True %}
     <div style="text-align: right">Country reviewer? Log in <a href="../reviewers/">here</a>.</div>
     {% endif %}
     <table class="table table-bordered">
@@ -43,10 +43,10 @@
         <td> {% if record %} 
             {% if record.dateavailable %} {{record.dateavailable}} {% else %} Unknown {% endif %} / 
             <a data-toggle="tooltip" class="count-0" title="{{record.details}}">i</a> / 
-            <a data-toggle="tooltip" class="count-0" title="{{record.submitter}} ({{record.submitterurl}})">P</a> |
-            <a href="../submit/?dataset={{dataset.id}}&area={{place}}">Submit Changes for review</a>
+            <a data-toggle="tooltip" class="count-0" title="{{record.submitter}} ({{record.submitterurl}})">P</a>{% if loggedin != True %} |
+            <a href="../submit/?dataset={{dataset.id}}&area={{place}}">Submit Changes for review</a>{% endif %} 
             {% else %}
-            ? / ? / ? | <a href="../submit/?dataset={{dataset.id}}&area={{place}}" data-toggle="tooltip" class="count-0" title="Click here to add to the census!">Submit data for review</a>
+            ? / ? / ?{% if loggedin != True %} | <a href="../submit/?dataset={{dataset.id}}&area={{place}}" data-toggle="tooltip" class="count-0" title="Click here to add to the census!">Submit data for review</a>{% endif %} 
             {% endif %}  
             </tr>
 
@@ -67,7 +67,7 @@
         <td> 
             {% if record.dateavailable %} {{record.dateavailable}} {% else %} Unknown {% endif %} / 
             <a data-toggle="tooltip" class="count-0" title="{{record.details}}">i</a> / 
-            <a data-toggle="tooltip" class="count-0" title="{{record.submitter}} ({{record.submitterurl}})">P</a>{% if loggedin %} |
+            <a data-toggle="tooltip" class="count-0" title="{{record.submitter}} ({{record.submitterurl}})">P</a>{% if loggedin == True %} |
             <a href="../review/?dataset={{record.dataset}}&country={{record.place}}">Review this submission</a>{% endif %}
             {% else %}
 

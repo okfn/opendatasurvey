@@ -128,7 +128,7 @@ app.get('/country/overview/', function(req, res) {
 app.get('/country/review/', function(req, res) {
     if (req.session.loggedin) {
         model.load(function() { //Get latest data
-        res.render('country/review/index.html', {info: model.data.country, submissions: model.data.countrysubmissions, country: req.param('country'), dataset: req.param('dataset')});
+        res.render('country/review/index.html', {info: model.data.country, submissions: model.data.countrysubmissions, country: req.param('country'), dataset: req.param('dataset'), datasetfriendly: model.datasetNamesMap[req.param('dataset')]});
         });
     }
     else res.render('country/reviewers/index.html', {countries: model.data.countrysubmissions.places, country: req.param('country'), error: "Only reviewers can access that page" });
@@ -176,7 +176,7 @@ app.post('/country/update/', function(req, res) {
     var my_sheet = new GoogleSpreadsheet(gKey);
     //We need authentication to perform edits(?) 
     //TODO: Create Google account with no user data (sheet is open, but you need to be logged in to add(?)) 
-    my_sheet.setAuth('matt.fullerton', 'r0njasgr8', function(err) {
+    my_sheet.setAuth('munich.altwire', 'altw!re!', function(err) {
         if (err) {
             returnError = {value: 1, message: "Could not authenticate: " + err + "<br />No changes have taken place. You may want to <a href='../sheets/'>resolve the problem manually.</a> This error has been reported."};
             doneUpdating(returnError, req, res);
