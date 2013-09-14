@@ -29,9 +29,9 @@ describe('Backend', function() {
           if(err) {
             console.log(err);
           }
-          done();
         });
       });
+      done();
     });
   });
   it('getEntrys', function(done) {
