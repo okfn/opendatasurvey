@@ -52,7 +52,8 @@ We attempt to have a common form to the results spreadsheet.
 2. Normalized - raw submissions data but in normalized form (standard headings)
 3. Reviewed (not yet used) - reviewed and consolidated data
 
-### Country Spreadsheet
+Country Spreadsheet
+~~~~~~~~~~~~~~~~~~~
 
 Process
 
@@ -61,7 +62,8 @@ Process
 3. Copy to the Normalized tab (which has standard columns)
 4. Review (soon)
 
-### City Spreadsheet
+City Spreadsheet
+~~~~~~~~~~~~~~~~
 
 Process
 
@@ -84,13 +86,11 @@ We have 2 main branches:
 * master - development branch - deploy to <http://opendatacensus-staging.herokuapp.com/>
 * production - release branch (production ready code) - deploy to <http://census.okfn.org/>
 
-Install
-~~~~~~~
+### Install
 
 To install do the following:
 
 1. Get the code and init the submodules (for recline vendor library)
-
 
         git clone https://github.com/okfn/opendatacensus 
         git submodule init
@@ -107,8 +107,7 @@ To install do the following:
 
 4. Should now be running at <http://localhost:5000>
 
-Running Tests
-~~~~~~~~~~~~~
+### Running Tests
 
 Install mocha (see devDependencies in package.json) then do:
 
@@ -118,8 +117,7 @@ Install mocha (see devDependencies in package.json) then do:
 tests are likely to break as underlying data changes. We should fix this soon
 by running off mock data.
 
-Deployment
-~~~~~~~~~~
+### Deployment
 
 We have 2 apps on Heroku:
 
