@@ -14,7 +14,7 @@
   { 'id': 'public',
     'icon': 'gift',
     'label': 'Is it publicly available, free of charge?' },
-  { 'id': 'openlicence',
+  { 'id': 'openlicense',
     'icon': 'unlock-alt',
     'label': 'Is it openly licensed (as per OpenDefinition.org)?' },
   { 'id': 'uptodate',
@@ -24,7 +24,7 @@
 
 {% if loggedin != True %}
   <p class="pull-right">
-    Country reviewer? Log in <a href="../reviewers/">here</a>.
+    Country reviewer? Log in <a href="../reviewers/?country={{country | urlencode}}">here</a>.
   </p>
 {% endif %}
 
