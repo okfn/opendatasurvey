@@ -114,13 +114,15 @@ app.get('/country/place/{place}/', function(req, res) {
 app.get('/country/submit/', function(req, res) {
   var datasets = [];
   var ynquestions = model.data.questions.slice(0,9);
+  console.log(model.data.country.datasets);
   res.render('country/submit.html', {
     datasetsmap: model.datasetNamesMap
     , countryList: model.countryList
     , ynquestions: ynquestions
     , questions: model.data.questions
-    , dataset: req.param('dataset')
-    , place: req.param('place')
+    , datasets: model.data.country.datasets
+    , datasetFromQuery: req.param('dataset')
+    , placeFromQuery: req.param('place')
   });
 });
 

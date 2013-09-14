@@ -11,14 +11,27 @@ Country - Submit
 
 <form action="" method="POST" class="form">
   <label>Country<br/>
-    <select name="place">
+    <select name="place" required>
+      <option value="">Please select</option>
       {% for country in countryList %}
-      <option value="{{country}}" {% if place == country %}selected="true"{% endif %}>{{country}}</option>
+      <option value="{{country}}" {% if placeFromQuery == country %}selected="true"{% endif %}>{{country}}</option>
       {% endfor %}
     </select>
   </label>
   <label>Dataset<br/>
-    <select name="dataset" id="dataset-select"></select>
+    <select name="dataset" id="dataset-select" required>
+      <option value="">Please select</option>
+      {% for dataset in datasets %}
+      <option value="{{dataset.id}}" {% if dataset == datasetFromQuery %}selected="true"{% endif %}>{{dataset.title}}</option>
+      {% endfor %}
+    </select>
+
+    {% for dataset in datasets %}
+    <div class="dataset-description js-dataset-{{dataset.id}}" style="display: none;">
+      {{dataset.description}}
+    </div>
+    {% endfor %}
+
   </label>
   <label>Census Year<br/>
     <input name="year" type="number" min="2012" max="2013" value="2013" readonly="true" />
@@ -92,7 +105,7 @@ Country - Submit
 
 <script src="{{page.root}}/src/common.js"></script>
 <script type="text/javascript">
-jquery(document).ready(function($) {
+jQuery(document).ready(function($) {
   $('input[name="exists"]').change(function(){
     var input = $(this);
     if(input.val() !== "yes") {
@@ -112,6 +125,13 @@ jquery(document).ready(function($) {
     } else {
       $('#dataset-properties').find('.hide').hide().removeclass('hide').slidedown();
     }
+  });
+
+  $('#dataset-select').change(function(e) {
+    e.preventDefault();
+    var val = $(e.target).val();
+    $('.dataset-description').hide();
+    $('.js-dataset-' + val).show();
   });
 });
 </script>
