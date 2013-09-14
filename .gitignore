@@ -3,3 +3,4 @@ utils/env
 *.swp
 node_modules/*
 settings.json
+sandbox/*
