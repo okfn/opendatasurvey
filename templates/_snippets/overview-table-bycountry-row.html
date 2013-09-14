@@ -1,0 +1,67 @@
+<tr{% if type == 'submissions' %} class="queued"{% endif %}>
+  <th>
+    {% if type == 'submissions' %}
+      &#8627; Awaiting review
+    {% else %}
+      {{ dataset.title }}
+    {% endif %}
+  </th>
+  <td{% if record %} data-place="{{ record.place }}" data-dataset="{{ record.dataset }}" data-datasetTitle="{{ dataset.title }}"{% endif %}>
+    <ul class="availability icons">
+      {% for field in record_fields %}
+        {% set state = record[field.id] %}
+        <li class="{% if state == 'Y' %}yes{% elif state == 'N' %}no{% elif state == '?' %}maybe{% endif %}" data-toggle="tooltip" title="{{ field.label }}">
+          <i class="icon-{{ field.icon }}"></i>
+          <span class="text">{{ state }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  </td>
+  <td>
+    {% if record %}
+      <a href="{{ record.url }}"><i class="icon-link"></i></a>
+    {% else %}
+      <i class="icon-link"></i>
+    {% endif %}
+  </td>
+  <td>
+    <ul class="icons">
+      <li>
+        {% if record and record.dateavailable %}
+          <i class="icon-calendar" title="{{ record.dateavailable }}" data-toggle="tooltip"></i>
+        {% else %}
+          <i class="icon-calendar"></i>
+        {% endif %}
+      </li>
+      <li>
+        {% if record %}
+          <a data-toggle="tooltip" class="count-0" title="{{ record.details }}">
+            <i class="icon-info-sign"></i>
+          </a>
+        {% else %}
+          <i class="icon-info-sign"></i>
+        {% endif %}
+      </li>
+      <li>
+        {% if record %}
+          <a data-toggle="tooltip" class="count-0" title="{{ record.submitter }} ({{ record.submitterurl }})">
+            <i class="icon-user"></i>
+          </a>
+        {% else %}
+          <i class="icon-user"></i>
+        {% endif %}
+      </li>
+    </ul>
+  </td>
+  <td>
+    {% if loggedin != True and type == 'info' %}
+      <a href="../submit/?dataset={{ dataset.id }}&area={{ country }}" class="btn btn-mini btn-primary">
+        <i class="icon-plus"></i>
+      </a>
+    {% elif loggedin == True and type == 'submissions' %}
+      <a href="../review/?dataset={{record.dataset}}&country={{record.place}}" class="btn btn-mini btn-primary">
+        <i class="icon-search"></i>
+      </a>
+    {% endif %}
+  </td>
+</tr>

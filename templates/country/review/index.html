@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+
+{% block title %}
+Countries
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    
+      
+    
+        <h1><span class="muted"><a href="../overview/?country={{ country | urlencode }}">{{ country }}</a> / </span> {{datasetfriendly}}</h1>
+      </div>
+
+              
+              {% set subrecord = submissions.byplace[country].datasets[dataset] %}
+              {% set currrecord = info.byplace[country].datasets[dataset] %}
+              
+            {% if subrecord %}
+            
+            <h3>Data Availability</h3>
+      <p>Please answer regarding open data availability <strong>right now</strong>.<br>
+        If data will be released soon this can be mentioned this in the details and comments section below.</p>
+       <form action="../update/" method="post">
+      <table class="table table-striped availability-form">
+              
+             
+        
+             <thead>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>Unsure</td>
+            <td class="current-entry">Current Entry</td>
+          </tr>
+        </thead>
+        <tbody>
+                       <tr>
+            <td>Does the data exist?</td>
+            <td></td>
+                        <td><input type="radio" class="ss-q-radio" name="exists" value="Yes" {% if subrecord.exists == 'Y' %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="exists" value="No" {% if subrecord.exists == 'N' %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="exists" value="Unsure" {% if subrecord.exists == '?' %} checked {% endif %} /></td>
+                        <td class="current-entry">{% if currrecord.exists == "Y" %} Yes {% elif currrecord.exists == "N" %} No {% elif currrecord.exists == "?" %} Unsure {% else %} No record {% endif %}</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Is it openly licensed? (as per the http://OpenDefinition.org/)</td>
+            <td></td>
+                        <td><input type="radio" class="ss-q-radio" name="openlicense" value="Yes" {% if subrecord.openlicense == 'Y' %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="openlicense" value="No" {% if subrecord.openlicense == 'N' %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="openlicense" value="Unsure" {% if subrecord.openlicense == '?' %} checked {% endif %} /></td>
+                        <td class="current-entry">{% if currrecord.openlicense == "Y" %} Yes {% elif currrecord.openlicense == "N" %} No {% elif currrecord.openlicense == "?" %} Unsure {% else %} No record {% endif %}</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Is it publicly available, free of charge?</td>
+            <td></td>
+                        <td><input type="radio" class="ss-q-radio" name="public" value="Yes" {% if subrecord.public == 'Y' %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="public" value="No" {% if subrecord.public == 'N' %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="public" value="Unsure" {% if subrecord.public == '?' %} checked {% endif %} /></td>
+                        <td class="current-entry">{% if currrecord.public == "Y" %} Yes {% elif currrecord.public == "N" %} No {% elif currrecord.public == "?" %} Unsure {% else %} No record {% endif %}</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Is it machine readable? (E.g. spreadsheet not PDF)</td>
+            <td></td>
+                        <td><input type="radio" class="ss-q-radio" name="machinereadable" value="Yes" {% if subrecord.machinereadable == 'Y' %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="machinereadable" value="No" {% if subrecord.machinereadable == 'N' %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="machinereadable" value="Unsure" {% if subrecord.machinereadable == '?' %} checked {% endif %} /></td>
+                        <td class="current-entry">{% if currrecord.machinereadable == "Y" %} Yes {% elif currrecord.machinereadable == "N" %} No {% elif currrecord.machinereadable == "?" %} Unsure {% else %} No record {% endif %}</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Is it in digital form?</td>
+            <td></td>
+                        <td><input type="radio" class="ss-q-radio" name="digital" value="Yes" {% if subrecord.digital == 'Y' %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="digital" value="No" {% if subrecord.digital == 'N' %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="digital" value="Unsure" {% if subrecord.digital == '?' %} checked {% endif %} /></td>
+                        <td class="current-entry">{% if currrecord.digital == "Y" %} Yes {% elif currrecord.digital == "N" %} No {% elif currrecord.digital == "?" %} Unsure {% else %} No record {% endif %}</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Is it up to date?</td>
+            <td></td>
+                        <td><input type="radio" class="ss-q-radio" name="uptodate" value="Yes"  {% if subrecord.uptodate == 'Y' %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="uptodate" value="No" {% if subrecord.uptodate == 'N' %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="uptodate" value="Unsure" {% if subrecord.uptodate == '?' %} checked {% endif %} /></td>
+                        <td class="current-entry">{% if currrecord.uptodate == "Y" %} Yes {% elif currrecord.uptodate == "N" %} No {% elif currrecord.uptodate == "?" %} Unsure {% else %} No record {% endif %}</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Available in bulk? (Can you get the whole dataset easily)</td>
+            <td></td>
+                        <td><input type="radio" class="ss-q-radio" name="bulk" value="Yes" {% if subrecord.bulk == 'Y' %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="bulk" value="No" {% if subrecord.bulk == 'N' %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="bulk" value="Unsure" {% if subrecord.bulk == '?' %} checked {% endif %} /></td>
+                        <td class="current-entry">{% if currrecord.bulk == "Y" %} Yes {% elif currrecord.bulk == "N" %} No {% elif currrecord.bulk == "?" %} Unsure {% else %} No record {% endif %}</td>
+                    </tr>
+        </tbody>
+      </table>
+                
+                <div class="row">
+      	<div class="span6">
+        	<h3>Location of Data Online <span class="muted">(Optional)</span></h3>
+          <label for="url" class="ss-q-help">Please provide URL (location) of data if available</label>
+                            <input type="text" id="url" name="url" value="{{ subrecord.url }}" /><br />
+                            <div class="current-entry">
+                            <label>Current Entry</label>
+                            <input type="text" id="" class="span6" value="{% if currrecord %} {{currrecord.url}} {% else %} No record {% endif %}" readonly>
+                        
+                            
+                            </div>
+        </div>
+        <div class="span6">
+        	<h3>Date it became available <span class="muted">(Optional)</span></h3>
+          <label for="entry_133" class="ss-q-help">Use YYYY-MM-DD format if possible</label>
+                            <input type="text" id="entry_133" class="span6" name="dateavailable" value="{{ subrecord.dateavailable }}" />
+                            <div class="current-entry">
+          	<label>Current Entry</label>
+          	<input type="text" id="" class="span6" value="{% if currrecord %} {{currrecord.dateavailable}} {% else %} No record {% endif %}" readonly>
+          </div>
+        </div>
+      </div>
+
+           <h3>Details and comments <span class="muted">(Optional)</span></h3>
+      <label for="entry_12" class="ss-q-help">e.g. is the data partially available, are there plans to make it available in the future?</label>
+      
+      <div class="historic-entries">
+        <textarea id="entry_12" class="expanding-texarea-common" name="details">{{ subrecord.details }} </textarea>
+        <div class="current-entry">
+          <span class="label">Current Entry</span>
+          <div class="textarea">{% if currrecord %} {{currrecord.details}} {% else %} No record {% endif %}</div>
+        </div>
+        
+       
+      </div>
+      
+      
+         <div class="row">
+      	<div class="span6">
+        	<h3>Your name <span class="muted">(Optional)</span></h3>
+        	<label for="entry_1" class="ss-q-help">So we can credit you. <br>This will be public</label>
+        	<div class="historic-entries">
+            <textarea id="entry_1" class="expanding-texarea-common" name="submitter" value="{{ subrecord.submitter }}">{{ subrecord.submitter }}</textarea>
+            <div class="current-entry">
+              <span class="label">Current Entry</span>
+              <div class="textarea">{% if currrecord %} {{currrecord.submitter}} {% else %} No record {% endif %}</div>
+            </div>
+          </div>
+        </div>
+
+                        <div class="span6">
+        	<h3>Your email address <span class="muted">(Optional)</span></h3>
+        	<label for="entry_134" class="ss-q-help">This will be private and allow us to contact you with any questions or status of your submission</label>
+        	<div class="historic-entries">
+            <textarea id="entry_134" class="expanding-texarea-common" name="email">{{ subrecord.email }}</textarea>
+            <div class="current-entry">
+              <span class="label">Current Entry</span>
+              <div class="textarea">{% if currrecord %} {{currrecord.email}} {% else %} No record {% endif %}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+                            
+      <div class="row">
+      	<div class="span6">
+          <h3>Link for you  <span class="muted">(Optional)</span></h3>
+          <label for="entry_130" class="ss-q-help">A link to your website, twitter etc. So we can credit you. This will be public</label>
+          <div class="historic-entries">
+            <textarea id="entry_130" class="expanding-texarea-common" name="submitterurl">{{ subrecord.submitterurl }}</textarea>
+            <div class="current-entry">
+              <span class="label">Current Entry</span>
+              <div class="textarea">{% if currrecord %}{{currrecord.submitterurl}}{% else %}No record{% endif %}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+              
+           
+                  
+                  <input type="hidden" name="country" value="{{country}}" />
+                  <input type="hidden" name="dataset" value="{{dataset}}" />
+                  <input type="hidden" name="timestamp" value="{{subrecord.timestamp}}" />
+                  
+                  <div style="text-align: right;"><input type="submit" name="submit" class="btn btn-danger" value="Reject" />&nbsp; <input name="submit" type="submit" value="Publish" class="btn btn-primary" /></div>
+                  
+                  </form>
+            {% else %}
+            
+            There is no submission for this country and dataset.
+            
+            {% endif %}
+            
+       
+  
+
+    <script src="{{page.root}}/src/common.js"></script>
+    <script src="{{page.root}}/src/census.js"></script>
+{% endblock %}
