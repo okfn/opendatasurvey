@@ -1,12 +1,12 @@
 var express = require('express')
-  , path = require('path')
-  , fs = require('fs')
-  , nunjucks = require('nunjucks')
-  , request = require('request')
-  , csv = require('csv')
-  , GoogleSpreadsheet = require('google-spreadsheet')
-  , _ = require('underscore')
-  ;
+        , path = require('path')
+        , fs = require('fs')
+        , nunjucks = require('nunjucks')
+        , request = require('request')
+        , csv = require('csv')
+        , GoogleSpreadsheet = require('google-spreadsheet')
+        , _ = require('underscore')
+        ;
 
 var app = express();
 
@@ -97,8 +97,8 @@ app.get('/country/results.json', function(req, res) {
 // interfere with other urls
 app.get('/country/place/{place}/', function(req, res) {
   res.render('country/place.html', {
-  place: place,
-  info: model.data.country.byplace[place]
+    place: place,
+    info: model.data.country.byplace[place]
   });
 });
 
@@ -190,8 +190,7 @@ app.post('/country/update/', function(req, res) {
     var returnError = {value: 0, message: ""};
 
     var my_sheet = new GoogleSpreadsheet(gKey);
-    //We need authentication to perform edits(?) 
-    //TODO: Create Google account with no user data (sheet is open, but you need to be logged in to add(?)) 
+    //We need authentication to perform edits (double-check) 
     my_sheet.setAuth(model.gUser, model.gPass, function(err) {
       if (err) {
         returnError = {value: 1, message: "Could not authenticate: " + err + "<br />No changes have taken place. You may want to <a href='../sheets/'>resolve the problem manually.</a> This error has been reported."};
@@ -202,53 +201,60 @@ app.post('/country/update/', function(req, res) {
         var query = {};
         query["sq"] = 'dataset="' + fulldatasetname + '" and place="' + req.body['country'] + '"';
 
+        var norecord = false;
+        
         //Get the (unique) row
         my_sheet.getRows(3, {}, query, function(err, rows) {
           if (err) {
             returnError = {value: 1, message: "While getting the current entry from the live sheet: " + err + "<br />No changes have taken place. You may want to <a href='../sheets/'>resolve the problem manually.</a> This error has been reported."};
             doneUpdating(returnError, req, res);
           }
-          else if (rows.length === 0) {
-            returnError = {value: 1, message: "There is no entry for " + req.body['dataset'] + "/" + req.body['country'] + "<br />No changes have taken place. You may want to <a href='../sheets/'>resolve the problem manually.</a> This error has been reported."};
-            doneUpdating(returnError, req, res);
-          }
+
           else if (rows.length > 1) {
             returnError = {value: 1, message: "There is more than one entry for " + req.body['dataset'] + "/" + req.body['country'] + "<br />No changes have taken place. You may want to <a href='../sheets/'>resolve the problem manually.</a> This error has been reported."};
             doneUpdating(returnError, req, res);
           }
           else {
+            if (rows.length === 0) norecord = true;
             //Copy the data to the archive
-            my_sheet.addRow(5, {timestamp: rows[0].timestamp, place: rows[0].place, dataset: rows[0].dataset, exists: rows[0].exists, digital: rows[0].digital, machinereadable: rows[0].machinereadable, bulk: rows[0].bulk, public: rows[0].public, openlicense: rows[0].openlicense, uptodate: rows[0].uptodate, url: rows[0].url, dateavailable: rows[0].dateavailable, details: rows[0].details, submitter: rows[0].submitter, submitterurl: rows[0].submitterurl, email: rows[0].email, reviewed: rows[0].reviewed, archived: timeStamp()});
+            //No: discard old data, we will keep the submissions instead
+            //my_sheet.addRow(5, {timestamp: rows[0].timestamp, place: rows[0].place, dataset: rows[0].dataset, exists: rows[0].exists, digital: rows[0].digital, machinereadable: rows[0].machinereadable, bulk: rows[0].bulk, public: rows[0].public, openlicense: rows[0].openlicense, uptodate: rows[0].uptodate, url: rows[0].url, dateavailable: rows[0].dateavailable, details: rows[0].details, submitter: rows[0].submitter, submitterurl: rows[0].submitterurl, email: rows[0].email, reviewed: rows[0].reviewed, archived: timeStamp()});
 
+            var object = {};
+            if (!norecord) object = rows[0];
             //Modify the row with the new data
-            rows[0].timestamp = req.body['timestamp'];
+            object.timestamp = req.body['timestamp'];
+            object.year = req.body['year'];
             //rows[0].place = //Don't change!
             //rows[0].dataset = //Don't change!
-            rows[0].exists = req.body['exists'];
-            rows[0].digital = req.body['digital'];
-            rows[0].machinereadable = req.body['machinereadable'];
-            rows[0].bulk = req.body['bulk'];
-            rows[0].public = req.body['public'];
-            rows[0].openlicense = req.body['openlicense'];
-            rows[0].uptodate = req.body['uptodate'];
-            rows[0].url = req.body['url'];
-            rows[0].dateavailable = req.body['dateavailable'];
-            rows[0].details = req.body['details'];
-            rows[0].submitter = req.body['submitter'];
-            rows[0].submitterurl = req.body['submitterurl'];
-            rows[0].email = req.body['email'];
-            rows[0].reviewed = 'Via web interface on ' + timeStamp();
+            object.exists = req.body['exists'];
+            object.digital = req.body['digital'];
+            object.online = req.body['online'];
+            object.free = req.body['free'];
+            object.machinereadable = req.body['machinereadable'];
+            object.bulk = req.body['bulk'];
+            object.public = req.body['public'];
+            object.openlicense = req.body['openlicense'];
+            object.uptodate = req.body['uptodate'];
+            object.url = req.body['url'];
+            object.dateavailable = req.body['dateavailable'];
+            object.format = req.body['format'];
+            object.details = req.body['details'];
+            //rows[0].submitter = req.body['submitter'];
+            //rows[0].submitterurl = req.body['submitterurl'];
+            //rows[0].email = req.body['email'];
+            //rows[0].reviewed = 'Via web interface on ' + timeStamp();
 
-            rows[0].save(function(err) {
+            var afterwards = function(err) {
               if (err) {
-                returnError = {value: 1, message: "While modifying the current entry in the live sheet: " + err + "<br />The current entry is still there but has been ERRONEOUSLY copied to the archive. You should <a href='../sheets/'>resolve the problem manually.</a> This error has been reported."};
+                returnError = {value: 1, message: "While modifying/adding the current entry in the live sheet: " + err + "<br />The current entry (if any) is still there. You should <a href='../sheets/'>resolve the problem manually.</a> This error has been reported."};
                 doneUpdating(returnError, req, res);
               }
               else {
 
                 //Get the row in the submitted sheet
                 var query = {};
-                query["sq"] = 'dataset="' + fulldatasetname + '" and censuscountry="' + req.body['country'] + '"';
+                query["sq"] = 'dataset="' + fulldatasetname + '" and place="' + req.body['country'] + '"';
 
                 //Get the (unique) row
                 my_sheet.getRows(1, {}, query, function(err, srows) {
@@ -266,21 +272,29 @@ app.post('/country/update/', function(req, res) {
                     doneUpdating(returnError, req, res);
                   }
                   else {
-                    srows[0].del(function(err) {
+                    srows[0].review_outcome = 'accepted';
+                    srows[0].reviewer = 'Via web interface on ' + timeStamp();
+                    //Copy it to the other sheet with the new 
+                    my_sheet.addRow(2, srows[0], function(err) {
 
-                      if (err) {
-                        returnError = {value: 1, message: "While removing the submission from the submissions sheet: " + err + "<br />The new entry has been added and the submission marked as reviewed but not removed from the submissions sheet. Please <a href='../sheets/'>remove it manually.</a> This error has been reported."};
+                       if (err) {
+                        returnError = {value: 1, message: "While moving the submission from the submissions sheet to the reviewed submissions sheet: " + err + "<br />The new entry has been added but the submission not marked as reviewed and not removed from the submissions sheet. Please <a href='../sheets/'>move it manually.</a> This error has been reported."};
                         doneUpdating(returnError, req, res);
                       }
-                      else {
+                      else { 
+                        srows[0].del(); //Attempt to delete, not handling errors yet.
                         returnError = {value: 0, message: "Entry updated successfully. The old entry has been archived and the submission marked as reviewed. Thank you!"};
                         doneUpdating(returnError, req, res);
-                      }
+                     }
                     });
                   }
                 });
               }
-            });
+            };
+            
+            if (!norecord) object.save(afterwards);
+            else my_sheet.addRow(3, object, afterwards);
+            
           }
         });
       }
@@ -311,7 +325,7 @@ app.post('/country/update/', function(req, res) {
     var my_sheet = new GoogleSpreadsheet(gKey);
     //We need authentication to perform edits(?) 
     //TODO: Create Google account with no user data (sheet is open, but you need to be logged in to add(?)) 
-    
+
     my_sheet.setAuth(model.gUser, model.gPass, function(err) {
       if (err) {
         returnError = {value: 1, message: "Could not authenticate: " + err + "<br />No changes have taken place. You may want to <a href='../sheets/'>resolve the problem manually.</a> This error has been reported."};
@@ -320,9 +334,10 @@ app.post('/country/update/', function(req, res) {
       else {
         //Start by getting current entry. Module was modified to accept a query so that we don't have to download the whole sheet :)
         var query = {};
-        query["sq"] = 'dataset="' + fulldatasetname + '" and censuscountry="' + req.body['country'] + '"';
+        query["sq"] = 'dataset="' + fulldatasetname + '" and place="' + req.body['country'] + '"';
 
         //Get the (unique) row
+        //Use gid 1 (submissions)
         my_sheet.getRows(1, {}, query, function(err, rows) {
           if (err) {
             returnError = {value: 1, message: "While getting the current entry from the submissions sheet: " + err + "<br />No changes have taken place. You may want to <a href='../sheets/'>resolve the problem manually.</a> This error has been reported."};
@@ -340,17 +355,20 @@ app.post('/country/update/', function(req, res) {
             //Copy the data to the archive, marking as rejected
             //The column names in the submissions sheet are horrible due to the form, which we will get rid of soon
             //FOR FUTURE: // my_sheet.addRow(5, {timestamp: rows[0].timestamp, place: rows[0].place, dataset: rows[0].dataset, exists: rows[0].exists, digital: rows[0].digital, machinereadable: rows[0].machinereadable, bulk: rows[0].bulk, public: rows[0].public, openlicense: rows[0].openlicense, uptodate: rows[0].uptodate, url: rows[0].url, dateavailable: rows[0].dateavailable, details: rows[0].details, submitter: rows[0].submitter, submitterurl: rows[0].submitterurl, email: rows[0].email, reviewed: "Rejected via Web Interface", archived: timeStamp()});
-            console.log(rows[0]);
-            my_sheet.addRow(5, {timestamp: rows[0].timestamp, place: rows[0].censuscountry, dataset: rows[0].dataset, exists: rows[0].dataavailabilitydoesthedataexist, digital: rows[0].dataavailabilityisitindigitalform, machinereadable: rows[0]['dataavailabilityisitmachinereadablee.g.spreadsheetnotpdf'], bulk: rows[0].dataavailabilityavailableinbulkcanyougetthewholedataseteasily, public: rows[0].dataavailabilityisitpubliclyavailablefreeofcharge, openlicense: rows[0]['dataavailabilityisitopenlylicensedasperthehttpopendefinition.org'], uptodate: rows[0].dataavailabilityisituptodate, url: rows[0].locationofdataonline, dateavailable: rows[0].dateitbecameavailable, details: rows[0].detailsandcomments, submitter: rows[0].yourname, submitterurl: rows[0].linkforyou, email: rows[0].youremailaddress, reviewed: "Rejected via Web Interface", archived: timeStamp()});
-
-
-            rows[0].del(function(err) {
+            //console.log(rows[0]);
+            //my_sheet.addRow(5, {timestamp: rows[0].timestamp, place: rows[0].censuscountry, dataset: rows[0].dataset, exists: rows[0].dataavailabilitydoesthedataexist, digital: rows[0].dataavailabilityisitindigitalform, machinereadable: rows[0]['dataavailabilityisitmachinereadablee.g.spreadsheetnotpdf'], bulk: rows[0].dataavailabilityavailableinbulkcanyougetthewholedataseteasily, public: rows[0].dataavailabilityisitpubliclyavailablefreeofcharge, openlicense: rows[0]['dataavailabilityisitopenlylicensedasperthehttpopendefinition.org'], uptodate: rows[0].dataavailabilityisituptodate, url: rows[0].locationofdataonline, dateavailable: rows[0].dateitbecameavailable, details: rows[0].detailsandcomments, submitter: rows[0].yourname, submitterurl: rows[0].linkforyou, email: rows[0].youremailaddress, reviewed: "Rejected via Web Interface", archived: timeStamp()});
+            //No, just mark it as rejected
+            rows[0].review_outcome = 'rejected';
+            rows[0].reviewer = 'Via web interface on ' + timeStamp();
+            
+            my_sheet.add(2, rows[0], function(err) {
 
               if (err) {
-                returnError = {value: 1, message: "While removing the submission from the submissions sheet: " + err + "<br />The rejected entry has been added to the archive but not removed from the submissions sheet. Please <a href='../sheets/'>remove it manually.</a> This error has been reported."};
+                returnError = {value: 1, message: "While marking the submission in the submissions sheet as rejected: " + err + "<br />The rejected entry has not been rejected. Please <a href='../sheets/'>reject it manually.</a> This error has been reported."};
                 doneUpdating(returnError, req, res);
               }
               else {
+                rows[0].del(); //Attempt to delete, not handling errors yet.
                 returnError = {value: 0, message: "Entry rejected successfully. The entry has been archived and marked as rejected. Thank you!"};
                 doneUpdating(returnError, req, res);
               }
