@@ -52,7 +52,7 @@ ul.icons li {
 	text-align:center;
 }
 ul.availability.icons li {
-	background-color:#f9b339;
+	background-color:#CCC;
 	color:#FFF;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
@@ -63,6 +63,9 @@ ul.availability.icons li.yes {
 }
 ul.availability.icons li.no {
 	background-color:#dd3d3a;
+}
+ul.availability.icons li.maybe {
+	background-color:#f9b339;
 }
 ul.availability.icons li .text {
 	display:none;
@@ -455,6 +458,10 @@ table.response-summary thead tr th div {
 	/*line-height: */
 }
 
+table.response-summary tbody tr td.active {
+	background-color: #EEE;
+}
+
 /* city table */
 
 #city-table thead tr th.sorting {
@@ -537,6 +544,7 @@ table.cell-summary {
 
 table.table th.area-name {
 	text-align: left;
+	width: 140px;
 }
 
 .nav-tabs {
