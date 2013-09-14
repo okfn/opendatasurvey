@@ -1,8 +1,78 @@
 var assert = require('assert')
   , model = require('../lib/model.js').OpenDataCensus
+  , Backend = require('../lib/model.js').Backend
   , mocha = require('mocha')
   , _ = require('underscore')
   ;
+
+var options = {
+ 'key': '0AqR8dXc6Ji4JdHR5WWdUU2dYUElPaFluUlBJbkFOMUE'
+};
+
+// some rules
+// we only add rows where place = Germany (so we can delete afterwards)
+describe('Backend', function() {
+  this.timeout(2000);
+  var backend = new Backend(options);
+
+  before(function(done) {
+    backend.login(function(err){
+      if (err) throw err;
+      done();
+    });
+  });
+  after(function(done) {
+    // TODO: delete all Germany entries
+    backend.getEntrys({place: 'Germany'}, function(err, rows) {
+      rows.forEach(function(entry) {
+        entry.del(function(err) {
+          if(err) {
+            console.log(err);
+          }
+          done();
+        });
+      });
+    });
+  });
+  it('getEntrys', function(done) {
+    backend.getEntrys({place: 'United Kingdom'}, function(err, entrys) {
+      assert.ok(!err);
+      assert.ok(entrys!==[]);
+      assert.equal(entrys.length, 2);
+      done();
+    });
+  });
+  it('getEntry', function(done) {
+    backend.getEntry({year: 2012, dataset: 'timetables', place: 'United Kingdom'}, function(err, entry) {
+      assert.ok(!err);
+      assert.ok(entry!=null, 'No entry (entry is null)');
+      assert.equal(entry.public, 'Yes', entry);
+      done();
+    });
+  });
+  it('insertEntry', function(done) {
+    var data = {
+      year: 2012,
+      dataset: 'spending',
+      place: 'Germany'
+    };
+    backend.insertEntry(data, function(err) {
+      assert.ok(!err);
+      done();
+    });
+  });
+  it('upsertEntry', function(done) {
+    var data = {
+      year: 2012,
+      dataset: 'spending',
+      place: 'Germany'
+    };
+    backend.insertEntry(data, function(err) {
+      assert.ok(!err);
+      done();
+    });
+  });
+});
 
 describe('census', function() {
   before(function(done) {

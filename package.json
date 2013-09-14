@@ -14,7 +14,7 @@
     , "csv": ""
     , "request": ""
     , "underscore": ""
-    , "google-spreadsheet": ""
+    , "google-spreadsheet": "https://github.com/mattfullerton/node-google-spreadsheets/tarball/master"
     , "nconf": ""
   }
   , "devDependencies": {
