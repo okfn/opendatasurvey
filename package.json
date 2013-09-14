@@ -8,13 +8,14 @@
   }
   , "license": "MIT"
   , "dependencies": {
-      "express": "3.x",
-      "nunjucks": "0.1.8",
-      "marked": "",
-      "csv": "",
-      "request": "",
-      "underscore": "",
-      "google-spreadsheet": ""
+      "express": "3.x"
+    , "nunjucks": "0.1.8"
+    , "marked": ""
+    , "csv": ""
+    , "request": ""
+    , "underscore": ""
+    , "google-spreadsheet": ""
+    , "nconf": ""
   }
   , "devDependencies": {
     "supertest": "",

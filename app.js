@@ -25,7 +25,7 @@ var CORSSupport = function(req, res, next) {
 }
 
 app.configure(function() {
-  app.set('port', process.env.PORT || 50000);
+  app.set('port', process.env.PORT || 5000);
   app.set('views', __dirname + '/templates');
   app.use(express.favicon());
   app.use(express.logger('dev'));

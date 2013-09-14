@@ -107,6 +107,26 @@ To install do the following:
 
 4. Should now be running at <http://localhost:5000>
 
+
+### Configuration
+
+Configuration runs off lib/config.js. You can selectively override in your own
+local config. To do this:
+
+* Create `settings.json`
+* Copy the config object from lib/config.js and override relevant parts. Note
+  you don't need the whole object only the bits you want to change. For example:
+
+        {
+          "google": {
+            "user": "xxx",
+            "password": "yyy"
+          }
+        }
+
+Note for Heroku you could try uploading a settings.json or take a look at
+https://devcenter.heroku.com/articles/config-vars
+
 ### Running Tests
 
 Install mocha (see devDependencies in package.json) then do:
