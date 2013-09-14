@@ -108,7 +108,9 @@ OpenDataCensus.data = {
     // must be the CSV file
     //The column titles are tied to the form. We have short form titles in the 2nd line to match the final results set TODO: Is that necessary?
     //TODO: Careful that column mismatches don't cause problems. Additions are usually made by specifying columns, so it shouldn't matter
-    resultsUrl: 'https://docs.google.com/spreadsheet/pub?key=0Ak6K0pSAyW1gdFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc&single=true&gid=0&range=A2%3AP200000&output=csv', 
+    // resultsUrl: 'https://docs.google.com/spreadsheet/pub?key=0Ak6K0pSAyW1gdFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc&single=true&gid=0&range=A2%3AP200000&output=csv', 
+    // Do not use gid=0 for the moment as seems to have an issue
+    resultsUrl: 'https://docs.google.com/spreadsheet/pub?key=0Ak6K0pSAyW1gdFpGRWhWd1lSeXNFX0dMRGw2VEFvSXc&single=true&gid=7&output=csv',
     
 // dataset info looks like
     // 
