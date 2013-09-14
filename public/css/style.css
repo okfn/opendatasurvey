@@ -813,3 +813,10 @@ div.historic-entries div.current-entry:last-child .textarea {
 .expanding-texarea-lbr {
   line-height: 3px;
 }
+
+
+.yntable tr td:first-child {
+  width: 150px;
+  white-space: nowrap;
+}
+

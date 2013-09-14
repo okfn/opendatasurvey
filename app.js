@@ -112,7 +112,16 @@ app.get('/country/place/{place}/', function(req, res) {
  */
 
 app.get('/country/submit/', function(req, res) {
-  res.render('country/submit/index.html', {datasetsmap: model.datasetNamesMap, dataset: req.param('dataset')});
+  var datasets = [];
+  var ynquestions = model.data.questions.slice(0,9);
+  res.render('country/submit.html', {
+    datasetsmap: model.datasetNamesMap
+    , countryList: model.countryList
+    , ynquestions: ynquestions
+    , questions: model.data.questions
+    , dataset: req.param('dataset')
+    , place: req.param('place')
+  });
 });
 
 //"Log In" page
