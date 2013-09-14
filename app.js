@@ -10,7 +10,7 @@ var express = require('express')
 
 var app = express();
 
-var model = require('./models/country.js').OpenDataCensus;
+var model = require('./lib/model.js').OpenDataCensus;
 
 //NODE.JS AND EXPRESS - SESSIONS - http://blog.modulus.io/nodejs-and-express-sessions
 app.use(express.cookieParser());

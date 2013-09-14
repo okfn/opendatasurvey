@@ -1,5 +1,5 @@
 var assert = require('assert')
-  , model = require('../models/country.js').OpenDataCensus
+  , model = require('../lib/model.js').OpenDataCensus
   , mocha = require('mocha')
   , _ = require('underscore')
   ;
