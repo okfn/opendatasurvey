@@ -1,7 +1,8 @@
-Open Data Census Dashboard
-==========================
+Open Data Census
+================
 
-Visualizations and data procesing for the [Open Data Census][].
+Website for the [Open Data Census][] including submission workflow,
+presentation of results and visualizations.
 
 [Open Data Census]: http://census.okfn.org/
 
@@ -76,7 +77,12 @@ Process
 For Developers
 --------------
 
-The app is a simple Express NodeJS app deployed on Heroku.
+The app is a simple Express NodeJS app designed to be deployed on Heroku.
+
+We have 2 main branches:
+
+* master - development branch - deploy to <http://opendatacensus-staging.herokuapp.com/>
+* production - release branch (production ready code) - deploy to <http://census.okfn.org/>
 
 Install
 ~~~~~~~
@@ -115,5 +121,23 @@ by running off mock data.
 Deployment
 ~~~~~~~~~~
 
-App is deployed on Heroku as `opendatacensus`. Do the usual.
+We have 2 apps on Heroku:
+
+* Production: `opendatacensus` - push there from production branch
+* Staging: `opendatacensus-staging` - push from master
+
+To work with a given remote:
+
+    heroku --remote production ...
+
+To work with these do:
+
+    heroku git:remote -r production -a opendatacensus
+    heroku git:remote -r staging -a opendatacensus-staging
+    # this way git push heroku master will push to staging
+    heroku git:remote -a opendatacensus-staging
+
+To avoid error suggest making the staging app the default:
+
+    git config heroku.remote staging
 
