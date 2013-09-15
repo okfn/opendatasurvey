@@ -50,20 +50,22 @@ OpenDataCensus.summaryTable = (function(){
 
     $('.showpopover').each(function(idx, td) {
       var $td = $(td);
-      var record = data.byplace[$td.data('place')].datasets[$td.data('dataset')];
-      var datasetTitle = $td.data('datasettitle');
-      $td.popover({
-        html: true,
-        placement: 'bottom',
-        container: 'body',
-        title: function(e){
-          title = '<h3>' + datasetTitle + ' in ' + record.place + '</h3>';
-          return title;
-        },
-        content: function(){
-          return OpenDataCensus.popoverBody(record);
-        }
-      });
+      if (typeof data.byplace[$td.data('place')] != 'undefined') {
+        var record = data.byplace[$td.data('place')].datasets[$td.data('dataset')];
+        var datasetTitle = $td.data('datasettitle');
+        $td.popover({
+          html: true,
+          placement: 'bottom',
+          container: 'body',
+          title: function(e){
+            title = '<h3>' + datasetTitle + ' in ' + record.place + '</h3>';
+            return title;
+          },
+          content: function(){
+            return OpenDataCensus.popoverBody(record);
+          }
+        });
+      }
     });
 
     $(table.find('thead tr th').get(0)).addClass('sorting')
