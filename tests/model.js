@@ -83,10 +83,11 @@ describe('Backend', function() {
       place: 'Germany',
       exists: 'No'
     };
-    backend.insertSubmission(data, function(err, id_) {
+    backend.insertSubmission(data, function(err, obj) {
       // TODO: check something was actually created
       assert.ok(!err);
-      assert.equal(id_.length, 36);
+      assert.equal(obj.submissionid.length, 36);
+      assert.equal(obj.timestamp.slice(0, 4), '2013');
       done();
     });
   });
