@@ -11,7 +11,12 @@ var options = {
 };
 
 describe('Country', function() {
-  var backend = new Backend(options);
+  before(function(done) {
+    model.backend.login(function(err){
+      if (err) throw err;
+      done();
+    });
+  });
 
   it('POST Submission', function(done) {
     request(app)
@@ -24,6 +29,7 @@ describe('Country', function() {
       .expect(200)
       .end(function(err, res) {
         assert.ok(!err, err);
+        assert.ok(res.text.match(/Thank-you for your submission/));
         // TODO: test something was inserted
         // backend.getSubmission()
         done();

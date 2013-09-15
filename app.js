@@ -131,11 +131,10 @@ app.post('/country/submit/', function(req, res) {
       console.log(err);
       res.send(500, 'There was an error! ' + err);
     } else {
-      var subpath = '/country/submission/' + obj.submissionid;
-      res.send('Submission received ok');
-      // res.render('country/submission_done.html', {
-      //  path: subpath
-      // });
+      var submispath = '/country/submission/' + obj.submissionid;
+      res.render('country/submission_done.html', {
+        path: submispath
+      });
     }
   });
 });
