@@ -54,7 +54,7 @@ Country - Submit
 </thead>
 <tbody id="dataset-properties">
   {% for qu in ynquestions %}
-  <tr {% if loop.index0 != 0 %}class="hide"{% endif %}>
+  <tr {% if loop.index0 != 0 %}class="hide js-dependent"{% endif %}>
     <td>{{qu.question}}?</td>
     <td><input type="radio" name="{{qu.id}}" value="Yes" required></td>
     <td><input type="radio" name="{{qu.id}}" value="No"></td>
@@ -106,24 +106,15 @@ Country - Submit
 <script src="{{page.root}}/src/common.js"></script>
 <script type="text/javascript">
 jQuery(document).ready(function($) {
+  var $yninputs = $('.yntable .js-dependent');
   $('input[name="exists"]').change(function(){
     var input = $(this);
-    if(input.val() !== "yes") {
-      $.each([
-          "public",
-          "digital",
-          "machine-readable",
-          "bulk",
-          "open-license",
-          "up-to-date"
-        ],
-        function(i, name) {
-          $('input[name="' + name + '"][value="'+ input.val() +'"]')
-            .prop('checked', true);
-        }
-      );
+    if(input.val() !== "Yes") {
+      $yninputs.find('input[value="'+ input.val() +'"]')
+        .prop('checked', true);
+      $yninputs.addClass('hide').slideUp();
     } else {
-      $('#dataset-properties').find('.hide').hide().removeclass('hide').slidedown();
+      $yninputs.hide().removeClass('hide').slideDown();
     }
   });
 
