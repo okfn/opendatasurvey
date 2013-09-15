@@ -24,14 +24,17 @@ describe('Backend', function() {
   after(function(done) {
     // TODO: delete all Germany entries
     backend.getEntrys({place: 'Germany'}, function(err, rows) {
+      if (rows.length == 0) {
+        done();
+      }
       rows.forEach(function(entry) {
         entry.del(function(err) {
           if(err) {
             console.log(err);
           }
+          done();
         });
       });
-      done();
     });
   });
   it('getEntrys', function(done) {
@@ -50,25 +53,40 @@ describe('Backend', function() {
       done();
     });
   });
-  it('insertEntry', function(done) {
+  it('insertEntry and updateEntry', function(done) {
     var data = {
       year: 2012,
       dataset: 'spending',
-      place: 'Germany'
+      place: 'Germany',
+      exists: 'No'
     };
+    var newData = {
+      exists: 'Yes'
+    }
     backend.insertEntry(data, function(err) {
+      // TODO: check something was actually created
       assert.ok(!err);
-      done();
+      backend.updateEntry(data, newData, function(err) {
+        assert.ok(!err);
+        done();
+      });
     });
   });
-  it('upsertEntry', function(done) {
+
+
+  // Submissions
+
+  it('insertSubmission', function(done) {
     var data = {
       year: 2012,
       dataset: 'spending',
-      place: 'Germany'
+      place: 'Germany',
+      exists: 'No'
     };
-    backend.insertEntry(data, function(err) {
+    backend.insertSubmission(data, function(err, id_) {
+      // TODO: check something was actually created
       assert.ok(!err);
+      assert.equal(id_.length, 36);
       done();
     });
   });
