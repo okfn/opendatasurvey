@@ -11,7 +11,7 @@ Country - Submit
 
 <form action="" method="POST" class="form">
   <label>Country<br/>
-    <select name="place" required>
+    <select name="place" required autocomplete="off"> <!-- This doesn't prevent Chrome -->
       <option value="">Please select</option>
       {% for country in countryList %}
       <option value="{{country}}" {% if placeFromQuery == country %}selected="true"{% endif %}>{{country}}</option>
@@ -22,7 +22,8 @@ Country - Submit
     <select name="dataset" id="dataset-select" required>
       <option value="">Please select</option>
       {% for dataset in datasets %}
-      <option value="{{dataset.id}}" {% if dataset.id == datasetFromQuery %}selected="true"{% endif %}>{{dataset.title}}</option>
+      <!-- TODO: Change value back to dataset.id -->
+      <option value="{{dataset.title}}" {% if dataset.id == datasetFromQuery %}selected="true"{% endif %}>{{dataset.title}}</option>
       {% endfor %}
     </select>
 
@@ -76,10 +77,10 @@ Country - Submit
   <span class="help-block">{{qu.description}}</span>
   {% endfor %}
 
-  <label>Date it became available (optional)<br/>
+  <!-- <label>Date it became available (optional)<br/>
     <input type="text" name="dateavailable" value="" placeholder="YYYY-MM-DD">
     <span class="help-block">This can be approximate. For example, "2012" or "Jan 2012". If there is a precise date please entere as yyyy-mm-dd format if possible</span>
-  </label>
+  </label> -->
 </fieldset>
 
   <label>Further Information, Details and Comments (optional but strongly encouraged)</label>
@@ -93,8 +94,12 @@ Country - Submit
   <span class="help-block">so we can credit you. this will be public.</span>
 
   <label>link for you (optional)</label>
-  <input type="url" name="submitter_url" value="" placeholder="http://">
+  <input type="url" name="submitterurl" value="" placeholder="http://">
   <span class="help-block">a link to your website, twitter etc. so we can credit you. this will be public.</span>
+  
+  <label>your email (optional)</label>
+  <input type="email" name="submitteremail" value="" placeholder="">
+  <span class="help-block">so we contact you for clarification if needed</span>
 </fieldset>
 
   <button type="submit" class="btn btn-large btn-success" data-loading-text="saving ...">submit</button>

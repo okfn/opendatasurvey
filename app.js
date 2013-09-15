@@ -127,13 +127,18 @@ app.get('/country/submit/', function(req, res) {
 
 app.post('/country/submit/', function(req, res) {
   model.backend.insertSubmission(req.body, function(err, obj) {
+    error = {};
     if (err) {
       console.log(err);
-      res.send(500, 'There was an error! ' + err);
+      //res.send(500, 'There was an error! ' + err);
+      error.value = 1;
+      error.message = 'There was an error! ' + err;
     } else {
+      error.value = 0;
+      error.message = 'Thank you very much for contributing to the 2013 Country Census! Your entry has now been placed in the review queue waiting for one of our editors to review.';
       var submispath = '/country/submission/' + obj.submissionid;
-      res.render('country/submission_done.html', {
-        path: submispath
+      res.render('country/overview/index.html' /*submission_done.html'*/, {
+        /*path: submispath, */ country: req.body['place'], error: error
       });
     }
   });
@@ -227,7 +232,7 @@ app.post('/country/update/', function(req, res) {
     var fulldatasetname = model.datasetNamesMap[req.body['dataset']];
 
     //Key for the spreadsheet (see country.js)
-    var gKey = model.sheetsQueryUrlMap['key'];
+    var gKey = model.gKey;
 
     //Feedback
     var returnError = {value: 0, message: ""};
@@ -283,6 +288,12 @@ app.post('/country/update/', function(req, res) {
             object.dateavailable = req.body['dateavailable'];
             object.format = req.body['format'];
             object.details = req.body['details'];
+            
+            //TODO: Change once new fields are there throughout the site
+            object.year = "2013";
+            object.online = "Unsure";
+            object.free = "Unsure";
+            object.format = "Unknown";
             //rows[0].submitter = req.body['submitter'];
             //rows[0].submitterurl = req.body['submitterurl'];
             //rows[0].email = req.body['email'];
@@ -315,7 +326,7 @@ app.post('/country/update/', function(req, res) {
                     doneUpdating(returnError, req, res);
                   }
                   else {
-                    srows[0].review_outcome = 'accepted';
+                    srows[0].reviewoutcome = 'accepted';
                     srows[0].reviewer = 'Via web interface on ' + timeStamp();
                     //Copy it to the other sheet with the new 
                     my_sheet.addRow(2, srows[0], function(err) {
@@ -360,7 +371,7 @@ app.post('/country/update/', function(req, res) {
     var fulldatasetname = model.datasetNamesMap[req.body['dataset']];
 
     //Key for the spreadsheet (see country.js)
-    var gKey = model.sheetsQueryUrlMap['key'];
+    var gKey = model.gKey;
 
     //Feedback
     var returnError = {value: 0, message: ""};
@@ -404,7 +415,7 @@ app.post('/country/update/', function(req, res) {
             rows[0].review_outcome = 'rejected';
             rows[0].reviewer = 'Via web interface on ' + timeStamp();
             
-            my_sheet.add(2, rows[0], function(err) {
+            my_sheet.addRow(2, rows[0], function(err) {
 
               if (err) {
                 returnError = {value: 1, message: "While marking the submission in the submissions sheet as rejected: " + err + "<br />The rejected entry has not been rejected. Please <a href='../sheets/'>reject it manually.</a> This error has been reported."};

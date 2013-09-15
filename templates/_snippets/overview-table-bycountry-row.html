@@ -42,6 +42,7 @@
           <i class="icon-info-sign"></i>
         {% endif %}
       </li>
+      {% if type == 'submissions' %}
       <li>
         {% if record %}
           <a data-toggle="tooltip" class="count-0" title="{{ record.submitter }} ({{ record.submitterurl }})">
@@ -51,6 +52,7 @@
           <i class="icon-user"></i>
         {% endif %}
       </li>
+      {% endif %}
     </ul>
   </td>
   <td>
