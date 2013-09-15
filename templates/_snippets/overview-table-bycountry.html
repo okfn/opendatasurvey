@@ -24,7 +24,7 @@
 
 {% if loggedin != True %}
   <p class="pull-right">
-    Country reviewer? Log in <a href="../reviewers/?country={{country | urlencode}}">here</a>.
+    Country reviewer? Log in <a href="../reviewers/?country={{country | replace(' ', '%20') }}">here</a>.
   </p>
 {% endif %}
 

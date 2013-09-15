@@ -10,7 +10,7 @@ Countries
     
       
     
-        <h1><span class="muted"><a href="../overview/?country={{ country | urlencode }}">{{ country }}</a> / </span> {{datasetfriendly}}</h1>
+        <h1><span class="muted"><a href="../overview/?country={{ country | replace(' ', '%20') }}">{{ country }}</a> / </span> {{datasetfriendly}}</h1>
       </div>
 
               
