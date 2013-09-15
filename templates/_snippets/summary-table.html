@@ -2,7 +2,7 @@
   <tr>
     <th></th>
     {% for dataset in info.datasets %}
-      <th><div>{{ dataset.titleRotated }}</div></th>
+      <th><div>{{ dataset.titleRotated }}</div></th><th style='width: 3px;'></th>
     {% endfor %}
     <th><div><strong>Total Score</strong></div>
   </tr>
@@ -44,7 +44,7 @@
         {% endfor %}
         {{ record }}
         <a>{{record.ycount}} / {{info.summary.maxScorePerRecord}}</a>#}
-    </td>
+    </td><td></td>
     {% endfor %}
     <td class="placescore" data-score="{{placeScore}}"><a>{{placeScore}} / {{info.summary.maxScorePerPlace}}</a></td>
   </tr>

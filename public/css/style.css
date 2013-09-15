@@ -30,7 +30,7 @@ h1 {
 }
 
 table {
-	font-size:13px;
+	font-size:15px;
 }
 table tr.queued td,
 table tr.queued th {
@@ -54,6 +54,7 @@ ul.icons li {
 ul.availability.icons li {
 	background-color:#CCC;
 	color:#FFF;
+  margin: -1px;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
 	border-radius: 2px;
@@ -102,6 +103,9 @@ ul.availability.icons.mini li i {
 	padding-right:10px;
 }
 .key.availability ul li {
+	border-left-color:#CCC;
+}
+.key.availability ul li.maybe {
 	border-left-color:#f9b339;
 }
 .key.availability ul li.yes {
@@ -505,7 +509,7 @@ table.response-summary td  ul.availability.icons.mini {
 }
 
 table.response-summary td.placescore a {
-	background-color:#FFF;
+	/* background-color:#FFF; */
 	margin-left:6px;
 }
 

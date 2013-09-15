@@ -56,13 +56,15 @@
     </ul>
   </td>
   <td>
-    {% if loggedin != True and type == 'info' %}
+  <!-- REMOVED UNTIL LOG IN ISSUES ARE SORTED: loggedin != True and -->
+    {% if type == 'info' %}
       <a href="../submit/?dataset={{ dataset.id }}&area={{ country }}" class="btn btn-mini btn-primary">
-        <i class="icon-plus"></i>
+        <!-- <i class="icon-plus"></i> -->Add Entry
       </a>
-    {% elif loggedin == True and type == 'submissions' %}
+   <!-- REMOVED UNTIL LOG IN ISSUES ARE SORTED:  loggedin == True and -->
+    {% elif type == 'submissions' %}
       <a href="../review/?dataset={{record.dataset}}&country={{record.place}}" class="btn btn-mini btn-primary">
-        <i class="icon-search"></i>
+        <!-- <i class="icon-search"></i> -->Review
       </a>
     {% endif %}
   </td>
