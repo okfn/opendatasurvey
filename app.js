@@ -114,7 +114,6 @@ app.get('/country/place/{place}/', function(req, res) {
 app.get('/country/submit/', function(req, res) {
   var datasets = [];
   var ynquestions = model.data.questions.slice(0,9);
-  console.log(model.data.country.datasets);
   res.render('country/submit.html', {
     datasetsmap: model.datasetNamesMap
     , countryList: model.countryList
@@ -123,6 +122,40 @@ app.get('/country/submit/', function(req, res) {
     , datasets: model.data.country.datasets
     , datasetFromQuery: req.param('dataset')
     , placeFromQuery: req.param('place')
+  });
+});
+
+app.post('/country/submit/', function(req, res) {
+  model.backend.insertSubmission(req.body, function(err, obj) {
+    if (err) {
+      console.log(err);
+      res.send(500, 'There was an error! ' + err);
+    } else {
+      var subpath = '/country/submission/' + obj.submissionid;
+      res.send('Submission received ok');
+      // res.render('country/submission_done.html', {
+      //  path: subpath
+      // });
+    }
+  });
+});
+
+app.get('/country/submission/:id', function(req, res) {
+  model.backend.getSubmission({submissionid: req.params.id}, function(err, obj) {
+    if (err) {
+      res.send(500, 'There was an error: ' + err);
+    }
+    // TODO: do something properly ...
+    res.send('Your submission exists');
+  });
+});
+
+app.get('/country/submission/:id.json', function(req, res) {
+  model.backend.getSubmission({submissionid: req.params.id}, function(err, obj) {
+    if (err) {
+      res.json(500, { error: { message: 'There was an error: ' + err } });
+    }
+    res.json(obj);
   });
 });
 
@@ -469,4 +502,6 @@ model.load(function(err) {
     console.log("Listening on " + app.get('port'));
   });
 });
+
+exports.app = app;
 

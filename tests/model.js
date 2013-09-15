@@ -75,6 +75,15 @@ describe('Backend', function() {
 
 
   // Submissions
+  it('getSubmission', function(done) {
+    backend.getSubmission({submissionid: 'testid-1'}, function(err, entry) {
+      assert.ok(!err);
+      assert.ok(entry!=null, 'No entry (entry is null)');
+      assert.equal(entry.dataset, 'timetables', entry);
+      assert.equal(entry.public, 'Yes', entry);
+      done();
+    });
+  });
 
   it('insertSubmission', function(done) {
     var data = {
