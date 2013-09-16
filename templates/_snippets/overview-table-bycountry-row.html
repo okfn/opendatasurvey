@@ -58,9 +58,15 @@
   <td>
   <!-- REMOVED UNTIL LOG IN ISSUES ARE SORTED: loggedin != True and -->
     {% if type == 'info' %}
-      <a href="../submit/?dataset={{ dataset.id }}&area={{ country }}" class="btn btn-mini btn-primary">
-        <!-- <i class="icon-plus"></i> -->Add Entry
-      </a>
+      {% if record %} 
+        <a href="../submit/?dataset={{ dataset.id }}&place={{ country }}" class="btn btn-mini btn-primary">
+          <!-- <i class="icon-plus"></i> -->Edit Entry
+        </a>
+      {% else %} 
+        <a href="../submit/?dataset={{ dataset.id }}&place={{ country }}" class="btn btn-mini btn-primary">
+          <!-- <i class="icon-plus"></i> -->Add Entry
+        </a>
+      {% endif %}
    <!-- REMOVED UNTIL LOG IN ISSUES ARE SORTED:  loggedin == True and -->
     {% elif type == 'submissions' %}
       <a href="../review/?dataset={{record.dataset}}&country={{record.place}}" class="btn btn-mini btn-primary">
