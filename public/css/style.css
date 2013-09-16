@@ -824,3 +824,7 @@ div.historic-entries div.current-entry:last-child .textarea {
   white-space: nowrap;
 }
 
+.help-block, .help-inline {
+  font-size: 13px;
+}
+
