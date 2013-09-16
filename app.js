@@ -134,11 +134,11 @@ app.post('/country/submit/', function(req, res) {
       error.value = 1;
       error.message = 'There was an error! ' + err;
     } else {
-      error.value = 0;
-      error.message = 'Thank you very much for contributing to the 2013 Country Census! Your entry has now been placed in the review queue waiting for one of our editors to review.';
+      // error.value = 0;
+      // error.message = 'Thank you very much for contributing to the 2013 Country Census! Your entry has now been placed in the review queue waiting for one of our editors to review.';
       var submispath = '/country/submission/' + obj.submissionid;
-      res.render('country/overview/index.html' /*submission_done.html'*/, {
-        /*path: submispath, */ country: req.body['place'], error: error
+      res.render('country/submission_done.html', {
+        path: submispath
       });
     }
   });
