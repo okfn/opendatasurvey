@@ -195,18 +195,19 @@ OpenDataCensus.popoverBody = function(response) {
   not = '';
   if (response.exists === 'Y'){
     out += '<li>Data exists</li>';
-    not = makeNot(response['openlicense']);
-    out += '<li>It\'s ' + not + 'openly licensed</li>';
+    not = makeNot(response['digital']);
+    out += '<li>It\'s ' + not + 'digital</li>';
     not = makeNot(response['public']);
     out += '<li>It\'s ' + not + 'publicly available</li>';
     not = makeNot(response['machinereadable']);
     out += '<li>It\'s ' + not + 'machine readable</li>';
-    not = makeNot(response['digital']);
-    out += '<li>It\'s ' + not + 'digital</li>';
-    not = makeNot(response['uptodate']);
-    out += '<li>It\'s ' + not + 'up-to-date</li>';
     not = makeNot(response['bulk']);
     out += '<li>It\'s ' + not + ' available in bulk</li>';
+    not = makeNot(response['openlicense']);
+    out += '<li>It\'s ' + not + 'openly licensed</li>';
+    not = makeNot(response['uptodate']);
+    out += '<li>It\'s ' + not + 'up-to-date</li>';
+    
   } else {
     out += '<li>Data does not exist</li>';
   }

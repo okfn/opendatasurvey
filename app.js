@@ -114,6 +114,7 @@ app.get('/country/place/{place}/', function(req, res) {
 app.get('/country/submit/', function(req, res) {
   var datasets = [];
   var ynquestions = model.data.questions.slice(0,9);
+  
   res.render('country/submit.html', {
     datasetsmap: model.datasetNamesMap
     , countryList: model.countryList
@@ -126,6 +127,9 @@ app.get('/country/submit/', function(req, res) {
 });
 
 app.post('/country/submit/', function(req, res) {
+  //TODO: REMOVE, TEMPORARY TO ENSURE CONSISTENT DATASET NAMING
+  req.body['dataset'] = model.datasetNamesShortToLongMap[req.body['dataset']];
+  //END TODO
   model.backend.insertSubmission(req.body, function(err, obj) {
     error = {};
     if (err) {
@@ -138,7 +142,7 @@ app.post('/country/submit/', function(req, res) {
       // error.message = 'Thank you very much for contributing to the 2013 Country Census! Your entry has now been placed in the review queue waiting for one of our editors to review.';
       var submispath = '/country/submission/' + obj.submissionid;
       res.render('country/submission_done.html', {
-        path: submispath
+        path: submispath, place: req.body['place']
       });
     }
   });
