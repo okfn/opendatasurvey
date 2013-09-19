@@ -41,6 +41,10 @@ table tr.queued:hover th {
 	opacity:1;
 }
 
+i[class*='icon-'] {
+  text-decoration: none;
+  }
+  
 ul.icons {
 	margin:0;
 }
@@ -537,6 +541,8 @@ table.response-summary td.count-0 {
 	background-color: whiteSmoke;
 	cursor: auto;
 }
+
+
 
 table.response-summary td,
 table.response-summary td:hover {

@@ -28,14 +28,14 @@
     <ul class="icons">
       <li>
         {% if record and record.dateavailable %}
-          <i class="icon-calendar" title="{{ record.dateavailable }}" data-toggle="tooltip"></i>
+          <a title="{{ record.dateavailable }}" data-toggle="tooltip"><i class="icon-calendar"></i></a>
         {% else %}
           <i class="icon-calendar"></i>
         {% endif %}
       </li>
       <li>
         {% if record %}
-          <a data-toggle="tooltip" class="count-0" title="{{ record.details }}">
+          <a data-toggle="tooltip" data-html="true" data-trigger="click" class="count-0" title="{{ record.details }}">
             <i class="icon-info-sign"></i>
           </a>
         {% else %}
@@ -45,7 +45,7 @@
       {% if type == 'submissions' %}
       <li>
         {% if record %}
-          <a data-toggle="tooltip" class="count-0" title="{{ record.submitter }} ({{ record.submitterurl }})">
+          <a data-toggle="tooltip" data-trigger="click" data-html="true" class="count-0" title="{{ record.submitter }} ({{ record.submitterurl }})">
             <i class="icon-user"></i>
           </a>
         {% else %}
