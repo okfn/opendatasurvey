@@ -9,8 +9,8 @@ Country - Submit
   <h1>Country Open Data Census</h1>
 </div>
 
-<form action="" method="POST" class="form">
-  <label>Country<br/>
+<form action="" method="POST" class="form" autocomplete="off">
+  <label>Country (required)<br/>
     <select name="place" required autocomplete="off"> <!-- This doesn't prevent Chrome -->
       <option value="">Please select</option>
       {% for country in countryList %}
@@ -18,7 +18,7 @@ Country - Submit
       {% endfor %}
     </select>
   </label>
-  <label>Dataset<br/>
+  <label>Dataset (required)<br/>
     <select name="dataset" id="dataset-select" required>
       <option value="">Please select</option>
       {% for dataset in datasets %}
@@ -41,7 +41,7 @@ Country - Submit
 <hr />
 
 <fieldset>
-<legend>Data Availability Questions</legend>
+<legend>Data Availability Questions (required)</legend>
 
 <div class="alert alert-info">
 <ul>
@@ -77,7 +77,7 @@ Country - Submit
 <fieldset>
   <legend>Follow-ups</legend>
   {% for qu in questions.slice(9, 12) %}
-  <label>{{qu.question}}</label>
+  <label>{{qu.question}} (optional)</label>
   <input type="{{qu.type}}" name="{{qu.id}}" value="" />
   <span class="help-block">{{qu.description}}</span>
   {% endfor %}
@@ -89,8 +89,8 @@ Country - Submit
 
 <fieldset>
   <legend>Your Information</legend>
-  <label>Your Name</label>
-  <input type="text" name="submitter" value="" required="true" />
+  <label>Your Name (optional)</label>
+  <input type="text" name="submitter" value="" />
   <span class="help-block">So we can credit you. This will be public.</span>
 
   <label>Link for you (optional)</label>

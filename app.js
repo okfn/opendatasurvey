@@ -36,6 +36,53 @@ app.configure(function() {
 });
 
 var env = new nunjucks.Environment(new nunjucks.FileSystemLoader('templates'));
+
+//Support for Jinja urlize filter
+//Heavily cut down version of linkify:
+/*
+
+linkify plugin for jQuery - automatically finds and changes URLs in text content into proper hyperlinks  ****
+
+  Version: 1.0
+
+  Copyright (c) 2009
+    Már Örlygsson  (http://mar.anomy.net/)  &
+    Hugsmiðjan ehf. (http://www.hugsmidjan.is)
+
+  Dual licensed under a MIT licence (http://en.wikipedia.org/wiki/MIT_License)
+  and GPL 2.0 or above (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html).
+ */
+
+ var noProtocolUrl = /(^|["'(\s]|&lt;)(www\..+?\..+?)((?:[:?]|\.+)?(?:\s|$)|&gt;|[)"',])/g,
+      httpOrMailtoUrl = /(^|["'(\s]|&lt;)((?:(?:https?|ftp):\/\/|mailto:).+?)((?:[:?]|\.+)?(?:\s|$)|&gt;|[)"',])/g;
+
+env.addFilter('urlize', function(str) {
+  return str
+    .replace( noProtocolUrl, '$1<a href=\'<``>://$2\'>$2</a>$3' )  // NOTE: we escape `"http` as `"<``> 
+    .replace( httpOrMailtoUrl, '$1<a href=\'$2\'>$2</a>$3' )
+    .replace( /'<``>/g, '\'http' );  // reinsert `"http`
+});
+
+/*
+ * Addition of wordwrap, also missing from nunjucks
+ * Taken from http://james.padolsey.com/javascript/wordwrap-for-javascript/
+ *
+ */
+
+env.addFilter('wordwrap', function(str, width, brk, cut) {
+ 
+    brk = brk || '\n';
+    width = width || 75;
+    cut = cut || false;
+ 
+    if (!str) { return str; }
+ 
+    var regex = '.{1,' +width+ '}(\\s|$)' + (cut ? '|.{' +width+ '}|.+$' : '|\\S+?(\\s|$)');
+ 
+    return str.match( RegExp(regex, 'g') ).join( brk );
+ 
+});
+
 env.express(app);
 
 // middleware to add trailing slash

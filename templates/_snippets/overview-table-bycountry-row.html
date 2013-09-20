@@ -19,7 +19,7 @@
   </td>
   <td>
     {% if record %}
-      <a href="{{ record.url }}"><i class="icon-link"></i></a>
+      <a title="{{ record.url | urlize | wordwrap(100, '\n', true) }}" data-toggle="tooltip" data-html="true" data-trigger="click"><i class="icon-link"></i></a>
     {% else %}
       <i class="icon-link"></i>
     {% endif %}
@@ -35,7 +35,7 @@
       </li>
       <li>
         {% if record %}
-          <a data-toggle="tooltip" data-html="true" data-trigger="click" class="count-0" title="{{ record.details }}">
+          <a data-toggle="tooltip" data-html="true" data-trigger="click" class="count-0" title="{{ record.details | replace ('\"', '\'') | urlize | wordwrap(100, '\n', true) }}">
             <i class="icon-info-sign"></i>
           </a>
         {% else %}
@@ -45,7 +45,7 @@
       {% if type == 'submissions' %}
       <li>
         {% if record %}
-          <a data-toggle="tooltip" data-trigger="click" data-html="true" class="count-0" title="{{ record.submitter }} ({{ record.submitterurl }})">
+          <a data-toggle="tooltip" data-trigger="click" data-html="true" class="count-0" title="{{ record.submitter }} ({{ record.submitterurl | replace ('\"', '\'') | urlize | wordwrap(100, '\n', true) }})">
             <i class="icon-user"></i>
           </a>
         {% else %}

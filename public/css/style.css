@@ -43,7 +43,11 @@ table tr.queued:hover th {
 
 i[class*='icon-'] {
   text-decoration: none;
-  }
+}
+  
+.tooltip-inner {
+  max-width: 350px;
+}
   
 ul.icons {
 	margin:0;
