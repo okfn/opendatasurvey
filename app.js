@@ -1,5 +1,4 @@
-var config = require('./lib/config.js')
-        , express = require('express')
+var express = require('express')
         , path = require('path')
         , fs = require('fs')
         , nunjucks = require('nunjucks')
@@ -28,7 +27,7 @@ var CORSSupport = function(req, res, next) {
 
 
 app.configure(function() {
-  app.set('port', config.get('port') || process.env.PORT || 5000);
+  app.set('port', model.port);
   app.set('views', __dirname + '/templates');
   app.use(express.favicon());
   app.use(express.logger('dev'));
