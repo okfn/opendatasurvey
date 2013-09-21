@@ -1,4 +1,5 @@
-var express = require('express')
+var config = require('./lib/config.js')
+        , express = require('express')
         , path = require('path')
         , fs = require('fs')
         , nunjucks = require('nunjucks')
@@ -24,8 +25,10 @@ var CORSSupport = function(req, res, next) {
   next();
 }
 
+
+
 app.configure(function() {
-  app.set('port', process.env.PORT || 5000);
+  app.set('port', config.get('port') || process.env.PORT || 5000);
   app.set('views', __dirname + '/templates');
   app.use(express.favicon());
   app.use(express.logger('dev'));
@@ -143,10 +146,9 @@ app.get('/country/results.json', function(req, res) {
 
 // TODO: want this at simply /country/{place} but need to make sure we don't
 // interfere with other urls
-app.get('/country/place/{place}/', function(req, res) {
-  res.render('country/place.html', {
-    place: place,
-    info: model.data.country.byplace[place]
+app.get('/country/overview/:place/', function(req, res) {
+  model.load(function() { //Get latest data, even for the public; they should see their entries awaiting approval
+    res.render('country/place.html', {info: model.data.country, submissions: model.data.countrysubmissions, country: req.params.place, loggedin: req.session.loggedin});
   });
 });
 
@@ -216,23 +218,24 @@ app.get('/country/submission/:id.json', function(req, res) {
 });
 
 //"Log In" page
-app.get('/country/reviewers/', function(req, res) {
-  res.render('country/reviewers/index.html', {countries: model.data.countrysubmissions.places, country: req.param('country')});
+app.get('/country/login/', function(req, res) {
+  res.render('country/login.html', {countries: model.data.countrysubmissions.places, country: req.param('country'), redirect: req.session.redirect});
+  console.log(req);
 });
 
 //Show the spreadsheet data, only for reviewers
 app.get('/country/sheets/', function(req, res) {
   if (req.session.loggedin)
     res.render('country/sheets/index.html', {});
-  else
-    res.render('country/reviewers/index.html', {countries: model.data.countrysubmissions.places, error: "Only reviewers can access that page"});
+  else {
+    req.session.redirect = '/country/sheets/';
+    res.redirect('/country/login/');
+  }
 });
 
 //Show details per country. Extra/different functionality for reviewers.
 app.get('/country/overview/', function(req, res) {
-  model.load(function() { //Get latest data, even for the public; they should see their entries awaiting approval
-    res.render('country/overview/index.html', {info: model.data.country, submissions: model.data.countrysubmissions, country: req.param('country'), loggedin: req.session.loggedin});
-  });
+  
 });
 
 //Compare & update page
@@ -247,19 +250,22 @@ app.get('/country/review/', function(req, res) {
 });
 
 app.get('/country/logout/', function(req, res) {
-  req.session.loggedin = false;
+  if (req.session.loggedin) delete req.session.loggedin;
   res.render('country/index.html', {info: model.data.country});
 });
 
-app.post('/country/authenticate/', function(req, res) {
+app.post('/country/login/', function(req, res) {
   if (req.body['password'] === "notagoodpassword") {
     req.session.loggedin = true;
     model.load(function() { //Get latest data
-      res.render('country/overview/index.html', {info: model.data.country, submissions: model.data.countrysubmissions, country: req.body['country']});
+      var redirectto = req.session.redirect;
+      if (redirectto) delete req.session.redirect;
+      else if (req.body['country'] !== "") redirectto = '/country/overview/' + encodeURIComponent(req.body['country']) + '/';
+      res.redirect(( redirectto || '/country/'));
     });
   }
   else
-    res.render('country/reviewers/index.html', {countries: model.data.countrysubmissions.places, error: "Password incorrect"});
+    res.render('country/login.html', {countries: model.data.countrysubmissions.places, country: req.body['country'], error: "Password incorrect"});
 });
 
 app.post('/country/update/', function(req, res) {

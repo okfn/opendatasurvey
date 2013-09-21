@@ -24,9 +24,16 @@
   </div>
   
   <p>The Census is an initiative of the <a href="http://okfn.org/">Open Knowledge Foundation</a> with entries contributed by advocates and experts from the global <a href="http://okfn.org/opendata/">open data</a> community. If you want to <strong>add, change or improve an entry</strong> please see the <a href="/contribute/">instructions</a> then choose your country or add a new one.</p>
-  <a href="submit/" class="btn btn-primary">
-    <i class="icon-plus"></i> Add data to the census!
-  </a>
+  
+  
+  
+  <div class="pull-left">{% include '_snippets/key.html' %}
+  </div>
+  <div class="pull-right">
+    <a href="submit/" class="btn btn-primary">
+      <i class="icon-plus"></i> Add data to the census!
+    </a>
+  </div>
 
   <table class="response-summary table">
     {% include '_snippets/summary-table.html' %}
@@ -61,6 +68,9 @@
               </table>
             </div>
           </div>
+          
+          
+          
           <div class="tab-pane" id="map-overview">
             <div class="map row">
               <div class="span3">
@@ -85,10 +95,14 @@
             </div>
           </div>
         </div>
+
+        
+
       <!--</div>-->
       <p>If you know key datasets from you country:
         <a href="submit/">submit them to the census!</a>
       </p>
+      
     <div class="modal hide fade" id="CountryInfo">
       <div class="modal-header">
         <button class="close" data-dismiss="modal">&times;</button>
@@ -131,7 +145,9 @@
 
     </div>
 #}
-
+    <div class="pull-right">
+    {% include '_snippets/key.html' %}
+    </div>
     <script src="{{page.root}}/src/common.js"></script>
     <script src="{{page.root}}/src/census.js"></script>
 {% endblock %}

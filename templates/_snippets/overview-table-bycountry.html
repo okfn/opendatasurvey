@@ -22,9 +22,9 @@
     'label': 'Is it up to date?' }
 ] %}
 
-{% if loggedin != True %}
+{% if not loggedin %}
   <p class="pull-right">
-    Country reviewer? Log in <a href="../reviewers/?country={{country | replace(' ', '%20') }}">here</a>.
+    Country reviewer? Log in <a href="/country/login/?country={{country | replace(' ', '%20') }}">here</a>.
   </p>
 {% endif %}
 
@@ -70,12 +70,4 @@
   </tbody>
 </table>
 
-<div class="key well availability">
-  <h5>Key:</h5>
-  <ul>
-    <li class="yes">Yes</li>
-    <li class="no">No</li>
-    <li class="maybe">Unsure</li>
-    <li>No data</li>
-  </ul>
-</div>
+{% include '_snippets/key.html' %}

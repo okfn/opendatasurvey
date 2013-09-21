@@ -57,19 +57,19 @@
   </td>
   <td>
   <!-- REMOVED UNTIL LOG IN ISSUES ARE SORTED: loggedin != True and -->
-    {% if type == 'info' %}
+    {% if not loggedin and type == 'info' %}
       {% if record %} 
-        <a href="../submit/?dataset={{ dataset.id }}&place={{ country }}" class="btn btn-mini btn-primary">
+        <a href="/country/submit/?dataset={{ dataset.id }}&place={{ country }}" class="btn btn-mini btn-primary">
           <!-- <i class="icon-plus"></i> -->Edit Entry
         </a>
       {% else %} 
-        <a href="../submit/?dataset={{ dataset.id }}&place={{ country }}" class="btn btn-mini btn-primary">
+        <a href="/country/submit/?dataset={{ dataset.id }}&place={{ country }}" class="btn btn-mini btn-primary">
           <!-- <i class="icon-plus"></i> -->Add Entry
         </a>
       {% endif %}
    <!-- REMOVED UNTIL LOG IN ISSUES ARE SORTED:  loggedin == True and -->
-    {% elif type == 'submissions' %}
-      <a href="../review/?dataset={{record.dataset}}&country={{record.place}}" class="btn btn-mini btn-primary">
+    {% elif loggedin and type == 'submissions' %}
+      <a href="/country/review/?dataset={{record.dataset}}&country={{record.place}}" class="btn btn-mini btn-primary">
         <!-- <i class="icon-search"></i> -->Review
       </a>
     {% endif %}

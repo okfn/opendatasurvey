@@ -6,28 +6,31 @@ Country - Access Data
 
 {% block content %}
       <div class="page-header">
-        <h1>Reviewers: Start reviewing</h1>
+        <h1>Reviewers: Login</h1>
       </div>
 
-{% if error %}
+
     <div class="alert alert-error" style="text-align: center;">
-        {{error}}
+        {% if error %} {{ error }} {% else %}  Please enter the password{% if not redirect %} and select a country to proceed {% endif %}{% endif %}
     </div>
-{% endif %}  
+
     
     
       <div>
-      <p>Please enter the password and select a country</p>
-      <form action='../authenticate/' method='post' >
+      <form method='post' >
       Password: <br />
       <input type="password" name="password" />
+      
+      {% if not redirect %} 
       <!-- In case they came from the country page -->
       <br />Country<br />
       <select name="country">
+      <option value="">Please select</option>
       {% for place in countries %}
         <option value="{{place}}" {% if country and country==place %} selected {% endif %}>{{place}}</option>
       {% endfor %}
       </select>
+      {% endif %}
       <br />
       <input type="submit" value="Log In" class="btn btn-small" />
 		</form>
