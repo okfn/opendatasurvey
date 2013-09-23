@@ -22,8 +22,7 @@ Country - Submit
     <select name="dataset" id="dataset-select" required>
       <option value="">Please select</option>
       {% for dataset in datasets %}
-      <!-- TODO: Change value back to dataset.id -->
-      <option value="{{dataset.title}}" {% if dataset.id == datasetFromQuery %}selected="true"{% endif %}>{{dataset.title}}</option>
+      <option value="{{dataset.id}}" {% if dataset.id == datasetFromQuery %}selected="true"{% endif %}>{{dataset.title}}</option>
       {% endfor %}
     </select>
 
