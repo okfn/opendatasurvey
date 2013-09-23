@@ -176,9 +176,6 @@ app.get('/country/submit/', function(req, res) {
 });
 
 app.post('/country/submit/', function(req, res) {
-  //TODO: REMOVE, TEMPORARY TO ENSURE CONSISTENT DATASET NAMING
-  req.body['dataset'] = model.datasetNamesShortToLongMap[req.body['dataset']];
-  //END TODO
   model.backend.insertSubmission(req.body, function(err, obj) {
     error = {};
     if (err) {
