@@ -143,6 +143,7 @@ app.get('/country/results.json', function(req, res) {
   });
 });
 
+//Show details per country. Extra/different functionality for reviewers.
 // TODO: want this at simply /country/{place} but need to make sure we don't
 // interfere with other urls
 app.get('/country/overview/:place/', function(req, res) {
@@ -227,11 +228,6 @@ app.get('/country/sheets/', function(req, res) {
     req.session.redirect = '/country/sheets/';
     res.redirect('/country/login/');
   }
-});
-
-//Show details per country. Extra/different functionality for reviewers.
-app.get('/country/overview/', function(req, res) {
-  
 });
 
 //Compare & update page
