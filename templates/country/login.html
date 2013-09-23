@@ -11,7 +11,7 @@ Country - Access Data
 
 
     <div class="alert alert-error" style="text-align: center;">
-        {% if error %} {{ error }} {% else %}  Please enter the password{% if not redirect %} and select a country to proceed {% endif %}{% endif %}
+        {% if error %} Password incorrect {% else %}  Please enter the password{% if not redirect %} and select a country to proceed {% endif %}{% endif %}
     </div>
 
     
@@ -24,10 +24,10 @@ Country - Access Data
       {% if not redirect %} 
       <!-- In case they came from the country page -->
       <br />Country<br />
-      <select name="country">
+      <select name="place">
       <option value="">Please select</option>
-      {% for place in countries %}
-        <option value="{{place}}" {% if country and country==place %} selected {% endif %}>{{place}}</option>
+      {% for thePlace in places %}
+        <option value="{{thePlace}}" {% if place and thePlace==place %} selected {% endif %}>{{thePlace}}</option>
       {% endfor %}
       </select>
       {% endif %}

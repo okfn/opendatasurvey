@@ -24,8 +24,6 @@ var CORSSupport = function(req, res, next) {
   next();
 }
 
-
-
 app.configure(function() {
   app.set('port', model.port);
   app.set('views', __dirname + '/templates');
@@ -148,7 +146,7 @@ app.get('/country/results.json', function(req, res) {
 // interfere with other urls
 app.get('/country/overview/:place/', function(req, res) {
   model.load(function() { //Get latest data, even for the public; they should see their entries awaiting approval
-    res.render('country/place.html', {info: model.data.country, submissions: model.data.countrysubmissions, country: req.params.place, loggedin: req.session.loggedin});
+    res.render('country/place.html', {error: req.param('e'), info: model.data.country, submissions: model.data.countrysubmissions, place: req.params.place, loggedin: req.session.loggedin, errormessage: req.param('em')});
   });
 });
 
@@ -178,20 +176,17 @@ app.get('/country/submit/', function(req, res) {
 
 app.post('/country/submit/', function(req, res) {
   model.backend.insertSubmission(req.body, function(err, obj) {
-    error = {};
+    //TODO: Do flash messages properly
+    var eValue;
     if (err) {
       console.log(err);
-      //res.send(500, 'There was an error! ' + err);
-      error.value = 1;
-      error.message = 'There was an error! ' + err;
+      eValue = 1;
+      var msg = 'There was an error! ' + err;
     } else {
-      // error.value = 0;
-      // error.message = 'Thank you very much for contributing to the 2013 Country Census! Your entry has now been placed in the review queue waiting for one of our editors to review.';
-      var submispath = '/country/submission/' + obj.submissionid;
-      res.render('country/submission_done.html', {
-        path: submispath, place: req.body['place']
-      });
+      eValue = 0;
+      var msg = 'Thank-you for your submission which has been received. It will now be reviewed by an Editor before being published. It may take up to a few minutes for your submission to appear here and up to a few days for it be reviewed. Please be patient.'
     }
+    res.redirect('country/overview/' + encodeURIComponent(req.body['place']) + '/?e=' + eValue + '&em=' + encodeURIComponent(msg));
   });
 });
 
@@ -216,8 +211,12 @@ app.get('/country/submission/:id.json', function(req, res) {
 
 //"Log In" page
 app.get('/country/login/', function(req, res) {
-  res.render('country/login.html', {countries: model.data.countrysubmissions.places, country: req.param('country'), redirect: req.session.redirect});
-  console.log(req);
+  res.render('country/login.html', {places: model.data.countrysubmissions.places, redirect: req.session.redirect, error: req.param('e')});
+});
+
+//"Log In" page
+app.get('/country/login/:place/', function(req, res) {
+  res.render('country/login.html', {places: model.data.countrysubmissions.places, place: req.params.place, redirect: req.session.redirect, error: req.param('e')});
 });
 
 //Show the spreadsheet data, only for reviewers
@@ -234,36 +233,48 @@ app.get('/country/sheets/', function(req, res) {
 app.get('/country/review/', function(req, res) {
   if (req.session.loggedin) {
     model.load(function() { //Get latest data
-      res.render('country/review/index.html', {info: model.data.country, submissions: model.data.countrysubmissions, country: req.param('country'), dataset: req.param('dataset'), datasetfriendly: model.datasetNamesMap[req.param('dataset')]});
+      res.render('country/review/index.html', {info: model.data.country, submissions: model.data.countrysubmissions, place: req.param('place'), dataset: req.param('dataset'), datasetfriendly: model.datasetNamesMap[req.param('dataset')]});
     });
   }
-  else
-    res.render('country/reviewers/index.html', {countries: model.data.countrysubmissions.places, country: req.param('country'), error: "Only reviewers can access that page"});
+  else { WRONG
+    req.session.redirect = '/country/review/?place=' + encodeURIComponent(req.params.place) + '&dataset=' + req.params.dataset;
+    res.redirect('/country/login/');
+  }
 });
 
 app.get('/country/logout/', function(req, res) {
   if (req.session.loggedin) delete req.session.loggedin;
-  res.render('country/index.html', {info: model.data.country});
+  res.redirect('/country/');
 });
 
 app.post('/country/login/', function(req, res) {
+  doLogin(req, res);
+});
+
+app.post('/country/login/:place/', function(req, res) {
+  doLogin(req, res);
+});
+
+function doLogin(req, res) {
   if (req.body['password'] === "notagoodpassword") {
     req.session.loggedin = true;
     model.load(function() { //Get latest data
       var redirectto = req.session.redirect;
       if (redirectto) delete req.session.redirect;
-      else if (req.body['country'] !== "") redirectto = '/country/overview/' + encodeURIComponent(req.body['country']) + '/';
+      else if (req.body['place']) redirectto = '/country/overview/' + encodeURIComponent(req.body['place']) + '/';
       res.redirect(( redirectto || '/country/'));
     });
   }
+  else if (req.body['place'])
+    res.redirect('country/login/'+encodeURIComponent(req.body['place'])+'/?e=1');
   else
-    res.render('country/login.html', {countries: model.data.countrysubmissions.places, country: req.body['country'], error: "Password incorrect"});
-});
+    res.redirect('country/login/?e=1');
+}
 
 app.post('/country/update/', function(req, res) {
 
   if (!req.session.loggedin) {
-    res.render('country/reviewers/index.html', {countries: model.data.countrysubmissions.places, country: req.param('country'), error: "Only reviewers can access that page"});
+    res.redirect('/country/login/' + req.params.place); //No redirect needed
     return;
   }
 
@@ -297,7 +308,7 @@ app.post('/country/update/', function(req, res) {
       else {
         //Start by getting current entry. Module was modified to accept a query so that we don't have to download the whole sheet :)
         var query = {};
-        query["sq"] = 'dataset="' + fulldatasetname + '" and place="' + req.body['country'] + '"';
+        query["sq"] = 'dataset="' + fulldatasetname + '" and place="' + req.body['place'] + '"';
 
         var norecord = false;
         
@@ -309,7 +320,7 @@ app.post('/country/update/', function(req, res) {
           }
 
           else if (rows.length > 1) {
-            returnError = {value: 1, message: "There is more than one entry for " + req.body['dataset'] + "/" + req.body['country'] + "<br />No changes have taken place. You may want to <a href='../sheets/'>resolve the problem manually.</a> This error has been reported."};
+            returnError = {value: 1, message: "There is more than one entry for " + req.body['dataset'] + "/" + req.body['place'] + "<br />No changes have taken place. You may want to <a href='../sheets/'>resolve the problem manually.</a> This error has been reported."};
             doneUpdating(returnError, req, res);
           }
           else {
@@ -358,7 +369,7 @@ app.post('/country/update/', function(req, res) {
 
                 //Get the row in the submitted sheet
                 var query = {};
-                query["sq"] = 'dataset="' + fulldatasetname + '" and place="' + req.body['country'] + '"';
+                query["sq"] = 'dataset="' + fulldatasetname + '" and place="' + req.body['place'] + '"';
 
                 //Get the (unique) row
                 my_sheet.getRows(1, {}, query, function(err, srows) {
@@ -368,11 +379,11 @@ app.post('/country/update/', function(req, res) {
                     doneUpdating(returnError, req, res);
                   }
                   else if (srows.length === 0) {
-                    returnError = {value: 1, message: "There is no submission for " + req.body['dataset'] + "/" + req.body['country'] + "<br />. Your edits have been saved but the submission cannot be altered. Please <a href='../sheets/'>resolve this manually</a>. This error has been reported."};
+                    returnError = {value: 1, message: "There is no submission for " + req.body['dataset'] + "/" + req.body['place'] + "<br />. Your edits have been saved but the submission cannot be altered. Please <a href='../sheets/'>resolve this manually</a>. This error has been reported."};
                     doneUpdating(returnError, req, res);
                   }
                   else if (srows.length > 1) {
-                    returnError = {value: 1, message: "There is more than one submission for " + req.body['dataset'] + "/" + req.body['country'] + ". Your edits have been saved but the submission cannot be altered. Please <a href='../sheets/'>resolve this manually</a>. This error has been reported."};
+                    returnError = {value: 1, message: "There is more than one submission for " + req.body['dataset'] + "/" + req.body['place'] + ". Your edits have been saved but the submission cannot be altered. Please <a href='../sheets/'>resolve this manually</a>. This error has been reported."};
                     doneUpdating(returnError, req, res);
                   }
                   else {
@@ -387,7 +398,7 @@ app.post('/country/update/', function(req, res) {
                       }
                       else { 
                         srows[0].del(); //Attempt to delete, not handling errors yet.
-                        returnError = {value: 0, message: "Entry updated successfully. The old entry has been archived and the submission marked as reviewed. Thank you!"};
+                        returnError = {value: 0, message: "Entry updated successfully. The old entry has been archived and the submission marked as reviewed. It will take a few minutes for this table to update. Thank you!"};
                         doneUpdating(returnError, req, res);
                      }
                     });
@@ -438,7 +449,7 @@ app.post('/country/update/', function(req, res) {
       else {
         //Start by getting current entry. Module was modified to accept a query so that we don't have to download the whole sheet :)
         var query = {};
-        query["sq"] = 'dataset="' + fulldatasetname + '" and place="' + req.body['country'] + '"';
+        query["sq"] = 'dataset="' + fulldatasetname + '" and place="' + req.body['place'] + '"';
 
         //Get the (unique) row
         //Use gid 1 (submissions)
@@ -448,11 +459,11 @@ app.post('/country/update/', function(req, res) {
             doneUpdating(returnError, req, res);
           }
           else if (rows.length === 0) {
-            returnError = {value: 1, message: "There is no entry for " + req.body['dataset'] + "/" + req.body['country'] + "<br />No changes have taken place. You may want to <a href='../sheets/'>resolve the problem manually.</a> This error has been reported."};
+            returnError = {value: 1, message: "There is no entry for " + req.body['dataset'] + "/" + req.body['place'] + "<br />No changes have taken place. You may want to <a href='../sheets/'>resolve the problem manually.</a> This error has been reported."};
             doneUpdating(returnError, req, res);
           }
           else if (rows.length > 1) {
-            returnError = {value: 1, message: "There is more than one entry for " + req.body['dataset'] + "/" + req.body['country'] + "<br />No changes have taken place. You may want to <a href='../sheets/'>resolve the problem manually.</a> This error has been reported."};
+            returnError = {value: 1, message: "There is more than one entry for " + req.body['dataset'] + "/" + req.body['place'] + "<br />No changes have taken place. You may want to <a href='../sheets/'>resolve the problem manually.</a> This error has been reported."};
             doneUpdating(returnError, req, res);
           }
           else {
@@ -473,7 +484,7 @@ app.post('/country/update/', function(req, res) {
               }
               else {
                 rows[0].del(); //Attempt to delete, not handling errors yet.
-                returnError = {value: 0, message: "Entry rejected successfully. The entry has been archived and marked as rejected. Thank you!"};
+                returnError = {value: 0, message: "Entry rejected successfully. The entry has been archived and marked as rejected. It will take a few minutes for this table to update. Thank you!"};
                 doneUpdating(returnError, req, res);
               }
             });
@@ -497,7 +508,8 @@ function doneUpdating(error, req, res) {
     console.log(req.body);
   }
   model.load(function() { //Get latest data
-    res.render('country/overview/index.html', {info: model.data.country, submissions: model.data.countrysubmissions, country: req.body['country'], error: error});
+    //TODO: Switch to using error codes, but move to using Backend first
+    res.redirect('country/overview/' + req.body['place'] + '/' + '?e=' + encodeURIComponent(error.value) + '&em=' + encodeURIComponent(error.message));
   });
 }
 

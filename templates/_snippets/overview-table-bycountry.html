@@ -24,22 +24,22 @@
 
 {% if not loggedin %}
   <p class="pull-right">
-    Country reviewer? Log in <a href="/country/login/?country={{country | replace(' ', '%20') }}">here</a>.
+    Country reviewer? Log in <a href="/country/login/{{place | replace(' ', '%20') }}/">here</a>.
   </p>
 {% endif %}
 
 <h1>
   <a href="../" data-toggle="tooltip" class="count-0" title="Return to country results overview">Countries:</a>
-  {{ country }}
+  {{ place }}
 </h1>
 
 {% if error %}
-  {% if error.value == 0 %}
+  {% if error == 0 %}
     <div class="alert alert-success" style="text-align: center;">
   {% else %}
     <div class="alert alert-error" style="text-align: center;">
   {% endif %}
-  {{ error.message }}
+  {{ errormessage }}
 </div>
 {% endif %}
 
@@ -56,11 +56,11 @@
   <tbody>
     {% for dataset in info.datasets %}
 
-      {% set record = info.byplace[country].datasets[dataset.id] %}
+      {% set record = info.byplace[place].datasets[dataset.id] %}
       {% set type = 'info' %}
       {% include '_snippets/overview-table-bycountry-row.html' %}
 
-      {% set record = submissions.byplace[country].datasets[dataset.id] %}
+      {% set record = submissions.byplace[place].datasets[dataset.id] %}
       {% if record %}
         {% set type = 'submissions' %}
         {% include '_snippets/overview-table-bycountry-row.html' %}

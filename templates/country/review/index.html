@@ -10,12 +10,12 @@ Countries
     
       
     
-        <h1><span class="muted"><a href="../overview/?country={{ country | replace(' ', '%20') }}">{{ country }}</a> / </span> {{datasetfriendly}}</h1>
+        <h1><span class="muted"><a href="/country/overview/{{ place | replace(' ', '%20') }}/">{{ place }}</a> / </span> {{datasetfriendly}}</h1>
       </div>
 
               
-              {% set subrecord = submissions.byplace[country].datasets[dataset] %}
-              {% set currrecord = info.byplace[country].datasets[dataset] %}
+              {% set subrecord = submissions.byplace[place].datasets[dataset] %}
+              {% set currrecord = info.byplace[place].datasets[dataset] %}
               
             {% if subrecord %}
             
@@ -183,7 +183,7 @@ Countries
       -->        
            
                   
-                  <input type="hidden" name="country" value="{{country}}" />
+                  <input type="hidden" name="place" value="{{place}}" />
                   <input type="hidden" name="dataset" value="{{dataset}}" />
                   <input type="hidden" name="timestamp" value="{{subrecord.timestamp}}" />
                   

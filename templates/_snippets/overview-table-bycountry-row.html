@@ -56,21 +56,21 @@
     </ul>
   </td>
   <td>
-  <!-- REMOVED UNTIL LOG IN ISSUES ARE SORTED: loggedin != True and -->
+    
     {% if not loggedin and type == 'info' %}
       {% if record %} 
-        <a href="/country/submit/?dataset={{ dataset.id }}&place={{ country }}" class="btn btn-mini btn-primary">
-          <!-- <i class="icon-plus"></i> -->Edit Entry
+        <a href="/country/submit/?dataset={{ dataset.id }}&place={{ place }}" class="btn btn-mini btn-primary">
+          <!-- <i class="icon-plus"></i> -->Propose Revisions
         </a>
       {% else %} 
-        <a href="/country/submit/?dataset={{ dataset.id }}&place={{ country }}" class="btn btn-mini btn-primary">
-          <!-- <i class="icon-plus"></i> -->Add Entry
+        <a href="/country/submit/?dataset={{ dataset.id }}&place={{ place }}" class="btn btn-mini btn-primary">
+          <!-- <i class="icon-plus"></i> -->Submit information
         </a>
       {% endif %}
-   <!-- REMOVED UNTIL LOG IN ISSUES ARE SORTED:  loggedin == True and -->
+      {# TODO: Show review button but make it disabled (with hover link to log in? #}
     {% elif loggedin and type == 'submissions' %}
-      <a href="/country/review/?dataset={{record.dataset}}&country={{record.place}}" class="btn btn-mini btn-primary">
-        <!-- <i class="icon-search"></i> -->Review
+      <a href="/country/review/?dataset={{record.dataset}}&place={{record.place}}" class="btn btn-mini btn-primary">
+        <!-- <i class="icon-search"></i> -->Review Now
       </a>
     {% endif %}
   </td>
