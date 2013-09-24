@@ -1,13 +1,13 @@
 var express = require('express')
-        , path = require('path')
-        , fs = require('fs')
-        , nunjucks = require('nunjucks')
-        , request = require('request')
-        , csv = require('csv')
-        , GoogleSpreadsheet = require('google-spreadsheet')
-        , _ = require('underscore')
-        , config = require('./lib/config.js')
-        ;
+  , path = require('path')
+  , fs = require('fs')
+  , nunjucks = require('nunjucks')
+  , request = require('request')
+  , csv = require('csv')
+  , GoogleSpreadsheet = require('google-spreadsheet')
+  , _ = require('underscore')
+  , config = require('./lib/config.js')
+  ;
 
 var app = express();
 
@@ -22,7 +22,7 @@ var CORSSupport = function(req, res, next) {
 }
 
 app.configure(function() {
-  app.set('port', model.port);
+  app.set('port', config.get('appconfig:port'));
   app.set('views', __dirname + '/templates');
   app.use(express.favicon());
   app.use(express.logger('dev'));
