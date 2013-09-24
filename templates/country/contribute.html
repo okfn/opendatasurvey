@@ -15,9 +15,7 @@ Contributing to the Open Data Census
 We welcome contributions to the Census, both in the form of new entries, reviews of existing submissions and general improvements.
 
 <h2>How to Submit Information to the Census</h2>
-<p>Below you will find a list of countries where we already have data. Clicking on these links takes you to an overview page for that country where you will find the current status of each data set. You can submit new information where none exists or submit alternative/improved information for existing entries.
-
-<p>If you do <strong>not</strong> see your country in the list, it means that we have no data for that country yet. If that's the case, please proceed directly to the <a href="/country/submit/">data submission form</a> where you can submit data for any known world country.</p>
+<p>Below you will find a list of all known world countries. Clicking on these links takes you to an overview page for that country where you will find the current status of each data set. You can submit new information where none exists or submit alternative/improved information for existing entries.</p>
 
 <p>Note that submissions are reviewed and are subject to amendment or exclusion by the editors. </p>
 
@@ -34,7 +32,6 @@ We welcome contributions to the Census, both in the form of new entries, reviews
 {% for thePlace in places %}
 <a href="/country/overview/{{thePlace}}/">{{thePlace}}</a><br />
 {% endfor %}
-<a href="/country/submit/">I don't see my country in the list!</a><br />
 
 {% endblock %}
 

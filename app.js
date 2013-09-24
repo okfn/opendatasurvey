@@ -130,7 +130,7 @@ app.get('/country/', function(req, res) {
 //});
 
 app.get('/country/contribute/', function(req, res) {
-  res.render('country/contribute.html', {places: model.data.countrysubmissions.places});
+  res.render('country/contribute.html', {places: model.countryList});
 });
 
 app.get('/country/results.json', function(req, res) {
