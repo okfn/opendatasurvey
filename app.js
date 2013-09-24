@@ -211,16 +211,6 @@ app.get('/country/submission/:id.json', function(req, res) {
   });
 });
 
-//Show the spreadsheet data, only for reviewers
-app.get('/country/sheets/', function(req, res) {
-  if (req.session.loggedin)
-    res.render('country/sheets/index.html', {key: model.gKey});
-  else {
-    req.session.redirect = '/country/sheets/';
-    res.redirect('/country/login/');
-  }
-});
-
 //Compare & update page
 app.get('/country/review/:submissionid', function(req, res) {
   if (!req.session.loggedin) {
