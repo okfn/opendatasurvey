@@ -6,6 +6,7 @@ var express = require('express')
         , csv = require('csv')
         , GoogleSpreadsheet = require('google-spreadsheet')
         , _ = require('underscore')
+        , config = require('./lib/config.js')
         ;
 
 var app = express();
@@ -81,6 +82,14 @@ env.addFilter('wordwrap', function(str, width, brk, cut) {
 });
 
 env.express(app);
+
+app.all('*', function(req, res, next) {
+  if (config.get('test:testing') === true) {
+    req.session.loggedin = true;
+  }
+  next();
+});
+
 
 // ========================================================
 // Start routes
