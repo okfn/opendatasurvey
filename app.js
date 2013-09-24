@@ -211,16 +211,6 @@ app.get('/country/submission/:id.json', function(req, res) {
   });
 });
 
-//"Log In" page
-app.get('/country/login/', function(req, res) {
-  res.render('country/login.html', {places: model.data.countrysubmissions.places, redirect: req.session.redirect, error: req.param('e')});
-});
-
-//"Log In" page
-app.get('/country/login/:place/', function(req, res) {
-  res.render('country/login.html', {places: model.data.countrysubmissions.places, place: req.params.place, redirect: req.session.redirect, error: req.param('e')});
-});
-
 //Show the spreadsheet data, only for reviewers
 app.get('/country/sheets/', function(req, res) {
   if (req.session.loggedin)
@@ -249,35 +239,6 @@ app.get('/country/review/:submissionid', function(req, res) {
     );
   });
 });
-
-app.get('/country/logout/', function(req, res) {
-  if (req.session.loggedin) delete req.session.loggedin;
-  res.redirect('/country/');
-});
-
-app.post('/country/login/', function(req, res) {
-  doLogin(req, res);
-});
-
-app.post('/country/login/:place/', function(req, res) {
-  doLogin(req, res);
-});
-
-function doLogin(req, res) {
-  if (req.body['password'] === "notagoodpassword") {
-    req.session.loggedin = true;
-    model.load(function() { //Get latest data
-      var redirectto = req.session.redirect;
-      if (req.body['place']) redirectto = '/country/overview/' + encodeURIComponent(req.body['place']) + '/';
-      else if (redirectto) delete req.session.redirect;
-      res.redirect(( redirectto || '/country/'));
-    });
-  }
-  else if (req.body['place'])
-    res.redirect('country/login/'+encodeURIComponent(req.body['place'])+'/?e=1');
-  else
-    res.redirect('country/login/?e=1');
-}
 
 app.post('/country/review/:submissionid', function(req, res) {
   if (!req.session.loggedin) {
@@ -349,6 +310,49 @@ app.get('/city/submit/', function(req, res) {
 app.get('/catalogs/', function(req, res) {
   res.render('catalogs/index.html', {});
 });
+
+//"Log In" page
+app.get('/country/login/', function(req, res) {
+  res.render('country/login.html', {places: model.data.countrysubmissions.places, redirect: req.session.redirect, error: req.param('e')});
+});
+
+//"Log In" page
+app.get('/country/login/:place/', function(req, res) {
+  res.render('country/login.html', {places: model.data.countrysubmissions.places, place: req.params.place, redirect: req.session.redirect, error: req.param('e')});
+});
+
+app.get('/country/logout/', function(req, res) {
+  if (req.session.loggedin) delete req.session.loggedin;
+  res.redirect('/country/');
+});
+
+app.post('/country/login/', function(req, res) {
+  doLogin(req, res);
+});
+
+app.post('/country/login/:place/', function(req, res) {
+  doLogin(req, res);
+});
+
+function doLogin(req, res) {
+  if (req.body['password'] === "notagoodpassword") {
+    req.session.loggedin = true;
+    model.load(function() { //Get latest data
+      var redirectto = req.session.redirect;
+      if (req.body['place']) redirectto = '/country/overview/' + encodeURIComponent(req.body['place']) + '/';
+      else if (redirectto) delete req.session.redirect;
+      res.redirect(( redirectto || '/country/'));
+    });
+  }
+  else if (req.body['place'])
+    res.redirect('country/login/'+encodeURIComponent(req.body['place'])+'/?e=1');
+  else
+    res.redirect('country/login/?e=1');
+}
+
+// ========================================================
+// Booting up
+// ========================================================
 
 // var url = process.env.CATALOG_URL|| CATALOG_URL_DEFAULT;
 // var catalog = new model.Catalog();
