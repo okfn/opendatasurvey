@@ -17,7 +17,7 @@ var model = require('../lib/model.js').OpenDataCensus
 
 // some rules
 // we only add rows where place = Germany (so we can delete afterwards)
-describe('Backend', function() {
+describe('Backend Entry', function() {
   this.timeout(3000);
   var backend = new Backend(options);
 
@@ -78,10 +78,28 @@ describe('Backend', function() {
       });
     });
   });
+});
 
+describe('Submissions', function() {
+  this.timeout(3000);
+  var backend = new Backend(options);
 
-  // Submissions
-  it('getSubmission', function(done) {
+  before(function(done) {
+    backend.login(function(err){
+      if (err) throw err;
+      done();
+    });
+  });
+  after(function(done) {
+    backend.deleteAll(backend.options.submissionIndex, {place: 'Germany'}, complete);
+    backend.deleteAll(backend.options.entryIndex, {place: 'Germany'}, complete);
+    var count = 2;
+    function complete() {
+      count--;
+      if (count === 0) done();
+    }
+  });
+  it('get', function(done) {
     backend.getSubmission({submissionid: 'testid-1'}, function(err, entry) {
       assert.ok(!err);
       assert.ok(entry!=null, 'No entry (entry is null)');
@@ -91,7 +109,7 @@ describe('Backend', function() {
     });
   });
 
-  it('insertSubmission', function(done) {
+  it('insert', function(done) {
     var data = {
       year: 2012,
       dataset: 'spending',
@@ -99,11 +117,44 @@ describe('Backend', function() {
       exists: 'No'
     };
     backend.insertSubmission(data, function(err, obj) {
-      // TODO: check something was actually created
       assert.ok(!err);
       assert.equal(obj.submissionid.length, 36);
       assert.equal(obj.timestamp.slice(0, 4), '2013');
+      // TODO: check something was actually created by doing the get
       done();
+    });
+  });
+  it('accept', function(done) {
+    this.timeout(8000);
+    var data = {
+      year: 2012,
+      dataset: 'timetables',
+      place: 'Germany',
+      exists: 'Yes',
+      public: 'No'
+    };
+    backend.insertSubmission(data, function(err, obj) {
+      // now check we can reject it ...
+      backend.getSubmission(data, function(err, subm) {
+        // check initial conditions
+        assert.equal(subm.reviewed, '');
+        // do submit 
+        backend.acceptSubmission(subm, {}, function(err) {
+          // check entry
+          backend.getEntry(data, function(err, obj) {
+            assert(!err, 'get entry ok');
+            assert(obj, obj);
+            assert.equal(obj.exists, data.exists);
+            assert.equal(obj.public, data.public);
+            // check submission
+            backend.getSubmission(subm, function(err, newobj) {
+              assert(newobj)
+              assert.equal(newobj.reviewed, 1);
+              done();
+            });
+          });
+        });
+      });
     });
   });
 });
