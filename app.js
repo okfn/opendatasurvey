@@ -222,7 +222,7 @@ app.get('/country/login/:place/', function(req, res) {
 //Show the spreadsheet data, only for reviewers
 app.get('/country/sheets/', function(req, res) {
   if (req.session.loggedin)
-    res.render('country/sheets/index.html', {});
+    res.render('country/sheets/index.html', {key: model.gKey});
   else {
     req.session.redirect = '/country/sheets/';
     res.redirect('/country/login/');
@@ -237,7 +237,7 @@ app.get('/country/review/', function(req, res) {
     });
   }
   else {
-    req.session.redirect = '/country/review/?place=' + encodeURIComponent(req.params.place) + '&dataset=' + req.params.dataset;
+    req.session.redirect = '/country/review/?place=' + encodeURIComponent(req.param('place')) + '&dataset=' + req.param('dataset');
     res.redirect('/country/login/');
   }
 });
@@ -260,8 +260,8 @@ function doLogin(req, res) {
     req.session.loggedin = true;
     model.load(function() { //Get latest data
       var redirectto = req.session.redirect;
-      if (redirectto) delete req.session.redirect;
-      else if (req.body['place']) redirectto = '/country/overview/' + encodeURIComponent(req.body['place']) + '/';
+      if (req.body['place']) redirectto = '/country/overview/' + encodeURIComponent(req.body['place']) + '/';
+      else if (redirectto) delete req.session.redirect;
       res.redirect(( redirectto || '/country/'));
     });
   }
@@ -289,8 +289,8 @@ app.post('/country/update/', function(req, res) {
      * 
      */
 
-    //The simple dataset names are not used in the spreadsheet: use this to get the complicated name
-    var fulldatasetname = model.datasetNamesMap[req.body['dataset']];
+    //The simple dataset names are NOW USED in the spreadsheet: use this to get the complicated name
+    var datasetname = req.body['dataset'];
 
     //Key for the spreadsheet (see country.js)
     var gKey = model.gKey;
@@ -308,7 +308,8 @@ app.post('/country/update/', function(req, res) {
       else {
         //Start by getting current entry. Module was modified to accept a query so that we don't have to download the whole sheet :)
         var query = {};
-        query["sq"] = 'dataset="' + fulldatasetname + '" and place="' + req.body['place'] + '"';
+        query["sq"] = 'dataset="' + datasetname + '" and place="' + req.body['place'] + '"';
+        console.log(query);
 
         var norecord = false;
         
@@ -330,12 +331,16 @@ app.post('/country/update/', function(req, res) {
             //my_sheet.addRow(5, {timestamp: rows[0].timestamp, place: rows[0].place, dataset: rows[0].dataset, exists: rows[0].exists, digital: rows[0].digital, machinereadable: rows[0].machinereadable, bulk: rows[0].bulk, public: rows[0].public, openlicense: rows[0].openlicense, uptodate: rows[0].uptodate, url: rows[0].url, dateavailable: rows[0].dateavailable, details: rows[0].details, submitter: rows[0].submitter, submitterurl: rows[0].submitterurl, email: rows[0].email, reviewed: rows[0].reviewed, archived: timeStamp()});
 
             var object = {};
-            if (!norecord) object = rows[0];
+            if (!norecord) {
+              object = rows[0];
+            }
+            else {
+              object.place = req.body['place'];
+              object.dataset = req.body['dataset'];
+            }
             //Modify the row with the new data
             object.timestamp = req.body['timestamp'];
             object.year = req.body['year'];
-            //rows[0].place = //Don't change!
-            //rows[0].dataset = //Don't change!
             object.exists = req.body['exists'];
             object.digital = req.body['digital'];
             object.online = req.body['online'];
@@ -350,11 +355,8 @@ app.post('/country/update/', function(req, res) {
             object.format = req.body['format'];
             object.details = req.body['details'];
             
-            //TODO: Change once new fields are there throughout the site
+            //TODO: Change once year is properly handled
             object.year = "2013";
-            object.online = "Unsure";
-            object.free = "Unsure";
-            object.format = "Unknown";
             //rows[0].submitter = req.body['submitter'];
             //rows[0].submitterurl = req.body['submitterurl'];
             //rows[0].email = req.body['email'];
@@ -369,7 +371,7 @@ app.post('/country/update/', function(req, res) {
 
                 //Get the row in the submitted sheet
                 var query = {};
-                query["sq"] = 'dataset="' + fulldatasetname + '" and place="' + req.body['place'] + '"';
+                query["sq"] = 'dataset="' + datasetname + '" and place="' + req.body['place'] + '"';
 
                 //Get the (unique) row
                 my_sheet.getRows(1, {}, query, function(err, srows) {
@@ -429,7 +431,7 @@ app.post('/country/update/', function(req, res) {
      */
 
     //The simple dataset names are not used in the spreadsheet: use this to get the complicated name
-    var fulldatasetname = model.datasetNamesMap[req.body['dataset']];
+    var datasetname = req.body['dataset'];
 
     //Key for the spreadsheet (see country.js)
     var gKey = model.gKey;
@@ -449,7 +451,7 @@ app.post('/country/update/', function(req, res) {
       else {
         //Start by getting current entry. Module was modified to accept a query so that we don't have to download the whole sheet :)
         var query = {};
-        query["sq"] = 'dataset="' + fulldatasetname + '" and place="' + req.body['place'] + '"';
+        query["sq"] = 'dataset="' + datasetname + '" and place="' + req.body['place'] + '"';
 
         //Get the (unique) row
         //Use gid 1 (submissions)
@@ -473,7 +475,7 @@ app.post('/country/update/', function(req, res) {
             //console.log(rows[0]);
             //my_sheet.addRow(5, {timestamp: rows[0].timestamp, place: rows[0].censuscountry, dataset: rows[0].dataset, exists: rows[0].dataavailabilitydoesthedataexist, digital: rows[0].dataavailabilityisitindigitalform, machinereadable: rows[0]['dataavailabilityisitmachinereadablee.g.spreadsheetnotpdf'], bulk: rows[0].dataavailabilityavailableinbulkcanyougetthewholedataseteasily, public: rows[0].dataavailabilityisitpubliclyavailablefreeofcharge, openlicense: rows[0]['dataavailabilityisitopenlylicensedasperthehttpopendefinition.org'], uptodate: rows[0].dataavailabilityisituptodate, url: rows[0].locationofdataonline, dateavailable: rows[0].dateitbecameavailable, details: rows[0].detailsandcomments, submitter: rows[0].yourname, submitterurl: rows[0].linkforyou, email: rows[0].youremailaddress, reviewed: "Rejected via Web Interface", archived: timeStamp()});
             //No, just mark it as rejected
-            rows[0].review_outcome = 'rejected';
+            rows[0].reviewoutcome = 'rejected';
             rows[0].reviewer = 'Via web interface on ' + timeStamp();
             
             my_sheet.addRow(2, rows[0], function(err) {

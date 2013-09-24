@@ -28,9 +28,16 @@
     <ul class="icons">
       <li>
         {% if record and record.dateavailable %}
-          <a title="{{ record.dateavailable }}" data-toggle="tooltip"><i class="icon-calendar"></i></a>
+          <a title="Date available: {{ record.dateavailable }}" data-toggle="tooltip"><i class="icon-calendar"></i></a>
         {% else %}
           <i class="icon-calendar"></i>
+        {% endif %}
+      </li>
+      <li>
+        {% if record and record.format %}
+          <a title="Data format: {{ record.format }}" data-toggle="tooltip"><i class="icon-file"></i></a>
+        {% else %}
+          <i class="icon-file"></i>
         {% endif %}
       </li>
       <li>
@@ -67,9 +74,13 @@
           <!-- <i class="icon-plus"></i> -->Submit information
         </a>
       {% endif %}
-      {# TODO: Show review button but make it disabled (with hover link to log in? #}
-    {% elif loggedin and type == 'submissions' %}
-      <a href="/country/review/?dataset={{record.dataset}}&place={{record.place}}" class="btn btn-mini btn-danger">
+      {# TODO: Show hover link to log in on disabled button? #}
+    {% elif type == 'submissions' %}
+      {% if not loggedin %}
+      <a class="btn btn-mini btn-danger disabled" data-toggle="tooltip" title="Editors: first log in using the link above to review submissions">
+         {% else %}
+         <a href="/country/review/?dataset={{record.dataset}}&place={{record.place}}" class="btn btn-mini btn-danger">
+          {% endif %} 
         <!-- <i class="icon-search"></i> -->Review Now
       </a>
     {% endif %}

@@ -60,7 +60,7 @@ Countries
                     </tr>
                     
                     <tr>
-                        <td>Is it publicly available, free of charge?</td>
+                        <td>Is it publicly available?</td>
             <td></td>
                         <td><input type="radio" class="ss-q-radio" name="public" value="Yes" {% if subrecord.public == 'Y' %} checked {% endif %} /></td>
                         <td><input type="radio" class="ss-q-radio" name="public" value="No" {% if subrecord.public == 'N' %} checked {% endif %} /></td>
@@ -103,6 +103,24 @@ Countries
                         <td><input type="radio" class="ss-q-radio" name="bulk" value="Unsure" {% if subrecord.bulk == '?' %} checked {% endif %} /></td>
                         <td class="current-entry">{% if currrecord.bulk == "Y" %} Yes {% elif currrecord.bulk == "N" %} No {% elif currrecord.bulk == "?" %} Unsure {% else %} No record {% endif %}</td>
                     </tr>
+                    
+                    <tr>
+                        <td>Is it accessible online?</td>
+            <td></td>
+                        <td><input type="radio" class="ss-q-radio" name="online" value="Yes" {% if subrecord.online == 'Y' %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="online" value="No" {% if subrecord.online == 'N' %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="online" value="Unsure" {% if subrecord.online == '?' %} checked {% endif %} /></td>
+                        <td class="current-entry">{% if currrecord.online == "Y" %} Yes {% elif currrecord.online == "N" %} No {% elif currrecord.online == "?" %} Unsure {% else %} No record {% endif %}</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Is it available free of charge?</td>
+            <td></td>
+                        <td><input type="radio" class="ss-q-radio" name="free" value="Yes" {% if subrecord.free == 'Y' %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="free" value="No" {% if subrecord.free == 'N' %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="free" value="Unsure" {% if subrecord.free == '?' %} checked {% endif %} /></td>
+                        <td class="current-entry">{% if currrecord.free == "Y" %} Yes {% elif currrecord.free == "N" %} No {% elif currrecord.free == "?" %} Unsure {% else %} No record {% endif %}</td>
+                    </tr>
         </tbody>
       </table>
                 
@@ -128,6 +146,20 @@ Countries
           </div>
         </div>
       </div>
+         
+      <div class="row">
+         <div class="span6">
+        	<h3>Data format <span class="muted">(Optional)</span></h3>
+          <label for="format" class="ss-q-help">Please provide the format of the data if available</label>
+                            <input type="text" id="format" name="format" value="{{ subrecord.format }}" /><br />
+                            <div class="current-entry">
+                            <label>Current Entry</label>
+                            <input type="text" id="" class="span6" value="{% if currrecord %} {{currrecord.format}} {% else %} No record {% endif %}" readonly>
+                        
+                            
+                            </div>
+        </div>
+       </div>
 
            <h3>Details and comments <span class="muted">(Optional)</span></h3>
       <label for="entry_12" class="ss-q-help">e.g. is the data partially available, are there plans to make it available in the future?</label>
