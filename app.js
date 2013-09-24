@@ -144,7 +144,7 @@ app.get('/country/results.json', function(req, res) {
 //Show details per country. Extra/different functionality for reviewers.
 // TODO: want this at simply /country/{place} but need to make sure we don't
 // interfere with other urls
-app.get('/country/overview/:place/', function(req, res) {
+app.get('/country/overview/:place', function(req, res) {
   model.load(function() { //Get latest data, even for the public; they should see their entries awaiting approval
     res.render('country/place.html', {error: req.param('e'), info: model.data.country, submissions: model.data.countrysubmissions, place: req.params.place, loggedin: req.session.loggedin, errormessage: req.param('em')});
   });
