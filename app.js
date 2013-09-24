@@ -311,15 +311,7 @@ app.get('/catalogs/', function(req, res) {
 app.get('/country/login/', function(req, res) {
   res.render('country/login.html', {
     places: model.data.countrysubmissions.places,
-    redirect: req.session.redirect
-  });
-});
-
-//"Log In" page
-app.get('/country/login/:place/', function(req, res) {
-  res.render('country/login.html', {
-    places: model.data.countrysubmissions.places,
-    place: req.params.place,
+    place: req.query.place,
     redirect: req.session.redirect
   });
 });
@@ -330,10 +322,6 @@ app.get('/country/logout/', function(req, res) {
 });
 
 app.post('/country/login/', function(req, res) {
-  doLogin(req, res);
-});
-
-app.post('/country/login/:place/', function(req, res) {
   doLogin(req, res);
 });
 
@@ -350,7 +338,7 @@ function doLogin(req, res) {
   else if (req.body['place']) {
     var msg = 'Password incorrect'
     req.flash('error', msg);
-    res.redirect('country/login/'+encodeURIComponent(req.body['place']));
+    res.redirect('country/login/?place='+encodeURIComponent(req.body['place']));
   }
   else {
     var msg = 'Password incorrect'
