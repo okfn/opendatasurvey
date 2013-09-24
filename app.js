@@ -86,18 +86,6 @@ env.addFilter('wordwrap', function(str, width, brk, cut) {
 
 env.express(app);
 
-// middleware to add trailing slash
-/*
- app.use(function(req, res, next) {
- if(req.url.substr(-1) != '/' && req.url.indexOf('.') == -1) {
- res.redirect(301, req.url + '/');
- }
- else {
- next();
- }
- });
- */
-
 app.get('/', function(req, res) {
   //model.load(function() { //Don't reload for the public
   res.render('index.html', {
