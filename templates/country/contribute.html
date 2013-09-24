@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}
+Contributing to the Open Data Census
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+  <h1>
+    Contributing to the Open Data Census
+  </h1>
+</div>
+
+We welcome contributions to the Census, both in the form of new entries, reviews of existing submissions and general improvements.
+
+<h2>How to Submit Information to the Census</h2>
+<p>Below you will find a list of all known world countries. Clicking on these links takes you to an overview page for that country where you will find the current status of each data set. You can submit new information where none exists or submit alternative/improved information for existing entries.</p>
+
+<p>Note that submissions are reviewed and are subject to amendment or exclusion by the editors. </p>
+
+<h3>How do I find the data?</h3>
+<ol>
+  <li>Use your favorite Internet search tool (Google etc.) to see if the data set is available online. Keep the URL open in a separate window.</li>
+  <li>Fill in the form based on the data set you have found.</li>
+  <li>Click submit.</li>
+  <li>Your submission, subject to review, will be visible in the table as 'awaiting review' after a few minutes. We aim to review all submissions quickly. Those reviewed entries constitute the data shown on the <a href='/country/'>front page</a></li>
+</ol>
+
+<h3>Country selection:</h3>
+
+{% for thePlace in places %}
+<a href="/country/overview/{{thePlace}}/">{{thePlace}}</a><br />
+{% endfor %}
+
+{% endblock %}
+
+
+
