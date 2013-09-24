@@ -133,19 +133,22 @@ describe('Submissions', function() {
       exists: 'Yes',
       public: 'No'
     };
+    var newdata = {
+      public: 'Yes'
+    }
     backend.insertSubmission(data, function(err, obj) {
       // now check we can reject it ...
       backend.getSubmission(data, function(err, subm) {
         // check initial conditions
         assert.equal(subm.reviewed, '');
         // do submit 
-        backend.acceptSubmission(subm, {}, function(err) {
+        backend.acceptSubmission(subm, newdata, function(err) {
           // check entry
           backend.getEntry(data, function(err, obj) {
             assert(!err, 'get entry ok');
             assert(obj, obj);
             assert.equal(obj.exists, data.exists);
-            assert.equal(obj.public, data.public);
+            assert.equal(obj.public, newdata.public);
             // check submission
             backend.getSubmission(subm, function(err, newobj) {
               assert(newobj)
