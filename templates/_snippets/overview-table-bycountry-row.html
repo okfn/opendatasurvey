@@ -69,7 +69,7 @@
       {% endif %}
       {# TODO: Show review button but make it disabled (with hover link to log in? #}
     {% elif loggedin and type == 'submissions' %}
-      <a href="/country/review/?dataset={{record.dataset}}&place={{record.place}}" class="btn btn-mini btn-primary">
+      <a href="/country/review/?dataset={{record.dataset}}&place={{record.place}}" class="btn btn-mini btn-danger">
         <!-- <i class="icon-search"></i> -->Review Now
       </a>
     {% endif %}

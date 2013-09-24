@@ -10,7 +10,7 @@ Countries
     
       
     
-        <h1><span class="muted"><a href="/country/overview/{{ place | replace(' ', '%20') }}/">{{ place }}</a> / </span> {{datasetfriendly}}</h1>
+        <h1>{% if subrecord %}<span class="muted"><a href="/country/overview/{{ place | replace(' ', '%20') }}/">{{ place }}</a> / </span> {{datasetfriendly}}{% else %}No record{% endif %}</h1>
       </div>
 
               
@@ -19,8 +19,11 @@ Countries
               
             {% if subrecord %}
             
+            <p>Please review this submission. If data is available, you must check that the location link is correct and reflects the answers here. We need there to be an official accessible direct link to the data.</p>
+            
+            
             <h3>Data Availability</h3>
-      <p>Please answer regarding open data availability <strong>right now</strong>.<br>
+      <p>Please answer regarding open data availability. This is the census for {{ currentYear }}. Please check that the answers reflect the availability of data <strong>right now</strong>.<br>
         If data will be released soon this can be mentioned this in the details and comments section below.</p>
        <form action="../update/" method="post">
       <table class="table table-striped availability-form">
@@ -130,9 +133,10 @@ Countries
       <label for="entry_12" class="ss-q-help">e.g. is the data partially available, are there plans to make it available in the future?</label>
       
       <div class="historic-entries">
-        <textarea id="entry_12" class="expanding-texarea-common" name="details">{{ subrecord.details }} </textarea>
+        <textarea id="entry_12" class="expanding-texarea-common" name="details" style="min-height: 150px;">{{ subrecord.details }} </textarea>
+      </div>
         <div class="current-entry">
-          <span class="label">Current Entry</span>
+          <label>Current Entry</label>
           <div class="textarea">{% if currrecord %} {{currrecord.details}} {% else %} No record {% endif %}</div>
         </div>
         
@@ -187,7 +191,8 @@ Countries
                   <input type="hidden" name="dataset" value="{{dataset}}" />
                   <input type="hidden" name="timestamp" value="{{subrecord.timestamp}}" />
                   
-                  <div style="text-align: right;"><input type="submit" name="submit" class="btn btn-danger" value="Reject" />&nbsp; <input name="submit" type="submit" value="Publish" class="btn btn-primary" /></div>
+                  <div class='pull-left' style='max-width: 80%;'>If this entry does not add anything to the current entry, then simply 'Reject' and this will be removed from the review queue. Otherwise, please copy over any relevant text or information from the grey current entry parts to the editable form before hitting Publish. Please also correct any spelling mistakes. <strong>Publish will overwrite the whole current entry with the data in this form.</strong><br />&nbsp;</div>
+                  <div class='pull-right' style='max-width: 20%;'><br /><input type="submit" name="submit" class="btn btn-danger" value="Reject" />&nbsp; <input name="submit" type="submit" value="Publish" class="btn btn-primary" /></div>
                   
                   </form>
             {% else %}

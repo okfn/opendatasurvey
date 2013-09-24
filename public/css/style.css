@@ -703,7 +703,6 @@ table.availability-form thead td.current-entry {
 }
 table.availability-form tbody td.current-entry {
 	background-color: #f2f2f1;
-	padding:0;
 	border-top-color: #caccc7;
 }
 table.availability-form tbody td.current-entry label {
@@ -724,7 +723,6 @@ table.table-striped.availability-form tbody > tr:nth-child(odd) > td.current-ent
 table.availability-form tbody tr:last-child td.current-entry:after {
 	content:'';
 	display:block;
-	border-bottom:3px solid #caccc7;
 	-webkit-border-bottom-right-radius: 3px;
 	-webkit-border-bottom-left-radius: 3px;
 	-moz-border-radius-bottomright: 3px;

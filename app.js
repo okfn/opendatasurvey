@@ -233,10 +233,10 @@ app.get('/country/sheets/', function(req, res) {
 app.get('/country/review/', function(req, res) {
   if (req.session.loggedin) {
     model.load(function() { //Get latest data
-      res.render('country/review/index.html', {info: model.data.country, submissions: model.data.countrysubmissions, place: req.param('place'), dataset: req.param('dataset'), datasetfriendly: model.datasetNamesMap[req.param('dataset')]});
+      res.render('country/review/index.html', {info: model.data.country, submissions: model.data.countrysubmissions, place: req.param('place'), dataset: req.param('dataset'), datasetfriendly: model.datasetNamesMap[req.param('dataset')], currentYear: model.data.country.currentYear});
     });
   }
-  else { WRONG
+  else {
     req.session.redirect = '/country/review/?place=' + encodeURIComponent(req.params.place) + '&dataset=' + req.params.dataset;
     res.redirect('/country/login/');
   }
