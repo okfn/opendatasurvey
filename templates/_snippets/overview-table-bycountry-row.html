@@ -19,7 +19,7 @@
   </td>
   <td>
     {% if record %}
-      <a title="{{ record.url | urlize | wordwrap(100, '\n', true) }}" data-toggle="tooltip" data-html="true" data-trigger="click"><i class="icon-link"></i></a>
+      <a href="{{record.url}}" title="{{record.url}}" target="_blank"><i class="icon-link"></i></a>
     {% else %}
       <i class="icon-link"></i>
     {% endif %}
