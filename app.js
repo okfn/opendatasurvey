@@ -13,10 +13,6 @@ var app = express();
 
 var model = require('./lib/model.js').OpenDataCensus;
 
-//NODE.JS AND EXPRESS - SESSIONS - http://blog.modulus.io/nodejs-and-express-sessions
-app.use(express.cookieParser());
-app.use(express.session({secret: 'wpbmzky%js,$#jsmdvgas'}));
-
 //CORS middleware
 var CORSSupport = function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -32,6 +28,8 @@ app.configure(function() {
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
+  app.use(express.cookieParser());
+  app.use(express.session({secret: 'wpbmzky%js,$#jsmdvgas'}));
   app.use(CORSSupport);
   app.use(express.static(path.join(__dirname, 'public')));
 });
