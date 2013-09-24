@@ -7,6 +7,7 @@ var express = require('express')
   , GoogleSpreadsheet = require('google-spreadsheet')
   , _ = require('underscore')
   , config = require('./lib/config.js')
+  , flash = require('connect-flash')
   ;
 
 var app = express();
@@ -31,6 +32,7 @@ app.configure(function() {
   app.use(express.cookieParser());
   app.use(express.session({secret: 'wpbmzky%js,$#jsmdvgas'}));
   app.use(CORSSupport);
+  app.use(flash());
   app.use(express.static(path.join(__dirname, 'public')));
 });
 
@@ -85,6 +87,8 @@ app.all('*', function(req, res, next) {
   if (config.get('test:testing') === true) {
     req.session.loggedin = true;
   }
+  res.locals.error_messages = req.flash('error');
+  res.locals.info_messages = req.flash('info');
   next();
 });
 
@@ -140,14 +144,12 @@ app.get('/country/results.json', function(req, res) {
 // interfere with other urls
 app.get('/country/overview/:place', function(req, res) {
   model.load(function() {
-    //Get latest data, even for the public; they should see their entries awaiting approval
     res.render('country/place.html', {
       error: req.param('e'),
       info: model.data.country,
       submissions: model.data.countrysubmissions,
       place: req.params.place,
-      loggedin: req.session.loggedin,
-      errormessage: req.param('em')
+      loggedin: req.session.loggedin
     });
   });
 });
@@ -179,23 +181,22 @@ app.get('/country/submit/', function(req, res) {
 app.post('/country/submit/', function(req, res) {
   model.backend.insertSubmission(req.body, function(err, obj) {
     //TODO: Do flash messages properly
-    var eValue;
     if (err) {
       console.log(err);
       var msg = 'There was an error! ' + err;
-      // req.flash('error', msg);
+      req.flash('error', msg);
     } else {
-      eValue = 0;
       var msg = 'Thank-you for your submission which has been received. It will now be reviewed by an Editor before being published. It may take up to a few minutes for your submission to appear here and up to a few days for it be reviewed. Please be patient.'
+      req.flash('info', msg);
     }
-    res.redirect('country/overview/' + encodeURIComponent(req.body['place']) + '/?e=' + eValue + '&em=' + encodeURIComponent(msg));
+    res.redirect('country/overview/' + req.body['place']);
   });
 });
 
 app.get('/country/submission/:id', function(req, res) {
   model.backend.getSubmission({submissionid: req.params.id}, function(err, obj) {
     if (err) {
-      res.send(500, 'There was an error: ' + err);
+      res.send(500, 'There was an rror: ' + err);
     }
     // TODO: do something properly ...
     res.send('Your submission exists');
@@ -257,21 +258,22 @@ app.post('/country/review/:submissionid', function(req, res) {
         if (err) {
           res.send(500, err);
         } else {
+          var msg = "Submission processed and entered into the census.";
+          req.flash('info', msg);
           doneUpdating(req, res, submission);
         }
       });
     } else if (req.body['submit'] === "Reject") {
       model.backend.markSubmissionAsReviewed(submission, function(err) {
-        var msg = "Entry rejected successfully. The entry has been archived and marked as rejected. It will take a few minutes for this table to update. Thank you!";
-        // req.flash('success', msg);
+        var msg = "Submission marked as rejected. The entry has been archived and marked as rejected. It will take a few minutes for this table to update. Thank you!";
+        req.flash('info', msg);
         doneUpdating(req, res, submission);
       });
     }
   }
   function doneUpdating(req, res, submission) {
+    //Get latest data
     model.load(function() {
-      //Get latest data
-      //TODO: Switch to using error codes, but move to using Backend first
       res.redirect('country/overview/' + submission.place);
     });
   }
@@ -303,12 +305,19 @@ app.get('/catalogs/', function(req, res) {
 
 //"Log In" page
 app.get('/country/login/', function(req, res) {
-  res.render('country/login.html', {places: model.data.countrysubmissions.places, redirect: req.session.redirect, error: req.param('e')});
+  res.render('country/login.html', {
+    places: model.data.countrysubmissions.places,
+    redirect: req.session.redirect
+  });
 });
 
 //"Log In" page
 app.get('/country/login/:place/', function(req, res) {
-  res.render('country/login.html', {places: model.data.countrysubmissions.places, place: req.params.place, redirect: req.session.redirect, error: req.param('e')});
+  res.render('country/login.html', {
+    places: model.data.countrysubmissions.places,
+    place: req.params.place,
+    redirect: req.session.redirect
+  });
 });
 
 app.get('/country/logout/', function(req, res) {
@@ -334,10 +343,16 @@ function doLogin(req, res) {
       res.redirect(( redirectto || '/country/'));
     });
   }
-  else if (req.body['place'])
-    res.redirect('country/login/'+encodeURIComponent(req.body['place'])+'/?e=1');
-  else
-    res.redirect('country/login/?e=1');
+  else if (req.body['place']) {
+    var msg = 'Password incorrect'
+    req.flash('error', msg);
+    res.redirect('country/login/'+encodeURIComponent(req.body['place']));
+  }
+  else {
+    var msg = 'Password incorrect'
+    req.flash('error', msg);
+    res.redirect('country/login/');
+  }
 }
 
 // ========================================================

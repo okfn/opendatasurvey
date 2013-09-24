@@ -16,6 +16,7 @@
     , "underscore": ""
     , "google-spreadsheet": "https://github.com/mattfullerton/node-google-spreadsheets/tarball/master"
     , "nconf": ""
+    , "connect-flash": ""
   }
   , "devDependencies": {
     "supertest": "",

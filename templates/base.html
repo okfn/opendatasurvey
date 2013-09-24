@@ -75,6 +75,17 @@
 <div class="container">
 <div class="content">
   <div class="page">
+    {% if error_messages.length > 0 %}
+    <div class="flash alert alert-error">
+      {{ error_messages }}
+    </div>
+    {% endif %}
+    {% if info_messages.length > 0 %}
+    <div class="flash alert alert-info">
+      {{ info_messages }}
+    </div>
+    {% endif %}
+
     {% block content %}{{content}}{% endblock %}
   </div>
   </div><!-- /content -->
