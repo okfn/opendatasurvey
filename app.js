@@ -229,12 +229,19 @@ app.get('/country/review/:submissionid', function(req, res) {
     } else if (!obj) {
       res.send(404, 'There is no submission with id ' + req.params.submissionid);
     } else {
-      res.render('country/review/index.html', {
-        info: model.data.country,
-        submissions: model.data.countrysubmissions,
-        subrecord: obj,
-        datasetfriendly: model.datasetNamesMap[obj.dataset],
-        currentYear: model.data.country.currentYear
+      // let's see if there was an entry
+      model.backend.getEntry(obj, function(err, entry) {
+        if (!entry) {
+          entry = {};
+        }
+        res.render('country/review/index.html', {
+          info: model.data.country,
+          submissions: model.data.countrysubmissions,
+          subrecord: obj,
+          currrecord: entry,
+          datasetfriendly: model.datasetNamesMap[obj.dataset],
+          currentYear: model.data.country.currentYear
+        });
       });
     }
   });
