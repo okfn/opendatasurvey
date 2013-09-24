@@ -11,7 +11,7 @@
       "express": "3.x"
     , "nunjucks": "0.1.8"
     , "marked": ""
-    , "csv": ""
+    , "csv": "0.3.6"
     , "request": ""
     , "underscore": ""
     , "google-spreadsheet": "https://github.com/mattfullerton/node-google-spreadsheets/tarball/master"
