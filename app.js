@@ -69,30 +69,29 @@ env.addFilter('urlize', function(str) {
  * Taken from http://james.padolsey.com/javascript/wordwrap-for-javascript/
  *
  */
-
 env.addFilter('wordwrap', function(str, width, brk, cut) {
- 
     brk = brk || '\n';
     width = width || 75;
     cut = cut || false;
- 
-    if (!str) { return str; }
- 
+    if (!str) {
+      return str;
+    }
     var regex = '.{1,' +width+ '}(\\s|$)' + (cut ? '|.{' +width+ '}|.+$' : '|\\S+?(\\s|$)');
- 
     return str.match( RegExp(regex, 'g') ).join( brk );
- 
 });
 
 env.express(app);
 
+// ========================================================
+// Start routes
+// ========================================================
+
 app.get('/', function(req, res) {
-  //model.load(function() { //Don't reload for the public
   res.render('index.html', {
     numberEntries: model.data.country.summary.entries.toString(),
     numberOpen: model.data.country.summary.open.toString(),
-    numberCatalogs: model.data.catalogs.records.length.toString()});
-//});
+    numberCatalogs: model.data.catalogs.records.length.toString()
+  });
 });
 
 app.get('/about/', function(req, res) {
@@ -378,7 +377,9 @@ app.post('/country/update/', function(req, res) {
                   }
                   else {
                     srows[0].reviewoutcome = 'accepted';
-                    srows[0].reviewer = 'Via web interface on ' + timeStamp();
+                    var timestamp = new Date();
+                    timestamp = timestamp.toISOString();
+                    srows[0].reviewer = 'Via web interface on ' + timestamp;
                     //Copy it to the other sheet with the new 
                     my_sheet.addRow(2, srows[0], function(err) {
 
@@ -501,33 +502,6 @@ function doneUpdating(error, req, res) {
     //TODO: Switch to using error codes, but move to using Backend first
     res.redirect('country/overview/' + req.body['place'] + '/' + '?e=' + encodeURIComponent(error.value) + '&em=' + encodeURIComponent(error.message));
   });
-}
-
-/**
- * Return a timestamp with the format "m/d/yy h:MM:ss TT"
- * @type {Date}
- * https://gist.github.com/hurjas/2660489
- */
-
-function timeStamp() {
-// Create a date object with the current time
-  var now = new Date();
-
-// Create an array with the current month, day and time
-  var date = [now.getDate(), now.getMonth() + 1, now.getFullYear()];
-
-// Create an array with the current hour, minute and second
-  var time = [now.getHours(), now.getMinutes(), now.getSeconds()];
-
-// If seconds and minutes are less than 10, add a zero
-  for (var i = 1; i < 3; i++) {
-    if (time[i] < 10) {
-      time[i] = "0" + time[i];
-    }
-  }
-
-// Return the formatted string
-  return date.join("/") + " " + time.join(":");
 }
 
 app.get('/g8/', function(req, res) {
