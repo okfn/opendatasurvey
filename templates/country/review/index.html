@@ -7,14 +7,13 @@ Countries
 {% block content %}
 
 <div class="page-header">
-    
-      
-    
-        <h1>{% if subrecord %}<span class="muted"><a href="/country/overview/{{ place | replace(' ', '%20') }}/">{{ place }}</a> / </span> {{datasetfriendly}}{% else %}No record{% endif %}</h1>
-      </div>
-
-              
-              {% set subrecord = submissions.byplace[place].datasets[dataset] %}
+  <h1>
+    <span class="muted">
+      <a href="/country/overview/{{ subrecord.place | replace(' ', '%20') }}/">{{ subrecord.place }}</a> /
+    </span>
+    {{datasetfriendly}}
+  </h1>
+</div>
               {% set currrecord = info.byplace[place].datasets[dataset] %}
               
             {% if subrecord %}
@@ -25,7 +24,7 @@ Countries
             <h3>Data Availability</h3>
       <p>Please answer regarding open data availability. This is the census for {{ currentYear }}. Please check that the answers reflect the availability of data <strong>right now</strong>.<br>
         If data will be released soon this can be mentioned this in the details and comments section below.</p>
-       <form action="../update/" method="post">
+       <form action="" method="post">
       <table class="table table-striped availability-form">
               
              
@@ -44,82 +43,82 @@ Countries
                        <tr>
             <td>Does the data exist?</td>
             <td></td>
-                        <td><input type="radio" class="ss-q-radio" name="exists" value="Yes" {% if subrecord.exists == 'Y' %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="exists" value="No" {% if subrecord.exists == 'N' %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="exists" value="Unsure" {% if subrecord.exists == '?' %} checked {% endif %} /></td>
-                        <td class="current-entry">{% if currrecord.exists == "Y" %} Yes {% elif currrecord.exists == "N" %} No {% elif currrecord.exists == "?" %} Unsure {% else %} No record {% endif %}</td>
+                        <td><input type="radio" class="ss-q-radio" name="exists" value="Yes" {% if subrecord.exists == 'Yes' %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="exists" value="No" {% if subrecord.exists == 'No' %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="exists" value="Unsure" {% if subrecord.exists == 'Unsure' %} checked {% endif %} /></td>
+                        <td class="current-entry">{% if currrecord.exists == "Yes" %} Yes {% elif currrecord.exists == "No" %} No {% elif currrecord.exists == "Unsure" %} Unsure {% else %} No record {% endif %}</td>
                     </tr>
                     
                     <tr>
                         <td>Is it openly licensed? (as per the http://OpenDefinition.org/)</td>
             <td></td>
-                        <td><input type="radio" class="ss-q-radio" name="openlicense" value="Yes" {% if subrecord.openlicense == 'Y' %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="openlicense" value="No" {% if subrecord.openlicense == 'N' %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="openlicense" value="Unsure" {% if subrecord.openlicense == '?' %} checked {% endif %} /></td>
-                        <td class="current-entry">{% if currrecord.openlicense == "Y" %} Yes {% elif currrecord.openlicense == "N" %} No {% elif currrecord.openlicense == "?" %} Unsure {% else %} No record {% endif %}</td>
+                        <td><input type="radio" class="ss-q-radio" name="openlicense" value="Yes" {% if subrecord.openlicense == "Yes" %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="openlicense" value="No" {% if subrecord.openlicense == "No" %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="openlicense" value="Unsure" {% if subrecord.openlicense == "Unsure" %} checked {% endif %} /></td>
+                        <td class="current-entry">{% if currrecord.openlicense == "Yes" %} Yes {% elif currrecord.openlicense == "No" %} No {% elif currrecord.openlicense == "Unsure" %} Unsure {% else %} No record {% endif %}</td>
                     </tr>
                     
                     <tr>
                         <td>Is it publicly available?</td>
             <td></td>
-                        <td><input type="radio" class="ss-q-radio" name="public" value="Yes" {% if subrecord.public == 'Y' %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="public" value="No" {% if subrecord.public == 'N' %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="public" value="Unsure" {% if subrecord.public == '?' %} checked {% endif %} /></td>
-                        <td class="current-entry">{% if currrecord.public == "Y" %} Yes {% elif currrecord.public == "N" %} No {% elif currrecord.public == "?" %} Unsure {% else %} No record {% endif %}</td>
+                        <td><input type="radio" class="ss-q-radio" name="public" value="Yes" {% if subrecord.public == "Yes" %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="public" value="No" {% if subrecord.public == "No" %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="public" value="Unsure" {% if subrecord.public == "Unsure" %} checked {% endif %} /></td>
+                        <td class="current-entry">{% if currrecord.public == "Yes" %} Yes {% elif currrecord.public == "No" %} No {% elif currrecord.public == "Unsure" %} Unsure {% else %} No record {% endif %}</td>
                     </tr>
                     
                     <tr>
                         <td>Is it machine readable? (E.g. spreadsheet not PDF)</td>
             <td></td>
-                        <td><input type="radio" class="ss-q-radio" name="machinereadable" value="Yes" {% if subrecord.machinereadable == 'Y' %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="machinereadable" value="No" {% if subrecord.machinereadable == 'N' %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="machinereadable" value="Unsure" {% if subrecord.machinereadable == '?' %} checked {% endif %} /></td>
-                        <td class="current-entry">{% if currrecord.machinereadable == "Y" %} Yes {% elif currrecord.machinereadable == "N" %} No {% elif currrecord.machinereadable == "?" %} Unsure {% else %} No record {% endif %}</td>
+                        <td><input type="radio" class="ss-q-radio" name="machinereadable" value="Yes" {% if subrecord.machinereadable == "Yes" %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="machinereadable" value="No" {% if subrecord.machinereadable == "No" %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="machinereadable" value="Unsure" {% if subrecord.machinereadable == "Unsure" %} checked {% endif %} /></td>
+                        <td class="current-entry">{% if currrecord.machinereadable == "Yes" %} Yes {% elif currrecord.machinereadable == "No" %} No {% elif currrecord.machinereadable == "Unsure" %} Unsure {% else %} No record {% endif %}</td>
                     </tr>
                     
                     <tr>
                         <td>Is it in digital form?</td>
             <td></td>
-                        <td><input type="radio" class="ss-q-radio" name="digital" value="Yes" {% if subrecord.digital == 'Y' %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="digital" value="No" {% if subrecord.digital == 'N' %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="digital" value="Unsure" {% if subrecord.digital == '?' %} checked {% endif %} /></td>
-                        <td class="current-entry">{% if currrecord.digital == "Y" %} Yes {% elif currrecord.digital == "N" %} No {% elif currrecord.digital == "?" %} Unsure {% else %} No record {% endif %}</td>
+                        <td><input type="radio" class="ss-q-radio" name="digital" value="Yes" {% if subrecord.digital == "Yes" %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="digital" value="No" {% if subrecord.digital == "No" %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="digital" value="Unsure" {% if subrecord.digital == "Unsure" %} checked {% endif %} /></td>
+                        <td class="current-entry">{% if currrecord.digital == "Yes" %} Yes {% elif currrecord.digital == "No" %} No {% elif currrecord.digital == "Unsure" %} Unsure {% else %} No record {% endif %}</td>
                     </tr>
                     
                     <tr>
                         <td>Is it up to date?</td>
             <td></td>
-                        <td><input type="radio" class="ss-q-radio" name="uptodate" value="Yes"  {% if subrecord.uptodate == 'Y' %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="uptodate" value="No" {% if subrecord.uptodate == 'N' %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="uptodate" value="Unsure" {% if subrecord.uptodate == '?' %} checked {% endif %} /></td>
-                        <td class="current-entry">{% if currrecord.uptodate == "Y" %} Yes {% elif currrecord.uptodate == "N" %} No {% elif currrecord.uptodate == "?" %} Unsure {% else %} No record {% endif %}</td>
+                        <td><input type="radio" class="ss-q-radio" name="uptodate" value="Yes"  {% if subrecord.uptodate == "Yes" %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="uptodate" value="No" {% if subrecord.uptodate == "No" %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="uptodate" value="Unsure" {% if subrecord.uptodate == "Unsure" %} checked {% endif %} /></td>
+                        <td class="current-entry">{% if currrecord.uptodate == "Yes" %} Yes {% elif currrecord.uptodate == "No" %} No {% elif currrecord.uptodate == "Unsure" %} Unsure {% else %} No record {% endif %}</td>
                     </tr>
                     
                     <tr>
                         <td>Available in bulk? (Can you get the whole dataset easily)</td>
             <td></td>
-                        <td><input type="radio" class="ss-q-radio" name="bulk" value="Yes" {% if subrecord.bulk == 'Y' %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="bulk" value="No" {% if subrecord.bulk == 'N' %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="bulk" value="Unsure" {% if subrecord.bulk == '?' %} checked {% endif %} /></td>
-                        <td class="current-entry">{% if currrecord.bulk == "Y" %} Yes {% elif currrecord.bulk == "N" %} No {% elif currrecord.bulk == "?" %} Unsure {% else %} No record {% endif %}</td>
+                        <td><input type="radio" class="ss-q-radio" name="bulk" value="Yes" {% if subrecord.bulk == "Yes" %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="bulk" value="No" {% if subrecord.bulk == "No" %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="bulk" value="Unsure" {% if subrecord.bulk == "Unsure" %} checked {% endif %} /></td>
+                        <td class="current-entry">{% if currrecord.bulk == "Yes" %} Yes {% elif currrecord.bulk == "No" %} No {% elif currrecord.bulk == "Unsure" %} Unsure {% else %} No record {% endif %}</td>
                     </tr>
                     
                     <tr>
                         <td>Is it accessible online?</td>
             <td></td>
-                        <td><input type="radio" class="ss-q-radio" name="online" value="Yes" {% if subrecord.online == 'Y' %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="online" value="No" {% if subrecord.online == 'N' %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="online" value="Unsure" {% if subrecord.online == '?' %} checked {% endif %} /></td>
-                        <td class="current-entry">{% if currrecord.online == "Y" %} Yes {% elif currrecord.online == "N" %} No {% elif currrecord.online == "?" %} Unsure {% else %} No record {% endif %}</td>
+                        <td><input type="radio" class="ss-q-radio" name="online" value="Yes" {% if subrecord.online == "Yes" %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="online" value="No" {% if subrecord.online == "No" %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="online" value="Unsure" {% if subrecord.online == "Unsure" %} checked {% endif %} /></td>
+                        <td class="current-entry">{% if currrecord.online == "Yes" %} Yes {% elif currrecord.online == "No" %} No {% elif currrecord.online == "Unsure" %} Unsure {% else %} No record {% endif %}</td>
                     </tr>
                     
                     <tr>
                         <td>Is it available free of charge?</td>
             <td></td>
-                        <td><input type="radio" class="ss-q-radio" name="free" value="Yes" {% if subrecord.free == 'Y' %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="free" value="No" {% if subrecord.free == 'N' %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="free" value="Unsure" {% if subrecord.free == '?' %} checked {% endif %} /></td>
-                        <td class="current-entry">{% if currrecord.free == "Y" %} Yes {% elif currrecord.free == "N" %} No {% elif currrecord.free == "?" %} Unsure {% else %} No record {% endif %}</td>
+                        <td><input type="radio" class="ss-q-radio" name="free" value="Yes" {% if subrecord.free == "Yes" %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="free" value="No" {% if subrecord.free == "No" %} checked {% endif %} /></td>
+                        <td><input type="radio" class="ss-q-radio" name="free" value="Unsure" {% if subrecord.free == "Unsure" %} checked {% endif %} /></td>
+                        <td class="current-entry">{% if currrecord.free == "Yes" %} Yes {% elif currrecord.free == "No" %} No {% elif currrecord.free == "Unsure" %} Unsure {% else %} No record {% endif %}</td>
                     </tr>
         </tbody>
       </table>
