@@ -1,7 +1,5 @@
 var assert = require('assert')
   , config = require('../lib/config.js')
-  , model = require('../lib/model.js').OpenDataCensus
-  , Backend = require('../lib/model.js').Backend
   , mocha = require('mocha')
   , _ = require('underscore')
   ;
@@ -11,6 +9,11 @@ var options = {
  'key': '0AqR8dXc6Ji4JdHR5WWdUU2dYUElPaFluUlBJbkFOMUE'
 };
 config.set('database:country:spreadsheetKey', options.key);
+
+// only require after setting config ...
+var model = require('../lib/model.js').OpenDataCensus
+  , Backend = require('../lib/model.js').Backend
+  ;
 
 // some rules
 // we only add rows where place = Germany (so we can delete afterwards)
@@ -148,7 +151,7 @@ describe('census', function() {
     // console.log(uk);
     assert.equal(uk.exists, 'Y');
     assert.equal(uk['uptodate'], 'Y');
-    assert.equal(uk.ycount, 6);
+    assert.equal(uk.ycount, 7);
     assert.equal(uk.isopen, false);
   });
 
