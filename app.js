@@ -139,8 +139,16 @@ app.get('/country/results.json', function(req, res) {
 // TODO: want this at simply /country/{place} but need to make sure we don't
 // interfere with other urls
 app.get('/country/overview/:place', function(req, res) {
-  model.load(function() { //Get latest data, even for the public; they should see their entries awaiting approval
-    res.render('country/place.html', {error: req.param('e'), info: model.data.country, submissions: model.data.countrysubmissions, place: req.params.place, loggedin: req.session.loggedin, errormessage: req.param('em')});
+  model.load(function() {
+    //Get latest data, even for the public; they should see their entries awaiting approval
+    res.render('country/place.html', {
+      error: req.param('e'),
+      info: model.data.country,
+      submissions: model.data.countrysubmissions,
+      place: req.params.place,
+      loggedin: req.session.loggedin,
+      errormessage: req.param('em')
+    });
   });
 });
 
@@ -224,16 +232,22 @@ app.get('/country/sheets/', function(req, res) {
 });
 
 //Compare & update page
-app.get('/country/review/', function(req, res) {
-  if (req.session.loggedin) {
-    model.load(function() { //Get latest data
-      res.render('country/review/index.html', {info: model.data.country, submissions: model.data.countrysubmissions, place: req.param('place'), dataset: req.param('dataset'), datasetfriendly: model.datasetNamesMap[req.param('dataset')], currentYear: model.data.country.currentYear});
-    });
-  }
-  else {
+app.get('/country/review/:submissionid', function(req, res) {
+  if (!req.session.loggedin) {
     req.session.redirect = '/country/review/?place=' + encodeURIComponent(req.param('place')) + '&dataset=' + req.param('dataset');
     res.redirect('/country/login/');
+    return;
   }
+  model.backend.getSubmission({submissionid: req.params.submissionid}, function(err, obj) {
+    console.log(obj);
+    res.render('country/review/index.html', {
+      info: model.data.country,
+      submissions: model.data.countrysubmissions,
+      subrecord: obj,
+      datasetfriendly: model.datasetNamesMap[obj.dataset],
+      currentYear: model.data.country.currentYear}
+    );
+  });
 });
 
 app.get('/country/logout/', function(req, res) {

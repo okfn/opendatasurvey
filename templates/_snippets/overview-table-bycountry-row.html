@@ -79,7 +79,7 @@
       {% if not loggedin %}
       <a class="btn btn-mini btn-danger disabled" data-toggle="tooltip" title="Editors: first log in using the link above to review submissions">
          {% else %}
-         <a href="/country/review/?dataset={{record.dataset}}&place={{record.place}}" class="btn btn-mini btn-danger">
+         <a href="/country/review/{{record.submissionid}}" class="btn btn-mini btn-danger">
           {% endif %} 
         <!-- <i class="icon-search"></i> -->Review Now
       </a>
