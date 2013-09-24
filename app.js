@@ -224,14 +224,19 @@ app.get('/country/review/:submissionid', function(req, res) {
     return;
   }
   model.backend.getSubmission({submissionid: req.params.submissionid}, function(err, obj) {
-    console.log(obj);
-    res.render('country/review/index.html', {
-      info: model.data.country,
-      submissions: model.data.countrysubmissions,
-      subrecord: obj,
-      datasetfriendly: model.datasetNamesMap[obj.dataset],
-      currentYear: model.data.country.currentYear}
-    );
+    if (err) {
+      res.send(500, 'There was an error ' + err);
+    } else if (!obj) {
+      res.send(404, 'There is no submission with id ' + req.params.submissionid);
+    } else {
+      res.render('country/review/index.html', {
+        info: model.data.country,
+        submissions: model.data.countrysubmissions,
+        subrecord: obj,
+        datasetfriendly: model.datasetNamesMap[obj.dataset],
+        currentYear: model.data.country.currentYear
+      });
+    }
   });
 });
 
