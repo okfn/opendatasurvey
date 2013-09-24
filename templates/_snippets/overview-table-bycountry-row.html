@@ -3,7 +3,7 @@
     {% if type == 'submissions' %}
       &#8627; Awaiting review
     {% else %}
-      {{ dataset.title }}
+      <a data-toggle="tooltip" data-trigger="click" class="count-0" title="{{ dataset.description }}"><i class="icon-info-sign"></i></a> {{ dataset.title }} &nbsp; 
     {% endif %}
   </th>
   <td{% if record %} data-place="{{ record.place }}" data-dataset="{{ record.dataset }}" data-datasetTitle="{{ dataset.title }}"{% endif %}>
