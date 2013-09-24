@@ -74,7 +74,7 @@ Each icon in data availability column represents important factors for how acces
       {% include '_snippets/overview-table-bycountry-row.html' %}
 
       {% set record = submissions.byplace[place].datasets[dataset.id] %}
-      {% if record %}
+      {% if record and not record.reviewed == "1" %}
         {% set type = 'submissions' %}
         {% include '_snippets/overview-table-bycountry-row.html' %}
       {% endif %}
