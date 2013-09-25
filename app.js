@@ -117,14 +117,7 @@ app.get('/about', function(req, res) {
 });
 
 app.get('/contribute', function(req, res) {
-  fs.readFile('templates/contribute.md', 'utf8', function(err, text) {
-    var marked = require('marked');
-    var content = marked(text);
-    res.render('base.html', {
-      content: content,
-      title: 'Contribute'
-    });
-  });
+  res.render('country/contribute.html', {places: model.countryList});
 });
 
 app.get('/country/', function(req, res) {
@@ -132,10 +125,6 @@ app.get('/country/', function(req, res) {
   res.render('country/index.html', {info: model.data.country});
 });
 //});
-
-app.get('/country/contribute', function(req, res) {
-  res.render('country/contribute.html', {places: model.countryList});
-});
 
 app.get('/country/results.json', function(req, res) {
   model.load(function() { //Get latest data
