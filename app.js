@@ -327,7 +327,7 @@ app.post('/country/login/', function(req, res) {
 });
 
 function doLogin(req, res) {
-  if (req.body['password'] === "notagoodpassword") {
+  if (req.body['password'] === "opendat1") {
     req.session.loggedin = true;
     req.flash('info', 'You are now logged in!');
     model.load(function() { //Get latest data
