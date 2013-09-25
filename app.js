@@ -136,6 +136,11 @@ app.get('/country/results.json', function(req, res) {
 // TODO: want this at simply /country/{place} but need to make sure we don't
 // interfere with other urls
 app.get('/country/overview/:place', function(req, res) {
+  var place = req.params.place;
+  if (model.countryList.indexOf(req.params.place) == -1) {
+    res.send(404, 'There is no country named ' + place + ' in our database. Are you sure you have spelled it correctly? Please check the <a href="/country/">country page</a> for the list of countries');
+    return;
+  }
   model.load(function() {
     res.render('country/place.html', {
       error: req.param('e'),
