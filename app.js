@@ -105,7 +105,7 @@ app.get('/', function(req, res) {
   });
 });
 
-app.get('/about/', function(req, res) {
+app.get('/about', function(req, res) {
   fs.readFile('templates/about.md', 'utf8', function(err, text) {
     var marked = require('marked');
     var content = marked(text);
@@ -116,7 +116,7 @@ app.get('/about/', function(req, res) {
   });
 });
 
-app.get('/contribute/', function(req, res) {
+app.get('/contribute', function(req, res) {
   fs.readFile('templates/contribute.md', 'utf8', function(err, text) {
     var marked = require('marked');
     var content = marked(text);
@@ -133,7 +133,7 @@ app.get('/country/', function(req, res) {
 });
 //});
 
-app.get('/country/contribute/', function(req, res) {
+app.get('/country/contribute', function(req, res) {
   res.render('country/contribute.html', {places: model.countryList});
 });
 
@@ -167,7 +167,7 @@ app.get('/country/overview/:place', function(req, res) {
  });
  */
 
-app.get('/country/submit/', function(req, res) {
+app.get('/country/submit', function(req, res) {
   var datasets = [];
   var ynquestions = model.data.questions.slice(0,9);
   
@@ -182,7 +182,7 @@ app.get('/country/submit/', function(req, res) {
   });
 });
 
-app.post('/country/submit/', function(req, res) {
+app.post('/country/submit', function(req, res) {
   model.backend.insertSubmission(req.body, function(err, obj) {
     //TODO: Do flash messages properly
     if (err) {
