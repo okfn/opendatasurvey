@@ -130,9 +130,6 @@ html {
   overflow-x: hidden;
 	background-color: #edeeec;
 }
-body {
-  padding-top: 70px;
-}
 
 .navbar {
 	background-image: url(stripes.png);
