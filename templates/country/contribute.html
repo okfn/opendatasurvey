@@ -27,11 +27,19 @@ We welcome contributions to the Census, both in the form of new entries, reviews
   <li>Your submission, subject to review, will be visible in the table as 'awaiting review' after a few minutes. We aim to review all submissions quickly. Those reviewed entries constitute the data shown on the <a href='/country/'>front page</a></li>
 </ol>
 
-<h3>Country selection:</h3>
+<h3>Country selection</h3>
 
+<div class="row">
+{% for idx in [0, 65, 130, 195] %}
+<div class="span3">
 {% for thePlace in places %}
-<a href="/country/overview/{{thePlace}}/">{{thePlace}}</a><br />
+{% if loop.index0 >= idx and loop.index0 < idx + 65 %}
+<a href="/country/overview/{{thePlace}}/">{{thePlace}}</a> <br />
+{% endif %}
 {% endfor %}
+</div>
+{% endfor %}
+</div>
 
 {% endblock %}
 
