@@ -9,45 +9,61 @@ Country - Submit
   <h1>Country Open Data Census</h1>
 </div>
 
+<div class="alert alert-warning">
+  <h3 style="margin-top: 0;">Please read first</h3>
+  <h4>1. Official data sources</h4>
+  <p>Please answer regarding <strong>official (government or government associated)</strong> sources of data. Often data is available from various sources both official and unofficial but we only want answers on the basis of official sources.</p>
+  <p>To illustrate: suppose election results data is available both from government sources and from a third party website and that the government data is in PDF (so <strong>not</strong> machine readable) but that the unofficial source has the data in spreadsheets (machine-readable). Then the answer to the machine readable question would be <strong>'No'</strong> as the official source is not machine readable (but please do list the unofficial source in the details and comments section).
+  </p>
+
+  <h4>2. Assessment Point</h4>
+  <p>please answer the questions on the basis of the data situation as of the current assessment point (August / September 2013). Do <strong>not</strong> answer based on what may happen in the future (or the situation previously).</p>
+  <p>So, for example, if data will be online soon but is not online now the answer to the 'online' question should be 'No' (though please mention that it <em>will</em> be available in the details and comments section).</p>
+</div>
+
 <form action="" method="POST" class="form" autocomplete="off">
-  <label>Country (required)<br/>
-    <select name="place" required autocomplete="off"> <!-- This doesn't prevent Chrome -->
-      <option value="">Please select</option>
-      {% for country in countryList %}
-      <option value="{{country}}" {% if placeFromQuery == country %}selected="true"{% endif %}>{{country}}</option>
-      {% endfor %}
-    </select>
-  </label>
-  <label>Dataset (required)<br/>
-    <select name="dataset" id="dataset-select" required>
-      <option value="">Please select</option>
-      {% for dataset in datasets %}
-      <option value="{{dataset.id}}" {% if dataset.id == datasetFromQuery %}selected="true"{% endif %}>{{dataset.title}}</option>
-      {% endfor %}
-    </select>
-
-    {% for dataset in datasets %}
-    <div class="dataset-description js-dataset-{{dataset.id}}" style="display: none;">
-      {{dataset.description}}
-    </div>
-    {% endfor %}
-
-  </label>
-  <label>Census Year<br/>
-    <input name="year" type="number" min="2012" max="2013" value="2013" readonly="true" />
-  </label>
-
-<hr />
 
 <fieldset>
-<legend>Data Availability Questions (required)</legend>
+  <h3>Country and Dataset</h3>
+  <div class="row">
+    <div class="span4">
+      <label>Country<br/>
+        <select name="place" required autocomplete="off"> <!-- This doesn't prevent Chrome -->
+          <option value="">Please select</option>
+          {% for country in countryList %}
+          <option value="{{country}}" {% if placeFromQuery == country %}selected="true"{% endif %}>{{country}}</option>
+          {% endfor %}
+        </select>
+      </label>
+    </div>
+    <div class="span4">
+      <label>Dataset<br/>
+        <select name="dataset" id="dataset-select" required>
+          <option value="">Please select</option>
+          {% for dataset in datasets %}
+          <option value="{{dataset.id}}" {% if dataset.id == datasetFromQuery %}selected="true"{% endif %}>{{dataset.title}}</option>
+          {% endfor %}
+        </select>
 
-<div class="alert alert-info">
-<ul>
-  <li><strong>Situation right now</strong>: Your answers should be about the situation <em>right now</em>. If e.g. data will be online soon but is not online now the answer to 'online' question should be 'No'  &ndash; you can mention that it will be available soon in the details and comments section below.</li>
-  <li><strong>Official sources</strong>: Your answers should focus on <em>official</em> sources of data. If data is e.g. <strong>not</strong> in machine readable format from an official source but is available unofficially in machine readable form then the answer to the machine readable question is <strong>'No'</strong> &ndash; but please list the unofficial source in the details and comments section.</li>
-</ul>
-</div>
+        {% for dataset in datasets %}
+        <div class="dataset-description js-dataset-{{dataset.id}}" style="display: none;">
+          <span class="help-block">
+            {{dataset.description}}
+          </span>
+        </div>
+        {% endfor %}
+      </label>
+    </div>
+    <div class="span4">
+      <label>Census Year<br/>
+        <input name="year" type="number" min="2012" max="2013" value="2013" readonly="true" />
+      </label>
+    </div>
+  </div>
+</fieldset>
+
+<fieldset>
+<h3>Data Availability Questions</h3>
 
 <table class="table table-striped yntable">
 <thead>
@@ -74,15 +90,17 @@ Country - Submit
 </fieldset>
 
 <fieldset>
-  <legend>Follow-ups</legend>
+  <div class="row">
   {% for qu in questions.slice(9, 12) %}
-  <label>{{qu.question}} (optional)</label>
-  <input type="{{qu.type}}" name="{{qu.id}}" value="" />
-  <span class="help-block">{{qu.description}}</span>
+  <div class="span6">
+    <h3>{{qu.question}} (optional)</h3>
+    <input type="{{qu.type}}" name="{{qu.id}}" value="" />
+    <span class="help-block">{{qu.description}}</span>
+  </div>
   {% endfor %}
 </fieldset>
 
-  <label>Further Information, Details and Comments (optional but strongly encouraged)</label>
+  <h3>Further Information, Details and Comments (optional but strongly encouraged)</h3>
   <textarea name="details" class="span8" style="min-height: 150px;"></textarea>
   <span class="help-block">Please add detail here especially regarding data availability. for example, is the data partially available, are there plans to make it available in the future? is the data available from an unofficial source.</span>
 
@@ -126,12 +144,18 @@ jQuery(document).ready(function($) {
     }
   });
 
-  $('#dataset-select').change(function(e) {
+  var $select = $('#dataset-select');
+  $select.change(function(e) {
     e.preventDefault();
-    var val = $(e.target).val();
-    $('.dataset-description').hide();
-    $('.js-dataset-' + val).show();
+    showCurrentDatasetInfo();
   });
+
+  function showCurrentDatasetInfo() {
+    var val = $select.val();
+    $('.dataset-description').hide();
+    $('.js-dataset-' + val).show('slow');
+  }
+  showCurrentDatasetInfo();
 });
 </script>
 {% endblock %}
