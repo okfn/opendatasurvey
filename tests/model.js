@@ -52,7 +52,7 @@ describe('Backend Entry', function() {
     });
   });
   it('getEntry', function(done) {
-    backend.getEntry({year: 2012, dataset: 'timetables', place: 'United Kingdom'}, function(err, entry) {
+    backend.getEntry({year: 2012, dataset: 'maps', place: 'United Kingdom'}, function(err, entry) {
       assert.ok(!err);
       assert.ok(entry!=null, 'No entry (entry is null)');
       assert.equal(entry.public, 'Yes', entry);
@@ -153,7 +153,15 @@ describe('Submissions', function() {
             backend.getSubmission(subm, function(err, newobj) {
               assert(newobj)
               assert.equal(newobj.reviewed, 1);
-              done();
+
+              // now resubmit the submission (atm we are allowed to do this)
+              backend.acceptSubmission(subm, {online: 'No'}, function(err) {
+                backend.getEntrys({dataset: data.dataset, place: data.place, year: data.year}, function(err, rows) {
+                  assert.equal(rows.length, 1);
+                  assert.equal(rows[0].online, 'No');
+                  done();
+                });
+              });
             });
           });
         });
