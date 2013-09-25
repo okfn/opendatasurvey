@@ -279,6 +279,7 @@ app.post('/country/review/:submissionid', function(req, res) {
         }
       });
     } else if (req.body['submit'] === "Reject") {
+      submission.reviewresult = 'rejected';
       model.backend.markSubmissionAsReviewed(submission, function(err) {
         var msg = "Submission marked as rejected. The entry has been archived and marked as rejected. It will take a few minutes for this table to update. Thank you!";
         req.flash('info', msg);
