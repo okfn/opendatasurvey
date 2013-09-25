@@ -90,6 +90,10 @@ ul.availability.icons.mini li i {
 	display:none;
 }
 
+.icons-nodata {
+  color: #333333;
+}
+
 .key {
 	display:inline-block;
 	padding-top:0;

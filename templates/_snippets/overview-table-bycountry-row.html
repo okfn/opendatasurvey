@@ -1,11 +1,11 @@
 <tr{% if type == 'submissions' %} class="queued"{% endif %}>
-  <th>
+  <td>
     {% if type == 'submissions' %}
       &#8627; Awaiting review
     {% else %}
       {{ dataset.title }} &nbsp; <a data-toggle="tooltip" data-trigger="click" class="count-0" title="{{ dataset.description }}"><i class="icon-info-sign"></i></a> 
     {% endif %}
-  </th>
+  </td>
   <td{% if record %} data-place="{{ record.place }}" data-dataset="{{ record.dataset }}" data-datasetTitle="{{ dataset.title }}"{% endif %}>
     <ul class="availability icons">
       {% for field in record_fields %}
@@ -21,7 +21,9 @@
     {% if record and record.url %}
       <a href="{{record.url}}" title="{{record.url}}" target="_blank"><i class="icon-link"></i></a>
     {% else %}
-      <i class="icon-link"></i>
+      <a data-toggle="tooltip" data-trigger="hover" title="No URL given">
+            <i class="icon-link icons-nodata"></i>
+          </a>
     {% endif %}
   </td>
   <td>
@@ -30,14 +32,18 @@
         {% if record and record.dateavailable %}
           <a title="Date available: {{ record.dateavailable }}" data-toggle="tooltip"><i class="icon-calendar"></i></a>
         {% else %}
-          <i class="icon-calendar"></i>
+          <a data-toggle="tooltip" data-trigger="hover" title="No date available given">
+            <i class="icon-calendar icons-nodata"></i>
+          </a>
         {% endif %}
       </li>
       <li>
         {% if record and record.format %}
           <a title="Data format: {{ record.format }}" data-toggle="tooltip"><i class="icon-file"></i></a>
         {% else %}
-          <i class="icon-file"></i>
+          <a data-toggle="tooltip" data-trigger="hover" title="No data format given">
+            <i class="icon-file icons-nodata"></i>
+          </a>
         {% endif %}
       </li>
       <li>
@@ -46,7 +52,9 @@
             <i class="icon-info-sign"></i>
           </a>
         {% else %}
-          <i class="icon-info-sign"></i>
+          <a data-toggle="tooltip" data-trigger="hover" title="No details">
+            <i class="icon-info-sign icons-nodata"></i>
+          </a>
         {% endif %}
       </li>
       {% if type == 'submissions' %}
@@ -61,7 +69,9 @@
           </a>
           {% endif %}
         {% else %}
-          <i class="icon-user"></i>
+          <a data-toggle="tooltip" data-trigger="hover" title="No submitter details">
+            <i class="icon-user icons-nodata"></i>
+          </a>
         {% endif %}
       </li>
       {% endif %}
