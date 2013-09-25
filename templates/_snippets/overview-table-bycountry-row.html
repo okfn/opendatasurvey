@@ -64,7 +64,7 @@
   </td>
   <td>
     
-    {% if not loggedin and type == 'info' %}
+    {% if type == 'info' %}
       {% if record %} 
         <a href="/country/submit/?dataset={{ dataset.id }}&place={{ place }}" class="btn btn-mini btn-primary">
           <!-- <i class="icon-plus"></i> -->Propose Revisions
