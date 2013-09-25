@@ -18,8 +18,8 @@
     </ul>
   </td>
   <td>
-    {% if record %}
-      <a href="{{record.url}}" title="{{record.url}}" target="_blank"><i class="icon-link"></i></a>
+    {% if record and record.url %}
+      <a href="{{record.url | urlize}}" title="{{record.url}}" target="_blank"><i class="icon-link"></i></a>
     {% else %}
       <i class="icon-link"></i>
     {% endif %}
@@ -41,7 +41,7 @@
         {% endif %}
       </li>
       <li>
-        {% if record %}
+        {% if record and record.details %}
           <a data-toggle="tooltip" data-html="true" data-trigger="click" class="count-0" title="{{ record.details | replace ('\"', '\'') | urlize | wordwrap(100, '\n', true) }}">
             <i class="icon-info-sign"></i>
           </a>
@@ -51,10 +51,15 @@
       </li>
       {% if type == 'submissions' %}
       <li>
-        {% if record %}
-          <a data-toggle="tooltip" data-trigger="click" data-html="true" class="count-0" title="{{ record.submitter }} ({{ record.submitterurl | replace ('\"', '\'') | urlize | wordwrap(100, '\n', true) }})">
+        {% if record and record.submitter %}
+          {% if record.submitterurl %}
+            {% set appendtext = record.submitterurl | replace ('\"', '\'') | urlize | wordwrap(100, '\n', true) %}
+          {% else %}
+            {% set appendtext = '' %}
+          <a data-toggle="tooltip" data-trigger="click" data-html="true" class="count-0" title="{{ record.submitter }} ({{ appendtext }})">
             <i class="icon-user"></i>
           </a>
+          {% endif %}
         {% else %}
           <i class="icon-user"></i>
         {% endif %}
