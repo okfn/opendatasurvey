@@ -79,15 +79,10 @@
           <!-- <i class="icon-plus"></i> -->Submit information
         </a>
       {% endif %}
-      {# TODO: Show hover link to log in on disabled button? #}
     {% elif type == 'submissions' %}
-      {% if not loggedin %}
-      <a class="btn btn-mini btn-danger disabled" data-toggle="tooltip" title="Editors: first log in using the link above to review submissions">
-         {% else %}
-         <a href="/country/review/{{record.submissionid}}" class="btn btn-mini btn-danger">
-          {% endif %} 
-        <!-- <i class="icon-search"></i> -->Review Now
-      </a>
+       <a href="/country/review/{{record.submissionid}}" class="btn btn-mini btn-danger">
+        Review Now
+       </a>
     {% endif %}
   </td>
 </tr>
