@@ -37,12 +37,9 @@ describe('Country', function() {
       .field('dataset', 'timetables')
       .field('place', 'Germany')
       .field('exists', 'No')
-      .expect(200)
+      .expect(302)
       .end(function(err, res) {
-        assert.ok(!err, err);
-        assert.ok(res.text.match(/Thank-you for your submission/));
-        // TODO: test something was inserted
-        // backend.getSubmission()
+        assert.equal(res.header['location'], '/country/overview/Germany');
         done();
       });
   });
