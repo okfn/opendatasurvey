@@ -10,24 +10,14 @@ Country - Access Data
       </div>
 
     <div class="alert alert-info" style="text-align: center;">
-        Please enter the password{% if not redirect %} and select a country to proceed {% endif %}
+        Please enter the password
     </div>
     
       <div>
       <form method='post' >
       Password: <br />
       <input type="password" name="password" />
-      
-      {% if not redirect %} 
-      <!-- In case they came from the country page -->
-      <br />Country<br />
-      <select name="place">
-      <option value="">Please select</option>
-      {% for thePlace in places %}
-        <option value="{{thePlace}}" {% if place and thePlace==place %} selected {% endif %}>{{thePlace}}</option>
-      {% endfor %}
-      </select>
-      {% endif %}
+      <input type="hidden" name="next" value="{{next}}" />
       <br />
       <input type="submit" value="Log In" class="btn btn-small" />
 		</form>

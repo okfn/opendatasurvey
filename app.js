@@ -219,8 +219,7 @@ app.get('/country/submission/:id.json', function(req, res) {
 //Compare & update page
 app.get('/country/review/:submissionid', function(req, res) {
   if (!req.session.loggedin) {
-    req.session.redirect = '/country/review/?place=' + encodeURIComponent(req.param('place')) + '&dataset=' + req.param('dataset');
-    res.redirect('/country/login/');
+    res.redirect('/country/login/?next=' + encodeURIComponent(req.url));
     return;
   }
   model.backend.getSubmission({submissionid: req.params.submissionid}, function(err, obj) {
@@ -324,7 +323,7 @@ app.get('/country/login/', function(req, res) {
   res.render('country/login.html', {
     places: model.data.countrysubmissions.places,
     place: req.query.place,
-    redirect: req.session.redirect
+    next: req.query.next
   });
 });
 
@@ -340,22 +339,15 @@ app.post('/country/login/', function(req, res) {
 function doLogin(req, res) {
   if (req.body['password'] === "notagoodpassword") {
     req.session.loggedin = true;
+    req.flash('info', 'You are now logged in!');
     model.load(function() { //Get latest data
-      var redirectto = req.session.redirect;
-      if (req.body['place']) redirectto = '/country/overview/' + encodeURIComponent(req.body['place']) + '/';
-      else if (redirectto) delete req.session.redirect;
+      var redirectto = req.body['next'];
       res.redirect(( redirectto || '/country/'));
     });
   }
-  else if (req.body['place']) {
-    var msg = 'Password incorrect'
-    req.flash('error', msg);
-    res.redirect('country/login/?place='+encodeURIComponent(req.body['place']));
-  }
   else {
-    var msg = 'Password incorrect'
-    req.flash('error', msg);
-    res.redirect('country/login/');
+    req.flash('error', 'Incorrect password. Plese try again');
+    res.redirect('country/login/?next=' + req.body['next']);
   }
 }
 

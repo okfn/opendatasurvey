@@ -30,7 +30,7 @@
 
 {% if not loggedin %}
   <p class="pull-right">
-    Country reviewer? <a href="/country/login/?place={{place | replace(' ', '%20') }}">Log in here</a>.
+    Country reviewer? <a href="/country/login/?next=/country/overview/{{place | replace(' ', '%20') }}">Log in here</a>.
   </p>
 {% endif %}
 
