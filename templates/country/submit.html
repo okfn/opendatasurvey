@@ -105,25 +105,32 @@ Country - Submit
   <span class="help-block">Please add detail here especially regarding data availability. for example, is the data partially available, are there plans to make it available in the future? is the data available from an unofficial source.</span>
 
 <fieldset>
-  <legend>Your Information</legend>
-  <label>Your Name (optional)</label>
-  <input type="text" name="submitter" value="" />
-  <span class="help-block">So we can credit you. This will be public.</span>
+  <h3>Your Information</h3>
 
-  <label>Link for you (optional)</label>
-  <input type="url" name="submitterurl" value="" placeholder="http://">
-  <span class="help-block">A link to your website, twitter etc. So we can credit you. this will be public.</span>
-  
-  <label>Your email (optional)</label>
-  <input type="email" name="submitteremail" value="" placeholder="">
-  <span class="help-block">So we contact you for clarification if needed</span>
+  <div class="row">
+    <div class="span4">
+      <label>Your Name (optional)</label>
+      <input type="text" name="submitter" value="" />
+      <span class="help-block">So we can credit you. This will be public.</span>
+    </div>
+
+    <div class="span4">
+      <label>Link for you (optional)</label>
+      <input type="url" name="submitterurl" value="" placeholder="http://">
+      <span class="help-block">A link to your website, twitter etc. So we can credit you. This will be public.</span>
+    </div>
+      
+    <div class="span4">
+      <label>Your email (optional)</label>
+      <input type="email" name="submitteremail" value="" placeholder="">
+      <span class="help-block">So we contact you for clarification if needed. This will <strong>not</strong> be displayed publicly or shared.</span>
+    </div>
+  </div>
 </fieldset>
 
 <div class="controls" style="margin-top: 30px;">
-  <button type="submit" class="btn btn-large btn-success" data-loading-text="Saving ...">Submit</button>
-  <div>
+  <button type="submit" class="btn btn-large btn-success" data-loading-text="Saving ..." style="float: left; margin-right: 30px;">Submit</button>
     <span class="help-block">By submitting material to the census you agreeing to <a href="http://okfn.org/terms-of-use/">terms of use</a> and also to license your contribution (to the extent there are any rights in it!) under the <a href="http://opendatacommons.org/licenses/pddl/1.0/">Open Data Commons Public Domain Dedication and License</a>.</span>
-  </div>
 </div>
 
 </form>
