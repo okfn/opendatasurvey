@@ -8,11 +8,11 @@
 
 ### What's the current state of the Census?
 
-Right now we are collecting data for the 2013 Census, which focusses on country-level information. 
-
-We will be launching the 2013 Census results later in autumn 2013. 
+Right now we are collecting data for the **2013** Census, which focusses on country-level information.  We will be launching the 2013 Census results later in autumn 2013. 
 
 After that we will be looking at further developing the city-level Census and other enhancements.
+
+**Most of the information in this FAQ applies to the 2013 Census - 2012 ran a little differently.**
 
 ### What is the Census?
 
@@ -31,7 +31,7 @@ The Census was created by the Open Knowledge Foundation in 2012, and provides a 
 
 ### What datasets are included in the Country Census?
 
-There are 10 datasets considered in the 2013 Census. There's more information on each of these on the Census site:
+There are 10 datasets considered in the 2013 Census:
 
 * Transport Timetables
 * Government Budget
@@ -44,8 +44,19 @@ There are 10 datasets considered in the 2013 Census. There's more information on
 * Postcodes / Zipcodes
 * Emissions of pollutants
 
+There's more information on each of these on the Census site - just click the "i" icon next to the dataset name on a country overview page (such as [Canada's overview page](http://2013.census.okfn.org/country/overview/Canada/))
+
+### How reliable is the Census?
+
+The information in the Census is collected by open data experts around the world including the Open Knowledge Foundation Network’s Open Government Working Group. The Census data undergoes a process of peer review and evidence checking to ensure high quality results.
+
+
 ### What about the City Census?
 We are currently expanding and improving the Open Data Census and are currently focusing on the Country Census. The City Census is still running on the older system and is due for update later. This means City Census results are not currently being reviewed. More detailed plans for the update will be announced shortly.
+
+### What about the 2012 Census?
+
+Right now we're focussed on the 2013 Census and so the information on the site and in this FAQ mostly is about 2013. In 2012 we looked at fewer datasets and some of the details of methodology were a little different.
 
 
 ## Submitting information to the Census
@@ -53,6 +64,9 @@ We are currently expanding and improving the Open Data Census and are currently 
 At the moment we are only working on 2013 information. 
 
 The census is a survey of the state of open data around the world focusing on the the availability and openness of a <a href=”http://2013.census.okfn.org/about/”>specific set of key datasets</a>.
+
+
+### What's the Census data collection and review process?
 
 It works like this:
 
