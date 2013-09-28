@@ -4,9 +4,9 @@
   </h1>
 </div>
 
-## About the Census
+## About the Open Data Census
 
-### What's the current state of the Census?
+### What's the current state of the Open Data Census?
 
 Right now we are collecting data for the **2013** Census, which focusses on country-level information.  We will be launching the 2013 Census results later in autumn 2013. 
 
@@ -14,18 +14,18 @@ After that we will be looking at further developing the city-level Census and ot
 
 **Most of the information in this FAQ applies to the 2013 Census - 2012 ran a little differently.**
 
-### What is the Census?
+### What is the Open Data Census?
 
 The Open Data Census is a year-round ongoing measure of the current state of the open data world; annual snapshots are made by the Open Knowledge Foundation to showcase the results (the first one later in autumn 2013).  Anyone can contribute at any time to have their input peer-reviewed periodically by a team of 60+ Country Editors.
 
 
-### Who creates the Census?
+### Who creates the Open Data Census?
 
 The purpose of the Census is to provide an accurate and reliable assessment of the state of open (government) data around the world and to present this information in a way that is easy to understand and use.
 
 The Open Data Census was initiated by the Open Knowledge Foundation. It is maintained by the Foundation and its Open Government Data working group with contributions from many members of the wider community.
 
-### What is the history of the Census?
+### What is the history of the Open Data Census?
 
 The Census was created by the Open Knowledge Foundation in 2012, and provides a clear measure of available open data - not what is claimed, but what data is actually available and how open it is. The Census is designed by open data experts, including the Open Knowledge Foundation Network’s Open Government Working Group, and undergoes a process of peer review and evidence checking to ensure high quality results. An annual announcement of the results creates a focus for debate and review. The Census was launched in 2012 and is undergoing active development to create an Open Data Index in 2013. 
 
@@ -46,7 +46,7 @@ There are 10 datasets considered in the 2013 Census:
 
 There's more information on each of these on the Census site - just click the "i" icon next to the dataset name on a country overview page (such as [Canada's overview page](http://2013.census.okfn.org/country/overview/Canada/))
 
-### How reliable is the Census?
+### How reliable is the Open Data Census?
 
 The information in the Census is collected by open data experts around the world including the Open Knowledge Foundation Network’s Open Government Working Group. The Census data undergoes a process of peer review and evidence checking to ensure high quality results.
 
@@ -66,7 +66,7 @@ At the moment we are only working on 2013 information.
 The census is a survey of the state of open data around the world focusing on the the availability and openness of a <a href=”http://2013.census.okfn.org/about/”>specific set of key datasets</a>.
 
 
-### What's the Census data collection and review process?
+### What's the Open Data Census data collection and review process?
 
 It works like this:
 
@@ -138,7 +138,7 @@ If you'd like to be more involved you could become a Country Editor for the Cens
 If there's already an editor for the country you are interested in, don't worry - it's great to have more than one editor as you can work together!  More eyes on the data makes the data better quality.
 
 
-### Where can I discuss the Census with others?
+### Where can I discuss the Open Data Census with others?
 
 Join the [Open Data Census discussion list](http://lists.okfn.org/mailman/listinfo/open-data-census)
 
@@ -148,13 +148,27 @@ There are lots of people who can help on the [Open Data Census discussion list](
 
 
 
-## Understanding the Census results
+## Understanding the Open Data Census results
 
 You can see the results for the 2012 Census online now, but for the final 2013 results you'll need to wait for our current round of data collection and peer review to finish. We'll be launching 2013 later this autumn... watch this space!
 
 In the meantime you can see the [results in progress for the 2013 Census](http://2013.census.okfn.org/country/) - if these don't look right for your country, [correct them](http://2013.census.okfn.org/contribute/)!  
 
 ### How does the scoring system work?
+
+The Open Data Census measures the state of openness of 10 data sets for each country.  Several elements of openness (according to [the Open Definition](http://opendefinition.org)) and availability are assessed by the Census:
+
+* Does the data exist?
+* Is the data in digital form?
+* Is the data publicly available?
+* Is the data available online?
+* Is the data available for free?
+* Is the data machine readable?
+* Is the data available for bulk download?
+* Is the data openly licensed?
+* Is the data available in a timely manner and up to date?
+
+The overall score for a dataset is created from the answers to these questions, and the overall country score from the 10 scores for the datasets in each country.
 
 Check back soon for more information!
 
