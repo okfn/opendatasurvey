@@ -166,13 +166,34 @@ app.get('/country/submit', function(req, res) {
   var ynquestions = model.data.questions.slice(0,9);
   var prefill = req.query;
   
-  res.render('country/submit.html', {
-      countryList: model.countryList
-    , ynquestions: ynquestions
-    , questions: model.data.questions
-    , datasets: model.data.country.datasets
-    , prefill: prefill
-  });
+  function render(prefill_) {
+    res.render('country/submit.html', {
+        countryList: model.countryList
+      , ynquestions: ynquestions
+      , questions: model.data.questions
+      , datasets: model.data.country.datasets
+      , prefill: prefill_
+    });
+  }
+
+  // look up if there is an entry and if so we use it to prepopulate the form
+  if (prefill.dataset && prefill.place) {
+    model.backend.getEntry({
+        place: prefill.place,
+        dataset: prefill.dataset,
+        year: prefill.year || model.DEFAULT_YEAR
+      }, function(err, obj) {
+        // we allow query args to override entry values
+        // might be useful (e.g. if we started having form errors and redirecting here ...)
+        if (obj) { // we might have a got a 404 etc
+          prefill = _.extend(obj, prefill);
+        }
+        render(prefill);
+      }
+    );
+  } else {
+    render(prefill);
+  }
 });
 
 app.post('/country/submit', function(req, res) {

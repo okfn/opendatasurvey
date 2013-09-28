@@ -41,9 +41,18 @@ describe('Country', function() {
       });
   });
 
-  it('GET Submission with pre-populated', function(done) {
+  function testRadio(text, name, value) {
+    var exp = 'name="%name" value="%value" checked="true"'
+      .replace('%name', name)
+      .replace('%value', value)
+      ;
+    assert(text.match(exp), 'Not checked: ' + name + ' ' + value);
+  }
+
+  it('GET Submission with pre-populated no entry', function(done) {
     var prefill = {
-        place: 'Germany'
+      // country with nothing in our test db ...
+        place: 'Uganda'
       , dataset: 'emissions'
       , exists: 'Yes'
       , digital: 'Unsure'
@@ -58,7 +67,7 @@ describe('Country', function() {
       .end(function(err, res) {
         assert(!err);
         // all test regex tests are rather hacky ...
-        assert(res.text.match('value="Germany" selected="true"'), 'place not set');
+        assert(res.text.match('value="%s" selected="true"'.replace('%s', prefill.place)), 'place not set');
         assert(res.text.match('value="emissions" selected="true"'), 'dataset not set');
         assert(res.text.match('value="emissions" selected="true"'), 'dataset not set');
         testRadio(res.text, 'exists', prefill.exists);
@@ -68,14 +77,28 @@ describe('Country', function() {
         assert(res.text.match(prefill.details + '</textarea>'), 'details not set');
         done();
       });
+  });
 
-    function testRadio(text, name, value) {
-      var exp = 'name="%name" value="%value" checked="true"'
-        .replace('%name', name)
-        .replace('%value', value)
-        ;
-      assert(text.match(exp), 'Not checked: ' + name + ' ' + value);
-    }
+  it('GET Submission pre-populated with entry', function(done) {
+    var prefill = {
+      // country in our test db for default year
+        place: 'United Kingdom'
+      , dataset: 'maps'
+    };
+    var url = 'http://www.ordnancesurvey.co.uk/opendata/';
+    request(app)
+      .get('/country/submit/')
+      .query(prefill)
+      .expect(200)
+      .end(function(err, res) {
+        assert(!err);
+        // all test regex tests are rather hacky ...
+        assert(res.text.match('value="%s" selected="true"'.replace('%s', prefill.place)), 'place not set');
+        testRadio(res.text, 'exists', 'Yes');
+        testRadio(res.text, 'openlicense', 'No');
+        assert(res.text.match('name="url" value="' + url + '"'), 'url not set');
+        done();
+      });
   });
 
   it('POST Submission', function(done) {
