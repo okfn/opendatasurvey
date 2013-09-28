@@ -1,3 +1,4 @@
+{% macro inforow(dataset, record, type) -%}
 <tr{% if type == 'submissions' %} class="queued"{% endif %}>
   <td>
     {% if type == 'submissions' %}
@@ -11,7 +12,7 @@
       {% for field in record_fields %}
         {% set state = record[field.id] %}
         <a data-toggle="tooltip" title="{{ field.label }}">
-        <li class="{% if state == 'Y' %}yes{% elif state == 'N' %}no{% elif state == '?' %}maybe{% endif %}">
+        <li class="{% if state == 'Yes' %}yes{% elif state == 'No' %}no{% elif state == 'Unsure' %}maybe{% endif %}">
           <i class="icon-{{ field.icon }}"></i>
           <span class="text">{{ state }}</span>
         </li>
@@ -98,3 +99,4 @@
     {% endif %}
   </td>
 </tr>
+{%- endmacro %}

@@ -72,17 +72,13 @@ Each icon in data availability column represents important factors for how acces
     </tr>
   </thead>
   <tbody>
+    {% include '_snippets/overview-table-bycountry-row.html' %}
     {% for dataset in info.datasets %}
-
-      {% set record = info.byplace[place].datasets[dataset.id] %}
-      {% set type = 'info' %}
-      {% include '_snippets/overview-table-bycountry-row.html' %}
-
-      {% set record = submissions.byplace[place].datasets[dataset.id] %}
-      {% if record and not record.reviewed == "1" %}
-        {% set type = 'submissions' %}
-        {% include '_snippets/overview-table-bycountry-row.html' %}
-      {% endif %}
+      {{ inforow(dataset, entrys[dataset.id], 'info') }}
+      
+      {% for submission in submissions[dataset.id] %}
+      {{ inforow(dataset, submission, 'submissions') }}
+      {% endfor %}
 
     {% endfor %}
   </tbody>
@@ -95,9 +91,6 @@ Each icon in data availability column represents important factors for how acces
         </div>
       </div>
       
-
-
-
     <script src="{{page.root}}/src/common.js"></script>
     <script src="{{page.root}}/src/census.js"></script>
 {% endblock %}

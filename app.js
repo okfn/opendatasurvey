@@ -141,12 +141,30 @@ app.get('/country/overview/:place', function(req, res) {
     res.send(404, 'There is no country named ' + place + ' in our database. Are you sure you have spelled it correctly? Please check the <a href="/country/">country page</a> for the list of countries');
     return;
   }
-  model.load(function() {
+
+  model.backend.getPlace(place, function(err, info) {
+    if (err) {
+      res.send(500, err);
+      return;
+    }
+    var entrys = {}
+      , submissions = {}
+      ;
+    _.each(model.data.country.datasets, function(dataset) {
+      _.each(info.entrys, function(entry) {
+        if (entry.dataset == dataset.id) {
+          entrys[dataset.id] = entry;
+        }
+      });
+      submissions[dataset.id] = _.filter(info.submissions, function(submission) {
+        return (submission.dataset == dataset.id)
+      });
+    });
     res.render('country/place.html', {
-      error: req.param('e'),
       info: model.data.country,
-      submissions: model.data.countrysubmissions,
-      place: req.params.place,
+      submissions: submissions,
+      entrys: entrys,
+      place: place,
       loggedin: req.session.loggedin
     });
   });

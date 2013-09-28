@@ -108,6 +108,14 @@ describe('Submissions', function() {
       done();
     });
   });
+  it('get byplace', function(done) {
+    backend.getPlace('United Kingdom', function(err, data) {
+      // submissions has 2 items for UK but only one is unreviewed
+      assert.equal(data.submissions.length, 1);
+      assert.equal(data.entrys.length, 2);
+      done();
+    });
+  });
 
   it('insert', function(done) {
     var data = {
