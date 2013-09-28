@@ -44,6 +44,9 @@ There are 10 datasets considered in the 2013 Census. There's more information on
 * Postcodes / Zipcodes
 * Emissions of pollutants
 
+### What about the City Census?
+We are currently expanding and improving the Open Data Census and are currently focusing on the Country Census. The City Census is still running on the older system and is due for update later. This means City Census results are not currently being reviewed. More detailed plans for the update will be announced shortly.
+
 
 ## Submitting information to the Census
 
