@@ -16,18 +16,18 @@ After that we will be looking at further developing the city-level Census and ot
 
 ### What is the Open Data Census?
 
-The Open Data Census is a year-round ongoing measure of the current state of the open data world; annual snapshots are made by the Open Knowledge Foundation to showcase the results (the first one later in autumn 2013).  Anyone can contribute at any time to have their input peer-reviewed periodically by a team of 60+ Country Editors.
+The Open Data Census is a year-round ongoing measure of the current state of the open data world; annual snapshots are made by the [Open Knowledge Foundation](http://okfn.org) to showcase the results (the first one later in autumn 2013).  Anyone can contribute at any time to have their input peer-reviewed periodically by a team of 60+ Country Editors.
 
 
-### Who creates the Open Data Census?
+### Who created the Open Data Census?
 
 The purpose of the Census is to provide an accurate and reliable assessment of the state of open (government) data around the world and to present this information in a way that is easy to understand and use.
 
-The Open Data Census was initiated by the Open Knowledge Foundation. It is maintained by the Foundation and its Open Government Data working group with contributions from many members of the wider community.
+The Open Data Census was initiated by the [Open Knowledge Foundation](http://okfn.org). It is maintained by the Foundation and its [Open Government Data working group](http://opengovernmentdata.org/) with contributions from many members of the wider community.
 
 ### What is the history of the Open Data Census?
 
-The Census was created by the Open Knowledge Foundation in 2012, and provides a clear measure of available open data - not what is claimed, but what data is actually available and how open it is. The Census is designed by open data experts, including the Open Knowledge Foundation Network’s Open Government Working Group, and undergoes a process of peer review and evidence checking to ensure high quality results. An annual announcement of the results creates a focus for debate and review. The Census was launched in 2012 and is undergoing active development to create an Open Data Index in 2013. 
+The Census was created by the [Open Knowledge Foundation](http://okfn.org) in 2012, and provides a clear measure of available open data - not what is claimed, but what data is actually available and how open it is. The Census is designed by open data experts, including the [Open Knowledge Foundation Open Government Working Group](http://opengovernmentdata.org/), and undergoes a process of peer review and evidence checking to ensure high quality results. An annual announcement of the results creates a focus for debate and review. The Census was launched in 2012 and is undergoing active development to create an Open Data Index in autumn 2013. 
 
 ### What datasets are included in the Country Census?
 
@@ -48,7 +48,7 @@ There's more information on each of these on the Census site - just click the "i
 
 ### How reliable is the Open Data Census?
 
-The information in the Census is collected by open data experts around the world including the Open Knowledge Foundation Network’s Open Government Working Group. The Census data undergoes a process of peer review and evidence checking to ensure high quality results.
+The information in the Census is collected by open data experts around the world including the [Open Knowledge Foundation Open Government Working Group](http://opengovernmentdata.org/). The Census data undergoes a process of peer review and evidence checking to ensure high quality results.
 
 
 ### What about the City Census?
@@ -106,10 +106,32 @@ We welcome corrections to the Census :)  Anyone can submit corrections to the Ce
 #### What is meant by "Does the data exist?"
 What is meant here is whether the data exist at all in any system. They do not have to be online or even digital - as long as they're known to be in existence.
 
-This refers simply to the existence of the data in an machine readable format, not necessarily in open format. In regards to open formats, though, we refer to them as any format that complies with the criteria set forth in the Open Definition.
-#### What is meant by "Is it machine readable?" Does formats need to be open to be machines readable? 
+#### What is meant by "publicly available"?
+
+Publicly available data is "public" - this does NOT mean freely available but does require that *someone* outside of the government can access the data in some way. For example, if the data is available for purchase it is public, if the timetables exist as PDFs on a website that you can access it it is public, if you can get it in paper form it is public.
+
+#### What is meant by "available online"?
+
+Data is available online if you can access it via the internet in some way. (Note that data could exist and be in digital form and even be machine readable, but not available online (for instance, in a computer without a network connection in a government office).
+
+#### What is meant by "machine readable?" 
+
+Data is machine readable if it is in a format that can be easily processed by a computer. Data can be digital but not machine readable: for example, consider a PDF document containing tables of data. These are definitely digital but are not machine-readable becuase a computer would struggle to access the tabular information (even though they are very human readable!). The equivalent tables in a format such as a spreadsheet would be machine readable. Note: The appropriate machine readable format may vary by type of data – so, for example, machine readable formats for geographic data may be different than for tabular data.
+
+#### What is meant by "free of charge"?
+
+Data which is free of charge can be accessed or downloaded without paying money. Note that data may be free of charge in one way of accessing it but also available for money; for instance, a free bulk download or a paid, high speed API service. If the data is available at all free of charge, then this question should be answered with a Yes; it does not have to be available in all methods free of charge.
+
+#### What is meant by "available in bulk"?
+
+Data is available in bulk if you download or access the **whole** dataset easily.  It is not available in bulk if you are you limited to just getting parts of the dataset (for example, are you restricted to querying a web form and retrieving a few results at a time from a very large database).
+
+#### What is meant by "openly licensed"?
+
+As per [http://opendefinition.org/](http://opendefinition.org/) - data is openly licensed if the terms of use or license allow anyone to freely use, reuse or redistribute the data (subject at most to attribution or sharealike requirements).
 
 #### Are data to be considered publicly available if an FOI request is needed to retrieve them?
+
 By publicly available is meant without having to put in FOI request - so it should be available without further ado.
 
 #### Regarding open licensing: What about countries (ie. Russie) where they have no Open License in their legislation?
