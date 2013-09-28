@@ -84,11 +84,11 @@
     
     {% if type == 'info' %}
       {% if record %} 
-        <a href="/country/submit/?dataset={{ dataset.id }}&place={{ place }}" class="btn btn-mini btn-primary">
+        <a id="submit-{{ dataset.id }}" href="/country/submit/?dataset={{ dataset.id }}&place={{ place }}" class="btn btn-mini btn-primary">
           <!-- <i class="icon-plus"></i> -->Propose Revisions
         </a>
       {% else %} 
-        <a href="/country/submit/?dataset={{ dataset.id }}&place={{ place }}" class="btn btn-mini btn-primary">
+        <a id="submit-{{ dataset.id }}" href="/country/submit/?dataset={{ dataset.id }}&place={{ place }}" class="btn btn-mini btn-primary">
           <!-- <i class="icon-plus"></i> -->Submit information
         </a>
       {% endif %}
@@ -96,6 +96,11 @@
        <a href="/country/review/{{record.submissionid}}" class="btn btn-mini btn-danger">
         Review Now
        </a>
+       <script>
+        $("#submit-{{ dataset.id }}").addClass("disabled");
+        $("#submit-{{ dataset.id }}").attr("data-toggle", "tooltip");
+        $("#submit-{{ dataset.id }}").attr("title", "Sorry, only one submission can be waiting for review at a time - please come back in a few days to submit new information");
+       </script>
     {% endif %}
   </td>
 </tr>
