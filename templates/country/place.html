@@ -5,10 +5,17 @@
 {% endblock %}
 
 {% block content %}
-<!--      <div class="page-header">
-        <h1>Open Government Data Census</h1>
-      </div>-->
 
+{% if not loggedin %}
+  <p class="pull-right">
+    Country reviewer? <a href="/country/login/?next=/country/overview/{{place | replace(' ', '%20') }}">Log in here</a>.
+  </p>
+{% endif %}
+
+<h1>
+  <a href="/country/" data-toggle="tooltip" class="count-0" title="Return to country results overview">Countries</a> /
+  {{ place }}
+</h1>
     
       <div id="spacer"></div>
       <div class="tabbable"> <!-- Only required for left/right tabs -->
@@ -17,8 +24,71 @@
           <div class="tab-pane active" id="table-overview">
             <div class="table">
               
-                {% include '_snippets/overview-table-bycountry.html' %}
-              
+{% set record_fields = [
+  { 'id': 'exists',
+    'icon': 'file-alt',
+    'label': 'Does the data exist?' },
+  { 'id': 'digital',
+    'icon': 'save',
+    'label': 'Is it in digital form?' },
+  { 'id': 'public',
+    'icon': 'eye-open',
+    'label': 'Is it publicly available?' },
+  { 'id': 'free',
+    'icon': 'dollar',
+    'label': 'Is it free of charge?' },
+  { 'id': 'online',
+    'icon': 'download',
+    'label': 'Is it online?' },  
+  { 'id': 'machinereadable',
+    'icon': 'keyboard',
+    'label': 'Is it machine readable (e.g. spreadsheet not PDF)?' },
+  { 'id': 'bulk',
+    'icon': 'copy',
+    'label': 'Available in bulk (e.g. can you download the *whole* dataset easily)?' },
+  { 'id': 'openlicense',
+    'icon': 'unlock-alt',
+    'label': 'Is it openly licensed (as per OpenDefinition.org)?' },
+  { 'id': 'uptodate',
+    'icon': 'time',
+    'label': 'Is it up to date?' }
+] %}
+
+<p>This is the country overview page where you can see the state of open data across each key dataset (displayed down the left hand side). To find out more about each dataset, click on the info icon.
+Each icon in data availability column represents important factors for how accessible this data is - mouse over the icons to see what they are and the colours correspond to yes / no / unsure / no data.</p>
+
+<p>Is something missing or is the data incorrect? Then please hit either 'submit information' or 'propose revisions' on the right and contribute more information. We need a correct direct link to the official source of the data - so make sure to include this! Click the link icon under Location to see the current entry.</p>
+
+<p>Greyed out queued entries are submissions that are waiting approval by our editor team - but you can see the entry now and judge whether anything is missing.</p>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Dataset</th>
+      <th>Data Availability</th>
+      <th>Location</th>
+      <th>Information</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for dataset in info.datasets %}
+
+      {% set record = info.byplace[place].datasets[dataset.id] %}
+      {% set type = 'info' %}
+      {% include '_snippets/overview-table-bycountry-row.html' %}
+
+      {% set record = submissions.byplace[place].datasets[dataset.id] %}
+      {% if record and not record.reviewed == "1" %}
+        {% set type = 'submissions' %}
+        {% include '_snippets/overview-table-bycountry-row.html' %}
+      {% endif %}
+
+    {% endfor %}
+  </tbody>
+</table>
+
+{% include '_snippets/key.html' %}
             </div>
           </div>
   
