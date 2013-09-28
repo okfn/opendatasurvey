@@ -18,7 +18,9 @@ describe('Country', function() {
   before(function(done) {
     model.backend.login(function(err){
       if (err) throw err;
-      done();
+      model.load(function() {
+        done();
+      });
     });
   });
 
@@ -27,6 +29,53 @@ describe('Country', function() {
       .get('/country/')
       .expect(200, done)
       ;
+  });
+
+  it('GET Submission', function(done) {
+    request(app)
+      .get('/country/submit/')
+      .expect(200)
+      .end(function(err, res) {
+        assert(res.text.match('Country - Submit'));
+        done();
+      });
+  });
+
+  it('GET Submission with pre-populated', function(done) {
+    var prefill = {
+        place: 'Germany'
+      , dataset: 'emissions'
+      , exists: 'Yes'
+      , digital: 'Unsure'
+      , online: 'No'
+      , url: 'http://xyz.com'
+      , details: 'Lots of random stuff\n\nincluding line breaks'
+    };
+    request(app)
+      .get('/country/submit/')
+      .query(prefill)
+      .expect(200)
+      .end(function(err, res) {
+        assert(!err);
+        // all test regex tests are rather hacky ...
+        assert(res.text.match('value="Germany" selected="true"'), 'place not set');
+        assert(res.text.match('value="emissions" selected="true"'), 'dataset not set');
+        assert(res.text.match('value="emissions" selected="true"'), 'dataset not set');
+        testRadio(res.text, 'exists', prefill.exists);
+        testRadio(res.text, 'digital', prefill.digital);
+        testRadio(res.text, 'online', prefill.online);
+        assert(res.text.match('name="url" value="' + prefill.url + '"'), 'url not set');
+        assert(res.text.match(prefill.details + '</textarea>'), 'details not set');
+        done();
+      });
+
+    function testRadio(text, name, value) {
+      var exp = 'name="%name" value="%value" checked="true"'
+        .replace('%name', name)
+        .replace('%value', value)
+        ;
+      assert(text.match(exp), 'Not checked: ' + name + ' ' + value);
+    }
   });
 
   it('POST Submission', function(done) {
