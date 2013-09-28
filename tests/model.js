@@ -52,7 +52,7 @@ describe('Backend Entry', function() {
     });
   });
   it('getEntry', function(done) {
-    backend.getEntry({year: 2012, dataset: 'maps', place: 'United Kingdom'}, function(err, entry) {
+    backend.getEntry({year: 2013, dataset: 'maps', place: 'United Kingdom'}, function(err, entry) {
       assert.ok(!err);
       assert.ok(entry!=null, 'No entry (entry is null)');
       assert.equal(entry.public, 'Yes', entry);
