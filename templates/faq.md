@@ -102,8 +102,10 @@ We welcome corrections to the Census :)  Anyone can submit corrections to the Ce
 
 ### What do all the questions about the data sets mean?
 
+When filling in information about a dataset, there's a list of questions to answer about the availability and openness of the datasets.  The answers then appear in the country overview page for the Census. 
 
 #### What is meant by "Does the data exist?"
+
 What is meant here is whether the data exist at all in any system. They do not have to be online or even digital - as long as they're known to be in existence.
 
 #### What is meant by "publicly available"?
@@ -128,16 +130,26 @@ Data is available in bulk if you download or access the **whole** dataset easily
 
 #### What is meant by "openly licensed"?
 
-As per [http://opendefinition.org/](http://opendefinition.org/) - data is openly licensed if the terms of use or license allow anyone to freely use, reuse or redistribute the data (subject at most to attribution or sharealike requirements).
+As per [http://opendefinition.org/](http://opendefinition.org/) - data is openly licensed if the terms of use or license allow anyone to freely use, reuse or redistribute the data (subject at most to attribution or sharealike requirements). It is vital that a licence is available (if there's no licence, the data is not openly licensed). [Open Licences](http://opendefinition.org/licenses/) which meet the requirements of [the Open Definition](http://opendefinition.org/) are [listed here](http://opendefinition.org/licenses/).
+
+#### What is meant by "timely and up to date"?
+
+Is the data up to date and timely, or long delayed. For example, for election data is it made available immediately or soon after the election or is it only available many years later?  The impact of delay in data will depend a bit on the kind of data in question; knowing about a changed bus timetable in a timely fashion (immediately when it changes!) may be more useful than having only a day's delay in the national statistics.  (Because this can be subjective, we encourage people adding data to include comments and extra detail to explain the question answer)
+
+
+### Questions about the assessment of openness
 
 #### Are data to be considered publicly available if an FOI request is needed to retrieve them?
 
 By publicly available is meant without having to put in FOI request - so it should be available without further ado.
 
-#### Regarding open licensing: What about countries (ie. Russie) where they have no Open License in their legislation?
+#### What about countries where there is no official Open License or Open Government Data License in their legislation?
+
+Data can only be marked as "openly licensed" if an open licence has been applied to it. [Open Licences](http://opendefinition.org/licenses/) which meet the requirements of [the Open Definition](http://opendefinition.org/) are [listed here](http://opendefinition.org/licenses/).
 
 ### What should I do if different regions/counties/municipalities have different open data situations?
 
+Please email the [Open Data Census discussion list](http://lists.okfn.org/mailman/listinfo/open-data-census) and explain the situation and we'll figure out how to handle the situation. This FAQ will be updated with more info soon!
 
 ### How are different years handled?
 
@@ -192,7 +204,7 @@ The Open Data Census measures the state of openness of 10 data sets for each cou
 
 The overall score for a dataset is created from the answers to these questions, and the overall country score from the 10 scores for the datasets in each country.
 
-Check back soon for more information!
+**Check back soon for more information!**
 
 
 
