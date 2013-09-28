@@ -206,5 +206,9 @@ The overall score for a dataset is created from the answers to these questions, 
 
 **Check back soon for more information!**
 
+## If you are intrigued by Open Data...
+
+If the Open Data Census has caught your interest, there's lots more open data and open government to learn about.  You might like to join the [Open Knowledge Foundation Open Government Working Group](http://opengovernmentdata.org/), or check for [Open Knowledge Foundation groups in your area](http://okfn.org/local). If you're a developer or data wrangler and you'd like to help improve the Census site or any other open data tech, join [the Open Knowledge Foundation Labs](http://okfnlabs.org) where you can meet others and collaborate on open source code and other tech projects. You can also sign up to the [Open Knowledge Foundation](http://okfn.org) list to stay in touch.
+
 
 
