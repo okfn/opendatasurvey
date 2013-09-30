@@ -120,7 +120,7 @@ app.get('/contribute', function(req, res) {
   res.render('country/contribute.html', {places: model.countryList});
 });
 
-app.get('/country/', function(req, res) {
+app.get('/country', function(req, res) {
   //model.load(function() { //Don't reload for the public
   res.render('country/index.html', {info: model.data.country});
 });
@@ -328,14 +328,14 @@ app.post('/country/review/:submissionid', function(req, res) {
 });
 
 
-app.get('/g8/', function(req, res) {
+app.get('/g8', function(req, res) {
   //model.load(function() { //Don't reload for the public
   res.render('g8/index.html', {info: model.data.g8});
 
   //});
 });
 
-app.get('/city/', function(req, res) {
+app.get('/city', function(req, res) {
   res.render('city/index.html', {info: model.data.city});
 });
 
@@ -343,16 +343,16 @@ app.get('/city/results.json', function(req, res) {
   res.json(model.data.city);
 });
 
-app.get('/city/submit/', function(req, res) {
+app.get('/city/submit', function(req, res) {
   res.render('city/submit/index.html', {});
 });
 
-app.get('/catalogs/', function(req, res) {
+app.get('/catalogs', function(req, res) {
   res.render('catalogs/index.html', {});
 });
 
 //"Log In" page
-app.get('/country/login/', function(req, res) {
+app.get('/country/login', function(req, res) {
   res.render('country/login.html', {
     places: model.data.countrysubmissions.places,
     place: req.query.place,
@@ -360,12 +360,12 @@ app.get('/country/login/', function(req, res) {
   });
 });
 
-app.get('/country/logout/', function(req, res) {
+app.get('/country/logout', function(req, res) {
   if (req.session.loggedin) delete req.session.loggedin;
   res.redirect('/country/');
 });
 
-app.post('/country/login/', function(req, res) {
+app.post('/country/login', function(req, res) {
   doLogin(req, res);
 });
 
