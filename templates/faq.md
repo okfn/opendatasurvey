@@ -4,7 +4,26 @@
   </h1>
 </div>
 
-## About the Open Data Census
+<div class="row" style="margin-top: 30px;">
+  <div class="span5">
+    <div class="toc well">
+      <h3>Table of Contents</h3>
+      <ul>
+        <li>[About the Census](#about)</li>
+        <li>[Submitting Information](#submit)</li>
+        <li>
+          [Understanding the Results](#results)
+          <ul>
+            <li>[Scoring System](#scoring)</li>
+          </ul>
+        </li>
+        <li>[Find out more about Open Data](#more)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<h2 id="about">About the Open Data Census</h2>
 
 ### What's the current state of the Open Data Census?
 
@@ -59,7 +78,7 @@ We are currently expanding and improving the Open Data Census and are currently 
 Right now we're focussed on the 2013 Census and so the information on the site and in this FAQ mostly is about 2013. In 2012 we looked at fewer datasets and some of the details of methodology were a little different.
 
 
-## Submitting information to the Census
+<h2 id="submit">Submitting information to the Census</h2>
 
 At the moment we are only working on 2013 information. 
 
@@ -181,14 +200,15 @@ Join the [Open Data Census discussion list](http://lists.okfn.org/mailman/listin
 There are lots of people who can help on the [Open Data Census discussion list](http://lists.okfn.org/mailman/listinfo/open-data-census) and there are no silly questions, so we encourage you to post there.  You can also privately email the Census Team at the Open Knowledge Foundation on census@okfn.org
 
 
+<h2 id="results">Understanding the Open Data Census results</h2>
 
-## Understanding the Open Data Census results
+### 2012 versus 2013
 
 You can see the results for the 2012 Census online now, but for the final 2013 results you'll need to wait for our current round of data collection and peer review to finish. We'll be launching 2013 later this autumn... watch this space!
 
-In the meantime you can see the [results in progress for the 2013 Census](http://2013.census.okfn.org/country/) - if these don't look right for your country, [correct them](http://2013.census.okfn.org/contribute/)!  
+In the meantime you can see the [results in progress for the 2013 Census](http://2013.census.okfn.org/country/) - if these don't look right for your country, [correct them](http://2013.census.okfn.org/contribute/)!
 
-### How does the scoring system work?
+<h3 id="scoring">How does the scoring system work?</h3>
 
 The Open Data Census measures the state of openness of 10 data sets for each country.  Several elements of openness (according to [the Open Definition](http://opendefinition.org)) and availability are assessed by the Census:
 
@@ -206,9 +226,17 @@ The overall score for a dataset is created from the answers to these questions, 
 
 **Check back soon for more information!**
 
-## If you are intrigued by Open Data...
+<h2 id="more">If you are intrigued by Open Data...</h2>
 
-If the Open Data Census has caught your interest, there's lots more open data and open government to learn about.  You might like to join the [Open Knowledge Foundation Open Government Working Group](http://opengovernmentdata.org/), or check for [Open Knowledge Foundation groups in your area](http://okfn.org/local). If you're a developer or data wrangler and you'd like to help improve the Census site or any other open data tech, join [the Open Knowledge Foundation Labs](http://okfnlabs.org) where you can meet others and collaborate on open source code and other tech projects. You can also sign up to the [Open Knowledge Foundation](http://okfn.org) list to stay in touch.
+### Learn more
+
+If the Open Data Census has caught your interest, there's lots more open data and open government to learn about.
+
+You might like to join the [Open Knowledge Foundation Open Government Working Group](http://opengovernmentdata.org/), or check for [Open Knowledge Foundation groups in your area](http://okfn.org/local).
+
+If you're a developer or data wrangler and you'd like to help improve the Census site or any other open data tech, join [the Open Knowledge Foundation Labs](http://okfnlabs.org) where you can meet others and collaborate on open source code and other tech projects.
+
+You can also sign up to the [Open Knowledge Foundation](http://okfn.org) list to stay in touch.
 
 
 

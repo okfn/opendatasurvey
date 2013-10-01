@@ -116,6 +116,17 @@ app.get('/about', function(req, res) {
   });
 });
 
+app.get('/faq', function(req, res) {
+  fs.readFile('templates/faq.md', 'utf8', function(err, text) {
+    var marked = require('marked');
+    var content = marked(text);
+    res.render('base.html', {
+      content: content,
+      title: 'FAQ - Frequently Asked Questions'
+    });
+  });
+});
+
 app.get('/contribute', function(req, res) {
   res.render('country/contribute.html', {places: model.countryList});
 });

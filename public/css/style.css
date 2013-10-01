@@ -16,6 +16,10 @@ h1 {
 	margin-bottom:20px;
 }
 
+h2 {
+  margin-bottom: 10px;
+}
+
 .muted {
   color: #caccc7;
 }
@@ -835,5 +839,30 @@ div.historic-entries div.current-entry:last-child .textarea {
 
 .help-block, .help-inline {
   font-size: 13px;
+}
+
+.well h3 {
+  margin: 0;
+  margin-bottom: 10px;
+  padding: 0;
+}
+
+.toc {
+  padding-top: 10px;
+}
+
+.toc h3 {
+  font-size: 18px;
+  border-bottom: solid 1px #ccc;
+}
+
+.toc ul {
+  list-style-type: none;
+  margin-left: 0px;
+  font-weight: bold;
+}
+
+.toc ul ul {
+  margin-left: 30px;
 }
 
