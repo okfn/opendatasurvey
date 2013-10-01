@@ -133,7 +133,7 @@ app.get('/contribute', function(req, res) {
 
 app.get('/country', function(req, res) {
   //model.load(function() { //Don't reload for the public
-  res.render('country/index.html', {info: model.data.country});
+  res.render('country/index.html', {info: model.data.country, questions: model.openQuestions});
 });
 //});
 
@@ -341,11 +341,13 @@ app.post('/country/review/:submissionid', function(req, res) {
 
 app.get('/g8', function(req, res) {
   //model.load(function() { //Don't reload for the public
-  res.render('g8/index.html', {info: model.data.g8});
+  console.log(model.openQuestions);
+  res.render('g8/index.html', {info: model.data.g8, questions: model.openQuestions});
 
   //});
 });
 
+//TODO: If these are re-enabled, we should pass in: questions: model.openQuestions, as done for g8 and countries
 // app.get('/city', function(req, res) {
 //   res.render('city/index.html', {info: model.data.city});
 // });

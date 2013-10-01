@@ -193,6 +193,8 @@ OpenDataCensus.popoverBody = function(response) {
   var out = '', not;
   out += '<ul>';
   not = '';
+  
+  //This should match the order of fields in the model!
   if (response.exists === 'Y'){
     out += '<li>Data exists</li>';
     not = makeNot(response['digital']);

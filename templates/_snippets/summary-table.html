@@ -30,7 +30,7 @@
       data-datasetTitle="{{dataset.title}}"
       >
         <ul class="availability icons mini">
-          {% for field in record_fields %}
+          {% for field in questions %}
             {% set state = record[field] %}
             <li class="{% if state == 'Y' %}yes{% elif state == 'N' %}no{% elif state == '?' %}maybe{% endif %}" data-toggle="tooltip" title="{{ field.label }}">
               <i class="icon-{{ field.icon }}"></i>
@@ -38,7 +38,7 @@
             </li>
           {% endfor %}
         </ul>
-        {#{% for field in record_fields %}
+        {#{% for field in questions %}
           {% set state = record[field.id] %}
 
         {% endfor %}

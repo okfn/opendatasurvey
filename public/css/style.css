@@ -85,7 +85,7 @@ ul.availability.icons li .text {
 }
 
 ul.availability.icons.mini li {
-	width:6px;
+	width:5px;
 	-webkit-border-radius: 1px;
 	-moz-border-radius: 1px;
 	border-radius: 1px;
