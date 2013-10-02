@@ -14,8 +14,6 @@ Countries
     {{datasetfriendly}}
   </h1>
 </div>
-            {% if subrecord %}
-            
             <p>Please review this submission. If data is available, you must check that the location link is correct and reflects the answers here. We need there to be an official accessible direct link to the data.</p>
             
             
@@ -171,59 +169,12 @@ Countries
         
        
       </div>
-      
-      <!--
-         <div class="row">
-      	<div class="span6">
-        	<h3>Your name <span class="muted">(Optional)</span></h3>
-        	<label for="entry_1" class="ss-q-help">So we can credit you. <br>This will be public</label>
-        	<div class="historic-entries">
-            <textarea id="entry_1" class="expanding-texarea-common" name="submitter" value="{{ subrecord.submitter }}">{{ subrecord.submitter }}</textarea>
-            <div class="current-entry">
-              <span class="label">Current Entry</span>
-              <div class="textarea">{% if currrecord %} {{currrecord.submitter}} {% else %} No record {% endif %}</div>
-            </div>
-          </div>
-        </div>
-
-                        <div class="span6">
-        	<h3>Your email address <span class="muted">(Optional)</span></h3>
-        	<label for="entry_134" class="ss-q-help">This will be private and allow us to contact you with any questions or status of your submission</label>
-        	<div class="historic-entries">
-            <textarea id="entry_134" class="expanding-texarea-common" name="email">{{ subrecord.email }}</textarea>
-            <div class="current-entry">
-              <span class="label">Current Entry</span>
-              <div class="textarea">{% if currrecord %} {{currrecord.email}} {% else %} No record {% endif %}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-                            
-      <div class="row">
-      	<div class="span6">
-          <h3>Link for you  <span class="muted">(Optional)</span></h3>
-          <label for="entry_130" class="ss-q-help">A link to your website, twitter etc. So we can credit you. This will be public</label>
-          <div class="historic-entries">
-            <textarea id="entry_130" class="expanding-texarea-common" name="submitterurl">{{ subrecord.submitterurl }}</textarea>
-            <div class="current-entry">
-              <span class="label">Current Entry</span>
-              <div class="textarea">{% if currrecord %}{{currrecord.submitterurl}}{% else %}No record{% endif %}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      -->        
            
+
                   <div class='pull-left' style='max-width: 80%;'>If this entry does not add anything to the current entry, then simply 'Reject' and this will be removed from the review queue. Otherwise, please copy over any relevant text or information from the grey current entry parts to the editable form before hitting Publish. Please also correct any spelling mistakes. <strong>Publish will overwrite the whole current entry with the data in this form.</strong><br />&nbsp;</div>
                   <div class='pull-right' style='max-width: 20%;'><br /><input type="submit" name="submit" class="btn btn-danger" value="Reject" />&nbsp; <input name="submit" type="submit" value="Publish" class="btn btn-primary" /></div>
                   
                   </form>
-            {% else %}
-            
-            There is no submission for this country and dataset.
-            
-            {% endif %}
             
        
   
