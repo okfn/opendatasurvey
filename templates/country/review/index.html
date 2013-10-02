@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-Countries
+Review - Countries
 {% endblock %}
 
 {% block content %}
@@ -14,110 +14,60 @@ Countries
     {{datasetfriendly}}
   </h1>
 </div>
-            <p>Please review this submission. If data is available, you must check that the location link is correct and reflects the answers here. We need there to be an official accessible direct link to the data.</p>
-            
-            
-            <h3>Data Availability</h3>
-      <p>Please answer regarding open data availability. This is the census for {{ currentYear }}. Please check that the answers reflect the availability of data <strong>right now</strong>.<br>
-        If data will be released soon this can be mentioned this in the details and comments section below.</p>
-       <form action="" method="post">
-      <table class="table table-striped availability-form">
-              
-             
-        
-             <thead>
-          <tr>
-            <td></td>
-            <td></td>
-            <td>Yes</td>
-            <td>No</td>
-            <td>Unsure</td>
-            <td class="current-entry">Current Entry</td>
-          </tr>
-        </thead>
-        <tbody>
-                       <tr>
-            <td>Does the data exist?</td>
-            <td></td>
-                        <td><input type="radio" class="ss-q-radio" name="exists" value="Yes" {% if subrecord.exists == 'Yes' %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="exists" value="No" {% if subrecord.exists == 'No' %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="exists" value="Unsure" {% if subrecord.exists == 'Unsure' %} checked {% endif %} /></td>
-                        <td class="current-entry">{% if currrecord.exists == "Yes" %} Yes {% elif currrecord.exists == "No" %} No {% elif currrecord.exists == "Unsure" %} Unsure {% else %} No record {% endif %}</td>
-                    </tr>
-                    
-                    <tr>
-                        <td>Is it openly licensed? (as per the http://OpenDefinition.org/)</td>
-            <td></td>
-                        <td><input type="radio" class="ss-q-radio" name="openlicense" value="Yes" {% if subrecord.openlicense == "Yes" %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="openlicense" value="No" {% if subrecord.openlicense == "No" %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="openlicense" value="Unsure" {% if subrecord.openlicense == "Unsure" %} checked {% endif %} /></td>
-                        <td class="current-entry">{% if currrecord.openlicense == "Yes" %} Yes {% elif currrecord.openlicense == "No" %} No {% elif currrecord.openlicense == "Unsure" %} Unsure {% else %} No record {% endif %}</td>
-                    </tr>
-                    
-                    <tr>
-                        <td>Is it publicly available?</td>
-            <td></td>
-                        <td><input type="radio" class="ss-q-radio" name="public" value="Yes" {% if subrecord.public == "Yes" %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="public" value="No" {% if subrecord.public == "No" %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="public" value="Unsure" {% if subrecord.public == "Unsure" %} checked {% endif %} /></td>
-                        <td class="current-entry">{% if currrecord.public == "Yes" %} Yes {% elif currrecord.public == "No" %} No {% elif currrecord.public == "Unsure" %} Unsure {% else %} No record {% endif %}</td>
-                    </tr>
-                    
-                    <tr>
-                        <td>Is it machine readable? (E.g. spreadsheet not PDF)</td>
-            <td></td>
-                        <td><input type="radio" class="ss-q-radio" name="machinereadable" value="Yes" {% if subrecord.machinereadable == "Yes" %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="machinereadable" value="No" {% if subrecord.machinereadable == "No" %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="machinereadable" value="Unsure" {% if subrecord.machinereadable == "Unsure" %} checked {% endif %} /></td>
-                        <td class="current-entry">{% if currrecord.machinereadable == "Yes" %} Yes {% elif currrecord.machinereadable == "No" %} No {% elif currrecord.machinereadable == "Unsure" %} Unsure {% else %} No record {% endif %}</td>
-                    </tr>
-                    
-                    <tr>
-                        <td>Is it in digital form?</td>
-            <td></td>
-                        <td><input type="radio" class="ss-q-radio" name="digital" value="Yes" {% if subrecord.digital == "Yes" %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="digital" value="No" {% if subrecord.digital == "No" %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="digital" value="Unsure" {% if subrecord.digital == "Unsure" %} checked {% endif %} /></td>
-                        <td class="current-entry">{% if currrecord.digital == "Yes" %} Yes {% elif currrecord.digital == "No" %} No {% elif currrecord.digital == "Unsure" %} Unsure {% else %} No record {% endif %}</td>
-                    </tr>
-                    
-                    <tr>
-                        <td>Is it up to date?</td>
-            <td></td>
-                        <td><input type="radio" class="ss-q-radio" name="uptodate" value="Yes"  {% if subrecord.uptodate == "Yes" %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="uptodate" value="No" {% if subrecord.uptodate == "No" %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="uptodate" value="Unsure" {% if subrecord.uptodate == "Unsure" %} checked {% endif %} /></td>
-                        <td class="current-entry">{% if currrecord.uptodate == "Yes" %} Yes {% elif currrecord.uptodate == "No" %} No {% elif currrecord.uptodate == "Unsure" %} Unsure {% else %} No record {% endif %}</td>
-                    </tr>
-                    
-                    <tr>
-                        <td>Available in bulk? (Can you get the whole dataset easily)</td>
-            <td></td>
-                        <td><input type="radio" class="ss-q-radio" name="bulk" value="Yes" {% if subrecord.bulk == "Yes" %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="bulk" value="No" {% if subrecord.bulk == "No" %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="bulk" value="Unsure" {% if subrecord.bulk == "Unsure" %} checked {% endif %} /></td>
-                        <td class="current-entry">{% if currrecord.bulk == "Yes" %} Yes {% elif currrecord.bulk == "No" %} No {% elif currrecord.bulk == "Unsure" %} Unsure {% else %} No record {% endif %}</td>
-                    </tr>
-                    
-                    <tr>
-                        <td>Is it accessible online?</td>
-            <td></td>
-                        <td><input type="radio" class="ss-q-radio" name="online" value="Yes" {% if subrecord.online == "Yes" %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="online" value="No" {% if subrecord.online == "No" %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="online" value="Unsure" {% if subrecord.online == "Unsure" %} checked {% endif %} /></td>
-                        <td class="current-entry">{% if currrecord.online == "Yes" %} Yes {% elif currrecord.online == "No" %} No {% elif currrecord.online == "Unsure" %} Unsure {% else %} No record {% endif %}</td>
-                    </tr>
-                    
-                    <tr>
-                        <td>Is it available free of charge?</td>
-            <td></td>
-                        <td><input type="radio" class="ss-q-radio" name="free" value="Yes" {% if subrecord.free == "Yes" %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="free" value="No" {% if subrecord.free == "No" %} checked {% endif %} /></td>
-                        <td><input type="radio" class="ss-q-radio" name="free" value="Unsure" {% if subrecord.free == "Unsure" %} checked {% endif %} /></td>
-                        <td class="current-entry">{% if currrecord.free == "Yes" %} Yes {% elif currrecord.free == "No" %} No {% elif currrecord.free == "Unsure" %} Unsure {% else %} No record {% endif %}</td>
-                    </tr>
-        </tbody>
-      </table>
+
+<div class="alert alert-warning">
+  <h3 style="margin-top: 0;">Please read first</h3>
+  <p>Please review this submission carefully as we have updated the guidance around what each dataset refers to and the data availability question explanations.</p>
+
+  <h4>1. Official data sources</h4>
+  <p>Please answer regarding <strong>official (government or government associated)</strong> sources of data. Often data is available from various sources both official and unofficial but we only want answers on the basis of official sources.</p>
+  <p>To illustrate: suppose election results data is available both from government sources and from a third party website and that the government data is in PDF (so <strong>not</strong> machine readable) but that the unofficial source has the data in spreadsheets (machine-readable). Then the answer to the machine readable question would be <strong>'No'</strong> as the official source is not machine readable (but please do list the unofficial source in the details and comments section).
+  </p>
+
+  <h4>2. Assessment Point</h4>
+  <p>Please answer the questions on the basis of the data situation as of the current assessment point (August / September 2013). Do <strong>not</strong> answer based on what may happen in the future (or the situation previously).</p>
+  <p>So, for example, if data will be online soon but is not online now the answer to the 'online' question should be 'No' (though please mention that it <em>will</em> be available in the details and comments section).</p>
+</div>
+
+
+
+
+<form action="" method="post">
+<h3>{{dataset.title}}</h3>
+{{datasets}}
+<p>{{dataset.description}}</p>
+
+<table class="table table-striped availability-form">
+  <thead>
+    <tr>
+      <td></td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Unsure</td>
+      <td class="current-entry">Current Entry</td>
+      <td>Info</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for qu in ynquestions %}
+    <tr>
+      <td class="qu-title">{{qu.question}}?</td>
+      {% for val in ['Yes', 'No', 'Unsure'] %}
+      <td>
+        <input type="radio" name="{{qu.id}}" value="{{val}}" {% if prefill[qu.id] == val %}checked="true"{% endif %}
+          required>
+      </td>
+      {% endfor %}
+      <td class="current-entry">
+        {{ currrecord[qu.id] }}
+      </td>
+      <td class="info">
+        <span class="help-block">{{qu.description}}</span>
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
                 
                 <div class="row">
       	<div class="span6">

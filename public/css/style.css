@@ -692,6 +692,9 @@ table.availability-form td {
 	text-align:center;
 	min-width:40px;
 }
+table.availability-form td.info {
+  text-align: left;
+}
 table.availability-form td:first-child {
 	text-align:left;
 }
@@ -870,3 +873,6 @@ div.historic-entries div.current-entry:last-child .textarea {
   margin-top: 20px;
 }
 
+.availability-form td.qu-title {
+  min-width: 150px;
+}

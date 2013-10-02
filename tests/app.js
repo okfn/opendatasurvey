@@ -115,5 +115,16 @@ describe('Country', function() {
         done();
       });
   });
+
+  it('GET review', function(done) {
+    var url = '/country/review/2948d308-ce1c-46fb-b131-dc0f846da788';
+    request(app)
+      .get(url)
+      .expect(200)
+      .end(function(err, res) {
+        assert(res.text.match('Review - '), 'on review page');
+        done();
+      });
+  });
 });
 

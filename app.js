@@ -265,6 +265,9 @@ app.get('/country/review/:submissionid', function(req, res) {
     res.redirect('/country/login/?next=' + encodeURIComponent(req.url));
     return;
   }
+
+  var ynquestions = model.data.questions.slice(0,9);
+
   model.backend.getSubmission({submissionid: req.params.submissionid}, function(err, obj) {
     if (err) {
       res.send(500, 'There was an error ' + err);
@@ -276,11 +279,16 @@ app.get('/country/review/:submissionid', function(req, res) {
         if (!entry) {
           entry = {};
         }
+        var dataset = _.find(model.data.country.datasets, function(d) {
+          return d.id = obj.dataset;
+        });
         res.render('country/review/index.html', {
           info: model.data.country,
-          submissions: model.data.countrysubmissions,
+          ynquestions: ynquestions,
           subrecord: obj,
+          prefill: obj,
           currrecord: entry,
+          dataset: dataset,
           datasetfriendly: model.datasetNamesMap[obj.dataset],
           currentYear: model.data.country.currentYear
         });
