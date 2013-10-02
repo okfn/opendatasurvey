@@ -1,6 +1,8 @@
 Open Data Census
 ================
 
+[![Build Status](https://travis-ci.org/okfn/opendatacensus.png?branch=master)](https://travis-ci.org/okfn/opendatacensus)
+
 Website for the [Open Data Census][] including submission workflow,
 presentation of results and visualizations.
 
@@ -44,7 +46,7 @@ We use google spreadsheets as a backend for the Open Data Census. Data is stored
 [country]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVnbG5pUFlyUzBpVkFXbXJ2WWpGTUE#gid=6
 [city]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdEEycENNYXQtU1RIbzRSYVRxLXFOdHc#gid=1
 
-For historical reasons the raw data from the Country and City census arrive in different forms. We aim to get 
+For historical reasons the raw data from the Country and City census arrive in different forms. We aim to get
 
 We attempt to have a common form to the results spreadsheet.
 
@@ -92,12 +94,12 @@ To install do the following:
 
 1. Get the code and init the submodules (for recline vendor library)
 
-        git clone https://github.com/okfn/opendatacensus 
+        git clone https://github.com/okfn/opendatacensus
         git submodule init
         git submodule update
 
 2. Install node dependencies
-        
+
         cd opendatacensus
         npm install .
 
