@@ -221,7 +221,7 @@ describe('census', function() {
     // console.log(uk);
     assert.equal(uk.exists, 'Y');
     assert.equal(uk['uptodate'], 'Y');
-    assert.equal(uk.ycount, 7);
+    assert.equal(uk.ycount, 8);
     assert.equal(uk.isopen, false);
   });
 
