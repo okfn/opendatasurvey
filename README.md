@@ -131,7 +131,7 @@ https://devcenter.heroku.com/articles/config-vars
 
 Install mocha (see devDependencies in package.json) then do:
 
-    mocha test/
+    mocha tests/
 
 **note** we run off live data yet some expected values are hard-coded. Thus
 tests are likely to break as underlying data changes. We should fix this soon
