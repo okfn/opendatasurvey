@@ -1,29 +1,29 @@
 {
-    "name": "opendatacensus"
-  , "version": "0.1.0"
-  , "author": "Open Knowledge Foundation"
-  , "repository": {
+  "name": "opendatacensus",
+  "version": "0.1.0",
+  "author": "Open Knowledge Foundation",
+  "repository": {
     "type": "git",
     "url": "https://github.com/okfn/opendatacensus"
-  }
-  , "license": "MIT"
-  , "dependencies": {
-      "express": "3.x"
-    , "nunjucks": "0.1.8"
-    , "marked": ""
-    , "csv": "0.3.6"
-    , "request": ""
-    , "underscore": ""
-    , "google-spreadsheet": "https://github.com/mattfullerton/node-google-spreadsheets/tarball/master"
-    , "nconf": ""
-    , "connect-flash": ""
-    , "async": ""
-  }
-  , "devDependencies": {
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "3.x",
+    "nunjucks": "0.1.8",
+    "marked": "",
+    "csv": "0.3.6",
+    "request": "",
+    "underscore": "",
+    "google-spreadsheet": "https://github.com/mattfullerton/node-google-spreadsheets/tarball/master",
+    "nconf": "",
+    "connect-flash": "",
+    "async": ""
+  },
+  "devDependencies": {
     "supertest": "",
     "mocha": ""
-  }
-  , "engines": {
+  },
+  "engines": {
     "node": "0.10.17",
     "npm": ""
   }
