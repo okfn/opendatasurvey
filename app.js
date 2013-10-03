@@ -117,9 +117,19 @@ app.get('/about', function(req, res) {
 });
 
 app.get('/faq', function(req, res) {
+  var tmpl = env.getTemplate('_snippets/questions.html');
+  var questionInfo = tmpl.render({
+    questions: model.data.questions
+  });
+  var dataTmpl = env.getTemplate('_snippets/datasets.html');
+  var dataInfo = dataTmpl.render({
+    datasets: model.data.country.datasets
+  });
   fs.readFile('templates/faq.md', 'utf8', function(err, text) {
     var marked = require('marked');
     var content = marked(text);
+    content = content.replace('{{questions}}', questionInfo);
+    content = content.replace('{{datasets}}', dataInfo);
     res.render('base.html', {
       content: content,
       title: 'FAQ - Frequently Asked Questions'

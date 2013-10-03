@@ -52,18 +52,8 @@ The Census was created by the [Open Knowledge Foundation](http://okfn.org) in 20
 
 There are 10 datasets considered in the 2013 Census:
 
-* Transport Timetables
-* Government Budget
-* Government Spending
-* Election Results
-* Company Register
-* National Map
-* National Statistics
-* Legislation
-* Postcodes / Zipcodes
-* Emissions of pollutants
+{{datasets}}
 
-There's more information on each of these on the Census site - just click the "i" icon next to the dataset name on a country overview page (such as [Canada's overview page](http://2013.census.okfn.org/country/overview/Canada/))
 
 ### How reliable is the Open Data Census?
 
@@ -71,6 +61,7 @@ The information in the Census is collected by open data experts around the world
 
 
 ### What about the City Census?
+
 We are currently expanding and improving the Open Data Census and are currently focusing on the Country Census. The City Census is still running on the older system and is due for update later. This means City Census results are not currently being reviewed. More detailed plans for the update will be announced shortly.
 
 ### What about the 2012 Census?
@@ -123,38 +114,7 @@ We welcome corrections to the Census :)  Anyone can submit corrections to the Ce
 
 When filling in information about a dataset, there's a list of questions to answer about the availability and openness of the datasets.  The answers then appear in the country overview page for the Census. 
 
-#### What is meant by "Does the data exist?"
-
-What is meant here is whether the data exist at all in any system. They do not have to be online or even digital - as long as they're known to be in existence.
-
-#### What is meant by "publicly available"?
-
-Publicly available data is "public" - this does NOT mean freely available but does require that *someone* outside of the government can access the data in some way. For example, if the data is available for purchase it is public, if the timetables exist as PDFs on a website that you can access it it is public, if you can get it in paper form it is public.
-
-#### What is meant by "available online"?
-
-Data is available online if you can access it via the internet in some way. (Note that data could exist and be in digital form and even be machine readable, but not available online (for instance, in a computer without a network connection in a government office).
-
-#### What is meant by "machine readable?" 
-
-Data is machine readable if it is in a format that can be easily processed by a computer. Data can be digital but not machine readable: for example, consider a PDF document containing tables of data. These are definitely digital but are not machine-readable becuase a computer would struggle to access the tabular information (even though they are very human readable!). The equivalent tables in a format such as a spreadsheet would be machine readable. Note: The appropriate machine readable format may vary by type of data – so, for example, machine readable formats for geographic data may be different than for tabular data.
-
-#### What is meant by "free of charge"?
-
-Data which is free of charge can be accessed or downloaded without paying money. Note that data may be free of charge in one way of accessing it but also available for money; for instance, a free bulk download or a paid, high speed API service. If the data is available at all free of charge, then this question should be answered with a Yes; it does not have to be available in all methods free of charge.
-
-#### What is meant by "available in bulk"?
-
-Data is available in bulk if you download or access the **whole** dataset easily.  It is not available in bulk if you are you limited to just getting parts of the dataset (for example, are you restricted to querying a web form and retrieving a few results at a time from a very large database).
-
-#### What is meant by "openly licensed"?
-
-As per [http://opendefinition.org/](http://opendefinition.org/) - data is openly licensed if the terms of use or license allow anyone to freely use, reuse or redistribute the data (subject at most to attribution or sharealike requirements). It is vital that a licence is available (if there's no licence, the data is not openly licensed). [Open Licences](http://opendefinition.org/licenses/) which meet the requirements of [the Open Definition](http://opendefinition.org/) are [listed here](http://opendefinition.org/licenses/).
-
-#### What is meant by "timely and up to date"?
-
-Is the data up to date and timely, or long delayed. For example, for election data is it made available immediately or soon after the election or is it only available many years later?  The impact of delay in data will depend a bit on the kind of data in question; knowing about a changed bus timetable in a timely fashion (immediately when it changes!) may be more useful than having only a day's delay in the national statistics.  (Because this can be subjective, we encourage people adding data to include comments and extra detail to explain the question answer)
-
+{{questions}}
 
 ### Questions about the assessment of openness
 
@@ -210,21 +170,8 @@ In the meantime you can see the [results in progress for the 2013 Census](http:/
 
 <h3 id="scoring">How does the scoring system work?</h3>
 
-The Open Data Census measures the state of openness of 10 data sets for each country.  Several elements of openness (according to [the Open Definition](http://opendefinition.org)) and availability are assessed by the Census:
+The Open Data Census measures the state of openness of 10 data sets for each country. The overall score for a dataset is based on the response to specific questions with varying weightings - the weighting for each question is listed in the question table above. The overall country score is then calculated from the score on each dataset.
 
-* Does the data exist?
-* Is the data in digital form?
-* Is the data publicly available?
-* Is the data available online?
-* Is the data available for free?
-* Is the data machine readable?
-* Is the data available for bulk download?
-* Is the data openly licensed?
-* Is the data available in a timely manner and up to date?
-
-The overall score for a dataset is created from the answers to these questions, and the overall country score from the 10 scores for the datasets in each country.
-
-**Check back soon for more information!**
 
 <h2 id="more">If you are intrigued by Open Data...</h2>
 

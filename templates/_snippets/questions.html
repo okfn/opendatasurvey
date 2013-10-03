@@ -1,0 +1,18 @@
+<table class="table table-bordered table-striped faq-table">
+  <thead>
+    <tr>
+      <th>Question</th>
+      <th>Details</th>
+      <th>Weighting</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for qu in questions %}
+    <tr>
+      <td>{{qu.question}}?</td>
+      <td>{{qu.description}}</td>
+      <td>{{qu.score}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

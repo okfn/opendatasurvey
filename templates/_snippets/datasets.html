@@ -1,0 +1,16 @@
+<table class="table table-bordered table-striped faq-table">
+  <thead>
+    <tr>
+      <th>Dataset</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for dataset in datasets %}
+    <tr>
+      <td>{{dataset.title}}</td>
+      <td>{{dataset.description}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

@@ -876,3 +876,8 @@ div.historic-entries div.current-entry:last-child .textarea {
 .availability-form td.qu-title {
   min-width: 150px;
 }
+
+table.faq-table tr td:first-child {
+  min-width: 150px; 
+}
+
