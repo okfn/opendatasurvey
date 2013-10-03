@@ -521,6 +521,10 @@ table.response-summary td  ul.availability.icons.mini {
 	margin-top:7px;
 }
 
+table.response-summary td.placescore {
+  text-align: right;
+}
+
 table.response-summary td.placescore a {
 	/* background-color:#FFF; */
 	margin-left:6px;
