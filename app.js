@@ -280,7 +280,7 @@ app.get('/country/review/:submissionid', function(req, res) {
           entry = {};
         }
         var dataset = _.find(model.data.country.datasets, function(d) {
-          return d.id = obj.dataset;
+          return (d.id == obj.dataset);
         });
         res.render('country/review/index.html', {
           info: model.data.country,

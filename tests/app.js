@@ -23,6 +23,22 @@ describe('Country', function() {
       });
     });
   });
+  after(function(done) {
+    // TODO: delete all Germany entries
+    model.backend.getSubmissions({place: 'Germany'}, function(err, rows) {
+      if (rows.length == 0) {
+        done();
+      }
+      rows.forEach(function(entry) {
+        entry.del(function(err) {
+          if(err) {
+            console.log(err);
+          }
+          done();
+        });
+      });
+    });
+  });
 
   it('front page works', function(done) {
     request(app)
@@ -123,6 +139,7 @@ describe('Country', function() {
       .expect(200)
       .end(function(err, res) {
         assert(res.text.match('Review - '), 'on review page');
+        assert(res.text.match('Government budget at a high level'), 'correct dataset shows up');
         done();
       });
   });
