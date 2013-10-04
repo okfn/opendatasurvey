@@ -29,7 +29,7 @@
 
 Right now we are collecting data for the **2013** Census, which focusses on country-level information.  We will be launching the 2013 Census results later in autumn 2013.
 
-After that we will be looking at further developing the city-level Census and other enhancements.
+After that we will be looking at developing a city-level Census and other enhancements.
 
 **Most of the information in this FAQ applies to the 2013 Census - 2012 ran a little differently.**
 

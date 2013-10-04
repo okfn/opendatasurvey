@@ -478,37 +478,6 @@ table.response-summary thead tr th div {
 table.response-summary tbody tr td.active {
 	background-color: #EEE;
 }
-
-/* city table */
-
-#city-table thead tr th.sorting {
-	height: auto;
-	padding: 8px;
-	padding-bottom: auto;
-	text-align: left;
-}
-
-#city-table thead tr th {
-	height: 144px;
-	/*display: block;*/
-	padding: 8px;
-	text-align: center;
-	vertical-align: bottom;
-}
-
-#city-table thead tr th div {
-	text-align: left;
-	writing-mode: tb-rl;
-	-webkit-transform: rotate(-90deg);
-	-o-transform: rotate(-90deg);
-	transform: rotate(-90deg);
-	vertical-align: middle;
-	padding: 8px 0;
-	height: 45px;
-	width: 28px;
-	margin-bottom: -15px;
-}
-
 table.response-summary td {
 	padding: 0;
 }

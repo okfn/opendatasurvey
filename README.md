@@ -38,13 +38,11 @@ The set of datasets asked about for each level are different but the questions a
 We use google spreadsheets as a backend for the Open Data Census. Data is stored in 3 different spreadsheets:
 
 * [Dataset and Questions spreadsheet][questions] - this list the datasets for
-  the country and city census as well as the questions asked for each dataset
+  the country census as well as the questions asked for each dataset
 * [Country spreadsheet][country]
-* [City and Region spreadsheet][city]
 
 [questions]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc#gid=0
 [country]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVnbG5pUFlyUzBpVkFXbXJ2WWpGTUE#gid=6
-[city]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdEEycENNYXQtU1RIbzRSYVRxLXFOdHc#gid=1
 
 For historical reasons the raw data from the Country and City census arrive in different forms. We aim to get
 
@@ -63,20 +61,6 @@ Process
 2. Arrive in submissions tab
 3. Copy to the Normalized tab (which has standard columns)
 4. Review (soon)
-
-City Spreadsheet
-~~~~~~~~~~~~~~~~
-
-Process
-
-1. Submit via our custom JS form. Data is still submitted to a google spreadsheet with a google form. However we do not use Google's generated form but just submit ourselves using JS. The form therefore only has 1 field "Data") and we store results of form as a JSON blob in this field.
-
-2. Normalized sheet - this is produced from submissions sheet by running the unpack script (go to Open Data Census menu => Unpack)
-
-  * uses this app script https://script.google.com/a/macros/okfn.org/d/M2ShE7x1mR_sRh_6fT27vYhyeNKfa_QZS/edit
-
-3. Reviewed
-
 
 For Developers
 --------------
