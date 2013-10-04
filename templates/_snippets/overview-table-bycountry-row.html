@@ -4,7 +4,7 @@
     {% if type == 'submissions' %}
       &#8627; Awaiting review
     {% else %}
-      {{ dataset.title }} &nbsp; <a data-toggle="tooltip" data-trigger="click" class="count-0" title="{{ dataset.description }}"><i class="icon-info-sign"></i></a> 
+      {{ dataset.title }} &nbsp; <a data-toggle="tooltip" data-trigger="click" class="count-0" title="{{ dataset.description }}"><i class="icon-info-sign"></i></a>
     {% endif %}
   </td>
   <td{% if record %} data-place="{{ record.place }}" data-dataset="{{ record.dataset }}" data-datasetTitle="{{ dataset.title }}"{% endif %}>
@@ -81,13 +81,13 @@
     </ul>
   </td>
   <td>
-    
+
     {% if type == 'info' %}
-      {% if record %} 
+      {% if record %}
         <a id="submit-{{ dataset.id }}" href="/country/submit/?dataset={{ dataset.id }}&place={{ place }}" class="btn btn-mini btn-primary">
           <!-- <i class="icon-plus"></i> -->Propose Revisions
         </a>
-      {% else %} 
+      {% else %}
         <a id="submit-{{ dataset.id }}" href="/country/submit/?dataset={{ dataset.id }}&place={{ place }}" class="btn btn-mini btn-primary">
           <!-- <i class="icon-plus"></i> -->Submit information
         </a>

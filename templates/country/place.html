@@ -16,14 +16,14 @@
   <a href="/country/" data-toggle="tooltip" class="count-0" title="Return to country results overview">Countries</a> /
   {{ place }}
 </h1>
-    
+
       <div id="spacer"></div>
       <div class="tabbable"> <!-- Only required for left/right tabs -->
-        
+
         <div class="tab-content">
           <div class="tab-pane active" id="table-overview">
             <div class="table">
-              
+
 {% set record_fields = [
   { 'id': 'exists',
     'icon': 'file-alt',
@@ -39,7 +39,7 @@
     'label': 'Is it free of charge?' },
   { 'id': 'online',
     'icon': 'download',
-    'label': 'Is it online?' },  
+    'label': 'Is it online?' },
   { 'id': 'machinereadable',
     'icon': 'keyboard',
     'label': 'Is it machine readable (e.g. spreadsheet not PDF)?' },
@@ -75,7 +75,7 @@ Each icon in data availability column represents important factors for how acces
     {% include '_snippets/overview-table-bycountry-row.html' %}
     {% for dataset in info.datasets %}
       {{ inforow(dataset, entrys[dataset.id], 'info') }}
-      
+
       {% for submission in submissions[dataset.id] %}
       {{ inforow(dataset, submission, 'submissions') }}
       {% endfor %}
@@ -87,10 +87,10 @@ Each icon in data availability column represents important factors for how acces
 {% include '_snippets/key.html' %}
             </div>
           </div>
-  
+
         </div>
       </div>
-      
+
     <script src="{{page.root}}/src/common.js"></script>
     <script src="{{page.root}}/src/census.js"></script>
 {% endblock %}

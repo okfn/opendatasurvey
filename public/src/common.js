@@ -193,7 +193,7 @@ OpenDataCensus.popoverBody = function(response) {
   var out = '', not;
   out += '<ul>';
   not = '';
-  
+
   //This should match the order of fields in the model!
   if (response.exists === 'Y'){
     out += '<li>Data exists</li>';
@@ -213,7 +213,7 @@ OpenDataCensus.popoverBody = function(response) {
     out += '<li>It\'s ' + not + 'openly licensed</li>';
     not = makeNot(response['uptodate']);
     out += '<li>It\'s ' + not + 'up-to-date</li>';
-    
+
   } else {
     out += '<li>Data does not exist</li>';
   }

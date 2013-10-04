@@ -27,7 +27,7 @@
 
 ### What's the current state of the Open Data Census?
 
-Right now we are collecting data for the **2013** Census, which focusses on country-level information.  We will be launching the 2013 Census results later in autumn 2013. 
+Right now we are collecting data for the **2013** Census, which focusses on country-level information.  We will be launching the 2013 Census results later in autumn 2013.
 
 After that we will be looking at further developing the city-level Census and other enhancements.
 
@@ -46,7 +46,7 @@ The Open Data Census was initiated by the [Open Knowledge Foundation](http://okf
 
 ### What is the history of the Open Data Census?
 
-The Census was created by the [Open Knowledge Foundation](http://okfn.org) in 2012, and provides a clear measure of available open data - not what is claimed, but what data is actually available and how open it is. The Census is designed by open data experts, including the [Open Knowledge Foundation Open Government Working Group](http://opengovernmentdata.org/), and undergoes a process of peer review and evidence checking to ensure high quality results. An annual announcement of the results creates a focus for debate and review. The Census was launched in 2012 and is undergoing active development to create an Open Data Index in autumn 2013. 
+The Census was created by the [Open Knowledge Foundation](http://okfn.org) in 2012, and provides a clear measure of available open data - not what is claimed, but what data is actually available and how open it is. The Census is designed by open data experts, including the [Open Knowledge Foundation Open Government Working Group](http://opengovernmentdata.org/), and undergoes a process of peer review and evidence checking to ensure high quality results. An annual announcement of the results creates a focus for debate and review. The Census was launched in 2012 and is undergoing active development to create an Open Data Index in autumn 2013.
 
 ### What datasets are included in the Country Census?
 
@@ -71,7 +71,7 @@ Right now we're focussed on the 2013 Census and so the information on the site a
 
 <h2 id="submit">Submitting information to the Census</h2>
 
-At the moment we are only working on 2013 information. 
+At the moment we are only working on 2013 information.
 
 The census is a survey of the state of open data around the world focusing on the the availability and openness of a <a href=”http://2013.census.okfn.org/about/”>specific set of key datasets</a>.
 
@@ -92,7 +92,7 @@ It works like this:
 
 ### How can I improve the Census information about a country?
 
-If you've got information about a dataset which isn't in the Census yet you can add it!  Anyone can submit new information to the Census. 
+If you've got information about a dataset which isn't in the Census yet you can add it!  Anyone can submit new information to the Census.
 
 * Select your country in [the list](http://2013.census.okfn.org/contribute/) and click on it.
 * You are now on the Country overview page for that country
@@ -112,7 +112,7 @@ We welcome corrections to the Census :)  Anyone can submit corrections to the Ce
 
 ### What do all the questions about the data sets mean?
 
-When filling in information about a dataset, there's a list of questions to answer about the availability and openness of the datasets.  The answers then appear in the country overview page for the Census. 
+When filling in information about a dataset, there's a list of questions to answer about the availability and openness of the datasets.  The answers then appear in the country overview page for the Census.
 
 {{questions}}
 
@@ -132,21 +132,21 @@ Please email the [Open Data Census discussion list](http://lists.okfn.org/mailma
 
 ### How are different years handled?
 
-Right now we are collecting information for the state of open data in the world in 2013, and this data is collected at [http://2013.census.okfn.org](http://2013.census.okfn.org). 
+Right now we are collecting information for the state of open data in the world in 2013, and this data is collected at [http://2013.census.okfn.org](http://2013.census.okfn.org).
 
-The [main Census page](http://census.okfn.org) points to the current year's census and soon you'll be able to see all the various years of Census results and in the future you'll be able to compare them too. 
+The [main Census page](http://census.okfn.org) points to the current year's census and soon you'll be able to see all the various years of Census results and in the future you'll be able to compare them too.
 
 ### I want to help but I'm not sure where to start!
 
 On the Open Data Census, you can see the 10 categories of data that we are focusing on on [the actual site](http://2013.census.okfn.org/country/). Each of the entries for each country has been sent in by citizens of that country, who have simply used Google or other search engines to find out what data sets are available (simply finding the URL) and under which circumstances (are the data openly licensed, can they be downloaded in bulk etc.) - and then made a submission via the form on the site, where they simply fill out a handful of questions and put in the URL for the data. All in all it is a really easy (and fun) task that helps to put a country on the open data map - and it's easy to get started!
 
-You can do some research yourself! Pick a country where the Census shows there is data missing or where there are comments showing that there's uncertainty (perhaps the licence hasn't been specified for example) or a country that you know well. 
+You can do some research yourself! Pick a country where the Census shows there is data missing or where there are comments showing that there's uncertainty (perhaps the licence hasn't been specified for example) or a country that you know well.
 
 A targetted search or working with others is most fun and helpful. You could ask on  the [Open Data Census discussion list](http://lists.okfn.org/mailman/listinfo/open-data-census) whether there's a country or area you could help with. Get together with friends, colleagues, your local open data community or [Open Knowledge Foundation local group](http://okfn.org/local) and dig into data on a given topic or for a given country together.
 
 ### How can I get more involved?
 
-If you'd like to be more involved you could become a Country Editor for the Census.  Only Census Country Editors can review submissions. If you’d like to become an editor, email the Census team on census@okfn.org 
+If you'd like to be more involved you could become a Country Editor for the Census.  Only Census Country Editors can review submissions. If you’d like to become an editor, email the Census team on census@okfn.org
 
 If there's already an editor for the country you are interested in, don't worry - it's great to have more than one editor as you can work together!  More eyes on the data makes the data better quality.
 

@@ -149,7 +149,7 @@ describe('Submissions', function() {
       backend.getSubmission(data, function(err, subm) {
         // check initial conditions
         assert.equal(subm.reviewed, '');
-        // do submit 
+        // do submit
         backend.acceptSubmission(subm, newdata, function(err) {
           // check entry
           backend.getEntry(data, function(err, obj) {

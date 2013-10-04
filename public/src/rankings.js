@@ -9,7 +9,7 @@ function rank(parameter) {
   if (parameter=="datasets") {
     options.log=true;
     }
-  options.log=true;  
+  options.log=true;
   options.colorscale=new chroma.ColorScale ({
     })
   data.sort(function(a,b) { return b[parameter]-a[parameter]});
@@ -71,7 +71,7 @@ function showMap(data,key,colscale,callback) {
             return !data.hasOwnProperty(d.iso2);
           }
         });
-        
+
         map.addLayer({
           id: 'regions',
           key: 'iso2',
@@ -82,7 +82,7 @@ function showMap(data,key,colscale,callback) {
 
         map.choropleth({
           data: values,
-          colors: function(d) {        
+          colors: function(d) {
             if (d === null) return '#e3e0e0';
             return colscale.getColor(d);
           }

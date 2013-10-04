@@ -67,7 +67,7 @@ Review - Countries
     {% endfor %}
     </tbody>
   </table>
-                
+
                 <div class="row">
       	<div class="span6">
         	<h3>Location of Data Online <span class="muted">(Optional)</span></h3>
@@ -76,8 +76,8 @@ Review - Countries
                             <div class="current-entry">
                             <label>Current Entry</label>
                             <input type="text" id="" class="span6" value="{% if currrecord %} {{currrecord.url}} {% else %} No record {% endif %}" readonly>
-                        
-                            
+
+
                             </div>
         </div>
         <div class="span6">
@@ -90,7 +90,7 @@ Review - Countries
           </div>
         </div>
       </div>
-         
+
       <div class="row">
          <div class="span6">
         	<h3>Data format <span class="muted">(Optional)</span></h3>
@@ -99,8 +99,8 @@ Review - Countries
                             <div class="current-entry">
                             <label>Current Entry</label>
                             <input type="text" id="" class="span6" value="{% if currrecord %} {{currrecord.format}} {% else %} No record {% endif %}" readonly>
-                        
-                            
+
+
                             </div>
         </div>
        </div>
@@ -109,7 +109,7 @@ Review - Countries
 
            <h3>Details and comments <span class="muted">(Optional)</span></h3>
       <label for="entry_12" class="ss-q-help">e.g. is the data partially available, are there plans to make it available in the future?</label>
-      
+
       <div class="historic-entries">
         <textarea id="entry_12" class="expanding-texarea-common" name="details" style="min-height: 150px;">{{ subrecord.details }} </textarea>
       </div>
@@ -117,15 +117,15 @@ Review - Countries
           <label>Current Entry</label>
           <div class="textarea">{% if currrecord %} {{currrecord.details}} {% else %} No record {% endif %}</div>
         </div>
-        
-       
+
+
       </div>
-           
+
        <div class="row"><br />
       	<div class="span8">
         <div><br />If this entry does not add anything to the current entry, then simply 'Reject' and this will be removed from the review queue. Otherwise, please copy over any relevant text or information from the grey current entry parts to the editable form before hitting Publish. Please also correct any spelling mistakes. <strong>Publish will overwrite the whole current entry with the data in this form.</strong><br />&nbsp;</div>
         </div>
-         
+
         <div class="span4">
          <div class="pull-right">
            <h3>Your name <span class="muted">(Required)</span></h3>
@@ -135,13 +135,13 @@ Review - Countries
         </div>
       </div>
 
-                 
-                 
-                  
+
+
+
                   </form>
-            
-       
-  
+
+
+
 
     <script src="{{page.root}}/src/common.js"></script>
     <script src="{{page.root}}/src/census.js"></script>

@@ -60,7 +60,7 @@ linkify plugin for jQuery - automatically finds and changes URLs in text content
 //TODO: Parameterize the targetting
 env.addFilter('urlize', function(str) {
   return str
-    .replace( noProtocolUrl, '$1<a href=\'<``>://$2\' target=\'_blank\'>$2</a>$3' )  // NOTE: we escape `"http` as `"<``> 
+    .replace( noProtocolUrl, '$1<a href=\'<``>://$2\' target=\'_blank\'>$2</a>$3' )  // NOTE: we escape `"http` as `"<``>
     .replace( httpOrMailtoUrl, '$1<a href=\'$2\' target=\'_blank\'>$2</a>$3' )
     .replace( /'<``>/g, '\'http' );  // reinsert `"http`
 });
@@ -204,7 +204,7 @@ app.get('/country/submit', function(req, res) {
   var datasets = [];
   var ynquestions = model.data.questions.slice(0,9);
   var prefill = req.query;
-  
+
   function render(prefill_) {
     res.render('country/submit.html', {
         countryList: model.countryList
@@ -369,11 +369,11 @@ app.post('/country/review/:submissionid', function(req, res) {
 // app.get('/city', function(req, res) {
 //   res.render('city/index.html', {info: model.data.city});
 // });
-// 
+//
 // app.get('/city/results.json', function(req, res) {
 //   res.json(model.data.city);
 // });
-// 
+//
 // app.get('/city/submit', function(req, res) {
 //   res.render('city/submit/index.html', {});
 // });
