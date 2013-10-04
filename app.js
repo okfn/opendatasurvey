@@ -412,6 +412,7 @@ function doLogin(req, res) {
 model.load(function(err) {
   if (err) {
     console.error('Failed to load dataset info');
+    throw err;
   }
   app.listen(app.get('port'), function() {
     console.log("Listening on " + app.get('port'));
