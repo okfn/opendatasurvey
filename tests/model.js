@@ -245,51 +245,6 @@ describe('census', function() {
   });
 
   // /////////////////////
-  // City
-
-  var city = model.data.city;
-
-  it('city summary is ok', function(){
-    // console.log(city.summary);
-    assert(city.summary.entries >= 300);
-    assert(city.summary.open >= 0 && city.summary.open <= city.summary.entries);
-    assert(city.summary.open_percent >= 0.0);
-  });
-
-  it('city.places is ok ', function(){
-    // test places / countries
-    // console.log(city.places.length);
-    assert(city.places.length >= 34);
-    assert(_.contains(city.places, 'Berlin'));
-  });
-
-  it('city.datasets is ok ', function(){
-    // test datasets
-    assert.equal(city.datasets.length, 15);
-    assert.equal(city.datasets[0].id, 'timetables');
-  });
-
-  it('city.byplace is ok ', function(){
-    assert.equal(_.keys(city.byplace).length, city.places.length);
-
-    var berlin = city.byplace['Berlin'];
-    // bad test as number will change over time!!
-    assert.equal(_.keys(berlin.datasets).length, 14);
-  });
-
-  it('city data is ok', function(){
-    var berlintt = city.byplace['Berlin'].datasets['timetables'];
-    assert.equal(berlintt.ycount, 70);
-    assert.equal(berlintt.isopen, true);
-  });
-
-  it('city score is ok', function(){
-    var berlintt = city.byplace['Berlin'];
-    assert.equal(berlintt.score, 495);
-    assert.equal(berlintt.totalopen, 5);
-  });
-
-  // /////////////////////
   // Catalogs
 
   it('catalogs is ok ', function(){

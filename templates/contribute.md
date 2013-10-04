@@ -13,7 +13,7 @@ In addition to the options below there is a **[mailing list][ml]** where issues 
 
 ## How to Submit Information to the Census
 
-Contributions to the Census are encouraged. Please visit the <a href="http://census.okfn.org/country/">Country Census</a> or the <a href="http://census.okfn.org/city/">City Census</a> to contribute. Note that submissions are reviewed and are subject to amendment or exclusion by the editors.</p>
+Contributions to the Census are encouraged. Please visit the <a href="http://census.okfn.org/country/">Country Census</a> to contribute. Note that submissions are reviewed and are subject to amendment or exclusion by the editors.</p>
 
 <ol>
   <li>Find the dataset and country in the table where information is missing you want to submit for.</li>
