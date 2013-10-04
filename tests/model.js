@@ -133,7 +133,7 @@ describe('Submissions', function() {
     });
   });
   it('accept', function(done) {
-    this.timeout(8000);
+    this.timeout(10000);
     var data = {
       year: 2012,
       dataset: 'timetables',
@@ -221,7 +221,7 @@ describe('census', function() {
     // console.log(uk);
     assert.equal(uk.exists, 'Y');
     assert.equal(uk['uptodate'], 'Y');
-    assert.equal(uk.ycount, 8);
+    assert.equal(uk.ycount, 60);
     assert.equal(uk.isopen, false);
   });
 
@@ -279,13 +279,13 @@ describe('census', function() {
 
   it('city data is ok', function(){
     var berlintt = city.byplace['Berlin'].datasets['timetables'];
-    assert.equal(berlintt.ycount, 6);
+    assert.equal(berlintt.ycount, 70);
     assert.equal(berlintt.isopen, true);
   });
 
   it('city score is ok', function(){
     var berlintt = city.byplace['Berlin'];
-    assert.equal(berlintt.score, 60);
+    assert.equal(berlintt.score, 495);
     assert.equal(berlintt.totalopen, 5);
   });
 
