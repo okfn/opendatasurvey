@@ -27,7 +27,7 @@
 
 ### What's the current state of the Open Data Census?
 
-Right now we are collecting data for the **2013** Census, which focusses on country-level information.  We will be launching the 2013 Census results later in autumn 2013. 
+Right now we are collecting data for the **2013** Census, which focusses on country-level information.  We will be launching the 2013 Census results later in September/October 2013. 
 
 After that we will be looking at further developing the city-level Census and other enhancements.
 
