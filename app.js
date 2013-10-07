@@ -341,6 +341,8 @@ app.post('/country/review/:submissionid', function(req, res) {
       });
     } else if (req.body['submit'] === "Reject") {
       submission.reviewresult = 'rejected';
+      //The only field we need from the form is the reviewer
+      submission.reviewer = req.body['reviewername'];
       model.backend.markSubmissionAsReviewed(submission, function(err) {
         var msg = "Submission marked as rejected. The entry has been archived and marked as rejected. It will take a few minutes for this table to update. Thank you!";
         req.flash('info', msg);
