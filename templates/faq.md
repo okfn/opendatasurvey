@@ -27,7 +27,7 @@
 
 ### What's the current state of the Open Data Census?
 
-Right now we are collecting data for the **2013** Census, which focusses on country-level information.  We will be launching the 2013 Census results later in autumn 2013.
+Right now we are collecting data for the **2013** Census, which focusses on country-level information.  We will be launching the 2013 Census results later in Septmber/October 2013.
 
 After that we will be looking at developing a city-level Census and other enhancements.
 
@@ -46,7 +46,7 @@ The Open Data Census was initiated by the [Open Knowledge Foundation](http://okf
 
 ### What is the history of the Open Data Census?
 
-The Census was created by the [Open Knowledge Foundation](http://okfn.org) in 2012, and provides a clear measure of available open data - not what is claimed, but what data is actually available and how open it is. The Census is designed by open data experts, including the [Open Knowledge Foundation Open Government Working Group](http://opengovernmentdata.org/), and undergoes a process of peer review and evidence checking to ensure high quality results. An annual announcement of the results creates a focus for debate and review. The Census was launched in 2012 and is undergoing active development to create an Open Data Index in autumn 2013.
+The Census was created by the [Open Knowledge Foundation](http://okfn.org) in 2012, and provides a clear measure of available open data - not what is claimed, but what data is actually available and how open it is. The Census is designed by open data experts, including the [Open Knowledge Foundation Open Government Working Group](http://opengovernmentdata.org/), and undergoes a process of peer review and evidence checking to ensure high quality results. An annual announcement of the results creates a focus for debate and review. The Census was launched in 2012 and is undergoing active development to create an Open Data Index in September/October 2013.
 
 ### What datasets are included in the Country Census?
 
