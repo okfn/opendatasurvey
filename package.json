@@ -17,7 +17,7 @@
     "nconf": "",
     "connect-flash": "",
     "q": "0.9.x",
-    "google-spreadsheet": "https://github.com/mattfullerton/node-google-spreadsheets/tarball/goodnewlines"
+    "google-spreadsheet": "https://github.com/mattfullerton/node-google-spreadsheets/tarball/master"
   },
   "devDependencies": {
     "supertest": "",
