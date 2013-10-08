@@ -60,21 +60,28 @@ describe('Backend Entry', function() {
     });
   });
   it('insertEntry and updateEntry', function(done) {
+    //Deliberately include new line in details field
     var data = {
       year: 2012,
       dataset: 'spending',
       place: 'Germany',
-      exists: 'No'
+      details: 'Some \ndetails',
     };
     var newData = {
-      exists: 'Yes'
+      details: 'New details'
     }
     backend.insertEntry(data, function(err) {
-      // TODO: check something was actually created
+      //TODO: Test that something was inserted
       assert.ok(!err);
+      //N.B. We need to delete this anyway for getEntry, but having newlines in the query string, even when encoded, causes HTTP 400 error
+      delete data['details'];
       backend.updateEntry(data, newData, function(err) {
         assert.ok(!err);
-        done();
+        //Test that field was 'changed' (we didn't check the original value yet, TODO)
+        backend.getEntry(data, function(err, entry) {
+          assert.equal(entry.details, 'New details', entry);
+          done();
+        });
       });
     });
   });
