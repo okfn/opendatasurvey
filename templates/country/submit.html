@@ -101,10 +101,21 @@ Country - Submit
   {% for qu in questions.slice(9, 12) %}
   <div class="span6">
     <h3>{{qu.question}} (optional)</h3>
-    <input type="{{qu.type}}" {% if qu.type=='url' %} title="URL in the form of http://..."{% endif %} name="{{qu.id}}" value="{{prefill[qu.id]}}" placeholder="{{qu.placeholder}}" />
+    <input type="{{qu.type}}" {% if qu.type=='url' %} title="URL in the form of http://..."{% endif %} name="{{qu.id}}" value="{{prefill[qu.id]}}" placeholder="{{qu.placeholder}}" {% if qu.id=='format' %} list="formats" {% endif %} />
     <span class="help-block">{{qu.description}}</span>
   </div>
   {% endfor %}
+
+  <datalist id="formats">
+    <option value="CSV">
+    <option value="Excel">
+    <option value="HTML">
+    <option value="PDF">
+    <option value="json">
+    <option value="geojson">
+    <option value="shapefiles">
+  </datalist>
+
 </fieldset>
 
   <h3>Further Information, Details and Comments (optional but strongly encouraged)</h3>
