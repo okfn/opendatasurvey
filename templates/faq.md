@@ -59,7 +59,7 @@ There are 10 datasets considered in the 2013 Census:
 
 ### Examples of more detailed discussions of the data catagories relating to submissions and review
 
-Government data are often somewhat complex matters, and specific submission and review can meet challenges - which are discussed on the [Census discussion list](http://lists.okfn.org/mailman/listinfo/open-data-census). Some of the recurring questions and considerations are listed here:
+Issues and challenges for submitters and reviewers are discussed on the [Census discussion list](http://lists.okfn.org/mailman/listinfo/open-data-census). Some of the recurring questions and considerations are listed here:
 
 #### Postcodes/Zipcodes
 A list of the postcodes alone are not enough, as an important component is the land mass that they refer to. So the data having latitude/longitude components is a key requirement. There could however also be cases where the corresponding location information (eg town name) could be converted to lat/long through the use of other open data (eg an open address register or gazetteer with lat/longs).
