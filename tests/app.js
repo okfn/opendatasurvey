@@ -139,7 +139,7 @@ describe('Country', function() {
       .expect(200)
       .end(function(err, res) {
         assert(res.text.match('Publish will overwrite the whole current entry'), 'on review page');
-        assert(res.text.match('Government budget at a high level'), 'correct dataset shows up');
+        assert(res.text.match('National government budget at a high level'), 'correct dataset shows up');
         done();
       });
   });
