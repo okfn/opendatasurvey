@@ -37,6 +37,9 @@ After that we will be looking at developing a city-level Census and other enhanc
 
 The Open Data Census is a year-round ongoing measure of the current state of the open data world; annual snapshots are made by the [Open Knowledge Foundation](http://okfn.org) to showcase the results (the first one later in autumn 2013).  Anyone can contribute at any time to have their input peer-reviewed periodically by a team of 60+ Country Editors.
 
+### How can the results of Open Data Census be used?
+
+The Open Data Census does not aim to create a comprehensive list of open data sets around the world for data users. The Open Data Census seeks to be a tool with which people can ignite conversations with their government by either questioning their performance on the ranking list or by pointing to performance of other governments.
 
 ### Who created the Open Data Census?
 
@@ -54,6 +57,26 @@ There are 10 datasets considered in the 2013 Census:
 
 {{datasets}}
 
+### Examples of more detailed discussions of the data catagories relating to submissions and review
+
+Government data are often somewhat complex matters, and specific submission and review can meet challenges - which are discussed on the [Census discussion list](http://lists.okfn.org/mailman/listinfo/open-data-census). Some of the recurring questions and considerations are listed here:
+
+#### Postcodes/Zipcodes
+A list of the postcodes alone are not enough, as an important component is the land mass that they refer to. So the data having latitude/longitude components is a key requirement. There could however also be cases where the corresponding location information (eg town name) could be converted to lat/long through the use of other open data (eg an open address register or gazetteer with lat/longs).
+More detailed discussion can be found in [this thread](http://lists.okfn.org/pipermail/open-data-census/2013-October/000221.html) on the Census discussion list.
+
+#### Elections Results
+How far back should the data go before elections info is considered valid? There is no strict guideline for this, but in general the data should include at least the most recent cycle. Of course, please put your explanation and justification in the details section.
+
+#### National Map
+Map details can vary a lot, so consider providing more detailed information in the comments-section - ie. cartographic boundaries (coastline plus country borders), topographic values (that show elevation), land cover (forests versus lakes, etc.) - or even satellite images. Also, what sort of properties does it contain? For example, if the dataset is a set of images (Tiff), are they georeferenced (GeoTiff)? Are they vector or raster? Print-ready? See more detailed discussions in [this thread](http://lists.okfn.org/pipermail/open-data-census/2013-October/000237.html) on the Census discussion list.
+
+#### Transport Timetables
+Some countries do not have national timetables, so in those cases a way forward is either to list the data as unavailable (despite how that reflects on the overall score) or see if major regional data in general are released in a similarly (open) ways. In those cases, however, make sure to provide detailed explanation of the background in the comments field.
+
+#### See the full Census discussion list archive [here](http://lists.okfn.org/mailman/listinfo/open-data-census).
+
+#### 
 
 ### How reliable is the Open Data Census?
 
@@ -68,6 +91,9 @@ We are currently expanding and improving the Open Data Census and are currently 
 
 Right now we're focussed on the 2013 Census and so the information on the site and in this FAQ mostly is about 2013. In 2012 we looked at fewer datasets and some of the details of methodology were a little different.
 
+### I see you are referring to a Census push or spring in the ‘autumn of 2013’, which can be a bit ambiguous depending on geographic location  - when is that exactly? 
+
+By ‘autumn’ we are referring to the northern hemisphere autumn/fall, which was a term originating in preliminary internal correspondance. Since then we’ve tried to replace this term with ‘September/October 2013’, and apologize if single instances are still to be found across the site.
 
 <h2 id="submit">Submitting information to the Census</h2>
 
@@ -87,7 +113,6 @@ It works like this:
 3. Reviewers either approve (with or without amendments) or reject the Submission
 
 4. If approved, these Submissions become an official entry in the census and are displayed on the website.
-
 
 
 ### How can I improve the Census information about a country?
@@ -116,6 +141,12 @@ When filling in information about a dataset, there's a list of questions to answ
 
 {{questions}}
 
+### How should I use the comments/details field when submitting and reviewing?
+
+Comparing datasets between countries are, as mentioned, a complex and often difficult task. This is why the comments/details field is public, so that submitters and reviewers can explain the reasoning for their choices. In other words, the comments/details field is your main tool to ensure that your Country’s entries and scores can be compared to other countries’. We therefore strongly encourage you to be thorough in your comments, as that will reflect on how your country is perceived and compared.
+
+Tip: Try to see the comments of countries with similar score in the given category, or go to countries whose data systems and governance structure may be similar to your country’s.
+
 ### Questions about the assessment of openness
 
 #### Are data to be considered publicly available if an FOI request is needed to retrieve them?
@@ -125,6 +156,21 @@ By publicly available is meant without having to put in FOI request - so it shou
 #### What about countries where there is no official Open License or Open Government Data License in their legislation?
 
 Data can only be marked as "openly licensed" if an open licence has been applied to it. [Open Licences](http://opendefinition.org/licenses/) which meet the requirements of [the Open Definition](http://opendefinition.org/) are [listed here](http://opendefinition.org/licenses/).
+
+#### What formats can generally be considered machine readable?
+
+Since machine readability is not strictly a matter of data format, here are some further considerations to consider:
+
+HTML, even well structured, will only sometimes count as machine-readable and is, by default, not machine-readable - because it most often needs parsing and thereby is not directly reusable.
+
+CSV, XML and XLS would usually count as machine readable, but not always. Consult the [Census discussion list](http://lists.okfn.org/mailman/listinfo/open-data-census) if you’re in doubt.
+
+An API might well count for machine-readable (though probably not for bulk) but it would have to provided by the official source (see the notice at the top of the submission form making clear that the questions relate to the officially provided source - not data provided by the third-parties even if derived from the official source).
+
+In general we suggest to look at machine readable as a combination of fact and objective judgement, and not say that a particular format is automatically machine-readable or not machine-readable. So, machine-readable is to be understood in the sense that you could extract the data and directly reuse it.
+
+This issue is discussed in more detail in [this thread](http://lists.okfn.org/pipermail/open-data-census/2013-October/000227.html) on the Census discussion list.
+
 
 ### What should I do if different regions/counties/municipalities have different open data situations?
 
@@ -172,6 +218,14 @@ In the meantime you can see the [results in progress for the 2013 Census](http:/
 
 The Open Data Census measures the state of openness of 10 data sets for each country. The overall score for a dataset is based on the response to specific questions with varying weightings - the weighting for each question is listed in the question table above. The overall country score is then calculated from the score on each dataset.
 
+The score algorithm is:
+
+1. If answer is yes to a question at the weighting value to score for that dataset
+2. Add up total scores for each dataset to get a country score
+
+As the weightings indicate, timeliness is now included with a weighting of 10.
+
+One of the aims of the questions for each dataset is to provide a increasing set of requirements leading up to full openness (excluding ‘timely’ which is important but not a requirement for open data). It should be noted that this does not mean each question directly builds on the previous since some of are parallel (e.g. digital form and publicly available) but in general there is a progression, so ”No” on an earlier question may well imply ”No” on a later question.
 
 <h2 id="more">If you are intrigued by Open Data...</h2>
 
