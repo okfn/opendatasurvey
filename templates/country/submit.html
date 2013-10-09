@@ -21,6 +21,8 @@ Country - Submit
 
   <h4>3. Assessment Point</h4>
   <p>Questions should be answered on the basis of the situation as of the current assessment point (August / September 2013). Do <strong>not</strong> answer based on what may happen in the future (or the situation previously). So, for example, if data will be online soon but is not online now the answer to the 'online' question should be 'No' (though please mention that it <em>will</em> be available in the details and comments section).</p>
+
+  <p style="text-align: center;">For more details, please see our <a href="/faq">FAQ</a></p>
 </div>
 
 <form action="" method="POST" class="form" autocomplete="off">
@@ -99,7 +101,7 @@ Country - Submit
   {% for qu in questions.slice(9, 12) %}
   <div class="span6">
     <h3>{{qu.question}} (optional)</h3>
-    <input type="{{qu.type}}" name="{{qu.id}}" value="{{prefill[qu.id]}}" placeholder="{{qu.placeholder}}" />
+    <input type="{{qu.type}}" {% if qu.type=='url' %} title="URL in the form of http://..."{% endif %} name="{{qu.id}}" value="{{prefill[qu.id]}}" placeholder="{{qu.placeholder}}" />
     <span class="help-block">{{qu.description}}</span>
   </div>
   {% endfor %}
@@ -121,7 +123,7 @@ Country - Submit
 
     <div class="span4">
       <label>Link for you (optional)</label>
-      <input type="url" name="submitterurl" value="" placeholder="http://">
+      <input type="url" name="submitterurl" value="" placeholder="http://" title="Your URL in the form of http://...">
       <span class="help-block">A link to your website, twitter etc. So we can credit you. This will be public.</span>
     </div>
 
