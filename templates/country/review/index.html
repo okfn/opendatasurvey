@@ -5,7 +5,7 @@ Review - Countries
 {% endblock %}
 
 {% block content %}
-
+{% if subrecord.place %}
 <div class="page-header">
   <h1>
     <span class="muted">
@@ -14,6 +14,7 @@ Review - Countries
     {{datasetfriendly}}
   </h1>
 </div>
+{% endif %}
 
 <div class="alert alert-warning">
   <h3 style="margin-top: 0;">Please read first</h3>

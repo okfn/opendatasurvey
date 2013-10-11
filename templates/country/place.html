@@ -6,7 +6,7 @@
 
 {% block content %}
 
-{% if not loggedin %}
+{% if not loggedin and place %}
   <p class="pull-right">
     Country reviewer? <a href="/country/login/?next=/country/overview/{{place | replace(' ', '%20') }}">Log in here</a>.
   </p>
