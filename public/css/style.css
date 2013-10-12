@@ -72,7 +72,7 @@ ul.availability.icons li {
 	border-radius: 2px;
 }
 ul.availability.icons li.yes {
-	background-color:#8bdd3a;
+	background-color:#66ae1e;
 }
 ul.availability.icons li.no {
 	background-color:#dd3d3a;
@@ -125,7 +125,7 @@ ul.availability.icons.mini li i {
 	border-left-color:#f9b339;
 }
 .key.availability ul li.yes {
-	border-left-color:#8bdd3a;
+	border-left-color:#66ae1e;
 }
 .key.availability ul li.no {
 	border-left-color:#dd3d3a;
