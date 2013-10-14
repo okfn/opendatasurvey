@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{datasetNamesMap[dataset]}} - Data sets
+{% endblock %}
+
+{% block content %}
+
+{% if not loggedin and place and not readonly %}
+  <p class="pull-right">
+    Country reviewer? <a href="/country/login/?next=/country/overview/{{place | replace(' ', '%20') }}">Log in here</a>.
+  </p>
+{% endif %}
+
+<h1>
+  <a href="/faq#whatdatasets" data-toggle="tooltip" class="count-0" title="Return to country results overview">Data sets</a> /
+  {{ datasetNamesMap[dataset] }}
+</h1>
+
+      <div id="spacer"></div>
+      <div class="tabbable"> <!-- Only required for left/right tabs -->
+
+        <div class="tab-content">
+          <div class="tab-pane active" id="table-overview">
+            <div class="table">
+
+{% set record_fields = [
+  { 'id': 'exists',
+    'icon': 'file-alt',
+    'label': 'Does the data exist?' },
+  { 'id': 'digital',
+    'icon': 'save',
+    'label': 'Is it in digital form?' },
+  { 'id': 'public',
+    'icon': 'eye-open',
+    'label': 'Is it publicly available?' },
+  { 'id': 'free',
+    'icon': 'dollar',
+    'label': 'Is it free of charge?' },
+  { 'id': 'online',
+    'icon': 'download',
+    'label': 'Is it online?' },
+  { 'id': 'machinereadable',
+    'icon': 'keyboard',
+    'label': 'Is it machine readable (e.g. spreadsheet not PDF)?' },
+  { 'id': 'bulk',
+    'icon': 'copy',
+    'label': 'Available in bulk (e.g. can you download the *whole* dataset easily)?' },
+  { 'id': 'openlicense',
+    'icon': 'unlock-alt',
+    'label': 'Is it openly licensed (as per OpenDefinition.org)?' },
+  { 'id': 'uptodate',
+    'icon': 'time',
+    'label': 'Is it up to date?' }
+] %}
+
+<p>On this page you can see the state of open data for {{ datasetNamesMap[dataset] }} across all countries for which we have information (displayed down the left hand side). Each icon in the data availability column represents important factors indicating data accessibility or availability - mouse over the icons to see what they are and the colours correspond to yes / no / unsure / no data.</p>
+
+{% if not readonly %}
+<p>Is something missing or is the data incorrect? Then please hit either 'submit information' or 'propose revisions' on the right and contribute more information. We need a correct direct link to the official source of the data - so make sure to include this! Click the link icon under Location to see the current entry.</p>
+
+<p>Greyed out queued entries are submissions that are waiting approval by our editor team - but you can see the entry now and judge whether anything is missing.</p>
+{% endif %}
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Country</th>
+      <th>Data Availability</th>
+      <th>Location</th>
+      <th>Information</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for place in info.places %}
+    {% set record = info.bydataset[dataset][place] %}
+    {% set type = 'info' %}
+    {% include '_snippets/overview-table-bydataset-row.html' %}
+
+    {% endfor %}
+  </tbody>
+</table>
+
+{% include '_snippets/key.html' %}
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    <script src="{{page.root}}/src/common.js"></script>
+    <script src="{{page.root}}/src/census.js"></script>
+{% endblock %}

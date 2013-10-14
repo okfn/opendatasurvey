@@ -51,7 +51,7 @@ The Open Data Census was initiated by the [Open Knowledge Foundation](http://okf
 
 The Census was created by the [Open Knowledge Foundation](http://okfn.org) in 2012, and provides a clear measure of available open data - not what is claimed, but what data is actually available and how open it is. The Census is designed by open data experts, including the [Open Knowledge Foundation Open Government Working Group](http://opengovernmentdata.org/), and undergoes a process of peer review and evidence checking to ensure high quality results. An annual announcement of the results creates a focus for debate and review. The Census was launched in 2012 and is undergoing active development to create an Open Data Index in September/October 2013.
 
-### What datasets are included in the Country Census?
+<h3 id="whatdatasets">What datasets are included in the Country Census?</h3>
 
 There are 10 datasets considered in the 2013 Census:
 
@@ -76,7 +76,7 @@ Some countries do not have national timetables, so in those cases a way forward 
 
 #### See the full Census discussion list archive [here](http://lists.okfn.org/mailman/listinfo/open-data-census).
 
-#### 
+####
 
 ### How reliable is the Open Data Census?
 
@@ -91,7 +91,7 @@ We are currently expanding and improving the Open Data Census and are currently 
 
 Right now we're focussed on the 2013 Census and so the information on the site and in this FAQ mostly is about 2013. In 2012 we looked at fewer datasets and some of the details of methodology were a little different.
 
-### I see you are referring to a Census push or spring in the ‘autumn of 2013’, which can be a bit ambiguous depending on geographic location  - when is that exactly? 
+### I see you are referring to a Census push or spring in the ‘autumn of 2013’, which can be a bit ambiguous depending on geographic location  - when is that exactly?
 
 By ‘autumn’ we are referring to the northern hemisphere autumn/fall, which was a term originating in preliminary internal correspondance. Since then we’ve tried to replace this term with ‘September/October 2013’, and apologize if single instances are still to be found across the site.
 

@@ -194,6 +194,25 @@ app.get('/country/overview/:place', function(req, res) {
   });
 });
 
+//Show details per dataset
+app.get('/country/dataset/:dataset', function(req, res) {
+  var dataset = req.params.dataset;
+  if (!model.datasetNamesMap[dataset]) {
+    res.send(404, 'There is no such dataset in the index. Are you sure you have spelled it correctly? Please check the <a href="/faq#whatdatasets">FAQ</a> for the list of datasets');
+    return;
+  }
+
+  console.log(model.data.country.bydataset['timetables']['United Kingdom']);
+
+  res.render('country/dataset.html', {
+    info: model.data.country,
+    loggedin: req.session.loggedin,
+    dataset: dataset,
+    datasetNamesMap: model.datasetNamesMap
+  });
+
+});
+
 //This messes up URL arguments, removing for now
 /*
  app.get('/country/remove', function(req, res) {
