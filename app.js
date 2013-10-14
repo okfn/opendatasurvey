@@ -87,6 +87,9 @@ app.all('*', function(req, res, next) {
   if (config.get('test:testing') === true) {
     req.session.loggedin = true;
   }
+  if (config.get('production:readonly') === true) {
+    res.locals.readonly = true;
+  }
   res.locals.error_messages = req.flash('error');
   res.locals.info_messages = req.flash('info');
   next();

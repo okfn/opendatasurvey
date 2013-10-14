@@ -5,7 +5,7 @@
 {% block content %}
 
 
-  <div class="alert alert-success full-width"> This is the 2013 Country Census - an index of the state of open data across the world! It is currently <strong>in progress</strong>. </div>
+  <div class="alert alert-success full-width"> This is the 2013 Country Census - an index of the state of open data across the world!{% if not readonly %} It is currently <strong>in progress</strong>{% endif %}.</div>
 
   <div class="page-header">
     <div class="summary featured">
@@ -22,7 +22,7 @@
     </div>
   </div>
 
-  <p>The Census is an initiative of the <a href="http://okfn.org/">Open Knowledge Foundation</a> with entries contributed by advocates and experts from the global <a href="http://okfn.org/opendata/">open data</a> community. If you want to <strong>add, change or improve an entry</strong> please see the <a href="/contribute/">instructions</a> then choose your country or add a new one.</p>
+  <p>The Census is an initiative of the <a href="http://okfn.org/">Open Knowledge Foundation</a> with entries contributed by advocates and experts from the global <a href="http://okfn.org/opendata/">open data</a> community.{% if not readonly %} If you want to <strong>add, change or improve an entry</strong> please see the <a href="/contribute/">instructions</a> then choose your country or add a new one.{% endif %}</p>
 
 
 
