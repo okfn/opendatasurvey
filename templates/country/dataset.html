@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-{{datasetNamesMap[dataset]}} - Data sets
+{{datasetNamesMap[dataset]}} - Datasets
 {% endblock %}
 
 {% block content %}
@@ -13,7 +13,7 @@
 {% endif %}
 
 <h1>
-  <a href="/country/" data-toggle="tooltip" class="count-0" title="Return to country results overview">Data sets</a> /
+  <a href="/country/" data-toggle="tooltip" class="count-0" title="Return to country results overview">Datasets</a> /
   {{ datasetNamesMap[dataset] }}
 </h1>
 <!-- alternative link, but then we have different navigation modes: "/faq#whatdatasets" -->

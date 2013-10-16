@@ -17,8 +17,8 @@ Contributions to the Census are encouraged. Please visit the <a href="http://cen
 
 <ol>
   <li>Find the dataset and country in the table where information is missing you want to submit for.</li>
-  <li>Use your favorite Internet search tool (Google etc.) to see if the data set is available online. Keep the URL open in a separate window.</li>
-  <li>Click the 'Add data to the Census' button and fill in the form based on the data set you have found.</li>
+  <li>Use your favorite Internet search tool (Google etc.) to see if the dataset is available online. Keep the URL open in a separate window.</li>
+  <li>Click the 'Add data to the Census' button and fill in the form based on the dataset you have found.</li>
   <li>Click submit.</li>
   <li>Your submission, subject to review, will soon be visible in the table.</li>
 </ol>

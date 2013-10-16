@@ -39,7 +39,7 @@ The Open Data Census is a year-round ongoing measure of the current state of the
 
 ### How can the results of Open Data Census be used?
 
-The Open Data Census does not aim to create a comprehensive list of open data sets around the world for data users. The Open Data Census seeks to be a tool with which people can ignite conversations with their government by either questioning their performance on the ranking list or by pointing to performance of other governments.
+The Open Data Census does not aim to create a comprehensive list of open datasets around the world for data users. The Open Data Census seeks to be a tool with which people can ignite conversations with their government by either questioning their performance on the ranking list or by pointing to performance of other governments.
 
 ### Who created the Open Data Census?
 
@@ -122,7 +122,7 @@ If you've got information about a dataset which isn't in the Census yet you can 
 * Select your country in [the list](http://2013.census.okfn.org/contribute/) and click on it.
 * You are now on the Country overview page for that country
 * Click the blue “Submit Information” button on the right next to the appropriate category.
-* Fill the form based on the data set you have found (there are detailed instructions on the page).
+* Fill the form based on the dataset you have found (there are detailed instructions on the page).
 * Click Submit. Your submission is now waiting for review, and will be visible in the table as 'awaiting review' after a few minutes.
 
 ### How can I correct an existing entry in the Census?
@@ -135,7 +135,7 @@ We welcome corrections to the Census :)  Anyone can submit corrections to the Ce
 * Fill in the form based on the changes you want to make to the existing data.
 * Click Submit. Your submission is now waiting for review, and will be visible in the table as 'awaiting review' after a few minutes.
 
-### What do all the questions about the data sets mean?
+### What do all the questions about the datasets mean?
 
 When filling in information about a dataset, there's a list of questions to answer about the availability and openness of the datasets.  The answers then appear in the country overview page for the Census.
 
@@ -184,7 +184,7 @@ The [main Census page](http://census.okfn.org) points to the current year's cens
 
 ### I want to help but I'm not sure where to start!
 
-On the Open Data Census, you can see the 10 categories of data that we are focusing on on [the actual site](http://2013.census.okfn.org/country/). Each of the entries for each country has been sent in by citizens of that country, who have simply used Google or other search engines to find out what data sets are available (simply finding the URL) and under which circumstances (are the data openly licensed, can they be downloaded in bulk etc.) - and then made a submission via the form on the site, where they simply fill out a handful of questions and put in the URL for the data. All in all it is a really easy (and fun) task that helps to put a country on the open data map - and it's easy to get started!
+On the Open Data Census, you can see the 10 categories of data that we are focusing on on [the actual site](http://2013.census.okfn.org/country/). Each of the entries for each country has been sent in by citizens of that country, who have simply used Google or other search engines to find out what datasets are available (simply finding the URL) and under which circumstances (are the data openly licensed, can they be downloaded in bulk etc.) - and then made a submission via the form on the site, where they simply fill out a handful of questions and put in the URL for the data. All in all it is a really easy (and fun) task that helps to put a country on the open data map - and it's easy to get started!
 
 You can do some research yourself! Pick a country where the Census shows there is data missing or where there are comments showing that there's uncertainty (perhaps the licence hasn't been specified for example) or a country that you know well.
 
@@ -216,7 +216,7 @@ In the meantime you can see the [results in progress for the 2013 Census](http:/
 
 <h3 id="scoring">How does the scoring system work?</h3>
 
-The Open Data Census measures the state of openness of 10 data sets for each country. The overall score for a dataset is based on the response to specific questions with varying weightings - the weighting for each question is listed in the question table above. The overall country score is then calculated from the score on each dataset.
+The Open Data Census measures the state of openness of 10 datasets for each country. The overall score for a dataset is based on the response to specific questions with varying weightings - the weighting for each question is listed in the question table above. The overall country score is then calculated from the score on each dataset.
 
 The score algorithm is:
 
