@@ -58,6 +58,15 @@ i[class*='icon-'] {
   max-width: 350px;
 }
 
+
+#table-overview a [class^="icon"] {
+	color:#333333;
+}
+a .icons-nodata,
+#table-overview a .icons-nodata {
+  color: #CCCCCC;
+}
+
 ul.icons {
 	margin:0;
 }
@@ -68,22 +77,26 @@ ul.icons li {
 	line-height:22px;
 	text-align:center;
 }
+
+ul.availability.icons li,
+#table-overview ul.availability.icons a [class^="icon"] {
+	color:#FFF;
+}
 ul.availability.icons li {
 	background-color:#CCC;
-	color:#FFF;
   margin: -1px;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
 	border-radius: 2px;
 }
 ul.availability.icons li.yes {
-	background-color:#66ae1e;
+	background-color:#8bdd3a;
 }
 ul.availability.icons li.no {
 	background-color:#dd3d3a;
 }
 ul.availability.icons li.maybe {
-	background-color:#f9b339;
+	background-color:#39bef9;
 }
 ul.availability.icons li .text {
 	display:none;
@@ -99,9 +112,6 @@ ul.availability.icons.mini li i {
 	display:none;
 }
 
-.icons-nodata {
-  color: #333333;
-}
 
 .key {
 	display:inline-block;
@@ -127,10 +137,10 @@ ul.availability.icons.mini li i {
 	border-left-color:#CCC;
 }
 .key.availability ul li.maybe {
-	border-left-color:#f9b339;
+	border-left-color:#39bef9;
 }
 .key.availability ul li.yes {
-	border-left-color:#66ae1e;
+	border-left-color:#8bdd3a;
 }
 .key.availability ul li.no {
 	border-left-color:#dd3d3a;
