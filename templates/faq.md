@@ -99,7 +99,7 @@ By ‘autumn’ we are referring to the northern hemisphere autumn/fall, which w
 
 At the moment we are only working on 2013 information.
 
-The census is a survey of the state of open data around the world focusing on the the availability and openness of a <a href=”http://2013.census.okfn.org/about/”>specific set of key datasets</a>.
+The census is a survey of the state of open data around the world focusing on the the availability and openness of a <a href="/faq#whatdatasets">specific set of key datasets</a>.
 
 
 ### What's the Open Data Census data collection and review process?
