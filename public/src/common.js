@@ -9,7 +9,7 @@ OpenDataCensus.dataCatalogsUrl = "https://docs.google.com/spreadsheet/ccc?key=0A
 
 OpenDataCensus.colorScale = {
   totalColorScale: new chroma.ColorScale({
-    colors: ['#dd3d3a', '#f9b339', '#8bdd3a'],
+    colors: ['#dd3d3a', '#8bdd3a'],
     limits: [0, 1000]
   })
 };
