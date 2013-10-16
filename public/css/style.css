@@ -465,9 +465,9 @@ table.response-summary thead tr th {
 table.response-summary thead tr th div {
 	text-align: left;
 	writing-mode: tb-rl;
-	-webkit-transform: rotate(-90deg);
-	-o-transform: rotate(-90deg);
-	transform: rotate(-90deg);
+	-webkit-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+	transform: rotate(-45deg);
 	vertical-align: middle;
 	padding: 8px 0;
 	height: 55px;
@@ -490,13 +490,16 @@ table.response-summary td  ul.availability.icons.mini {
 	margin-top:7px;
 }
 
-table.response-summary td.placescore {
-  text-align: right;
+table.response-summary tr:nth-child(n+2) td.placescore {
+	border:none;
 }
-
 table.response-summary td.placescore a {
-	/* background-color:#FFF; */
-	margin-left:6px;
+	background-color:#FFF;
+	background-color:rgba(255,255,255,0.5);
+	margin-right:6px;
+}
+table.response-summary td.placescore a:hover {
+	text-decoration:none;
 }
 
 table.response-summary .no-data a {
@@ -526,8 +529,9 @@ table.response-summary td.count-0 {
 
 
 
-table.response-summary td,
-table.response-summary td:hover {
+table.response-summary th:empty,
+table.response-summary td:empty {
+	display:none;
 }
 
 table.cell-summary {
@@ -536,7 +540,8 @@ table.cell-summary {
 
 table.table th.area-name {
 	text-align: left;
-	width: 140px;
+	min-width: 140px;
+	border-left:none;
 }
 
 .nav-tabs {
