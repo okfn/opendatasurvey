@@ -94,6 +94,7 @@ OpenDataCensus.summaryTable = (function(){
     });
     $('.sort-table').change();
     $('a[data-toggle="tooltip"]').tooltip();
+    $('a[data-toggle="popover"]').popover();
   };
 
   return summaryTable;

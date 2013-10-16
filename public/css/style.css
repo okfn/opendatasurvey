@@ -5,6 +5,14 @@
 .tooltip {
   font-size: 13px;
 }
+.popover {
+	max-width: 400px;
+}
+.popover-content {
+	word-wrap: break-word;
+  font-size: 13px;
+  line-height: 1.5;
+}
 
 /* General Styles */
 /* ============== */
@@ -54,6 +62,9 @@ table tr.queued:hover th {
 td.recordurl {
   font-size:12px;
   max-width: 100px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 i[class*='icon-'] {

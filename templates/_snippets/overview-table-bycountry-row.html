@@ -50,7 +50,8 @@
       </li>
       <li>
         {% if record and record.details %}
-          <a data-toggle="tooltip" data-html="true" data-trigger="click" class="count-0" title="{{ record.details | replace ('\"', '\'') | urlize | wordwrap(100, '\n', true) }}">
+          {% set content = record.details | replace('\n', '<br>') | replace ('\"', '\'') | urlize | wordwrap(100, '\n', true) %}
+          <a href="javascript:;" class="count-0" title="Details" data-toggle="popover" data-content="{{ content }}" data-html="true" data-placement="left">
             <i class="icon-info-sign"></i>
           </a>
         {% else %}
