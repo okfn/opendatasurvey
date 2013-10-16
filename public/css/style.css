@@ -1,5 +1,11 @@
 @import "fonts.css";
 
+/* Bootstrap Overrides */
+/* =================== */
+.tooltip {
+  font-size: 13px;
+}
+
 /* General Styles */
 /* ============== */
 h1,
