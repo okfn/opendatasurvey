@@ -81,6 +81,17 @@ env.addFilter('wordwrap', function(str, width, brk, cut) {
     return str.match( RegExp(regex, 'g') ).join( brk );
 });
 
+env.addFilter('truncate', function(str, width) {
+    width = width || 100;
+    if (!str) {
+      return str;
+    }
+    if (str.length <= width) return str;
+    else {
+      return str.substr(0,width-1) + "...";
+    }
+});
+
 env.express(app);
 
 app.all('*', function(req, res, next) {
@@ -177,6 +188,7 @@ app.get('/country/overview/:place', function(req, res) {
     _.each(model.data.country.datasets, function(dataset) {
       _.each(info.entrys, function(entry) {
         if (entry.dataset == dataset.id) {
+          entry['ycount'] = model.scoreOpenness(entry);
           entrys[dataset.id] = entry;
         }
       });
@@ -201,9 +213,6 @@ app.get('/country/dataset/:dataset', function(req, res) {
     res.send(404, 'There is no such dataset in the index. Are you sure you have spelled it correctly? Please check the <a href="/faq#whatdatasets">FAQ</a> for the list of datasets');
     return;
   }
-
-  console.log(model.data.country.bydataset['timetables']['United Kingdom']);
-
   res.render('country/dataset.html', {
     info: model.data.country,
     loggedin: req.session.loggedin,

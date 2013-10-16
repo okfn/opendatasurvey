@@ -6,7 +6,7 @@
 
 {% block content %}
 
-{% if not loggedin and place %}
+{% if not loggedin and place and not readonly %}
   <p class="pull-right">
     Country reviewer? <a href="/country/login/?next=/country/overview/{{place | replace(' ', '%20') }}">Log in here</a>.
   </p>
@@ -56,29 +56,31 @@
 
 <p>This is the country overview page where you can see the state of open data across each key dataset (displayed down the left hand side). To find out more about each dataset, click on the info icon.
 Each icon in the data availability column represents important factors indicating data accessibility or availability - mouse over the icons to see what they are and the colours correspond to yes / no / unsure / no data.</p>
-
+{% if not readonly %}
 <p>Is something missing or is the data incorrect? Then please hit either 'submit information' or 'propose revisions' on the right and contribute more information. We need a correct direct link to the official source of the data - so make sure to include this! Click the link icon under Location to see the current entry.</p>
 
 <p>Greyed out queued entries are submissions that are waiting approval by our editor team - but you can see the entry now and judge whether anything is missing.</p>
-
+{% endif %}
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Dataset</th>
-      <th>Data Availability</th>
-      <th>Location</th>
+      <th>Data set</th>
+      <th>Score</th>
+      <th>Breakdown</th>
+      <th>Location (URL)</th>
       <th>Information</th>
-      <th></th>
+      {% if not readonly %}<th></th>{% endif %}
     </tr>
   </thead>
   <tbody>
     {% include '_snippets/overview-table-bycountry-row.html' %}
     {% for dataset in info.datasets %}
       {{ inforow(dataset, entrys[dataset.id], 'info') }}
-
-      {% for submission in submissions[dataset.id] %}
-      {{ inforow(dataset, submission, 'submissions') }}
-      {% endfor %}
+      {% if not readonly %}
+        {% for submission in submissions[dataset.id] %}
+        {{ inforow(dataset, submission, 'submissions') }}
+        {% endfor %}
+      {% endif %}
 
     {% endfor %}
   </tbody>

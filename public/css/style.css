@@ -45,14 +45,19 @@ table tr.queued:hover th {
 	opacity:1;
 }
 
+td.recordurl {
+  font-size:12px;
+  max-width: 100px;
+}
+
 i[class*='icon-'] {
   text-decoration: none;
 }
-  
+
 .tooltip-inner {
   max-width: 350px;
 }
- 
+
 
 #table-overview a [class^="icon"] {
 	color:#333333;
@@ -61,7 +66,7 @@ a .icons-nodata,
 #table-overview a .icons-nodata {
   color: #CCCCCC;
 }
-  
+
 ul.icons {
 	margin:0;
 }
@@ -72,6 +77,7 @@ ul.icons li {
 	line-height:22px;
 	text-align:center;
 }
+
 ul.availability.icons li,
 #table-overview ul.availability.icons a [class^="icon"] {
 	color:#FFF;
@@ -105,6 +111,7 @@ ul.availability.icons.mini li {
 ul.availability.icons.mini li i {
 	display:none;
 }
+
 
 .key {
 	display:inline-block;
@@ -201,7 +208,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 	margin:-12px 0 0 5px;
 	border-color:rgb(237,237,236);
 	border-width:0;
-	border-top-width:3px;	
+	border-top-width:3px;
 	-webkit-border-radius: 0px;
 	-webkit-border-bottom-right-radius: 2px;
 	-webkit-border-bottom-left-radius: 2px;
@@ -298,7 +305,7 @@ div.section-right {
 .summary td{
   margin-bottom: 5px;
   }
-	
+
 .featured.summary {
 	 margin-top:30px;
 }
@@ -321,11 +328,11 @@ div.section-right {
 #spacer {
   clear: both;
   }
-	
+
 
 /* Home Page */
 /* ========= */
-	
+
 .dashboard {
   position: relative;
 }
@@ -345,7 +352,7 @@ div.section-right {
   top: 0;
   bottom: -10px;
   width: 9999px;   /* some huge width */
-} 
+}
 .dashboard:before {
    right: 100%;
 	 background-position: right 2px;
@@ -383,7 +390,7 @@ div.section-right {
 	background-repeat: no-repeat;
 	position:relative;
 	text-shadow: 0px -1px 0px #000000;
-  filter: dropshadow(color=#000000, offx=0, offy=-1); 
+  filter: dropshadow(color=#000000, offx=0, offy=-1);
 }
 .dashboard .bignumber > span:after {
 	content: "";
@@ -441,14 +448,14 @@ section.home-content .link.well .ribbon {
 }
 
 
-	
+
 td.bpvalue {
   text-shadow: 1px 1px #ffffff;
   }
-tr.active > td.bpvalue > div { 
+tr.active > td.bpvalue > div {
   background: #ff9900 !important;
   }
-input.span2 { 
+input.span2 {
   margin-bottom: 0px;
   margin-left: 0px;
   }
@@ -607,7 +614,7 @@ SPAN.brand {
     padding-left: 10px;
     }
 #pagesel A {
-     color: #ffffff; 
+     color: #ffffff;
      margin-top: 5px;
     }
 #pagesel {
@@ -671,8 +678,8 @@ ul.tab-control > li > a {
 .rankings > .selector > a {
   text-transform: capitalize;
   }
-	
-	
+
+
 /* Review */
 table.availability-form td {
 	text-align:center;
@@ -742,7 +749,7 @@ div.current-entry .label {
 	display:block;
 	text-shadow:none;
 }
-div.current-entry input[readonly], 
+div.current-entry input[readonly],
 div.current-entry textarea[readonly] {
   cursor: text;
 	margin-top:-3px;
@@ -770,7 +777,7 @@ div.historic-entries {
 }
 div.historic-entries textarea,
 div.historic-entries .textarea {
-	border:none;   
+	border:none;
 }
 div.historic-entries textarea {
 	-webkit-border-bottom-right-radius: 0px;
@@ -864,6 +871,6 @@ div.historic-entries div.current-entry:last-child .textarea {
 }
 
 table.faq-table tr td:first-child {
-  min-width: 150px; 
+  min-width: 150px;
 }
 

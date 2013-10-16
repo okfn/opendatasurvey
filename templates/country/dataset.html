@@ -13,10 +13,10 @@
 {% endif %}
 
 <h1>
-  <a href="/faq#whatdatasets" data-toggle="tooltip" class="count-0" title="Return to country results overview">Data sets</a> /
+  <a href="/country/" data-toggle="tooltip" class="count-0" title="Return to country results overview">Data sets</a> /
   {{ datasetNamesMap[dataset] }}
 </h1>
-
+<!-- alternative link, but then we have different navigation modes: "/faq#whatdatasets" -->
       <div id="spacer"></div>
       <div class="tabbable"> <!-- Only required for left/right tabs -->
 
@@ -66,10 +66,11 @@
   <thead>
     <tr>
       <th>Country</th>
-      <th>Data Availability</th>
-      <th>Location</th>
+      <th>Score</th>
+      <th>Breakdown</th>
+      <th>Location (URL)</th>
       <th>Information</th>
-      <th></th>
+      {% if not readonly %}<th></th>{% endif %}
     </tr>
   </thead>
   <tbody>

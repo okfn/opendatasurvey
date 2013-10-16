@@ -7,6 +7,9 @@
       {{ dataset.title }} &nbsp; <a data-toggle="tooltip" data-trigger="click" class="count-0" title="{{ dataset.description }}"><i class="icon-info-sign"></i></a>
     {% endif %}
   </td>
+  <td>
+      {{ record.ycount }}%
+  </td>
   <td{% if record %} data-place="{{ record.place }}" data-dataset="{{ record.dataset }}" data-datasetTitle="{{ dataset.title }}"{% endif %}>
     <ul class="availability icons">
       {% for field in record_fields %}
@@ -20,15 +23,11 @@
       {% endfor %}
     </ul>
   </td>
-  <td>
     {% if record and record.url %}
-      <a href="{{record.url}}" title="{{record.url}}" target="_blank"><i class="icon-link"></i></a>
+      <td class="recordurl"><a href="{{record.url}}" title="{{record.url}}" target="_blank">{{record.url | truncate(25)}}</a></td>
     {% else %}
-      <a data-toggle="tooltip" data-trigger="hover" title="No URL given">
-            <i class="icon-link icons-nodata"></i>
-          </a>
+      <td><!-- No URL given --></td>
     {% endif %}
-  </td>
   <td>
     <ul class="icons">
       <li>
@@ -80,8 +79,8 @@
       {% endif %}
     </ul>
   </td>
+  {% if not readonly %}
   <td>
-
     {% if type == 'info' %}
       {% if record %}
         <a id="submit-{{ dataset.id }}" href="/country/submit/?dataset={{ dataset.id }}&place={{ place }}" class="btn btn-mini btn-primary">
@@ -103,5 +102,6 @@
        </script>
     {% endif %}
   </td>
+  {% endif %}
 </tr>
 {%- endmacro %}
