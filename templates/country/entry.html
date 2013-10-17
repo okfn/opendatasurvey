@@ -78,10 +78,10 @@ Country Index - Entry for {{prefill.place}}/{{datasetNamesMap[prefill.dataset]}}
 {% include '_snippets/key.html' %}
 
 <h3>Details</h3>
-<table>
-  <tr><td>Date the data became available</td><td>{{ prefill.dateavailable }}</td></tr>
-  <tr><td>Format of data</td><td>{{ prefill.format }}</td></tr>
-  <tr><td>Contributors</td><td>TODO</td></tr>
+<table class="table table-striped yntable">
+  <tr><td>Date the data became available</td><td>&nbsp;&nbsp;&nbsp;{% if prefill.dateavailable %}{{ prefill.dateavailable }}{% endif %}</td></tr>
+  <tr><td>Format of data</td><td>&nbsp;&nbsp;&nbsp;{% if prefill.format %}{{ prefill.format }}{% endif %}</td></tr>
+  <tr><td>Contributors</td><td>&nbsp;&nbsp;&nbsp;TODO</td></tr>
 </table>
 
 <script src="{{page.root}}/src/common.js"></script>
