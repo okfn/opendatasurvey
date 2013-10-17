@@ -87,7 +87,8 @@ a .icons-nodata,
 ul.icons {
 	margin:0;
 }
-ul.icons li {
+ul.icons li,
+.data-icon {
 	display:inline-block;
 	width:22px;
 	height:22px;
@@ -96,26 +97,35 @@ ul.icons li {
 }
 
 ul.availability.icons li,
-#table-overview ul.availability.icons a [class^="icon"] {
+#table-overview ul.availability.icons a [class^="icon"],
+.data-icon {
 	color:#FFF;
 }
-ul.availability.icons li {
+ul.availability.icons li,
+.data-icon {
 	background-color:#CCC;
   margin: -1px;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
 	border-radius: 2px;
 }
-ul.availability.icons li.yes {
+.data-icon {
+	display: block;
+}
+ul.availability.icons li.yes,
+.data-icon.yes {
 	background-color:#8bdd3a;
 }
-ul.availability.icons li.no {
+ul.availability.icons li.no,
+.data-icon.no {
 	background-color:#dd3d3a;
 }
-ul.availability.icons li.maybe {
+ul.availability.icons li.maybe,
+.data-icon.maybe {
 	background-color:#39bef9;
 }
-ul.availability.icons li .text {
+ul.availability.icons li .text,
+.data-icon .text {
 	display:none;
 }
 
@@ -127,6 +137,28 @@ ul.availability.icons.mini li {
 }
 ul.availability.icons.mini li i {
 	display:none;
+}
+
+.data-availability {
+	margin-top: 10px;
+}
+.data-availability li {
+	box-sizing: border-box;
+	float: left;
+	width: 33%;
+	margin-bottom: 10px;
+	padding-right: 10px;
+}
+.data-availability li .data-icon {
+	position: absolute;
+	left: 0;
+}
+.data-availability li a {
+	color: #222;
+}
+.data-icon-wrapper {
+	position: relative;
+	padding-left: 28px;
 }
 
 
