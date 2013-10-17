@@ -120,7 +120,9 @@ app.get('/', function(req, res) {
 });
 
 app.get('/about', function(req, res) {
-  fs.readFile('templates/about.md', 'utf8', function(err, text) {
+  var aboutfile = 'templates/about.md';
+  if (config.get('production:readonly') === true) aboutfile = 'templates/aboutro.md';
+  fs.readFile(aboutfile, 'utf8', function(err, text) {
     var marked = require('marked');
     var content = marked(text);
     res.render('base.html', {
@@ -417,7 +419,10 @@ app.get('/country/logout', function(req, res) {
 });
 
 app.post('/country/login', function(req, res) {
-  doLogin(req, res);
+  if (config.get('production:readonly') === true) {
+      res.send(500, 'This version of the site does not support logging in.');
+  }
+  else doLogin(req, res);
 });
 
 function doLogin(req, res) {
