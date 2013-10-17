@@ -4,7 +4,7 @@
     {% if type == 'submissions' %}
       &#8627; Awaiting review
     {% else %}
-      {% if record %}<a href="/country/{{place | replace(' ', '%20')}}/{{dataset.id}}">{% endif %}{{ dataset.title }}{% if record %}</a>{% endif %} &nbsp; <a data-toggle="tooltip" data-trigger="click" class="count-0" title="{{ dataset.description }}"><i class="icon-info-sign"></i></a>
+      {% if record %}<a href="/country/{{place | replace(' ', '%20')}}/{{dataset.id}}">{% endif %}{{ dataset.title }}{% if record %}</a>{% endif %} &nbsp; <a href="javascript:;" data-toggle="popover" class="count-0" data-content="{{ dataset.description }}" title="{{ dataset.title }}"><i class="icon-info-sign"></i></a>
     {% endif %}
   </td>
   <td>
