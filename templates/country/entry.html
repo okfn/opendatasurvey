@@ -52,9 +52,12 @@ Country Index - Entry for {{prefill.place}}/{{datasetNamesMap[prefill.dataset]}}
 ] %}
 
 <table><tr>
-  <td{% if prefill %} data-place="{{ prefill.place }}" data-dataset="{{ prefill.dataset }}" data-datasetTitle="{{datasetNamesMap[prefill.dataset]}}"{% endif %}>
-    <ul class="availability icons">
-      {% for field in record_fields %}
+  {% for field in record_fields %}
+    {% if (loop.index-1)%3 == 0 %}
+      </tr><tr>
+    {% endif %}
+    <td{% if prefill %} data-place="{{ prefill.place }}" data-dataset="{{ prefill.dataset }}" data-datasetTitle="{{datasetNamesMap[prefill.dataset]}}"{% endif %}>
+      <ul class="availability icons">
         {% set state = prefill[field.id] %}
         <a data-toggle="tooltip" title="{{ field.label }}">
         <li class="{% if state == 'Yes' %}yes{% elif state == 'No' %}no{% elif state == 'Unsure' %}maybe{% endif %}">
@@ -62,10 +65,17 @@ Country Index - Entry for {{prefill.place}}/{{datasetNamesMap[prefill.dataset]}}
           <span class="text">{{ state }}</span>
         </li>
         </a>
-      {% endfor %}
+        {% for qu in ynquestions %}
+          {% if qu.id == field.id %}
+            {{field.label}} <a data-toggle="tooltip" title="{{qu.description}}"><i class="icon-info-sign"></i></a>
+          {% endif %}
+        {% endfor %}
     </ul>
   </td>
+  {% endfor %}
 </tr></table>
+
+
 
 {% include '_snippets/key.html' %}
 
