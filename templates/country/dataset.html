@@ -63,6 +63,14 @@
 {% endif %}
 
 <table class="table table-striped">
+  <colgroup>
+    <col width="25%" />
+    <col width="1%" />
+    <col width="25%" />
+    <col />
+    <col width="13%" />
+    {% if not readonly %}<col width="15%" />{% endif %}
+  </colgroup>
   <thead>
     <tr>
       <th>Country</th>
