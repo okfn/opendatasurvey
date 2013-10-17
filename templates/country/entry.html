@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}
+Country Index - Entry for {{prefill.place}}/{{datasetNamesMap[prefill.dataset]}}
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  {% if prefill.place %}
+  <h1><a href="/country/overview/{{prefill.place | replace(' ','%20')}}" data-toggle="tooltip" class="count-0" title="Go to country results overview">{{prefill.place}}</a>/<a href="/country/dataset/{{prefill.dataset}}" data-toggle="tooltip" class="count-0" title="Return to dataset results overview">{{datasetNamesMap[prefill.dataset]}}</a></h1>
+  {% endif %}
+</div>
+
+<p>{% for dataset in datasets %}{% if dataset.id == prefill.dataset %}{{dataset.description}}{% endif %}{% endfor %}</p>
+
+<h3>Data Location</h3>
+<a href="{{prefill.url}}">{{prefill.url}}</a>
+
+<h3>Comments</h3>
+<p>{{prefill.details}}</p>
+
+<h3>Data Availability</h3>
+{# TODO: Move this out to an include!!! There are 3 copies so far... #}
+{% set record_fields = [
+  { 'id': 'exists',
+    'icon': 'file-alt',
+    'label': 'Does the data exist?' },
+  { 'id': 'digital',
+    'icon': 'save',
+    'label': 'Is it in digital form?' },
+  { 'id': 'public',
+    'icon': 'eye-open',
+    'label': 'Is it publicly available?' },
+  { 'id': 'free',
+    'icon': 'dollar',
+    'label': 'Is it free of charge?' },
+  { 'id': 'online',
+    'icon': 'download',
+    'label': 'Is it online?' },
+  { 'id': 'machinereadable',
+    'icon': 'keyboard',
+    'label': 'Is it machine readable (e.g. spreadsheet not PDF)?' },
+  { 'id': 'bulk',
+    'icon': 'copy',
+    'label': 'Available in bulk (e.g. can you download the *whole* dataset easily)?' },
+  { 'id': 'openlicense',
+    'icon': 'unlock-alt',
+    'label': 'Is it openly licensed (as per OpenDefinition.org)?' },
+  { 'id': 'uptodate',
+    'icon': 'time',
+    'label': 'Is it up to date?' }
+] %}
+
+<table><tr>
+  <td{% if prefill %} data-place="{{ prefill.place }}" data-dataset="{{ prefill.dataset }}" data-datasetTitle="{{datasetNamesMap[prefill.dataset]}}"{% endif %}>
+    <ul class="availability icons">
+      {% for field in record_fields %}
+        {% set state = prefill[field.id] %}
+        <a data-toggle="tooltip" title="{{ field.label }}">
+        <li class="{% if state == 'Yes' %}yes{% elif state == 'No' %}no{% elif state == 'Unsure' %}maybe{% endif %}">
+          <i class="icon-{{ field.icon }}"></i>
+          <span class="text">{{ state }}</span>
+        </li>
+        </a>
+      {% endfor %}
+    </ul>
+  </td>
+</tr></table>
+
+{% include '_snippets/key.html' %}
+
+<h3>Details</h3>
+<table>
+  <tr><td>Date the data became available</td><td>{{ prefill.dateavailable }}</td></tr>
+  <tr><td>Format of data</td><td>{{ prefill.format }}</td></tr>
+  <tr><td>Contributors</td><td>TODO</td></tr>
+</table>
+
+<script src="{{page.root}}/src/common.js"></script>
+
+{% endblock %}
+
