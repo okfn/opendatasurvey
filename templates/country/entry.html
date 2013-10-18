@@ -17,7 +17,7 @@ Country Index - Entry for {{prefill.place}}/{{datasetNamesMap[prefill.dataset]}}
 <a href="{{prefill.url}}">{{prefill.url}}</a>
 
 <h3>Comments</h3>
-<p>{{prefill.details}}</p>
+<p>{{prefill.details | urlize}}</p>
 
 <h3>Data Availability</h3>
 {# TODO: Move this out to an include!!! There are 3 copies so far... #}
@@ -79,9 +79,9 @@ Country Index - Entry for {{prefill.place}}/{{datasetNamesMap[prefill.dataset]}}
 
 <h3>Details</h3>
 <table class="table table-striped yntable">
-  <tr><td>Date the data became available</td><td>&nbsp;&nbsp;&nbsp;{% if prefill.dateavailable %}{{ prefill.dateavailable }}{% endif %}</td></tr>
-  <tr><td>Format of data</td><td>&nbsp;&nbsp;&nbsp;{% if prefill.format %}{{ prefill.format }}{% endif %}</td></tr>
-  <tr><td>Contributors</td><td>&nbsp;&nbsp;&nbsp;TODO</td></tr>
+  <tr><td>Date the data became available</td><td>&nbsp;&nbsp;&nbsp;{% if prefill.dateavailable %}{{ prefill.dateavailable }}{% else %}Unknown{% endif %}</td></tr>
+  <tr><td>Format of data</td><td>&nbsp;&nbsp;&nbsp;{% if prefill.format %}{{ prefill.format }}{% else %}Unknown{% endif %}</td></tr>
+  <tr><td>Contributors</td><td>&nbsp;&nbsp;&nbsp;{% for reviewer in prefill.reviewers %}{% if loop.index>1 %}, {% endif %}{{reviewer}}{% endfor %} (Editors); {% for submitter in prefill.submitters %}{% if loop.index>1 %}, {% endif %}{{submitter}}{% endfor %} (Submitters)</td></tr>
 </table>
 
 <script src="{{page.root}}/src/common.js"></script>

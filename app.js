@@ -286,38 +286,59 @@ app.get('/country/submit', function(req, res) {
 /* TODO: Reduce duplication with submit form, if any */
 app.get('/country/:place/:dataset', function(req, res) {
   var datasets = [];
-  var ynquestions = model.data.questions.slice(0,9);
+  var ynquestions = model.data.questions.slice(0, 9);
 
   function render(prefill_) {
     res.render('country/entry.html', {
-        countryList: model.countryList
-      , ynquestions: ynquestions
-      , questions: model.data.questions
-      , datasets: model.data.country.datasets
-      , datasetNamesMap: model.datasetNamesMap
-      , prefill: prefill_
+      countryList: model.countryList
+     , ynquestions: ynquestions
+     , questions: model.data.questions
+     , datasets: model.data.country.datasets
+     , datasetNamesMap: model.datasetNamesMap
+     , prefill: prefill_
     });
   }
 
   // look up if there is an entry and if so we use it to prepopulate the form
-
-    model.backend.getEntry({
-        place: req.params.place,
-        dataset: req.params.dataset,
-        year: /*year || */ model.DEFAULT_YEAR //TODO: next year, extend to /2013/, etc.
-      }, function(err, obj) {
-        // we allow query args to override entry values
-        // might be useful (e.g. if we started having form errors and redirecting here ...)
-        if (obj) { // we might have a got a 404 etc
-          var prefill = [];
-          prefill = _.extend(obj, prefill);
-          render(prefill);
-        }
-        else res.send(404, 'There is no entry for ' + req.params.place + ' and ' + req.params.dataset);
-
+  var prefill = [];
+  
+  model.backend.getEntry({
+    place: req.params.place,
+    dataset: req.params.dataset,
+    year: /*year || */ model.DEFAULT_YEAR //TODO: next year, extend to /2013/, etc.
+  }, function(err, obj) {
+    if (obj) { // we might have a got a 404 etc
+        prefill = _.extend(obj, prefill);
       }
+      else
+        res.send(404, 'There is no entry for ' + req.params.place + ' and ' + req.params.dataset);
+      
+    model.backend.getSubmissions({
+      place: req.params.place,
+      dataset: req.params.dataset,
+      year: /*year || */ model.DEFAULT_YEAR //TODO: next year, extend to /2013/, etc.
+    }, function(err, obj) {
+      // we allow query args to override entry values
+      // might be useful (e.g. if we started having form errors and redirecting here ...)
+      if (obj) { // we might have a got a 404 etc
+        prefill['reviewers'] = [];
+        prefill['submitters'] = [];
+        console.log(obj);
+        _.each(obj, function(val) {
+          if (val['reviewer'] !== "") prefill['reviewers'].push(val['reviewer']);
+          if (val['submitter'] !== "") prefill['submitters'].push(val['submitter']);
+      });
+        
+        prefill['reviewers'] = _.uniq(prefill['reviewers']);
+        prefill['submitters'] = _.uniq(prefill['submitters']);
+        render(prefill);
+      }
+      else
+        res.send(404, 'There is no entry for ' + req.params.place + ' and ' + req.params.dataset);
+    }
     );
-
+  }
+  );
 });
 
 app.post('/country/submit', function(req, res) {

@@ -17,102 +17,100 @@
   {{ place }}
 </h1>
 
-      <div id="spacer"></div>
-      <div class="tabbable"> <!-- Only required for left/right tabs -->
+<div id="spacer"></div>
+<div class="tabbable"> <!-- Only required for left/right tabs -->
+  <div class="tab-content">
+    <div class="tab-pane active" id="table-overview">
+      <div class="table">
 
-        <div class="tab-content">
-          <div class="tab-pane active" id="table-overview">
-            <div class="table">
+        {% set record_fields = [
+          { 'id': 'exists',
+            'icon': 'file-alt',
+            'label': 'Does the data exist?' },
+          { 'id': 'digital',
+            'icon': 'save',
+            'label': 'Is it in digital form?' },
+          { 'id': 'public',
+            'icon': 'eye-open',
+            'label': 'Is it publicly available?' },
+          { 'id': 'free',
+            'icon': 'dollar',
+            'label': 'Is it free of charge?' },
+          { 'id': 'online',
+            'icon': 'download',
+            'label': 'Is it online?' },
+          { 'id': 'machinereadable',
+            'icon': 'keyboard',
+            'label': 'Is it machine readable (e.g. spreadsheet not PDF)?' },
+          { 'id': 'bulk',
+            'icon': 'copy',
+            'label': 'Available in bulk (e.g. can you download the *whole* dataset easily)?' },
+          { 'id': 'openlicense',
+            'icon': 'unlock-alt',
+            'label': 'Is it openly licensed (as per OpenDefinition.org)?' },
+          { 'id': 'uptodate',
+            'icon': 'time',
+            'label': 'Is it up to date?' }
+        ] %}
 
-{% set record_fields = [
-  { 'id': 'exists',
-    'icon': 'file-alt',
-    'label': 'Does the data exist?' },
-  { 'id': 'digital',
-    'icon': 'save',
-    'label': 'Is it in digital form?' },
-  { 'id': 'public',
-    'icon': 'eye-open',
-    'label': 'Is it publicly available?' },
-  { 'id': 'free',
-    'icon': 'dollar',
-    'label': 'Is it free of charge?' },
-  { 'id': 'online',
-    'icon': 'download',
-    'label': 'Is it online?' },
-  { 'id': 'machinereadable',
-    'icon': 'keyboard',
-    'label': 'Is it machine readable (e.g. spreadsheet not PDF)?' },
-  { 'id': 'bulk',
-    'icon': 'copy',
-    'label': 'Available in bulk (e.g. can you download the *whole* dataset easily)?' },
-  { 'id': 'openlicense',
-    'icon': 'unlock-alt',
-    'label': 'Is it openly licensed (as per OpenDefinition.org)?' },
-  { 'id': 'uptodate',
-    'icon': 'time',
-    'label': 'Is it up to date?' }
-] %}
+        <p>This is the country overview page where you can see the state of open data across each key dataset (displayed down the left hand side). To find out more about each dataset, click on the info icon.
+        Each icon in the data availability column represents important factors indicating data accessibility or availability - mouse over the icons to see what they are and the colours correspond to yes / no / unsure / no data.</p>
+        
+        {% if not readonly %}
+        <p>Is something missing or is the data incorrect? Then please hit either 'submit information' or 'propose revisions' on the right and contribute more information. We need a correct direct link to the official source of the data - so make sure to include this! Click the link icon under Location to see the current entry.</p>
 
-<p>This is the country overview page where you can see the state of open data across each key dataset (displayed down the left hand side). To find out more about each dataset, click on the info icon.
-Each icon in the data availability column represents important factors indicating data accessibility or availability - mouse over the icons to see what they are and the colours correspond to yes / no / unsure / no data.</p>
-{% if not readonly %}
-<p>Is something missing or is the data incorrect? Then please hit either 'submit information' or 'propose revisions' on the right and contribute more information. We need a correct direct link to the official source of the data - so make sure to include this! Click the link icon under Location to see the current entry.</p>
+        <p>Greyed out queued entries are submissions that are waiting approval by our editor team - but you can see the entry now and judge whether anything is missing.</p>
+        {% endif %}
+        
+        <table class="table table-striped">
+          <colgroup>
+            <col width="25%" />
+            <col width="1%" />
+            <col width="25%" />
+            <col />
+            <col width="13%" />
+            {% if not readonly %}<col width="15%" />{% endif %}
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Dataset</th>
+              <th>Score</th>
+              <th>Breakdown</th>
+              <th>Location (URL)</th>
+              <th>Information</th>
+              {% if not readonly %}<th></th>{% endif %}
+            </tr>
+          </thead>
+          <tbody>
+            {% include '_snippets/overview-table-bycountry-row.html' %}
+            {% for dataset in info.datasets %}
+              {{ inforow(dataset, entrys[dataset.id], 'info') }}
+              {% if not readonly %}
+                {% for submission in submissions[dataset.id] %}
+                {{ inforow(dataset, submission, 'submissions') }}
+                {% endfor %}
+              {% endif %}
 
-<p>Greyed out queued entries are submissions that are waiting approval by our editor team - but you can see the entry now and judge whether anything is missing.</p>
-{% endif %}
-<table class="table table-striped">
-  <colgroup>
-    <col width="25%" />
-    <col width="1%" />
-    <col width="25%" />
-    <col />
-    <col width="13%" />
-    {% if not readonly %}<col width="15%" />{% endif %}
-  </colgroup>
-  <thead>
-    <tr>
-      <th>Dataset</th>
-      <th>Score</th>
-      <th>Breakdown</th>
-      <th>Location (URL)</th>
-      <th>Information</th>
-      {% if not readonly %}<th></th>{% endif %}
-    </tr>
-  </thead>
-  <tbody>
-    {% include '_snippets/overview-table-bycountry-row.html' %}
-    {% for dataset in info.datasets %}
-      {{ inforow(dataset, entrys[dataset.id], 'info') }}
-      {% if not readonly %}
-        {% for submission in submissions[dataset.id] %}
-        {{ inforow(dataset, submission, 'submissions') }}
-        {% endfor %}
-      {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
 
-    {% endfor %}
-  </tbody>
-</table>
+        {% include '_snippets/key.html' %}
 
-{% include '_snippets/key.html' %}
-
-<h3>Contributors</h3>
-<h4>Editors for {{place}}: </h4>
-<p> {% for reviewer in reviewers %}
-     {{reviewer}},
-    {% endfor %}
-</p>
-<h4>With submissions from: </h4>
-<p> {% for submitter in submitters %}
-     {{submitter}},
-    {% endfor %}
-</p>
-            </div>
-          </div>
-
-        </div>
+        <h3>Contributors</h3>
+        <h4>Editors for {{place}}: </h4>
+        <p>
+          {% for reviewer in reviewers %}{% if loop.index>1 %}, {% endif %}{{reviewer}}{% endfor %}
+        </p>
+        <h4>With submissions from: </h4>
+        <p>
+          {% for submitter in submitters %}{% if loop.index>1 %}, {% endif %}{{submitter}}{% endfor %}
+        </p>
       </div>
+    </div>
+  </div>
+</div>
 
-    <script src="{{page.root}}/src/common.js"></script>
-    <script src="{{page.root}}/src/census.js"></script>
+<script src="{{page.root}}/src/common.js"></script>
+<script src="{{page.root}}/src/census.js"></script>
 {% endblock %}
