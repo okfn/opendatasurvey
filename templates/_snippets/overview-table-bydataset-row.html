@@ -24,7 +24,7 @@
       </ul>
     </td>
     {% if record and record.url %}
-      <td class="recordurl"><a href="{{record.url}}" title="{{record.url}}" target="_blank">{{record.url | truncate(25)}}</a></td>
+      <td class="recordurl"><a href="{{record.url}}" title="{{record.url}}" target="_blank">{{record.url }}</a></td>
     {% else %}
       <td><!-- No URL given --></td>
     {% endif %}
