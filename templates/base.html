@@ -60,8 +60,11 @@
         <!--</li>-->
         <!--<li><a href="/catalogs/">Catalogs</a></li>-->
         <li><a href="/about/">About</a></li>
-        {% if not readonly %}<li><a href="/faq/">FAQ</a></li>{% endif %}
+        {% if not readonly %}<li><a href="/faq/">FAQ</a></li>
         <li><a href="/contribute/">Contribute</a></li>
+        {% else %}
+        <li><a href="/contributors/">Contributors</a></li>
+        {% endif %}
         <!-- <li><a href="/rankings/">Rankings</a></li> -->
 
       </ul>

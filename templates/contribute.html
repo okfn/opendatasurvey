@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+Contributors
+{% endblock %}
+
+{% block content %}
+<style type="text/css">
+  .navbar {
+	  border-bottom-style:none;
+  }
+</style>
+
+
+
+
+
+We want to thank the following people for submitting and editing data for the index:
+<h4>Editors: </h4>
+<p> {% for reviewer in reviewers %}
+     {{reviewer}},
+    {% endfor %}
+</p>
+<h4>With submissions from: </h4>
+<p> {% for submitter in submitters %}
+     {{submitter}},
+    {% endfor %}
+</p>
+{% endblock %}

@@ -115,11 +115,13 @@ app.get('/', function(req, res) {
   res.render('index.html', {
     numberCountries: model.data.country.summary.places.toString(),
     numberSubmissions: _.size(model.data.countrysubmissions.results),
+    numberSubmitters: _.size(model.data.countrysubmissions.submitters),
     numberEditors: _.size(model.data.countrysubmissions.reviewers),
     numberEntries: model.data.country.summary.entries.toString(),
     numberOpen: model.data.country.summary.open.toString(),
     numberCatalogs: model.data.catalogs.records.length.toString()
   });
+  console.log(model.data.countrysubmissions.submitters);
 });
 
 app.get('/about', function(req, res) {
@@ -133,6 +135,13 @@ app.get('/about', function(req, res) {
       title: 'About'
     });
   });
+});
+
+app.get('/contributors', function(req, res) {
+    res.render('contribute.html', {
+      reviewers: model.data.countrysubmissions.reviewers,
+      submitters: model.data.countrysubmissions.submitters
+    });
 });
 
 app.get('/faq', function(req, res) {
@@ -202,6 +211,8 @@ app.get('/country/overview/:place', function(req, res) {
       });
     });
     res.render('country/place.html', {
+      reviewers: model.data.countrysubmissions.reviewersByPlace[place],
+      submitters: model.data.countrysubmissions.submittersByPlace[place],
       info: model.data.country,
       submissions: submissions,
       entrys: entrys,

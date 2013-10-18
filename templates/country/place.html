@@ -95,6 +95,18 @@ Each icon in the data availability column represents important factors indicatin
 </table>
 
 {% include '_snippets/key.html' %}
+
+<h3>Contributors</h3>
+<h4>Editors for {{place}}: </h4>
+<p> {% for reviewer in reviewers %}
+     {{reviewer}},
+    {% endfor %}
+</p>
+<h4>With submissions from: </h4>
+<p> {% for submitter in submitters %}
+     {{submitter}},
+    {% endfor %}
+</p>
             </div>
           </div>
 
