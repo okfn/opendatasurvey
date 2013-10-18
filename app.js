@@ -113,6 +113,7 @@ app.all('*', function(req, res, next) {
 
 app.get('/', function(req, res) {
   res.render('index.html', {
+    numberCountries: _.size(model.data.country.byplace).toString(),
     numberEntries: model.data.country.summary.entries.toString(),
     numberOpen: model.data.country.summary.open.toString(),
     numberCatalogs: model.data.catalogs.records.length.toString()
@@ -300,10 +301,10 @@ app.get('/country/:place/:dataset', function(req, res) {
           render(prefill);
         }
         else res.send(404, 'There is no entry for ' + req.params.place + ' and ' + req.params.dataset);
-        
+
       }
     );
-  
+
 });
 
 app.post('/country/submit', function(req, res) {
