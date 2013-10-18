@@ -195,6 +195,51 @@ ul.availability.icons.mini li i {
 	border-left-color:#dd3d3a;
 }
 
+.highlight-bg {
+	background-color:#c7c9c4;
+}
+
+.stat-pod {
+	display:block;
+	position:relative;
+	height:102px;
+}
+.stat-pod .highlight-bg {
+	height:50px;
+	line-height:50px;
+	display:inline-block;
+	padding:0 25px 0 30px;
+	margin:32px 0 0 60px;
+	font-family: 'BebasNeueRegular',Arial,Helvetica, sans-serif;
+	font-size: 28px;
+  letter-spacing: 2px;
+	color: #333333;
+	-webkit-border-top-right-radius: 25px;
+	-webkit-border-bottom-right-radius: 25px;
+	-moz-border-radius-topright: 25px;
+	-moz-border-radius-bottomright: 25px;
+	border-top-right-radius: 25px;
+	border-bottom-right-radius: 25px;
+}
+.stat-pod:after {
+	position:absolute;
+	top:0;
+	left:0;
+}
+.stat-pod.man:after {
+	content: url(man.png);
+}
+.stat-pod.woman:after {
+	content: url(woman.png);
+}
+.stat-pod.megaphone:after {
+	content: url(megaphone.png);
+	top:21px;
+}
+.stat-pod.megaphone .highlight-bg {
+	margin-left:65px;
+}
+
 
 /* Layout */
 /* ====== */
