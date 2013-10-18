@@ -283,7 +283,7 @@ app.get('/country/submit', function(req, res) {
 });
 
 /* Single Entry Page */
-/* TODO: Reduce duplication with submit form, if any */
+/* TODO: optimize/improve */
 app.get('/country/:place/:dataset', function(req, res) {
   var datasets = [];
   var ynquestions = model.data.questions.slice(0, 9);
@@ -331,6 +331,8 @@ app.get('/country/:place/:dataset', function(req, res) {
         
         prefill['reviewers'] = _.uniq(prefill['reviewers']);
         prefill['submitters'] = _.uniq(prefill['submitters']);
+        if (prefill['reviewers'].length === 0) prefill['noreviewers'] = true;
+        if (prefill['submitters'].length === 0) prefill['nosubmitters'] = true;
         render(prefill);
       }
       else

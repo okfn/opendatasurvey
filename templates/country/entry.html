@@ -81,7 +81,7 @@ Country Index - Entry for {{prefill.place}}/{{datasetNamesMap[prefill.dataset]}}
 <table class="table table-striped yntable">
   <tr><td>Date the data became available</td><td>&nbsp;&nbsp;&nbsp;{% if prefill.dateavailable %}{{ prefill.dateavailable }}{% else %}Unknown{% endif %}</td></tr>
   <tr><td>Format of data</td><td>&nbsp;&nbsp;&nbsp;{% if prefill.format %}{{ prefill.format }}{% else %}Unknown{% endif %}</td></tr>
-  <tr><td>Contributors</td><td>&nbsp;&nbsp;&nbsp;{% for reviewer in prefill.reviewers %}{% if loop.index>1 %}, {% endif %}{{reviewer}}{% endfor %} (Editors); {% for submitter in prefill.submitters %}{% if loop.index>1 %}, {% endif %}{{submitter}}{% endfor %} (Submitters)</td></tr>
+  <tr><td>Contributors</td><td>&nbsp;&nbsp;&nbsp;{% if not prefill.noreviewers %}{% for reviewer in prefill.reviewers %}{% if loop.index>1 %}, {% endif %}{{reviewer}}{% endfor %} (Editors); {% endif %}{% if not prefill.nosubmitters %}{% for submitter in prefill.submitters %}{% if loop.index>1 %}, {% endif %}{{submitter}}{% endfor %} (Submitters){% endif %}</td></tr>
 </table>
 
 <script src="{{page.root}}/src/common.js"></script>
