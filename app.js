@@ -176,9 +176,9 @@ app.get('/country', function(req, res) {
 //});
 
 app.get('/country/results.json', function(req, res) {
-  model.load(function() { //Get latest data
+  //model.load(function() { //Get latest data
     res.json(model.data.country);
-  });
+  //});
 });
 
 //Show details per country. Extra/different functionality for reviewers.
