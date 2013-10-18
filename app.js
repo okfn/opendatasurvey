@@ -113,7 +113,9 @@ app.all('*', function(req, res, next) {
 
 app.get('/', function(req, res) {
   res.render('index.html', {
-    numberCountries: _.size(model.data.country.byplace).toString(),
+    numberCountries: model.data.country.summary.places.toString(),
+    numberSubmissions: _.size(model.data.countrysubmissions.results),
+    numberEditors: _.size(model.data.countrysubmissions.reviewers),
     numberEntries: model.data.country.summary.entries.toString(),
     numberOpen: model.data.country.summary.open.toString(),
     numberCatalogs: model.data.catalogs.records.length.toString()
