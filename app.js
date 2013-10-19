@@ -138,7 +138,7 @@ app.get('/about', function(req, res) {
 });
 
 app.get('/contributors', function(req, res) {
-    res.render('contribute.html', {
+    res.render('contributors.html', {
       reviewers: model.data.countrysubmissions.reviewers,
       submitters: model.data.countrysubmissions.submitters
     });
@@ -301,7 +301,7 @@ app.get('/country/:place/:dataset', function(req, res) {
 
   // look up if there is an entry and if so we use it to prepopulate the form
   var prefill = [];
-  
+
   model.backend.getEntry({
     place: req.params.place,
     dataset: req.params.dataset,
@@ -312,7 +312,7 @@ app.get('/country/:place/:dataset', function(req, res) {
       }
       else
         res.send(404, 'There is no entry for ' + req.params.place + ' and ' + req.params.dataset);
-      
+
     model.backend.getSubmissions({
       place: req.params.place,
       dataset: req.params.dataset,
@@ -328,7 +328,7 @@ app.get('/country/:place/:dataset', function(req, res) {
           if (val['reviewer'] !== "") prefill['reviewers'].push(val['reviewer']);
           if (val['submitter'] !== "") prefill['submitters'].push(val['submitter']);
       });
-        
+
         prefill['reviewers'] = _.uniq(prefill['reviewers']);
         prefill['submitters'] = _.uniq(prefill['submitters']);
         if (prefill['reviewers'].length === 0) prefill['noreviewers'] = true;

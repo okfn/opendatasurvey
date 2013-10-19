@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}
+Country - Contributors
+{% endblock %}
+
+{% block content %}
+<h1>Country Open Data Index - Contributors</h1>
+
+We want to thank the following people for submitting and editing data for the index:
+<div class="page-header">
+<h4>Editors: </h4>
+</div>
+<table style="width: 100%;">
+  <tr>
+  <td style="vertical-align: top;">
+  {% for reviewer in reviewers %}
+    {% if (loop.index)%20 == 0 %}</td><td style="vertical-align: top;">{% endif %}
+      {{reviewer}}<br />
+  {% endfor %}
+  </td>
+  </tr>
+</table>
+<div class="page-header">
+<h4>With submissions from: </h4>
+</div>
+<table>
+  <tr>
+  <td style="vertical-align: top;">
+  {% for submitter in submitters %}
+    {% if (loop.index)%55 == 0 %}</td><td style="vertical-align: top;">{% endif %}
+      {{submitter}}<br />
+  {% endfor %}
+  </td>
+  </tr>
+</table>
+
+<br />
+
+{% endblock %}
