@@ -55,13 +55,13 @@
 
         <p>This is the country overview page where you can see the state of open data across each key dataset (displayed down the left hand side). To find out more about each dataset, click on the info icon.
         Each icon in the data availability column represents important factors indicating data accessibility or availability - mouse over the icons to see what they are and the colours correspond to yes / no / unsure / no data.</p>
-        
+
         {% if not readonly %}
         <p>Is something missing or is the data incorrect? Then please hit either 'submit information' or 'propose revisions' on the right and contribute more information. We need a correct direct link to the official source of the data - so make sure to include this! Click the link icon under Location to see the current entry.</p>
 
         <p>Greyed out queued entries are submissions that are waiting approval by our editor team - but you can see the entry now and judge whether anything is missing.</p>
         {% endif %}
-        
+
         <table class="table table-striped">
           <colgroup>
             <col width="25%" />
@@ -83,15 +83,17 @@
           </thead>
           <tbody>
             {% include '_snippets/overview-table-bycountry-row.html' %}
-            {% for dataset in info.datasets %}
-              {{ inforow(dataset, entrys[dataset.id], 'info') }}
-              {% if not readonly %}
-                {% for submission in submissions[dataset.id] %}
-                {{ inforow(dataset, submission, 'submissions') }}
-                {% endfor %}
-              {% endif %}
+            {% if info.datasets %}
+              {% for dataset in info.datasets %}
+                {{ inforow(dataset, entrys[dataset.id], 'info') }}
+                {% if not readonly %}
+                  {% for submission in submissions[dataset.id] %}
+                  {{ inforow(dataset, submission, 'submissions') }}
+                  {% endfor %}
+                {% endif %}
 
-            {% endfor %}
+              {% endfor %}
+            {% endif %}
           </tbody>
         </table>
 
@@ -100,11 +102,11 @@
         <h3>Contributors</h3>
         <h4>Editors for {{place}}: </h4>
         <p>
-          {% for reviewer in reviewers %}{% if loop.index>1 %}, {% endif %}{{reviewer}}{% endfor %}
+          {% if reviewers %}{% for reviewer in reviewers %}{% if loop.index>1 %}, {% endif %}{{reviewer}}{% endfor %}{% endif %}
         </p>
         <h4>With submissions from: </h4>
         <p>
-          {% for submitter in submitters %}{% if loop.index>1 %}, {% endif %}{{submitter}}{% endfor %}
+          {% if submitters %}{% for submitter in submitters %}{% if loop.index>1 %}, {% endif %}{{submitter}}{% endfor %}{% endif %}
         </p>
       </div>
     </div>

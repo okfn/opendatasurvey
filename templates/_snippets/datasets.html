@@ -6,11 +6,13 @@
     </tr>
   </thead>
   <tbody>
-    {% for dataset in datasets %}
-    <tr>
-      <td>{{dataset.title}}</td>
-      <td>{{dataset.description}}</td>
-    </tr>
-    {% endfor %}
+    {% if datasets %}
+      {% for dataset in datasets %}
+      <tr>
+        <td>{{dataset.title}}</td>
+        <td>{{dataset.description}}</td>
+      </tr>
+      {% endfor %}
+    {% endif %}
   </tbody>
 </table>

@@ -11,7 +11,7 @@ Country Index - Entry for {{prefill.place}}/{{datasetNamesMap[prefill.dataset]}}
   {% endif %}
 </div>
 
-<p>{% for dataset in datasets %}{% if dataset.id == prefill.dataset %}{{dataset.description}}{% endif %}{% endfor %}</p>
+<p>{% if datasets %}{% for dataset in datasets %}{% if dataset.id == prefill.dataset %}{{dataset.description}}{% endif %}{% endfor %}{% endif %}</p>
 
 <h3>Data Location</h3>
 <a href="{{prefill.url}}">{{prefill.url}}</a>

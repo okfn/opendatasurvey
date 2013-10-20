@@ -14,10 +14,12 @@ We want to thank the following people for submitting and editing data for the in
 <table style="width: 100%;">
   <tr>
   <td style="vertical-align: top;">
-  {% for reviewer in reviewers %}
-    {% if (loop.index)%20 == 0 %}</td><td style="vertical-align: top;">{% endif %}
-      {{reviewer}}<br />
-  {% endfor %}
+  {% if reviewers %}
+    {% for reviewer in reviewers %}
+      {% if (loop.index)%20 == 0 %}</td><td style="vertical-align: top;">{% endif %}
+        {{reviewer}}<br />
+    {% endfor %}
+  {% endif %}
   </td>
   </tr>
 </table>
@@ -27,10 +29,12 @@ We want to thank the following people for submitting and editing data for the in
 <table>
   <tr>
   <td style="vertical-align: top;">
-  {% for submitter in submitters %}
-    {% if (loop.index)%55 == 0 %}</td><td style="vertical-align: top;">{% endif %}
-      {{submitter}}<br />
-  {% endfor %}
+  {% if submitters %}
+    {% for submitter in submitters %}
+      {% if (loop.index)%55 == 0 %}</td><td style="vertical-align: top;">{% endif %}
+        {{submitter}}<br />
+    {% endfor %}
+  {% endif %}
   </td>
   </tr>
 </table>
