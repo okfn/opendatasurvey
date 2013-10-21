@@ -179,13 +179,8 @@ If the data is not open, then this question will instead describe the date the d
 
 ### Getting the data
 
-<p>All the data for the Index is available openly and in bulk:</p>
-
-<ul>
-  <li>Underlying data for the country Index is available in bulk as CSV: <a href="http://datahub.io/dataset/opendataIndex">http://datahub.io/dataset/opendataIndex</a></li>
-  <li>Underlying data for Data Catalogs: <a href="http://datahub.io/dataset/data-catalogs">http://datahub.io/dataset/data-catalogs</a></li>
-  <li>Underlying listing of datasets (including proposals for datasets to be added): <a href="https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc#gid=0">Country Datasets</a></li>
-</ul>
+* Underlying data for the country Index is available in bulk as CSV: (coming soon)
+* Underlying listing of datasets (including proposals for datasets to be added): <a href="https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc#gid=0">Country Datasets</a>
 
 ### How can I get more involved?
 

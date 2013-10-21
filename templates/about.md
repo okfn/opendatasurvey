@@ -85,12 +85,9 @@ See the [FAQ page &raquo;](/faq)
 
 ------
 
-<h2 id="data">Data</h2>
+## Data
 
-All the data for the Index is available openly and in bulk:
-
-* Underlying data for the country index is available in bulk as CSV: <http://datahub.io/dataset/opendatacensus>
-* Underlying data for Data Catalogs: <http://datahub.io/dataset/data-catalogs>
+* Underlying data for the country index is available in bulk as CSV: (coming soon)
 * Underlying listing of datasets (including proposals for datasets to be added):
   * [Country Datasets](https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc#gid=0)
   * [City Datasets](https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc#gid=0)
