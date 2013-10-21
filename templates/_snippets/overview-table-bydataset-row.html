@@ -4,7 +4,7 @@
       {% if type == 'submissions' %}
         &#8627; Awaiting review
       {% else %}
-      <a href="/country/overview/{{place | replace(' ', '%20') }}">{{place}}</a>
+      <a href="/country/overview/{{record.place | replace(' ', '%20') }}">{{record.place}}</a>
       {% endif %}
     </td>
     <td>

@@ -82,13 +82,16 @@
     </tr>
   </thead>
   <tbody>
-    {% if info.places %}
-      {% for place in info.places %}
-      {% set record = info.bydataset[dataset][place] %}
-      {% set type = 'info' %}
-      {% include '_snippets/overview-table-bydataset-row.html' %}
-
-      {% endfor %}
+    {% if info.bydataset %}
+      {% if info.bydataset[dataset] %}
+        {% for entry in info.bydataset[dataset] %}
+          {% if entry %}
+            {% set record = entry %}
+            {% set type = 'info' %}
+            {% include '_snippets/overview-table-bydataset-row.html' %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
     {% endif %}
   </tbody>
 </table>
