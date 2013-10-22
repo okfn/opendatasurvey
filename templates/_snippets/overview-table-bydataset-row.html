@@ -14,7 +14,7 @@
       <ul class="availability icons">
         {% for field in record_fields %}
           {% set state = record[field.id] %}
-          <a data-toggle="tooltip" title="{{ field.label }}">
+          <a class="icon-hover" data-toggle="tooltip" title="{{ field.label }}">
           <li class="{% if state == 'Y' %}yes{% elif state == 'N' %}no{% elif state == '?' %}maybe{% endif %}">
             <i class="icon-{{ field.icon }}"></i>
             <span class="text">{{ state }}</span>
@@ -32,18 +32,18 @@
       <ul class="icons">
         <li>
           {% if record and record.dateavailable %}
-            <a title="Date available: {{ record.dateavailable }}" data-toggle="tooltip"><i class="icon-calendar"></i></a>
+            <a class="icon-hover" title="Date available: {{ record.dateavailable }}" data-toggle="tooltip"><i class="icon-calendar"></i></a>
           {% else %}
-            <a data-toggle="tooltip" data-trigger="hover" title="No date available given">
+            <a class="icon-hover" data-toggle="tooltip" data-trigger="hover" title="No date available given">
               <i class="icon-calendar icons-nodata"></i>
             </a>
           {% endif %}
         </li>
         <li>
           {% if record and record.format %}
-            <a title="Data format: {{ record.format }}" data-toggle="tooltip"><i class="icon-file"></i></a>
+            <a class="icon-hover" title="Data format: {{ record.format }}" data-toggle="tooltip"><i class="icon-file"></i></a>
           {% else %}
-            <a data-toggle="tooltip" data-trigger="hover" title="No data format given">
+            <a class="icon-hover" data-toggle="tooltip" data-trigger="hover" title="No data format given">
               <i class="icon-file icons-nodata"></i>
             </a>
           {% endif %}
@@ -55,7 +55,7 @@
               <i class="icon-info-sign"></i>
             </a>
           {% else %}
-            <a data-toggle="tooltip" data-trigger="hover" title="No details">
+            <a class="icon-hover" data-toggle="tooltip" data-trigger="hover" title="No details">
               <i class="icon-info-sign icons-nodata"></i>
             </a>
           {% endif %}
@@ -72,7 +72,7 @@
             </a>
             {% endif %}
           {% else %}
-            <a data-toggle="tooltip" data-trigger="hover" title="No submitter details">
+            <a class="icon-hover" data-toggle="tooltip" data-trigger="hover" title="No submitter details">
               <i class="icon-user icons-nodata"></i>
             </a>
           {% endif %}
