@@ -79,10 +79,10 @@ i[class*='icon-'] {
   max-width: 350px;
 }
 
-
-#table-overview a [class^="icon"] {
-	color:#333333;
+a.icon-hover {
+  color: #333333;
 }
+
 a .icons-nodata,
 #table-overview a .icons-nodata {
   color: #CCCCCC;
@@ -156,9 +156,6 @@ ul.availability.icons.mini li i {
 .data-availability li .data-icon {
 	position: absolute;
 	left: 0;
-}
-.data-availability li a {
-	color: #222;
 }
 .data-icon-wrapper {
 	position: relative;
