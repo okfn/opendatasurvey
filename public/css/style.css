@@ -560,7 +560,19 @@ input.span2 {
   }
 
 
-table.response-summary thead tr th.sorting {
+table.response-summary thead,
+table.response-summary tfoot {
+  position: sticky;
+  background: white;
+}
+table.response-summary thead.stuck,
+table.response-summary tfoot.stuck {
+  top: 0;
+  border-bottom: 2px solid #2B2A2B;
+}
+
+table.response-summary thead tr th.sorting,
+table.response-summary tfoot tr th.sorting {
 	height: auto;
 	padding: 8px;
 	padding-bottom: auto;
@@ -568,7 +580,8 @@ table.response-summary thead tr th.sorting {
 }
 
 /* Country table */
-table.response-summary thead tr th {
+table.response-summary thead tr th,
+table.response-summary tfoot tr th {
 	height: 114px;
 	padding: 8px;
 	padding-bottom: 0px;
@@ -576,7 +589,8 @@ table.response-summary thead tr th {
 	vertical-align: bottom;
 }
 
-table.response-summary thead tr th div {
+table.response-summary thead tr th div,
+table.response-summary tfoot tr th div {
 	text-align: left;
 	writing-mode: tb-rl;
 	-webkit-transform: rotate(-45deg);

@@ -67,20 +67,25 @@ OpenDataCensus.summaryTable = (function(){
       }
     });
 
-    $(table.find('thead tr th').get(0)).addClass('sorting')
-      .html('Sort' +
+    $(table).find('thead tr th:first-child, tfoot tr th:first-child')
+      .addClass('sorting')
+      .html(function (idx) {
+        return 'Sort' +
         '<label class="radio">' +
-          '<input type="radio" name="sorttable" class="sort-table" value="alpha">' +
+          '<input type="radio" name="sorttable-' + idx + '" class="sort-table" value="alpha">' +
           'alphabetically' +
         '</label>' +
         '<label class="radio">' +
-          '<input type="radio" name="sorttable" class="sort-table" value="score" checked>' +
+          '<input type="radio" name="sorttable-' + idx + '" class="sort-table" value="score" checked>' +
           'by score' +
-      '</label>' +
-      '');
+      '</label>';
+      });
+
     $('.sort-table').change(function(){
       var sortFunc;
-      if ($('.sort-table:checked').val() === 'score') {
+      var sortBy = $(this).val();
+
+      if (sortBy === 'score') {
         sortFunc = function(a, b) {
           return parseInt($(b).data('score'), 10) - parseInt($(a).data('score'), 10);
         };
@@ -89,12 +94,25 @@ OpenDataCensus.summaryTable = (function(){
           return $(a).data('area').toUpperCase().localeCompare($(b).data('area').toUpperCase());
         };
       }
-      table.find('tbody tr').sort(sortFunc).appendTo(table);
 
+      $('.sort-table').attr('checked', false);
+      $('.sort-table[value="' + sortBy + '"]').attr('checked', true);
+      table.find('tbody tr').sort(sortFunc).appendTo(table);
     });
-    $('.sort-table').change();
+    $('.sort-table[value="score"]').eq(0).change();
+
     $('a[data-toggle="tooltip"]').tooltip();
     $('a[data-toggle="popover"]').popover();
+
+    // Fix widths of table cells so that when thead becomes "position: fixed;"
+    // it still displays correctly
+    var widths = $(table).find('tbody tr:nth-child(1) > *').map(function () {
+      return $(this).width();
+    });
+    for (var i = 0, max = widths.length; i < max; i++) {
+      $(table).find('tr > *:nth-child(' + (i+1) + ')').width(widths[i]);
+    }
+
   };
 
   return summaryTable;
