@@ -169,15 +169,11 @@ app.get('/contribute', function(req, res) {
 });
 
 app.get('/country', function(req, res) {
-  //model.load(function() { //Don't reload for the public
   res.render('country/index.html', {info: model.data.country, questions: model.openQuestions});
 });
-//});
 
 app.get('/country/results.json', function(req, res) {
-  //model.load(function() { //Get latest data
-    res.json(model.data.country);
-  //});
+  res.json(model.data.country);
 });
 
 //Show details per country. Extra/different functionality for reviewers.
@@ -236,15 +232,6 @@ app.get('/country/dataset/:dataset', function(req, res) {
   });
 
 });
-
-//This messes up URL arguments, removing for now
-/*
- app.get('/country/remove', function(req, res) {
- //var country = req.param('country');
- //var dataset = req.param('dataset');
- remove('submitted', req);
- });
- */
 
 app.get('/country/submit', function(req, res) {
   var datasets = [];
