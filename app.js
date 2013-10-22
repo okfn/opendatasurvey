@@ -119,8 +119,7 @@ app.get('/', function(req, res) {
     numberSubmitters: _.size(model.data.countrysubmissions.submitters),
     numberEditors: _.size(model.data.countrysubmissions.reviewers),
     numberEntries: model.data.country.summary.entries.toString(),
-    numberOpen: model.data.country.summary.open.toString(),
-    numberCatalogs: model.data.catalogs.records.length.toString()
+    numberOpen: model.data.country.summary.open.toString()
   });
 });
 
@@ -405,10 +404,6 @@ app.post('/country/review/:submissionid', function(req, res) {
   }
 });
 
-app.get('/catalogs', function(req, res) {
-  res.render('catalogs/index.html', {});
-});
-
 //"Log In" page
 app.get('/country/login', function(req, res) {
   res.render('country/login.html', {
@@ -515,9 +510,6 @@ app.get('/country/:place/:dataset', function(req, res) {
 // ========================================================
 // Booting up
 // ========================================================
-
-// var url = process.env.CATALOG_URL|| CATALOG_URL_DEFAULT;
-// var catalog = new model.Catalog();
 
 model.load(function(err) {
   if (err) {

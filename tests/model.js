@@ -239,12 +239,4 @@ describe('census', function() {
     // assert.equal(uk.isopen, true);
   });
 
-  // /////////////////////
-  // Catalogs
-
-  it('catalogs is ok ', function(){
-    // console.log(model.data.catalogs.records.length);
-    assert(model.data.catalogs.records.length >= 280);
-  });
-
 });
