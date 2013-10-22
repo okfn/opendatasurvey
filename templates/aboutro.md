@@ -34,7 +34,7 @@
 <p>The state of open data around the world is assessed by focusing on the the availability and openness of a 10 key datasets.</p>
 
 
-<table border="1">
+<table class="table table-bordered table-striped faq-table">
 <tr>
 <td>Dataset</td>
 <td>Details</td>
@@ -93,7 +93,7 @@
 
 <p>When submitting a dataset, there is a list of questions to answer about the availability and openness of the datasets. These answers appear in the Country overview page for each country.</p>
 
-<table border="1">
+<table class="table table-bordered table-striped faq-table">
 <tr>
 <td>Question</td>
 <td>Details</td>
