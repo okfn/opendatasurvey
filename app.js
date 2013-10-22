@@ -31,7 +31,7 @@ app.configure(function() {
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());
-  app.use(express.session({secret: 'wpbmzky%js,$#jsmdvgas'}));
+  app.use(express.session({secret: process.env.SESSION_SECRET || 'dummysecret'}));
   app.use(CORSSupport);
   app.use(flash());
   app.use(express.static(path.join(__dirname, 'public')));
