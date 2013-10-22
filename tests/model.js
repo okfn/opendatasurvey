@@ -240,18 +240,6 @@ describe('census', function() {
   });
 
   // /////////////////////
-  // G8
-
-  it('g8 census is ok ', function(){
-    var g8 = model.data.g8;
-    // console.log(g8.results.length);
-    assert.equal(_.keys(g8.datasets).length, 10);
-    assert.equal(g8.results.length, 2);
-    assert.equal(_.keys(g8.byplace).length, 1);
-    assert.equal(g8.summary.open, 0);
-  });
-
-  // /////////////////////
   // Catalogs
 
   it('catalogs is ok ', function(){

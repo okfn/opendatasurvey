@@ -405,15 +405,6 @@ app.post('/country/review/:submissionid', function(req, res) {
   }
 });
 
-
-//app.get('/g8', function(req, res) {
-//  //model.load(function() { //Don't reload for the public
-//  console.log(model.openQuestions);
-//  res.render('g8/index.html', {info: model.data.g8, questions: model.openQuestions});
-//
-//  //});
-//});
-
 app.get('/catalogs', function(req, res) {
   res.render('catalogs/index.html', {});
 });
