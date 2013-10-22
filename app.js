@@ -8,6 +8,7 @@ var express = require('express')
   , _ = require('underscore')
   , config = require('./lib/config.js')
   , flash = require('connect-flash')
+  , crypto = require('crypto')
   ;
 
 var app = express();
@@ -438,8 +439,14 @@ app.post('/country/login', function(req, res) {
   else doLogin(req, res);
 });
 
+function checkPassword(password, expectedHash) {
+  var sha1 = crypto.createHash('sha1');
+  var hash = sha1.update(password).digest('hex');
+  return (hash === expectedHash);
+}
+
 function doLogin(req, res) {
-  if (req.body['password'] === "opendat1") {
+  if (checkPassword(req.body['password'], 'dfadfb32ba022696637f550b4d9a1a6438ed57dd')) {
     req.session.loggedin = true;
     req.flash('info', 'You are now logged in!');
     model.load(function() { //Get latest data
