@@ -10,8 +10,7 @@ config.set('appconfig:port', 5001 + Math.floor(Math.random() * 1000));
 config.set('database:country:spreadsheetKey', options.key);
 
 // only require after setting config ...
-var model = require('../lib/model.js').OpenDataCensus
-  ;
+var model = require('../lib/model.js').OpenDataCensus;
 
 var app = require('../app.js').app;
 
