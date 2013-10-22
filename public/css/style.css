@@ -34,6 +34,10 @@ h2 {
   margin-bottom: 10px;
 }
 
+.pull-top {
+  margin-top: 0;
+}
+
 .muted {
   color: #caccc7;
 }
