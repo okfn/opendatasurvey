@@ -121,7 +121,6 @@ app.get('/', function(req, res) {
     numberOpen: model.data.country.summary.open.toString(),
     numberCatalogs: model.data.catalogs.records.length.toString()
   });
-  console.log(model.data.countrysubmissions.submitters);
 });
 
 app.get('/about', function(req, res) {
@@ -495,7 +494,6 @@ app.get('/country/:place/:dataset', function(req, res) {
       if (obj) { // we might have a got a 404 etc
         prefill['reviewers'] = [];
         prefill['submitters'] = [];
-        console.log(obj);
         _.each(obj, function(val) {
           if (val['reviewer'] !== "") prefill['reviewers'].push(val['reviewer']);
           if (val['submitter'] !== "") prefill['submitters'].push(val['submitter']);
