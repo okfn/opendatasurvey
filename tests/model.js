@@ -209,6 +209,15 @@ describe('census', function() {
     assert.equal(c.places.length, 1);
   });
 
+  it('country.places is sorted by score, descending ', function(){
+    // test places / countries
+    var scores = c.places.map(function (n) { return c.byplace[n].score; });
+    var scoresCopy = scores.slice(0);
+    // sort scoresCopy descending, in-place
+    scoresCopy.sort().reverse();
+    assert.deepEqual(scoresCopy, scores);
+  });
+
   it('country.datasets is ok ', function(){
     // test datasets
     assert.equal(c.datasets.length, 10);
