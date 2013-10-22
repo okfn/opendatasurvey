@@ -49,8 +49,8 @@
         {% endif %}
       </li>
       <li>
-        {% if record and record.details %}
-          {% set content = record.details | replace('\n', '<br>') | replace ('\"', '\'') | urlize | wordwrap(100, '\n', true) %}
+        {% if record and record.details and (record.details | trim | length) > 0 %}
+          {% set content = record.details | urlize | replace('\n', '<br>') | replace ('\"', '\'') | wordwrap(100, '\n', true) %}
           <a href="javascript:;" class="count-0" title="Details" data-toggle="popover" data-content="{{ content }}" data-html="true" data-placement="left">
             <i class="icon-info-sign"></i>
           </a>
