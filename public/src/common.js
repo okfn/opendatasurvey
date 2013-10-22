@@ -97,7 +97,6 @@ OpenDataCensus.summaryTable = (function(){
       $('.sort-table[value="' + sortBy + '"]').attr('checked', true);
       table.find('tbody tr').sort(sortFunc).appendTo(table);
     });
-    $('.sort-table[value="score"]').eq(0).change();
 
     $('a[data-toggle="tooltip"]').tooltip();
     $('a[data-toggle="popover"]').popover();
