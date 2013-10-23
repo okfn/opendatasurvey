@@ -729,11 +729,6 @@ table.response-summary td.count-0 {
 	cursor: auto;
 }
 
-table.response-summary th:empty,
-table.response-summary td:empty {
-	display: none;
-}
-
 table.cell-summary {
 	margin-top: 6px;
 }
