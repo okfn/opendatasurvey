@@ -1,27 +1,29 @@
-var express = require('express')
-  , path = require('path')
-  , fs = require('fs')
-  , nunjucks = require('nunjucks')
-  , request = require('request')
-  , csv = require('csv')
-  , GoogleSpreadsheet = require('google-spreadsheet')
-  , _ = require('underscore')
-  , config = require('./lib/config.js')
-  , flash = require('connect-flash')
-  , crypto = require('crypto')
-  ;
+"use strict";
+
+var crypto = require('crypto');
+var fs = require('fs');
+var path = require('path');
+
+var GoogleSpreadsheet = require('google-spreadsheet');
+var _ = require('underscore');
+var csv = require('csv');
+var express = require('express');
+var flash = require('connect-flash');
+var nunjucks = require('nunjucks');
+var request = require('request');
+
+var config = require('./lib/config.js');
+var model = require('./lib/model.js').OpenDataCensus;
 
 var app = express();
 
-var model = require('./lib/model.js').OpenDataCensus;
-
-//CORS middleware
+// CORS middleware
 var CORSSupport = function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
-}
+};
 
 app.configure(function() {
   app.set('port', config.get('appconfig:port'));
@@ -34,63 +36,60 @@ app.configure(function() {
   app.use(express.session({secret: process.env.SESSION_SECRET || 'dummysecret'}));
   app.use(CORSSupport);
   app.use(flash());
-  app.use(express.static(path.join(__dirname, 'public')));
+  app.use(express['static'](path.join(__dirname, 'public')));
 });
 
 var env = new nunjucks.Environment(new nunjucks.FileSystemLoader('templates'));
 
-//Support for Jinja urlize filter
-//Heavily cut down version of linkify:
-/*
 
-linkify plugin for jQuery - automatically finds and changes URLs in text content into proper hyperlinks  ****
-
-  Version: 1.0
-
-  Copyright (c) 2009
-    Már Örlygsson  (http://mar.anomy.net/)  &
-    Hugsmiðjan ehf. (http://www.hugsmidjan.is)
-
-  Dual licensed under a MIT licence (http://en.wikipedia.org/wiki/MIT_License)
-  and GPL 2.0 or above (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html).
- */
-
- var noProtocolUrl = /(^|["'(\s]|&lt;)(www\..+?\..+?)((?:[:?]|\.+)?(?:\s|$)|&gt;|[)"',])/g,
+// linkify plugin for jQuery - automatically finds and changes URLs in text
+// content into proper hyperlinks
+//
+//   Version: 1.0
+//
+//   Copyright (c) 2009
+//     Már Örlygsson (http://mar.anomy.net/) &
+//     Hugsmiðjan ehf. (http://www.hugsmidjan.is)
+//
+// Dual licensed under a MIT licence (http://en.wikipedia.org/wiki/MIT_License)
+// and GPL 2.0 or above (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html).
+(function () {
+  var noProtocolUrl = /(^|["'(\s]|&lt;)(www\..+?\..+?)((?:[:?]|\.+)?(?:\s|$)|&gt;|[)"',])/g,
       httpOrMailtoUrl = /(^|["'(\s]|&lt;)((?:(?:https?|ftp):\/\/|mailto:).+?)((?:[:?]|\.+)?(?:\s|$)|&gt;|[)"',])/g;
 
-//TODO: Parameterize the targetting
-env.addFilter('urlize', function(str) {
-  return str
-    .replace( noProtocolUrl, '$1<a href=\'<``>://$2\' target=\'_blank\'>$2</a>$3' )  // NOTE: we escape `"http` as `"<``>
-    .replace( httpOrMailtoUrl, '$1<a href=\'$2\' target=\'_blank\'>$2</a>$3' )
-    .replace( /'<``>/g, '\'http' );  // reinsert `"http`
-});
+  //TODO: Parameterize the targetting
+  env.addFilter('urlize', function(str) {
+    return str
+      .replace(noProtocolUrl, '$1<a href=\'<``>://$2\' target=\'_blank\'>$2</a>$3')  // NOTE: we escape `"http` as `"<``>
+      .replace(httpOrMailtoUrl, '$1<a href=\'$2\' target=\'_blank\'>$2</a>$3')
+      .replace(/'<``>/g, '\'http');  // reinsert `"http`
+  });
+}());
 
-/*
- * Addition of wordwrap, also missing from nunjucks
- * Taken from http://james.padolsey.com/javascript/wordwrap-for-javascript/
- *
- */
+
+// Addition of wordwrap, also missing from nunjucks
+// Taken from http://james.padolsey.com/javascript/wordwrap-for-javascript/
 env.addFilter('wordwrap', function(str, width, brk, cut) {
-    brk = brk || '\n';
-    width = width || 75;
-    cut = cut || false;
-    if (!str) {
-      return str;
-    }
-    var regex = '.{1,' +width+ '}(\\s|$)' + (cut ? '|.{' +width+ '}|.+$' : '|\\S+?(\\s|$)');
-    return str.match( RegExp(regex, 'g') ).join( brk );
+  brk = brk || '\n';
+  width = width || 75;
+  cut = cut || false;
+  if (!str) {
+    return str;
+  }
+  var regex = '.{1,' +width+ '}(\\s|$)' + (cut ? '|.{' +width+ '}|.+$' : '|\\S+?(\\s|$)');
+  return str.match( RegExp(regex, 'g') ).join( brk );
 });
 
 env.addFilter('truncate', function(str, width) {
-    width = width || 100;
-    if (!str) {
-      return str;
-    }
-    if (str.length <= width) return str;
-    else {
-      return str.substr(0,width-1) + "...";
-    }
+  width = width || 100;
+  if (!str) {
+    return str;
+  }
+  if (str.length <= width) {
+    return str;
+  } else {
+    return str.substr(0,width-1) + "...";
+  }
 });
 
 env.express(app);
@@ -138,10 +137,10 @@ app.get('/about', function(req, res) {
 });
 
 app.get('/contributors', function(req, res) {
-    res.render('contributors.html', {
-      reviewers: model.data.countrysubmissions.reviewers,
-      submitters: model.data.countrysubmissions.submitters
-    });
+  res.render('contributors.html', {
+    reviewers: model.data.countrysubmissions.reviewers,
+    submitters: model.data.countrysubmissions.submitters
+  });
 });
 
 if (config.get('production:readonly') !== true) {
@@ -174,7 +173,10 @@ if (config.get('production:readonly') !== true) {
 }
 
 app.get('/country', function(req, res) {
-  res.render('country/index.html', {info: model.data.country, questions: model.openQuestions});
+  res.render('country/index.html', {
+    info: model.data.country,
+    questions: model.openQuestions
+  });
 });
 
 app.get('/country/results.json', function(req, res) {
@@ -196,9 +198,10 @@ app.get('/country/overview/:place', function(req, res) {
       res.send(500, err);
       return;
     }
-    var entrys = {}
-      , submissions = {}
-      ;
+
+    var entrys = {},
+        submissions = {};
+
     _.each(model.data.country.datasets, function(dataset) {
       _.each(info.entrys, function(entry) {
         if (entry.dataset == dataset.id) {
@@ -207,9 +210,10 @@ app.get('/country/overview/:place', function(req, res) {
         }
       });
       submissions[dataset.id] = _.filter(info.submissions, function(submission) {
-        return (submission.dataset == dataset.id)
+        return (submission.dataset == dataset.id);
       });
     });
+
     res.render('country/place.html', {
       reviewers: model.data.countrysubmissions.reviewersByPlace[place],
       submitters: model.data.countrysubmissions.submittersByPlace[place],
@@ -229,46 +233,46 @@ app.get('/country/dataset/:dataset', function(req, res) {
     res.send(404, 'There is no such dataset in the index. Are you sure you have spelled it correctly? Please check the <a href="/faq#whatdatasets">FAQ</a> for the list of datasets');
     return;
   }
+
   res.render('country/dataset.html', {
     info: model.data.country,
     loggedin: req.session.loggedin,
     dataset: dataset,
     datasetNamesMap: model.datasetNamesMap
   });
-
 });
 
 if (config.get('production:readonly') !== true) {
-app.get('/country/submit', function(req, res) {
-  var datasets = [];
-  var ynquestions = model.data.questions.slice(0,9);
-  var prefill = req.query;
+  app.get('/country/submit', function(req, res) {
+    var datasets = [];
+    var ynquestions = model.data.questions.slice(0,9);
+    var prefill = req.query;
 
-  function render(prefill_) {
-    res.render('country/submit.html', {
-        countryList: model.countryList
-      , ynquestions: ynquestions
-      , questions: model.data.questions
-      , datasets: model.data.country.datasets
-      , prefill: prefill_
-    });
-  }
+    function render(prefill_) {
+      res.render('country/submit.html', {
+        countryList: model.countryList,
+        ynquestions: ynquestions,
+        questions: model.data.questions,
+        datasets: model.data.country.datasets,
+        prefill: prefill_
+      });
+    }
 
     // look up if there is an entry and if so we use it to prepopulate the form
     if (prefill.dataset && prefill.place) {
       model.backend.getEntry({
-          place: prefill.place,
-          dataset: prefill.dataset,
-          year: prefill.year || model.DEFAULT_YEAR
-        }, function(err, obj) {
-          // we allow query args to override entry values
-          // might be useful (e.g. if we started having form errors and redirecting here ...)
-          if (obj) { // we might have a got a 404 etc
-            prefill = _.extend(obj, prefill);
-          }
-          render(prefill);
+        place: prefill.place,
+        dataset: prefill.dataset,
+        year: prefill.year || model.DEFAULT_YEAR
+      }, function(err, obj) {
+        // we allow query args to override entry values
+        // might be useful (e.g. if we started having form errors and
+        // redirecting here ...)
+        if (obj) { // we might have a got a 404 etc
+          prefill = _.extend(obj, prefill);
         }
-      );
+        render(prefill);
+      });
     } else {
       render(prefill);
     }
@@ -276,13 +280,14 @@ app.get('/country/submit', function(req, res) {
 
   app.post('/country/submit', function(req, res) {
     model.backend.insertSubmission(req.body, function(err, obj) {
-      //TODO: Do flash messages properly
+      var msg;
+      // TODO: Do flash messages properly
       if (err) {
         console.log(err);
-        var msg = 'There was an error! ' + err;
+        msg = 'There was an error! ' + err;
         req.flash('error', msg);
       } else {
-        var msg = 'Thank-you for your submission which has been received. It will now be reviewed by an Editor before being published. It may take up to a few minutes for your submission to appear here and up to a few days for it be reviewed. Please be patient.'
+        msg = 'Thank-you for your submission which has been received. It will now be reviewed by an Editor before being published. It may take up to a few minutes for your submission to appear here and up to a few days for it be reviewed. Please be patient.';
         req.flash('info', msg);
       }
       res.redirect('country/overview/' + req.body['place']);
@@ -308,7 +313,7 @@ app.get('/country/submit', function(req, res) {
     });
   });
 
-  //Compare & update page
+  // Compare & update page
   app.get('/country/review/:submissionid', function(req, res) {
     if (!req.session.loggedin) {
       res.redirect('/country/login/?next=' + encodeURIComponent(req.url));
@@ -353,19 +358,18 @@ app.get('/country/submit', function(req, res) {
     }
 
     model.backend.getSubmission({
-        submissionid: req.params.submissionid
-      }, function(err, submission) {
-        if (err) {
-          res.send(500, err);
-          return;
-        } else if (!submission) {
-          res.send(404, 'No submission found for that info');
-          return;
-        } else {
-          processSubmission(submission)
-        }
+      submissionid: req.params.submissionid
+    }, function(err, submission) {
+      if (err) {
+        res.send(500, err);
+        return;
+      } else if (!submission) {
+        res.send(404, 'No submission found for that info');
+        return;
+      } else {
+        processSubmission(submission);
       }
-    );
+    });
 
     function processSubmission(submission) {
       if ((req.body['submit']) === "Publish") {
@@ -380,7 +384,7 @@ app.get('/country/submit', function(req, res) {
         });
       } else if (req.body['submit'] === "Reject") {
         submission.reviewresult = 'rejected';
-        //The only field we need from the form is the reviewer
+        // The only field we need from the form is the reviewer
         submission.reviewer = req.body['reviewername'];
         model.backend.markSubmissionAsReviewed(submission, function(err) {
           var msg = "Submission marked as rejected. The entry has been archived and marked as rejected. It will take a few minutes for this table to update. Thank you!";
@@ -390,7 +394,7 @@ app.get('/country/submit', function(req, res) {
       }
     }
     function doneUpdating(req, res, submission) {
-      //Get latest data
+      // Get latest data
       model.load(function() {
         res.redirect('country/overview/' + submission.place);
       });
@@ -450,12 +454,12 @@ app.get('/country/:place/:dataset', function(req, res) {
 
   function render(prefill_) {
     res.render('country/entry.html', {
-      countryList: model.countryList
-     , ynquestions: ynquestions
-     , questions: model.data.questions
-     , datasets: model.data.country.datasets
-     , datasetNamesMap: model.datasetNamesMap
-     , prefill: prefill_
+      countryList: model.countryList,
+      ynquestions: ynquestions,
+      questions: model.data.questions,
+      datasets: model.data.country.datasets,
+      datasetNamesMap: model.datasetNamesMap,
+      prefill: prefill_
     });
   }
 
@@ -468,10 +472,11 @@ app.get('/country/:place/:dataset', function(req, res) {
     year: /*year || */ model.DEFAULT_YEAR //TODO: next year, extend to /2013/, etc.
   }, function(err, obj) {
     if (obj) { // we might have a got a 404 etc
-        prefill = _.extend(obj, prefill);
-      }
-      else
-        res.send(404, 'There is no entry for ' + req.params.place + ' and ' + req.params.dataset);
+      prefill = _.extend(obj, prefill);
+    } else {
+      res.send(404, 'There is no entry for ' + req.params.place + ' and ' + req.params.dataset);
+      return;
+    }
 
     model.backend.getSubmissions({
       place: req.params.place,
@@ -479,27 +484,28 @@ app.get('/country/:place/:dataset', function(req, res) {
       year: /*year || */ model.DEFAULT_YEAR //TODO: next year, extend to /2013/, etc.
     }, function(err, obj) {
       // we allow query args to override entry values
-      // might be useful (e.g. if we started having form errors and redirecting here ...)
+      // might be useful (e.g. if we started having form errors and redirecting
+      // here ...)
       if (obj) { // we might have a got a 404 etc
         prefill['reviewers'] = [];
         prefill['submitters'] = [];
+
         _.each(obj, function(val) {
           if (val['reviewer'] !== "") prefill['reviewers'].push(val['reviewer']);
           if (val['submitter'] !== "") prefill['submitters'].push(val['submitter']);
-      });
+        });
 
         prefill['reviewers'] = _.uniq(prefill['reviewers']);
         prefill['submitters'] = _.uniq(prefill['submitters']);
         if (prefill['reviewers'].length === 0) prefill['noreviewers'] = true;
         if (prefill['submitters'].length === 0) prefill['nosubmitters'] = true;
         render(prefill);
-      }
-      else
+      } else {
         res.send(404, 'There is no entry for ' + req.params.place + ' and ' + req.params.dataset);
-    }
-    );
-  }
-  );
+        return;
+      }
+    });
+  });
 });
 
 
@@ -518,4 +524,3 @@ model.load(function(err) {
 });
 
 exports.app = app;
-
