@@ -1,4 +1,13 @@
-@import "fonts.css";
+@font-face {
+	font-family: 'BebasNeueRegular';
+	src: url('BebasNeue-webfont.eot');
+	src: url('BebasNeue-webfont.eot?#iefix') format('embedded-opentype'),
+	     url('BebasNeue-webfont.woff') format('woff'),
+	     url('BebasNeue-webfont.ttf') format('truetype'),
+	     url('BebasNeue-webfont.svg#BebasNeueRegular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
 
 /* Bootstrap Overrides */
 /* =================== */
@@ -71,7 +80,7 @@ td.recordurl {
   white-space: nowrap;
 }
 
-i[class*='icon-'] {
+a i[class*='icon-'] {
   text-decoration: none;
 }
 
@@ -161,7 +170,6 @@ ul.availability.icons.mini li i {
 	position: relative;
 	padding-left: 28px;
 }
-
 
 .key {
 	display:inline-block;
@@ -676,107 +684,15 @@ table.table th.area-name {
 	max-width: 250px;
 }
 
-#map path {
-	stroke: #fff;
-	stroke-width: 0.3px;
-}
-
-#map svg path.regions:hover {
-	fill: #c00;
-	cursor: pointer;
-}
-
-#map svg path.bg {
-	stroke: #d3d0d0;
-	fill: #d3d0d0;
-	opacity: 0.5;
-}
-
-
-.modal {
-	width: 800px;
-	margin-left: -400px;
-	margin-right: -400px;
-}
-button.close {
-	padding: 0;
-	cursor: pointer;
-	background: transparent;
-	border: 0;
-	-webkit-appearance: none;
-}
-
-.modal table th {
-	width: 60%;
-}
-
-.modal table th,
-.modal table td {
-	text-align: left;
-}
-
 .loading {
 	text-align: center;
 	font-size: 24px;
 	margin-bottom: 5px;
 }
-.modal .notice {
-  margin-top: 5px;
-  }
-SPAN.brand {
-    padding-left: 10px;
-    }
-#pagesel A {
-     color: #ffffff;
-     margin-top: 5px;
-    }
-#pagesel {
-    background-color: #2C2C2C;
-    font-size: 20px;
-    width: 100px;
-    position: absolute;
-    display: none;
-    padding-left: 10px;
-    }
-#pagesel UL {
-    list-style: none;
-    margin-left: 0px;
-    }
+
 .page {
   min-height: 580px;
   padding-bottom: 10px;
-  }
-.footer {
-  background: #2C2C2C;
-  color: white;
-  width: 100%;
-  clear: both;
-}
-
-A.control {
-  }
-
-A.control:hover {
-  background: #999999;
-  color: white;
-  }
-
-
-.map-tab {
-  height: 400px;
-	padding-top:20px;
-}
-ul.tab-control {
-  float: left;
-  list-style: none;
-  margin-left: 0px;
-  }
-ul.tab-control > li > a {
-	display:block;
-	margin-bottom:5px;
-}
-#map svg path.regions:hover {
-  fill: #FF9900;
   }
 
 /* Review */
@@ -972,4 +888,3 @@ div.historic-entries div.current-entry:last-child .textarea {
 table.faq-table tr td:first-child {
   min-width: 150px;
 }
-
