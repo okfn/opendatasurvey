@@ -23,10 +23,12 @@ var CORSSupport = function(req, res, next) {
 };
 
 app.configure(function() {
+  if (!config.get('test:testing')) {
+    app.use(express.logger('dev'));
+  }
   app.set('port', config.get('appconfig:port'));
   app.set('views', __dirname + '/templates');
   app.use(express.favicon());
-  app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());

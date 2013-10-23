@@ -3,7 +3,6 @@ node_js:
   - '0.10'
 env:
   global:
-    - TEST=true
     - SPREADSHEET_KEY=0AqR8dXc6Ji4JdHR5WWdUU2dYUElPaFluUlBJbkFOMUE
     # GOOGLE_USER
     - secure: GPj9WCcdZTZJNGQEnLrhylnOSpSD++ME4BxO+YRZDgB0I+fJYWURCN31hMCFa5s2xw7J102XKt4Ere6+xnBrGP570+U7CW/xvhANirfIbW9quvU1CREtN64f8mrCtIUzNk/anR/uI/4G4Iu0+vgXtcg20N3awrqbdZ/bfEf91es=

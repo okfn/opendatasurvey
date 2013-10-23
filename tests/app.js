@@ -6,6 +6,7 @@ var request = require('supertest')
 var options = {
  'key': '0AqR8dXc6Ji4JdHR5WWdUU2dYUElPaFluUlBJbkFOMUE'
 };
+config.set('test:testing', true);
 config.set('appconfig:port', 5001 + Math.floor(Math.random() * 1000));
 config.set('database:country:spreadsheetKey', options.key);
 
