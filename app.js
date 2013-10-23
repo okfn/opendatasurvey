@@ -22,6 +22,18 @@ var CORSSupport = function(req, res, next) {
   next();
 };
 
+// Cache-Control header middleware
+var CacheControl = function (maxAge) {
+  maxAge = parseInt(maxAge, 10);
+
+  return function(req, res, next) {
+    if (typeof res.get('Cache-Control') === 'undefined') {
+      res.set('Cache-Control', 'public, max-age=' + maxAge);
+    }
+    next();
+  };
+};
+
 app.configure(function() {
   if (!config.get('test:testing')) {
     app.use(express.logger('dev'));
@@ -30,12 +42,28 @@ app.configure(function() {
   app.set('views', __dirname + '/templates');
   app.use(express.favicon());
   app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(express.cookieParser());
-  app.use(express.session({secret: process.env.SESSION_SECRET || 'dummysecret'}));
+
+  if (!config.get('production:readonly')) {
+    app.use(express.methodOverride());
+    app.use(express.cookieParser());
+    app.use(express.session({
+      secret: process.env.SESSION_SECRET || 'dummysecret'
+    }));
+  }
+
   app.use(CORSSupport);
   app.use(flash());
-  app.use(express['static'](path.join(__dirname, 'public')));
+
+  var staticRoot = path.join(__dirname, 'public');
+  var staticOpts = {};
+  if (config.get('production:readonly')) {
+    staticOpts.maxAge = 3600 * 1000;
+  }
+  app.use(express['static'](staticRoot, staticOpts));
+
+  if (config.get('production:readonly')) {
+    app.use(CacheControl(1800));
+  }
 });
 
 env.express(app);
@@ -46,6 +74,8 @@ app.all('*', function(req, res, next) {
   }
   if (config.get('production:readonly') === true) {
     res.locals.readonly = true;
+    // No session support in readonly mode, so fake it out:
+    req.session = {};
     req.session.loggedin = false;
   }
   res.locals.error_messages = req.flash('error');
