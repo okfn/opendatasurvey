@@ -9,39 +9,17 @@
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.min.js"></script>
     <![endif]-->
 
-    <script src="/vendor/recline/vendor/jquery/1.7.1/jquery.js"></script>
-    <script src="/vendor/recline/vendor/underscore/1.4.2/underscore.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
+    <script src="/vendor/chroma.pack.min.js"></script>
 
-  <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
-
-<script src="/vendor/recline/vendor/backbone/0.9.2/backbone.js"></script>
-<script src="/vendor/recline/vendor/leaflet/0.4.4/leaflet.js"></script>
-<script src="/vendor/recline/vendor/leaflet.markercluster/leaflet.markercluster.js"></script>
-<script type="text/javascript" src="/vendor/recline/vendor/mustache/0.5.0-dev/mustache.js"></script>
-
-<script src="/vendor/raphael-min.js"></script>
-
-<script src="/vendor/kartograph.min.js"></script>
-<script src="/vendor/jquery.sparkline.min.js"></script>
-
-<script src="/vendor/chroma.pack.min.js"></script>
-
-<script src="/vendor/recline/dist/recline.js"></script>
-
-    <!--<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-    <link href="/vendor/recline/css/map.css" rel="stylesheet" />
-    <link href="/vendor/recline/vendor/leaflet/0.4.4/leaflet.css" rel="stylesheet" />
-    <link href="/vendor/recline/vendor/leaflet.markercluster/MarkerCluster.Default.css" rel="stylesheet" />
-    <!-- [if lte IE 9]>
-    <link href="/vendor/recline/vendor/leaflet/0.4.4/leaflet.ie.css" rel="stylesheet" />
-    <link href="/vendor/recline/vendor/leaflet/leaflet.markercluster/MarkerCluster.Default.ie.css" rel="stylesheet" />
-    <![endif]-->
-    <link href="/css/style.css" rel="stylesheet" />
+    <link href="/css/style.css" rel="stylesheet">
   </head>
 
   <body>
@@ -61,7 +39,7 @@
         {% endif %}
       </ul>
       <a class="nav-logo pull-right" href="http://okfn.org/" title="An Open Knowledge Foundation Project" target="_blank">
-        <img src="http://assets.okfn.org/images/logo/okfn-logo-landscape-black.png" alt="Open Knowledge Foundation logo" style="height:30px;" />
+        <img src="//assets.okfn.org/images/logo/okfn-logo-landscape-black.png" alt="Open Knowledge Foundation logo" style="height:30px;" />
       </a>
     </div>
   </div>
@@ -102,22 +80,27 @@
         </p>
     <p>
       <a href="http://opendefinition.org/ossd/" title="Open Online Software Service" style="border:none;">
-        <img src="http://assets.okfn.org/images/ok_buttons/os_80x15_orange_grey.png" alt="" border="" />
+        <img src="//assets.okfn.org/images/ok_buttons/os_80x15_orange_grey.png" alt="" border="" />
       </a>
       <a href="http://opendefinition.org/okd/" title="Open Definition" style="border:none;">
-        <img src="http://assets.okfn.org/images/ok_buttons/oc_80x15_blue.png" alt="" border="" />
+        <img src="//assets.okfn.org/images/ok_buttons/oc_80x15_blue.png" alt="" border="" />
       </a>
       <a href="http://opendefinition.org/okd/" title="Open Definition" style="border:none;">
-        <img src="http://assets.okfn.org/images/ok_buttons/od_80x15_blue.png" alt="" border="" />
+        <img src="//assets.okfn.org/images/ok_buttons/od_80x15_blue.png" alt="" border="" />
       </a>
     </p>
       </div>
       <div class="span6">
         <ul class="pull-right">
-          <li><a href="mailto:census@okfn.org" title="Contact Us">Contact Us</a></li>
-          <li><a href="https://github.com/okfn/opendatacensus/issues" title="Report Issues">Report Issues</a></li>
+          {% if readonly %}
+          <li><a href="mailto:index@okfn.org" title="Contact us">Contact us</a></li>
+          <li><a href="mailto:index@okfn.org?Subject=Open%20Data%20Index%20issue%20report" title="Report issues">Report issues</a></li>
+          {% else %}
+          <li><a href="mailto:census@okfn.org" title="Contact us">Contact us</a></li>
+          <li><a href="https://github.com/okfn/opendatacensus/issues" title="Report issues">Report issues</a></li>
+          {% endif %}
           <li><a href="http://okfn.org/opendata/" title="More about Open Data">Open Data</a></li>
-          <li><a href="https://github.com/okfn/opendatacensus/">Source Code</a></li>
+          <li><a href="https://github.com/okfn/opendatacensus/">Source code</a></li>
         </ul>
       </div>
     </div>

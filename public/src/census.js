@@ -1,257 +1,106 @@
 $(document).ready(function($) {
 
-  var summary;
+  // Only one popover visible
+  // Adapted from http://stackoverflow.com/a/12119747/114462
+  var $visiblePopover;
 
-  // 2013-06-09 (rgrp) - is anyone using this (do not think so)
-  if (window.location.search.indexOf('embed=1')!=-1) {
-    $('.navbar').hide();
-    $('body').attr('style', 'padding-top: 0');
-  }
+  $('body').on('click', 'td.showpopover', function() {
+    var $this = $(this);
 
-  $.getJSON('/country/results.json', function(data) {
-    OpenDataCensus.summaryTable($('.response-summary'), data);
-    // summaryMap(data);
-    $('#overallscore').click(function(e){
-      e.preventDefault();
-      summaryMap(data);
-    });
-    $('#opendatasets').click(function(e){
-      e.preventDefault();
-      showOpenMap();
-    });
-    // createMapSelector();
+    // check if the one clicked is now shown
+    if ($this.data('popover').tip().hasClass('in')) {
+
+      // if another was showing, hide it
+      if ($visiblePopover) {
+        $visiblePopover.popover('hide');
+      }
+
+      // then store reference to current popover
+      $visiblePopover = $this;
+
+    } else { // if it was hidden, then nothing must be showing
+      $visiblePopover = '';
+    }
   });
 
-  function createMapSelector() {
-    var el = $("ul.tab-control");
-    var temp = function(name) {
-      return function(e){
-        e.preventDefault();
-        $("ul.tab-control > li > a").removeClass("active");
-        $(this).addClass("active");
-        showSelectedMap(name);
-      };
-    };
-    _.each(OpenDataCensus.censusDatasets, function(ds, i) {
-      var title = OpenDataCensus.makeDatasetTitle(ds);
-      el.append('<li><a class="btn" id="ds-' + i +
-        '" href="#" class="control">' + title + '</a></li>');
-      $('#ds-' + i).click(temp(ds));
+  var summaryTable = function(table, data) {
+    // do gradient on score
+    $(table).find('.placescore').each(function(idx, td) {
+      var $td = $(td);
+      var score = parseInt($td.data('score'), 10);
+      $td.css('background-color', OpenDataCensus.colorScale.totalColorScale.getColor(score).hex());
     });
-  }
 
-  function getAllDatasetByCountry(dataset, country) {
-    var ret = [];
-    _.each(_.keys(dataset.bydataset), function (d) {
-      ret.push(dataset.bydataset[d][country]);
-    });
-    return ret;
-  }
-
-  function summaryMap(countryInfo) {
-    $("ul.tab-control > li > a").removeClass("active");
-    $("#overallscore").addClass("active");
-    var byIso = createByIso(countryInfo.places);
-    var scores = {};
-    _.each(_.keys(byIso), function(country) {
-      var count = byIso[country] ? byIso[country].count : 0;
-      byIso[country].datasets = getAllDatasetByCountry(countryInfo, byIso[country].name);
-      byIso[country].score=0;
-      _.each(byIso[country].datasets,function(dataset) {
-        if (dataset.count) {
-          response = getLatestReponse(dataset.responses);
-          _.each(OpenDataCensus.censusKeys.slice(3,9), function(key) {
-              var answer = response[gdocsMunge(key)];
-              if (answer === 'Yes') {
-                byIso[country].score++;
-              }
-          });
-        }
-      });
-      scores[country]=byIso[country].score;
-    });
-    var max=0;
-    _.each(_.keys(scores),function(key) {
-      if (scores[key] > max) {
-        max=scores[key];
-      }
-    });
-    var colscale = new chroma.ColorScale({
-      colors: chroma.brewer.Blues,
-      limits: [-2,max]
-    });
-    showMap(byIso,"score",colscale,countrySummary);
-  }
-
-  function createByIso(countries) {
-    var ret = {};
-    _.each(countries, function (c) {
-      ret[OpenDataCensus.countryCodes[c]]= {name: c};
-    });
-    return ret;
-  }
-
-  function showSelectedMap(dataset) {
-    var byIso = createByIso(dataset.places);
-    _.each(_.keys(byIso), function (c) {
-      byIso[c].count=0;
-      });
-    var ds=summary.datasets[dataset];
-    _.each(_.keys(byIso), function(c) {
-      var cds=ds[byIso[c].name];
-      var r = getLatestReponse(cds.responses);
-      if (r) {
-        byIso[c].count=scoreOpenness(r);
-        byIso[c].response=r;
-        }
-      });
-
-    var colscale= new chroma.ColorScale({
-      colors: chroma.brewer.Blues,
-      limits: [-2,6]
-      });
-    showMap(byIso,"count",colscale,function(d) {
-      $("#CountryDatasetInfo div.modal-header h3").html(d.name);
-      console.log(d);
-      $("#CountryDatasetInfo div.modal-body table").empty();
-      if (d.response) {
-        _.each(OpenDataCensus.censusKeys, function(key) {
-          var tr = ["<tr><td>"];
-          tr.push(key);
-          tr.push("</td><td>");
-          tr.push(d.response[gdocsMunge(key)]);
-          tr.push("</td></tr>");
-          $("#CountryDatasetInfo div.modal-body table").append(tr.join(""));
-        });
-      }
-      $("#CountryDatasetInfo").modal({backgrop: false});
-      $("#CountryDatasetInfo").modal('show');
-    });
-  }
-
-  function showOpenMap() {
-    $("ul.tab-control > li > a").removeClass("active");
-    $("#opendatasets").addClass("active");
-    byIso=createByIso(summary);
-    _.each(_.keys(byIso),function(c) {
-      byIso[c].count = 0;
-      byIso[c].datasets = [];
-    });
-    _.each(_.keys(summary.datasets), function (ds) {
-      _.each(_.keys(summary.datasets[ds]), function (country) {
-          var cc=OpenDataCensus.countryCodes[country];
-          var response = getLatestReponse(summary.datasets[ds][country].responses);
-          if (response) {
-            if (scoreOpenness(response) == 6) {
-              byIso[cc].count++;
-              byIso[cc].datasets.push(summary.datasets[ds][country]);
-            }
+    $('.showpopover').each(function(idx, td) {
+      var $td = $(td);
+      if (typeof data.byplace[$td.data('place')] != 'undefined') {
+        var record = data.byplace[$td.data('place')].datasets[$td.data('dataset')];
+        var datasetTitle = $td.data('datasettitle');
+        $td.popover({
+          html: true,
+          placement: 'bottom',
+          container: 'body',
+          title: function(e){
+            title = '<h3>' + datasetTitle + ' in ' + record.place + '</h3>';
+            return title;
+          },
+          content: function(){
+            return OpenDataCensus.popoverBody(record);
           }
         });
-    });
-    var colscale= new chroma.ColorScale({
-      colors: chroma.brewer.Blues,
-      limits: [-1,10]
-    });
-
-    showMap(byIso,"count",colscale,function(d) {
-      $("#CountryOpenInfo div.modal-header h3").html(d.name);
-      $("#CountryOpenInfo div.modal-body table").empty();
-      _.each(d.datasets,function(ds) {
-        var r = getLatestReponse(ds.responses);
-        var tr = ["<tr><td>"];
-        if (r.locationofdataonline) {
-          tr.push("<a href='", r.locationofdataonline, "'>");
-        }
-        tr.push(r.dataset);
-        if (r.locationofdataonline) {
-          tr.push("</a>");
-        }
-        tr.push("</td></tr>");
-        $("#CountryOpenInfo div.modal-body table").append(tr.join(""));
-      });
-      $("#CountryOpenInfo").modal({backgrop: false});
-      $("#CountryOpenInfo").modal('show');
-    });
-
-  }
-
-  function showMap(data,key,colscale,callback) {
-    var values = {};
-    _.each(_.keys(data), function(d) {
-      values[d] = data[d][key];
-    });
-    $('#map').empty();
-    var map = $K.map('#map', 700);
-    map.loadMap('../data/world.svg', function(map) {
-      map.addLayer({
-        id: 'regions',
-        className: 'bg',
-        key: 'iso2',
-        filter: function(d) {
-          return !data.hasOwnProperty(d.iso2);
-        }
-      });
-
-      map.addLayer({
-        id: 'regions',
-        key: 'iso2',
-        filter: function(d) {
-          return data.hasOwnProperty(d.iso2);
-        }
-      });
-
-      map.choropleth({
-        data: values,
-        colors: function(d) {
-          if (d === null) return '#e3e0e0';
-          return colscale.getColor(d);
-        }
-      });
-
-      map.onLayerEvent('click', function(d) {
-        callback(data[d.iso2]);
-      });
-    });
-    $("#map").show();
-  }
-
-  function countrySummary(data) {
-    $("#CountryInfo table").empty();
-    var ds=0;
-    _.each(data.datasets,function(d) {
-      if (d.count>0) {
-        ds++;
-        }
-      });
-    var free=0;
-    _.each(data.datasets,function(d) {
-      if (d.count>0) {
-        var tr=["<tr><td>"];
-        var resp = getLatestReponse(d.responses);
-        if (scoreOpenness(resp)==6) {
-          free++;
-          d.isopen=true;
-          }
-        if (resp.locationofdataonline) {
-          tr.push("<a href='" + resp.locationofdataonline + "'>");
-          }
-        tr.push(resp.dataset);
-        if (resp.locationofdataonline) {
-          tr.push("</a>");
-        }
-        tr.push("</td><td>");
-        if (d.isopen) {
-          tr.push("<img src='http://assets.okfn.org/images/ok_buttons/od_80x15_blue.png' />");
-        }
-        tr.push("</td></tr>");
-        $("#CountryInfo table").append(tr.join(""));
       }
     });
-    $("#CountryInfo h3").html(data.name);
-    $("#CountryInfo").modal({backgrop: false});
-    $("#CountryInfo").modal('show');
-    $("#cnds").html(ds);
-    $("#cokds").html(free);
-  }
+
+    $(table).find('thead tr th:first-child, tfoot tr th:first-child')
+      .addClass('sorting')
+      .html(function (idx) {
+        return 'Sort' +
+        '<label class="radio">' +
+          '<input type="radio" name="sorttable-' + idx + '" class="sort-table" value="alpha">' +
+          'alphabetically' +
+        '</label>' +
+        '<label class="radio">' +
+          '<input type="radio" name="sorttable-' + idx + '" class="sort-table" value="score" checked>' +
+          'by score' +
+      '</label>';
+      });
+
+    $('.sort-table').change(function(){
+      var sortFunc;
+      var sortBy = $(this).val();
+
+      if (sortBy === 'score') {
+        sortFunc = function(a, b) {
+          return parseInt($(b).data('score'), 10) - parseInt($(a).data('score'), 10);
+        };
+      } else {
+        sortFunc = function(a, b) {
+          return $(a).data('area').toUpperCase().localeCompare($(b).data('area').toUpperCase());
+        };
+      }
+
+      $('.sort-table').attr('checked', false);
+      $('.sort-table[value="' + sortBy + '"]').attr('checked', true);
+      table.find('tbody tr').sort(sortFunc).appendTo(table);
+    });
+
+    $('a[data-toggle="tooltip"]').tooltip();
+    $('a[data-toggle="popover"]').popover();
+
+    // Fix widths of table cells so that when thead becomes "position: fixed;"
+    // it still displays correctly
+    var widths = $(table).find('tbody tr:nth-child(1) > *').map(function () {
+      return $(this).width();
+    });
+    for (var i = 0, max = widths.length; i < max; i++) {
+      $(table).find('tr > *:nth-child(' + (i+1) + ')').width(widths[i]);
+    }
+  };
+
+  var summary;
+
+  $.getJSON('/country/results.json', function(data) {
+    summaryTable($('.response-summary'), data);
+  });
+
 });
