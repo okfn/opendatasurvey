@@ -775,23 +775,9 @@ ul.tab-control > li > a {
 	display:block;
 	margin-bottom:5px;
 }
-.rankings > #map {
-    margin-left: 0px;
-    }
 #map svg path.regions:hover {
   fill: #FF9900;
   }
-#ranks {
-  width: 400px;
-  float: right;
-  height: 500px;
-  overflow-y: scroll;
-  }
-
-.rankings > .selector > a {
-  text-transform: capitalize;
-  }
-
 
 /* Review */
 table.availability-form td {
