@@ -184,7 +184,7 @@ If the data is not open, then this question will instead describe the date the d
 
 ### How can I get more involved?
 
-<p>There are several ways to become involved. Anyone are invited to make submissions, and also apply to become a Country Reviewer. The Open Data Index and Index is discussed in the community via this <a href="http://lists.okfn.org/mailman/listinfo/open-data-census">discussion list</a>, which is open for anyone to join. You can also privately email the Index Team at the Open Knowledge Foundation on <a href="index@okfn.org">index@okfn.org</a></p>
+<p>There are several ways to become involved. Anyone are invited to make submissions, and also apply to become a Country Reviewer. The Open Data Index and Index is discussed in the community via this <a href="http://lists.okfn.org/mailman/listinfo/open-data-census">discussion list</a>, which is open for anyone to join. You can also privately email the Index Team at the Open Knowledge Foundation on <a href="mailto:index@okfn.org">index@okfn.org</a></p>
 
 ### If you want to learn more about Open Data...
 
