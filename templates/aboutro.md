@@ -19,20 +19,36 @@
 <p>The public is invited to contribute at any time and have their input peer-reviewed periodically by a team of 60+ Country Editors.</p>
 
 </div>
+<div class="span4">
+  <div class="toc well">
+    <h3>Table of Contents</h3>
+    <ul>
+      <li>[What does the Open Data Index contain?](#contents)</li>
+      <li>[How can the results of the Open Data Index be used?](#uses)</li>
+      <li>[What datasets are included in the Open Data Index?](#datasets)</li>
+      <li>[How reliable is the Open Data Index?](#reliability)</li>
+      <li>[What's the Open Data Index data collection and review process?](#process)</li>
+      <li>[What criteria matters in the assessment of the datasets?](#criteria)</li>
+      <li>[How does the scoring system work?](#scoring)</li>
+      <li>[How can I get the data?](#getting-the-data)</li>
+      <li>[How can I get more involved?](#getting-involved)</li>
+      <li>[If you want to learn more about Open Data...](#learning-more)</li>
+    </ul>
+  </div>
+</div>
 </div>
 
-### What does the Open Data Index and Index contain?
+<h3 id="contents">What does the Open Data Index contain?</h3>
 
-<p>The Open Data Index and Index intentionally focuses on a small number of key datasets. These datasets have been chosen for their breadth and relevance and were discussion after consultation within the open government data community. It is planned that the Open Data Index will be expanded to include more categories of datasets later. </p>
+<p>The Open Data Index intentionally focuses on a small number of key datasets. These datasets have been chosen for their breadth and relevance and were discussion after consultation within the open government data community. It is planned that the Open Data Index will be expanded to include more categories of datasets later. </p>
 
-### How can the results of Open Data Index be used?
+<h3 id="uses">How can the results of the Open Data Index be used?</h3>
 
 <p>The Open Data Index does not aim to create a comprehensive list of open data sets around the world for data users. The Open Data Index seeks to be a tool with which people can ignite conversations with their government by either questioning their performance on the ranking list or by pointing to performance of other governments.</p>
 
-### What datasets are included in the Open Data Index?
+<h3 id="datasets">What datasets are included in the Open Data Index?</h3>
 
-<p>The state of open data around the world is assessed by focusing on the the availability and openness of a 10 key datasets.</p>
-
+<p>The state of open data around the world is assessed by focusing on the availability and openness of 10 key datasets:</p>
 
 <table class="table table-bordered table-striped faq-table">
 <tr>
@@ -81,17 +97,18 @@
 </tr>
 </table>
 
-### How reliable is the Open Data Index?
+<h3 id="reliability">How reliable is the Open Data Index?</h3>
 
 <p>The information in the Index is collected by open data experts around the world including the <a href="http://opengovernmentdata.org/">Open Knowledge Foundation Open Government Working Group</a>. The Index data undergoes a process of peer review and evidence checking to ensure high quality results.</p>
 
-### What's the Open Data Index data collection and review process?
+<h3 id="process">What's the Open Data Index data collection and review
+process?</h3>
 
 <p>Contributers (citizens or anyone else) submit information about the availability (or not) of key datasets in their country (for example Budgets in Brasil). These submissions are reviewed by a community of Country Editors around the world. Country Editors either approve (with or without amendments) or reject the submission. If approved, these submissions become an official entry and are displayed on the website.</p>
 
-### What criteria matters in the assessment of the datasets?
+<h3 id="criteria">What criteria matters in the assessment of the datasets?</h3>
 
-<p>When submitting a dataset, there is a list of questions to answer about the availability and openness of the datasets. These answers appear in the Country overview page for each country.</p>
+<p>When submitting a dataset, there is a list of questions to answer about the availability and openness of the datasets. These answers appear in the Country overview page for each country:</p>
 
 <table class="table table-bordered table-striped faq-table">
 <tr>
@@ -162,7 +179,7 @@ If the data is not open, then this question will instead describe the date the d
 </tr>
 </table>
 
-### How does the scoring system work?
+<h3 id="scoring">How does the scoring system work?</h3>
 
 <p>The Open Data Index and Index measures the state of openness of 10 datasets for each country. The overall score for a dataset is based on the response to specific questions with varying weightings - the weighting for each question is listed in the question table above. The overall country score is then calculated from the score on each dataset.</p>
 
@@ -177,18 +194,18 @@ If the data is not open, then this question will instead describe the date the d
 
 <p>One of the aims of the questions for each dataset is to provide a increasing set of requirements leading up to full openness (excluding ‘timely’ which is important but not a requirement for open data). It should be noted that this does not mean each question directly builds on the previous since some of are parallel (e.g. digital form and publicly available) but in general there is a progression, so ”No” on an earlier question may well imply ”No” on a later question.</p>
 
-### Getting the data
+<h3 id="getting-the-data">How can I get the data?</h3>
 
 * Underlying data for the country Index is available in bulk as CSV: (coming soon)
 * Underlying listing of datasets (including proposals for datasets to be added): <a href="https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc#gid=0">Country Datasets</a>
 
-### How can I get more involved?
+<h3 id="getting-involved">How can I get more involved?</h3>
 
 <p>There are several ways to become involved. Anyone are invited to make submissions, and also apply to become a Country Reviewer. The Open Data Index and Index is discussed in the community via this <a href="http://lists.okfn.org/mailman/listinfo/open-data-census">discussion list</a>, which is open for anyone to join. You can also privately email the Index Team at the Open Knowledge Foundation on <a href="mailto:index@okfn.org">index@okfn.org</a></p>
 
-### If you want to learn more about Open Data...
+<h3 id="learning-more">If you want to learn more about Open Data...</h3>
 
-<p>If the Open Data Index and Index has caught your interest, there's lots more open data and open government to learn about.</p>
+<p>If the Open Data Index has caught your interest, there's lots more open data and open government to learn about.</p>
 
 <p>You might like to join the <a href="http://opengovernmentdata.org/">Open Knowledge Foundation Open Government Working Group</a>, or check for <a href="http://okfn.org/local/">Open Knowledge Foundation Local Groups</a> in your area.</p>
 
