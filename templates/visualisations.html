@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}
+Visualisations
+{% endblock %}
+
+{% block content %}
+<h1>Visualisations</h1>
+
+<p>
+  The following visualisations have been constructed from the 2013
+  {{ sitename_short }} data. All are licensed under a <a
+    href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+    Attribution 3.0</a> license, meaning you are to free to use them in any
+  context, commercial or otherwise, provided you clearly attribute them to
+  "{{ sitename }} 2013, Open Knowledge Foundation."
+</p>
+
+<ul>
+  <li><a href="//opendataindex.s3.amazonaws.com/2013/visualisations/top10.png"><tt>top10.png</tt></a> &mdash; Top 10 countries by {{ sitename }} score.</li>
+  <li><a href="//opendataindex.s3.amazonaws.com/2013/visualisations/top20.png"><tt>top20.png</tt></a> &mdash; Top 20 countries by {{ sitename }} score.</li>
+  <li><a href="//opendataindex.s3.amazonaws.com/2013/visualisations/top20h.png"><tt>top20h.png</tt></a> &mdash; Top 20 countries by {{ sitename }} score, arranged horizontally.</li>
+  <li><a href="//opendataindex.s3.amazonaws.com/2013/visualisations/ogp.png"><tt>ogp.png</tt></a> &mdash; Open Government Partnership countries by {{ sitename }} score.</li>
+  <li><a href="//opendataindex.s3.amazonaws.com/2013/visualisations/g8.png"><tt>g8.png</tt></a> &mdash; G8 countries by {{ sitename }} score.</li>
+  <li><a href="//opendataindex.s3.amazonaws.com/2013/visualisations/top10bottom10.png"><tt>top10bottom10.png</tt></a> &mdash; Top 10 and bottom 10 countries by {{ sitename }} score.</li>
+  <li><a href="//opendataindex.s3.amazonaws.com/2013/visualisations/histogram.png"><tt>histogram.png</tt></a> &mdash; Distribution of countries by {{ sitename }} score.</li>
+  <li><a href="//opendataindex.s3.amazonaws.com/2013/visualisations/choropleth.png"><tt>choropleth.png</tt></a> &mdash; Chloropleth map of {{ sitename }} scores. Darker colours reflect higher scores, whereas grey indicates an absence of data.</li>
+  <li><a href="//opendataindex.s3.amazonaws.com/2013/visualisations/proportions.png"><tt>proportions.png</tt></a> &mdash; Proportion of countries in which each dataset is "open" according to the <a href="http://opendefinition.org/">Open Definition</a> (public, machine-readable, and openly licensed).</li>
+</ul>
+
+{% endblock %}

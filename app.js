@@ -143,6 +143,10 @@ app.get('/contributors', function(req, res) {
   });
 });
 
+app.get('/visualisations', function(req, res) {
+  res.render('visualisations.html');
+});
+
 app.get('/country', function(req, res) {
   res.render('country/index.html', {
     info: model.data.country,
