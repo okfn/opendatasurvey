@@ -22,16 +22,14 @@
     </div>
   </div>
 
-  <p>The Open Data Index is an initiative of the <a href="http://okfn.org/">Open Knowledge Foundation</a> based on contributions from <a href="http://okfn.org/opendata/">open data</a> advocates and experts around the world.{% if not readonly %} If you want to <strong>add, change or improve an entry</strong> please see the <a href="/contribute/">instructions</a> then choose your country or add a new one.{% endif %} You can see a list of our global community of contributors <a href="/contributors">here</a>.</p>
-
-
+  <p>The {{ sitename }} is an initiative of the <a href="http://okfn.org/">Open Knowledge Foundation</a> based on contributions from <a href="http://okfn.org/opendata/">open data</a> advocates and experts around the world.{% if not readonly %} If you want to <strong>add, change or improve an entry</strong> please see the <a href="/contribute/">instructions</a> then choose your country or add a new one.{% endif %} You can see a list of our global community of contributors <a href="/contributors">here</a>.</p>
 
   <div class="pull-left">{% include '_snippets/key.html' %}
   </div>
   {% if not readonly %}
   <div class="pull-right">
     <a href="/contribute/" class="btn btn-primary">
-      <i class="icon-plus"></i> Add data to the index!
+      <i class="icon-plus"></i> Add data to the {{ sitename_short }}!
     </a>
   </div>
   {% endif %}

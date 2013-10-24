@@ -6,7 +6,7 @@ Country - Submit
 
 {% block content %}
 <div class="page-header">
-  <h1>Country Open Data Index</h1>
+  <h1>Country {{ sitename }}</h1>
 </div>
 
 <div class="alert alert-warning">
@@ -59,7 +59,7 @@ Country - Submit
       </label>
     </div>
     <div class="span4">
-      <label>Index Year<br/>
+      <label>{{ sitename_short }} Year<br/>
         <input name="year" type="number" min="2012" max="2013" value="2013" readonly="true" />
       </label>
     </div>

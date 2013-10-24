@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>
       {% block title%}{{title}}{% endblock %}
-      - Open Data Index</title>
+      - {{ sitename }}</title>
     <meta name="author" content="Open Knowledge Foundation">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -27,7 +27,7 @@
 <div class="navbar navbar-static-top">
   <div class="navbar-inner">
     <div class="container">
-      <a class="brand" href="/">Open Data Index</a>
+      <a class="brand" href="/">{{ sitename }}</a>
       <ul class="nav">
         <li><a href="/">Home</a></li>
         <li><a  href="/country/">Countries <!-- <b class="caret"></b> --> </a></li>
@@ -68,10 +68,10 @@
     <div class="row">
       <div class="span6">
         <p>
-        The Open Data Index is an initative of the <a href="http://okfn.org">Open Knowledge Foundation</a> and its <a href="http://opengovernmentdata.org/">working groups</a> and <a href="http://okfn.org/local/">local groups</a>.
+          The {{ sitename }} is an initative of the <a href="http://okfn.org">Open Knowledge Foundation</a> and its <a href="http://opengovernmentdata.org/">working groups</a> and <a href="http://okfn.org/local/">local groups</a>.
         </p>
         <p>
-          The index results are contributed by advocates and experts from the <a
+          The {{ sitename_short }} results are contributed by advocates and experts from the <a
             href="http://okfn.org/">open data</a> community around the world.
           {% if not readonly %}
           If you think there is something that we should add, change please see
