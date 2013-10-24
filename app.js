@@ -55,7 +55,7 @@ app.configure(function() {
   app.use(express.favicon());
   app.use(express.bodyParser());
 
-  if (!config.get('production:readonly')) {
+  if (!config.get('appconfig:readonly')) {
     app.use(express.methodOverride());
     app.use(express.cookieParser());
     app.use(express.session({
@@ -68,12 +68,12 @@ app.configure(function() {
 
   var staticRoot = path.join(__dirname, 'public');
   var staticOpts = {};
-  if (config.get('production:readonly')) {
+  if (config.get('appconfig:readonly')) {
     staticOpts.maxAge = 3600 * 1000;
   }
   app.use(express['static'](staticRoot, staticOpts));
 
-  if (config.get('production:readonly')) {
+  if (config.get('appconfig:readonly')) {
     app.use(CacheControl(1800));
   }
 });
@@ -84,7 +84,7 @@ app.all('*', function(req, res, next) {
   if (config.get('test:testing') === true) {
     req.session.loggedin = true;
   }
-  if (config.get('production:readonly') === true) {
+  if (config.get('appconfig:readonly')) {
     res.locals.readonly = true;
     // No session support in readonly mode, so fake it out:
     req.session = {};
@@ -101,7 +101,7 @@ app.all('*', function(req, res, next) {
 // ========================================================
 
 // If we are NOT running in readonly mode, then load the "census" routes
-if (!config.get('production:readonly')) {
+if (!config.get('appconfig:readonly')) {
   console.log("WARNING: Loading in census mode. Data will be editable.");
   var census = require('./census');
 
@@ -121,7 +121,9 @@ app.get('/', function(req, res) {
 
 app.get('/about', function(req, res) {
   var aboutfile = 'templates/about.md';
-  if (config.get('production:readonly') === true) aboutfile = 'templates/aboutro.md';
+  if (config.get('appconfig:readonly')) {
+    aboutfile = 'templates/aboutro.md';
+  }
   fs.readFile(aboutfile, 'utf8', function(err, text) {
     var marked = require('marked');
     var content = marked(text);
