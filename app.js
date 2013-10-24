@@ -88,6 +88,14 @@ app.all('*', function(req, res, next) {
 // Start routes
 // ========================================================
 
+// If we are NOT running in readonly mode, then load the "census" routes
+if (!config.get('production:readonly')) {
+  console.log("WARNING: Loading in census mode. Data will be editable.");
+  var census = require('./census');
+
+  census.addRoutes(app);
+}
+
 app.get('/', function(req, res) {
   res.render('index.html', {
     numberCountries: model.data.country.summary.places.toString(),
@@ -251,13 +259,6 @@ app.get('/country/:place/:dataset', function(req, res) {
   });
 });
 
-// If we are NOT running in readonly mode, then load the "census" routes as well
-if (!config.get('production:readonly')) {
-  console.log("WARNING: Loading in census mode. Data will be editable.");
-  var census = require('./census');
-
-  census.addRoutes(app);
-}
 
 // ========================================================
 // Booting up
