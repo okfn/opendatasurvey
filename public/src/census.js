@@ -41,7 +41,7 @@ $(document).ready(function($) {
           placement: 'bottom',
           container: 'body',
           title: function(e){
-            title = '<h3>' + datasetTitle + ' in ' + record.place + '</h3>';
+            title = '<strong>' + datasetTitle + '</strong> in <strong>' + record.place + '</strong>';
             return title;
           },
           content: function(){

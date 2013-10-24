@@ -34,36 +34,59 @@ OpenDataCensus.popoverBody = function(response) {
     return '<b>' + not + '</b>';
   };
 
-  var out = '', not;
-  out += '<ul>';
-  not = '';
+  var truncate = function(s, l) {
+    var o;
+    if (l === null || typeof l === 'undefined') {
+      l = 50;
+    }
+    o = s.slice(0, l);
+    if (s.length > l) {
+      o += "&hellip;";
+    }
+    return o;
+  };
 
-  //This should match the order of fields in the model!
+  var out = [], not = '';
+  out.push('<ul>');
+
+  // This should match the order of fields in the model!
   if (response.exists === 'Y'){
-    out += '<li>Data exists</li>';
+    out.push('<li>Data exists</li>');
     not = makeNot(response['digital']);
-    out += '<li>It\'s ' + not + 'digital</li>';
+    out.push('<li>It\'s ' + not + 'digital</li>');
     not = makeNot(response['public']);
-    out += '<li>It\'s ' + not + 'publicly available</li>';
+    out.push('<li>It\'s ' + not + 'publicly available</li>');
     not = makeNot(response['free']);
-    out += '<li>It\'s ' + not + 'free of charge</li>';
+    out.push('<li>It\'s ' + not + 'free of charge</li>');
     not = makeNot(response['online']);
-    out += '<li>It\'s ' + not + 'online</li>';
+    out.push('<li>It\'s ' + not + 'online');
+    if (response['online'] !== 'N' && response.url) {
+      out.push(' (<a href="' + response.url + '" target="_blank">');
+      out.push(truncate(response.url, 30));
+      out.push('</a>)');
+    }
+    out.push('</li>');
     not = makeNot(response['machinereadable']);
-    out += '<li>It\'s ' + not + 'machine readable</li>';
+    out.push('<li>It\'s ' + not + 'machine readable</li>');
     not = makeNot(response['bulk']);
-    out += '<li>It\'s ' + not + ' available in bulk</li>';
+    out.push('<li>It\'s ' + not + ' available in bulk</li>');
     not = makeNot(response['openlicense']);
-    out += '<li>It\'s ' + not + 'openly licensed</li>';
+    out.push('<li>It\'s ' + not + 'openly licensed</li>');
     not = makeNot(response['uptodate']);
-    out += '<li>It\'s ' + not + 'up-to-date</li>';
+    out.push('<li>It\'s ' + not + 'up-to-date</li>');
 
   } else {
-    out += '<li>Data does not exist</li>';
+    out.push('<li>Data does not exist</li>');
   }
-  out += '</ul>';
-  if (response.url) {
-    out += '<a href="' + response.url + '" target="_blank">Data Location Online</a>';
+  out.push('</ul>');
+  if (response.details) {
+    out.push('<p>' + truncate(response.details, 300));
+    out.push(' <a href="' + response.details_url + '">Read more &raquo;</a>');
+    out.push('</p>');
+  } else {
+    out.push('<p>');
+    out.push('<a href="' + response.details_url + '">View details &raquo;</a>');
+    out.push('</p>');
   }
-  return out;
+  return out.join('');
 };
