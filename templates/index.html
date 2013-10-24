@@ -16,14 +16,14 @@ Home
     <div class="row">
       <div class="span4">
         <p>&nbsp;</p>
-        <a href="country/" class="bignumber" id="tds">{% for char in numberCountries %}<span>{{char}}</span>{% endfor %}</a> <p>Countries in the the <a href="/country/">index</a></p>
+        <a href="country/" class="bignumber" id="tds">{% for char in numberCountries %}<span>{{char}}</span>{% endfor %}</a> <p>Countries in the the <a href="/country/">{{ sitename_short }}</a></p>
       </div>
       <div class="span8">
         <p>&nbsp;</p>
         <a href="country/" class="bignumber" id="nok">{% for char in numberOpen %}<span>{{char}}</span>{% endfor %}</a>
         <span class="between-numbers">of</span>
         <a href="country/" class="bignumber"
-          id="nds">{% for char in numberEntries %}<span>{{char}}</span>{% endfor %}</a> <p>key datasets in the<br /><a href="/country/">index</a> are open</p>
+          id="nds">{% for char in numberEntries %}<span>{{char}}</span>{% endfor %}</a> <p>key datasets in the<br /><a href="/country/">{{ sitename_short }}</a> are open</p>
       </div>
     </div>
   </div>
