@@ -1,7 +1,5 @@
 <div class="page-header">
-  <h1>
-    {{ sitename }} - Frequently Asked Questions
-  </h1>
+  <h1>Frequently Asked Questions</h1>
 </div>
 
 <div class="row" style="margin-top: 30px;">
@@ -128,9 +126,7 @@ overall score) or see if major regional data in general are released in a
 similarly (open) ways. In those cases, however, make sure to provide detailed
 explanation of the background in the comments field.
 
-#### See the full Census discussion list archive [here](http://lists.okfn.org/mailman/listinfo/open-data-census).
-
-####
+See the full Census discussion list archive [here](http://lists.okfn.org/mailman/listinfo/open-data-census).
 
 ### How reliable is the Open Data Census?
 
