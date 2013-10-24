@@ -1,12 +1,12 @@
 "use strict";
 
-var crypto = require('crypto');
 var fs = require('fs');
 var path = require('path');
 
 var _ = require('underscore');
 var express = require('express');
 var flash = require('connect-flash');
+var scrypt = require('scrypt');
 
 var config = require('./lib/config');
 var env = require('./env');
@@ -34,12 +34,24 @@ var CacheControl = function (maxAge) {
   };
 };
 
+var BasicAuth = express.basicAuth(function(user, pass) {
+  var validUser = (user === config.get('appconfig:auth_user'));
+  var validPass = scrypt.verifyHashSync(
+    config.get('appconfig:auth_passhash'),
+    pass
+  );
+  return validUser && validPass;
+});
+
 app.configure(function() {
+  app.set('port', config.get('appconfig:port'));
+  app.set('views', __dirname + '/templates');
+  if (config.get('appconfig:auth_on')) {
+    app.use(BasicAuth);
+  }
   if (!config.get('test:testing')) {
     app.use(express.logger('dev'));
   }
-  app.set('port', config.get('appconfig:port'));
-  app.set('views', __dirname + '/templates');
   app.use(express.favicon());
   app.use(express.bodyParser());
 

@@ -1,21 +1,19 @@
-var crypto = require('crypto');
 var fs = require('fs');
 
 var _ = require('underscore');
+var scrypt = require('scrypt');
 
 var config = require('./lib/config');
 var env = require('./env');
 var model = require('./lib/model').OpenDataCensus;
 
-function checkPassword(password, expectedHash) {
-  var sha1 = crypto.createHash('sha1');
-  var hash = sha1.update(password).digest('hex');
-  return (hash === expectedHash);
-}
 
 function doLogin(req, res) {
-  if (checkPassword(req.body['password'],
-      'dfadfb32ba022696637f550b4d9a1a6438ed57dd')) {
+  var validPass = scrypt.verifyHashSync(
+    config.get('appconfig:review_passhash'),
+    req.body['password']
+  );
+  if (validPass) {
     req.session.loggedin = true;
     req.flash('info', 'You are now logged in!');
     model.load(function() { // Get latest data
