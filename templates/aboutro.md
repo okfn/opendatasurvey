@@ -14,9 +14,9 @@
 
 <p>The Open Data Index has been developed to help answer these sorts of questions. It collects and presents information on the evolution and current state of open data around the world. Once a year, a snapshot of the Open Data index is taken out to form the Open Data Index - a list ranking countries and their open data efforts around the world.</p>
 
-<p>The Open Data Index is a community-based effort initiated and coordinated by the Open Knowledge Foundation but with participation from many different groups and individuals. The [Index, then called Census, was launched in April 2012 to coincide with the OGP meeting in Brasilia](http://blog.okfn.org/2012/04/17/launching-the-open-data-census-2012/).</p>
+<p>The Open Data Index is a community-based effort initiated and coordinated by the Open Knowledge Foundation with participation from many different groups and individuals. The [Index, then called Census, was launched in April 2012 to coincide with the OGP meeting in Brasilia](http://blog.okfn.org/2012/04/17/launching-the-open-data-census-2012/).</p>
 
-<p>The public is invited to contribute at any time and have their input peer-reviewed periodically by a team of 60+ Country Editors.</p>
+<p>The Open Data Index is compiled using contributions from civil society members and open data practitioners around the world, to which the public is invited to contribute at any time; this is then peer-reviewed and checked periodically by a team of 60+ expert Country Editors.</p>
 
 </div>
 <div class="span4">
@@ -40,11 +40,11 @@
 
 <h3 id="contents">What does the Open Data Index contain?</h3>
 
-<p>The Open Data Index intentionally focuses on a small number of key datasets. These datasets have been chosen for their breadth and relevance and were discussion after consultation within the open government data community. It is planned that the Open Data Index will be expanded to include more categories of datasets later. </p>
+<p>The Open Data Index intentionally focuses on a small number of key datasets. These datasets have been chosen for their breadth and relevance and were discussion after consultation within the open government data community. It is planned that the Open Data Index will be expanded to include more categories of datasets in the future. </p>
 
 <h3 id="uses">How can the results of the Open Data Index be used?</h3>
 
-<p>The Open Data Index does not aim to create a comprehensive list of open data sets around the world for data users. The Open Data Index seeks to be a tool with which people can ignite conversations with their government by either questioning their performance on the ranking list or by pointing to performance of other governments.</p>
+<p>The Open Data Index does not aim to create a comprehensive list of open data sets around the world for data users. The Open Data Index seeks to be a tool with which people can ignite conversations with their governments, based on their performance compared with other governments around the world. It should be noted that a number of countries were not assessed, often because they were not open enough to have an active civil society able or free to safely carry out the research.</p>
 
 <h3 id="datasets">What datasets are included in the Open Data Index?</h3>
 
@@ -57,11 +57,11 @@
 </tr>
 <tr>
 <td>Transport Timetables</td>
-<td>Timetables of major government operated (or commissioned) *national-level* public transport services (specifically bus and train). The focus here is on national level services (not those which operate *only* at a municipal or city level and which are not controlled or regulated by the national government). A 'yes' in any question will refer to both types of transport. However, if there is no national level service operated or regulated by the government for a given type of transport (for instance busses), then this type is ignored in this data category.</td>
+<td>Timetables of major government operated (or commissioned) *national-level* public transport services (specifically bus and train). The focus here is on national level services (not those which operate *only* at a municipal or city level and which are not controlled or regulated by the national government). A 'yes' in any question will refer to both types of transport. However, if there is no national level service operated or regulated by the government for a given type of transport (for instance buses), then this type is ignored in this data category.</td>
 </tr>
 <tr>
 <td>Government Budget</td>
-<td>National government budget at a high level (e.g. spending by sector, department etc). This category is about *budgets* which are government *plans* for expenditure (not actual expenditure in the past).</td>
+<td>Records of actual (past) national government spending at a detailed transactional level of month-to-month government expenditure on specific items (usually this means individual records of spending amounts under $1m or lower). (Note: Just a database of contracts awarded or similar is not considered sufficient. This data category refers to detailed ongoing data on actual expenditure).</td>
 </tr>
 <tr>
 <td>Government Spending</td>
@@ -77,34 +77,33 @@
 </tr>
 <tr>
 <td>National Map</td>
-<td>High level map at a scale of 1:250,000 or better (1cm = 2.5km)</td>
+<td>High level map at a scale of 1:250,000 or better (1cm = 2.5km).</td>
 </tr>
 <tr>
 <td>National Statistics</td>
-<td>Key national statistics such as demographic and economic indicators (GDP, unemployment, population, etc). Aggregate data (e.g. GDP for whole country at a quarterly level, or population at an annual level) is also considered acceptable in this data category. In general, answers of 'yes' in this category refers to entries with a reasonable amount of both economic and demographic information available.</td>
+<td>Key national statistics such as demographic and economic indicators (GDP, unemployment, population, etc). Aggregate data (e.g. GDP for whole country at a quarterly level, or population at an annual level) is also considered acceptable in this data category. In general, answers of 'yes' in this category refer to entries with a reasonable amount of both economic and demographic information available.</td>
 </tr>
 <tr>
 <td>Legislation</td>
-<td>This data category requires all national laws and statutes available to be available online, although it is not a requirement that information on legislative behaviour e.g. voting records is available.</td>
+<td>This data category requires all national laws and statutes to be available online, although it is not a requirement that information on legislative behaviour e.g. voting records is available.</td>
 </tr>
 <tr>
 <td>Postcodes / Zipcodes</td>
-<td>A database of postcodes/zipcodes and the corresponding geospatial locations in terms of a latitude and a longitude (or similar co-ordinates in an openly published national co-ordinate system).  A database which gives a location in terms of the name of a town or a street without lat/long co-ordinates is not considered acceptable unless the name of the town or street can be further converted to a latitude and longitude by means of other open data (eg an open gazetteer with latitude and longitude attributes).</td>
+<td>A database of postcodes/zipcodes and the corresponding geospatial locations in terms of a latitude and a longitude (or similar co-ordinates in an openly published national co-ordinate system). A database which gives a location in terms of the name of a town or a street without latitude and longitude co-ordinates is not considered acceptable unless the name of the town or street can be further converted to a latitude and longitude by means of other open data (eg an open gazetteer with latitude and longitude attributes).</td>
 </tr>
 <tr>
 <td>Emissions of pollutants</td>
-<td>Aggregate data about the emission of air pollutants especially those potentially harmful to human health (although it is not a requirement to include information on green house gas emissions). Aggregate means national-level or more detailed and on an annual basis or better. Standard examples of relevant pollutants would be: carbon monoxides, nitrogen oxides, particulate matter etc.</td>
+<td>Aggregate data about the emission of air pollutants, especially those potentially harmful to human health (although it is not a requirement to include information on greenhouse gas emissions). “Aggregate” means national-level or more detailed, and on an annual basis or more often. Standard examples of relevant pollutants would be carbon monoxides, nitrogen oxides, or particulate matter.</td>
 </tr>
 </table>
 
 <h3 id="reliability">How reliable is the Open Data Index?</h3>
 
-<p>The information in the Index is collected by open data experts around the world including the <a href="http://opengovernmentdata.org/">Open Knowledge Foundation Open Government Working Group</a>. The Index data undergoes a process of peer review and evidence checking to ensure high quality results.</p>
+<p>The information in the Index is collected by open data experts around the world including the <a href="http://opengovernmentdata.org/">Open Knowledge Foundation Open Government Working Group</a>. The Index data undergoes a process of peer review and evidence-checking to ensure high quality results.</p>
 
-<h3 id="process">What's the Open Data Index data collection and review
-process?</h3>
+<h3 id="process">What's the Open Data Index data collection and review process?</h3>
 
-<p>Contributers (citizens or anyone else) submit information about the availability (or not) of key datasets in their country (for example Budgets in Brasil). These submissions are reviewed by a community of Country Editors around the world. Country Editors either approve (with or without amendments) or reject the submission. If approved, these submissions become an official entry and are displayed on the website.</p>
+<p>Contributors (who may be citizens, experts, officials, journalists, or anyone else) submit information about the availability of key datasets in their country (for example, Budgets in Brazil). These submissions are reviewed by a community of Country Editors around the world. Country Editors either approve (with or without amendments) or reject the submission. If approved, these submissions become an official entry and are displayed on the website.</p>
 
 <h3 id="criteria">What criteria matters in the assessment of the datasets?</h3>
 
@@ -123,7 +122,7 @@ process?</h3>
 </tr>
 <tr>
 <td>Is data in digital form?</td>
-<td>This question addresses whether the data is in digital form (stored on computers or digital storage) or if it only in e.g. paper form.</td>
+<td>This question addresses whether the data is in digital form (stored on computers or digital storage) or if it only in, for example, paper form.</td>
 <td>5</td>
 </tr>
 <tr>
@@ -157,19 +156,19 @@ process?</h3>
 <td>30</td>
 </tr>
 <tr>
-<td>Is the data provided on a timely and up to date basis?</td>
-<td>This question addresses whether the data is up to date and timely - or long delayed. For example, for election data that it is made available immediately or soon after the election or if it is only available many years later. Any comments around uncertainty are put in the comments field.</td>
+<td>Is the data provided on a timely and up-to-date basis?</td>
+<td>This question addresses whether the data is up-to-date and timely - or long delayed. For example, is election data made available immediately or soon after the election, or is it only available many years later? Any comments around uncertainty are put in the comments field.</td>
 <td>10</td>
 </tr>
 <tr>
 <td>URL of data online?</td>
-<td>The link to the specific dataset if that is possible. Otherwise to the home page for the data. If that is not impossible, then the link to main page of site on which the data is located. Only links to **official** sites are eligeble, not third party sites. When it is necessary for submitters to provide third party links, then they are put in the comments section.</td>
+<td>The link to the specific dataset if that is possible. Otherwise to the home page for the data. If that is not possible, then the link to main page of site on which the data is located. Only links to official sites are eligeble, not third party sites. When it is necessary for submitters to provide third party links, then they are put in the comments section.</td>
 <td></td>
 </tr>
 <tr>
 <td>Date the data became available?</td>
 <td>This question describes when the data first became openly available (online, in digital form, openly licensed etc). Sometimes this is approximate. For example, "2012" or "Jan 2012". If there is a precise date, then they are typed in in a yyyy-mm-dd format.<br />
-If the data is not open, then this question will instead describe the date the data first became available at all. (Note: Obviously some open data was available in other forms previously, so the date specified here is the date it became openly available).</td>
+If the data is not open, then this question will instead describe the date the data first became available at all. (Note: some open data will have been available in other forms previously, so the date specified here is the date it became openly available).</td>
 <td></td>
 </tr>
 <tr>
@@ -181,13 +180,13 @@ If the data is not open, then this question will instead describe the date the d
 
 <h3 id="scoring">How does the scoring system work?</h3>
 
-<p>The Open Data Index and Index measures the state of openness of 10 datasets for each country. The overall score for a dataset is based on the response to specific questions with varying weightings - the weighting for each question is listed in the question table above. The overall country score is then calculated from the score on each dataset.</p>
+<p>The Open Data Index measures the state of openness of 10 datasets for each country. The overall score for a dataset is based on the response to specific questions with varying weightings - the weighting for each question is listed in the question table above. The overall country score is then calculated from the score on each dataset.</p>
 
-<p>The score algorithm is:</p>
+<p>The score is calculated in the following way:</p>
 
 <ol>
-  <li>If answer is yes to a question at the weighting value to score for that dataset</li>
-  <li>Add up total scores for each dataset to get a country score</li>
+  <li>1. When the answer to a question is 'yes', the score is increased by the weighting value listed in the table above.</li>
+  <li>2. The country score is found by adding up all the scores for each data category.</li>
 </ol>
 
 <p>As the weightings indicate, timeliness is now included with a weighting of 10.</p>
@@ -201,7 +200,7 @@ If the data is not open, then this question will instead describe the date the d
 
 <h3 id="getting-involved">How can I get more involved?</h3>
 
-<p>There are several ways to become involved. Anyone are invited to make submissions, and also apply to become a Country Reviewer. The Open Data Index and Index is discussed in the community via this <a href="http://lists.okfn.org/mailman/listinfo/open-data-census">discussion list</a>, which is open for anyone to join. You can also privately email the Index Team at the Open Knowledge Foundation on <a href="mailto:index@okfn.org">index@okfn.org</a></p>
+<p>There are several ways to become involved. Everyone is welcome to make submissions, and to apply to become a Country Reviewer. The Open Data Index and Index is discussed in the community via this [discussion list](http://lists.okfn.org/mailman/listinfo/open-data-census), which is open for anyone to join. You can also privately email the Index Team at the Open Knowledge Foundation on <a href="mailto:index@okfn.org">index@okfn.org</a>.</p>
 
 <h3 id="learning-more">If you want to learn more about Open Data...</h3>
 
@@ -209,6 +208,6 @@ If the data is not open, then this question will instead describe the date the d
 
 <p>You might like to join the <a href="http://opengovernmentdata.org/">Open Knowledge Foundation Open Government Working Group</a>, or check for <a href="http://okfn.org/local/">Open Knowledge Foundation Local Groups</a> in your area.</p>
 
-<p>If you're a developer or data wrangler and you'd like to help improve the Index site or any other open data tech, join the <a href="http://okfnlabs.org/">Open Knowledge Foundation Labs</a> where you can meet others and collaborate on open source code and other tech projects.</p>
+<p>If you're a developer or data wrangler and you'd like to help contribute to the Index site or any other open data tech, join the <a href="http://okfnlabs.org/">Open Knowledge Foundation Labs</a> where you can meet others and collaborate on open source code and other tech projects.</p>
 
 <p>You can also sign up to the <a href="http://okfn.org/">Open Knowledge Foundation list</a> to stay in touch.</p>

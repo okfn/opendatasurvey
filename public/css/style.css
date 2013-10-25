@@ -397,6 +397,10 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 	filter: none;
 }
 
+body.homepage .navbar {
+  border-bottom: none;
+}
+
 .page-header {
 	margin-bottom: 10px;
 }

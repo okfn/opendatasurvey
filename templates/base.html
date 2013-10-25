@@ -22,7 +22,7 @@
     <link href="/css/style.css" rel="stylesheet">
   </head>
 
-  <body>
+  <body class="{% block bodyclass %}{% endblock %}">
 <div class="wrapper">
 <div class="navbar navbar-static-top">
   <div class="navbar-inner">
@@ -68,14 +68,18 @@
     <div class="row">
       <div class="span6">
         <p>
-          The {{ sitename }} is an initative of the <a href="http://okfn.org">Open Knowledge Foundation</a> and its <a href="http://opengovernmentdata.org/">working groups</a> and <a href="http://okfn.org/local/">local groups</a>.
+          The {{ sitename }} is an initiative of the <a
+            href="http://okfn.org">Open Knowledge Foundation</a> and its <a
+            href="http://okfn.org/wg/">Working Groups</a> and <a
+            href="http://okfn.org/local/">Local Groups</a>.
         </p>
         <p>
-          The {{ sitename_short }} results are contributed by advocates and experts from the <a
-            href="http://okfn.org/">open data</a> community around the world.
+          The {{ sitename_short }} results are contributed by advocates and
+          experts from the <a href="http://okfn.org/opendata/">open data</a>
+          community around the world.
           {% if not readonly %}
-          If you think there is something that we should add, change please see
-          the <a href="/contribute/">contributor page</a>.
+          If you think there is something that we should add or change please
+          see the <a href="/contribute/">contributor page</a>.
           {% endif %}
         </p>
     <p>
@@ -115,7 +119,6 @@
 
   ga('create', 'UA-33874954-22', 'okfn.org');
   ga('send', 'pageview');
-
 </script>
 {% else %}
 <script type="text/javascript">

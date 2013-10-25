@@ -4,13 +4,9 @@
 Home
 {% endblock %}
 
-{% block content %}
-<style type="text/css">
-  .navbar {
-	  border-bottom-style:none;
-  }
-</style>
+{% block bodyclass %}homepage{% endblock %}
 
+{% block content %}
 <div class="dashboard">
   <div class="inner">
     <div class="row">
@@ -55,15 +51,4 @@ Home
     </div>
   </div>
 </section>
-<script>
-	$(window).scroll(function(e){
-		$el = $('.navbar');
-		if ($(this).scrollTop() > 1 && $el.css('border-bottom-style') != 'solid'){
-		$('.navbar').css({'border-bottom-style': 'solid'});
-		}
-		if ($(this).scrollTop() < 1 && $el.css('border-bottom-style') == 'solid') {
-		$('.navbar').css({'border-bottom-style': 'none'});
-		}
-	});
-</script>
 {% endblock %}
