@@ -48,6 +48,9 @@ h2 {
 .muted {
 	color: #caccc7;
 }
+.readonly .muted {
+	color: #e9d046;
+}
 
 .full-width {
 	margin: 0 -500%;
@@ -225,6 +228,9 @@ ul.availability.icons.mini li i {
 .highlight-bg {
 	background-color: #c7c9c4;
 }
+.readonly .highlight-bg {
+	background-color: #e9d046;
+}
 
 .stat-pod {
 	display: block;
@@ -284,6 +290,9 @@ html {
 	overflow-x: hidden;
 	background-color: #edeeec;
 }
+html.readonly {
+	background-color: #f7efc0;
+}
 
 .navbar {
 	background-image: url(stripes.png);
@@ -292,6 +301,10 @@ html {
 	border-bottom-style: solid;
 	border-bottom-width: 2px;
 	border-bottom-color: #2b2a2a;
+}
+.readonly .navbar {
+	background-image:none;
+	background-color:#e9d046;
 }
 
 .navbar .navbar-inner {
@@ -308,18 +321,22 @@ html {
 }
 
 .navbar .navbar-inner .brand {
-	padding: 0px 20px 0px 26px;
-	background-image: url(logo-icon.png);
-	background-repeat: no-repeat;
-	background-position: left 18px;
-	margin: 0px;
+	padding: 3px 0 0 0;
+	margin: 0 20px 0 0;
 	color: #2b2a2a;
 	text-shadow: none;
+	font-family: 'BebasNeueRegular',Arial,Helvetica, sans-serif;
+	font-size: 24px;
+	letter-spacing: 2px;
 }
 
 .navbar .nav > li {
 	border-left: solid 1px #a7a9a4;
 	padding: 10px 5px;
+}
+.readonly .navbar .nav > li {
+	border-left: solid 1px rgb(255,255,255);
+	border-left: solid 1px rgba(255,255,255,0.3);
 }
 
 .navbar .nav > li > a {
@@ -389,6 +406,10 @@ footer {
 	padding: 20px 20px 20px;
 	border-top: solid 10px #caccc7;
 	font-size: 12px;
+}
+.readonly footer {
+	background-color: #f7efc0;
+	border-top-color:#e9d046;
 }
 
 footer a,
@@ -496,6 +517,13 @@ div.section-right {
 	background-position: center 2px;
 	border-bottom: solid 10px #2b2a2a;
 }
+.readonly .dashboard,
+.readonly .dashboard:before,
+.readonly .dashboard:after {
+	background-color: #e9d046;
+	background-image: none;
+	border-bottom-color: #FFF;
+}
 
 .dashboard:before,
 .dashboard:after {
@@ -527,7 +555,7 @@ div.section-right {
 	font-size: 36px;
 	line-height: 36px;
 	letter-spacing: 5px;
-	text-shadow: 0px 1px 0px #FFF;
+	text-shadow: 0px 1px 0px rgba(255,255,255,0.5);
 }
 
 .dashboard .bignumber {
@@ -585,6 +613,18 @@ div.section-right {
 	vertical-align: top;
 	line-height: 146px;
 	padding: 3px;
+}
+
+.dashboard a {
+	color: #333333;
+}
+.dashboard a:hover {
+	text-decoration:none;
+}
+.dashboard p a {
+	border-bottom-width: 4px;
+	border-bottom-style: dotted;
+	border-bottom-color: #333333;
 }
 
 section.home-content {
