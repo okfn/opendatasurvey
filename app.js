@@ -143,6 +143,10 @@ app.get('/contributors', function(req, res) {
   });
 });
 
+app.get('/press', function(req, res) {
+  res.render('press.html');
+});
+
 app.get('/visualisations', function(req, res) {
   res.render('visualisations.html');
 });
