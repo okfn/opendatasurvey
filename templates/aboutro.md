@@ -36,7 +36,6 @@
   	  <li>[Why open government data matters](#govt)</li>
       <li>[What does the Open Data Index contain?](#contents)</li>
       <li>[What datasets are included in the Open Data Index?](#datasets)</li>
-    <li>[How can the results of the Open Data Index be used?](#uses)</li>
       <li>[How reliable is the Open Data Index?](#reliability)</li>
       <li>[What's the Open Data Index data collection and review process?](#process)</li>
       <li>[What criteria matters in the assessment of the datasets?](#criteria)</li>
