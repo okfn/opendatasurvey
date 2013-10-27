@@ -33,9 +33,10 @@
     <h3>Table of Contents</h3>
     <ul>
       <li>[Why does the Open Data Index matter?](#why)</li>
-  	  <li>[Why open government data matters](#govt)</li>
+  	  <li>[Why does open government data matter?](#govt)</li>
       <li>[What does the Open Data Index contain?](#contents)</li>
       <li>[What datasets are included in the Open Data Index?](#datasets)</li>
+      <li>[What do the 2013 results say?](#2013)</li>
       <li>[How reliable is the Open Data Index?](#reliability)</li>
       <li>[What's the Open Data Index data collection and review process?](#process)</li>
       <li>[What criteria matters in the assessment of the datasets?](#criteria)</li>
@@ -61,7 +62,7 @@
 <p>The Open Data Index for 2013 released by <a href="http://okfn.org">the Open Knowledge Foundation</a> provides the first major snapshot of the state of open government data around the world, ranking countries based on a detailed assessment of the availability of key datasets.  It provides an independent peer-reviewed assessment of openness in a range of key areas, reflecting the realities of public information release and practice in over 60 countries.  </p>
 
 
-<h3 id="govt">Why open government data matters</h3>
+<h3 id="govt">Why does open government data matter?</h3>
 
 <p>Governments a whole variety of data that is essential both in terms of citizens understanding and holding accountable government but also for our daily lives. Data on things like where government spends our money and where pollution occurs (and the maps to show that on) as well as, for example, the timetables for public transport that you need every time you travel to work.</p>
 
@@ -130,6 +131,22 @@
 <td>Aggregate data about the emission of air pollutants, especially those potentially harmful to human health (although it is not a requirement to include information on greenhouse gas emissions). “Aggregate” means national-level or more detailed, and on an annual basis or more often. Standard examples of relevant pollutants would be carbon monoxides, nitrogen oxides, or particulate matter.</td>
 </tr>
 </table>
+
+<h3 id="2013">What do the 2013 results say?</h3>
+
+<p>Topping the Index with the best scores for key open data were the United Kingdom and the United States, both countries which have been at the forefront of open data and open government internationally. Nonetheless there is work still to be done here, as the United States for example does not provide a single consolidated and open register of corporations, which is a critical element of ensuring businesses know who they are trading with, and eliminating tax evasion. Neither country manages a full openness score for more than 7 datasets out of 10.</p>
+
+<p>In the 2013 Index, we see clearly the open divide between governments providing good transparency and valuable information available for use (such as the UK, US, Denmark, Norway and the Netherlands for example, all scoring over 740 out of 1000) and those where citizens are deprived of key information such as election results and national maps, with openness scores as low as 100-350 out of 1000. </p>
+
+<p>Overall, only just 18% of these key datasets are available as fully open data, with the right to access and reuse the information clearly stated, thereby meeting basic legal and technical requirements for free reuse and benefit. (Even simple technical standards for openness are often not met, with only just over a third of datasets machine readable - in digital form and easily processable by computers (so not just, for example, PDF), and a third available in bulk - both vital technical qualities for data to be put to use.)</p>
+
+<p>Even in the best 20 countries detailed government spending information is the dataset least likely to be available – it is only available as open data in 3 out the top 20 countries. Government budget data is somewhat better being freely available in three-quarters of the leading countries and as full open data in half of them. Spending data at a transactional level is critical for citizens to understand how public money is spent (not just how it is supposed to be spent) and to root out corruption and inefficiency.</p>
+
+<p>Of key datasets in the 20 most open countries, less than half (43%) are available to re-use as open data, showing that governments and public sector data owners even in the leading countries have not yet got the message about the value of reuse and the power of open. For citizens and businesses to fully benefit from public information, they must be able to legally and technically use, reuse and redistribute the data, building and sharing both commercial and non-commercial services and deriving new insights without restriction. Only fully Open Definition compliant open data offers this.</p>
+
+<p>There is a also very  poor level of openness for Company Registers – only 5 out of the 20 leading countries have even basic information available under a real open licence, and only 10 allow any form of bulk access.  Company register information is essential data for transparency and accountability - and especially relevant in fighting corruption and tax evasion - and we hope to see significant improvement in this area before the 2014 Index.</p>
+
+
 
 
 <h3 id="reliability">How reliable is the Open Data Index?</h3>
