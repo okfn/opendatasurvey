@@ -3,29 +3,40 @@
     About the Open Data Index
     <br />
     <small>
-      The Open Data Index assesses the state of <a href="http://okfn.org/opendata/">open data</a> around the world, based on submissions by a global community of open data advocates and experts.
+      The Open Data Index assesses the state of <a href="http://okfn.org/opendata/">open data</a> around the world, based on peer-reviewed submissions by a global community of open data advocates and experts.
     </small>
   </h1>
 </div>
 
 <div class="row" style="margin-top: 30px;">
 <div class="span8">
-<p>An increasing number of governments have now committed to open up data but how much data is actually being released? What kind of data is this and in what format? Which countries are the most advanced and which are lagging in relation to open data?</p>
+<p>An increasing number of governments have committed to open up data, but how much key information is actually being released? Is the available data legally and technically usable so that citizens, civil society and businesses can realise the full benefits of the information? Which countries are the most advanced and which are lagging in relation to open data?</p>
 
-<p>The Open Data Index has been developed to help answer these sorts of questions. It collects and presents information on the evolution and current state of open data around the world. Once a year, a snapshot of the Open Data index is taken out to form the Open Data Index - a list ranking countries and their open data efforts around the world.</p>
+<p>The Open Data Index has been developed to help answer such questions by collecting and presenting information on the state of open data around the world - to ignite discussions between citizens and governments. </p>
 
-<p>The Open Data Index is a community-based effort initiated and coordinated by the Open Knowledge Foundation with participation from many different groups and individuals. The [Index, then called Census, was launched in April 2012 to coincide with the OGP meeting in Brasilia](http://blog.okfn.org/2012/04/17/launching-the-open-data-census-2012/).</p>
 
-<p>The Open Data Index is compiled using contributions from civil society members and open data practitioners around the world, to which the public is invited to contribute at any time; this is then peer-reviewed and checked periodically by a team of 60+ expert Country Editors.</p>
+<p>The 2013 Open Data Index is the global reference for the state of open data release by national governments.  It provides an independent peer-reviewed assessment of openness in a range of key areas, reflecting the realities of public information release and practice in over 60 countries. The 2013 Open Data Index launches just before the Open Government Partnership summit in London, at a time when governments and civil society meet to make commitments, monitor progress, and plan for greater open government and transparency around the world.</p>
+
+
+<p>The Open Data Index is a community-based effort initiated and coordinated by the Open Knowledge Foundation with participation from many different groups and individuals. The [Open Data Census, upon which the Open Data Index is based, was launched in April 2012 to coincide with the OGP meeting in Brasilia](http://blog.okfn.org/2012/04/17/launching-the-open-data-census-2012/).</p>
+
+<p>The Open Data Census is compiled using contributions from civil society members and open data practitioners around the world, to which the public is invited to contribute at any time; this is then peer-reviewed and checked periodically by a team of 60+ expert Country Editors. The Open Data Census is a year-round ongoing measure of the current state of the open data world; annual snapshots are made by the Open Knowledge Foundation to showcase the results after further peer review (the first one published in October 2013 as the 2013 Open Data Index). </p>
+
+
+<p>The Open Data Index does not aim to create a comprehensive list of open data sets around the world for data users; it is a tool with which citizens and civil society can ignite conversations with their governments. The Open Data Index is an indicator of openness across a few carefully selected key information sets, to stimulate debate and action. </p>
+
+
 
 </div>
 <div class="span4">
   <div class="toc well">
     <h3>Table of Contents</h3>
     <ul>
+      <li>[Why does the Open Data Index matter?](#why)</li>
+  	  <li>[Why open government data matters](#govt)</li>
       <li>[What does the Open Data Index contain?](#contents)</li>
-      <li>[How can the results of the Open Data Index be used?](#uses)</li>
       <li>[What datasets are included in the Open Data Index?](#datasets)</li>
+    <li>[How can the results of the Open Data Index be used?](#uses)</li>
       <li>[How reliable is the Open Data Index?](#reliability)</li>
       <li>[What's the Open Data Index data collection and review process?](#process)</li>
       <li>[What criteria matters in the assessment of the datasets?](#criteria)</li>
@@ -38,13 +49,37 @@
 </div>
 </div>
 
+
+
+<h3 id="why">Why does the Open Data Index matter?</h3>
+
+<p>Citizens, businesses and civil society all benefit from open information provided by national governments, including key data such as election results, how public money is spent, legislation, maps and more.  </p>
+
+<p>Reflecting this many governments around the world have made major commitments to open up data and increase transparency. For example, more than 60 countries around the world have signed up as members of the Open Government Partnership and in June this year the G8 made a major commitment to open data with the release of the Open Data Charter. The Open Data Index launches just before the Open Government Partnership summit in London, at a time when governments and civil society meet to make commitments, monitor progress, and plan for greater open government and transparency around the world.  The Index focuses debate and action within countries by highlighting key national information which may not be fully open and accessible yet. </p>
+
+<p>But how far are these promises translating into reality? Are governments released meaningful and useful open data - for example government budgets and spending - or are we just seeing token gestures - such as the release of locations of park benches? </p>
+
+<p>The Open Data Index for 2013 released by <a href="http://okfn.org">the Open Knowledge Foundation</a> provides the first major snapshot of the state of open government data around the world, ranking countries based on a detailed assessment of the availability of key datasets.  It provides an independent peer-reviewed assessment of openness in a range of key areas, reflecting the realities of public information release and practice in over 60 countries.  </p>
+
+
+<h3 id="govt">Why open government data matters</h3>
+
+<p>Governments a whole variety of data that is essential both in terms of citizens understanding and holding accountable government but also for our daily lives. Data on things like where government spends our money and where pollution occurs (and the maps to show that on) as well as, for example, the timetables for public transport that you need every time you travel to work.</p>
+
+<p>This information should be available to everyone freely and openly. to all without restriction, so that the full benefits of understanding, insight, innovation and empowerment can be realised.  This requires open data, which can be used freely and legally  by anyone for any purpose, and that the data be released in a form which makes it practical to use. </p>
+
+<p>Open data guarantees that citizens, organisations and businesses can work with the information to create new insights and services, without limiting what can be done to scholarly work or reuse by certain groups - this is assured by making sure the data is available without charge, to anyone, and with an appropriate open licence.  To ensure the information is in a usable form, the Open Data Index checks whether it is issued online,  in a machine-readable format (so that it’s easy for computers to work with it), that you can download in bulk (rather than having to ask for one bit at a time), and that the information is timely and up to date.</p>
+
+<p>For the true benefits of open data to be realised, governments must do more than simply put a few spreadsheets online under an open licence. The right information which is needed by civil society and business must be published, and it must be possible for citizens to find the information and use it too.  </p>
+
+<p>With the proliferation of government websites, it has become increasingly hard to identify where valuable information is available to all, as opposed to large amounts of insignificant data being release (sometimes to great fanfare), and the Open Data Index provides a reality check of what open information civil society and others around the world can access in their countries.</p>
+
+
 <h3 id="contents">What does the Open Data Index contain?</h3>
 
-<p>The Open Data Index intentionally focuses on a small number of key datasets. These datasets have been chosen for their breadth and relevance and were discussion after consultation within the open government data community. It is planned that the Open Data Index will be expanded to include more categories of datasets in the future. </p>
+<p>The Open Data Index intentionally focuses on a small number of key datasets. These datasets have been chosen for their breadth and relevance and were discussion after consultation within the open government data community. There are 10 datasets considered in the 2013 Index. These are selected to capture a range of key national information and are included in the G8 Open Data Charter’s selection of “high value” datasets. </p>
 
-<h3 id="uses">How can the results of the Open Data Index be used?</h3>
 
-<p>The Open Data Index does not aim to create a comprehensive list of open data sets around the world for data users. The Open Data Index seeks to be a tool with which people can ignite conversations with their governments, based on their performance compared with other governments around the world. It should be noted that a number of countries were not assessed, often because they were not open enough to have an active civil society able or free to safely carry out the research.</p>
 
 <h3 id="datasets">What datasets are included in the Open Data Index?</h3>
 
@@ -97,13 +132,16 @@
 </tr>
 </table>
 
+
 <h3 id="reliability">How reliable is the Open Data Index?</h3>
 
-<p>The information in the Index is collected by open data experts around the world including the <a href="http://opengovernmentdata.org/">Open Knowledge Foundation Open Government Working Group</a>. The Index data undergoes a process of peer review and evidence-checking to ensure high quality results.</p>
+<p>The information in the Index is collected by civil society practitioners and open data experts around the world including the <a href="http://opengovernmentdata.org/">Open Knowledge Foundation Open Government Working Group</a>. The Index data undergoes a process of peer review and evidence-checking to ensure high quality results.</p>
 
 <h3 id="process">What's the Open Data Index data collection and review process?</h3>
 
 <p>Contributors (who may be citizens, experts, officials, journalists, or anyone else) submit information about the availability of key datasets in their country (for example, Budgets in Brazil). These submissions are reviewed by a community of Country Editors around the world. Country Editors either approve (with or without amendments) or reject the submission. If approved, these submissions become an official entry and are displayed on the website.</p>
+
+It should be noted that a number of countries were not assessed, often because they were not open enough to have an active civil society able or free to safely carry out the research.
 
 <h3 id="criteria">What criteria matters in the assessment of the datasets?</h3>
 
@@ -162,7 +200,7 @@
 </tr>
 <tr>
 <td>URL of data online?</td>
-<td>The link to the specific dataset if that is possible. Otherwise to the home page for the data. If that is not possible, then the link to main page of site on which the data is located. Only links to official sites are eligeble, not third party sites. When it is necessary for submitters to provide third party links, then they are put in the comments section.</td>
+<td>The link to the specific dataset if that is possible. Otherwise to the home page for the data. If that is not possible, then the link to main page of site on which the data is located. Only links to official sites are eligible, not third party sites. When it is necessary for submitters to provide third party links, then they are put in the comments section.</td>
 <td></td>
 </tr>
 <tr>
@@ -180,22 +218,22 @@ If the data is not open, then this question will instead describe the date the d
 
 <h3 id="scoring">How does the scoring system work?</h3>
 
-<p>The Open Data Index measures the state of openness of 10 datasets for each country. The overall score for a dataset is based on the response to specific questions with varying weightings - the weighting for each question is listed in the question table above. The overall country score is then calculated from the score on each dataset.</p>
+<p>The Open Data Index measures the state of openness of 10 datasets for each country. The overall score for a dataset is based on the response to specific questions about information availability with varying weightings - the weighting for each question is listed in the table above. The overall country score is then calculated from the score on each dataset.</p>
 
 <p>The score is calculated in the following way:</p>
 
 <ol>
-  <li>1. When the answer to a question is 'yes', the score is increased by the weighting value listed in the table above.</li>
-  <li>2. The country score is found by adding up all the scores for each data category.</li>
+	<li>Each dataset for each country starts with a score of zero.
+  <li>1. When the answer to a question for a given dataset is 'yes', the weighting value listed in the table above for that question is added to the dataset score.</li>
+  <li>2. The country score is found by adding up all the dataset scores for that country.</li>
 </ol>
 
-<p>As the weightings indicate, timeliness is now included with a weighting of 10.</p>
 
 <p>One of the aims of the questions for each dataset is to provide a increasing set of requirements leading up to full openness (excluding ‘timely’ which is important but not a requirement for open data). It should be noted that this does not mean each question directly builds on the previous since some of are parallel (e.g. digital form and publicly available) but in general there is a progression, so ”No” on an earlier question may well imply ”No” on a later question.</p>
 
 <h3 id="getting-the-data">How can I get the data?</h3>
 
-* Underlying data for the country Index is available in bulk as CSV: (coming soon)
+* Underlying data for the country Index is available in bulk as CSV: (coming soon) (with open licence!)
 * Underlying listing of datasets (including proposals for datasets to be added): <a href="https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc#gid=0">Country Datasets</a>
 
 <h3 id="getting-involved">How can I get more involved?</h3>
@@ -208,6 +246,6 @@ If the data is not open, then this question will instead describe the date the d
 
 <p>You might like to join the <a href="http://opengovernmentdata.org/">Open Knowledge Foundation Open Government Working Group</a>, or check for <a href="http://okfn.org/local/">Open Knowledge Foundation Local Groups</a> in your area.</p>
 
-<p>If you're a developer or data wrangler and you'd like to help contribute to the Index site or any other open data tech, join the <a href="http://okfnlabs.org/">Open Knowledge Foundation Labs</a> where you can meet others and collaborate on open source code and other tech projects.</p>
+<p>If you're a developer or data wrangler and you'd like to help contribute to the Index site or any other open data technologies, join the <a href="http://okfnlabs.org/">Open Knowledge Foundation Labs</a> where you can meet others and collaborate on open source code and other tech projects.</p>
 
 <p>You can also sign up to the <a href="http://okfn.org/">Open Knowledge Foundation list</a> to stay in touch.</p>
