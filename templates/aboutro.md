@@ -64,7 +64,7 @@
 
 <h3 id="govt">Why does open government data matter?</h3>
 
-<p>Governments control a variety of data that is essential for citizens wishing to understand government or hold it to account. This data is also relevant for our daily lives: it tells us how and where government spends our money, where pollution occurs, and includes such things asthe timetables for public transport that many of us need every time we travel to work.</p>
+<p>Governments control a variety of data that is essential for citizens wishing to understand government or hold it to account. This data is also relevant for our daily lives: it tells us how and where government spends our money, where pollution occurs, and includes such things as the timetables for public transport that many of us need every time we travel to work.</p>
 
 <p>We hold that this information should be available to everyone, without restriction, so that the full benefits of public understanding, insight, innovation and empowerment can be realised.  This requires the data to be open: that is, it must be usable freely and legally by anyone for any purpose. It requires, furthermore, that the data be released in a form which makes it practical to use: it must be machine-readable.</p>
 
