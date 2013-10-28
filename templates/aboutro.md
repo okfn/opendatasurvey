@@ -240,8 +240,8 @@ If the data is not open, then this question will instead describe the date the d
 
 <ol>
 	<li>Each dataset for each country starts with a score of zero.
-  <li>1. When the answer to a question for a given dataset is 'yes', the weighting value listed in the table above for that question is added to the dataset score.</li>
-  <li>2. The country score is found by adding up all the dataset scores for that country.</li>
+  <li>When the answer to a question for a given dataset is 'yes', the weighting value listed in the table above for that question is added to the dataset score.</li>
+  <li>The country score is found by adding up all the dataset scores for that country.</li>
 </ol>
 
 
