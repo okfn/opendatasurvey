@@ -90,7 +90,7 @@ See the [FAQ page &raquo;](/faq)
 
 ## <a id="data"></a>Data
 
-* Underlying data for the Country Census is available in bulk as CSV: (coming soon)
+* A snapshot of the current Country Census data can be downloaded in <a href="/country/results.json">JSON</a> format (with an <a href="http://www.opendefinition.org/licenses/odc-pddl">Open Data Commons Public Domain Dedication and License (PDDL)</a>)
 * Underlying listing of datasets (including proposals for datasets to be added):
   * [Country Datasets](https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc#gid=0)
   * [City Datasets](https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc#gid=0)
