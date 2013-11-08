@@ -90,7 +90,7 @@ See the [FAQ page &raquo;](/faq)
 
 ## <a id="data"></a>Data
 
-* Underlying data for the 2013 country index is available in bulk in CSV and JSON formats from <a href="http://datahub.io/dataset/open-data-index-2013">datahub</a> (with an <a href="http://www.opendefinition.org/licenses/odc-pddl">Open Data Commons Public Domain Dedication and License (PDDL)</a>). We intend to make a 'live' snapshot of the census data downloadable soon.
+* Underlying data for the <a href="http://index.okfn.org/">Open Data Index 2013</a>, which is the presentation of the Open Data Census released on October 28 2013, is available in bulk in CSV and JSON formats from <a href="http://datahub.io/dataset/open-data-index-2013">datahub</a> (with an <a href="http://www.opendefinition.org/licenses/odc-pddl">Open Data Commons Public Domain Dedication and License (PDDL)</a>). We intend to make a 'live' snapshot of the census data downloadable soon.
 * Underlying listing of datasets (including proposals for datasets to be added):
   * [Country Datasets](https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc#gid=0)
   * [City Datasets](https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc#gid=0)
