@@ -249,7 +249,7 @@ If the data is not open, then this question will instead describe the date the d
 
 <h3 id="getting-the-data">How can I get the data?</h3>
 
-* Underlying data for the country Index is available in bulk in <a href="http://datahub.io/dataset/open-data-index-2013">CSV</a> and <a href="/country/results.json">JSON</a> formats (with an <a href="http://www.opendefinition.org/licenses/odc-pddl">Open Data Commons Public Domain Dedication and License (PDDL)</a>)
+* Underlying data for the country Index is available in bulk in CSV and JSON formats from <a href="http://datahub.io/dataset/open-data-index-2013">datahub</a> (with an <a href="http://www.opendefinition.org/licenses/odc-pddl">Open Data Commons Public Domain Dedication and License (PDDL)</a>)
 * Underlying listing of datasets (including proposals for datasets to be added): <a href="https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc#gid=0">Country Datasets</a>
 
 <h3 id="getting-involved">How can I get more involved?</h3>
