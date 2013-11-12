@@ -12,7 +12,7 @@
 <div class="span8">
 <p>An increasing number of governments have now committed to open up data but how much data is actually being released? What kind of data is this and in what format? Which countries, regions and cities are the most advanced and which are lagging in relation to open data?</p>
 
-<p>The Open Data Census has been developed to help answer these sorts of questions. It collects and presents information on the evolution and current state of open data around the world. An Open Data Index based on the census results is currently under development and will be launched in 2013.</p>
+<p>The Open Data Census has been developed to help answer these sorts of questions. It collects and presents information on the evolution and current state of open data around the world. The [Open Data Index](http://index.okfn.org/), based on the census results, was released on October 28 2013.</p>
 
 <p>The Census is a community-based effort initiated and coordinated by the Open Knowledge Foundation but with participation from many different groups or individuals. The [Census was launched in April 2012 to coincide with the OGP meeting in Brasilia](http://blog.okfn.org/2012/04/17/launching-the-open-data-census-2012/).</p>
 </div>
@@ -40,7 +40,7 @@ were discussion after consultation within the open government data community.
 The Census currently operates on a Country level (started in April 2012).
 
 We're also in the early stages of developing a City level census, having started
-that effor in February 2013.
+that effort in February 2013.
 
 Currently there are 10 datasets in the Country Census and 15 in the City Census
 but the number and members are subject to revision and extension over time.
