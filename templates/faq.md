@@ -37,12 +37,11 @@ Index](http://index.okfn.org) to showcase the results.
 
 ### What's the current state of the Open Data Census?
 
-Right now we are collecting data in the Open Data Census for the **2013** Open
-Data Index, which focusses on country-level information.  We will be launching
-the 2013 Index results later in October 2013.
+Right now we are collecting data in the Open Data Census for the **2014** Open
+Data Index. The most recent Open Data Index was launched in **October 2013**.
 
-After that we will be looking at developing a city-level Census and other
-enhancements.
+Also we will be looking at developing a city-level Census and other
+enhancements in 2014.
 
 ### How can the results of the Open Data Census be used?
 
@@ -73,8 +72,9 @@ Working Group](http://opengovernmentdata.org/), and undergoes a process of peer
 review and evidence checking to ensure high quality results. An annual
 announcement of the results (the Index) creates a focus for debate and review.
 
-The Census was launched in 2012 and is undergoing active development to create
-an Open Data Index in October 2013.
+The Census was launched in 2012 and is undergoing active development. The Census 
+lays the foundation of the **Open Data Index** which is snap-shot released annually, most
+recently in October 2013.
 
 <h3 id="whatdatasets">What datasets are included in the Country Census?</h3>
 
@@ -135,7 +135,6 @@ including the [Open Knowledge Foundation Open Government Working
 Group](http://opengovernmentdata.org/). The Census data undergoes a process of
 peer review and evidence checking to ensure high quality results.
 
-
 ### What about the City Census?
 
 We are currently expanding and improving the Open Data Census and are currently
@@ -173,7 +172,7 @@ It works like this:
 
 3. Reviewers either approve (with or without amendments) or reject the Submission
 
-4. If approved, these Submissions become an official entry in the index and are displayed on the website.
+4. If approved, these Submissions become an official entry in the Census and are displayed on the website.
 
 
 ### How can I improve the Census information about a country?
