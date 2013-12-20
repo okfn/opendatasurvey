@@ -93,7 +93,7 @@
 </tr>
 <tr>
 <td>Government Budget</td>
-<td>Records of actual (past) national government spending at a detailed transactional level of month-to-month government expenditure on specific items (usually this means individual records of spending amounts under $1m or lower). (Note: Just a database of contracts awarded or similar is not considered sufficient. This data category refers to detailed ongoing data on actual expenditure).</td>
+<td>National government budget at a high level (e.g. spending by sector, department etc). This category is about budgets which are government plans for expenditure (not actual expenditure in the past).</td>
 </tr>
 <tr>
 <td>Government Spending</td>
