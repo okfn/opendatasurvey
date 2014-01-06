@@ -7,7 +7,7 @@ Country - Contributors
 {% block content %}
 <h1>Country {{ sitename }} - Contributors</h1>
 
-We want to thank the following people for submitting and editing data for the Open Data Index:
+We want to thank the following people for submitting and editing data for the {{ sitename }}:
 <div class="page-header">
 <h4>Editors: </h4>
 </div>
@@ -23,6 +23,8 @@ We want to thank the following people for submitting and editing data for the Op
   </td>
   </tr>
 </table>
+{# removed from census until we clean spreadsheet and add a captcha #}
+{% if readonly %}
 <div class="page-header">
 <h4>With submissions from: </h4>
 </div>
@@ -38,7 +40,7 @@ We want to thank the following people for submitting and editing data for the Op
   </td>
   </tr>
 </table>
-
+{% endif %}
 <br />
 
 {% endblock %}
