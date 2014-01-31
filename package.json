@@ -22,7 +22,8 @@
   },
   "devDependencies": {
     "supertest": "",
-    "mocha": ""
+    "mocha": "",
+    "sinon": ""
   },
   "engines": {
     "node": "0.10.17",
