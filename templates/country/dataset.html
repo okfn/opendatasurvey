@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-{{datasetNamesMap[dataset]}} - Datasets
+{{dataset.title}} - Datasets
 {% endblock %}
 
 {% block content %}
@@ -14,7 +14,7 @@
 
 <h1>
   <a href="/country/" data-toggle="tooltip" class="count-0" title="Return to country results overview">Datasets</a> /
-  {{ datasetNamesMap[dataset] }}
+  {{ dataset.title }}
 </h1>
 <!-- alternative link, but then we have different navigation modes: "/faq#whatdatasets" -->
       <div id="spacer"></div>
@@ -54,7 +54,7 @@
     'label': 'Is it up to date?' }
 ] %}
 
-<p>On this page you can see the state of open data for {{ datasetNamesMap[dataset] }} across all countries for which we have information (displayed down the left hand side). Each icon in the data availability column represents important factors indicating data accessibility or availability - mouse over the icons to see what they are and the colours correspond to yes / no / unsure / no data.</p>
+<p>On this page you can see the state of open data for {{ dataset.title }} across all countries for which we have information (displayed down the left hand side). Each icon in the data availability column represents important factors indicating data accessibility or availability - mouse over the icons to see what they are and the colours correspond to yes / no / unsure / no data.</p>
 
 {% if not readonly %}
 <p>Is something missing or is the data incorrect? Then please hit either 'submit information' or 'propose revisions' on the right and contribute more information. We need a correct direct link to the official source of the data - so make sure to include this! Click the link icon under Location to see the current entry.</p>

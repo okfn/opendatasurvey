@@ -153,7 +153,6 @@ var addRoutes = function (app) {
             prefill: obj,
             currrecord: entry,
             dataset: dataset,
-            datasetfriendly: model.datasetNamesMap[obj.dataset],
             currentYear: model.data.country.currentYear
           });
         });

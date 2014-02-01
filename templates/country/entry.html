@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% block title %}
-Country {{ sitename_short }} - Entry for {{prefill.place}}/{{datasetNamesMap[prefill.dataset]}}
+Country {{ sitename_short }} - Entry for {{prefill.place}} / {{dataset.title}}
 {% endblock %}
 
 {% block content %}
 <div class="page-header">
   {% if prefill.place %}
-  <h1><a href="/country/overview/{{prefill.place | replace(' ','%20')}}" data-toggle="tooltip" class="count-0" title="Go to country results overview">{{prefill.place}}</a> / <a href="/country/dataset/{{prefill.dataset}}" data-toggle="tooltip" class="count-0" title="Return to dataset results overview">{{datasetNamesMap[prefill.dataset]}}</a></h1>
+  <h1><a href="/country/overview/{{prefill.place | replace(' ','%20')}}" data-toggle="tooltip" class="count-0" title="Go to country results overview">{{prefill.place}}</a> / <a href="/country/dataset/{{prefill.dataset}}" data-toggle="tooltip" class="count-0" title="Return to dataset results overview">{{dataset.title}}</a></h1>
   {% endif %}
 </div>
 

@@ -212,7 +212,8 @@ app.get('/country/overview/:place', function(req, res) {
 //Show details per dataset
 app.get('/country/dataset/:dataset', function(req, res) {
   var dataset = req.params.dataset;
-  if (!model.datasetNamesMap[dataset]) {
+  var datasetIds = _.pluck(model.datasets, 'id');
+  if (! dataset in datasetIds) {
     res.send(404, 'There is no such dataset in the index. Are you sure you have spelled it correctly? Please check the <a href="/faq#whatdatasets">FAQ</a> for the list of datasets');
     return;
   }
@@ -220,15 +221,17 @@ app.get('/country/dataset/:dataset', function(req, res) {
   res.render('country/dataset.html', {
     info: model.data.country,
     loggedin: req.session.loggedin,
-    dataset: dataset,
-    datasetNamesMap: model.datasetNamesMap
+    dataset: dataset
   });
 });
 
 /* Single Entry Page */
 /* TODO: optimize/improve */
 app.get('/country/:place/:dataset', function(req, res) {
-  var datasets = [];
+  // TODO: check dataset is in the dataset list o/w 404
+  var dataset = model.data.datasets.filter(function(d) {
+    return (d.id === req.params.dataset);
+  });
   var ynquestions = model.data.questions.slice(0, 9);
 
   function render(prefill_) {
@@ -237,7 +240,7 @@ app.get('/country/:place/:dataset', function(req, res) {
       ynquestions: ynquestions,
       questions: model.data.questions,
       datasets: model.data.datasets,
-      datasetNamesMap: model.datasetNamesMap,
+      dataset: dataset,
       prefill: prefill_
     });
   }
