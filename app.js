@@ -91,8 +91,8 @@ app.all('*', function(req, res, next) {
     req.session = {};
     req.session.loggedin = false;
   }
-  res.locals.sitename = config.get('appconfig:sitename');
-  res.locals.sitename_short = config.get('appconfig:sitename_short');
+  res.locals.sitename = config.get('title');
+  res.locals.sitename_short = config.get('title_short');
   res.locals.error_messages = req.flash('error');
   res.locals.info_messages = req.flash('info');
   next();
