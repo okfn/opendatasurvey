@@ -15,12 +15,9 @@
 <p>The Open Data Index has been developed to help answer such questions by collecting and presenting information on the state of open data around the world - to ignite discussions between citizens and governments. </p>
 
 
-<p>The 2013 Open Data Index is the global reference for the state of open data release by national governments.  It provides an independent peer-reviewed assessment of openness in a range of key areas, reflecting the realities of public information release and practice in over 60 countries. The 2013 Open Data Index launches just before the Open Government Partnership summit in London, at a time when governments and civil society meet to make commitments, monitor progress, and plan for greater open government and transparency around the world.</p>
+<p>The 2013 Open Data Index is the global reference for the state of open data release by national governments.  It provides an independent peer-reviewed assessment of openness in a range of key areas, reflecting the realities of public information release and practice in over 60 countries. The 2013 Open Data Index was launched just before the Open Government Partnership summit in London, at a time when governments and civil society meet to make commitments, monitor progress, and plan for greater open government and transparency around the world.</p>
 
-
-<p>The Open Data Index is a community-based effort initiated and coordinated by the Open Knowledge Foundation with participation from many different groups and individuals. The [Open Data Census, upon which the Open Data Index is based, was launched in April 2012 to coincide with the OGP meeting in Brasilia](http://blog.okfn.org/2012/04/17/launching-the-open-data-census-2012/).</p>
-
-<p>The Open Data Census is compiled using contributions from civil society members and open data practitioners around the world, to which the public is invited to contribute at any time; this is then peer-reviewed and checked periodically by a team of 60+ expert Country Editors. The Open Data Census is a year-round ongoing measure of the current state of the open data world; annual snapshots are made by the Open Knowledge Foundation to showcase the results after further peer review (the first one published in October 2013 as the 2013 Open Data Index). </p>
+<p>The results of the Open Data Index are based on the [Open Data Census](http://census.okfn.org/). This is compiled using contributions from civil society members and open data practitioners around the world, to which the public is invited to contribute at any time; it is then peer-reviewed and checked periodically by a team of 60+ expert Country Editors. This community-based effort is initiated and coordinated by the [Open Knowledge Foundation](http://www.okfn.org/). The [Open Data Census](http://census.okfn.org/) [was launched in April 2012 to coincide with the OGP meeting in Brasilia](http://blog.okfn.org/2012/04/17/launching-the-open-data-census-2012/). Annual snapshots are made by to showcase the results after further peer review (the first one published in October 2013 as the 2013 Open Data Index).</p>
 
 
 <p>The Open Data Index does not aim to create a comprehensive list of open data sets around the world for data users; it is a tool with which citizens and civil society can ignite conversations with their governments. The Open Data Index is an indicator of openness across a few carefully selected key information sets, to stimulate debate and action. </p>
@@ -96,7 +93,7 @@
 </tr>
 <tr>
 <td>Government Budget</td>
-<td>Records of actual (past) national government spending at a detailed transactional level of month-to-month government expenditure on specific items (usually this means individual records of spending amounts under $1m or lower). (Note: Just a database of contracts awarded or similar is not considered sufficient. This data category refers to detailed ongoing data on actual expenditure).</td>
+<td>National government budget at a high level (e.g. spending by sector, department etc). This category is about budgets which are government plans for expenditure (not actual expenditure in the past).</td>
 </tr>
 <tr>
 <td>Government Spending</td>
@@ -249,7 +246,7 @@ If the data is not open, then this question will instead describe the date the d
 
 <h3 id="getting-the-data">How can I get the data?</h3>
 
-* Underlying data for the country Index is available in bulk as CSV: <a href="http://datahub.io/dataset/open-data-index-2013">datahub.io/dataset/open-data-index-2013</a> (with an <a href="http://www.opendefinition.org/licenses/odc-pddl">Open Data Commons Public Domain Dedication and License (PDDL)</a>)
+* Underlying data for the country Index is available in bulk in CSV and JSON formats from <a href="http://datahub.io/dataset/open-data-index-2013">datahub</a> (with an <a href="http://www.opendefinition.org/licenses/odc-pddl">Open Data Commons Public Domain Dedication and License (PDDL)</a>)
 * Underlying listing of datasets (including proposals for datasets to be added): <a href="https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc#gid=0">Country Datasets</a>
 
 <h3 id="getting-involved">How can I get more involved?</h3>

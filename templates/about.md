@@ -12,7 +12,7 @@
 <div class="span8">
 <p>An increasing number of governments have now committed to open up data but how much data is actually being released? What kind of data is this and in what format? Which countries, regions and cities are the most advanced and which are lagging in relation to open data?</p>
 
-<p>The Open Data Census has been developed to help answer these sorts of questions. It collects and presents information on the evolution and current state of open data around the world. An Open Data Index based on the census results is currently under development and will be launched in 2013.</p>
+<p>The Open Data Census has been developed to help answer these sorts of questions. It collects and presents information on the evolution and current state of open data around the world. The [Open Data Index](http://index.okfn.org/), based on the census results, was released on October 28 2013.</p>
 
 <p>The Census is a community-based effort initiated and coordinated by the Open Knowledge Foundation but with participation from many different groups or individuals. The [Census was launched in April 2012 to coincide with the OGP meeting in Brasilia](http://blog.okfn.org/2012/04/17/launching-the-open-data-census-2012/).</p>
 </div>
@@ -40,7 +40,7 @@ were discussion after consultation within the open government data community.
 The Census currently operates on a Country level (started in April 2012).
 
 We're also in the early stages of developing a City level census, having started
-that effor in February 2013.
+that effort in February 2013.
 
 Currently there are 10 datasets in the Country Census and 15 in the City Census
 but the number and members are subject to revision and extension over time.
@@ -90,7 +90,7 @@ See the [FAQ page &raquo;](/faq)
 
 ## <a id="data"></a>Data
 
-* Underlying data for the Country Census is available in bulk as CSV: (coming soon)
+* Underlying data for the <a href="http://index.okfn.org/">Open Data Index 2013</a>, which is the presentation of the Open Data Census released on October 28 2013, is available in bulk in CSV and JSON formats from <a href="http://datahub.io/dataset/open-data-index-2013">datahub</a> (with an <a href="http://www.opendefinition.org/licenses/odc-pddl">Open Data Commons Public Domain Dedication and License (PDDL)</a>). We intend to make a 'live' snapshot of the census data downloadable soon.
 * Underlying listing of datasets (including proposals for datasets to be added):
   * [Country Datasets](https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc#gid=0)
   * [City Datasets](https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc#gid=0)
