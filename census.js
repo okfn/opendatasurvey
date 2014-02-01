@@ -35,7 +35,7 @@ var addRoutes = function (app) {
     });
     var dataTmpl = env.getTemplate('_snippets/datasets.html');
     var dataInfo = dataTmpl.render({
-      datasets: model.data.country.datasets
+      datasets: model.data.datasets
     });
     fs.readFile('templates/faq.md', 'utf8', function(err, text) {
       var marked = require('marked');
@@ -63,7 +63,7 @@ var addRoutes = function (app) {
         countryList: model.countryList,
         ynquestions: ynquestions,
         questions: model.data.questions,
-        datasets: model.data.country.datasets,
+        datasets: model.data.datasets,
         prefill: prefill_
       });
     }
@@ -143,7 +143,7 @@ var addRoutes = function (app) {
           if (!entry) {
             entry = {};
           }
-          var dataset = _.find(model.data.country.datasets, function(d) {
+          var dataset = _.find(model.data.datasets, function(d) {
             return (d.id == obj.dataset);
           });
           res.render('country/review/index.html', {

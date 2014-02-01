@@ -1,14 +1,12 @@
 var request = require('supertest')
   , assert = require('assert')
   , config = require('../lib/config.js')
+  // importing base sets the test db
+  , base = require('./base.js')
   ;
 
-var options = {
- 'key': '0AqR8dXc6Ji4JdHR5WWdUU2dYUElPaFluUlBJbkFOMUE'
-};
 config.set('test:testing', true);
 config.set('appconfig:port', 5001 + Math.floor(Math.random() * 1000));
-config.set('database:country:spreadsheetKey', options.key);
 
 // only require after setting config ...
 var model = require('../lib/model.js').OpenDataCensus;
@@ -16,11 +14,11 @@ var model = require('../lib/model.js').OpenDataCensus;
 var app = require('../app.js').app;
 
 describe('Country', function() {
+  this.timeout(8000);
   before(function(done) {
-    model.backend.login(function(err){
-      if (err) throw err;
-      model.load(function() {
-        done();
+    model.load(function() {
+      model.backend.login(function(err){
+        done(err);
       });
     });
   });

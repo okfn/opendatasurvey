@@ -1,16 +1,17 @@
 "use strict";
 
-var fs = require('fs');
-var path = require('path');
+var fs = require('fs')
+  , path = require('path')
+  , _ = require('underscore')
+  , express = require('express')
+  , flash = require('connect-flash')
+  , scrypt = require('scrypt')
 
-var _ = require('underscore');
-var express = require('express');
-var flash = require('connect-flash');
-var scrypt = require('scrypt');
-
-var config = require('./lib/config');
-var env = require('./env');
-var model = require('./lib/model').OpenDataCensus;
+  , config = require('./lib/config')
+  , env = require('./env')
+  , model = require('./lib/model').OpenDataCensus
+  , util = require('./lib/util')
+  ; 
 
 var app = express();
 
@@ -154,6 +155,7 @@ app.get('/visualisations', function(req, res) {
 app.get('/country', function(req, res) {
   res.render('country/index.html', {
     info: model.data.country,
+    datasets: model.data.datasets,
     questions: model.openQuestions
   });
 });
@@ -181,10 +183,11 @@ app.get('/country/overview/:place', function(req, res) {
     var entrys = {},
         submissions = {};
 
-    _.each(model.data.country.datasets, function(dataset) {
+    // TODO: move this to model
+    _.each(model.data.datasets, function(dataset) {
       _.each(info.entrys, function(entry) {
         if (entry.dataset == dataset.id) {
-          entry['ycount'] = model.scoreOpenness(entry);
+          entry['ycount'] = util.scoreOpenness(model.data, entry);
           entrys[dataset.id] = entry;
         }
       });
@@ -197,6 +200,7 @@ app.get('/country/overview/:place', function(req, res) {
       reviewers: model.data.countrysubmissions.reviewersByPlace[place],
       submitters: model.data.countrysubmissions.submittersByPlace[place],
       info: model.data.country,
+      datasets: model.data.datasets,
       submissions: submissions,
       entrys: entrys,
       place: place,
@@ -232,7 +236,7 @@ app.get('/country/:place/:dataset', function(req, res) {
       countryList: model.countryList,
       ynquestions: ynquestions,
       questions: model.data.questions,
-      datasets: model.data.country.datasets,
+      datasets: model.data.datasets,
       datasetNamesMap: model.datasetNamesMap,
       prefill: prefill_
     });

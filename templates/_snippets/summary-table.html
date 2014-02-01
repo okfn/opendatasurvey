@@ -1,11 +1,9 @@
 <thead>
   <tr>
     <th>&nbsp;</th>
-    {% if info.datasets %}
-    {% for dataset in info.datasets %}
+    {% for dataset in datasets %}
       <th><div><a href="/country/dataset/{{dataset.id}}">{{ dataset.titleRotated }}</a></div></th>
     {% endfor %}
-    {% endif %}
     <th><div><strong>Total Score</strong></div>
   </tr>
 </thead>
@@ -21,8 +19,7 @@
           <a href="submit/" data-toggle="tooltip" class="unknown no-data count-0" title="Click here to add to the index!">Add new</a>
         {% endif %}
       </th>
-    {% if info.datasets %}
-    {% for dataset in info.datasets %}
+    {% for dataset in datasets %}
     {% set record = info.byplace[place].datasets[dataset.id] %}
     <td
       class="
@@ -50,7 +47,6 @@
         <a>{{record.ycount}} / {{info.summary.maxScorePerRecord}}</a>#}
     </td>
     {% endfor %}
-    {% endif %}
     <td class="placescore" data-score="{{placeScore}}"><a>{{placeScore}}</a></td>
   </tr>
   {% endfor %}
@@ -59,11 +55,9 @@
 <tfoot>
   <tr>
     <th>&nbsp;</th>
-    {% if info.datasets %}
-    {% for dataset in info.datasets %}
+    {% for dataset in datasets %}
       <th><div><a href="/country/dataset/{{dataset.id}}">{{ dataset.titleRotated }}</a></div></th>
     {% endfor %}
-    {% endif %}
     <th><div><strong>Total Score</strong></div>
   </tr>
 </tfoot>

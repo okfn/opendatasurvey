@@ -2,13 +2,9 @@ var assert = require('assert')
   , config = require('../lib/config.js')
   , mocha = require('mocha')
   , _ = require('underscore')
+  // importing base sets the test db
+  , base = require('./base.js')
   ;
-
-// use the test database
-var options = {
- 'key': '0AqR8dXc6Ji4JdHR5WWdUU2dYUElPaFluUlBJbkFOMUE'
-};
-config.set('database:country:spreadsheetKey', options.key);
 
 // only require after setting config ...
 var model = require('../lib/model.js').OpenDataCensus
@@ -19,7 +15,7 @@ var model = require('../lib/model.js').OpenDataCensus
 // we only add rows where place = Germany (so we can delete afterwards)
 describe('Backend Entry', function() {
   this.timeout(3000);
-  var backend = new Backend(options);
+  var backend = new Backend(base.options);
 
   before(function(done) {
     backend.login(function(err){
@@ -89,7 +85,7 @@ describe('Backend Entry', function() {
 
 describe('Submissions', function() {
   this.timeout(3000);
-  var backend = new Backend(options);
+  var backend = new Backend(base.options);
 
   before(function(done) {
     backend.login(function(err){
@@ -134,7 +130,7 @@ describe('Submissions', function() {
     backend.insertSubmission(data, function(err, obj) {
       assert.ok(!err);
       assert.equal(obj.submissionid.length, 36);
-      assert.equal(obj.timestamp.slice(0, 4), '2013');
+      assert.equal(obj.timestamp.slice(0, 4), '2014');
       // TODO: check something was actually created by doing the get
       done();
     });
@@ -185,67 +181,3 @@ describe('Submissions', function() {
   });
 });
 
-describe('census', function() {
-  before(function(done) {
-    this.timeout(5000);
-    model.load(function(err){
-      if (err) throw err;
-      done();
-    });
-  });
-
-  var c = model.data.country;
-
-  it('country summary is ok', function(){
-    // summary tests
-    assert.equal(c.summary.entries, 2);
-    // console.log(c.summary);
-    assert(c.summary.open >= 0 && c.summary.open <= c.summary.entries);
-    assert(c.summary.open_percent >= 0.0);
-  });
-
-  it('country.places is ok ', function(){
-    // test places / countries
-    assert.equal(c.places.length, 1);
-  });
-
-  it('country.places is sorted by score, descending ', function(){
-    // test places / countries
-    var scores = c.places.map(function (n) { return c.byplace[n].score; });
-    var scoresCopy = scores.slice(0);
-    // sort scoresCopy descending, in-place
-    scoresCopy.sort().reverse();
-    assert.deepEqual(scoresCopy, scores);
-  });
-
-  it('country.datasets is ok ', function(){
-    // test datasets
-    assert.equal(c.datasets.length, 10);
-    assert.equal(c.datasets[0].id, 'timetables');
-  });
-
-  it('country.byplace is ok ', function(){
-    assert.equal(_.keys(c.byplace).length, c.places.length);
-
-    var uk = c.byplace['United Kingdom'];
-    assert.equal(_.keys(uk.datasets).length, 2);
-    // assert(uk.datasets[
-  });
-
-  it('country item is ok ', function(){
-    var uk = c.byplace['United Kingdom'].datasets['maps'];
-    // console.log(uk);
-    assert.equal(uk.exists, 'Y');
-    assert.equal(uk['uptodate'], 'Y');
-    assert.equal(uk.ycount, 70);
-    assert.equal(uk.isopen, false);
-  });
-
-  it('country census item open is ok ', function(){
-    var uk = c.byplace['United Kingdom'].datasets['map'];
-    // TODO: reinstate
-    // assert.equal(uk.ycount, 6);
-    // assert.equal(uk.isopen, true);
-  });
-
-});

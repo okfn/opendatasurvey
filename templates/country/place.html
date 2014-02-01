@@ -83,17 +83,15 @@
           </thead>
           <tbody>
             {% include '_snippets/overview-table-bycountry-row.html' %}
-            {% if info.datasets %}
-              {% for dataset in info.datasets %}
-                {{ inforow(dataset, entrys[dataset.id], 'info') }}
-                {% if not readonly %}
-                  {% for submission in submissions[dataset.id] %}
-                  {{ inforow(dataset, submission, 'submissions') }}
-                  {% endfor %}
-                {% endif %}
+            {% for dataset in datasets %}
+              {{ inforow(dataset, entrys[dataset.id], 'info') }}
+              {% if not readonly %}
+                {% for submission in submissions[dataset.id] %}
+                {{ inforow(dataset, submission, 'submissions') }}
+                {% endfor %}
+              {% endif %}
 
-              {% endfor %}
-            {% endif %}
+            {% endfor %}
           </tbody>
         </table>
 
