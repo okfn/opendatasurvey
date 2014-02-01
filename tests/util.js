@@ -10,13 +10,6 @@ var fs = require('fs')
   , util = require('../lib/util.js')
   ;
 
-describe('Config - unloaded', function(){
-  it('config is basic if not loaded', function(done){
-    assert.equal(config.get('title'), undefined);
-    done();
-  });
-});
-
 describe('Config - load', function(){
   before(function(done){
     base.setFixtures();
