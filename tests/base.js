@@ -15,7 +15,7 @@ config.set('database_spreadsheet_key', exports.options.key);
 
 exports.setFixtures = function() {
   var data = {};
-  ['config', 'questions', 'datasets'].forEach(function(name) {
+  ['config', 'questions', 'datasets', 'places'].forEach(function(name) {
     data[name] = fs.readFileSync(path.join('tests', 'fixtures', name + '.csv'), 'utf8');
   });
   global.request = require('request');
@@ -25,10 +25,12 @@ exports.setFixtures = function() {
   function stubbed(url, cb) {
     if (url == config.get('configUrl')) {
       cb(null, null, data['config']);
-    } else if (url == config.get('questionsUrl')) {
+    } else if (url == config.get('question')) {
       cb(null, null, data['questions'])
-    } else if (url == config.get('datasetsUrl')) {
+    } else if (url == config.get('datasets')) {
       cb(null, null, data['datasets'])
+    } else if (url == config.get('places')) {
+      cb(null, null, data['places'])
     } else {
       request.get.restore();
       request.get(url, function(err,res,body) {

@@ -58,9 +58,14 @@ describe('LoadFixedData', function(){
   });
 
   it('datasets ok ', function() {
-    // test datasets
     assert.equal(db.datasets.length, 10);
     assert.equal(db.datasets[0].id, 'timetables');
+  });
+
+  it('places ok ', function() {
+    assert.equal(db.places.length, 249);
+    assert.equal(db.places[0].id, 'AF');
+    assert.equal(db.places[0].name, 'Afghanistan');
   });
 });
 

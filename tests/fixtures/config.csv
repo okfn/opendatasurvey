@@ -3,4 +3,5 @@ title,Test Open Data Census
 title_short,CensusShort
 questions,https://docs.google.com/spreadsheet/pub?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&single=true&gid=1&output=csv
 datasets,http://docs.google.com/spreadsheet/pub?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&single=true&gid=0&output=csv
+places,https://docs.google.com/spreadsheet/pub?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&single=true&gid=7&output=csv
 database_spreadsheet_key,0AqR8dXc6Ji4JdHR5WWdUU2dYUElPaFluUlBJbkFOMUE
