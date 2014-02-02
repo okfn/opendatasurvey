@@ -156,7 +156,8 @@ app.get('/country', function(req, res) {
   res.render('country/index.html', {
     info: model.data.country,
     datasets: model.data.datasets,
-    questions: model.openQuestions
+    questions: model.openQuestions,
+    placesById: model.data.placesById
   });
 });
 
@@ -169,7 +170,7 @@ app.get('/country/results.json', function(req, res) {
 // interfere with other urls
 app.get('/country/overview/:place', function(req, res) {
   var place = req.params.place;
-  if (model.placeIds.indexOf(req.params.place) === -1) {
+  if (!(req.params.place) in model.data.placesById) {
     res.send(404, 'There is no place with ID ' + place + ' in our database. Are you sure you have spelled it correctly? Please check the <a href="/country/">place page</a> for the list of places');
     return;
   }

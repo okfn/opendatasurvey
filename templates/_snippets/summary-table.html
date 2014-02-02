@@ -14,7 +14,7 @@
     <tr data-score="{{placeScore}}"  data-area="{{place}}">
       <th class="area-name">
         {% if place %}
-          <a href="/country/overview/{{ place }}/">{{place}}</a>
+          <a href="/country/overview/{{ place }}/">{{placesById[place].name}}</a>
         {% else %}
           <a href="submit/" data-toggle="tooltip" class="unknown no-data count-0" title="Click here to add to the index!">Add new</a>
         {% endif %}
