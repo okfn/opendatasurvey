@@ -1,10 +1,9 @@
-Open Data Census
-================
+# Open Data Census
 
 [![Build Status](https://travis-ci.org/okfn/opendatacensus.png?branch=master)](https://travis-ci.org/okfn/opendatacensus)
 
-Website for the [Open Data Census][] including submission workflow,
-presentation of results and visualizations.
+Webapp for doing [Open Data Censuses][] including submission workflow,
+presentation of results and some visualization.
 
 [Open Data Census]: http://census.okfn.org/
 
@@ -12,58 +11,24 @@ This also includes various ancillary information providing an overview of what
 is happening with release of open government data around the world (and
 initiatives related to it).
 
-Background and Resources
-------------------------
+## Architecture
 
-Read the [Project README and Overview][readme].
+### How it works Conceptually
 
-* [Open Data Census folder in Google Docs](https://drive.google.com/a/okfn.org/#folders/0B6R8dXc6Ji4JTWE0TVhFejYza2c)
-* [Original User Stories][stories]
-* [Data Catalogs Spreadsheet][catalogs]
+A Census is a survey built around 4 axes:
 
-[stories]: https://docs.google.com/document/d/1Ji2pifZYSggdgp0Pe8s_vFNrZIvrgwB1OhYz0AdkGsc/edit
-[readme]: https://docs.google.com/a/okfn.org/document/d/1gDa98Gz4PtblMYjMzbj2TvBTBsbhdYtJdDSxQLc70Tw/edit
-[catalogs]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdE9POFhudGd6NFk0THpxR0NicFViRUE#gid=1
+* Place - e.g. a country of a city
+* Dataset - e.g. Timetable
+* Question - a specific question we ask about each dataset (e.g. "does it exist", "is it machine readable")
+* Time - usually a year
 
-How it works technically
--------------------------
+We then ask for each Place / Dataset / Time combination for an answer to the set of "Questions".
 
-Census is being performed at 2 different levels:
+The set of answers to the Questions for given Place / Dataset / Time combination is called a `Submission`.
 
-* Country level
-* City / regional level
+When a `Submission` has been reviewed and deemed accurate it becomes an `Entry` in the Census. 
 
-The set of datasets asked about for each level are different but the questions asked per dataset are very similar.
-
-We use google spreadsheets as a backend for the Open Data Census. Data is stored in 3 different spreadsheets:
-
-* [Dataset and Questions spreadsheet][questions] - this list the datasets for
-  the country census as well as the questions asked for each dataset
-* [Country spreadsheet][country]
-
-[questions]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc#gid=0
-[country]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVnbG5pUFlyUzBpVkFXbXJ2WWpGTUE#gid=6
-
-For historical reasons the raw data from the Country and City census arrive in different forms. We aim to get
-
-We attempt to have a common form to the results spreadsheet.
-
-1. Submissions - this is raw data from form submissions
-2. Normalized - raw submissions data but in normalized form (standard headings)
-3. Reviewed (not yet used) - reviewed and consolidated data
-
-Country Spreadsheet
-~~~~~~~~~~~~~~~~~~~
-
-Process
-
-1. Submit via google form
-2. Arrive in submissions tab
-3. Copy to the Normalized tab (which has standard columns)
-4. Review (soon)
-
-For Developers
---------------
+### For Developers
 
 The app is a simple Express NodeJS app designed to be deployed on Heroku.
 
@@ -72,7 +37,79 @@ We have 2 main branches:
 * master - development branch - deploy to <http://opendatacensus-staging.herokuapp.com/>
 * production - release branch (production ready code) - deploy to <http://census.okfn.org/>
 
-### Install
+Our primary storage backend is Google Spreadsheets. (If you are wondering why see the appendix).
+
+More precisely, we store 2 sets of things:
+
+* Configuration (including the list of Places, Datasets and Questions). Stored in:
+  * Heroku environment - sensitive configuration (e.g. google login) plus
+    bootstrap link to general config (next item)
+  * Public CSV files (usually use CSV file access to a Google spreadsheet) -
+    general config plus the list of places, datasets and questions (each a
+    separate CSV file)
+* Database of responses (`Submission`s and `Entry`s) - stored in a google
+  spreadsheet
+  * WARNING: at present this Database must be world-readable (so we can't store
+    anything sensitive in it ...)
+
+The basic route for the config loading is as follows:
+
+* App boots
+* Looks up environment variable `CONFIG_URL` (plus sensitive config like DB
+  login)
+* Loads CSV file at `CONFIG_URL` - this file has pointers to all other config
+  information (see below for a template)
+* Loads all other config CSV files (Places, Datasets, Questions)
+
+
+### Config and DB Templates
+
+Our recommended approach is to keep all the config in one big google spreadsheet and then point 
+
+* [Template General Config Spreadsheet][config] - which in turn has pointers to other templates
+* [Template Database Spreadsheet][db-template]
+  * Note: must have column headings in Submissions and Entries that correspond
+    to question ids in question sheet
+
+[config]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdG5FYWF5M0o1cHBvQkZLTUdOYWtlNmc#gid=0
+[db-template]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdFgwSjlabk0wY3NfT2owbktCME5MY2c&usp=drive_web
+
+------
+
+
+## Creating a New Census App
+
+[For Developers - if you want a Census booted for you see <http://meta.census.okfn.org/request/>]
+
+1. Boot a config spreadsheet
+
+  * Add sheets for general config and for places, datasets and questions (see
+    templates above)
+  * Make the sheet 'Public on the Web' and world readable
+
+2. Create a Database spreadsheet (copy the template - see above)
+
+  * Add opendatacensusapp@gmail.com as read/write user
+  * Make the sheet 'Public on the Web' and world readable
+
+2. Create a new Heroku app `opendatacensus-{slug-name}`
+
+   * `heroku apps:create opendatacensus-{slug-name} --remote {slug-name}`
+   * Set up the environment config (see below)
+   * Deploy
+
+        git push {slug-name} master
+   
+   * Should now be live at http://{slug-name}.herokuapp.com/
+
+3. [optional] Set up the DNS
+
+
+------
+
+## Developing the Code
+
+### Install Locally
 
 To install do the following:
 
@@ -96,8 +133,14 @@ To install do the following:
 
 ### Configuration
 
-Configuration runs off lib/config.js. You can selectively override in your own
-local config. To do this:
+Core configuration is listed in lib/config.js which loads from environment
+variables and then via `lib/util.js` `load` method to pull in config from CSV
+files.
+
+#### Over-riding for development
+
+For convenience when doing local development, you can selectively override your
+own local config using a `settings.json` as follows:
 
 * Create `settings.json`
 * Copy the config object from lib/config.js and override relevant parts. Note
@@ -110,8 +153,8 @@ local config. To do this:
           }
         }
 
-Note for Heroku you could try uploading a settings.json or take a look at
-https://devcenter.heroku.com/articles/config-vars
+Note this will **not** work for Heroku - instead you need to do everything via
+environment variables: https://devcenter.heroku.com/articles/config-vars
 
 ### Running Tests
 
@@ -119,13 +162,11 @@ Install mocha (see devDependencies in package.json) then do:
 
     mocha tests/
 
-**note** we run off live data yet some expected values are hard-coded. Thus
-tests are likely to break as underlying data changes. We should fix this soon
-by running off mock data.
+------
 
-### Deployment
+## Heroku Deployment
 
-We have 2 apps on Heroku:
+We have multiple apps on Heroku including:
 
 * Production: `opendatacensus` - push there from production branch
 * Staging: `opendatacensus-staging` - push from master
@@ -144,4 +185,18 @@ To work with these do:
 To avoid error suggest making the staging app the default:
 
     git config heroku.remote staging
+
+## Appendix - Why Google Spreadsheets for the DB
+
+Pros
+
+* being easy to hand-edit and view (esp for non-techies)
+* multiple formats
+* versioned (so all changes are recorded)
+
+Cons
+
+* Google Spreadsheets has limited storage (400k cells etc). However, our data
+  requirements are usually quite limited for each census.
+
 
