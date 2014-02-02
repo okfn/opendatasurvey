@@ -17,7 +17,7 @@ describe('Config - load', function(){
   });
 
   after(function(done){
-    request.get.restore();
+    base.unsetFixtures();
     done();
   });
 
@@ -64,10 +64,10 @@ describe('LoadFixedData', function(){
 
   it('places ok ', function() {
     assert.equal(db.places.length, 249);
-    assert.equal(db.places[0].id, 'AF');
+    assert.equal(db.places[0].id, 'af');
     assert.equal(db.places[0].name, 'Afghanistan');
-    assert.equal(db.placeIds[0], 'AF');
-    assert.equal(db.placeIds[db.placeIds.length-1], 'ZW');
+    assert.equal(db.placeIds[0], 'af');
+    assert.equal(db.placeIds[db.placeIds.length-1], 'zw');
   });
 });
 
@@ -87,7 +87,7 @@ describe('LoadSubmittedData', function(){
 
   it('results ok ', function() {
     assert.equal(db.entries.results.length, 2);
-    assert.equal(db.entries.results[0].place, 'United Kingdom');
+    assert.equal(db.entries.results[0].place, 'gb');
   });
 
   it('entries summary is ok', function(){
@@ -115,13 +115,13 @@ describe('LoadSubmittedData', function(){
   it('entries.byplace is ok ', function(){
     assert.equal(Object.keys(db.entries.byplace).length, db.entries.places.length);
 
-    var uk = db.entries.byplace['United Kingdom'];
+    var uk = db.entries.byplace['gb'];
     assert.equal(Object.keys(uk.datasets).length, 2);
     // assert(uk.datasets[
   });
 
   it('entries item is ok ', function(){
-    var uk = db.entries.byplace['United Kingdom'].datasets['maps'];
+    var uk = db.entries.byplace['gb'].datasets['maps'];
     // console.log(uk);
     assert.equal(uk.exists, 'Y');
     assert.equal(uk['uptodate'], 'Y');
@@ -130,7 +130,7 @@ describe('LoadSubmittedData', function(){
   });
 
   it('entries census item open is ok ', function(){
-    var uk = db.entries.byplace['United Kingdom'].datasets['map'];
+    var uk = db.entries.byplace['gb'].datasets['map'];
     // TODO: reinstate
     // assert.equal(uk.ycount, 6);
     // assert.equal(uk.isopen, true);
@@ -138,7 +138,7 @@ describe('LoadSubmittedData', function(){
 
   it('submissions ok', function() {
     assert.equal(db.submissions.results.length, 4);
-    assert.deepEqual(db.submissions.places, ['United Kingdom', 'Uganda']);
+    assert.deepEqual(db.submissions.places, ['gb', 'ug']);
     assert.equal(db.submissions.reviewers.length, 0);
   });
 });

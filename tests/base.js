@@ -43,4 +43,7 @@ exports.setFixtures = function() {
   }
 }
 
+exports.unsetFixtures = function() {
+  request.get.restore();
+};
 

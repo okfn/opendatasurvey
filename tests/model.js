@@ -25,7 +25,7 @@ describe('Backend Entry', function() {
   });
   after(function(done) {
     // TODO: delete all Germany entries
-    backend.getEntrys({place: 'Germany'}, function(err, rows) {
+    backend.getEntrys({place: 'de'}, function(err, rows) {
       if (rows.length == 0) {
         done();
       }
@@ -40,7 +40,7 @@ describe('Backend Entry', function() {
     });
   });
   it('getEntrys', function(done) {
-    backend.getEntrys({place: 'United Kingdom'}, function(err, entrys) {
+    backend.getEntrys({place: 'gb'}, function(err, entrys) {
       assert.ok(!err);
       assert.ok(entrys!==[]);
       assert.equal(entrys.length, 2);
@@ -48,7 +48,7 @@ describe('Backend Entry', function() {
     });
   });
   it('getEntry', function(done) {
-    backend.getEntry({year: 2013, dataset: 'maps', place: 'United Kingdom'}, function(err, entry) {
+    backend.getEntry({year: 2013, dataset: 'maps', place: 'gb'}, function(err, entry) {
       assert.ok(!err);
       assert.ok(entry!=null, 'No entry (entry is null)');
       assert.equal(entry.public, 'Yes', entry);
@@ -60,7 +60,7 @@ describe('Backend Entry', function() {
     var data = {
       year: 2012,
       dataset: 'spending',
-      place: 'Germany',
+      place: 'de',
       details: 'Some \ndetails',
     };
     var newData = {
@@ -94,8 +94,8 @@ describe('Submissions', function() {
     });
   });
   after(function(done) {
-    backend.deleteAll(backend.options.submissionIndex, {place: 'Germany'}, complete);
-    backend.deleteAll(backend.options.entryIndex, {place: 'Germany'}, complete);
+    backend.deleteAll(backend.options.submissionIndex, {place: 'de'}, complete);
+    backend.deleteAll(backend.options.entryIndex, {place: 'de'}, complete);
     var count = 2;
     function complete() {
       count--;
@@ -112,7 +112,7 @@ describe('Submissions', function() {
     });
   });
   it('get byplace', function(done) {
-    backend.getPlace('United Kingdom', function(err, data) {
+    backend.getPlace('gb', function(err, data) {
       // submissions has 2 items for UK but only one is unreviewed
       assert.equal(data.submissions.length, 1);
       assert.equal(data.entrys.length, 2);
@@ -124,7 +124,7 @@ describe('Submissions', function() {
     var data = {
       year: 2012,
       dataset: 'spending',
-      place: 'Germany',
+      place: 'de',
       exists: 'No'
     };
     backend.insertSubmission(data, function(err, obj) {
@@ -140,7 +140,7 @@ describe('Submissions', function() {
     var data = {
       year: 2012,
       dataset: 'timetables',
-      place: 'Germany',
+      place: 'de',
       exists: 'Yes',
       public: 'No'
     };

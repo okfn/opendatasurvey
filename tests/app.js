@@ -16,6 +16,7 @@ var app = require('../app.js').app;
 describe('Country', function() {
   this.timeout(8000);
   before(function(done) {
+    base.setFixtures();
     model.load(function() {
       model.backend.login(function(err){
         done(err);
@@ -24,7 +25,8 @@ describe('Country', function() {
   });
   after(function(done) {
     // TODO: delete all Germany entries
-    model.backend.getSubmissions({place: 'Germany'}, function(err, rows) {
+    base.unsetFixtures();
+    model.backend.getSubmissions({place: 'de'}, function(err, rows) {
       if (rows.length == 0) {
         done();
       }
@@ -67,7 +69,7 @@ describe('Country', function() {
   it('GET Submission with pre-populated no entry', function(done) {
     var prefill = {
       // country with nothing in our test db ...
-        place: 'Uganda'
+        place: 'ug'
       , dataset: 'emissions'
       , exists: 'Yes'
       , digital: 'Unsure'
@@ -97,7 +99,7 @@ describe('Country', function() {
   it('GET Submission pre-populated with entry', function(done) {
     var prefill = {
       // country in our test db for default year
-        place: 'United Kingdom'
+        place: 'gb'
       , dataset: 'maps'
     };
     var url = 'http://www.ordnancesurvey.co.uk/opendata/';
@@ -122,11 +124,11 @@ describe('Country', function() {
       .type('form')
       .field('year', '2014')
       .field('dataset', 'timetables')
-      .field('place', 'Germany')
+      .field('place', 'de')
       .field('exists', 'No')
       .expect(302)
       .end(function(err, res) {
-        assert.equal(res.header['location'], '/country/overview/Germany');
+        assert.equal(res.header['location'], '/country/overview/de');
         done();
       });
   });
