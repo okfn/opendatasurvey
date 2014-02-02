@@ -169,8 +169,8 @@ app.get('/country/results.json', function(req, res) {
 // interfere with other urls
 app.get('/country/overview/:place', function(req, res) {
   var place = req.params.place;
-  if (model.countryList.indexOf(req.params.place) == -1) {
-    res.send(404, 'There is no country named ' + place + ' in our database. Are you sure you have spelled it correctly? Please check the <a href="/country/">country page</a> for the list of countries');
+  if (model.placeIds.indexOf(req.params.place) === -1) {
+    res.send(404, 'There is no place with ID ' + place + ' in our database. Are you sure you have spelled it correctly? Please check the <a href="/country/">place page</a> for the list of places');
     return;
   }
 
@@ -236,7 +236,6 @@ app.get('/country/:place/:dataset', function(req, res) {
 
   function render(prefill_) {
     res.render('country/entry.html', {
-      countryList: model.countryList,
       ynquestions: ynquestions,
       questions: model.data.questions,
       datasets: model.data.datasets,

@@ -101,7 +101,7 @@ Contributing to the {{ sitename }}
 <div class="span3">
 {% for thePlace in places %}
 {% if loop.index0 >= idx and loop.index0 < idx + 65 %}
-<a href="/country/overview/{{thePlace}}/">{{thePlace}}</a> <br />
+<a href="/country/overview/{{thePlace.id}}/">{{thePlace.name}}</a> <br />
 {% endif %}
 {% endfor %}
 </div>

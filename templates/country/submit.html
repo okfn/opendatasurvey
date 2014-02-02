@@ -34,8 +34,8 @@ Country - Submit
       <label>Country<br/>
         <select name="place" required autocomplete="off">
           <option value="">Please select</option>
-          {% for country in countryList %}
-          <option value="{{country}}" {% if country == prefill.place %}selected="true"{% endif %}>{{country}}</option>
+          {% for place in places %}
+          <option value="{{place.id}}" {% if place.id == prefill.place %}selected="true"{% endif %}>{{place.name}}</option>
           {% endfor %}
         </select>
       </label>

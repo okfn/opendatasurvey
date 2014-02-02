@@ -50,7 +50,7 @@ var addRoutes = function (app) {
   });
 
   app.get('/contribute', function(req, res) {
-    res.render('country/contribute.html', {places: model.countryList});
+    res.render('country/contribute.html', {places: model.data.places});
   });
 
   app.get('/country/submit', function(req, res) {
@@ -60,7 +60,7 @@ var addRoutes = function (app) {
 
     function render(prefill_) {
       res.render('country/submit.html', {
-        countryList: model.countryList,
+        places: model.data.places,
         ynquestions: ynquestions,
         questions: model.data.questions,
         datasets: model.data.datasets,

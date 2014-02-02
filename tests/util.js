@@ -66,6 +66,8 @@ describe('LoadFixedData', function(){
     assert.equal(db.places.length, 249);
     assert.equal(db.places[0].id, 'AF');
     assert.equal(db.places[0].name, 'Afghanistan');
+    assert.equal(db.placeIds[0], 'AF');
+    assert.equal(db.placeIds[db.placeIds.length-1], 'ZW');
   });
 });
 
