@@ -57,6 +57,7 @@ var addRoutes = function (app) {
     var datasets = [];
     var ynquestions = model.data.questions.slice(0,9);
     var prefill = req.query;
+    var year = prefill.year || config.get('submit_year');
 
     function render(prefill_) {
       res.render('country/submit.html', {
@@ -64,6 +65,7 @@ var addRoutes = function (app) {
         ynquestions: ynquestions,
         questions: model.data.questions,
         datasets: model.data.datasets,
+        year: year,
         prefill: prefill_
       });
     }
@@ -73,7 +75,7 @@ var addRoutes = function (app) {
       model.backend.getEntry({
         place: prefill.place,
         dataset: prefill.dataset,
-        year: prefill.year || model.DEFAULT_YEAR
+        year: year,
       }, function(err, obj) {
         // we allow query args to override entry values
         // might be useful (e.g. if we started having form errors and
@@ -152,8 +154,7 @@ var addRoutes = function (app) {
             subrecord: obj,
             prefill: obj,
             currrecord: entry,
-            dataset: dataset,
-            currentYear: model.data.country.currentYear
+            dataset: dataset
           });
         });
       }

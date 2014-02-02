@@ -250,7 +250,8 @@ app.get('/country/:place/:dataset', function(req, res) {
   model.backend.getEntry({
     place: req.params.place,
     dataset: req.params.dataset,
-    year: /*year || */ model.DEFAULT_YEAR //TODO: next year, extend to /2013/, etc.
+    //TODO: next year, extend to /2013/, etc.
+    year: config.get('display_year')
   }, function(err, obj) {
     if (obj) { // we might have a got a 404 etc
       prefill = _.extend(obj, prefill);
@@ -262,7 +263,8 @@ app.get('/country/:place/:dataset', function(req, res) {
     model.backend.getSubmissions({
       place: req.params.place,
       dataset: req.params.dataset,
-      year: /*year || */ model.DEFAULT_YEAR //TODO: next year, extend to /2013/, etc.
+      //TODO: next year, extend to /2013/, etc.
+      year: config.get('display_year')
     }, function(err, obj) {
       // we allow query args to override entry values
       // might be useful (e.g. if we started having form errors and redirecting
