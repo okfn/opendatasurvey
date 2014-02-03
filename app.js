@@ -87,17 +87,8 @@ env.express(app);
 
 app.all('*', function(req, res, next) {
   if (config.get('test:testing') === true) {
-    if (!req.user) {
-      var userobj = {
-        id: 'facebook:opendatacensus-test',
-        provider_id: 'xxx',
-        provider: 'facebook',
-        username: 'opendatacensus-test',
-        name: 'Tester',
-        email: 'test@okfn.org',
-        gravatar: 'https://www.gravatar.com/avatar/'
-      };
-      req.user = userobj;
+    if (!req.user && config.get('test:user')) {
+      req.user = config.get('test:user');
     }
     res.locals.currentUser = req.user ? req.user : null; 
   }

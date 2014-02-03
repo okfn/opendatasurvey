@@ -38,7 +38,7 @@ var addRoutes = function (app) {
   });
 
   app.get('/country/submit', function(req, res) {
-    requireLoggedIn(req, res);
+    if (requireLoggedIn(req, res)) return;
 
     var datasets = [];
     var ynquestions = model.data.questions.slice(0,9);
@@ -77,7 +77,7 @@ var addRoutes = function (app) {
   });
 
   app.post('/country/submit', function(req, res) {
-    requireLoggedIn(req, res);
+    if (requireLoggedIn(req, res)) return;
 
     model.backend.insertSubmission(req.body, function(err, obj) {
       var msg;
@@ -115,7 +115,11 @@ var addRoutes = function (app) {
 
   // Compare & update page
   app.get('/country/review/:submissionid', function(req, res) {
-    requireLoggedIn(req, res);
+    if (requireLoggedIn(req, res)) return;
+    if (!canReview(req.user)) {
+      res.send(401, 'Sorry, you are not an authorized reviewer');
+      return;
+    }
 
     var ynquestions = model.data.questions.slice(0,9);
 
@@ -147,7 +151,11 @@ var addRoutes = function (app) {
   });
 
   app.post('/country/review/:submissionid', function(req, res) {
-    requireLoggedIn(req, res);
+    if (requireLoggedIn(req, res)) return;
+    if (!canReview(req.user)) {
+      res.send(401, 'Sorry, you are not an authorized reviewer');
+      return;
+    }
 
     model.backend.getSubmission({
       submissionid: req.params.submissionid
@@ -272,8 +280,12 @@ app.get('/auth/logout', function(req, res){
 function requireLoggedIn(req, res) {
   if (!req.user) {
     res.redirect('/login/?next=' + encodeURIComponent(req.url));
-    return;
+    return true;
   }
 };
+
+function canReview(user) {
+  return (config.get('reviewers').indexOf(user.id) !== -1);
+}
 
 exports.addRoutes = addRoutes;

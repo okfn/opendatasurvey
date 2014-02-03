@@ -18,7 +18,7 @@ exports.setFixtures = function() {
   ['config', 'questions', 'datasets', 'places'].forEach(function(name) {
     data[name] = fs.readFileSync(path.join('tests', 'fixtures', name + '.csv'), 'utf8');
   });
-  global.request = require('request');
+
   sinon
     .stub(request, 'get', stubbed);
         

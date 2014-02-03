@@ -6,7 +6,7 @@ var request = require('supertest')
   ;
 
 config.set('test:testing', true);
-config.set('appconfig:port', 5001 + Math.floor(Math.random() * 1000));
+// config.set('appconfig:port', 5001 + Math.floor(Math.random() * 1000));
 
 // only require after setting config ...
 var model = require('../lib/model.js').OpenDataCensus;
@@ -39,6 +39,56 @@ describe('Basics', function() {
         done();
       });
       ;
+  });
+});
+
+describe('Permissions', function() {
+  this.timeout(5000);
+
+  // cache for later
+  var testuser = config.get('test:user');
+
+  before(function(done) {
+    base.setFixtures();
+    model.load(function() {
+      model.backend.login(function(err){
+        done(err);
+      });
+    });
+  });
+  after(function(done) {
+    config.set('test:user', testuser);
+    base.unsetFixtures();
+    done();
+  });
+  it('requires login for submit', function(done) {
+    config.set('test:testing', false);
+    request(app)
+      .get('/country/submit')
+      .end(function(err, res) {
+        if (err) done(err);
+        config.set('test:testing', true);
+        assert.equal(res.headers['location'], '/login/?next=%2Fcountry%2Fsubmit');
+        done();
+      });
+  });
+  it('requires login for review', function(done) {
+    config.set('test:testing', false);
+    request(app)
+      .get('/country/review/testid-1')
+      .end(function(err, res) {
+        if (err) done(err);
+        config.set('test:testing', true);
+        assert.equal(res.headers['location'], '/login/?next=%2Fcountry%2Freview%2Ftestid-1');
+        done();
+      });
+  });
+  it('Non-reviewer cannot review', function(done) {
+    config.set('test:user', {id: 'jones'});
+    request(app)
+      .get('/country/review/testid-1')
+      .expect(401, done)
+    ;
   });
 });
 
