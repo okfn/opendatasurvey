@@ -6,6 +6,8 @@ var fs = require('fs')
   , express = require('express')
   , flash = require('connect-flash')
   , scrypt = require('scrypt')
+  , passport = require('passport')
+  , FacebookStrategy = require('passport-facebook').Strategy
 
   , config = require('./lib/config')
   , env = require('./env')
@@ -62,6 +64,8 @@ app.configure(function() {
     app.use(express.session({
       secret: process.env.SESSION_SECRET || 'dummysecret'
     }));
+    app.use(passport.initialize());
+    app.use(passport.session());
   }
 
   app.use(CORSSupport);
@@ -83,8 +87,21 @@ env.express(app);
 
 app.all('*', function(req, res, next) {
   if (config.get('test:testing') === true) {
-    req.session.loggedin = true;
+    if (!req.user) {
+      var userobj = {
+        id: 'facebook:opendatacensus-test',
+        provider_id: 'xxx',
+        provider: 'facebook',
+        username: 'opendatacensus-test',
+        name: 'Tester',
+        email: 'test@okfn.org',
+        gravatar: 'https://www.gravatar.com/avatar/'
+      };
+      req.user = userobj;
+    }
+    res.locals.currentUser = req.user ? req.user : null; 
   }
+
   if (config.get('appconfig:readonly')) {
     res.locals.readonly = true;
     // No session support in readonly mode, so fake it out:

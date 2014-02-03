@@ -100,6 +100,13 @@
           <li><a href="mailto:index@okfn.org" title="Contact us">Contact us</a></li>
           <li><a href="mailto:index@okfn.org?Subject=Open%20Data%20Index%20issue%20report" title="Report issues">Report issues</a></li>
           {% else %}
+          <li>
+            {% if currentUser %}
+            Logged in as {{currentUser.name}}
+            {% else %}
+            <a href="/login">Login</a>
+            {% endif %}
+          </li>
           <li><a href="mailto:census@okfn.org" title="Contact us">Contact us</a></li>
           <li><a href="https://github.com/okfn/opendatacensus/issues" title="Report issues">Report issues</a></li>
           {% endif %}

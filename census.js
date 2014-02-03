@@ -1,30 +1,14 @@
-var fs = require('fs');
+var fs = require('fs')
+  , _ = require('underscore')
+  , crypto = require('crypto')
+  , passport = require('passport')
+  , FacebookStrategy = require('passport-facebook').Strategy
 
-var _ = require('underscore');
-var scrypt = require('scrypt');
+  , config = require('./lib/config')
+  , env = require('./env')
+  , model = require('./lib/model').OpenDataCensus
+  ;
 
-var config = require('./lib/config');
-var env = require('./env');
-var model = require('./lib/model').OpenDataCensus;
-
-
-function doLogin(req, res) {
-  var validPass = scrypt.verifyHashSync(
-    config.get('appconfig:review_passhash'),
-    req.body['password']
-  );
-  if (validPass) {
-    req.session.loggedin = true;
-    req.flash('info', 'You are now logged in!');
-    model.load(function() { // Get latest data
-      var redirectto = req.body['next'];
-      res.redirect(( redirectto || '/country/'));
-    });
-  } else {
-    req.flash('error', 'Incorrect password. Plese try again');
-    res.redirect('country/login/?next=' + req.body['next']);
-  }
-}
 
 var addRoutes = function (app) {
 
@@ -54,6 +38,8 @@ var addRoutes = function (app) {
   });
 
   app.get('/country/submit', function(req, res) {
+    requireLoggedIn(req, res);
+
     var datasets = [];
     var ynquestions = model.data.questions.slice(0,9);
     var prefill = req.query;
@@ -91,6 +77,8 @@ var addRoutes = function (app) {
   });
 
   app.post('/country/submit', function(req, res) {
+    requireLoggedIn(req, res);
+
     model.backend.insertSubmission(req.body, function(err, obj) {
       var msg;
       // TODO: Do flash messages properly
@@ -127,10 +115,7 @@ var addRoutes = function (app) {
 
   // Compare & update page
   app.get('/country/review/:submissionid', function(req, res) {
-    if (!req.session.loggedin) {
-      res.redirect('/country/login/?next=' + encodeURIComponent(req.url));
-      return;
-    }
+    requireLoggedIn(req, res);
 
     var ynquestions = model.data.questions.slice(0,9);
 
@@ -162,10 +147,7 @@ var addRoutes = function (app) {
   });
 
   app.post('/country/review/:submissionid', function(req, res) {
-    if (!req.session.loggedin) {
-      res.send(401, 'You are not authorized to do this');
-      return;
-    }
+    requireLoggedIn(req, res);
 
     model.backend.getSubmission({
       submissionid: req.params.submissionid
@@ -213,21 +195,85 @@ var addRoutes = function (app) {
 
   //"Log In" page
   app.get('/country/login', function(req, res) {
-    res.render('country/login.html', {
-      places: model.data.countrysubmissions.places,
-      place: req.query.place,
-      next: req.query.next
-    });
+    res.redirect('/login?next=' + req.query.next);
   });
 
-  app.get('/country/logout', function(req, res) {
-    if (req.session.loggedin) delete req.session.loggedin;
-    res.redirect('/country/');
+app.get('/login', function(req, res) {
+  // TODO: use this stored next url properly ...
+  req.session.nextUrl = req.query.next;
+  res.render('login.html', {
   });
+});
 
-  app.post('/country/login', function(req, res) {
-    doLogin(req, res);
-  });
+app.get('/auth/loggedin', function(req, res) {
+  if (req.session.nextUrl) {
+    res.redirect(req.session.nextUrl);
+  } else {
+    res.redirect('/');
+  }
+});
+
+app.get('/auth/facebook',
+    passport.authenticate('facebook', {scope: ['email']})
+);
+
+app.get('/auth/facebook/callback', 
+  passport.authenticate('facebook', {
+      successRedirect: '/auth/loggedin',
+      failureRedirect: '/login',
+      failureFlash: true,
+      successFlash: true
+    }
+  )
+);
+
+passport.use(
+  new FacebookStrategy({
+      clientID: config.get('facebook:app_id'),
+      clientSecret: config.get('facebook:app_secret'),
+      callbackURL: config.get('site_url') + '/auth/facebook/callback',
+      profileFields: ['id', 'displayName', 'name', 'username', 'emails', 'photos']
+    },
+    function(accessToken, refreshToken, profile, done) {
+      var userobj = {
+        id: profile.provider + ':' + profile.username,
+        provider_id: profile.id,
+        provider: profile.provider,
+        username: profile.username,
+        name: profile.displayName,
+        email: profile.emails[0].value,
+        given_name: profile.name.givenName,
+        family_name: profile.name.familyName,
+      };
+      var md5sum = crypto.createHash('md5');
+      md5sum.update(userobj.email.toLowerCase());
+      userobj.gravatar = 'https://www.gravatar.com/avatar/' + md5sum.digest() + '.jpg';
+      done(null, userobj);
+    }
+  )
+);
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(profile, done) {
+  var err = null;
+  done(err, profile);
+});
+
+app.get('/auth/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
+
+};
+
+function requireLoggedIn(req, res) {
+  if (!req.user) {
+    res.redirect('/login/?next=' + encodeURIComponent(req.url));
+    return;
+  }
 };
 
 exports.addRoutes = addRoutes;

@@ -13,7 +13,7 @@ initiatives related to it).
 
 ## Architecture
 
-### How it works Conceptually
+### Concepts
 
 A Census is a survey built around 4 axes:
 
@@ -28,7 +28,14 @@ The set of answers to the Questions for given Place / Dataset / Time combination
 
 When a `Submission` has been reviewed and deemed accurate it becomes an `Entry` in the Census. 
 
-### For Developers
+### Access Control
+
+You must be logged in to make a Submission or review a Submission. Login is via
+Facebook. We store sensitive user info (e.g. password) in a closed central DB.
+
+*Note*: you can also lock down the entire app if you set `auth_on` config.
+
+### Developer Stuff
 
 The app is a simple Express NodeJS app designed to be deployed on Heroku.
 
@@ -73,6 +80,12 @@ Our recommended approach is to keep all the config in one big google spreadsheet
 
 [config]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdG5FYWF5M0o1cHBvQkZLTUdOYWtlNmc#gid=0
 [db-template]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdFgwSjlabk0wY3NfT2owbktCME5MY2c&usp=drive_web
+
+
+### Facebook Auth
+
+For Facebook Auth you will need to create an App on Facebook developers section
+and set various config. See config section below for detail.
 
 ------
 
@@ -136,6 +149,13 @@ To install do the following:
 Core configuration is listed in lib/config.js which loads from environment
 variables and then via `lib/util.js` `load` method to pull in config from CSV
 files.
+
+Setting up Facebook for Login:
+
+* Register as a developer
+* Create an App
+* Go to Basic Settings and select Add Platform
+* Enter the site url of your site
 
 #### Over-riding for development
 

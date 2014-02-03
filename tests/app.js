@@ -13,6 +13,35 @@ var model = require('../lib/model.js').OpenDataCensus;
 
 var app = require('../app.js').app;
 
+describe('Basics', function() {
+  before(function(done) {
+    base.setFixtures();
+    model.load(function() {
+      done();
+    });
+  });
+  after(function(done) {
+    base.unsetFixtures();
+    done();
+  });
+  it('front page works', function(done) {
+    request(app)
+      .get('/')
+      .expect(200, done)
+      ;
+  });
+  it('login works', function(done) {
+    request(app)
+      .get('/login')
+      .expect(200)
+      .end(function(err, res) {
+        assert(res.text.match('Login with Facebook'));
+        done();
+      });
+      ;
+  });
+});
+
 describe('Country', function() {
   this.timeout(8000);
   before(function(done) {
