@@ -139,7 +139,7 @@ To install do the following:
 
 3. Run the app
 
-        node app.js
+        node run.js
 
 4. Should now be running at <http://localhost:5000>
 
