@@ -5,16 +5,14 @@ Review Submission
 {% endblock %}
 
 {% block content %}
-{% if subrecord.place %}
 <div class="page-header">
   <h1>
     <span class="muted">
-      <a href="/country/overview/{{ subrecord.place | replace(' ', '%20') }}/">{{ subrecord.place }}</a> /
+      <a href="/country/overview/{{ place.id }}/">{{ place.name }}</a> /
     </span>
     {{dataset.title}}
   </h1>
 </div>
-{% endif %}
 
 <div class="alert alert-warning">
   <h3 style="margin-top: 0;">Please read first</h3>
@@ -29,7 +27,7 @@ Review Submission
   <p>Please ensure there is <strong>relevant evidence to back up responses</strong>. For example, if data is public and online the URL field should not be empty, or, if the data is openly licensed there should be information (e.g. link) for relevant license of terms-of-use in the details.</p>
 
   <h4>3. Assessment Point</h4>
-  <p>Questions should be answered on the basis of the situation as of the current assessment point (August / September 2013). Do <strong>not</strong> answer based on what may happen in the future (or the situation previously). So, for example, if data will be online soon but is not online now the answer to the 'online' question should be 'No' (though please mention that it <em>will</em> be available in the details and comments section).</p>
+  <p>Questions should be answered on the basis of the situation as of the current assessment point. Do <strong>not</strong> answer based on what may happen in the future (or the situation previously). So, for example, if data will be online soon but is not online now the answer to the 'online' question should be 'No' (though please mention that it <em>will</em> be available in the details and comments section).</p>
 </div>
 
 <form action="" method="post">
@@ -124,25 +122,24 @@ Review Submission
 
        <div class="row"><br />
       	<div class="span8">
-        <div><br />If this entry does not add anything to the current entry, then simply 'Reject' and this will be removed from the review queue. Otherwise, please copy over any relevant text or information from the grey current entry parts to the editable form before hitting Publish. Please also correct any spelling mistakes. <strong>Publish will overwrite the whole current entry with the data in this form.</strong><br />&nbsp;</div>
-        </div>
+          <div class=help-block">
+            <p class="help-block">If this submission makes no changes to the current entry then please 'Reject' it rather than 'Accept'.</p>
+            <p class="help-block"> 
+              Note that you edit the submission before accepting it. In particular, please correct any spelling mistakes.</p>
+            <p class="help-block"><strong>Publish will overwrite the whole current entry with the data in this form.</strong></p>
+          </div>
 
-        <div class="span4">
-         <div class="pull-right">
-           <h3>Your name <span class="muted">(Required)</span></h3>
-           <!-- TODO: Autofill based on session -->
-          <input class="pull-right" type="text" id="reviewername" name="reviewername" required /><br />
-          <div class="pull-right"> <input type="submit" name="submit" class="btn btn-danger" value="Reject" />&nbsp; <input name="submit" type="submit" value="Publish" class="btn btn-primary" /></div></div>
+          <div>
+            <p>
+              <input type="submit" name="submit" class="btn btn-danger" value="Reject" />&nbsp;
+              <input name="submit" type="submit" value="Publish" class="btn btn-primary" />
+           </p>
+
+           <h3>Reviewer name (you) &ndash; {{currentUser.name}}</h3>
+           <p class="help-block">This will be logged and displayed</p>
         </div>
       </div>
-
-
-
-
-                  </form>
-
-
-
+    </form>
 
     <script src="{{page.root}}/src/common.js"></script>
     <script src="{{page.root}}/src/census.js"></script>

@@ -94,30 +94,34 @@ describe('Permissions', function() {
 
 describe('Country', function() {
   this.timeout(8000);
+  var fixSubmission = {
+    submissionid: 'test-created-1',
+    place: 'af',
+    year: '2013',
+    dataset: 'timetables',
+    exists: 'Yes'
+  };
   before(function(done) {
     base.setFixtures();
     model.load(function() {
       model.backend.login(function(err){
-        done(err);
+        if (err) {
+          done(err);
+          return;
+        }
+        model.backend.insertSubmission(fixSubmission, done);
       });
     });
   });
   after(function(done) {
-    // TODO: delete all Germany entries
     base.unsetFixtures();
-    model.backend.getSubmissions({place: 'de'}, function(err, rows) {
-      if (rows.length == 0) {
-        done();
-      }
-      rows.forEach(function(entry) {
-        entry.del(function(err) {
-          if(err) {
-            console.log(err);
-          }
-          done();
-        });
-      });
-    });
+    model.backend.deleteAll(model.backend.options.submissionIndex, {place: 'de'}, complete);
+    model.backend.deleteAll(model.backend.options.submissionIndex, {place: 'af'}, complete);
+    var count = 2;
+    function complete() {
+      count--;
+      if (count === 0) done();
+    }
   });
 
   it('front page works', function(done) {
@@ -208,7 +212,12 @@ describe('Country', function() {
       .expect(302)
       .end(function(err, res) {
         assert.equal(res.header['location'], '/country/overview/de');
-        done();
+        model.backend.getSubmissions({place: 'de', dataset: 'timetables'}, function(err, rows) {
+          assert.equal(rows.length, 1);
+          // test user
+          assert.equal(rows[0].submitter, config.get('test:user').id);
+          done();
+        });
       });
   });
 
@@ -221,6 +230,25 @@ describe('Country', function() {
         assert(res.text.match('Publish will overwrite the whole current entry'), 'on review page');
         assert(res.text.match('National government budget at a high level'), 'correct dataset shows up');
         done();
+      });
+  });
+
+  it('POST review', function(done) {
+    var url = '/country/review/' + fixSubmission.submissionid;
+    request(app)
+      .post(url)
+      .type('form')
+      .field('submit', 'Publish')
+      .expect(302)
+      .end(function(err, res) {
+        if (err) done(err);
+        assert.equal(res.header['location'], '/country/overview/');
+        model.backend.getSubmission(fixSubmission, function(err, sub) {
+          assert.equal(sub.reviewer, config.get('test:user').id);
+          assert.equal(sub.reviewresult, 'accepted');
+          assert.equal(sub.reviewed, '1');
+          done();
+        });
       });
   });
 });

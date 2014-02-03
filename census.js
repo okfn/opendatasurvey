@@ -79,7 +79,9 @@ var addRoutes = function (app) {
   app.post('/country/submit', function(req, res) {
     if (requireLoggedIn(req, res)) return;
 
-    model.backend.insertSubmission(req.body, function(err, obj) {
+    var submissionData = req.body;
+    submissionData.submitter = req.user.id;
+    model.backend.insertSubmission(submissionData, function(err, obj) {
       var msg;
       // TODO: Do flash messages properly
       if (err) {
@@ -87,10 +89,10 @@ var addRoutes = function (app) {
         msg = 'There was an error! ' + err;
         req.flash('error', msg);
       } else {
-        msg = 'Thank-you for your submission which has been received. It will now be reviewed by an Editor before being published. It may take up to a few minutes for your submission to appear here and up to a few days for it be reviewed. Please be patient.';
+        msg = 'Thank-you for your submission which has been received. It will now be reviewed by an expert before being published. It may take a few minutes for your submission to appear and a few days for it be reviewed.';
         req.flash('info', msg);
       }
-      res.redirect('country/overview/' + req.body['place']);
+      res.redirect('country/overview/' + submissionData.place);
     });
   });
 
@@ -143,7 +145,8 @@ var addRoutes = function (app) {
             subrecord: obj,
             prefill: obj,
             currrecord: entry,
-            dataset: dataset
+            dataset: dataset,
+            place: model.data.placesById[obj.place]
           });
         });
       }
@@ -157,48 +160,28 @@ var addRoutes = function (app) {
       return;
     }
 
-    model.backend.getSubmission({
-      submissionid: req.params.submissionid
-    }, function(err, submission) {
+    var acceptSubmission = req.body['submit'] == 'Publish';
+    model.backend.processSubmission(req.user, acceptSubmission, req.params.submissionid, req.body, function(err) {
       if (err) {
-        res.send(500, err);
-        return;
-      } else if (!submission) {
-        res.send(404, 'No submission found for that info');
-        return;
+        if (err.code) {
+          res.send(err.code, err.message);
+        } else {
+          res.send(500, err);
+        }
       } else {
-        processSubmission(submission);
+        if (acceptSubmission) {
+          var msg = "Submission processed and entered into the census.";
+          req.flash('info', msg);
+        } else {
+          var msg = "Submission marked as rejected.";
+          req.flash('info', msg);
+        }
+        // TODO: find a better way to update cached data
+        // model.load(function() {
+          res.redirect('country/overview/');
+        // });
       }
     });
-
-    function processSubmission(submission) {
-      if ((req.body['submit']) === "Publish") {
-        model.backend.acceptSubmission(submission, req.body, function(err) {
-          if (err) {
-            res.send(500, err);
-          } else {
-            var msg = "Submission processed and entered into the census.";
-            req.flash('info', msg);
-            doneUpdating(req, res, submission);
-          }
-        });
-      } else if (req.body['submit'] === "Reject") {
-        submission.reviewresult = 'rejected';
-        // The only field we need from the form is the reviewer
-        submission.reviewer = req.body['reviewername'];
-        model.backend.markSubmissionAsReviewed(submission, function(err) {
-          var msg = "Submission marked as rejected. The entry has been archived and marked as rejected. It will take a few minutes for this table to update. Thank you!";
-          req.flash('info', msg);
-          doneUpdating(req, res, submission);
-        });
-      }
-    }
-    function doneUpdating(req, res, submission) {
-      // Get latest data
-      model.load(function() {
-        res.redirect('country/overview/' + submission.place);
-      });
-    }
   });
 
   //"Log In" page
