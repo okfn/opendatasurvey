@@ -117,7 +117,8 @@ describe('Country', function() {
     base.unsetFixtures();
     model.backend.deleteAll(model.backend.options.submissionIndex, {place: 'de'}, complete);
     model.backend.deleteAll(model.backend.options.submissionIndex, {place: 'af'}, complete);
-    var count = 2;
+    model.backend.deleteAll(model.backend.options.entryIndex, {place: 'af'}, complete);
+    var count = 3;
     function complete() {
       count--;
       if (count === 0) done();
