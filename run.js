@@ -1,5 +1,5 @@
 var model = require('./lib/model').OpenDataCensus
-  , app = require('./app')
+  , app = require('./app').app
   ; 
 
 // Booting up
