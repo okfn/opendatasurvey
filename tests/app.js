@@ -30,6 +30,18 @@ describe('Basics', function() {
       .expect(200, done)
       ;
   });
+  it('about page works', function(done) {
+    request(app)
+      .get('/about')
+      .expect(200, done)
+      ;
+  });
+  it('contributors page works', function(done) {
+    request(app)
+      .get('/contributors')
+      .expect(200, done)
+      ;
+  });
   it('login works', function(done) {
     request(app)
       .get('/login')
