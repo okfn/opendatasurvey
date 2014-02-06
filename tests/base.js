@@ -12,6 +12,7 @@ exports.options = {
 
 // use the test database
 config.set('database_spreadsheet_key', exports.options.key);
+config.set('display_year', 2013);
 
 exports.setFixtures = function() {
   var data = {};
