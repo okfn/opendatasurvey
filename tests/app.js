@@ -162,7 +162,7 @@ describe('Country', function() {
 
   it('front page works', function(done) {
     request(app)
-      .get('/')
+      .get('/overview')
       .expect(200, done)
       ;
   });
@@ -175,6 +175,13 @@ describe('Country', function() {
         assert(res.text.match('Submit'));
         done();
       });
+  });
+
+  it('GET Entry', function(done) {
+    request(app)
+      .get('/entry/gb/timetables')
+      .expect(200, done)
+      ;
   });
 
   function testRadio(text, name, value) {
