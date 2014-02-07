@@ -26,9 +26,6 @@ exports.home = function(req, res) {
 
 exports.about = function(req, res) {
   var aboutfile = 'templates/about.md';
-  if (config.get('appconfig:readonly')) {
-    aboutfile = 'templates/aboutro.md';
-  }
   fs.readFile(aboutfile, 'utf8', function(err, text) {
     var marked = require('marked');
     var content = marked(text);
@@ -36,13 +33,6 @@ exports.about = function(req, res) {
       content: content,
       title: 'About'
     });
-  });
-};
-
-exports.contributors = function(req, res) {
-  res.render('contributors.html', {
-    reviewers: model.data.countrysubmissions.reviewers,
-    submitters: model.data.countrysubmissions.submitters
   });
 };
 

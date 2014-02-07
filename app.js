@@ -149,7 +149,6 @@ var routes = require('./routes/core');
 
 app.get('/', routes.home);
 app.get('/about', routes.about);
-app.get('/contributors', routes.contributors);
 app.get('/overview', routes.overview);
 app.get('/overview.json', routes.resultJson);
 app.get('/place/:place', routes.place);
@@ -158,9 +157,6 @@ app.get('/entry/:place/:dataset', routes.entryByPlaceDataset);
 
 var redirects = require('./routes/redirects');
 redirects.addRoutes(app);
-
-var indexonly = require('./routes/indexonly');
-indexonly.addRoutes(app);
 
 // ========================================================
 
