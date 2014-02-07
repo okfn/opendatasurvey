@@ -245,6 +245,7 @@ describe('Country', function() {
   });
 
   it('POST Submission', function(done) {
+    var testString = 'Text including 2 line\n\nbreaks';
     request(app)
       .post('/submit/')
       .type('form')
@@ -252,6 +253,7 @@ describe('Country', function() {
       .field('dataset', 'timetables')
       .field('place', 'de')
       .field('exists', 'No')
+      .field('details', testString)
       .expect(302)
       .end(function(err, res) {
         assert.equal(res.header['location'], '/place/de');
@@ -259,6 +261,7 @@ describe('Country', function() {
           assert.equal(rows.length, 1);
           // test user
           assert.equal(rows[0].submitter, config.get('test:user').id);
+          assert.equal(rows[0].details, testString);
           done();
         });
       });
