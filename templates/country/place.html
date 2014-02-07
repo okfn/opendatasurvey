@@ -1,19 +1,13 @@
 {% extends "base.html" %}
 
 {% block title %}
-{{place}} - Countries
+{{place}} - Places
 {% endblock %}
 
 {% block content %}
 
-{% if not loggedin and place and not readonly %}
-  <p class="pull-right">
-    Country reviewer? <a href="/country/login/?next=/country/overview/{{place | replace(' ', '%20') }}">Log in here</a>.
-  </p>
-{% endif %}
-
 <h1>
-  <a href="/country/" data-toggle="tooltip" class="count-0" title="Return to country results overview">Countries</a> /
+  <a href="/overview/" data-toggle="tooltip" class="count-0" title="Return to results overview">Places</a> /
   {{ place }}
 </h1>
 
@@ -53,7 +47,7 @@
             'label': 'Is it up to date?' }
         ] %}
 
-        <p>This is the country overview page where you can see the state of open data across each key dataset (displayed down the left hand side). To find out more about each dataset, click on the info icon.
+        <p>This is the overview page where you can see the state of open data across each key dataset (displayed down the left hand side). To find out more about each dataset, click on the info icon.
         Each icon in the data availability column represents important factors indicating data accessibility or availability - mouse over the icons to see what they are and the colours correspond to yes / no / unsure / no data.</p>
 
         {% if not readonly %}

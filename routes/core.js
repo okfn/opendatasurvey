@@ -127,6 +127,7 @@ exports.entryByPlaceDataset = function(req, res) {
   var dataset = model.data.datasets.filter(function(d) {
     return (d.id === req.params.dataset);
   });
+  var place = model.data.placesById[req.params.place];
   var ynquestions = model.data.questions.slice(0, 9);
 
   function render(prefill_) {
@@ -135,6 +136,7 @@ exports.entryByPlaceDataset = function(req, res) {
       questions: model.data.questions,
       datasets: model.data.datasets,
       dataset: dataset,
+      place: place,
       prefill: prefill_
     });
   }

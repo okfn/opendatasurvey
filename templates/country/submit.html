@@ -6,7 +6,7 @@ Submit
 
 {% block content %}
 <div class="page-header">
-  <h1>Country {{ sitename }}</h1>
+  <h1>Make a Submission &ndash; {{ sitename }}</h1>
 </div>
 
 <div class="alert alert-warning">
@@ -31,7 +31,7 @@ Submit
   <h3>Place and Dataset</h3>
   <div class="row">
     <div class="span4">
-      <label>Country<br/>
+      <label>Place<br/>
         <select name="place" required autocomplete="off">
           <option value="">Please select</option>
           {% for place in places %}

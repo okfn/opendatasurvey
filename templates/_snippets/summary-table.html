@@ -2,7 +2,7 @@
   <tr>
     <th>&nbsp;</th>
     {% for dataset in datasets %}
-      <th><div><a href="/country/dataset/{{dataset.id}}">{{ dataset.titleRotated }}</a></div></th>
+      <th><div><a href="/dataset/{{dataset.id}}">{{ dataset.titleRotated }}</a></div></th>
     {% endfor %}
     <th><div><strong>Total Score</strong></div>
   </tr>
@@ -14,9 +14,9 @@
     <tr data-score="{{placeScore}}"  data-area="{{place}}">
       <th class="area-name">
         {% if place %}
-          <a href="/country/overview/{{ place }}/">{{placesById[place].name}}</a>
+          <a href="/place/{{ place }}">{{placesById[place].name}}</a>
         {% else %}
-          <a href="submit/" data-toggle="tooltip" class="unknown no-data count-0" title="Click here to add to the index!">Add new</a>
+          <a href="submit/" data-toggle="tooltip" class="unknown no-data count-0" title="Click here to add to the census!">Add new</a>
         {% endif %}
       </th>
     {% for dataset in datasets %}
@@ -56,7 +56,7 @@
   <tr>
     <th>&nbsp;</th>
     {% for dataset in datasets %}
-      <th><div><a href="/country/dataset/{{dataset.id}}">{{ dataset.titleRotated }}</a></div></th>
+      <th><div><a href="/dataset/{{dataset.id}}">{{ dataset.titleRotated }}</a></div></th>
     {% endfor %}
     <th><div><strong>Total Score</strong></div>
   </tr>

@@ -6,14 +6,8 @@
 
 {% block content %}
 
-{% if not loggedin and place and not readonly %}
-  <p class="pull-right">
-    Country reviewer? <a href="/country/login/?next=/country/overview/{{place | replace(' ', '%20') }}">Log in here</a>.
-  </p>
-{% endif %}
-
 <h1>
-  <a href="/country/" data-toggle="tooltip" class="count-0" title="Return to country results overview">Datasets</a> /
+  <a href="/overview/" data-toggle="tooltip" class="count-0" title="Return to results overview">Datasets</a> /
   {{ dataset.title }}
 </h1>
 <!-- alternative link, but then we have different navigation modes: "/faq#whatdatasets" -->
@@ -73,7 +67,7 @@
   </colgroup>
   <thead>
     <tr>
-      <th>Country</th>
+      <th>Place</th>
       <th>Score</th>
       <th>Breakdown</th>
       <th>Location (URL)</th>
