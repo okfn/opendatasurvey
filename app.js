@@ -7,7 +7,6 @@ var fs = require('fs')
   , flash = require('connect-flash')
   , scrypt = require('scrypt')
   , passport = require('passport')
-  , FacebookStrategy = require('passport-facebook').Strategy
 
   , config = require('./lib/config')
   , env = require('./lib/templateenv')
@@ -111,12 +110,39 @@ app.all('*', function(req, res, next) {
 // Start routes
 // ========================================================
 
+// Census specific routes must come first ...
+
 // If we are NOT running in readonly mode, then load the "census" routes
 if (!config.get('appconfig:readonly')) {
   console.log("WARNING: Loading in census mode. Data will be editable.");
   var census = require('./routes/census');
 
-  census.addRoutes(app);
+  app.get('/faq', census.faq);
+  app.get('/contribute', census.contribute);
+  app.get('/submit', census.submit);
+  app.post('/submit', census.submitPost);
+  app.get('/submission/:id', census.submission);
+  app.get('/submission/:submissionid/review', census.review);
+  app.post('/submission/:submissionid/review', census.reviewPost);
+  app.get('/login', census.login);
+  app.get('/auth/logout', census.logout);
+  app.get('/auth/loggedin', census.loggedin);
+  
+  // Passport Auth Stuff (Facebook etc)
+  census.setupAuth();
+
+  app.get('/auth/facebook',
+      passport.authenticate('facebook', {scope: ['email']})
+  );
+  app.get('/auth/facebook/callback', 
+    passport.authenticate('facebook', {
+        successRedirect: '/auth/loggedin',
+        failureRedirect: '/login',
+        failureFlash: true,
+        successFlash: true
+      }
+    )
+  );
 }
 
 var routes = require('./routes/core');
@@ -124,17 +150,17 @@ var routes = require('./routes/core');
 app.get('/', routes.home);
 app.get('/about', routes.about);
 app.get('/contributors', routes.contributors);
-app.get('/country', routes.overview);
-app.get('/country/results.json', routes.resultJson);
-app.get('/country/overview/:place', routes.place);
-app.get('/country/dataset/:dataset', routes.dataset);
-app.get('/country/:place/:dataset', routes.entryByPlaceDataset);
-
-var indexonly = require('./routes/indexonly');
-indexonly.addRoutes(app);
+app.get('/overview', routes.overview);
+app.get('/overview.json', routes.resultJson);
+app.get('/place/:place', routes.place);
+app.get('/dataset/:dataset', routes.dataset);
+app.get('/entry/:place/:dataset', routes.entryByPlaceDataset);
 
 var redirects = require('./routes/redirects');
 redirects.addRoutes(app);
+
+var indexonly = require('./routes/indexonly');
+indexonly.addRoutes(app);
 
 // ========================================================
 

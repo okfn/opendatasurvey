@@ -9,35 +9,6 @@ var fs = require('fs')
   , model = require('../lib/model').OpenDataCensus
   ;
 
-exports.addRoutes = function(app) {
-  app.get('/faq', exports.faq);
-  app.get('/contribute', exports.contribute);
-  app.get('/country/submit', exports.submit);
-  app.post('/country/submit', exports.submitPost);
-  app.get('/country/submission/:id', exports.submission);
-  app.get('/country/review/:submissionid', exports.review);
-  app.post('/country/review/:submissionid', exports.reviewPost);
-  app.get('/login', exports.login);
-  app.get('/auth/logout', exports.logout);
-  app.get('/auth/loggedin', exports.loggedin);
-  
-  // Passport Auth Stuff (Facebook etc)
-  setupAuth();
-
-  app.get('/auth/facebook',
-      passport.authenticate('facebook', {scope: ['email']})
-  );
-  app.get('/auth/facebook/callback', 
-    passport.authenticate('facebook', {
-        successRedirect: '/auth/loggedin',
-        failureRedirect: '/login',
-        failureFlash: true,
-        successFlash: true
-      }
-    )
-  );
-}
-
 exports.faq = function(req, res) {
   var tmpl = env.getTemplate('_snippets/questions.html');
   var questionInfo = tmpl.render({
@@ -118,7 +89,7 @@ exports.submitPost = function(req, res) {
       msg = 'Thank-you for your submission which has been received. It will now be reviewed by an expert before being published. It may take a few minutes for your submission to appear and a few days for it be reviewed.';
       req.flash('info', msg);
     }
-    res.redirect('country/overview/' + submissionData.place);
+    res.redirect('/place/' + submissionData.place);
   });
 };
 
@@ -204,7 +175,7 @@ exports.reviewPost = function(req, res) {
       }
       // TODO: find a better way to update cached data
       // model.load(function() {
-        res.redirect('country/overview/');
+        res.redirect('/overview');
       // });
     }
   });
@@ -230,12 +201,11 @@ exports.loggedin = function(req, res) {
   }
 };
 
-
 // ========================================================
 // Local Functions
 // ========================================================
 
-function setupAuth () {
+exports.setupAuth = function() {
   passport.use(
     new FacebookStrategy({
         clientID: config.get('facebook:app_id'),

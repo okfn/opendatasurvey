@@ -52,7 +52,29 @@ describe('Basics', function() {
       });
       ;
   });
+
+  // test redirects
+  testRedirect('/country/', '/overview');
+  testRedirect('/country/results.json', '/overview.json');
+  testRedirect('/country/overview/gb', '/place/gb');
+  testRedirect('/country/gb/timetables', '/entry/gb/timetables');
+  testRedirect('/country/submit', '/submit');
+  testRedirect('/country/review/xyz', '/submission/xyz/review');
 });
+
+function testRedirect(src, dest) {
+  it('redirect from ' + src + ' to ' + dest, function(done) {
+    request(app)
+      .get(src)
+      .expect(302)
+      .end(function(err, res) {
+        if (err) done(err);
+        assert.equal(res.header['location'], dest);
+        done();
+      })
+      ;
+  });
+};
 
 describe('Permissions', function() {
   this.timeout(5000);
@@ -76,29 +98,30 @@ describe('Permissions', function() {
   it('requires login for submit', function(done) {
     config.set('test:testing', false);
     request(app)
-      .get('/country/submit')
+      .get('/submit')
       .end(function(err, res) {
         if (err) done(err);
         config.set('test:testing', true);
-        assert.equal(res.headers['location'], '/login/?next=%2Fcountry%2Fsubmit');
+        assert.equal(res.headers['location'], '/login/?next=%2Fsubmit');
         done();
       });
   });
   it('requires login for review', function(done) {
     config.set('test:testing', false);
     request(app)
-      .get('/country/review/testid-1')
+      .get('/submission/testid-1/review')
+      .expect(302)
       .end(function(err, res) {
         if (err) done(err);
         config.set('test:testing', true);
-        assert.equal(res.headers['location'], '/login/?next=%2Fcountry%2Freview%2Ftestid-1');
+        assert.equal(res.headers['location'], '/login/?next=%2Fsubmission%2Ftestid-1%2Freview');
         done();
       });
   });
   it('Non-reviewer cannot review', function(done) {
     config.set('test:user', {id: 'jones'});
     request(app)
-      .get('/country/review/testid-1')
+      .get('/submission/testid-1/review')
       .expect(401, done)
     ;
   });
@@ -139,17 +162,17 @@ describe('Country', function() {
 
   it('front page works', function(done) {
     request(app)
-      .get('/country/')
+      .get('/')
       .expect(200, done)
       ;
   });
 
   it('GET Submission', function(done) {
     request(app)
-      .get('/country/submit/')
+      .get('/submit/')
       .expect(200)
       .end(function(err, res) {
-        assert(res.text.match('Country - Submit'));
+        assert(res.text.match('Submit'));
         done();
       });
   });
@@ -174,7 +197,7 @@ describe('Country', function() {
       , details: 'Lots of random stuff\n\nincluding line breaks'
     };
     request(app)
-      .get('/country/submit/')
+      .get('/submit/')
       .query(prefill)
       .expect(200)
       .end(function(err, res) {
@@ -200,7 +223,7 @@ describe('Country', function() {
     };
     var url = 'http://www.ordnancesurvey.co.uk/opendata/';
     request(app)
-      .get('/country/submit/')
+      .get('/submit/')
       .query(prefill)
       .expect(200)
       .end(function(err, res) {
@@ -216,7 +239,7 @@ describe('Country', function() {
 
   it('POST Submission', function(done) {
     request(app)
-      .post('/country/submit/')
+      .post('/submit/')
       .type('form')
       .field('year', '2014')
       .field('dataset', 'timetables')
@@ -224,7 +247,7 @@ describe('Country', function() {
       .field('exists', 'No')
       .expect(302)
       .end(function(err, res) {
-        assert.equal(res.header['location'], '/country/overview/de');
+        assert.equal(res.header['location'], '/place/de');
         model.backend.getSubmissions({place: 'de', dataset: 'timetables'}, function(err, rows) {
           assert.equal(rows.length, 1);
           // test user
@@ -235,7 +258,7 @@ describe('Country', function() {
   });
 
   it('GET review', function(done) {
-    var url = '/country/review/2948d308-ce1c-46fb-b131-dc0f846da788';
+    var url = '/submission/2948d308-ce1c-46fb-b131-dc0f846da788/review';
     request(app)
       .get(url)
       .expect(200)
@@ -247,7 +270,7 @@ describe('Country', function() {
   });
 
   it('POST review', function(done) {
-    var url = '/country/review/' + fixSubmission.submissionid;
+    var url = '/submission/' + fixSubmission.submissionid + '/review';
     request(app)
       .post(url)
       .type('form')
@@ -255,7 +278,7 @@ describe('Country', function() {
       .expect(302)
       .end(function(err, res) {
         if (err) done(err);
-        assert.equal(res.header['location'], '/country/overview/');
+        assert.equal(res.header['location'], '/overview');
         model.backend.getSubmission(fixSubmission, function(err, sub) {
           assert.equal(sub.reviewer, config.get('test:user').id);
           assert.equal(sub.reviewresult, 'accepted');
