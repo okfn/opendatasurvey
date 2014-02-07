@@ -48,7 +48,7 @@ describe('Basics', function() {
   });
 
   // test redirects
-  testRedirect('/country/', '/overview');
+  testRedirect('/country/', '/');
   testRedirect('/country/results.json', '/overview.json');
   testRedirect('/country/overview/gb', '/place/gb');
   testRedirect('/country/gb/timetables', '/entry/gb/timetables');
@@ -121,7 +121,7 @@ describe('Permissions', function() {
   });
 });
 
-describe('Country', function() {
+describe('Census Pages', function() {
   this.timeout(8000);
   var fixSubmission = {
     submissionid: 'test-created-1',
@@ -152,13 +152,6 @@ describe('Country', function() {
       count--;
       if (count === 0) done();
     }
-  });
-
-  it('front page works', function(done) {
-    request(app)
-      .get('/overview')
-      .expect(200, done)
-      ;
   });
 
   it('GET Submission', function(done) {
@@ -282,7 +275,7 @@ describe('Country', function() {
       .expect(302)
       .end(function(err, res) {
         if (err) done(err);
-        assert.equal(res.header['location'], '/overview');
+        assert.equal(res.header['location'], '/');
         model.backend.getSubmission(fixSubmission, function(err, sub) {
           assert.equal(sub.reviewer, config.get('test:user').id);
           assert.equal(sub.reviewresult, 'accepted');

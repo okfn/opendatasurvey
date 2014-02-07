@@ -80,6 +80,8 @@ app.configure(function() {
   if (config.get('appconfig:readonly')) {
     app.use(CacheControl(1800));
   }
+
+  app.locals.urlFor = urlFor;
 });
 
 env.express(app);
@@ -147,9 +149,8 @@ if (!config.get('appconfig:readonly')) {
 
 var routes = require('./routes/core');
 
-app.get('/', routes.home);
+app.get('/', routes.overview);
 app.get('/about', routes.about);
-app.get('/overview', routes.overview);
 app.get('/overview.json', routes.resultJson);
 app.get('/place/:place', routes.place);
 app.get('/dataset/:dataset', routes.dataset);
@@ -157,6 +158,12 @@ app.get('/entry/:place/:dataset', routes.entryByPlaceDataset);
 
 var redirects = require('./routes/redirects');
 redirects.addRoutes(app);
+
+function urlFor(name) {
+  if (name === 'overview') {
+    return '/';
+  }
+}
 
 // ========================================================
 

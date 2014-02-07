@@ -13,14 +13,12 @@ var fs = require('fs')
   , util = require('../lib/util')
   ; 
 
-exports.home = function(req, res) {
-  res.render('index.html', {
-    numberCountries: model.data.country.summary.places.toString(),
-    numberSubmissions: _.size(model.data.countrysubmissions.results),
-    numberSubmitters: _.size(model.data.countrysubmissions.submitters),
-    numberEditors: _.size(model.data.countrysubmissions.reviewers),
-    numberEntries: model.data.country.summary.entries.toString(),
-    numberOpen: model.data.country.summary.open.toString()
+exports.overview = function(req, res) {
+  res.render('overview.html', {
+    info: model.data.country,
+    datasets: model.data.datasets,
+    questions: model.openQuestions,
+    placesById: model.data.placesById
   });
 };
 
@@ -33,15 +31,6 @@ exports.about = function(req, res) {
       content: content,
       title: 'About'
     });
-  });
-};
-
-exports.overview = function(req, res) {
-  res.render('country/index.html', {
-    info: model.data.country,
-    datasets: model.data.datasets,
-    questions: model.openQuestions,
-    placesById: model.data.placesById
   });
 };
 

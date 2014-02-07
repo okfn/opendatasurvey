@@ -175,7 +175,7 @@ exports.reviewPost = function(req, res) {
       }
       // TODO: find a better way to update cached data
       // model.load(function() {
-        res.redirect('/overview');
+        res.redirect('/');
       // });
     }
   });
