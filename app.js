@@ -105,6 +105,7 @@ app.all('*', function(req, res, next) {
   res.locals.custom_css = config.get('custom_css');
   res.locals.google_analytics_key = config.get('google_analytics_key');
   res.locals.custom_footer = config.get('custom_footer');
+  res.locals.navbar_logo = config.get('navbar_logo');
   res.locals.error_messages = req.flash('error');
   res.locals.info_messages = req.flash('info');
   next();

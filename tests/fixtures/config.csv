@@ -11,5 +11,6 @@ reviewers,"tester,a-reviewer"
 about_page,"This is the about page"
 overview_page,"Custom overview page content ..."
 custom_css,".xxxxxAAAAA { display: none; }"
-custom_footer,"Custom Footer"
+custom_footer,"<h3>Custom Footer</h3>"
 google_analytics_key,XXXX-GA-XXXX
+navbar_logo,"My logo here"

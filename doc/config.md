@@ -80,9 +80,17 @@ Content for contribute page.
 
 You can use markdown or HTML format.
 
-### `logo_navbar`
+### `navbar_logo`
 
 HTML for logo at top right of navbar
+
+Here's some sample HTML (replace links and image with your own!):
+
+    <a href="http://okfn.org/" title="" target="_blank">
+      <img src="//assets.okfn.org/images/logo/okfn-logo-landscape-black.png" alt="Logo" />
+    </a>
+
+Logo will be scaled to 30px height (so best is if it is already 30px)
 
 ### `custom_css`
 

@@ -72,6 +72,7 @@ describe('Basics', function() {
         checkContent(res, config.get('custom_css'));
         checkContent(res, config.get('custom_footer'));
         checkContent(res, config.get('google_analytics_key'));
+        checkContent(res, config.get('navbar_logo'));
         done();
       })
       ;
