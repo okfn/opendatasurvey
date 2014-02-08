@@ -1,14 +1,16 @@
 {% extends "base.html" %}
+{% include '_snippets/entry-summary-row.html' %}
 
 {% block title %}
-{{place}} - Places
+{{place.name}} - Places
 {% endblock %}
 
 {% block content %}
 
 <h1>
-  <a href="{{urlFor('overview')}}" data-toggle="tooltip" class="count-0" title="Return to results overview">Places</a> /
-  {{ place }}
+  <a href="{{urlFor('overview')}}" data-toggle="tooltip" class="count-0"
+    title="Return to results overview">Places</a>
+  / {{ place.name }}
 </h1>
 
 <div id="spacer"></div>
@@ -76,14 +78,57 @@
             </tr>
           </thead>
           <tbody>
-            {% include '_snippets/overview-table-bycountry-row.html' %}
             {% for dataset in datasets %}
-              {{ inforow(dataset, entrys[dataset.id], 'info') }}
+            {% set record = entrys[dataset.id] %}
+            <tr>
+              <td>
+                {% if record %}
+                <a href="/entry/{{place.id}}/{{dataset.id}}">{% endif %}
+                  {{ dataset.title }}{% if record %}
+                </a>
+                {% endif %}
+                &nbsp;
+                <a href="javascript:;"
+                  data-toggle="popover"
+                  class="count-0"
+                  data-content="{{ dataset.description }}"
+                  title="{{ dataset.title }}"><i class="icon-info-sign"></i></a>
+              </td>
+              {{entrysummary(dataset, place, record)}}
               {% if not readonly %}
-                {% for submission in submissions[dataset.id] %}
-                {{ inforow(dataset, submission, 'submissions') }}
-                {% endfor %}
+              <td>
+                {% if record %}
+                <a id="submit-{{ dataset.id }}" href="/submit/?dataset={{ dataset.id }}&place={{ place.id }}" class="btn btn-mini btn-primary">
+                  <!-- <i class="icon-plus"></i> -->Propose Revisions
+                </a>
+              {% else %}
+                <a id="submit-{{ dataset.id }}" href="/submit/?dataset={{ dataset.id }}&place={{ place.id }}" class="btn btn-mini btn-primary">
+                  <!-- <i class="icon-plus"></i> -->Submit information
+                </a>
+                {% endif %}
+              </td>
               {% endif %}
+            </tr>
+            {% if not readonly %}
+            {% for submission in submissions[dataset.id] %}
+            <tr class="queued">
+              <td>
+                &#8627; Awaiting review
+              </td>
+              {{entrysummary(dataset, place, submission)}}
+              <td>
+                 <a href="/submission/{{submission.submissionid}}/review" class="btn btn-mini btn-danger">
+                  Review Now
+                 </a>
+                 <script>
+                  $("#submit-{{ dataset.id }}").addClass("disabled");
+                  $("#submit-{{ dataset.id }}").attr("data-toggle", "tooltip");
+                  $("#submit-{{ dataset.id }}").attr("title", "Sorry, only one submission can be waiting for review at a time - please come back in a few days to submit new information");
+                 </script>
+              </td>
+            </tr>
+            {% endfor %}
+            {% endif %}
 
             {% endfor %}
           </tbody>
@@ -92,7 +137,7 @@
         {% include '_snippets/key.html' %}
 
         <h3>Contributors</h3>
-        <h4>Editors for {{place}}: </h4>
+        <h4>Editors for {{place.name}}: </h4>
         <p>
           {% if reviewers %}{% for reviewer in reviewers %}{% if loop.index>1 %}, {% endif %}{{reviewer}}{% endfor %}{% endif %}
         </p>

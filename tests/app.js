@@ -30,6 +30,27 @@ describe('Basics', function() {
       .expect(200, done)
       ;
   });
+  it('place page works', function(done) {
+    request(app)
+      .get('/place/gb')
+      .expect(200)
+      .end(function(err, res) {
+        assert(res.text.match('/ United Kingdom'), 'Place name not present');
+        assert(res.text.match('Transport Timetables'), 'Dataset list missing');
+        done();
+      })
+      ;
+  });
+  it('dataset page works', function(done) {
+    request(app)
+      .get('/dataset/timetables')
+      .expect(200)
+      .end(function(err, res) {
+        assert(res.text.match('/ Transport Timetables'), 'Dataset name not present');
+        done();
+      })
+      ;
+  });
   it('about page works', function(done) {
     request(app)
       .get('/about')

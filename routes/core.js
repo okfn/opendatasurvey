@@ -42,13 +42,13 @@ exports.resultJson = function(req, res) {
 // TODO: want this at simply /country/{place} but need to make sure we don't
 // interfere with other urls
 exports.place = function(req, res) {
-  var place = req.params.place;
   if (!(req.params.place) in model.data.placesById) {
     res.send(404, 'There is no place with ID ' + place + ' in our database. Are you sure you have spelled it correctly? Please check the <a href="/country/">place page</a> for the list of places');
     return;
   }
+  var place = model.data.placesById[req.params.place];
 
-  model.backend.getPlace(place, function(err, info) {
+  model.backend.getPlace(place.id, function(err, info) {
     if (err) {
       res.send(500, err);
       return;
@@ -71,8 +71,8 @@ exports.place = function(req, res) {
     });
 
     res.render('country/place.html', {
-      reviewers: model.data.countrysubmissions.reviewersByPlace[place],
-      submitters: model.data.countrysubmissions.submittersByPlace[place],
+      reviewers: model.data.countrysubmissions.reviewersByPlace[place.id],
+      submitters: model.data.countrysubmissions.submittersByPlace[place.id],
       info: model.data.country,
       datasets: model.data.datasets,
       submissions: submissions,
@@ -85,17 +85,26 @@ exports.place = function(req, res) {
 
 //Show details per dataset
 exports.dataset = function(req, res) {
-  var dataset = req.params.dataset;
-  var datasetIds = _.pluck(model.datasets, 'id');
-  if (! dataset in datasetIds) {
-    res.send(404, 'There is no such dataset in the index. Are you sure you have spelled it correctly? Please check the <a href="/faq#whatdatasets">FAQ</a> for the list of datasets');
+  var dataset = model.data.datasetsById[req.params.dataset];
+  if (!dataset) {
+    res.send(404, 'Dataset not found. Are you sure you have spelled it correctly?');
     return;
   }
 
-  res.render('country/dataset.html', {
-    info: model.data.country,
-    loggedin: req.session.loggedin,
-    dataset: dataset
+  model.backend.getEntrys({
+    dataset: req.params.dataset,
+    year: config.get('display_year')
+  }, function(err, entriesForThisDataset) {
+    if (err) throw err;
+    entriesForThisDataset.forEach(function(entry) {
+      entry.ycount = util.scoreOpenness(model.data, entry);
+    });
+    res.render('country/dataset.html', {
+      info: model.data.country,
+      bydataset: entriesForThisDataset,
+      placesById: model.data.placesById,
+      dataset: dataset
+    });
   });
 };
 
