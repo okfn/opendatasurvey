@@ -9,3 +9,4 @@ display_year,2013
 submit_year,2013
 reviewers,"tester,a-reviewer"
 about_page,"This is the about page"
+overview_page,"Custom overview page content ..."

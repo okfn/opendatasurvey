@@ -27,7 +27,11 @@ describe('Basics', function() {
   it('front page works', function(done) {
     request(app)
       .get('/')
-      .expect(200, done)
+      .expect(200)
+      .end(function(err, res) {
+        checkContent(res, config.get('overview_page'));
+        done();
+      })
       ;
   });
   it('about page ok', function(done) {

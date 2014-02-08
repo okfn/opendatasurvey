@@ -22,7 +22,8 @@ exports.overview = function(req, res) {
     places: model.data.country.places,
     datasets: model.data.datasets,
     scoredQuestions: model.data.scoredQuestions,
-    placesById: model.data.placesById
+    placesById: model.data.placesById,
+    custom_text: config.get('overview_page')
   });
 };
 
