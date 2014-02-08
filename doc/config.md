@@ -94,5 +94,5 @@ Custom footer content
 
 ### `google_analytics_key`
 
-Google analytics key to use
+Supply a google analytics key to use on the site
 
