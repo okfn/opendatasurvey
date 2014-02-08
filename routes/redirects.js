@@ -4,7 +4,7 @@
 // see https://github.com/okfn/opendatacensus/issues/257
 
 exports.addRoutes = function(app) {
-  app.get('/country', makeRedirect('/overview'));
+  app.get('/country', makeRedirect('/'));
   app.get('/country/results.json', makeRedirect('/overview.json'))
   app.get('/country/overview/:place', function(req, res) {
     res.redirect('/place/' + req.params.place);
