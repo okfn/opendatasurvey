@@ -26,7 +26,7 @@ exports.setFixtures = function() {
   function stubbed(url, cb) {
     if (url == config.get('configUrl')) {
       cb(null, null, data['config']);
-    } else if (url == config.get('question')) {
+    } else if (url == config.get('questions')) {
       cb(null, null, data['questions'])
     } else if (url == config.get('datasets')) {
       cb(null, null, data['datasets'])
