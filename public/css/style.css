@@ -430,6 +430,7 @@ footer a:hover {
 .nav-logo img {
 	margin-top: -4px;
 	margin-right: -4px;
+  height: 30px;
 }
 
 .sections ul {
@@ -1003,4 +1004,19 @@ div.historic-entries div.current-entry:last-child .textarea {
 
 table.faq-table tr td:first-child {
 	min-width: 150px;
+}
+
+.okf-footer-logo, .okf-footer-logo:hover {
+  text-decoration: none;
+  border-bottom: none;
+}
+
+.okf-footer-logo img {
+  height: 30px;
+}
+
+.common-footer {
+  border-top: solid 1px #caccc7;
+  margin-top: 15px;
+  padding-top: 15px;
 }

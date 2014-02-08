@@ -90,3 +90,9 @@ Custom CSS
 
 ### `custom_footer`
 
+Custom footer content
+
+### `google_analytics_key`
+
+Google analytics key to use
+

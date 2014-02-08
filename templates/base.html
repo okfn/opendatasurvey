@@ -69,40 +69,36 @@
 <footer>
   <div class="container">
     <div class="row">
-      <div class="span6">
+      {{ custom_footer }}
+    </div>
+    <div class="row common-footer">
+      <div class="span9">
         <p>
-          The {{ sitename }} is an initiative of the <a
-            href="http://okfn.org">Open Knowledge Foundation</a> and its <a
-            href="http://okfn.org/wg/">Working Groups</a> and <a
-            href="http://okfn.org/local/">Local Groups</a>.
+          <a href="http://opendefinition.org/ossd/" title="Open Online Software Service" style="border:none;">
+            <img src="//assets.okfn.org/images/ok_buttons/os_80x15_orange_grey.png" alt="" border="" />
+          </a>
+          <a href="http://opendefinition.org/okd/" title="Open Definition" style="border:none;">
+            <img src="//assets.okfn.org/images/ok_buttons/oc_80x15_blue.png" alt="" border="" />
+          </a>
+          <a href="http://opendefinition.org/okd/" title="Open Definition" style="border:none;">
+            <img src="//assets.okfn.org/images/ok_buttons/od_80x15_blue.png" alt="" border="" />
+          </a>
+          |
+          <a href="http://opendatacommons.org/licenses/pddl/1.0">Data License (Public Domain)</a>
+          |
+          <a href="https://github.com/okfn/opendatacensus/">Source code</a>
         </p>
         <p>
-          The {{ sitename_short }} results are contributed by advocates and
-          experts from the <a href="http://okfn.org/opendata/">open data</a>
-          community around the world.
-          {% if not readonly %}
-          If you think there is something that we should add or change please
-          see the <a href="/contribute/">contributor page</a>.
-          {% endif %}
+          This site is part of the <a href="http://meta.census.okfn.org/">Open Data Census project</a> run by the Open Knowledge Foundation.
         </p>
-    <p>
-      <a href="http://opendefinition.org/ossd/" title="Open Online Software Service" style="border:none;">
-        <img src="//assets.okfn.org/images/ok_buttons/os_80x15_orange_grey.png" alt="" border="" />
-      </a>
-      <a href="http://opendefinition.org/okd/" title="Open Definition" style="border:none;">
-        <img src="//assets.okfn.org/images/ok_buttons/oc_80x15_blue.png" alt="" border="" />
-      </a>
-      <a href="http://opendefinition.org/okd/" title="Open Definition" style="border:none;">
-        <img src="//assets.okfn.org/images/ok_buttons/od_80x15_blue.png" alt="" border="" />
-      </a>
-    </p>
+        <p>
+          <a class="okf-footer-logo" href="http://okfn.org/" title="An Open Knowledge Foundation Project" target="_blank">
+            <img src="//assets.okfn.org/images/logo/okfn-logo-landscape-black.png" alt="Open Knowledge Foundation logo" />
+          </a>
+        </p>
       </div>
-      <div class="span6">
+      <div class="span3">
         <ul class="pull-right">
-          {% if readonly %}
-          <li><a href="mailto:index@okfn.org" title="Contact us">Contact us</a></li>
-          <li><a href="mailto:index@okfn.org?Subject=Open%20Data%20Index%20issue%20report" title="Report issues">Report issues</a></li>
-          {% else %}
           <li>
             {% if currentUser %}
             Logged in as {{currentUser.name}}
@@ -110,27 +106,13 @@
             <a href="/login">Login</a>
             {% endif %}
           </li>
-          <li><a href="mailto:census@okfn.org" title="Contact us">Contact us</a></li>
-          <li><a href="https://github.com/okfn/opendatacensus/issues" title="Report issues">Report issues</a></li>
-          {% endif %}
-          <li><a href="http://okfn.org/opendata/" title="More about Open Data">Open Data</a></li>
-          <li><a href="https://github.com/okfn/opendatacensus/">Source code</a></li>
+          <li><a href="http://okfn.org/opendata/" title="More about Open Data">What is Open Data</a></li>
+          <li><a href="http://meta.census.okfn.org/">Run Your Own<br />Local Open Data Census</a></li>
         </ul>
       </div>
     </div>
   </div>
 </footer>
-{% if readonly %}
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-33874954-22', 'okfn.org');
-  ga('send', 'pageview');
-</script>
-{% else %}
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-8271754-48']);
@@ -142,6 +124,5 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 </script>
-{% endif %}
 </body>
 </html>

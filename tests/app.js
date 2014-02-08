@@ -70,6 +70,7 @@ describe('Basics', function() {
       .expect(200)
       .end(function(err, res) {
         checkContent(res, config.get('custom_css'));
+        checkContent(res, config.get('custom_footer'));
         done();
       })
       ;

@@ -103,6 +103,8 @@ app.all('*', function(req, res, next) {
   res.locals.sitename = config.get('title');
   res.locals.sitename_short = config.get('title_short');
   res.locals.custom_css = config.get('custom_css');
+  res.locals.google_analytics_key = config.get('google_analytics_key');
+  res.locals.custom_footer = config.get('custom_footer');
   res.locals.error_messages = req.flash('error');
   res.locals.info_messages = req.flash('info');
   next();
