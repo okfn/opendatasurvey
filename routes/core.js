@@ -15,11 +15,11 @@ var fs = require('fs')
   ; 
 
 exports.overview = function(req, res) {
-  // note: model.data.places and model.data.country.places are different
+  // note: model.data.places and model.data.entries.places are different
   // the latter only has places for which we have some actual results
   res.render('overview.html', {
-    info: model.data.country,
-    places: model.data.country.places,
+    summary: model.data.entries.summary,
+    places: model.data.entries.places,
     datasets: model.data.datasets,
     scoredQuestions: model.data.scoredQuestions,
     placesById: model.data.placesById,
@@ -64,7 +64,7 @@ exports.contribute = function(req, res) {
 };
 
 exports.resultJson = function(req, res) {
-  res.json(model.data.country);
+  res.json(model.data.entries);
 };
 
 //Show details per country. Extra/different functionality for reviewers.
@@ -100,9 +100,9 @@ exports.place = function(req, res) {
     });
 
     res.render('country/place.html', {
-      reviewers: model.data.countrysubmissions.reviewersByPlace[place.id],
-      submitters: model.data.countrysubmissions.submittersByPlace[place.id],
-      info: model.data.country,
+      reviewers: model.data.submissions.reviewersByPlace[place.id],
+      submitters: model.data.submissions.submittersByPlace[place.id],
+      info: model.data.entries,
       datasets: model.data.datasets,
       submissions: submissions,
       entrys: entrys,
@@ -130,7 +130,6 @@ exports.dataset = function(req, res) {
       entry.ycount = util.scoreOpenness(model.data, entry);
     });
     res.render('country/dataset.html', {
-      info: model.data.country,
       bydataset: entriesForThisDataset,
       placesById: model.data.placesById,
       scoredQuestions: model.data.scoredQuestions,

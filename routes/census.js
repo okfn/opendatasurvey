@@ -112,7 +112,6 @@ exports.review = function(req, res) {
           return (d.id == obj.dataset);
         });
         res.render('country/review/index.html', {
-          info: model.data.country,
           ynquestions: ynquestions,
           subrecord: obj,
           prefill: obj,
