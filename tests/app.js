@@ -64,6 +64,20 @@ describe('Basics', function() {
       })
       ;
   });
+  it('custom content works', function(done) {
+    request(app)
+      .get('/')
+      .expect(200)
+      .end(function(err, res) {
+        checkContent(res, config.get('custom_css'));
+        done();
+      })
+      ;
+  });
+
+  // ========================
+  // More complex pages
+
   it('place page works', function(done) {
     request(app)
       .get('/place/gb')
@@ -108,7 +122,7 @@ describe('Basics', function() {
 function checkContent(res, expected) {
   var found = res.text.match(expected)
   if (!found) {
-    console.log(res.text);
+    // console.log(res.text);
     assert(false, '<<' + expected + '>> not found in page');
   }
 }
