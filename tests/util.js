@@ -26,6 +26,7 @@ describe('Config - load', function(){
     assert.equal(config.get('questions'), 'https://docs.google.com/spreadsheet/pub?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&single=true&gid=1&output=csv');
     assert.equal(config.get('entries'), 'https://docs.google.com/spreadsheet/pub?key=0AqR8dXc6Ji4JdHR5WWdUU2dYUElPaFluUlBJbkFOMUE&single=true&gid=1&output=csv');
     assert.equal(config.get('display_year'), 2013);
+    assert.equal(config.get('about_page'), 'This is the about page');
     done();
   });
 });

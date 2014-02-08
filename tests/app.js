@@ -30,6 +30,36 @@ describe('Basics', function() {
       .expect(200, done)
       ;
   });
+  it('about page ok', function(done) {
+    request(app)
+      .get('/about')
+      .expect(200)
+      .end(function(err, res) {
+        checkContent(res, config.get('about_page'));
+        done();
+      })
+      ;
+  });
+  it('faq page ok', function(done) {
+    request(app)
+      .get('/faq')
+      .expect(200)
+      .end(function(err, res) {
+        checkContent(res, config.get('faq_page'));
+        done();
+      })
+      ;
+  });
+  it('contribute page ok', function(done) {
+    request(app)
+      .get('/contribute')
+      .expect(200)
+      .end(function(err, res) {
+        checkContent(res, config.get('contribute_page'));
+        done();
+      })
+      ;
+  });
   it('place page works', function(done) {
     request(app)
       .get('/place/gb')
@@ -51,12 +81,6 @@ describe('Basics', function() {
       })
       ;
   });
-  it('about page works', function(done) {
-    request(app)
-      .get('/about')
-      .expect(200, done)
-      ;
-  });
   it('login works', function(done) {
     request(app)
       .get('/login')
@@ -76,6 +100,14 @@ describe('Basics', function() {
   testRedirect('/country/submit', '/submit');
   testRedirect('/country/review/xyz', '/submission/xyz/review');
 });
+
+function checkContent(res, expected) {
+  var found = res.text.match(expected)
+  if (!found) {
+    console.log(res.text);
+    assert(false, '<<' + expected + '>> not found in page');
+  }
+}
 
 function testRedirect(src, dest) {
   it('redirect from ' + src + ' to ' + dest, function(done) {

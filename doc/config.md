@@ -9,6 +9,10 @@ Here is an [example config spreadsheet][ex] used for testing.
 
 [ex]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdEg2el9xaUxBcjFnbEYtNnMwLTVmTVE&usp=drive_web#gid=2
 
+### database_spreadsheet_key (*)
+
+The key of a Google docs spreadsheet.
+
 ### title
 
 Site title - used on the website etc
@@ -33,19 +37,48 @@ Default is 2014.
 
 List of reviewer user ids separated by spaces or commas. Reviewer user ids should be of form facebook:{facebook-username}
 
-### database_spreadsheet_key (*)
-
-The key of a Google docs spreadsheet.
-
 ### datasets
 
 URL to an online CSV file containing a list of datasets to ask questions about. The structure should follow that in https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&usp=drive_web#gid=0
+
 ### places
 
 URL to an online CSV file containing a list of places to ask questions about. The structure should follow that in https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&usp=drive_web#gid=7
+
 ### questions
 
 URL to a CSV file with a list of questions (usually this will be the CSV version of a google spreadsheet).
 
 We STRONGLY recommend using questions as in https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&usp=drive_web#gid=1"
+
+### home_page
+
+Content for the home page (top of page). You can use markdown or HTML format.
+
+### faq_page
+
+Content for the FAQ page. You can use markdown or HTML format.
+
+Note: you have access to 2 special variables that can be used in your html or markdown:
+
+* `{{questions}}` - this will be replaced by a table of all the questions
+* `{{datasets}}` - this will be replaced by a table of all the datasets
+
+### about_page
+
+Content for the about page. You can use markdown or HTML format.
+
+### contribute_page
+
+Content for contribute page. You can use markdown or HTML format.
+
+### logo_navbar
+
+HTML for logo at top right of navbar
+
+### custom_css
+
+Custom CSS
+
+### custom_footer
 

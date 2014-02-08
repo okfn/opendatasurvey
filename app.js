@@ -112,6 +112,8 @@ app.all('*', function(req, res, next) {
 // Start routes
 // ========================================================
 
+var routes = require('./routes/core');
+
 // Census specific routes must come first ...
 
 // If we are NOT running in readonly mode, then load the "census" routes
@@ -119,8 +121,7 @@ if (!config.get('appconfig:readonly')) {
   console.log("WARNING: Loading in census mode. Data will be editable.");
   var census = require('./routes/census');
 
-  app.get('/faq', census.faq);
-  app.get('/contribute', census.contribute);
+  app.get('/contribute', routes.contribute);
   app.get('/submit', census.submit);
   app.post('/submit', census.submitPost);
   app.get('/submission/:id', census.submission);
@@ -147,10 +148,9 @@ if (!config.get('appconfig:readonly')) {
   );
 }
 
-var routes = require('./routes/core');
-
 app.get('/', routes.overview);
 app.get('/about', routes.about);
+app.get('/faq', routes.faq);
 app.get('/overview.json', routes.resultJson);
 app.get('/place/:place', routes.place);
 app.get('/dataset/:dataset', routes.dataset);

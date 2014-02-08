@@ -4,6 +4,7 @@ var fs = require('fs')
   , express = require('express')
   , flash = require('connect-flash')
   , scrypt = require('scrypt')
+  , marked = require('marked')
   , passport = require('passport')
   , FacebookStrategy = require('passport-facebook').Strategy
 
@@ -26,14 +27,38 @@ exports.overview = function(req, res) {
 };
 
 exports.about = function(req, res) {
-  var aboutfile = 'templates/about.md';
-  fs.readFile(aboutfile, 'utf8', function(err, text) {
-    var marked = require('marked');
-    var content = marked(text);
-    res.render('base.html', {
-      content: content,
-      title: 'About'
-    });
+  var text = config.get('about_page');
+  var content = marked(text);
+  res.render('base.html', {
+    content: content,
+    title: 'About'
+  });
+};
+
+exports.faq = function(req, res) {
+  var tmpl = env.getTemplate('_snippets/questions.html');
+  var questionInfo = tmpl.render({
+    questions: model.data.questions
+  });
+  var dataTmpl = env.getTemplate('_snippets/datasets.html');
+  var dataInfo = dataTmpl.render({
+    datasets: model.data.datasets
+  });
+  var content = marked(config.get('faq_page'));
+  content = content.replace('{{questions}}', questionInfo);
+  content = content.replace('{{datasets}}', dataInfo);
+  res.render('base.html', {
+    content: content,
+    title: 'FAQ - Frequently Asked Questions'
+  });
+};
+
+exports.contribute = function(req, res) {
+  var text = config.get('contribute_page');
+  var content = marked(text);
+  res.render('base.html', {
+    content: content,
+    title: 'Contribute'
   });
 };
 
