@@ -8,8 +8,7 @@
   </tr>
 </thead>
 <tbody>
-  {% if info.places %}
-  {% for place in info.places %}
+  {% for place in places %}
     {% set placeScore = info.byplace[place].score %}
     <tr data-score="{{placeScore}}"  data-area="{{place}}">
       <th class="area-name">
@@ -31,26 +30,19 @@
       data-datasetTitle="{{dataset.title}}"
       >
         <ul class="availability icons mini">
-          {% for field in questions %}
-            {% set state = record[field] %}
-            <li class="{% if state == 'Y' %}yes{% elif state == 'N' %}no{% elif state == '?' %}maybe{% endif %}" data-toggle="tooltip" title="{{ field.label }}">
-              <i class="icon-{{ field.icon }}"></i>
+          {% for qu in scoredQuestions %}
+            {% set state = record[qu.id] %}
+            <li class="{% if state == 'Y' %}yes{% elif state == 'N' %}no{% elif state == '?' %}maybe{% endif %}" data-toggle="tooltip" title="{{ qu.question }}">
+              <i class="icon-{{ qu.icon }}"></i>
               <span class="text">{{ state }}</span>
             </li>
           {% endfor %}
         </ul>
-        {#{% for field in questions %}
-          {% set state = record[field.id] %}
-
-        {% endfor %}
-        {{ record }}
-        <a>{{record.ycount}} / {{info.summary.maxScorePerRecord}}</a>#}
     </td>
     {% endfor %}
     <td class="placescore" data-score="{{placeScore}}"><a>{{placeScore}}</a></td>
   </tr>
   {% endfor %}
-  {% endif %}
 </tbody>
 <tfoot>
   <tr>

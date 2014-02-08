@@ -20,52 +20,21 @@ Entry for {{prefill.place}} / {{dataset.title}}
 <p>{{prefill.details | urlize}}</p>
 
 <h3>Data Availability</h3>
-{# TODO: Move this out to an include!!! There are 3 copies so far... #}
-{% set record_fields = [
-  { 'id': 'exists',
-    'icon': 'file-alt',
-    'label': 'Does the data exist?' },
-  { 'id': 'digital',
-    'icon': 'save',
-    'label': 'Is it in digital form?' },
-  { 'id': 'public',
-    'icon': 'eye-open',
-    'label': 'Is it publicly available?' },
-  { 'id': 'free',
-    'icon': 'dollar',
-    'label': 'Is it free of charge?' },
-  { 'id': 'online',
-    'icon': 'download',
-    'label': 'Is it online?' },
-  { 'id': 'machinereadable',
-    'icon': 'keyboard',
-    'label': 'Is it machine readable?' },
-  { 'id': 'bulk',
-    'icon': 'copy',
-    'label': 'Available in bulk?' },
-  { 'id': 'openlicense',
-    'icon': 'unlock-alt',
-    'label': 'Is it openly licensed?' },
-  { 'id': 'uptodate',
-    'icon': 'time',
-    'label': 'Is it up to date?' }
-] %}
-
 <ul class="data-availability clearfix unstyled">
-  {% for field in record_fields %}
-    {% set state = prefill[field.id] %}
+  {% for qu in scoredQuestions %}
+    {% set state = prefill[qu.id] %}
     {% set description = '' %}
     <li>
       <span class="data-icon-wrapper">
         <span class="data-icon {% if state == 'Yes' %}yes{% elif state == 'No' %}no{% elif state == 'Unsure' %}maybe{% endif %}">
-          <i class="icon-{{ field.icon }}"></i>
+          <i class="icon-{{ qu.icon }}"></i>
           <span class="text">{{ state }}</span>
         </span>
-        {{ field.label }}
+        {{ qu.question }}
       </span>
-      {% for qu in ynquestions %}
-        {% if qu.id == field.id %}
-          <a href="javascript:;" data-toggle="popover" data-content="{{ qu.description }}" data-placement="top">
+      {% for qu2 in ynquestions %}
+        {% if qu2.id == qu.id %}
+          <a href="javascript:;" data-toggle="popover" data-content="{{ qu2.description }}" data-placement="top">
             <i class="icon-info-sign"></i>
           </a>
         {% endif %}

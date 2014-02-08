@@ -55,6 +55,10 @@ describe('LoadFixedData', function(){
   it('questions ok', function(done) {
     assert.equal(db.questions.length, 12);
     assert.equal(db.questions[0].id, 'exists');
+    assert.equal(db.questions[0].icon, 'file-alt');
+    assert.equal(db.scoredQuestions.length, 9);
+    assert.equal(db.scoredQuestions[0].id, 'exists');
+    assert.equal(db.scoredQuestions[8].id, 'uptodate');
     done();
   });
 

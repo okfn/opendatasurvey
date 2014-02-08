@@ -85,25 +85,30 @@ describe('Backend Entry', function() {
 
 describe('Submissions', function() {
   this.timeout(3000);
-  var backend = new Backend(base.options);
 
   before(function(done) {
-    backend.login(function(err){
-      if (err) throw err;
-      done();
+    base.setFixtures();
+    // we have to load config stuff as questions need for acceptSubmission
+    model.load(function() {
+      model.backend.login(function(err){
+        done(err);
+      });
     });
   });
   after(function(done) {
-    backend.deleteAll(backend.options.submissionIndex, {place: 'de'}, complete);
-    backend.deleteAll(backend.options.entryIndex, {place: 'de'}, complete);
+    model.backend.deleteAll(model.backend.options.submissionIndex, {place: 'de'}, complete);
+    model.backend.deleteAll(model.backend.options.entryIndex, {place: 'de'}, complete);
     var count = 2;
     function complete() {
       count--;
-      if (count === 0) done();
+      if (count === 0) {
+        base.unsetFixtures();
+        done();
+      }
     }
   });
   it('get', function(done) {
-    backend.getSubmission({submissionid: 'testid-1'}, function(err, entry) {
+    model.backend.getSubmission({submissionid: 'testid-1'}, function(err, entry) {
       assert.ok(!err);
       assert.ok(entry!=null, 'No entry (entry is null)');
       assert.equal(entry.dataset, 'timetables', entry);
@@ -112,7 +117,7 @@ describe('Submissions', function() {
     });
   });
   it('get byplace', function(done) {
-    backend.getPlace('gb', function(err, data) {
+    model.backend.getPlace('gb', function(err, data) {
       // submissions has 2 items for UK but only one is unreviewed
       assert.equal(data.submissions.length, 1);
       assert.equal(data.entrys.length, 2);
@@ -127,8 +132,8 @@ describe('Submissions', function() {
       place: 'de',
       exists: 'No'
     };
-    backend.insertSubmission(data, function(err, obj) {
-      assert.ok(!err);
+    model.backend.insertSubmission(data, function(err, obj) {
+      assert.ok(!err, err);
       assert.equal(obj.submissionid.length, 36);
       assert.equal(obj.timestamp.slice(0, 4), '2014');
       // TODO: check something was actually created by doing the get
@@ -147,27 +152,27 @@ describe('Submissions', function() {
     var newdata = {
       public: 'Yes'
     }
-    backend.insertSubmission(data, function(err, obj) {
+    model.backend.insertSubmission(data, function(err, obj) {
       // now check we can reject it ...
-      backend.getSubmission(data, function(err, subm) {
+      model.backend.getSubmission(data, function(err, subm) {
         // check initial conditions
         assert.equal(subm.reviewed, '');
         // do submit
-        backend.acceptSubmission(subm, newdata, function(err) {
+        model.backend.acceptSubmission(subm, newdata, function(err) {
           // check entry
-          backend.getEntry(data, function(err, obj) {
+          model.backend.getEntry(data, function(err, obj) {
             assert(!err, 'get entry ok');
             assert(obj, obj);
             assert.equal(obj.exists, data.exists);
             assert.equal(obj.public, newdata.public);
             // check submission
-            backend.getSubmission(subm, function(err, newobj) {
+            model.backend.getSubmission(subm, function(err, newobj) {
               assert(newobj)
               assert.equal(newobj.reviewed, 1);
 
               // now resubmit the submission (atm we are allowed to do this)
-              backend.acceptSubmission(subm, {online: 'No'}, function(err) {
-                backend.getEntrys({dataset: data.dataset, place: data.place, year: data.year}, function(err, rows) {
+              model.backend.acceptSubmission(subm, {online: 'No'}, function(err) {
+                model.backend.getEntrys({dataset: data.dataset, place: data.place, year: data.year}, function(err, rows) {
                   assert.equal(rows.length, 1);
                   assert.equal(rows[0].online, 'No');
                   done();

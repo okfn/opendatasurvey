@@ -14,10 +14,13 @@ var fs = require('fs')
   ; 
 
 exports.overview = function(req, res) {
+  // note: model.data.places and model.data.country.places are different
+  // the latter only has places for which we have some actual results
   res.render('overview.html', {
     info: model.data.country,
+    places: model.data.country.places,
     datasets: model.data.datasets,
-    questions: model.openQuestions,
+    scoredQuestions: model.data.scoredQuestions,
     placesById: model.data.placesById
   });
 };
@@ -78,6 +81,7 @@ exports.place = function(req, res) {
       submissions: submissions,
       entrys: entrys,
       place: place,
+      scoredQuestions: model.data.scoredQuestions,
       loggedin: req.session.loggedin
     });
   });
@@ -103,6 +107,7 @@ exports.dataset = function(req, res) {
       info: model.data.country,
       bydataset: entriesForThisDataset,
       placesById: model.data.placesById,
+      scoredQuestions: model.data.scoredQuestions,
       dataset: dataset
     });
   });
@@ -122,6 +127,7 @@ exports.entryByPlaceDataset = function(req, res) {
     res.render('country/entry.html', {
       ynquestions: ynquestions,
       questions: model.data.questions,
+      scoredQuestions: model.data.scoredQuestions,
       datasets: model.data.datasets,
       dataset: dataset,
       place: place,

@@ -16,37 +16,6 @@
         <div class="tab-content">
           <div class="tab-pane active" id="table-overview">
             <div class="table">
-
-{% set record_fields = [
-  { 'id': 'exists',
-    'icon': 'file-alt',
-    'label': 'Does the data exist?' },
-  { 'id': 'digital',
-    'icon': 'save',
-    'label': 'Is it in digital form?' },
-  { 'id': 'public',
-    'icon': 'eye-open',
-    'label': 'Is it publicly available?' },
-  { 'id': 'free',
-    'icon': 'dollar',
-    'label': 'Is it free of charge?' },
-  { 'id': 'online',
-    'icon': 'download',
-    'label': 'Is it online?' },
-  { 'id': 'machinereadable',
-    'icon': 'keyboard',
-    'label': 'Is it machine readable (e.g. spreadsheet not PDF)?' },
-  { 'id': 'bulk',
-    'icon': 'copy',
-    'label': 'Available in bulk (e.g. can you download the *whole* dataset easily)?' },
-  { 'id': 'openlicense',
-    'icon': 'unlock-alt',
-    'label': 'Is it openly licensed (as per OpenDefinition.org)?' },
-  { 'id': 'uptodate',
-    'icon': 'time',
-    'label': 'Is it up to date?' }
-] %}
-
 <p>On this page you can see the state of open data for {{ dataset.title }} across all countries for which we have information (displayed down the left hand side). Each icon in the data availability column represents important factors indicating data accessibility or availability - mouse over the icons to see what they are and the colours correspond to yes / no / unsure / no data.</p>
 
 {% if not readonly %}
@@ -81,7 +50,7 @@
       <td>
         <a href="/place/{{place.id}}">{{place.name}}</a>
       </td>
-      {{ entrysummary(dataset, place, record) }}
+      {{ entrysummary(dataset, place, record, scoredQuestions) }}
       {% if not readonly %}
       <td>
         {% if record %}

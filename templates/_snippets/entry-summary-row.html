@@ -1,14 +1,14 @@
-{% macro entrysummary(dataset, place, record) -%}
+{% macro entrysummary(dataset, place, record, scoredQuestions) -%}
   <td>
       {{ record.ycount }}%
   </td>
   <td{% if record %} data-place="{{ record.place }}" data-dataset="{{ record.dataset }}" data-datasetTitle="{{ dataset.title }}"{% endif %}>
     <ul class="availability icons">
-      {% for field in record_fields %}
-        {% set state = record[field.id] %}
-        <a data-toggle="tooltip" title="{{ field.label }}">
+      {% for qu in scoredQuestions %}
+        {% set state = record[qu.id] %}
+        <a data-toggle="tooltip" title="{{ qu.question }}">
         <li class="{% if state == 'Yes' %}yes{% elif state == 'No' %}no{% elif state == 'Unsure' %}maybe{% endif %}">
-          <i class="icon-{{ field.icon }}"></i>
+          <i class="icon-{{ qu.icon }}"></i>
           <span class="text">{{ state }}</span>
         </li>
         </a>
