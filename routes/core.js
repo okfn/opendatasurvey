@@ -5,8 +5,6 @@ var fs = require('fs')
   , flash = require('connect-flash')
   , scrypt = require('scrypt')
   , marked = require('marked')
-  , passport = require('passport')
-  , FacebookStrategy = require('passport-facebook').Strategy
 
   , config = require('../lib/config')
   , env = require('../lib/templateenv')

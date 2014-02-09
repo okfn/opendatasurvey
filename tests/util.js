@@ -151,12 +151,13 @@ describe('LoadSubmittedData', function(){
 describe('Misc', function(){
   it('makeUserObject', function(done) {
     var profile = {
+      id: 'aaa',
       provider: 'facebook',
-      username: 'x',
+      displayName: 'x',
       emails: [{ value: 'a@a.com'}]
     };
     out = util.makeUserObject(profile);
-    assert.equal(out.userid, 'facebook:x');
+    assert.equal(out.userid, 'facebook:aaa:x');
     done();
   });
 });

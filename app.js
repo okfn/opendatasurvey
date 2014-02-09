@@ -136,11 +136,15 @@ if (!config.get('appconfig:readonly')) {
   // Passport Auth Stuff (Facebook etc)
   census.setupAuth();
 
-  app.get('/auth/facebook',
-      passport.authenticate('facebook', {scope: ['email']})
+  app.get('/auth/google',
+    passport.authenticate('google', { scope: [
+        'https://www.googleapis.com/auth/userinfo.profile',
+        'https://www.googleapis.com/auth/userinfo.email'
+      ]}
+    )
   );
-  app.get('/auth/facebook/callback', 
-    passport.authenticate('facebook', {
+  app.get('/auth/google/callback', 
+    passport.authenticate('google', {
         successRedirect: '/auth/loggedin',
         failureRedirect: '/login',
         failureFlash: true,
@@ -148,6 +152,20 @@ if (!config.get('appconfig:readonly')) {
       }
     )
   );
+
+  // not using atm
+//  app.get('/auth/facebook',
+//      passport.authenticate('facebook', {scope: ['email']})
+//  );
+//  app.get('/auth/facebook/callback', 
+//    passport.authenticate('facebook', {
+//        successRedirect: '/auth/loggedin',
+//        failureRedirect: '/login',
+//        failureFlash: true,
+//        successFlash: true
+//      }
+//    )
+//  );
 }
 
 app.get('/', routes.overview);

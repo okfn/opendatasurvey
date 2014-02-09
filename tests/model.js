@@ -193,8 +193,9 @@ describe('User', function() {
   var backend = new Backend({key: base.options.userDbKey});
   var profile = {
     provider: 'facebook',
-    username: 'tests-xyz',
-    emails: [{ value: 'a@a.com'}]
+    id: 'tests-xyz',
+    emails: [{ value: 'a@a.com'}],
+    name: { familyName: 'george' }
   };
   var userinfo = util.makeUserObject(profile);
 
@@ -217,6 +218,7 @@ describe('User', function() {
       }
       backend.getUser(userinfo, function(err, userobj) {
         assert.equal(userobj.email, userinfo.email);
+        assert.equal(userobj.familyname, 'george');
         assert(userobj.id);
         done(err);
       });

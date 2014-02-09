@@ -2,7 +2,7 @@ var fs = require('fs')
   , _ = require('underscore')
   , crypto = require('crypto')
   , passport = require('passport')
-  , FacebookStrategy = require('passport-facebook').Strategy
+  , GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 
   , config = require('../lib/config')
   , env = require('../lib/templateenv')
@@ -182,10 +182,10 @@ exports.loggedin = function(req, res) {
 
 exports.setupAuth = function() {
   passport.use(
-    new FacebookStrategy({
-        clientID: config.get('facebook:app_id'),
-        clientSecret: config.get('facebook:app_secret'),
-        callbackURL: config.get('site_url') + '/auth/facebook/callback',
+    new GoogleStrategy({
+        clientID: config.get('google:app_id'),
+        clientSecret: config.get('google:app_secret'),
+        callbackURL: config.get('site_url') + '/auth/google/callback',
         profileFields: ['id', 'displayName', 'name', 'username', 'emails', 'photos']
       },
       function(accessToken, refreshToken, profile, done) {
