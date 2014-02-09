@@ -1,7 +1,81 @@
-## Administrator Config
+# Administrating an Open Data Census
 
-These are the config variables you can set in your primary config spreadsheet
-(CSV file).
+This is a short introduction to how to administer an Open Data Census.
+
+Note: it assumes that a census instance has been booted for you (and is **not**
+about the technical side of deploying a census instance)
+
+## Overview of How a Census is Structured
+
+A Census is a survey built around 4 axes:
+
+* Place - e.g. a country of a city
+* Dataset - e.g. Timetable
+* Question - a specific question we ask about each dataset (e.g. "does it
+  exist", "is it machine readable")
+* Time - usually a year
+
+We then ask for each Place / Dataset / Time combination for an answer to the
+set of "Questions".
+
+The set of answers to the Questions for given Place / Dataset / Time
+combination is called a `Submission`.
+
+When a `Submission` has been reviewed and deemed accurate it becomes an `Entry`
+in the Census. 
+
+### Access Control
+
+You must be logged in to make a Submission or review a Submission. Login is via
+Facebook. We store sensitive user info (e.g. password) in a closed central DB.
+
+### Configuration
+
+Configuration is of two types:
+
+* 'App Config' - the fundamental app configuration for the site (e.g. site
+  title) plus pointers to the other config files which are ...
+* 'Census Config' - the list of Places, Datasets and Questions to use for this
+  census. App Config contains pointers to where to find this.
+
+Both types of configuration should be stored in publicly accessible CSV files
+(one file for app config and one each for places, datasets and questions).
+
+Our recommended approach is to have all of these as separate sheets in one
+large google spreadsheet that is made 'public on the web' (you can then access
+those sheets as CSV files).
+
+Here is a [Template General Config Spreadsheet][config].
+
+The App Config options (the first sheet in that spreadsheet) are fully
+documented in the Appendix below.
+
+[config]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdG5FYWF5M0o1cHBvQkZLTUdOYWtlNmc#gid=0
+[db-template]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdFgwSjlabk0wY3NfT2owbktCME5MY2c&usp=drive_web
+
+Note: there is some very basic bootstrap (and sensitive) information stored by
+the developer (like the google username and password for accessing the
+database).
+
+### Data Storage
+
+Our primary storage backend is Google Spreadsheets.
+
+* Database of responses (`Submission`s and `Entry`s) - stored in a google
+  spreadsheet
+  * WARNING: at present this Database must be world-readable (so we can't store
+    anything sensitive in it ...)
+* User database (optional) - also a google spreadsheet
+
+* [Template Database Spreadsheet][db-template]
+  * Note: must have column headings in Submissions and Entries that correspond
+    to question ids in question sheet
+
+
+## Appendix - App Config Documentation
+
+These are the config variables you can set in your config spreadsheet
+(a Google Spreadsheet or online CSV file).
 
 Those marked with a (*) must be set.
 

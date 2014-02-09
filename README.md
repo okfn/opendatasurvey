@@ -11,75 +11,22 @@ This also includes various ancillary information providing an overview of what
 is happening with release of open government data around the world (and
 initiatives related to it).
 
-## Architecture
+## Overview
 
-### Concepts
-
-A Census is a survey built around 4 axes:
-
-* Place - e.g. a country of a city
-* Dataset - e.g. Timetable
-* Question - a specific question we ask about each dataset (e.g. "does it exist", "is it machine readable")
-* Time - usually a year
-
-We then ask for each Place / Dataset / Time combination for an answer to the set of "Questions".
-
-The set of answers to the Questions for given Place / Dataset / Time combination is called a `Submission`.
-
-When a `Submission` has been reviewed and deemed accurate it becomes an `Entry` in the Census. 
-
-### Access Control
-
-You must be logged in to make a Submission or review a Submission. Login is via
-Facebook. We store sensitive user info (e.g. password) in a closed central DB.
-
-*Note*: you can also lock down the entire app if you set `auth_on` config.
+See `doc/admin.md`
 
 ### Developer Stuff
 
 The app is a simple Express NodeJS app designed to be deployed on Heroku.
 
-We have 2 main branches:
+Config boot sequence:
 
-* master - development branch - deploy to <http://opendatacensus-staging.herokuapp.com/>
-* production - release branch (production ready code) - deploy to <http://census.okfn.org/>
-
-Our primary storage backend is Google Spreadsheets. (If you are wondering why see the appendix).
-
-More precisely, we store 2 sets of things:
-
-* Configuration (including the list of Places, Datasets and Questions). Stored in:
-  * Heroku environment - sensitive configuration (e.g. google login) plus
-    bootstrap link to general config (next item)
-  * Public CSV files (usually use CSV file access to a Google spreadsheet) -
-    general config plus the list of places, datasets and questions (each a
-    separate CSV file)
-* Database of responses (`Submission`s and `Entry`s) - stored in a google
-  spreadsheet
-  * WARNING: at present this Database must be world-readable (so we can't store
-    anything sensitive in it ...)
-
-The basic route for the config loading is as follows:
-
-* App boots
+* App boots and looks up local config (set by census deployer)
 * Looks up environment variable `CONFIG_URL` (plus sensitive config like DB
   login)
 * Loads CSV file at `CONFIG_URL` - this file has pointers to all other config
   information (see below for a template)
 * Loads all other config CSV files (Places, Datasets, Questions)
-
-
-### Config and DB Templates
-
-Our recommended approach is to keep all the config in one big google spreadsheet and then point 
-
-* [Template General Config Spreadsheet][config] - which in turn has pointers to other templates
-* [Template Database Spreadsheet][db-template]
-  * Note: must have column headings in Submissions and Entries that correspond
-    to question ids in question sheet
-
-[config]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdG5FYWF5M0o1cHBvQkZLTUdOYWtlNmc#gid=0
-[db-template]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdFgwSjlabk0wY3NfT2owbktCME5MY2c&usp=drive_web
 
 ### Facebook Auth
 
