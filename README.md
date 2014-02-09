@@ -81,42 +81,10 @@ Our recommended approach is to keep all the config in one big google spreadsheet
 [config]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdG5FYWF5M0o1cHBvQkZLTUdOYWtlNmc#gid=0
 [db-template]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdFgwSjlabk0wY3NfT2owbktCME5MY2c&usp=drive_web
 
-
 ### Facebook Auth
 
 For Facebook Auth you will need to create an App on Facebook developers section
 and set various config. See config section below for detail.
-
-------
-
-
-## Creating a New Census App
-
-[For Developers - if you want a Census booted for you see <http://meta.census.okfn.org/request/>]
-
-1. Boot a config spreadsheet
-
-  * Add sheets for general config and for places, datasets and questions (see
-    templates above)
-  * Make the sheet 'Public on the Web' and world readable
-
-2. Create a Database spreadsheet (copy the template - see above)
-
-  * Add opendatacensusapp@gmail.com as read/write user
-  * Make the sheet 'Public on the Web' and world readable
-
-2. Create a new Heroku app `opendatacensus-{slug-name}`
-
-   * `heroku apps:create opendatacensus-{slug-name} --remote {slug-name}`
-   * Set up the environment config (see below)
-   * Deploy
-
-        git push {slug-name} master
-   
-   * Should now be live at http://{slug-name}.herokuapp.com/
-
-3. [optional] Set up the DNS
-
 
 ------
 
@@ -218,5 +186,4 @@ Cons
 
 * Google Spreadsheets has limited storage (400k cells etc). However, our data
   requirements are usually quite limited for each census.
-
 
