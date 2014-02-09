@@ -4,6 +4,8 @@ var assert = require('assert')
   , _ = require('underscore')
   // importing base sets the test db
   , base = require('./base.js')
+  , util = require('../lib/util')
+  , Q = require('q')
   ;
 
 // only require after setting config ...
@@ -186,3 +188,38 @@ describe('Submissions', function() {
   });
 });
 
+describe('User', function() {
+  this.timeout(2000);
+  var backend = new Backend({key: base.options.userDbKey});
+  var profile = {
+    provider: 'facebook',
+    username: 'tests-xyz',
+    emails: [{ value: 'a@a.com'}]
+  };
+  var userinfo = util.makeUserObject(profile);
+
+  before(function(done) {
+    backend.login(done);
+  });
+  after(function(done) {
+    backend.getUser(userinfo, function(err, userobj) {
+      if (userobj) {
+        userobj.del(done);
+      }
+    });
+  });
+
+  it('create a user', function(done) {
+    backend.createUserIfNotExists(userinfo, function(err) {
+      if (err) {
+        done(err);
+        return;
+      }
+      backend.getUser(userinfo, function(err, userobj) {
+        assert.equal(userobj.email, userinfo.email);
+        assert(userobj.id);
+        done(err);
+      });
+    });
+  });
+});

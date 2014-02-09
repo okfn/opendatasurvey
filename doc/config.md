@@ -9,9 +9,36 @@ Here is an [example config spreadsheet][ex] used for testing.
 
 [ex]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdEg2el9xaUxBcjFnbEYtNnMwLTVmTVE&usp=drive_web#gid=2
 
+Definition: 'application google user' is the Google user(name) (e.g.
+opendatacensustest@gmail.com) which will be used by the Census app to access
+the data(base) spreadsheets. It is **not** configurable as part of the general
+application config but is provided to you your Census Deployer.
+
 ### `database_spreadsheet_key` (*)
 
 The key of a Google docs spreadsheet.
+
+This spreadsheet should be world-readable and read/write for the application
+google user.
+
+Note the key in a google spreadsheet url is the value the `?key=...` parameter. For example, for the url:
+
+`https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdEg2el9xaUxBcjFnbEYtNnMwLTVmTVE&usp=drive_web#gid=2`
+
+The key would be: `0AqR8dXc6Ji4JdEg2el9xaUxBcjFnbEYtNnMwLTVmTVE`
+
+### `user_database_key`
+
+The key of a Google docs spreadsheet that will be the user database.
+
+This is optional. If not provided, login will still be possible but we won't
+record user details such as email (we will just store the user id into the
+submissions and reviews).
+
+The user spreadsheet must be private as it will contain private user info like
+email addresses.
+
+It should be accessible to the applicate google user.
 
 ### `title`
 

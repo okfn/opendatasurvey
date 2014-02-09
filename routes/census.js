@@ -6,6 +6,7 @@ var fs = require('fs')
 
   , config = require('../lib/config')
   , env = require('../lib/templateenv')
+  , util =  require('../lib/util.js')
   , model = require('../lib/model').OpenDataCensus
   ;
 
@@ -52,7 +53,7 @@ exports.submitPost = function(req, res) {
   if (requireLoggedIn(req, res)) return;
 
   var submissionData = req.body;
-  submissionData.submitter = req.user.id;
+  submissionData.submitter = req.user.userid;
   model.backend.insertSubmission(submissionData, function(err, obj) {
     var msg;
     // TODO: Do flash messages properly
@@ -61,7 +62,7 @@ exports.submitPost = function(req, res) {
       msg = 'There was an error! ' + err;
       req.flash('error', msg);
     } else {
-      msg = 'Thank-you for your submission which has been received. It will now be reviewed by an expert before being published. It may take a few minutes for your submission to appear and a few days for it be reviewed.';
+      msg = 'Thank-you for your submission which has been received. It will now be reviewed before being published.';
       req.flash('info', msg);
     }
     res.redirect('/place/' + submissionData.place);
@@ -188,28 +189,23 @@ exports.setupAuth = function() {
         profileFields: ['id', 'displayName', 'name', 'username', 'emails', 'photos']
       },
       function(accessToken, refreshToken, profile, done) {
-        var userobj = {
-          id: profile.provider + ':' + profile.username,
-          provider_id: profile.id,
-          provider: profile.provider,
-          username: profile.username,
-          name: profile.displayName,
-          email: profile.emails[0].value,
-          given_name: profile.name.givenName,
-          family_name: profile.name.familyName,
-        };
-        var md5sum = crypto.createHash('md5');
-        md5sum.update(userobj.email.toLowerCase());
-        userobj.gravatar = 'https://www.gravatar.com/avatar/' + md5sum.digest() + '.jpg';
-        done(null, userobj);
+        var userobj = util.makeUserObject(profile);
+        if (config.get('user_database_key')) {
+          model.backendUser.createUserIfNotExists(userobj, function(err) {
+            if (err) console.error(err);
+            done(null, userobj);
+          });
+        } else {
+          done(null, userobj);
+        }
       }
     )
   );
 
+  // At the moment we get all user info on auth and store to cookie so these are both no-ops ...
   passport.serializeUser(function(user, done) {
     done(null, user);
   });
-
   passport.deserializeUser(function(profile, done) {
     var err = null;
     done(err, profile);
@@ -224,6 +220,6 @@ function requireLoggedIn(req, res) {
 };
 
 function canReview(user) {
-  return (config.get('reviewers').indexOf(user.id) !== -1);
+  return (config.get('reviewers').indexOf(user.userid) !== -1);
 }
 

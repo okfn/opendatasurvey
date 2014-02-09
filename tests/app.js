@@ -187,7 +187,7 @@ describe('Permissions', function() {
       });
   });
   it('Non-reviewer cannot review', function(done) {
-    config.set('test:user', {id: 'jones'});
+    config.set('test:user', {userid: 'jones'});
     request(app)
       .get('/submission/testid-1/review')
       .expect(401, done)
@@ -321,7 +321,7 @@ describe('Census Pages', function() {
         model.backend.getSubmissions({place: 'de', dataset: 'timetables'}, function(err, rows) {
           assert.equal(rows.length, 1);
           // test user
-          assert.equal(rows[0].submitter, config.get('test:user').id);
+          assert.equal(rows[0].submitter, config.get('test:user').userid);
           assert.equal(rows[0].details, testString);
           done();
         });
@@ -351,7 +351,7 @@ describe('Census Pages', function() {
         if (err) done(err);
         assert.equal(res.header['location'], '/');
         model.backend.getSubmission(fixSubmission, function(err, sub) {
-          assert.equal(sub.reviewer, config.get('test:user').id);
+          assert.equal(sub.reviewer, config.get('test:user').userid);
           assert.equal(sub.reviewresult, 'accepted');
           assert.equal(sub.reviewed, '1');
           done();
