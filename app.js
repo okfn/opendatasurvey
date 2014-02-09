@@ -87,12 +87,10 @@ app.configure(function() {
 env.express(app);
 
 app.all('*', function(req, res, next) {
-  if (config.get('test:testing') === true) {
-    if (!req.user && config.get('test:user')) {
-      req.user = config.get('test:user');
-    }
-    res.locals.currentUser = req.user ? req.user : null; 
+  if (config.get('test:testing') === true && !req.user && config.get('test:user')) {
+    req.user = config.get('test:user');
   }
+  res.locals.currentUser = req.user ? req.user : null; 
 
   if (config.get('appconfig:readonly')) {
     res.locals.readonly = true;
