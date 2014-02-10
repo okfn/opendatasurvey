@@ -212,7 +212,7 @@ describe('Census Pages', function() {
           done(err);
           return;
         }
-        model.backend.insertSubmission(fixSubmission, done);
+        model.backend.insertSubmission(fixSubmission, null, done);
       });
     });
   });
@@ -321,7 +321,8 @@ describe('Census Pages', function() {
         model.backend.getSubmissions({place: 'de', dataset: 'timetables'}, function(err, rows) {
           assert.equal(rows.length, 1);
           // test user
-          assert.equal(rows[0].submitter, config.get('test:user').userid);
+          assert.equal(rows[0].submitter, config.get('test:user').name);
+          assert.equal(rows[0].submitterid, config.get('test:user').userid);
           assert.equal(rows[0].details, testString);
           done();
         });
@@ -351,7 +352,8 @@ describe('Census Pages', function() {
         if (err) done(err);
         assert.equal(res.header['location'], '/');
         model.backend.getSubmission(fixSubmission, function(err, sub) {
-          assert.equal(sub.reviewer, config.get('test:user').userid);
+          assert.equal(sub.reviewer, config.get('test:user').name);
+          assert.equal(sub.reviewerid, config.get('test:user').userid);
           assert.equal(sub.reviewresult, 'accepted');
           assert.equal(sub.reviewed, '1');
           done();

@@ -134,15 +134,25 @@ describe('Submissions', function() {
       place: 'de',
       exists: 'No'
     };
-    model.backend.insertSubmission(data, function(err, obj) {
+    var user = {
+      userid: 'xyz',
+      name: 'Test Submitter'
+    };
+    model.backend.insertSubmission(data, user, function(err, obj) {
       assert.ok(!err, err);
       assert.equal(obj.submissionid.length, 36);
       assert.equal(obj.timestamp.slice(0, 4), '2014');
-      // TODO: check something was actually created by doing the get
-      done();
+      model.backend.getSubmission({submissionid: data.submissionid}, function(err, out) {
+        assert.ok(!err, err);
+        assert.equal(out.year, data.year);
+        assert.equal(out.reviewed, '');
+        assert.equal(out.submitter, user.name);
+        assert.equal(out.submitterid, user.userid);
+        done();
+      });
     });
   });
-  it('accept', function(done) {
+  it('processSubmission', function(done) {
     this.timeout(10000);
     var data = {
       year: 2012,
@@ -154,31 +164,35 @@ describe('Submissions', function() {
     var newdata = {
       public: 'Yes'
     }
-    model.backend.insertSubmission(data, function(err, obj) {
-      // now check we can reject it ...
-      model.backend.getSubmission(data, function(err, subm) {
-        // check initial conditions
-        assert.equal(subm.reviewed, '');
-        // do submit
-        model.backend.acceptSubmission(subm, newdata, function(err) {
-          // check entry
-          model.backend.getEntry(data, function(err, obj) {
-            assert(!err, 'get entry ok');
-            assert(obj, obj);
-            assert.equal(obj.exists, data.exists);
-            assert.equal(obj.public, newdata.public);
-            // check submission
-            model.backend.getSubmission(subm, function(err, newobj) {
-              assert(newobj)
-              assert.equal(newobj.reviewed, 1);
+    // do submit
+    var user = {
+      userid: 'xxx',
+      name: 'test reviewer'
+    };
+    model.backend.insertSubmission(data, null, function(err, subm) {
+      var acceptSubmission = true;
+      model.backend.processSubmission(user, acceptSubmission, subm.submissionid, newdata, function(err) {
+        // check we have created an entry
+        model.backend.getEntry(data, function(err, obj) {
+          assert(!err, 'get entry ok');
+          assert(obj, obj);
+          assert.equal(obj.exists, data.exists);
+          assert.equal(obj.public, newdata.public);
+          // check submission
+          model.backend.getSubmission(subm, function(err, newobj) {
+            assert(newobj)
+            assert.equal(newobj.reviewed, 1);
+            assert.equal(newobj.reviewer, user.name);
+            assert.equal(newobj.reviewerid, user.userid);
+            assert.equal(newobj.reviewresult, 'accepted');
 
-              // now resubmit the submission (atm we are allowed to do this)
-              model.backend.acceptSubmission(subm, {online: 'No'}, function(err) {
-                model.backend.getEntrys({dataset: data.dataset, place: data.place, year: data.year}, function(err, rows) {
-                  assert.equal(rows.length, 1);
-                  assert.equal(rows[0].online, 'No');
-                  done();
-                });
+            // now redo review to check case of review where entry already exists
+            var newnewdata = {online: 'No'};
+            model.backend.processSubmission(user, acceptSubmission, subm.submissionid, newnewdata, function(err) {
+              model.backend.getEntrys({dataset: data.dataset, place: data.place, year: data.year}, function(err, rows) {
+                assert.equal(rows.length, 1);
+                assert.equal(rows[0].online, 'No');
+                done();
               });
             });
           });

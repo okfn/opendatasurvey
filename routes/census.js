@@ -53,8 +53,7 @@ exports.submitPost = function(req, res) {
   if (requireLoggedIn(req, res)) return;
 
   var submissionData = req.body;
-  submissionData.submitter = req.user.userid;
-  model.backend.insertSubmission(submissionData, function(err, obj) {
+  model.backend.insertSubmission(submissionData, req.user, function(err, obj) {
     var msg;
     // TODO: Do flash messages properly
     if (err) {

@@ -157,7 +157,7 @@ describe('Misc', function(){
       emails: [{ value: 'a@a.com'}]
     };
     out = util.makeUserObject(profile);
-    assert.equal(out.userid, 'facebook:aaa:x');
+    assert.equal(out.userid, 'facebook:aaa');
     done();
   });
 });
