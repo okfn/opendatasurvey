@@ -11,13 +11,16 @@ exports.options = {
  'userDbKey': '0AqR8dXc6Ji4JdE5IdEhuQTZCTGp1em84VEZZcC04aUE'
 };
 
+exports.simpleConfigUrl = 'https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdEg2elXXXX&usp=drive_web#gid=2';
+exports.simpleConfigUrlCsv = 'https://docs.google.com/spreadsheet/pub?key=0AqR8dXc6Ji4JdEg2elXXXX&single=true&gid=2&output=csv';
+
 // use the test database
 config.set('database_spreadsheet_key', exports.options.key);
 config.set('display_year', 2013);
 
 exports.setFixtures = function() {
   var data = {};
-  ['config', 'questions', 'datasets', 'places'].forEach(function(name) {
+  ['config', 'questions', 'datasets', 'places', 'config-simple'].forEach(function(name) {
     data[name] = fs.readFileSync(path.join('tests', 'fixtures', name + '.csv'), 'utf8');
   });
 
@@ -25,7 +28,9 @@ exports.setFixtures = function() {
     .stub(request, 'get', stubbed);
         
   function stubbed(url, cb) {
-    if (url == config.get('configUrl')) {
+    if (url === exports.simpleConfigUrlCsv) {
+      cb(null, null, data['config-simple']);
+    } else if (url == config.get('configUrl')) {
       cb(null, null, data['config']);
     } else if (url == config.get('questions')) {
       cb(null, null, data['questions'])

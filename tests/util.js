@@ -1,7 +1,6 @@
 var fs = require('fs')
   , path = require('path')
   , request = require('request')
-  , sinon = require('sinon')
   , assert = require('assert')
   , Q = require('q')
 
@@ -27,6 +26,38 @@ describe('Config - load', function(){
     assert.equal(config.get('entries'), 'https://docs.google.com/spreadsheet/pub?key=0AqR8dXc6Ji4JdHR5WWdUU2dYUElPaFluUlBJbkFOMUE&single=true&gid=1&output=csv');
     assert.equal(config.get('display_year'), 2013);
     assert.equal(config.get('about_page'), 'This is the about page');
+    done();
+  });
+});
+
+// test loading a simpler config and also using a non csv url for config
+describe('Config - load simple', function(){
+  var configUrl = config.get('configUrl');
+  before(function(done){
+    config.reset();
+    config.set('configUrl', base.simpleConfigUrl);
+    base.setFixtures();
+    util.loadConfig(done);
+  });
+
+  after(function(done){
+    config.set('configUrl', configUrl);
+    base.unsetFixtures();
+    done();
+  });
+
+  it('config is loaded', function(done){
+    assert.equal(config.get('title'), 'Simple Open Data Census');
+    // should be default
+    var questions = 'https://docs.google.com/spreadsheet/pub?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&single=true&gid=3&output=csv';
+    assert.equal(config.get('questions'), questions);
+
+    // base.simpleConfigCsvUrl with index + 1
+    var places = 'https://docs.google.com/spreadsheet/pub?key=0AqR8dXc6Ji4JdEg2elXXXX&single=true&gid=3&output=csv';
+    assert.equal(config.get('places'), places);
+    var user_database_key = '0AqR8dXc6Ji4JdGJXallkcjNOaFlmN1N5MXZkM1ZSbUE';
+    assert.equal(config.get('user_database_key'), user_database_key);
+    assert.equal(config.get('display_year'), 2013);
     done();
   });
 });
@@ -159,5 +190,25 @@ describe('Misc', function(){
     out = util.makeUserObject(profile);
     assert.equal(out.userid, 'facebook:aaa');
     done();
+  });
+
+  it('parseSpreadsheetUrl', function() {
+    out = util.parseSpreadsheetUrl(base.simpleConfigUrl);
+    exp = {
+      key: '0AqR8dXc6Ji4JdEg2elXXXX',
+      sheet: 2
+    };
+    assert.deepEqual(out, exp);
+  });
+  it('getCsvUrlForGoogleSheet', function() {
+    // no op case
+    out = util.getCsvUrlForGoogleSheet(base.simpleConfigUrlCsv);
+    assert.deepEqual(out, base.simpleConfigUrlCsv);
+
+    out = util.getCsvUrlForGoogleSheet('http://config.url');
+    assert.deepEqual(out, 'http://config.url');
+
+    out = util.getCsvUrlForGoogleSheet(base.simpleConfigUrl);
+    assert.deepEqual(out, base.simpleConfigUrlCsv);
   });
 });
