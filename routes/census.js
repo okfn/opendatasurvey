@@ -184,7 +184,7 @@ exports.setupAuth = function() {
     new GoogleStrategy({
         clientID: config.get('google:app_id'),
         clientSecret: config.get('google:app_secret'),
-        callbackURL: config.get('site_url') + '/auth/google/callback',
+        callbackURL: config.get('site_url').replace(/\/$/, '') + '/auth/google/callback',
         profileFields: ['id', 'displayName', 'name', 'username', 'emails', 'photos']
       },
       function(accessToken, refreshToken, profile, done) {
@@ -220,5 +220,9 @@ function requireLoggedIn(req, res) {
 
 function canReview(user) {
   return (config.get('reviewers').indexOf(user.userid) !== -1);
+}
+
+function isAdmin(user) {
+  return (config.get('admins').indexOf(user.userid) !== -1);
 }
 
