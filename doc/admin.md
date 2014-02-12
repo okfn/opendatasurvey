@@ -177,6 +177,18 @@ Content for the overview on the home page (this is just content for top of page 
 
 You can use markdown or HTML format.
 
+### `submit_page`
+
+Instructions for the top of the submit page.
+
+You can use markdown or HTML format.
+
+### `review_page`
+
+Instructions for the top of the review page.
+
+You can use markdown or HTML format.
+
 ### `faq_page`
 
 Content for the FAQ page.

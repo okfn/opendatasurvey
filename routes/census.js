@@ -20,6 +20,7 @@ exports.submit = function(req, res) {
 
   function render(prefill_) {
     res.render('submission/create.html', {
+      submitInstructions: config.get('submit_page'),
       places: model.data.places,
       ynquestions: ynquestions,
       questions: model.data.questions,
@@ -112,6 +113,7 @@ exports.review = function(req, res) {
           return (d.id == obj.dataset);
         });
         res.render('submission/review.html', {
+          reviewInstructions: config.get('review_page'),
           ynquestions: ynquestions,
           subrecord: obj,
           prefill: obj,

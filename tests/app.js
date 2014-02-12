@@ -231,12 +231,13 @@ describe('Census Pages', function() {
     }
   });
 
-  it('GET Submission', function(done) {
+  it('GET Submit', function(done) {
     request(app)
       .get('/submit/')
       .expect(200)
       .end(function(err, res) {
         assert(res.text.match('Submit'));
+        checkContent(res, config.get('submit_page'));
         done();
       });
   });
@@ -338,6 +339,7 @@ describe('Census Pages', function() {
       .get(url)
       .expect(200)
       .end(function(err, res) {
+        checkContent(res, config.get('review_page'));
         assert(res.text.match('Publish will overwrite the whole current entry'), 'on review page');
         assert(res.text.match('National government budget at a high level'), 'correct dataset shows up');
         done();

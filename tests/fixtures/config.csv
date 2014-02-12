@@ -14,3 +14,5 @@ custom_css,".xxxxxAAAAA { display: none; }"
 custom_footer,"<h3>Custom Footer</h3>"
 google_analytics_key,XXXX-GA-XXXX
 navbar_logo,"My logo here"
+submit_page,"Our submit instructions"
+review_page,"Our review instructions"
