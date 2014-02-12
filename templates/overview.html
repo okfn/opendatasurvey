@@ -19,9 +19,11 @@
     </div>
   </div>
 
+  {% if custom_text %}
   <div class="custom-intro">
     {{ custom_text }}
   </div>
+  {% endif %}
 
   <div class="pull-left">{% include '_snippets/key.html' %}
   </div>

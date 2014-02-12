@@ -1020,3 +1020,7 @@ table.faq-table tr td:first-child {
   margin-top: 15px;
   padding-top: 15px;
 }
+
+.custom-intro {
+  margin-bottom: 20px;
+}
