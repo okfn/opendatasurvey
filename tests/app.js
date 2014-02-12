@@ -30,6 +30,9 @@ describe('Basics', function() {
       .expect(200)
       .end(function(err, res) {
         checkContent(res, config.get('overview_page'));
+        // check overview table works
+        checkContent(res, 'United Kingdom');
+        checkContent(res, 'Zambia');
         done();
       })
       ;

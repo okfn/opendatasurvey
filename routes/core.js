@@ -17,7 +17,8 @@ exports.overview = function(req, res) {
   // the latter only has places for which we have some actual results
   res.render('overview.html', {
     summary: model.data.entries.summary,
-    places: model.data.entries.places,
+    places: model.data.places,
+    byplace: model.data.entries.byplace,
     datasets: model.data.datasets,
     scoredQuestions: model.data.scoredQuestions,
     placesById: model.data.placesById,

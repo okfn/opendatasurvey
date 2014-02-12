@@ -150,11 +150,11 @@ describe('LoadSubmittedData', function(){
   });
 
   it('entries.byplace is ok ', function(){
-    assert.equal(Object.keys(db.entries.byplace).length, db.entries.places.length);
+    assert.equal(Object.keys(db.entries.byplace).length, db.places.length);
 
     var uk = db.entries.byplace['gb'];
     assert.equal(Object.keys(uk.datasets).length, 2);
-    // assert(uk.datasets[
+    assert.equal(uk.score, 75);
   });
 
   it('entries item is ok ', function(){

@@ -25,14 +25,76 @@
   </div>
   {% if not readonly %}
   <div class="pull-right">
-    <a href="/contribute/" class="btn btn-primary">
-      <i class="icon-plus"></i> Add data to the {{ sitename_short }}!
+    <a href="/submit/" class="btn btn-primary">
+      <i class="icon-plus"></i> Contribute data to the {{ sitename_short }}!
     </a>
   </div>
   {% endif %}
 
   <table class="response-summary table">
-    {% include '_snippets/summary-table.html' %}
+<thead>
+  <tr>
+    <th>&nbsp;</th>
+    {% for dataset in datasets %}
+      <th><div><a href="/dataset/{{dataset.id}}">{{ dataset.titleRotated }}</a></div></th>
+    {% endfor %}
+    <th><div><strong>Total Score</strong></div>
+  </tr>
+</thead>
+<tbody>
+  {% for place in places %}
+    {% set placeScore = byplace[place.id].score %}
+    <tr
+      {#
+        data-* are values needed for doing sorting
+
+        note we have place name not by id to avoid odd ux (e.g. united
+        arab emirates should come under 'u' but its iso code is 'ae'
+      #}
+      data-score="{{placeScore}}"
+      data-area="{{place.name}}">
+      <th class="area-name">
+        {% if place %}
+          <a href="/place/{{ place.id }}">{{place.name}}</a>
+        {% else %}
+          <a href="submit/" data-toggle="tooltip" class="unknown no-data count-0" title="Click here to add to the census!">Add new</a>
+        {% endif %}
+      </th>
+    {% for dataset in datasets %}
+    {% set record = byplace[place.id].datasets[dataset.id] %}
+    <td
+      class="
+      ycount-{{record.ycount}}
+      showpopover
+      "
+      data-place="{{record.place}}"
+      data-dataset="{{record.dataset}}"
+      data-datasetTitle="{{dataset.title}}"
+      >
+        <ul class="availability icons mini">
+          {% for qu in scoredQuestions %}
+            {% set state = record[qu.id] %}
+            <li class="{% if state == 'Y' %}yes{% elif state == 'N' %}no{% elif state == '?' %}maybe{% endif %}" data-toggle="tooltip" title="{{ qu.question }}">
+              <i class="icon-{{ qu.icon }}"></i>
+              <span class="text">{{ state }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+    </td>
+    {% endfor %}
+    <td class="placescore" data-score="{{placeScore}}"><a>{{placeScore}}</a></td>
+  </tr>
+  {% endfor %}
+</tbody>
+<tfoot>
+  <tr>
+    <th>&nbsp;</th>
+    {% for dataset in datasets %}
+      <th><div><a href="/dataset/{{dataset.id}}">{{ dataset.titleRotated }}</a></div></th>
+    {% endfor %}
+    <th><div><strong>Total Score</strong></div>
+  </tr>
+</tfoot>
   </table>
 
   <div class="pull-left">
