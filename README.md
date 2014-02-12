@@ -28,9 +28,11 @@ Config boot sequence:
   information (see below for a template)
 * Loads all other config CSV files (Places, Datasets, Questions)
 
-### Facebook Auth
+### Auth
 
-For Facebook Auth you will need to create an App on Facebook developers section
+For user Auth we use Google and their OAuth 2.0.
+
+you will need to create an App on Facebook developers section
 and set various config. See config section below for detail.
 
 ------
@@ -65,12 +67,6 @@ Core configuration is listed in lib/config.js which loads from environment
 variables and then via `lib/util.js` `load` method to pull in config from CSV
 files.
 
-Setting up Facebook for Login:
-
-* Register as a developer
-* Create an App
-* Go to Basic Settings and select Add Platform
-* Enter the site url of your site
 
 #### Over-riding for development
 
@@ -93,7 +89,10 @@ environment variables: https://devcenter.heroku.com/articles/config-vars
 
 ### Running Tests
 
-Install mocha (see devDependencies in package.json) then do:
+* Install dev dependencies and mocha - `npm install -d`
+* Get the opendatacensustest google user login and add to `settings.json`
+
+Then run the tests:
 
     mocha tests/
 

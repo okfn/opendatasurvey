@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+
+var path = require('path')
+  , request = require('request')
+  , fs = require('fs')
+  , optimist = require('optimist')
+  , os = require('os')
+  , colors = require('colors')
+
+  , cli = require('../lib/cli')
+  ;
+
+var argv = optimist
+  .usage(
+    [
+      'Usage: census <command> [options]',
+      '',
+      'Where command is one of:',
+      '',
+      '  create {slug}   Interactively create a census deployment named slug',
+    ].join(os.EOL)
+  )
+  .alias('h', 'help').describe('h', 'print usage')
+  .argv;
+
+if(argv.h){
+  console.log(optimist.help());
+  process.exit(0);
+}
+
+if(argv._[0] === 'create'){
+  cli.create(argv._[1]);
+} else {
+  console.error('Error: No command specified'.red);
+  console.log('');
+  console.log(optimist.help());
+  process.exit(1);
+}
+

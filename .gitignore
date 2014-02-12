@@ -5,3 +5,4 @@ node_modules/*
 settings.json*
 sandbox/*
 .env*
+.deploy.js
