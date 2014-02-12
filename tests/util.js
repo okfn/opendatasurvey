@@ -53,7 +53,7 @@ describe('Config - load simple', function(){
     assert.equal(config.get('database_spreadsheet_key'), 'AAAA');
 
     // should be default value from config
-    var questions = 'https://docs.google.com/spreadsheet/pub?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&single=true&gid=3&output=csv';
+    var questions = 'https://docs.google.com/spreadsheet/pub?key=0AqR8dXc6Ji4JdFI0QkpGUEZyS0wxYWtLdG1nTk9zU3c&single=true&gid=0&output=csv';
     assert.equal(config.get('questions'), questions);
 
     var datasets = 'https://docs.google.com/spreadsheet/pub?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&single=true&gid=3&output=csv';
