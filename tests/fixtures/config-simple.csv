@@ -1,7 +1,8 @@
 Key,Value
-database_spreadsheet_key,0AqR8dXc6Ji4JdHR5WWdUU2dYUElPaFluUlBJbkFOMUE
+database,https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=AAAA&usp=drive_web#gid=0
 title,Simple Open Data Census
 title_short,CensusShort
 display_year,2013
 submit_year,2013
 reviewers,"tester,a-reviewer"
+datasets,"https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&usp=drive_web#gid=3"

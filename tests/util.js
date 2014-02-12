@@ -49,9 +49,15 @@ describe('Config - load simple', function(){
 
   it('config is loaded', function(done){
     assert.equal(config.get('title'), 'Simple Open Data Census');
-    // should be default
+
+    assert.equal(config.get('database_spreadsheet_key'), 'AAAA');
+
+    // should be default value from config
     var questions = 'https://docs.google.com/spreadsheet/pub?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&single=true&gid=3&output=csv';
     assert.equal(config.get('questions'), questions);
+
+    var datasets = 'https://docs.google.com/spreadsheet/pub?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&single=true&gid=3&output=csv';
+    assert.equal(config.get('datasets'), datasets);
 
     // base.simpleConfigCsvUrl with index + 1
     var places = 'https://docs.google.com/spreadsheet/pub?key=0AqR8dXc6Ji4JdEg2elXXXX&single=true&gid=3&output=csv';

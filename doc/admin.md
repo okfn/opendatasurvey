@@ -24,11 +24,23 @@ combination is called a `Submission`.
 When a `Submission` has been reviewed and deemed accurate it becomes an `Entry`
 in the Census. 
 
-### Access Control
+### Contributor and Review Workflow
 
-You must be logged in to make a Submission or review a Submission. Login is via
-Facebook. We store sensitive user info (e.g. password) in a closed central DB.
+Contributing new submissions
 
+* Contributors visit the submit page to make a new `Submission`
+
+  * You must be logged in to make a Submission
+  
+* The Submission will now be displaying awaiting review on the place page for that place
+
+Review
+
+* A reviewer visits the review page for a submission
+  * You must be logged in to review
+  * You must be an authorized reviewer to review (see `reviewers` config option below)
+* The reviewer reviews or rejects the submission
+ 
 ### Configuration
 
 Configuration is of two types:
@@ -88,18 +100,12 @@ opendatacensustest@gmail.com) which will be used by the Census app to access
 the data(base) spreadsheets. It is **not** configurable as part of the general
 application config but is provided to you your Census Deployer.
 
-### `database_spreadsheet_key` (*)
+### `database` (*)
 
-The key of a Google docs spreadsheet.
+The url of the Google docs spreadsheet for the primary results database.
 
 This spreadsheet should be world-readable and read/write for the application
 google user.
-
-Note the key in a google spreadsheet url is the value the `?key=...` parameter. For example, for the url:
-
-`https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdEg2el9xaUxBcjFnbEYtNnMwLTVmTVE&usp=drive_web#gid=2`
-
-The key would be: `0AqR8dXc6Ji4JdEg2el9xaUxBcjFnbEYtNnMwLTVmTVE`
 
 ### `user_database_key`
 
@@ -140,17 +146,30 @@ List of reviewer user ids separated by spaces or commas. Reviewer user ids shoul
 
 ### `datasets`
 
-URL to an online CSV file containing a list of datasets to ask questions about. The structure should follow that in https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&usp=drive_web#gid=0
+URL to a Google Spreadsheet (make sure url is to *actual* sheet you want) or
+online CSV file containing a list of datasets to ask questions about.
+
+The structure should follow that in
+https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&usp=drive_web#gid=0
 
 ### `places`
 
-URL to an online CSV file containing a list of places to ask questions about. The structure should follow that in https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&usp=drive_web#gid=7
+URL to a Google Spreadsheet (make sure url is to *actual* sheet your want) or
+online CSV file containing a list of places to ask questions about.
+
+The structure should follow that in
+https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&usp=drive_web#gid=7
 
 ### `questions`
 
-URL to a CSV file with a list of questions (usually this will be the CSV version of a google spreadsheet).
+URL to a Google Spreadsheet (make sure url is to *actual* sheet your want) or
+online CSV file containing a list of questions about.
 
-We STRONGLY recommend using questions as in https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&usp=drive_web#gid=1"
+questions MUST follow structure as in
+https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&usp=drive_web#gid=1
+
+In particular, it must have the same set of questions ids (descriptions and
+titles can change - e.g. for translation).
 
 ### `overview_page`
 

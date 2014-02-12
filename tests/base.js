@@ -4,6 +4,7 @@ var fs = require('fs')
   , sinon = require('sinon')
 
   , config     = require('../lib/config.js')
+  , util = require('../lib/util')
   ;
 
 exports.options = {
@@ -26,17 +27,21 @@ exports.setFixtures = function() {
 
   sinon
     .stub(request, 'get', stubbed);
+
+  function _csv(name) {
+    return util.getCsvUrlForGoogleSheet(config.get(name))
+  };
         
   function stubbed(url, cb) {
     if (url === exports.simpleConfigUrlCsv) {
       cb(null, null, data['config-simple']);
-    } else if (url == config.get('configUrl')) {
+    } else if (url == _csv('configUrl')) {
       cb(null, null, data['config']);
-    } else if (url == config.get('questions')) {
+    } else if (url == _csv('questions')) {
       cb(null, null, data['questions'])
-    } else if (url == config.get('datasets')) {
+    } else if (url == _csv('datasets')) {
       cb(null, null, data['datasets'])
-    } else if (url == config.get('places')) {
+    } else if (url == _csv('places')) {
       cb(null, null, data['places'])
     } else {
       request.get.restore();
