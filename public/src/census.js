@@ -66,22 +66,8 @@ $(document).ready(function($) {
       });
 
     $('.sort-table').change(function(){
-      var sortFunc;
       var sortBy = $(this).val();
-
-      if (sortBy === 'score') {
-        sortFunc = function(a, b) {
-          return parseInt($(b).data('score'), 10) - parseInt($(a).data('score'), 10);
-        };
-      } else {
-        sortFunc = function(a, b) {
-          return $(a).data('area').toUpperCase().localeCompare($(b).data('area').toUpperCase());
-        };
-      }
-
-      $('.sort-table').attr('checked', false);
-      $('.sort-table[value="' + sortBy + '"]').attr('checked', true);
-      table.find('tbody tr').sort(sortFunc).appendTo(table);
+      sortTable(table, sortBy);
     });
 
     $('a[data-toggle="tooltip"]').tooltip();
@@ -100,7 +86,32 @@ $(document).ready(function($) {
   var summary;
 
   $.getJSON('/country/results.json', function(data) {
-    summaryTable($('.response-summary'), data);
+    var $table = $('.response-summary');
+    summaryTable($table, data);
+    // now sort
+    sortTable($table, 'score');
   });
 
 });
+
+function sortTable(table, sortBy) {
+  var sortFunc;
+
+  var sortByArea = function(a, b) {
+      return $(a).data('area').toUpperCase().localeCompare($(b).data('area').toUpperCase());
+    };
+
+  if (sortBy === 'score') {
+    // sort by score then name
+    sortFunc = function(a, b) {
+      var comp = parseInt($(b).data('score'), 10) - parseInt($(a).data('score'), 10);
+      return comp !== 0 ? comp : sortByArea(a,b);
+    };
+  } else {
+    sortFunc = sortByArea;
+  }
+
+  $('.sort-table').attr('checked', false);
+  $('.sort-table[value="' + sortBy + '"]').attr('checked', true);
+  table.find('tbody tr').sort(sortFunc).appendTo(table);
+}
