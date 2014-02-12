@@ -19,7 +19,7 @@ exports.submit = function(req, res) {
   var year = prefill.year || config.get('submit_year');
 
   function render(prefill_) {
-    res.render('country/submit.html', {
+    res.render('submission/create.html', {
       places: model.data.places,
       ynquestions: ynquestions,
       questions: model.data.questions,
@@ -111,7 +111,7 @@ exports.review = function(req, res) {
         var dataset = _.find(model.data.datasets, function(d) {
           return (d.id == obj.dataset);
         });
-        res.render('country/review/index.html', {
+        res.render('submission/review.html', {
           ynquestions: ynquestions,
           subrecord: obj,
           prefill: obj,
