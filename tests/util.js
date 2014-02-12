@@ -80,7 +80,7 @@ describe('LoadFixedData', function(){
   });
 
   after(function(done){
-    request.get.restore();
+    base.unsetFixtures();
     done();
   });
 
