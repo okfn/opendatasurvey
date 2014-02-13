@@ -1,5 +1,6 @@
 var model = require('./lib/model').OpenDataCensus
   , app = require('./app').app
+  , census = require('./routes/census')
   , config = require('./lib/config')
   ; 
 
