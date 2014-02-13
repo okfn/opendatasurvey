@@ -12,12 +12,12 @@ request <http://meta.census.okfn.org/request/>
 
 ## Before you start
 
-* Check you have a Google account and that this account has access to the [census instance spreadsheet][instance]
+* Check you have a Google account and that this account has access to the
+  [census instance spreadsheet][instance]
 * Identify the `slug` for your app. It will usually be `{2-digit-iso}-{type}`
   where {type} is one of `city` or `region`. The site will then be online at
   `{slug}.census.okfn.org` (the "`site_url`")
 * Identify the google user account that will be your database user
-
 
 IMPORTANT: to make a Google Spreadsheet 'Public on the Web' you must:
 
@@ -26,19 +26,22 @@ IMPORTANT: to make a Google Spreadsheet 'Public on the Web' you must:
 
 ## Step-by-Step
 
-1. Boot a config spreadsheet (copy the [template][config])
+* Open the [census instance spreadsheet][instance]. You should add relevant
+  info to this as you do next steps.
+
+* Boot a config spreadsheet (copy the [template][config])
 
   * Add sheets for general config and for places, datasets and questions (see
     [template][config])
   * Make the sheet 'Public on the Web' (see above)
   * Set essential config that should not be changed e.g. `site_url`
 
-2. Create a Database spreadsheet (copy the [DB template][db])
+* Create a Database spreadsheet (copy the [DB template][db])
 
   * Add relevant google user (e.g. opendatacensusapp@gmail.com) as read/write user
   * Make the sheet 'Public on the Web' and world readable
 
-4. Setup auth - you will need to register the app with Google - see
+* Setup auth - you will need to register the app with Google - see
    https://developers.google.com/accounts/docs/OAuth2#basicsteps
 
   * Register as a developer
@@ -50,17 +53,13 @@ IMPORTANT: to make a Google Spreadsheet 'Public on the Web' you must:
     * Authorized origins should be: the `site_url` plus the heroku url `opendatacensus-{slug}.herokuapp.com`
     * Note redirect urls should be the site urls plus /auth/google/callback
 
-2. Create a new Heroku app `opendatacensus-{slug}`
+* Run the `create` script (this will output further instructions)
 
-   * `heroku apps:create opendatacensus-{slug} --remote {slug}`
-   * Set up the environment config (see below)
-   * Deploy
+      bin/census create {SLUG}
 
-        git push {slug-name} master
-   
-   * Should now be live at http://opendatacensus-{slug}.herokuapp.com/
+Optional:
 
-3. [optional] Set up the DNS so that app is at http://{slug}.census.okfn.org/
+* Set up the DNS so that app is at http://{slug}.census.okfn.org/
 
    * Contact sysadmin team at Open Knowledge Foundation and request CNAME alias
      of {slug}.census.okfn.org to opendatacensus-{slug}.herokuapp.com
