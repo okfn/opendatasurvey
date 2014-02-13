@@ -132,9 +132,6 @@ if (!config.get('appconfig:readonly')) {
   app.get('/login', census.login);
   app.get('/auth/logout', census.logout);
   app.get('/auth/loggedin', census.loggedin);
-  
-  // Passport Auth Stuff (Facebook etc)
-  census.setupAuth();
 
   app.get('/auth/google',
     passport.authenticate('google', { scope: [

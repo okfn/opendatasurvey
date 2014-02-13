@@ -14,6 +14,10 @@ model.load(function(err) {
     console.error('Failed to load dataset info');
     throw err;
   }
+  // Passport Auth Stuff (Facebook etc)
+  // set up here rather than app.js as must be after config load to
+  // get site_url
+  census.setupAuth();
   app.listen(app.get('port'), function() {
     console.log("Listening on " + app.get('port'));
   });
