@@ -54,8 +54,8 @@ IMPORTANT: to make a Google Spreadsheet 'Public on the Web' you must:
     * Note redirect urls should be the site urls plus /auth/google/callback
 
 * Run the `create` script (this will output further instructions)
-
-      bin/census create {SLUG}
+  
+        bin/census create {SLUG}
 
 Optional:
 
