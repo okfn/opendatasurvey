@@ -1,0 +1,92 @@
+<fieldset>
+<h3>Data Availability Questions</h3>
+
+<table class="table table-striped yntable">
+<thead>
+  <tr>
+    <td></td>
+    <td><label>Yes</label></td> <td><label>No </label></td> <td><label>Unsure</label></td>
+    <td></td>
+  </tr>
+</thead>
+<tbody id="dataset-properties">
+  {% for qu in ynquestions %}
+  <tr {% if loop.index0 != 0 %}class="hide js-dependent"{% endif %}>
+    <td>{{qu.question}}?</td>
+    {% for val in ['Yes', 'No', 'Unsure'] %}
+    <td>
+      <input type="radio" name="{{qu.id}}" value="{{val}}" {% if prefill[qu.id] == val %}checked="true"{% endif %}
+        required>
+    </td>
+    {% endfor %}
+    <td>
+      <span class="help-block">{{qu.description}}</span>
+    </td>
+  </tr>
+  {% endfor %}
+</tbody>
+</table>
+</fieldset>
+
+{% macro question(qu) -%}
+    <h4>{{qu.question}}</h4>
+    <input type="{{qu.type}}"
+      title="{{qu.placeholder}}"
+      name="{{qu.id}}" value="{{prefill[qu.id]}}"
+      placeholder="{{qu.placeholder}}" {% if qu.id=='format' %} list="formats" {% endif %} />
+    <span class="help-block">{{qu.description}}</span>
+{%- endmacro  %}
+
+<fieldset class="data-details">
+  <div class="row">
+  {% for qu in questions.slice(9, 13) %}
+  <div class="span6">
+    {{ question(qu) }}
+  </div>
+  {% endfor %}
+  </div>
+
+  <datalist id="formats">
+    <option value="CSV">
+    <option value="Excel">
+    <option value="HTML">
+    <option value="PDF">
+    <option value="json">
+    <option value="geojson">
+    <option value="shapefiles">
+  </datalist>
+</fieldset>
+
+  <h3>Publisher Information</h3>
+  <div class="row">
+    <div class="span6">
+      {{question(questionsById.publisher)}}
+    </div>
+    <div class="span6">
+      {{question(questionsById.title)}}
+    </div>
+  </div>
+
+  <h3>Data Quality</h3>
+  <div class="row">
+  {% for quid in ['qualityinfo', 'qualitystructure'] %}
+  {% set qu = questionsById[quid] %}
+    <div class="span6">
+      <h4>{{qu.question}}</h4>
+      <select name="{{qu.id}}" autocomplete="off">
+        <option value="">Please select</option>
+        {% for xval in [1,2,3,4,5,6,7,8,9,10] %}
+        <option value="{{xval}}" {% if xval == prefill[qu.id] %}selected="true"{% endif %}
+          >{{xval}}</option>
+        {% endfor %}
+      </select>
+      <span class="help-block">{{qu.description}}</span>
+    </div>
+  {% endfor %}
+  </div>
+
+  <h3>{{questionsById.details.question}}</h3>
+  <textarea name="details" class="span8" style="min-height: 150px;">{{prefill.details}}</textarea>
+  <span class="help-block">{{questionsById.details.description}}</span>
+
+
