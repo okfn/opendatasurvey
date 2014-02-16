@@ -266,6 +266,8 @@ describe('Census Pages', function() {
       , digital: 'Unsure'
       , online: 'No'
       , url: 'http://xyz.com'
+      , licenseurl: 'http://abc.com'
+      , qualityinfo: 5
       , details: 'Lots of random stuff\n\nincluding line breaks'
     };
     request(app)
@@ -277,11 +279,12 @@ describe('Census Pages', function() {
         // all test regex tests are rather hacky ...
         assert(res.text.match('value="%s" selected="true"'.replace('%s', prefill.place)), 'place not set');
         assert(res.text.match('value="emissions" selected="true"'), 'dataset not set');
-        assert(res.text.match('value="emissions" selected="true"'), 'dataset not set');
         testRadio(res.text, 'exists', prefill.exists);
         testRadio(res.text, 'digital', prefill.digital);
         testRadio(res.text, 'online', prefill.online);
         assert(res.text.match('name="url" value="' + prefill.url + '"'), 'url not set');
+        assert(res.text.match('name="licenseurl" value="' + prefill.licenseurl + '"'), 'license url not set');
+        assert(res.text.match('value="5" selected="true"'), 'quality info not set');
         assert(res.text.match(prefill.details + '</textarea>'), 'details not set');
         done();
       });

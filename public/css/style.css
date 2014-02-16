@@ -287,7 +287,6 @@ ul.availability.icons.mini li i {
 /* Layout */
 /* ====== */
 html {
-	overflow-x: hidden;
 	background-color: #edeeec;
 }
 html.readonly {
@@ -967,6 +966,10 @@ div.historic-entries div.current-entry:last-child .textarea {
 
 .help-block, .help-inline {
 	font-size: 13px;
+}
+
+fieldset.data-details input {
+  width: 90%;
 }
 
 .well h3 {

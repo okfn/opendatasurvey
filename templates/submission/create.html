@@ -84,15 +84,23 @@ Submit
 </table>
 </fieldset>
 
-<fieldset>
-  <div class="row">
-  {% for qu in questions.slice(9, 12) %}
-  <div class="span6">
-    <h3>{{qu.question}} (optional)</h3>
-    <input type="{{qu.type}}" {% if qu.type=='url' %} title="URL in the form of http://..."{% endif %} name="{{qu.id}}" value="{{prefill[qu.id]}}" placeholder="{{qu.placeholder}}" {% if qu.id=='format' %} list="formats" {% endif %} />
+{% macro question(qu) -%}
+    <h4>{{qu.question}}</h4>
+    <input type="{{qu.type}}"
+      title="{{qu.placeholder}}"
+      name="{{qu.id}}" value="{{prefill[qu.id]}}"
+      placeholder="{{qu.placeholder}}" {% if qu.id=='format' %} list="formats" {% endif %} />
     <span class="help-block">{{qu.description}}</span>
+{%- endmacro  %}
+
+<fieldset class="data-details">
+  <div class="row">
+  {% for qu in questions.slice(9, 13) %}
+  <div class="span6">
+    {{ question(qu) }}
   </div>
   {% endfor %}
+  </div>
 
   <datalist id="formats">
     <option value="CSV">
@@ -103,12 +111,39 @@ Submit
     <option value="geojson">
     <option value="shapefiles">
   </datalist>
-
 </fieldset>
 
-  <h3>Further Information, Details and Comments (optional but strongly encouraged)</h3>
+  <h3>Publisher Information</h3>
+  <div class="row">
+    <div class="span6">
+      {{question(questionsById.publisher)}}
+    </div>
+    <div class="span6">
+      {{question(questionsById.title)}}
+    </div>
+  </div>
+
+  <h3>Data Quality</h3>
+  <div class="row">
+  {% for quid in ['qualityinfo', 'qualitystructure'] %}
+  {% set qu = questionsById[quid] %}
+    <div class="span6">
+      <h4>{{qu.question}}</h4>
+      <select name="{{qu.id}}" autocomplete="off">
+        <option value="">Please select</option>
+        {% for xval in [1,2,3,4,5,6,7,8,9,10] %}
+        <option value="{{xval}}" {% if xval == prefill[qu.id] %}selected="true"{% endif %}
+          >{{xval}}</option>
+        {% endfor %}
+      </select>
+      <span class="help-block">{{qu.description}}</span>
+    </div>
+  {% endfor %}
+  </div>
+
+  <h3>{{questionsById.details.question}}</h3>
   <textarea name="details" class="span8" style="min-height: 150px;">{{prefill.details}}</textarea>
-  <span class="help-block">Please add detail here especially regarding data availability. for example, is the data partially available, are there plans to make it available in the future? is the data available from an unofficial source.</span>
+  <span class="help-block">{{questionsById.details.description}}</span>
 
 
   <h3>Your Name &ndash; {{ currentUser.name}} </h3>

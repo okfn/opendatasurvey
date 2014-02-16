@@ -24,6 +24,7 @@ exports.submit = function(req, res) {
       places: model.data.places,
       ynquestions: ynquestions,
       questions: model.data.questions,
+      questionsById: model.data.questionsById,
       datasets: model.data.datasets,
       year: year,
       prefill: prefill_
