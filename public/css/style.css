@@ -673,6 +673,14 @@ input.span2 {
 	margin-left: 0px;
 }
 
+/* Overview  */
+/* ========= */
+
+body.overview.extrawidth .container {
+  width: 95%;
+  margin: auto;
+}
+
 table.response-summary thead,
 table.response-summary tfoot {
 	position: sticky;
