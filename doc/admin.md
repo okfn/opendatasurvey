@@ -91,34 +91,19 @@ These are the config variables you can set in your config spreadsheet
 
 Those marked with a (*) must be set.
 
-Here is an [example config spreadsheet][ex] used for testing.
+Some definitions:
 
-[ex]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdEg2el9xaUxBcjFnbEYtNnMwLTVmTVE&usp=drive_web#gid=2
+* 'application google user' is the Google user(name) (e.g.
+  opendatacensustest@gmail.com) which will be used by the Census app to access
+  the data(base) spreadsheets. It is **not** configurable as part of the
+  general application config but is provided to you your Census Deployer.
+* 'user id' - some configuration items require you to specify users 'user id'
+  (e.g. the reviewers field). The user id of a logged in user on a Census
+  application is of the form: `google:{id}` where `{id}` is the Google id of
+  that user (same as their G+ id). Here are some [instruction on how to find a
+  Google id][find-g-id].
 
-Definition: 'application google user' is the Google user(name) (e.g.
-opendatacensustest@gmail.com) which will be used by the Census app to access
-the data(base) spreadsheets. It is **not** configurable as part of the general
-application config but is provided to you your Census Deployer.
-
-### `database` (*)
-
-The url of the Google docs spreadsheet for the primary results database.
-
-This spreadsheet should be world-readable and read/write for the application
-google user.
-
-### `user_database_key`
-
-The key of a Google docs spreadsheet that will be the user database.
-
-This is optional. If not provided, login will still be possible but we won't
-record user details such as email (we will just store the user id into the
-submissions and reviews).
-
-The user spreadsheet must be private as it will contain private user info like
-email addresses.
-
-It should be accessible to the applicate google user.
+[find-g-id]: http://ansonalex.com/google-plus/how-do-i-find-my-google-plus-user-id-google/
 
 ### `title`
 
@@ -236,3 +221,28 @@ Custom footer content
 
 Supply a google analytics key to use on the site
 
+### `database` (*)
+
+**This will normally be set for you by the deployer. Do not change its value
+unless you know what you are doing!**
+
+The url of the Google docs spreadsheet for the primary results database.
+
+This spreadsheet should be world-readable and read/write for the application
+google user.
+
+### `user_database_key`
+
+**This will usually be set in the deployment config so you will not need to set
+it.**
+
+The key of a Google docs spreadsheet that will be the user database.
+
+This is optional. If not provided, login will still be possible but we won't
+record user details such as email (we will just store the user id into the
+submissions and reviews).
+
+The user spreadsheet must be private as it will contain private user info like
+email addresses.
+
+It should be accessible to the applicate google user.
