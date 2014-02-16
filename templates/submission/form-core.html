@@ -1,12 +1,15 @@
 <fieldset>
 <h3>Data Availability Questions</h3>
 
-<table class="table table-striped yntable">
+<table class="table table-striped yntable availability-form">
 <thead>
   <tr>
     <td></td>
-    <td><label>Yes</label></td> <td><label>No </label></td> <td><label>Unsure</label></td>
-    <td></td>
+    <td>Yes</td>
+    <td>No</td>
+    <td>Unsure</td>
+    <td class="current-entry">Current Entry</td>
+    <td>Info</td>
   </tr>
 </thead>
 <tbody id="dataset-properties">
@@ -19,7 +22,10 @@
         required>
     </td>
     {% endfor %}
-    <td>
+    <td class="current-entry">
+      {{ currrecord[qu.id] }}
+    </td>
+    <td class="info">
       <span class="help-block">{{qu.description}}</span>
     </td>
   </tr>
@@ -28,12 +34,23 @@
 </table>
 </fieldset>
 
+
+{% macro currentEntry(qu) %}
+  <div class="current-entry">
+    <label>Current Entry</label>
+    <div>
+      {% if currrecord %} {{currrecord[qu.id]}} {% else %} No entry {% endif %}
+    </div>
+  </div>
+{%- endmacro  %}
+
 {% macro question(qu) -%}
     <h4>{{qu.question}}</h4>
     <input type="{{qu.type}}"
       title="{{qu.placeholder}}"
       name="{{qu.id}}" value="{{prefill[qu.id]}}"
       placeholder="{{qu.placeholder}}" {% if qu.id=='format' %} list="formats" {% endif %} />
+    {{ currentEntry(qu) }}
     <span class="help-block">{{qu.description}}</span>
 {%- endmacro  %}
 
@@ -81,12 +98,15 @@
         {% endfor %}
       </select>
       <span class="help-block">{{qu.description}}</span>
+      {{ currentEntry(qu) }}
     </div>
   {% endfor %}
   </div>
 
   <h3>{{questionsById.details.question}}</h3>
-  <textarea name="details" class="span8" style="min-height: 150px;">{{prefill.details}}</textarea>
+  <textarea name="details" class="span8" 
+    style="min-height: 150px;">{{prefill.details}}</textarea>
   <span class="help-block">{{questionsById.details.description}}</span>
+  {{ currentEntry(questionsById.details) }}
 
 

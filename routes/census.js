@@ -116,7 +116,8 @@ exports.review = function(req, res) {
         res.render('submission/review.html', {
           reviewInstructions: config.get('review_page'),
           ynquestions: ynquestions,
-          subrecord: obj,
+          questions: model.data.questions,
+          questionsById: model.data.questionsById,
           prefill: obj,
           currrecord: entry,
           dataset: dataset,

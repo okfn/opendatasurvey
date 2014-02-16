@@ -19,116 +19,31 @@ Review Submission
 </div>
 
 <form action="" method="post">
-<h3>{{dataset.title}}</h3>
-{{datasets}}
-<p>{{dataset.description}}</p>
+  <h3>{{dataset.title}}</h3>
+  <p>{{dataset.description}}</p>
 
-<table class="table table-striped availability-form">
-  <thead>
-    <tr>
-      <td></td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Unsure</td>
-      <td class="current-entry">Current Entry</td>
-      <td>Info</td>
-    </tr>
-  </thead>
-  <tbody>
-    {% for qu in ynquestions %}
-    <tr>
-      <td class="qu-title">{{qu.question}}?</td>
-      {% for val in ['Yes', 'No', 'Unsure'] %}
-      <td>
-        <input type="radio" name="{{qu.id}}" value="{{val}}" {% if prefill[qu.id] == val %}checked="true"{% endif %}
-          required>
-      </td>
-      {% endfor %}
-      <td class="current-entry">
-        {{ currrecord[qu.id] }}
-      </td>
-      <td class="info">
-        <span class="help-block">{{qu.description}}</span>
-      </td>
-    </tr>
-    {% endfor %}
-    </tbody>
-  </table>
+  {% include 'submission/form-core.html' %}
 
-                <div class="row">
-      	<div class="span6">
-        	<h3>Location of Data Online <span class="muted">(Optional)</span></h3>
-          <label for="url" class="ss-q-help">Please provide URL (location) of data if available</label>
-                            <input type="text" id="url" name="url" value="{{ subrecord.url }}" /><br />
-                            <div class="current-entry">
-                            <label>Current Entry</label>
-                            <input type="text" id="" class="span6" value="{% if currrecord %} {{currrecord.url}} {% else %} No record {% endif %}" readonly>
+   <div class="row"><br />
+    <div class="span8">
+      <h3>Reviewer name (you) &ndash; {{currentUser.name}}</h3>
+      <p class="help-block">This will be logged and displayed</p>
+      <p>
+        <input name="submit" type="submit" value="Publish" class="btn btn-primary" />
+        <input type="submit" name="submit" class="btn btn-danger" value="Reject" />&nbsp;
+      </p>
+      <p class="help-block">
+        If this submission makes no changes to the current entry then please 'Reject' it rather than 'Accept'.
+        <br />
+        Note that you edit the submission before accepting it. In particular, please correct any spelling mistakes.
+        <br />
+        <strong>Publish will overwrite the whole current entry with the data in this form.</strong>
+      </p>
 
+    </div>
+  </div>
+</form>
 
-                            </div>
-        </div>
-        <div class="span6">
-        	<h3>Date it became available <span class="muted">(Optional)</span></h3>
-          <label for="entry_133" class="ss-q-help">Use YYYY-MM-DD format if possible</label>
-                            <input type="text" id="entry_133" class="span6" name="dateavailable" value="{{ subrecord.dateavailable }}" />
-                            <div class="current-entry">
-          	<label>Current Entry</label>
-          	<input type="text" id="" class="span6" value="{% if currrecord %} {{currrecord.dateavailable}} {% else %} No record {% endif %}" readonly>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-         <div class="span6">
-        	<h3>Data format <span class="muted">(Optional)</span></h3>
-          <label for="format" class="ss-q-help">Please provide the format of the data if available</label>
-                            <input type="text" id="format" name="format" value="{{ subrecord.format }}" /><br />
-                            <div class="current-entry">
-                            <label>Current Entry</label>
-                            <input type="text" id="" class="span6" value="{% if currrecord %} {{currrecord.format}} {% else %} No record {% endif %}" readonly>
-
-
-                            </div>
-        </div>
-       </div>
-
-<div>
-
-           <h3>Details and comments <span class="muted">(Optional)</span></h3>
-      <label for="entry_12" class="ss-q-help">e.g. is the data partially available, are there plans to make it available in the future?</label>
-
-      <div class="historic-entries">
-        <textarea id="entry_12" class="expanding-texarea-common" name="details" style="min-height: 150px;">{{ subrecord.details }} </textarea>
-      </div>
-        <div class="current-entry">
-          <label>Current Entry</label>
-          <div class="textarea">{% if currrecord %} {{currrecord.details}} {% else %} No record {% endif %}</div>
-        </div>
-
-
-      </div>
-
-       <div class="row"><br />
-      	<div class="span8">
-          <div class=help-block">
-            <p class="help-block">If this submission makes no changes to the current entry then please 'Reject' it rather than 'Accept'.</p>
-            <p class="help-block"> 
-              Note that you edit the submission before accepting it. In particular, please correct any spelling mistakes.</p>
-            <p class="help-block"><strong>Publish will overwrite the whole current entry with the data in this form.</strong></p>
-          </div>
-
-          <div>
-            <p>
-              <input type="submit" name="submit" class="btn btn-danger" value="Reject" />&nbsp;
-              <input name="submit" type="submit" value="Publish" class="btn btn-primary" />
-           </p>
-
-           <h3>Reviewer name (you) &ndash; {{currentUser.name}}</h3>
-           <p class="help-block">This will be logged and displayed</p>
-        </div>
-      </div>
-    </form>
-
-    <script src="{{page.root}}/src/common.js"></script>
-    <script src="{{page.root}}/src/census.js"></script>
+<script src="{{page.root}}/src/common.js"></script>
+<script src="/src/submit.js"></script>
 {% endblock %}
