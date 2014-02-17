@@ -180,6 +180,21 @@ exports.loggedin = function(req, res) {
 };
 
 // ========================================================
+// Admin
+// ========================================================
+
+exports.reload = function(req, res) {
+  model.load(function(err) {
+    msg = 'Reloaded OK &ndash; <a href="/">Back to home page</a>';
+    if (err) {
+      console.error('Failed to reload config info');
+      msg = 'Failed to reload config etc. ' + err;
+    }
+    res.send(msg);
+  });
+}
+
+// ========================================================
 // Local Functions
 // ========================================================
 
