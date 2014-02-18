@@ -47,6 +47,14 @@
   </tr>
 </thead>
 <tbody>
+  {% if places.length == 0 %}
+  <tr>
+    <td colspan="5">
+      The Census Admin needs to add some places to the Places configuration sheet
+    </td>
+  </tr>
+  {% endif %}
+
   {% for place in places %}
     {% set placeScore = byplace[place.id].score %}
     <tr
