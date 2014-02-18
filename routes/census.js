@@ -168,6 +168,8 @@ exports.anonLogin = function(req, res) {
     displayName: name
   });
 
+  req.session.nextUrl = req.query.next;
+
   req.login(user, function(err) {
     if (err) {
       return res.send(err.code || 500, err.message || err);
