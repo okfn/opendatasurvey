@@ -55,7 +55,7 @@ exports.submitPost = function(req, res) {
   if (requireLoggedIn(req, res)) return;
 
   var submissionData = req.body;
-  model.backend.insertSubmission(submissionData, req.user, function(err, obj) {
+  model.backend.insertSubmission(submissionData, req.user, function(err, data) {
     var msg;
     // TODO: Do flash messages properly
     if (err) {
@@ -63,7 +63,10 @@ exports.submitPost = function(req, res) {
       msg = 'There was an error! ' + err;
       req.flash('error', msg);
     } else {
-      msg = 'Thank-you for your submission which has been received. It will now be reviewed before being published.';
+      msg = 'Thank-you for your submission which has been received.';
+      if (!data.reviewed) {
+        msg += ' It will now be reviewed before being published.';
+      }
       req.flash('info', msg);
     }
     res.redirect('/place/' + submissionData.place);
