@@ -133,6 +133,8 @@ if (!config.get('appconfig:readonly')) {
   app.post('/login', census.anonLogin);
   app.get('/auth/logout', census.logout);
   app.get('/auth/loggedin', census.loggedin);
+  // admin
+  app.get('/admin/reload', census.reload);
 
   app.get('/auth/google',
     passport.authenticate('google', { scope: [

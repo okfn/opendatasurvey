@@ -13,11 +13,17 @@ var model = require('../lib/model.js').OpenDataCensus
   , Backend = require('../lib/model.js').Backend
   ;
 
+dboptions = {
+ 'key': '0AqR8dXc6Ji4JdHR5WWdUU2dYUElPaFluUlBJbkFOMUE',
+ 'userDbKey': '0AqR8dXc6Ji4JdE5IdEhuQTZCTGp1em84VEZZcC04aUE',
+ censusid: 'test'
+};
+
 // some rules
 // we only add rows where place = Germany (so we can delete afterwards)
 describe('Backend Entry', function() {
   this.timeout(3000);
-  var backend = new Backend(base.options);
+  var backend = new Backend(dboptions);
 
   before(function(done) {
     backend.login(function(err){
@@ -51,7 +57,7 @@ describe('Backend Entry', function() {
   });
   it('getEntry', function(done) {
     backend.getEntry({year: 2013, dataset: 'maps', place: 'gb'}, function(err, entry) {
-      assert.ok(!err);
+      assert.ok(!err, err);
       assert.ok(entry!=null, 'No entry (entry is null)');
       assert.equal(entry.public, 'Yes', entry);
       done();
@@ -82,6 +88,75 @@ describe('Backend Entry', function() {
         });
       });
     });
+  });
+});
+
+describe('getAllEntrysWithInfo', function() {
+  var db = {};
+
+  before(function(done) {
+    base.setFixtures();
+    // we have to load config stuff as questions needed here
+    model.load(function(err) {
+      db = model.data;
+      done(err);
+    });
+  });
+
+  after(function(done) {
+    base.unsetFixtures();
+    done();
+  });
+
+  it('results ok ', function() {
+    assert.equal(db.entries.results.length, 2);
+    assert.equal(db.entries.results[0].place, 'gb');
+  });
+
+  it('entries summary is ok', function(){
+    // summary tests
+    assert.equal(db.entries.summary.entries, 2);
+    // console.log(db.entries.summary);
+    assert(db.entries.summary.open >= 0 && db.entries.summary.open <= db.entries.summary.entries);
+    assert(db.entries.summary.open_percent >= 0.0);
+  });
+
+  it('entries.places is ok ', function(){
+    // test places / countries
+    assert.equal(db.entries.places.length, 1);
+  });
+
+  it('entries.places is sorted by score, descending ', function(){
+    // test places / countries
+    var scores = db.entries.places.map(function (n) { return db.entries.byplace[n].score; });
+    var scoresCopy = scores.slice(0);
+    // sort scoresCopy descending, in-place
+    scoresCopy.sort().reverse();
+    assert.deepEqual(scoresCopy, scores);
+  });
+
+  it('entries.byplace is ok ', function(){
+    assert.equal(Object.keys(db.entries.byplace).length, db.places.length);
+
+    var uk = db.entries.byplace['gb'];
+    assert.equal(Object.keys(uk.datasets).length, 2);
+    assert.equal(uk.score, 75);
+  });
+
+  it('entries item is ok ', function(){
+    var uk = db.entries.byplace['gb'].datasets['maps'];
+    // console.log(uk);
+    assert.equal(uk.exists, 'Y');
+    assert.equal(uk['uptodate'], 'Y');
+    assert.equal(uk.ycount, 70);
+    assert.equal(uk.isopen, false);
+  });
+
+  it('entries census item open is ok ', function(){
+    var uk = db.entries.byplace['gb'].datasets['map'];
+    // TODO: reinstate
+    // assert.equal(uk.ycount, 6);
+    // assert.equal(uk.isopen, true);
   });
 });
 
@@ -204,7 +279,7 @@ describe('Submissions', function() {
 
 describe('User', function() {
   this.timeout(2000);
-  var backend = new Backend({key: base.options.userDbKey});
+  var backend = new Backend({key: dboptions.userDbKey});
   var profile = {
     provider: 'facebook',
     id: 'tests-xyz',
