@@ -179,12 +179,6 @@ describe('LoadSubmittedData', function(){
     // assert.equal(uk.ycount, 6);
     // assert.equal(uk.isopen, true);
   });
-
-  it('submissions ok', function() {
-    assert.equal(db.submissions.results.length, 4);
-    assert.deepEqual(db.submissions.places, ['gb', 'ug']);
-    assert.equal(db.submissions.reviewers.length, 0);
-  });
 });
 
 describe('Misc', function(){
