@@ -92,7 +92,7 @@ exports.submission = function(req, res) {
 // Compare & update page
 exports.review = function(req, res) {
   if (requireLoggedIn(req, res)) return;
-  if (!canReview(req.user)) {
+  if (!exports.canReview(req.user)) {
     res.send(401, 'Sorry, you are not an authorized reviewer');
     return;
   }
@@ -130,7 +130,7 @@ exports.review = function(req, res) {
 
 exports.reviewPost = function(req, res) {
   if (requireLoggedIn(req, res)) return;
-  if (!canReview(req.user)) {
+  if (!exports.canReview(req.user)) {
     res.send(401, 'Sorry, you are not an authorized reviewer');
     return;
   }
@@ -262,7 +262,7 @@ function requireLoggedIn(req, res) {
   }
 }
 
-function canReview(user) {
+exports.canReview = function(user) {
   var reviewers = config.get('reviewers') || [];
 
   return ~reviewers.indexOf(user.userid) || ~reviewers.indexOf(user.email);
