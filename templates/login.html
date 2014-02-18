@@ -20,6 +20,7 @@ Login
     <p>Login with your existing google account in a few seconds.</p>
     <a class="btn btn-primary" href="/auth/google">Login with Google &raquo;</a>
   </div>
+  {% if anonymous_submissions %}
   <div class="span2" style="text-align: center;">
     <h3>&ndash; or &ndash;</h3>
   </div>
@@ -37,6 +38,7 @@ Login
       <button type="submit" class="btn btn-primary">Continue &raquo;</button>
     </form>
   </div>
+  {% endif %}
 </div>
 <!--<p><a class="btn btn-primary btn-large" href="/auth/facebook">Login with Facebook &raquo;</a></p> -->
 
