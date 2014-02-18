@@ -85,6 +85,75 @@ describe('Backend Entry', function() {
   });
 });
 
+describe('getAllEntrysWithInfo', function() {
+  var db = {};
+
+  before(function(done) {
+    base.setFixtures();
+    // we have to load config stuff as questions needed here
+    model.load(function(err) {
+      db = model.data;
+      done(err);
+    });
+  });
+
+  after(function(done) {
+    base.unsetFixtures();
+    done();
+  });
+
+  it('results ok ', function() {
+    assert.equal(db.entries.results.length, 2);
+    assert.equal(db.entries.results[0].place, 'gb');
+  });
+
+  it('entries summary is ok', function(){
+    // summary tests
+    assert.equal(db.entries.summary.entries, 2);
+    // console.log(db.entries.summary);
+    assert(db.entries.summary.open >= 0 && db.entries.summary.open <= db.entries.summary.entries);
+    assert(db.entries.summary.open_percent >= 0.0);
+  });
+
+  it('entries.places is ok ', function(){
+    // test places / countries
+    assert.equal(db.entries.places.length, 1);
+  });
+
+  it('entries.places is sorted by score, descending ', function(){
+    // test places / countries
+    var scores = db.entries.places.map(function (n) { return db.entries.byplace[n].score; });
+    var scoresCopy = scores.slice(0);
+    // sort scoresCopy descending, in-place
+    scoresCopy.sort().reverse();
+    assert.deepEqual(scoresCopy, scores);
+  });
+
+  it('entries.byplace is ok ', function(){
+    assert.equal(Object.keys(db.entries.byplace).length, db.places.length);
+
+    var uk = db.entries.byplace['gb'];
+    assert.equal(Object.keys(uk.datasets).length, 2);
+    assert.equal(uk.score, 75);
+  });
+
+  it('entries item is ok ', function(){
+    var uk = db.entries.byplace['gb'].datasets['maps'];
+    // console.log(uk);
+    assert.equal(uk.exists, 'Y');
+    assert.equal(uk['uptodate'], 'Y');
+    assert.equal(uk.ycount, 70);
+    assert.equal(uk.isopen, false);
+  });
+
+  it('entries census item open is ok ', function(){
+    var uk = db.entries.byplace['gb'].datasets['map'];
+    // TODO: reinstate
+    // assert.equal(uk.ycount, 6);
+    // assert.equal(uk.isopen, true);
+  });
+});
+
 describe('Submissions', function() {
   this.timeout(3000);
 
