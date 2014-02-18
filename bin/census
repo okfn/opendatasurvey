@@ -28,8 +28,8 @@ if(argv.h){
   process.exit(0);
 }
 
-if(argv._[0] === 'create'){
-  cli.create(argv._[1]);
+if(argv._.length > 0 && argv._[0] in cli) {
+  cli[argv._[0]](argv._[1]);
 } else {
   console.error('Error: No command specified'.red);
   console.log('');
