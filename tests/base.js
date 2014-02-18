@@ -9,7 +9,8 @@ var fs = require('fs')
 
 exports.options = {
  'key': '0AqR8dXc6Ji4JdHR5WWdUU2dYUElPaFluUlBJbkFOMUE',
- 'userDbKey': '0AqR8dXc6Ji4JdE5IdEhuQTZCTGp1em84VEZZcC04aUE'
+ 'userDbKey': '0AqR8dXc6Ji4JdE5IdEhuQTZCTGp1em84VEZZcC04aUE',
+ censusid: 'test'
 };
 
 exports.simpleConfigUrl = 'https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdEg2elXXXX&usp=drive_web#gid=2';

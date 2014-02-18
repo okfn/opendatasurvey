@@ -13,11 +13,17 @@ var model = require('../lib/model.js').OpenDataCensus
   , Backend = require('../lib/model.js').Backend
   ;
 
+dboptions = {
+ 'key': '0AqR8dXc6Ji4JdHR5WWdUU2dYUElPaFluUlBJbkFOMUE',
+ 'userDbKey': '0AqR8dXc6Ji4JdE5IdEhuQTZCTGp1em84VEZZcC04aUE',
+ censusid: 'test'
+};
+
 // some rules
 // we only add rows where place = Germany (so we can delete afterwards)
 describe('Backend Entry', function() {
   this.timeout(3000);
-  var backend = new Backend(base.options);
+  var backend = new Backend(dboptions);
 
   before(function(done) {
     backend.login(function(err){
@@ -51,7 +57,7 @@ describe('Backend Entry', function() {
   });
   it('getEntry', function(done) {
     backend.getEntry({year: 2013, dataset: 'maps', place: 'gb'}, function(err, entry) {
-      assert.ok(!err);
+      assert.ok(!err, err);
       assert.ok(entry!=null, 'No entry (entry is null)');
       assert.equal(entry.public, 'Yes', entry);
       done();
@@ -273,7 +279,7 @@ describe('Submissions', function() {
 
 describe('User', function() {
   this.timeout(2000);
-  var backend = new Backend({key: base.options.userDbKey});
+  var backend = new Backend({key: dboptions.userDbKey});
   var profile = {
     provider: 'facebook',
     id: 'tests-xyz',
