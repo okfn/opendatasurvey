@@ -11,26 +11,33 @@ Login
 
 <div class="name-modal modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <form class="modal-content" method="POST">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Continue without logging in</h4>
-      </div>
-      <div class="modal-body">
-        <label>Name</label>
-        <input name="displayName" class="span5" type="text" placeholder="Your name here">
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Continue</button>
-      </div>
-    </form>
   </div>
 </div>
 
-<p>
-  <a class="btn btn-primary btn-large" href="/auth/google">Login with Google &raquo;</a>
-  <button class="btn btn-default btn-large" data-toggle="modal" data-target=".name-modal">Enter name &raquo;</button>
-</p>
+<div class="row">
+  <div class="span5">
+    <h3>Login with Google</h3>
+    <p>Login with your existing google account in a few seconds.</p>
+    <a class="btn btn-primary" href="/auth/google">Login with Google &raquo;</a>
+  </div>
+  <div class="span2" style="text-align: center;">
+    <h3>&ndash; or &ndash;</h3>
+  </div>
+  <div class="span5">
+    <h3>Skip Login</h3>
+    <p>Continue without logging in.</p>
+    <form method="POST">
+      <div>
+        <label>Name (optional)</label>
+        <span class="help-block">If you provide a name we can credit you for
+          your contribution (if not provided you'll be listed as
+          Anonymous).</span>
+        <input name="displayName" class="span5" type="text" placeholder="Joe Bloggs">
+      </div>
+      <button type="submit" class="btn btn-primary">Continue &raquo;</button>
+    </form>
+  </div>
+</div>
 <!--<p><a class="btn btn-primary btn-large" href="/auth/facebook">Login with Facebook &raquo;</a></p> -->
 
 {% endblock %}
