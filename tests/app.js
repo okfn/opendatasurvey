@@ -1,4 +1,5 @@
 var request = require('supertest')
+  , passport = require('passport')
   , assert = require('assert')
   , config = require('../lib/config.js')
   // importing base sets the test db
@@ -195,6 +196,27 @@ describe('Permissions', function() {
       .get('/submission/testid-1/review')
       .expect(401, done)
     ;
+  });
+  it('user serialized after posting to login', function(done) {
+    var agent = request(app),
+        serializedUser;
+    // duplicated code to serializeUser to make passport work ...
+    passport.serializeUser(function(user, done) {
+      serializedUser = user;
+      done(null, user);
+    });
+    config.set('test:testing', false);
+    agent
+      .post('/login/?next=%2Fsubmit%2F')
+      .send({ displayName: 'xxx'})
+      .expect(302)
+      .end(function(err, res) {
+        config.set('test:testing', true);
+        if (err) return done(err);
+        assert.equal(serializedUser.name, 'xxx');
+        assert.equal(res.headers.location, '/submit/');
+        done();
+      });
   });
 });
 

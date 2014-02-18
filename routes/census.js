@@ -159,6 +159,26 @@ exports.reviewPost = function(req, res) {
   });
 };
 
+exports.anonLogin = function(req, res) {
+  var name = req.body.displayName || 'Anonymous';
+  var user = util.makeUserObject({
+    id: 'anonymous',
+    provider: 'okfn',
+    username: 'anonymous',
+    displayName: name
+  });
+
+  req.session.nextUrl = req.query.next;
+
+  req.login(user, function(err) {
+    if (err) {
+      return res.send(err.code || 500, err.message || err);
+    }
+
+    exports.loggedin(req, res);
+  });
+};
+
 exports.login = function(req, res) {
   // TODO: use this stored next url properly ...
   req.session.nextUrl = req.query.next;
@@ -178,6 +198,21 @@ exports.loggedin = function(req, res) {
     res.redirect('/');
   }
 };
+
+// ========================================================
+// Admin
+// ========================================================
+
+exports.reload = function(req, res) {
+  model.load(function(err) {
+    msg = 'Reloaded OK &ndash; <a href="/">Back to home page</a>';
+    if (err) {
+      console.error('Failed to reload config info');
+      msg = 'Failed to reload config etc. ' + err;
+    }
+    res.send(msg);
+  });
+}
 
 // ========================================================
 // Local Functions

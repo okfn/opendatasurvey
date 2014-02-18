@@ -101,8 +101,6 @@ exports.place = function(req, res) {
     });
 
     res.render('country/place.html', {
-      // reviewers: model.data.submissions.reviewersByPlace[place.id],
-      // submitters: model.data.submissions.submittersByPlace[place.id],
       info: model.data.entries,
       datasets: model.data.datasets,
       submissions: submissions,
