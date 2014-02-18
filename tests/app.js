@@ -197,6 +197,19 @@ describe('Permissions', function() {
       .expect(401, done)
     ;
   });
+  it('405s is anon login without anonymous_submissions: true', function(done) {
+    config.set('anonymous_submissions', 'FALSE');
+    config.set('test:testing', false);
+    request(app)
+      .post('/login/?next=%2Fsubmit%2F')
+      .send({ displayName: 'xxx'})
+      .expect(405)
+      .end(function(err, res) {
+        config.set('test:testing', true);
+        config.set('anonymous_submissions', 'TRUE');
+        done(err);
+      });
+  });
   it('user serialized after posting to login', function(done) {
     var agent = request(app),
         serializedUser;

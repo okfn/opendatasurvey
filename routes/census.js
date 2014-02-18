@@ -160,6 +160,10 @@ exports.reviewPost = function(req, res) {
 };
 
 exports.anonLogin = function(req, res) {
+  if (config.get('anonymous_submissions') !== 'TRUE') {
+    return res.send(405);
+  }
+
   var name = req.body.displayName || 'Anonymous';
   var user = util.makeUserObject({
     id: 'anonymous',
@@ -183,6 +187,7 @@ exports.login = function(req, res) {
   // TODO: use this stored next url properly ...
   req.session.nextUrl = req.query.next;
   res.render('login.html', {
+    anonymous_submissions: config.get('anonymous_submissions') === 'TRUE'
   });
 };
 
