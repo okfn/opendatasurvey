@@ -260,10 +260,12 @@ function requireLoggedIn(req, res) {
     res.redirect('/login/?next=' + encodeURIComponent(req.url));
     return true;
   }
-};
+}
 
 function canReview(user) {
-  return (config.get('reviewers').indexOf(user.userid) !== -1);
+  var reviewers = config.get('reviewers') || [];
+
+  return ~reviewers.indexOf(user.userid) || ~reviewers.indexOf(user.email);
 }
 
 function isAdmin(user) {
