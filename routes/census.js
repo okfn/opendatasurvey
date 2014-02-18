@@ -159,6 +159,24 @@ exports.reviewPost = function(req, res) {
   });
 };
 
+exports.anonLogin = function(req, res) {
+  var name = req.body.displayName || 'Anonymous';
+  var user = util.makeUserObject({
+    id: 'anonymous',
+    provider: 'okfn',
+    username: 'anonymous',
+    displayName: name
+  });
+
+  req.login(user, function(err) {
+    if (err) {
+      return res.send(err.code || 500, err.message || err);
+    }
+
+    exports.loggedin(req, res);
+  });
+};
+
 exports.login = function(req, res) {
   // TODO: use this stored next url properly ...
   req.session.nextUrl = req.query.next;

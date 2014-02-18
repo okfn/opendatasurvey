@@ -9,7 +9,28 @@ Login
   <h1>Login</h1>
 </div>
 
-<p><a class="btn btn-primary btn-large" href="/auth/google">Login with Google &raquo;</a></p>
+<div class="name-modal modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form class="modal-content" method="POST">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Continue without logging in</h4>
+      </div>
+      <div class="modal-body">
+        <label>Name</label>
+        <input name="displayName" class="span5" type="text" placeholder="Your name here">
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Continue</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<p>
+  <a class="btn btn-primary btn-large" href="/auth/google">Login with Google &raquo;</a>
+  <button class="btn btn-default btn-large" data-toggle="modal" data-target=".name-modal">Enter name &raquo;</button>
+</p>
 <!--<p><a class="btn btn-primary btn-large" href="/auth/facebook">Login with Facebook &raquo;</a></p> -->
 
 {% endblock %}

@@ -130,6 +130,7 @@ if (!config.get('appconfig:readonly')) {
   app.get('/submission/:submissionid/review', census.review);
   app.post('/submission/:submissionid/review', census.reviewPost);
   app.get('/login', census.login);
+  app.post('/login', census.anonLogin);
   app.get('/auth/logout', census.logout);
   app.get('/auth/loggedin', census.loggedin);
 
