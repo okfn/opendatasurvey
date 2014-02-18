@@ -12,7 +12,7 @@ var fs = require('fs')
   , env = require('./lib/templateenv')
   , model = require('./lib/model').OpenDataCensus
   , util = require('./lib/util')
-  ; 
+  ;
 
 var app = express();
 
@@ -90,7 +90,7 @@ app.all('*', function(req, res, next) {
   if (config.get('test:testing') === true && !req.user && config.get('test:user')) {
     req.user = config.get('test:user');
   }
-  res.locals.currentUser = req.user ? req.user : null; 
+  res.locals.currentUser = req.user ? req.user : null;
 
   if (config.get('appconfig:readonly')) {
     res.locals.readonly = true;
@@ -140,7 +140,7 @@ if (!config.get('appconfig:readonly')) {
       ]}
     )
   );
-  app.get('/auth/google/callback', 
+  app.get('/auth/google/callback',
     passport.authenticate('google', {
         successRedirect: '/auth/loggedin',
         failureRedirect: '/login',
@@ -154,7 +154,7 @@ if (!config.get('appconfig:readonly')) {
 //  app.get('/auth/facebook',
 //      passport.authenticate('facebook', {scope: ['email']})
 //  );
-//  app.get('/auth/facebook/callback', 
+//  app.get('/auth/facebook/callback',
 //    passport.authenticate('facebook', {
 //        successRedirect: '/auth/loggedin',
 //        failureRedirect: '/login',
