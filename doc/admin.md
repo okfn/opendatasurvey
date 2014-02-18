@@ -191,12 +191,6 @@ Content for the about page.
 
 You can use markdown or HTML format.
 
-### `contribute_page`
-
-Content for contribute page.
-
-You can use markdown or HTML format.
-
 ### `navbar_logo`
 
 HTML for logo at top right of navbar
@@ -220,6 +214,11 @@ Custom footer content
 ### `google_analytics_key`
 
 Supply a google analytics key to use on the site
+
+### `census_id`
+
+Unique short id for the Census. You will not normally have to set this as it
+will be set in core config by census deployer.
 
 ### `database` (*)
 
