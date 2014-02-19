@@ -16,6 +16,22 @@ jQuery(document).ready(function($) {
     } // else do nothing
   }
 
+  $('input[name=public], input[name=online]').change(function() {
+    var public = $('input[name=public]:checked').val() === 'Yes'
+      , online = $('input[name=online]:checked').val() === 'Yes'
+      , $url = $('input[name=url]')
+      , $header = $url.prev('h4')
+      ;
+
+    if (public && online) {
+      $url.attr('required', 'required');
+      $header.addClass('required');
+    } else {
+      $url.removeAttr('required');
+      $header.removeClass('required');
+    }
+  });
+
   var $select = $('#dataset-select');
   $select.change(function(e) {
     e.preventDefault();

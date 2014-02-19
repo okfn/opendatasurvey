@@ -1010,3 +1010,12 @@ table.faq-table tr td:first-child {
 .custom-intro {
   margin-bottom: 20px;
 }
+
+.required:after {
+  content: '*';
+  vertical-align: text-top;
+  font-size: 0.9em;
+  color: #c00;
+  font-weight: bold;
+  padding-left: 3px;
+}
