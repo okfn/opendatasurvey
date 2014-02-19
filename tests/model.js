@@ -19,6 +19,8 @@ dboptions = {
  censusid: 'test'
 };
 
+config.set('approve_first_submission', 'TRUE');
+
 // some rules
 // we only add rows where place = Germany (so we can delete afterwards)
 describe('Backend Entry', function() {
@@ -223,6 +225,7 @@ describe('Submissions', function() {
         assert.equal(out.reviewed, '');
         assert.equal(out.submitter, user.name);
         assert.equal(out.submitterid, user.userid);
+        assert.equal(out.censusid, dboptions.censusid);
         done();
       });
     });
