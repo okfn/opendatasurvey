@@ -32,6 +32,21 @@ jQuery(document).ready(function($) {
     }
   });
 
+  $('input[name=openlicense]').change(function() {
+    var open = $('input[name=openlicense]:checked').val() === 'Yes'
+      , $url = $('input[name=licenseurl]')
+      , $header = $url.prev('h4')
+      ;
+
+    if (open) {
+      $url.attr('required', 'required');
+      $header.addClass('required');
+    } else {
+      $url.removeAttr('required');
+      $header.removeClass('required');
+    }
+  });
+
   var $select = $('#dataset-select');
   $select.change(function(e) {
     e.preventDefault();
