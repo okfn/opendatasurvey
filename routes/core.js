@@ -19,18 +19,18 @@ exports.overview = function(req, res) {
   res.render('overview.html', {
     summary: model.data.entries.summary,
     extraWidth: extraWidth,
-    places: util.translateRows(model.data.places),
+    places: util.translateRows(model.data.places, req.locale),
     byplace: model.data.entries.byplace,
-    datasets: util.translateRows(model.data.datasets),
-    scoredQuestions: util.translateRows(model.data.scoredQuestions),
-    placesById: util.translateObject(model.data.placesById),
+    datasets: util.translateRows(model.data.datasets, req.locale),
+    scoredQuestions: util.translateRows(model.data.scoredQuestions, req.locale),
+    placesById: util.translateObject(model.data.placesById, req.locale),
     custom_text: config.get('overview_page', req.locale),
     missing_place_html: config.get('missing_place_html', req.locale)
   });
 };
 
 exports.about = function(req, res) {
-  var text = config.get('about_page');
+  var text = config.get('about_page', req.locale);
   var content = marked(text);
   res.render('base.html', {
     content: content,
@@ -41,14 +41,14 @@ exports.about = function(req, res) {
 exports.faq = function(req, res) {
   var tmpl = env.getTemplate('_snippets/questions.html');
   var questionInfo = tmpl.render({
-    questions: model.data.questions
+    questions: util.translateRows(model.data.questions, req.locale)
   });
   var dataTmpl = env.getTemplate('_snippets/datasets.html');
   var dataInfo = dataTmpl.render({
-    datasets: model.data.datasets
+    datasets: util.translateRows(model.data.datasets, req.locale)
   });
-  var missingPageHtml = config.get('missing_place_html');
-  var content = marked(config.get('faq_page'))
+  var missingPageHtml = config.get('missing_place_html', req.locale);
+  var content = marked(config.get('faq_page', req.locale))
     .replace('{{questions}}', questionInfo)
     .replace('{{datasets}}', dataInfo)
     .replace('{{missing_place}}', missingPageHtml);
@@ -60,7 +60,7 @@ exports.faq = function(req, res) {
 };
 
 exports.contribute = function(req, res) {
-  var text = config.get('contribute_page');
+  var text = config.get('contribute_page', req.locale);
   var content = marked(text);
   res.render('base.html', {
     content: content,
@@ -106,11 +106,11 @@ exports.place = function(req, res) {
 
     res.render('country/place.html', {
       info: model.data.entries,
-      datasets: model.data.datasets,
+      datasets: util.translateRows(model.data.datasets, req.locale),
       submissions: submissions,
       entrys: entrys,
-      place: place,
-      scoredQuestions: model.data.scoredQuestions,
+      place: util.translate(place, req.locale),
+      scoredQuestions: util.translateRows(model.data.scoredQuestions, req.locale),
       loggedin: req.session.loggedin
     });
   });
@@ -134,9 +134,9 @@ exports.dataset = function(req, res) {
     });
     res.render('country/dataset.html', {
       bydataset: entriesForThisDataset,
-      placesById: model.data.placesById,
-      scoredQuestions: model.data.scoredQuestions,
-      dataset: dataset
+      placesById: util.translateObject(model.data.placesById, req.locale),
+      scoredQuestions: util.translateRows(model.data.scoredQuestions, req.locale),
+      dataset: util.translate(dataset, req.locale)
     });
   });
 };
@@ -153,12 +153,12 @@ exports.entryByPlaceDataset = function(req, res) {
 
   function render(prefill_) {
     res.render('country/entry.html', {
-      ynquestions: ynquestions,
-      questions: model.data.questions,
-      scoredQuestions: model.data.scoredQuestions,
-      datasets: model.data.datasets,
-      dataset: dataset,
-      place: place,
+      ynquestions: util.translateRows(ynquestions, req.locale),
+      questions: util.translateRows(model.data.questions, req.locale),
+      scoredQuestions: util.translateRows(model.data.scoredQuestions, req.locale),
+      datasets: util.translateRows(model.data.datasets, req.locale),
+      dataset: util.translateRows(dataset, req.locale),
+      place: util.translate(place, req.locale),
       prefill: prefill_
     });
   }
