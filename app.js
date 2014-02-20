@@ -7,6 +7,7 @@ var fs = require('fs')
   , flash = require('connect-flash')
   , scrypt = require('scrypt')
   , passport = require('passport')
+  , locale = require('locale')
 
   , config = require('./lib/config')
   , env = require('./lib/templateenv')
@@ -76,6 +77,7 @@ app.configure(function() {
     staticOpts.maxAge = 3600 * 1000;
   }
   app.use(express['static'](staticRoot, staticOpts));
+  app.use(locale(config.get('locales')));
 
   if (config.get('appconfig:readonly')) {
     app.use(CacheControl(1800));
