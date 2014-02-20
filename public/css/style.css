@@ -426,6 +426,16 @@ footer a:hover {
 	border-bottom: solid 1px #333333;
 }
 
+div.nav-logo {
+  float: right;
+  height: 30px;
+}
+
+div.nav-logo a {
+  display: inline-block;
+  margin-left: 14px;
+}
+
 .nav-logo img {
 	margin-top: -4px;
 	margin-right: -4px;
