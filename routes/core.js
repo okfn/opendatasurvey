@@ -10,7 +10,7 @@ var fs = require('fs')
   , env = require('../lib/templateenv')
   , model = require('../lib/model').OpenDataCensus
   , util = require('../lib/util')
-  ; 
+  ;
 
 exports.overview = function(req, res) {
   var extraWidth = (model.data.datasets.length > 12);
@@ -24,7 +24,8 @@ exports.overview = function(req, res) {
     datasets: model.data.datasets,
     scoredQuestions: model.data.scoredQuestions,
     placesById: model.data.placesById,
-    custom_text: config.get('overview_page')
+    custom_text: config.get('overview_page'),
+    missing_place_html: config.get('missing_place_html')
   });
 };
 
@@ -46,9 +47,12 @@ exports.faq = function(req, res) {
   var dataInfo = dataTmpl.render({
     datasets: model.data.datasets
   });
-  var content = marked(config.get('faq_page'));
-  content = content.replace('{{questions}}', questionInfo);
-  content = content.replace('{{datasets}}', dataInfo);
+  var missingPageHtml = config.get('missing_place_html');
+  var content = marked(config.get('faq_page'))
+    .replace('{{questions}}', questionInfo)
+    .replace('{{datasets}}', dataInfo)
+    .replace('{{missing_place}}', missingPageHtml);
+
   res.render('base.html', {
     content: content,
     title: 'FAQ - Frequently Asked Questions'
