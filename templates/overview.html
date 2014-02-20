@@ -111,9 +111,12 @@
 </tfoot>
   </table>
 
-  <div class="pull-left">
+  <div class="row-fluid">
   {% include '_snippets/key.html' %}
   </div>
+  {% if missing_place_html %}
+    {% include '_snippets/missing_place_button.html' %}
+  {% endif %}
   <script src="{{page.root}}/vendor/sticky.min.js"></script>
   <script src="{{page.root}}/src/common.js"></script>
   <script src="{{page.root}}/src/census.js"></script>
