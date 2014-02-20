@@ -85,6 +85,7 @@
       data-dataset="{{record.dataset}}"
       data-datasetTitle="{{dataset.title}}"
       >
+        {% if record %}
         <ul class="availability icons mini">
           {% for qu in scoredQuestions %}
             {% set state = record[qu.id] %}
@@ -94,9 +95,15 @@
             </li>
           {% endfor %}
         </ul>
+        {% else %}
+        <a href="/submit/?dataset={{dataset.id}}&place={{place.id}}" class="btn btn-mini">
+          <i class="icon-plus"></i>
+          Add
+        </a>
+        {% endif %}
     </td>
     {% endfor %}
-    <td class="placescore" data-score="{{placeScore}}"><a>{{placeScore}}</a></td>
+    <td class="placescore" data-score="{{placeScore}}"><span>{{placeScore}}</span></td>
   </tr>
   {% endfor %}
 </tbody>

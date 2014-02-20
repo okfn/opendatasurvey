@@ -742,28 +742,23 @@ table.response-summary td {
 	padding: 0;
 }
 
-table.response-summary td a {
+.response-summary tbody td {
+  vertical-align: middle;
+  text-align: center;
+}
+
+table.response-summary td.placescore span {
+  text-align: left;
 	display: block;
 	padding: 8px;
 	color: #333;
-}
-
-table.response-summary td  ul.availability.icons.mini {
-	margin-top: 7px;
-}
-
-table.response-summary tr:nth-child(n+2) td.placescore {
-	border: none;
-}
-
-table.response-summary td.placescore a {
 	background-color: #FFF;
 	background-color: rgba(255,255,255,0.5);
 	margin-right: 6px;
 }
 
-table.response-summary td.placescore a:hover {
-	text-decoration: none;
+table.response-summary td  ul.availability.icons.mini {
+	margin-top: 7px;
 }
 
 table.response-summary .no-data a {
