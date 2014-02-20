@@ -19,19 +19,23 @@ dboptions = {
  censusid: 'test'
 };
 
+config.set('approve_first_submission', 'TRUE');
+
 // some rules
 // we only add rows where place = Germany (so we can delete afterwards)
 describe('Backend Entry', function() {
-  this.timeout(3000);
+  this.timeout(8000);
   var backend = new Backend(dboptions);
 
   before(function(done) {
-    backend.login(function(err){
-      if (err) throw err;
-      done();
+    base.setFixtures();
+    // we have to load config stuff as questions needed here
+    model.load(function(err) {
+      backend.login(done);
     });
   });
   after(function(done) {
+    base.unsetFixtures();
     // TODO: delete all Germany entries
     backend.getEntrys({place: 'de'}, function(err, rows) {
       if (rows.length == 0) {
@@ -47,6 +51,8 @@ describe('Backend Entry', function() {
       });
     });
   });
+
+
   it('getEntrys', function(done) {
     backend.getEntrys({place: 'gb'}, function(err, entrys) {
       assert.ok(!err);
@@ -76,7 +82,7 @@ describe('Backend Entry', function() {
     }
     backend.insertEntry(data, function(err) {
       //TODO: Test that something was inserted
-      assert.ok(!err);
+      assert.ok(!err, err);
       //N.B. We need to delete this anyway for getEntry, but having newlines in the query string, even when encoded, causes HTTP 400 error
       delete data['details'];
       backend.updateEntry(data, newData, function(err) {
@@ -223,6 +229,7 @@ describe('Submissions', function() {
         assert.equal(out.reviewed, '');
         assert.equal(out.submitter, user.name);
         assert.equal(out.submitterid, user.userid);
+        assert.equal(out.censusid, dboptions.censusid);
         done();
       });
     });
