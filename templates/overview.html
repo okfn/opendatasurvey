@@ -41,7 +41,7 @@
   <tr>
     <th>&nbsp;</th>
     {% for dataset in datasets %}
-      <th><div><a href="/dataset/{{dataset.id}}">{{ dataset.titleRotated }}</a></div></th>
+      <th><div><a href="/dataset/{{dataset.id}}">{{ dataset.title|rotate }}</a></div></th>
     {% endfor %}
     <th><div><strong>Total Score</strong></div>
   </tr>
@@ -104,7 +104,7 @@
   <tr>
     <th>&nbsp;</th>
     {% for dataset in datasets %}
-      <th><div><a href="/dataset/{{dataset.id}}">{{ dataset.titleRotated }}</a></div></th>
+      <th><div><a href="/dataset/{{dataset.id}}">{{ dataset.title|rotate }}</a></div></th>
     {% endfor %}
     <th><div><strong>Total Score</strong></div>
   </tr>
