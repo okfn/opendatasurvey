@@ -20,12 +20,12 @@ exports.submit = function(req, res) {
 
   function render(prefill_) {
     res.render('submission/create.html', {
-      submitInstructions: config.get('submit_page'),
-      places: model.data.places,
-      ynquestions: ynquestions,
-      questions: model.data.questions,
-      questionsById: model.data.questionsById,
-      datasets: model.data.datasets,
+      submitInstructions: config.get('submit_page', req.locale),
+      places: util.translateRows(model.data.places, req.locale),
+      ynquestions: util.translateRows(ynquestions, req.locale),
+      questions: util.translateRows(model.data.questions, req.locale),
+      questionsById: util.translateObject(model.data.questionsById, req.locale),
+      datasets: util.translateRows(model.data.datasets, req.locale),
       year: year,
       prefill: prefill_
     });
@@ -113,18 +113,18 @@ exports.review = function(req, res) {
         if (!entry) {
           entry = {};
         }
-        var dataset = _.find(model.data.datasets, function(d) {
-          return (d.id == obj.dataset);
+        var dataset = _.findWhere(model.data.datasets, {
+          id: obj.dataset
         });
         res.render('submission/review.html', {
-          reviewInstructions: config.get('review_page'),
-          ynquestions: ynquestions,
-          questions: model.data.questions,
-          questionsById: model.data.questionsById,
+          reviewInstructions: config.get('review_page', req.locale),
+          ynquestions: util.translateRows(ynquestions, req.locale),
+          questions: util.translateRows(model.data.questions, req.locale),
+          questionsById: util.translateObject(model.data.questionsById, req.locale),
           prefill: obj,
           currrecord: entry,
-          dataset: dataset,
-          place: model.data.placesById[obj.place]
+          dataset: util.translate(dataset, req.locale),
+          place: util.translate(model.data.placesById[obj.place], req.locale)
         });
       });
     }
