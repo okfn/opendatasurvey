@@ -21,7 +21,7 @@
     "scrypt": "~1.7.4",
     "passport": "",
     "passport-google-oauth": "",
-    "locale": "0.0.14"
+    "i18n-abide": "0.0.17"
   },
   "devDependencies": {
     "supertest": "",
