@@ -1,25 +1,25 @@
 {% extends "base.html" %}
 
 {% block title %}
-Entry for {{prefill.place}} / {{dataset.title}}
+{{format("Entry for %(place)s / %(title)s", { place: prefill.place, title: dataset.title}) }}
 {% endblock %}
 
 {% block content %}
 <div class="page-header">
   {% if prefill.place %}
-  <h1><a href="/place/{{place.id}}" data-toggle="tooltip" class="count-0" title="Go to place overview">{{place.name}}</a> / <a href="/dataset/{{dataset.id}}" data-toggle="tooltip" class="count-0" title="Return to dataset overview">{{dataset.title}}</a></h1>
+  <h1><a href="/place/{{place.id}}" data-toggle="tooltip" class="count-0" title="Go to place overview">{{place.name}}</a> / <a href="/dataset/{{dataset.id}}" data-toggle="tooltip" class="count-0" title="{{gettext("Return to dataset overview")}}">{{dataset.title}}</a></h1>
   {% endif %}
 </div>
 
 <p>{{dataset.description}}</p>
 
-<h3>Data Location</h3>
+<h3>{{gettext("Data Location")}}</h3>
 <a href="{{prefill.url}}">{{prefill.url}}</a>
 
-<h3>Comments</h3>
+<h3>{{gettext("Comments")}}</h3>
 <p>{{prefill.details | urlize}}</p>
 
-<h3>Data Availability</h3>
+<h3>{{gettext("Data Availability")}}</h3>
 <ul class="data-availability clearfix unstyled">
   {% for qu in scoredQuestions %}
     {% set state = prefill[qu.id] %}
@@ -46,11 +46,11 @@ Entry for {{prefill.place}} / {{dataset.title}}
 
 {% include '_snippets/key.html' %}
 
-<h3>Details</h3>
+<h3>{{gettext("Details")}}</h3>
 <table class="table table-striped yntable">
-  <tr><td>Date the data became available</td><td>&nbsp;&nbsp;&nbsp;{% if prefill.dateavailable %}{{ prefill.dateavailable }}{% else %}Unknown{% endif %}</td></tr>
-  <tr><td>Format of data</td><td>&nbsp;&nbsp;&nbsp;{% if prefill.format %}{{ prefill.format }}{% else %}Unknown{% endif %}</td></tr>
-  <tr><td>Contributors</td><td>&nbsp;&nbsp;&nbsp;{% if not prefill.noreviewers %}{% for reviewer in prefill.reviewers %}{% if loop.index>1 %}, {% endif %}{{reviewer}}{% endfor %} (Editors); {% endif %}{% if not prefill.nosubmitters %}{% for submitter in prefill.submitters %}{% if loop.index>1 %}, {% endif %}{{submitter}}{% endfor %} (Submitters){% endif %}</td></tr>
+  <tr><td>{{gettext("Date the data became available")}}</td><td>&nbsp;&nbsp;&nbsp;{% if prefill.dateavailable %}{{ prefill.dateavailable }}{% else %}{{gettext("Unknown")}}{% endif %}</td></tr>
+  <tr><td>{{gettext("Format of data")}}</td><td>&nbsp;&nbsp;&nbsp;{% if prefill.format %}{{ prefill.format }}{% else %}{{gettext("Unknown")}}{% endif %}</td></tr>
+  <tr><td>{{gettext("Contributors")}}</td><td>&nbsp;&nbsp;&nbsp;{% if not prefill.noreviewers %}{% for reviewer in prefill.reviewers %}{% if loop.index>1 %}, {% endif %}{{reviewer}}{% endfor %} {{gettext("(Editors)")}}; {% endif %}{% if not prefill.nosubmitters %}{% for submitter in prefill.submitters %}{% if loop.index>1 %}, {% endif %}{{submitter}}{% endfor %} {{gettext("(Submitters)")}}{% endif %}</td></tr>
 </table>
 
 <script src="{{page.root}}/src/common.js"></script>

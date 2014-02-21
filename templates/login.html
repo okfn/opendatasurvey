@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
 {% block title %}
-Login
+{{gettext("Login")}}
 {% endblock %}
 
 {% block content %}
 <div class="page-header">
-  <h1>Login</h1>
+  <h1>{{gettext("Login")}}</h1>
 </div>
 
 <div class="name-modal modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -16,26 +16,24 @@ Login
 
 <div class="row">
   <div class="span5">
-    <h3>Login with Google</h3>
-    <p>Login with your existing google account in a few seconds.</p>
-    <a class="btn btn-primary" href="/auth/google">Login with Google &raquo;</a>
+    <h3>{{gettext("Login with Google")}}</h3>
+    <p>{{gettext("Login with your existing google account in a few seconds.")}}</p>
+    <a class="btn btn-primary" href="/auth/google">{{gettext("Login with Google &raquo;")}}</a>
   </div>
   {% if anonymous_submissions %}
   <div class="span2" style="text-align: center;">
-    <h3>&ndash; or &ndash;</h3>
+    <h3>{{gettext("&ndash; or &ndash;")}}</h3>
   </div>
   <div class="span5">
-    <h3>Skip Login</h3>
-    <p>Continue without logging in.</p>
+    <h3>{{gettext("Skip Login")}}</h3>
+    <p>{{gettext("Continue without logging in.")}}</p>
     <form method="POST">
       <div>
-        <label>Name (optional)</label>
-        <span class="help-block">If you provide a name we can credit you for
-          your contribution (if not provided you'll be listed as
-          Anonymous).</span>
-        <input name="displayName" class="span5" type="text" placeholder="Joe Bloggs">
+        <label>{{gettext("Name (optional)")}}</label>
+        <span class="help-block">{{gettext("If you provide a name we can credit you for your contribution (if not provided you'll be listed as Anonymous).")}}</span>
+        <input name="displayName" class="span5" type="text" placeholder="{{gettext("Joe Bloggs")}}">
       </div>
-      <button type="submit" class="btn btn-primary">Continue &raquo;</button>
+      <button type="submit" class="btn btn-primary">{{gettext("Continue &raquo;")}}</button>
     </form>
   </div>
   {% endif %}

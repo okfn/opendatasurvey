@@ -2,14 +2,14 @@
 {% include '_snippets/entry-summary-row.html' %}
 
 {% block title %}
-{{place.name}} - Places
+{{place.name}} &mdash; {{gettext("Places")}}
 {% endblock %}
 
 {% block content %}
 
 <h1>
   <a href="{{urlFor('overview')}}" data-toggle="tooltip" class="count-0"
-    title="Return to results overview">Places</a>
+    title="Return to results overview">{{gettext("Places")}}</a>
   / {{ place.name }}
 </h1>
 
@@ -18,13 +18,13 @@
   <div class="tab-content">
     <div class="tab-pane active" id="table-overview">
       <div class="table">
-        <p>This is the overview page where you can see the state of open data across each key dataset (displayed down the left hand side). To find out more about each dataset, click on the info icon.
-        Each icon in the data availability column represents important factors indicating data accessibility or availability - mouse over the icons to see what they are and the colours correspond to yes / no / unsure / no data.</p>
+        <p>{{gettext("This is the overview page where you can see the state of open data across each key dataset (displayed down the left hand side). To find out more about each dataset, click on the info icon.\n" +
+"Each icon in the data availability column represents important factors indicating data accessibility or availability - mouse over the icons to see what they are and the colours correspond to yes / no / unsure / no data.")}}</p>
 
         {% if not readonly %}
-        <p>Is something missing or is the data incorrect? Then please hit either 'submit information' or 'propose revisions' on the right and contribute more information. We need a correct direct link to the official source of the data - so make sure to include this! Click the link icon under Location to see the current entry.</p>
+        <p>{{gettext("Is something missing or is the data incorrect? Then please hit either 'submit information' or 'propose revisions' on the right and contribute more information. We need a correct direct link to the official source of the data - so make sure to include this! Click the link icon under Location to see the current entry.")}}</p>
 
-        <p>Greyed out queued entries are submissions that are waiting approval by our editor team - but you can see the entry now and judge whether anything is missing.</p>
+        <p>{{gettext("Greyed out queued entries are submissions that are waiting approval by our editor team - but you can see the entry now and judge whether anything is missing.")}}</p>
         {% endif %}
 
         <table class="table table-striped">
@@ -38,11 +38,11 @@
           </colgroup>
           <thead>
             <tr>
-              <th>Dataset</th>
-              <th>Score</th>
-              <th>Breakdown</th>
-              <th>Location (URL)</th>
-              <th>Information</th>
+              <th>{{gettext("Dataset")}}</th>
+              <th>{{gettext("Score")}}</th>
+              <th>{{gettext("Breakdown")}}</th>
+              <th>{{gettext("Location (URL)")}}</th>
+              <th>{{gettext("Information")}}</th>
               {% if not readonly %}<th></th>{% endif %}
             </tr>
           </thead>
@@ -68,11 +68,11 @@
               <td>
                 {% if record %}
                 <a id="submit-{{ dataset.id }}" href="/submit/?dataset={{ dataset.id }}&place={{ place.id }}" class="btn btn-mini btn-primary">
-                  <!-- <i class="icon-plus"></i> -->Propose Revisions
+                  <!-- <i class="icon-plus"></i> -->{{gettext("Propose Revisions")}}
                 </a>
               {% else %}
                 <a id="submit-{{ dataset.id }}" href="/submit/?dataset={{ dataset.id }}&place={{ place.id }}" class="btn btn-mini btn-primary">
-                  <!-- <i class="icon-plus"></i> -->Submit information
+                  <!-- <i class="icon-plus"></i> -->{{gettext("Submit information")}}
                 </a>
                 {% endif %}
               </td>
@@ -82,12 +82,12 @@
             {% for submission in submissions[dataset.id] %}
             <tr class="queued">
               <td>
-                &#8627; Awaiting review
+                {{gettext("&#8627; Awaiting review")}}
               </td>
               {{entrysummary(dataset, place, submission, scoredQuestions)}}
               <td>
                  <a href="/submission/{{submission.submissionid}}/review" class="btn btn-mini btn-danger">
-                  Review Now
+                  {{gettext("Review Now")}}
                  </a>
                  <script>
                   $("#submit-{{ dataset.id }}").addClass("disabled");
@@ -105,12 +105,12 @@
 
         {% include '_snippets/key.html' %}
 
-        <h3>Contributors</h3>
-        <h4>Editors for {{place.name}}: </h4>
+        <h3>{{gettext("Contributors")}}</h3>
+        <h4>{{gettext("Editors for %(name)s:", { name: place.name)}}</h4>
         <p>
           {% if reviewers %}{% for reviewer in reviewers %}{% if loop.index>1 %}, {% endif %}{{reviewer}}{% endfor %}{% endif %}
         </p>
-        <h4>With submissions from: </h4>
+        <h4>{{gettext("With submissions from:")}} </h4>
         <p>
           {% if submitters %}{% for submitter in submitters %}{% if loop.index>1 %}, {% endif %}{{submitter}}{% endfor %}{% endif %}
         </p>

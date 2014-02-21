@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-Review Submission
+{{gettext("Review Submission")}}
 {% endblock %}
 
 {% block content %}
@@ -26,18 +26,18 @@ Review Submission
 
    <div class="row"><br />
     <div class="span8">
-      <h3>Reviewer name (you) &ndash; {{currentUser.name}}</h3>
-      <p class="help-block">This will be logged and displayed</p>
+      <h3>{{ format("Reviewer name (you) &ndash; %(name)s", { name: currentUser.name }) }}</h3>
+      <p class="help-block">{{gettext("This will be logged and displayed")}}</p>
       <p>
-        <input name="submit" type="submit" value="Publish" class="btn btn-primary" />
+        <input name="submit" type="submit" value="{{gettext("Publish")}}" class="btn btn-primary" />
         <input type="submit" name="submit" class="btn btn-danger" value="Reject" />&nbsp;
       </p>
       <p class="help-block">
-        If this submission makes no changes to the current entry then please 'Reject' it rather than 'Accept'.
-        <br />
-        Note that you edit the submission before accepting it. In particular, please correct any spelling mistakes.
-        <br />
-        <strong>Publish will overwrite the whole current entry with the data in this form.</strong>
+        {{gettext("If this submission makes no changes to the current entry then please 'Reject' it rather than 'Accept'.\n" +
+"        <br />\n" +
+"        Note that you edit the submission before accepting it. In particular, please correct any spelling mistakes.\n" +
+"        <br />\n" +
+"        <strong>Publish will overwrite the whole current entry with the data in this form.</strong>")}}
       </p>
 
     </div>

@@ -33,10 +33,10 @@
     <div class="container">
       <a class="brand" href="/">{{ sitename }}</a>
       <ul class="nav">
-        <li><a href="/">Home</a></li>
-        <li><a href="/about/">About</a></li>
+        <li><a href="/">{{gettext("Home")}}</a></li>
+        <li><a href="/about/">{{gettext("About")}}</a></li>
         {% if not readonly %}
-        <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/faq/">{{gettext("FAQ")}}</a></li>
         {% endif %}
       </ul>
       <span class="pull-right nav-logo">
@@ -71,27 +71,39 @@
     </div>
     <div class="row common-footer">
       <div class="span9">
+        {% if locales.length > 1 %}
+        <p class="lang-picker">
+          {{gettext("Change language:")}}
+          {% for locale in locales %}
+            {% if locale == currentLocale %}
+              <span>{{gettext("locale")}}</span>
+            {% else %}
+              <a href="/setlocale/{{locale}}">{{gettext("locale")}}</a>
+            {% endif %}
+          {% endfor %}
+        </p>
+        {% endif %}
         <p>
-          <a href="http://opendefinition.org/ossd/" title="Open Online Software Service" style="border:none;">
+        <a href="http://opendefinition.org/ossd/" title="{{gettext("Open Online Software Service")}}" style="border:none;">
             <img src="//assets.okfn.org/images/ok_buttons/os_80x15_orange_grey.png" alt="" border="" />
           </a>
-          <a href="http://opendefinition.org/okd/" title="Open Definition" style="border:none;">
+          <a href="http://opendefinition.org/okd/" title="{{gettext("Open Definition")}}" style="border:none;">
             <img src="//assets.okfn.org/images/ok_buttons/oc_80x15_blue.png" alt="" border="" />
           </a>
-          <a href="http://opendefinition.org/okd/" title="Open Definition" style="border:none;">
+          <a href="http://opendefinition.org/okd/" title="{{gettext("Open Definition")}}" style="border:none;">
             <img src="//assets.okfn.org/images/ok_buttons/od_80x15_blue.png" alt="" border="" />
           </a>
           |
-          <a href="http://opendatacommons.org/licenses/pddl/1.0">Data License (Public Domain)</a>
+          <a href="http://opendatacommons.org/licenses/pddl/1.0">{{gettext("Data License (Public Domain)")}}</a>
           |
-          <a href="https://github.com/okfn/opendatacensus/">Source code</a>
+          <a href="https://github.com/okfn/opendatacensus/">{{gettext("Source code")}}</a>
         </p>
         <p>
-          This site is part of the <a href="http://meta.census.okfn.org/">Open Data Census project</a> run by the Open Knowledge Foundation.
+        {{gettext("This site is part of the <a href=\"http://meta.census.okfn.org/\">Open Data Census project</a> run by the Open Knowledge Foundation.")}}
         </p>
         <p>
-          <a class="okf-footer-logo" href="http://okfn.org/" title="An Open Knowledge Foundation Project" target="_blank">
-            <img src="//assets.okfn.org/images/logo/okfn-logo-landscape-black.png" alt="Open Knowledge Foundation logo" />
+          <a class="okf-footer-logo" href="http://okfn.org/" title="{{gettext("An Open Knowledge Foundation Project")}}" target="_blank">
+            <img src="//assets.okfn.org/images/logo/okfn-logo-landscape-black.png" alt="{{gettext("Open Knowledge Foundation logo")}}" />
           </a>
         </p>
       </div>
@@ -99,13 +111,13 @@
         <ul class="pull-right">
           <li>
             {% if currentUser %}
-            Logged in as {{currentUser.name}}
+            {{format("Logged in as %(name)s", { name: currentUser.name })}}
             {% else %}
-            <a href="/login">Login</a>
+            <a href="/login">{{gettext("Login")}}</a>
             {% endif %}
           </li>
-          <li><a href="http://okfn.org/opendata/" title="More about Open Data">What is Open Data</a></li>
-          <li><a href="http://meta.census.okfn.org/">Run Your Own<br />Local Open Data Census</a></li>
+          <li><a href="http://okfn.org/opendata/" title="{{gettext("More about Open Data")}}">{{gettext("What is Open Data")}}</a></li>
+          <li><a href="http://meta.census.okfn.org/">{{gettext("Run Your Own<br />Local Open Data Census")}}</a></li>
         </ul>
       </div>
     </div>
