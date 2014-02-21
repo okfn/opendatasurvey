@@ -209,3 +209,11 @@ exports.entryByPlaceDataset = function(req, res) {
     });
   });
 };
+
+exports.setlocale = function(req, res) {
+  var locale = req.params.locale;
+
+  res.cookie('lang', locale);
+
+  res.redirect(req.headers.referer || '/');
+};
