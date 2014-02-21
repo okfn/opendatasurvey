@@ -126,6 +126,7 @@ if (!config.get('appconfig:readonly')) {
   var census = require('./routes/census');
 
   app.get('/contribute', routes.contribute);
+  app.get('/setlocale/:locale', routes.setlocale);
   app.get('/submit', census.submit);
   app.post('/submit', census.submitPost);
   app.get('/submission/:id', census.submission);
@@ -135,6 +136,7 @@ if (!config.get('appconfig:readonly')) {
   app.post('/login', census.anonLogin);
   app.get('/auth/logout', census.logout);
   app.get('/auth/loggedin', census.loggedin);
+
   // admin
   app.get('/admin/reload', census.reload);
 
