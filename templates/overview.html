@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Overview{% endblock %}
+{% block title %}{{gettext("Overview")}}{% endblock %}
 {% block bodyclass %}overview {% if extraWidth %}extrawidth{% endif %}{% endblock %}
 
 {% block content %}
@@ -8,13 +8,13 @@
   <div class="page-header">
     <div class="summary featured">
       <dl>
-        <dt>Number of places</dt>
+        <dt>{{gettext("Number of places")}}</dt>
         <dd id="nc">{{ summary.places }}</dd>
-        <dt>Number of datasets</dt>
+        <dt>{{gettext("Number of datasets")}}</dt>
         <dd id="nds">{{ summary.entries }}</dd>
-        <dt>Number of open datasets</dt>
+        <dt>{{gettext("Number of open datasets")}}</dt>
         <dd id="nok">{{ summary.open }}</dd>
-        <dt>Percentage <a href="http://okfn.org/opendata/">open</a></dt>
+        <dt>{{gettext("Percentage")}} <a href="http://okfn.org/opendata/">{{gettext("open")}}</a></dt>
         <dd id="nokpercent">{{ summary.open_percent }}%</dd>
       </dl>
     </div>
@@ -31,7 +31,7 @@
   {% if not readonly %}
   <div class="pull-right">
     <a href="/submit/" class="btn btn-primary">
-      <i class="icon-plus"></i> Contribute data to the {{ sitename_short }}!
+      <i class="icon-plus"></i> {{ format("Contribute data to the %(site)s!", { site: sitename_short }) }}
     </a>
   </div>
   {% endif %}
@@ -41,9 +41,9 @@
   <tr>
     <th>&nbsp;</th>
     {% for dataset in datasets %}
-      <th><div><a href="/dataset/{{dataset.id}}">{{ dataset.titleRotated }}</a></div></th>
+      <th><div><a href="/dataset/{{dataset.id}}">{{ dataset.title|rotate }}</a></div></th>
     {% endfor %}
-    <th><div><strong>Total Score</strong></div>
+    <th><div><strong>{{gettext("Total Score")}}</strong></div>
   </tr>
 </thead>
 <tbody>
@@ -51,7 +51,7 @@
   <tr>
     <td></td>
     <td colspan="10">
-      <strong><em>The Census Admin needs to add some places to the Places configuration sheet</em></strong>
+      <strong><em>{{gettext("The Census Admin needs to add some places to the Places configuration sheet")}}</em></strong>
     </td>
   </tr>
   {% endif %}
@@ -71,7 +71,7 @@
         {% if place %}
           <a href="/place/{{ place.id }}">{{place.name}}</a>
         {% else %}
-          <a href="submit/" data-toggle="tooltip" class="unknown no-data count-0" title="Click here to add to the census!">Add new</a>
+          <a href="submit/" data-toggle="tooltip" class="unknown no-data count-0" title="{{gettext("Click here to add to the census!")}}">{{gettext("Add new")}}</a>
         {% endif %}
       </th>
     {% for dataset in datasets %}
@@ -111,9 +111,9 @@
   <tr>
     <th>&nbsp;</th>
     {% for dataset in datasets %}
-      <th><div><a href="/dataset/{{dataset.id}}">{{ dataset.titleRotated }}</a></div></th>
+      <th><div><a href="/dataset/{{dataset.id}}">{{ dataset.title|rotate }}</a></div></th>
     {% endfor %}
-    <th><div><strong>Total Score</strong></div>
+    <th><div><strong>{{gettext("Total Score")}}</strong></div>
   </tr>
 </tfoot>
   </table>

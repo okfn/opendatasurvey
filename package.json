@@ -20,7 +20,8 @@
     "google-spreadsheet": "https://github.com/mattfullerton/node-google-spreadsheets/tarball/master",
     "scrypt": "~1.7.4",
     "passport": "",
-    "passport-google-oauth": ""
+    "passport-google-oauth": "",
+    "i18n-abide": "0.0.17"
   },
   "devDependencies": {
     "supertest": "",

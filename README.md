@@ -87,6 +87,24 @@ own local config using a `settings.json` as follows:
 Note this will **not** work for Heroku - instead you need to do everything via
 environment variables: https://devcenter.heroku.com/articles/config-vars
 
+### i18n For Templates 
+
+When templates change, the translations have to be changed. Extract the files by running this command:
+
+    ./node_modules/.bin/extract-pot --output=../messages.pot --locale locale -t jinja -f html templates
+
+You will need the GNU gettext commands. See [here](https://github.com/mozilla/i18n-abide/blob/master/docs/GETTEXT.md) for more information.
+
+To generate the .po files and compile them to json, run the following command: 
+
+    ./generate-translations.sh
+
+To update the list of languages, modify line `#4` to add more in the for loop.
+
+### i18n For Config
+
+Any column can be internationalised by adding another column with `@locale` after it. For example, the `description` column can be translated to German by adding a column of `description@de`. Only languages which have template translations created for them are valid. The `locales` setting in the config document can be used to restrict the number of locales available. The first locale in the list is the default locale.
+
 ### Running Tests
 
 * Install dev dependencies and mocha - `npm install -d`

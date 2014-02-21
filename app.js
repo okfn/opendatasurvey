@@ -1,17 +1,14 @@
 "use strict";
 
-var fs = require('fs')
-  , path = require('path')
-  , _ = require('underscore')
+var path = require('path')
   , express = require('express')
   , flash = require('connect-flash')
   , scrypt = require('scrypt')
   , passport = require('passport')
 
   , config = require('./lib/config')
+  , i18n = require('./lib/i18n')
   , env = require('./lib/templateenv')
-  , model = require('./lib/model').OpenDataCensus
-  , util = require('./lib/util')
   ;
 
 var app = express();
@@ -66,6 +63,7 @@ app.configure(function() {
     app.use(passport.initialize());
     app.use(passport.session());
   }
+  i18n.init(app);
 
   app.use(CORSSupport);
   app.use(flash());
@@ -90,6 +88,9 @@ app.all('*', function(req, res, next) {
   if (config.get('test:testing') === true && !req.user && config.get('test:user')) {
     req.user = config.get('test:user');
   }
+  if (req.cookies.lang) {
+    req.locale = req.cookies.lang;
+  }
   res.locals.currentUser = req.user ? req.user : null;
 
   if (config.get('appconfig:readonly')) {
@@ -98,12 +99,14 @@ app.all('*', function(req, res, next) {
     req.session = {};
     req.session.loggedin = false;
   }
-  res.locals.sitename = config.get('title');
-  res.locals.sitename_short = config.get('title_short');
+  res.locals.locales = config.get('locales');
+  res.locals.currentLocale = req.locale;
+  res.locals.sitename = config.get('title', req.locale);
+  res.locals.sitename_short = config.get('title_short', req.locale);
   res.locals.custom_css = config.get('custom_css');
   res.locals.google_analytics_key = config.get('google_analytics_key');
-  res.locals.custom_footer = config.get('custom_footer');
-  res.locals.navbar_logo = config.get('navbar_logo');
+  res.locals.custom_footer = config.get('custom_footer', req.locale);
+  res.locals.navbar_logo = config.get('navbar_logo', req.locale);
   res.locals.error_messages = req.flash('error');
   res.locals.info_messages = req.flash('info');
   next();
@@ -124,6 +127,7 @@ if (!config.get('appconfig:readonly')) {
   var census = require('./routes/census');
 
   app.get('/contribute', routes.contribute);
+  app.get('/setlocale/:locale', routes.setlocale);
   app.get('/submit', census.submit);
   app.post('/submit', census.submitPost);
   app.get('/submission/:id', census.submission);
@@ -133,6 +137,7 @@ if (!config.get('appconfig:readonly')) {
   app.post('/login', census.anonLogin);
   app.get('/auth/logout', census.logout);
   app.get('/auth/loggedin', census.loggedin);
+
   // admin
   app.get('/admin/reload', census.reload);
 

@@ -24,9 +24,9 @@
     <ul class="icons">
       <li>
         {% if record and record.dateavailable %}
-          <a class="icon-hover" title="Date available: {{ record.dateavailable }}" data-toggle="tooltip"><i class="icon-calendar"></i></a>
+          <a class="icon-hover" title="{{gettext("Date available:")}} {{ record.dateavailable }}" data-toggle="tooltip"><i class="icon-calendar"></i></a>
         {% else %}
-          <a class="icon-hover" data-toggle="tooltip" data-trigger="hover" title="No date available given">
+          <a class="icon-hover" data-toggle="tooltip" data-trigger="hover" title="{{gettext("No date available given")}}">
             <i class="icon-calendar icons-nodata"></i>
           </a>
         {% endif %}
@@ -35,7 +35,7 @@
         {% if record and record.format %}
           <a class="icon-hover" title="Data format: {{ record.format }}" data-toggle="tooltip"><i class="icon-file"></i></a>
         {% else %}
-          <a class="icon-hover" data-toggle="tooltip" data-trigger="hover" title="No data format given">
+          <a class="icon-hover" data-toggle="tooltip" data-trigger="hover" title="{{gettext("No data format given")}}">
             <i class="icon-file icons-nodata"></i>
           </a>
         {% endif %}
@@ -43,11 +43,11 @@
       <li>
         {% if record and record.details and (record.details | trim | length) > 0 %}
           {% set content = record.details | urlize | replace('\n', '<br>') | replace ('\"', '\'') | wordwrap(100, '\n', true) %}
-          <a href="javascript:;" class="count-0" title="Details" data-toggle="popover" data-content="{{ content }}" data-html="true" data-placement="left">
+          <a href="javascript:;" class="count-0" title="{{gettext("Details")}}" data-toggle="popover" data-content="{{ content }}" data-html="true" data-placement="left">
             <i class="icon-info-sign"></i>
           </a>
         {% else %}
-          <a class="icon-hover" data-toggle="tooltip" data-trigger="hover" title="No details">
+          <a class="icon-hover" data-toggle="tooltip" data-trigger="hover" title="{{gettext("No details")}}">
             <i class="icon-info-sign icons-nodata"></i>
           </a>
         {% endif %}
@@ -55,4 +55,3 @@
     </ul>
   </td>
 {%- endmacro  %}
-

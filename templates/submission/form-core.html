@@ -1,14 +1,14 @@
 <fieldset>
-<h3>Data Availability Questions</h3>
+<h3>{{gettext("Data Availability Questions")}}</h3>
 
 <table class="table table-striped yntable availability-form">
 <thead>
   <tr>
     <td></td>
-    <td>Yes</td>
-    <td>No</td>
-    <td>Unsure</td>
-    <td class="current-entry">Current Entry</td>
+    <td>{{gettext("Yes")}}</td>
+    <td>{{gettext("No")}}</td>
+    <td>{{gettext("Unsure")}}</td>
+    <td class="current-entry">{{gettext("Current Entry")}}</td>
     <td>Info</td>
   </tr>
 </thead>
@@ -37,7 +37,7 @@
 
 {% macro currentEntry(qu) %}
   <div class="current-entry">
-    <label>Current Entry</label>
+    <label>{{gettext("Current Entry")}}</label>
     <div>
       {% if currrecord %} {{currrecord[qu.id]}} {% else %} No entry {% endif %}
     </div>
@@ -74,7 +74,7 @@
   </datalist>
 </fieldset>
 
-  <h3>Publisher Information</h3>
+  <h3>{{gettext("Publisher Information")}}</h3>
   <div class="row">
     <div class="span6">
       {{question(questionsById.publisher)}}
@@ -84,14 +84,14 @@
     </div>
   </div>
 
-  <h3>Data Quality</h3>
+  <h3>{{gettext("Data Quality")}}</h3>
   <div class="row">
   {% for quid in ['qualityinfo', 'qualitystructure'] %}
   {% set qu = questionsById[quid] %}
     <div class="span6">
       <h4>{{qu.question}}</h4>
       <select name="{{qu.id}}" autocomplete="off">
-        <option value="">Please select</option>
+        <option value="">{{gettext("Please select")}}</option>
         {% for xval in [1,2,3,4,5,6,7,8,9,10] %}
         <option value="{{xval}}" {% if xval == prefill[qu.id] %}selected="true"{% endif %}
           >{{xval}}</option>
@@ -108,5 +108,3 @@
     style="min-height: 150px;">{{prefill.details}}</textarea>
   <span class="help-block">{{questionsById.details.description}}</span>
   {{ currentEntry(questionsById.details) }}
-
-
