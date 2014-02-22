@@ -76,9 +76,9 @@
           {{gettext("Change language:")}}
           {% for locale in locales %}
             {% if locale == currentLocale %}
-              <span>{{gettext("locale")}}</span>
+              <span>{{locale.toUpperCase()}}</span>
             {% else %}
-              <a href="/setlocale/{{locale}}">{{gettext("locale")}}</a>
+              <a href="/setlocale/{{locale}}">{{locale.toUpperCase()}}</a>
             {% endif %}
           {% endfor %}
         </p>
