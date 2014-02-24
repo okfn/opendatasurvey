@@ -39,21 +39,19 @@ exports.about = function(req, res) {
 };
 
 exports.faq = function(req, res) {
-  // gettext errors atm - to fix ...
-//  var tmpl = env.getTemplate('_snippets/questions.html');
-//  var questionInfo = tmpl.render({
-//    questions: util.translateRows(model.data.questions, req.locale)
-//  });
-//  var dataTmpl = env.getTemplate('_snippets/datasets.html');
-//  var dataInfo = dataTmpl.render({
-//    datasets: util.translateRows(model.data.datasets, req.locale)
-//  });
+  var tmpl = env.getTemplate('_snippets/questions.html');
+  var questionInfo = tmpl.render({
+    questions: util.translateRows(model.data.questions, req.locale)
+  });
+  var dataTmpl = env.getTemplate('_snippets/datasets.html');
+  var dataInfo = dataTmpl.render({
+    datasets: util.translateRows(model.data.datasets, req.locale)
+  });
   var missingPageHtml = config.get('missing_place_html', req.locale);
   var content = marked(config.get('faq_page', req.locale))
-    // .replace('{{questions}}', questionInfo)
-    // .replace('{{datasets}}', dataInfo)
-    .replace('{{missing_place}}', missingPageHtml)
-    ;
+    .replace('{{questions}}', questionInfo)
+    .replace('{{datasets}}', dataInfo)
+    .replace('{{missing_place}}', missingPageHtml);
 
   res.render('base.html', {
     content: content,
