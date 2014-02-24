@@ -24,7 +24,7 @@ config.set('approve_first_submission', 'TRUE');
 // some rules
 // we only add rows where place = Germany (so we can delete afterwards)
 describe('Backend Entry', function() {
-  this.timeout(8000);
+  this.timeout(base.LONG_TIMEOUT);
   var backend = new Backend(dboptions);
 
   before(function(done) {
@@ -167,7 +167,7 @@ describe('getAllEntrysWithInfo', function() {
 });
 
 describe('Submissions', function() {
-  this.timeout(3000);
+  this.timeout(base.TIMEOUT);
 
   before(function(done) {
     base.setFixtures();
@@ -235,7 +235,7 @@ describe('Submissions', function() {
     });
   });
   it('processSubmission', function(done) {
-    this.timeout(10000);
+    this.timeout(base.LONG_TIMEOUT);
     var data = {
       year: 2012,
       dataset: 'timetables',
@@ -285,7 +285,7 @@ describe('Submissions', function() {
 });
 
 describe('User', function() {
-  this.timeout(2000);
+  this.timeout(base.TIMEOUT);
   var backend = new Backend({key: dboptions.userDbKey});
   var profile = {
     provider: 'facebook',
@@ -309,8 +309,7 @@ describe('User', function() {
   it('create a user', function(done) {
     backend.createUserIfNotExists(userinfo, function(err) {
       if (err) {
-        done(err);
-        return;
+        return done(err);
       }
       backend.getUser(userinfo, function(err, userobj) {
         assert.equal(userobj.email, userinfo.email);

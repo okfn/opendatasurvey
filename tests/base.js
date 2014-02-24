@@ -2,16 +2,26 @@ var fs = require('fs')
   , path = require('path')
   , request = require('request')
   , sinon = require('sinon')
+  , argv = require('optimist').argv
 
   , config     = require('../lib/config.js')
   , util = require('../lib/util')
   ;
+
 
 exports.options = {
  'key': '0AqR8dXc6Ji4JdHR5WWdUU2dYUElPaFluUlBJbkFOMUE',
  'userDbKey': '0AqR8dXc6Ji4JdE5IdEhuQTZCTGp1em84VEZZcC04aUE',
  censusid: 'test'
 };
+
+// set timeouts
+exports.TIMEOUT = 3000;
+exports.LONG_TIMEOUT = 10000;
+if (argv.patient) {
+  exports.TIMEOUT *= 3;
+  exports.LONG_TIMEOUT *= 3;
+}
 
 exports.simpleConfigUrl = 'https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdEg2elXXXX&usp=drive_web#gid=2';
 exports.simpleConfigUrlCsv = 'https://docs.google.com/spreadsheet/pub?key=0AqR8dXc6Ji4JdEg2elXXXX&single=true&gid=2&output=csv';
@@ -32,7 +42,7 @@ exports.setFixtures = function() {
   function _csv(name) {
     return util.getCsvUrlForGoogleSheet(config.get(name))
   };
-        
+
   function stubbed(url, cb) {
     if (url === exports.simpleConfigUrlCsv) {
       cb(null, null, data['config-simple']);
