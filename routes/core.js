@@ -41,10 +41,12 @@ exports.about = function(req, res) {
 exports.faq = function(req, res) {
   var tmpl = env.getTemplate('_snippets/questions.html');
   var questionInfo = tmpl.render({
+    gettext: res.locals.gettext,
     questions: util.translateRows(model.data.questions, req.locale)
   });
   var dataTmpl = env.getTemplate('_snippets/datasets.html');
   var dataInfo = dataTmpl.render({
+    gettext: res.locals.gettext,
     datasets: util.translateRows(model.data.datasets, req.locale)
   });
   var missingPageHtml = config.get('missing_place_html', req.locale);
