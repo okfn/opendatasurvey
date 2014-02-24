@@ -26,7 +26,8 @@
   "devDependencies": {
     "supertest": "",
     "mocha": "",
-    "sinon": ""
+    "sinon": "",
+    "optimist": "~0.6.1"
   },
   "engines": {
     "node": "0.10.17",

@@ -140,7 +140,7 @@ function testRedirect(src, dest) {
       .get(src)
       .expect(302)
       .end(function(err, res) {
-        if (err) done(err);
+        if (err) return done(err);
         assert.equal(res.header['location'], dest);
         done();
       })
@@ -149,7 +149,7 @@ function testRedirect(src, dest) {
 };
 
 describe('Permissions', function() {
-  this.timeout(5000);
+  this.timeout(base.TIMEOUT);
 
   // cache for later
   var testuser = config.get('test:user');
@@ -172,7 +172,7 @@ describe('Permissions', function() {
     request(app)
       .get('/submit')
       .end(function(err, res) {
-        if (err) done(err);
+        if (err) return done(err);
         config.set('test:testing', true);
         assert.equal(res.headers['location'], '/login/?next=%2Fsubmit');
         done();
@@ -184,7 +184,7 @@ describe('Permissions', function() {
       .get('/submission/testid-1/review')
       .expect(302)
       .end(function(err, res) {
-        if (err) done(err);
+        if (err) return done(err);
         config.set('test:testing', true);
         assert.equal(res.headers['location'], '/login/?next=%2Fsubmission%2Ftestid-1%2Freview');
         done();
@@ -234,7 +234,7 @@ describe('Permissions', function() {
 });
 
 describe('Census Pages', function() {
-  this.timeout(8000);
+  this.timeout(base.LONG_TIMEOUT);
   var fixSubmission = {
     submissionid: 'test-created-1',
     place: 'af',
@@ -392,7 +392,7 @@ describe('Census Pages', function() {
       .field('submit', 'Publish')
       .expect(302)
       .end(function(err, res) {
-        if (err) done(err);
+        if (err) return done(err);
         assert.equal(res.header['location'], '/');
         model.backend.getSubmission(fixSubmission, function(err, sub) {
           assert.equal(sub.reviewer, config.get('test:user').name);
