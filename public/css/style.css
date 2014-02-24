@@ -724,9 +724,10 @@ table.response-summary tfoot tr th {
 table.response-summary thead tr th div,
 table.response-summary tfoot tr th div {
 	text-align: left;
-	writing-mode: tb-rl;
 	-webkit-transform: rotate(-45deg);
 	-o-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
 	transform: rotate(-45deg);
 	vertical-align: middle;
 	padding: 8px 0;
