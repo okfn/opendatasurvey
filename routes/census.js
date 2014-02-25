@@ -111,7 +111,8 @@ exports.submission = function(req, res) {
           prefill: obj,
           currrecord: entry,
           dataset: util.translate(dataset, req.locale),
-          place: util.translate(model.data.placesById[obj.place], req.locale)
+          place: util.translate(model.data.placesById[obj.place], req.locale),
+          disqus_shortname: config.get('disqus_shortname')
         });
       });
     }
@@ -125,7 +126,7 @@ exports.reviewPost = function(req, res) {
     return;
   }
 
-  var acceptSubmission = req.body['submit'] == 'Publish';
+  var acceptSubmission = req.body['submit'] === 'Publish';
   model.backend.processSubmission(req.user, acceptSubmission, req.params.submissionid, req.body, function(err) {
     if (err) {
       if (err.code) {
@@ -255,7 +256,7 @@ function requireLoggedIn(req, res) {
 exports.canReview = function(user) {
   var reviewers = config.get('reviewers') || [];
 
-  return ~reviewers.indexOf(user.userid) || ~reviewers.indexOf(user.email);
+  return !!(~reviewers.indexOf(user.userid) || ~reviewers.indexOf(user.email));
 }
 
 function isAdmin(user) {
