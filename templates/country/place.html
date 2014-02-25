@@ -85,8 +85,8 @@
               </td>
               {{entrysummary(dataset, place, submission, scoredQuestions)}}
               <td>
-                 <a href="/submission/{{submission.submissionid}}/review" class="btn btn-mini btn-danger">
-                  {{gettext("Review Now")}}
+                 <a href="/submission/{{submission.submissionid}}" class="btn btn-mini btn-danger">
+                  {{gettext("View Submission")}}
                  </a>
                  <script>
                   $("#submit-{{ dataset.id }}").addClass("disabled");

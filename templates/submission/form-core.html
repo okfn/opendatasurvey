@@ -18,7 +18,7 @@
     <td>{{qu.question}}?</td>
     {% for val in ['Yes', 'No', 'Unsure'] %}
     <td>
-      <input type="radio" name="{{qu.id}}" value="{{val}}" {% if prefill[qu.id] == val %}checked="true"{% endif %}
+      <input type="radio" name="{{qu.id}}" value="{{val}}" {% if canReview != true %}disabled="disabled"{% endif %} {% if prefill[qu.id] == val %}checked="true"{% endif %}
         required>
     </td>
     {% endfor %}
@@ -34,12 +34,19 @@
 </table>
 </fieldset>
 
-
 {% macro currentEntry(qu) %}
   <div class="current-entry">
     <label>{{gettext("Current Entry")}}</label>
     <div>
-      {% if currrecord %} {{currrecord[qu.id]}} {% else %} No entry {% endif %}
+      {% if currrecord %}
+        {% if currrecord[qu.id] %}
+          {{currrecord[qu.id]}}
+        {% else %}
+          {{ gettext("No entry") }}
+        {% endif %}
+      {% else %}
+        {{ gettext("No entry") }}
+      {% endif %}
     </div>
   </div>
 {%- endmacro  %}
@@ -49,19 +56,18 @@
     <input type="{{qu.type}}"
       title="{{qu.placeholder}}"
       name="{{qu.id}}" value="{{prefill[qu.id]}}"
+      {% if canReview != true %}disabled="disabled"{% endif %} 
       placeholder="{{qu.placeholder}}" {% if qu.id=='format' %} list="formats" {% endif %} />
     {{ currentEntry(qu) }}
     <span class="help-block">{{qu.description}}</span>
 {%- endmacro  %}
 
 <fieldset class="data-details">
-  <div class="row">
   {% for qu in questions.slice(9, 13) %}
-  <div class="span6">
+  <div class="row-fluid">
     {{ question(qu) }}
   </div>
   {% endfor %}
-  </div>
 
   <datalist id="formats">
     <option value="CSV">
@@ -74,23 +80,17 @@
   </datalist>
 </fieldset>
 
+  <div class="row-fluid">
   <h3>{{gettext("Publisher Information")}}</h3>
-  <div class="row">
-    <div class="span6">
-      {{question(questionsById.publisher)}}
-    </div>
-    <div class="span6">
-      {{question(questionsById.title)}}
-    </div>
-  </div>
-
+    {{question(questionsById.publisher)}}
+    {{question(questionsById.title)}}
   <h3>{{gettext("Data Quality")}}</h3>
-  <div class="row">
+  </div>
   {% for quid in ['qualityinfo', 'qualitystructure'] %}
   {% set qu = questionsById[quid] %}
-    <div class="span6">
+    <div class="row-fluid">
       <h4>{{qu.question}}</h4>
-      <select name="{{qu.id}}" autocomplete="off">
+      <select name="{{qu.id}}" autocomplete="off"  {% if canReview != true %}disabled="disabled"{% endif %}>
         <option value="">{{gettext("Please select")}}</option>
         {% for xval in [1,2,3,4,5,6,7,8,9,10] %}
         <option value="{{xval}}" {% if xval == prefill[qu.id] %}selected="true"{% endif %}
@@ -101,10 +101,11 @@
       {{ currentEntry(qu) }}
     </div>
   {% endfor %}
-  </div>
 
+  <div class="row-fluid">
   <h3>{{questionsById.details.question}}</h3>
-  <textarea name="details" class="span8" 
+  <textarea name="details" class="span12" {% if canReview != true %}disabled="disabled"{% endif %}
     style="min-height: 150px;">{{prefill.details}}</textarea>
   <span class="help-block">{{questionsById.details.description}}</span>
   {{ currentEntry(questionsById.details) }}
+  </div>
