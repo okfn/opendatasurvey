@@ -76,7 +76,7 @@ exports.submitPost = function(req, res) {
 exports.submission = function(req, res) {
   model.backend.getSubmission({submissionid: req.params.id}, function(err, obj) {
     if (err) {
-      res.send(500, 'There was an rror: ' + err);
+      return res.send(500, 'There was an error: ' + err);
     }
     // TODO: do something properly ...
     res.send('Your submission exists');
