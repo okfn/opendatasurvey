@@ -18,7 +18,7 @@
     <td>{{qu.question}}?</td>
     {% for val in ['Yes', 'No', 'Unsure'] %}
     <td>
-      <input type="radio" name="{{qu.id}}" value="{{val}}" {% if prefill[qu.id] == val %}checked="true"{% endif %}
+      <input type="radio" name="{{qu.id}}" value="{{val}}" {% if canReview != true %}disabled="disabled"{% endif %} {% if prefill[qu.id] == val %}checked="true"{% endif %}
         required>
     </td>
     {% endfor %}
@@ -39,7 +39,15 @@
   <div class="current-entry">
     <label>{{gettext("Current Entry")}}</label>
     <div>
-      {% if currrecord %} {{currrecord[qu.id]}} {% else %} No entry {% endif %}
+      {% if currrecord %}
+        {% if currrecord[qu.id] %}
+          {{currrecord[qu.id]}}
+        {% else %}
+          {{ gettext("No entry") }}
+        {% endif %}
+      {% else %}
+        {{ gettext("No entry") }}
+      {% endif %}
     </div>
   </div>
 {%- endmacro  %}
@@ -49,6 +57,7 @@
     <input type="{{qu.type}}"
       title="{{qu.placeholder}}"
       name="{{qu.id}}" value="{{prefill[qu.id]}}"
+      {% if canReview != true %}disabled="disabled"{% endif %} 
       placeholder="{{qu.placeholder}}" {% if qu.id=='format' %} list="formats" {% endif %} />
     {{ currentEntry(qu) }}
     <span class="help-block">{{qu.description}}</span>
@@ -90,7 +99,7 @@
   {% set qu = questionsById[quid] %}
     <div class="span6">
       <h4>{{qu.question}}</h4>
-      <select name="{{qu.id}}" autocomplete="off">
+      <select name="{{qu.id}}" autocomplete="off"  {% if canReview != true %}disabled="disabled"{% endif %}>
         <option value="">{{gettext("Please select")}}</option>
         {% for xval in [1,2,3,4,5,6,7,8,9,10] %}
         <option value="{{xval}}" {% if xval == prefill[qu.id] %}selected="true"{% endif %}
@@ -104,7 +113,7 @@
   </div>
 
   <h3>{{questionsById.details.question}}</h3>
-  <textarea name="details" class="span8" 
+  <textarea name="details" class="span8" {% if canReview != true %}disabled="disabled"{% endif %}
     style="min-height: 150px;">{{prefill.details}}</textarea>
   <span class="help-block">{{questionsById.details.description}}</span>
   {{ currentEntry(questionsById.details) }}

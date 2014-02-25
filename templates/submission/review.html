@@ -18,27 +18,32 @@
 {{reviewInstructions}}
 </div>
 
+{% if canReview %}
 <form action="" method="post">
+{% endif %}
   <h3>{{dataset.title}}</h3>
   <p>{{dataset.description}}</p>
 
   {% include 'submission/form-core.html' %}
 
-   <div class="row"><br />
+  {% if canReview %}
+  <div class="row"><br />
     <div class="span8">
       <h3>{{ format("Reviewer name (you) &ndash; %(name)s", { name: currentUser.name }) }}</h3>
       <p class="help-block">{{gettext("This will be logged and displayed")}}</p>
       <p>
-        <input name="submit" type="submit" value="{{gettext("Publish")}}" class="btn btn-primary" />
-        <input type="submit" name="submit" class="btn btn-danger" value="Reject" />&nbsp;
+      <input name="submit" type="submit" value="{{gettext("Publish")}}" class="btn btn-primary" />
+      <input type="submit" name="submit" class="btn btn-danger" value="Reject" />&nbsp;
       </p>
       <p class="help-block">
-        {{gettext("If this submission makes no changes to the current entry then please 'Reject' it rather than 'Accept'.\n <br />\n Note that you edit the submission before accepting it. In particular, please correct any spelling mistakes.\n <br />\n <strong>Publish will overwrite the whole current entry with the data in this form.</strong>")}}
+      {{gettext("If this submission makes no changes to the current entry then please 'Reject' it rather than 'Accept'.\n <br />\n Note that you edit the submission before accepting it. In particular, please correct any spelling mistakes.\n <br />\n <strong>Publish will overwrite the whole current entry with the data in this form.</strong>")}}
       </p>
-
     </div>
   </div>
+  {% endif %}
+{% if canReview %}
 </form>
+{% endif %}
 
 <script src="{{page.root}}/src/common.js"></script>
 <script src="/src/submit.js"></script>
