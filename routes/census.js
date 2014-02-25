@@ -73,16 +73,6 @@ exports.submitPost = function(req, res) {
   });
 };
 
-exports.submission = function(req, res) {
-  model.backend.getSubmission({submissionid: req.params.id}, function(err, obj) {
-    if (err) {
-      return res.send(500, 'There was an error: ' + err);
-    }
-    // TODO: do something properly ...
-    res.send('Your submission exists');
-  });
-};
-
 //app.get('/country/submission/:id.json', function(req, res) {
 //  model.backend.getSubmission({submissionid: req.params.id}, function(err, obj) {
 //    if (err) {
@@ -93,12 +83,8 @@ exports.submission = function(req, res) {
 //});
 
 // Compare & update page
-exports.review = function(req, res) {
+exports.submission = function(req, res) {
   if (requireLoggedIn(req, res)) return;
-  if (!exports.canReview(req.user)) {
-    res.send(401, 'Sorry, you are not an authorized reviewer');
-    return;
-  }
 
   var ynquestions = model.data.questions.slice(0,9);
 
@@ -117,6 +103,7 @@ exports.review = function(req, res) {
           id: obj.dataset
         });
         res.render('submission/review.html', {
+          canReview: exports.canReview(req.user),
           reviewInstructions: config.get('review_page', req.locale),
           ynquestions: util.translateRows(ynquestions, req.locale),
           questions: util.translateRows(model.data.questions, req.locale),
