@@ -146,10 +146,16 @@ exports.dataset = function(req, res) {
 /* Single Entry Page */
 /* TODO: optimize/improve */
 exports.entryByPlaceDataset = function(req, res) {
-  // TODO: check dataset is in the dataset list o/w 404
-  var dataset = model.data.datasets.filter(function(d) {
-    return (d.id === req.params.dataset);
+  var dataset = _.findWhere(model.data.datasets, {
+    id: req.params.dataset
   });
+  if (!dataset) {
+    return res.send(404, res.locals.format('There is no entry for %(place)s and %(dataset)s', {
+      place: req.params.place,
+     dataset: req.params.dataset
+    }, req.locale));
+  }
+
   var place = model.data.placesById[req.params.place];
   var ynquestions = model.data.questions.slice(0, 9);
 
@@ -159,7 +165,7 @@ exports.entryByPlaceDataset = function(req, res) {
       questions: util.translateRows(model.data.questions, req.locale),
       scoredQuestions: util.translateRows(model.data.scoredQuestions, req.locale),
       datasets: util.translateRows(model.data.datasets, req.locale),
-      dataset: util.translateRows(dataset, req.locale),
+      dataset: util.translate(dataset, req.locale),
       place: util.translate(place, req.locale),
       prefill: prefill_
     });

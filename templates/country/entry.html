@@ -51,6 +51,7 @@
   <tr><td>{{gettext("Date the data became available")}}</td><td>&nbsp;&nbsp;&nbsp;{% if prefill.dateavailable %}{{ prefill.dateavailable }}{% else %}{{gettext("Unknown")}}{% endif %}</td></tr>
   <tr><td>{{gettext("Format of data")}}</td><td>&nbsp;&nbsp;&nbsp;{% if prefill.format %}{{ prefill.format }}{% else %}{{gettext("Unknown")}}{% endif %}</td></tr>
   <tr><td>{{gettext("Contributors")}}</td><td>&nbsp;&nbsp;&nbsp;{% if not prefill.noreviewers %}{% for reviewer in prefill.reviewers %}{% if loop.index>1 %}, {% endif %}{{reviewer}}{% endfor %} {{gettext("(Editors)")}}; {% endif %}{% if not prefill.nosubmitters %}{% for submitter in prefill.submitters %}{% if loop.index>1 %}, {% endif %}{{submitter}}{% endfor %} {{gettext("(Submitters)")}}{% endif %}</td></tr>
+  <tr><td>{{gettext("Last modified")}}</td><td>&nbsp;&nbsp;&nbsp;{% if prefill.timestamp %}{{ prefill.timestamp | dateformat(currentLocale)}}{% else %}{{gettext("Unknown")}}{% endif %}</td></tr>
 </table>
 
 <script src="{{page.root}}/src/common.js"></script>
