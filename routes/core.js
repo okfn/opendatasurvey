@@ -98,7 +98,12 @@ exports.place = function(req, res) {
       _.each(info.entrys, function(entry) {
         if (entry.dataset == dataset.id) {
           entry['ycount'] = util.scoreOpenness(model.data, entry);
-          entrys[dataset.id] = entry;
+
+          var existing = entrys[dataset.id];
+          // assign if no entry or year is later
+          if (!existing || parseInt(entry, 10) > parseInt(existing.year, 10)) {
+            entrys[dataset.id] = entry;
+          }
         }
       });
       submissions[dataset.id] = _.filter(info.submissions, function(submission) {
