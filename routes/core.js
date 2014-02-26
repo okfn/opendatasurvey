@@ -101,7 +101,7 @@ exports.place = function(req, res) {
 
           var existing = entrys[dataset.id];
           // assign if no entry or year is later
-          if (!existing || parseInt(entry, 10) > parseInt(existing.year, 10)) {
+          if (!existing || parseInt(entry.year, 10) >= parseInt(existing.year, 10)) {
             entrys[dataset.id] = entry;
           }
         }
@@ -118,7 +118,8 @@ exports.place = function(req, res) {
       entrys: entrys,
       place: util.translate(place, req.locale),
       scoredQuestions: util.translateRows(model.data.scoredQuestions, req.locale),
-      loggedin: req.session.loggedin
+      loggedin: req.session.loggedin,
+      display_year: config.get('display_year')
     });
   });
 };
