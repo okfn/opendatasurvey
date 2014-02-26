@@ -20,6 +20,7 @@ exports.submit = function(req, res) {
 
   function render(prefill_) {
     res.render('submission/create.html', {
+      canReview: exports.canReview(req.user),
       submitInstructions: config.get('submit_page', req.locale),
       places: util.translateRows(model.data.places, req.locale),
       ynquestions: util.translateRows(ynquestions, req.locale),
