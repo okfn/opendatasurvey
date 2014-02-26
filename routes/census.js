@@ -84,8 +84,6 @@ exports.submitPost = function(req, res) {
 
 // Compare & update page
 exports.submission = function(req, res) {
-  if (requireLoggedIn(req, res)) return;
-
   var ynquestions = model.data.questions.slice(0,9);
 
   model.backend.getSubmission({submissionid: req.params.submissionid}, function(err, obj) {
