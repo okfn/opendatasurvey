@@ -15,6 +15,11 @@
       {% endfor %}
     </ul>
   </td>
+    <td>
+    {% if record %}
+      {% if record.year < display_year %}<div class="badge" title="{{record.year}}">{{record.year|dateformat(currentLocale, "'YY")}}</div>{% endif %}
+    {% endif %}
+    </td>
     {% if record and record.url %}
       <td class="recordurl"><a href="{{record.url}}" title="{{record.url}}" target="_blank">{{record.url }}</a></td>
     {% else %}
