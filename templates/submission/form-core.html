@@ -18,7 +18,7 @@
     <td>{{qu.question}}?</td>
     {% for val in ['Yes', 'No', 'Unsure'] %}
     <td>
-      <input type="radio" name="{{qu.id}}" value="{{val}}" {% if canReview != true %}disabled="disabled"{% endif %} {% if prefill[qu.id] == val %}checked="true"{% endif %}
+      <input type="radio" name="{{qu.id}}" value="{{val}}"{% if canReview != true %} disabled="disabled"{% endif %} {% if prefill[qu.id] == val %}checked="true"{% endif %}
         required>
     </td>
     {% endfor %}
