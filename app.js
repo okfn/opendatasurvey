@@ -130,8 +130,7 @@ if (!config.get('appconfig:readonly')) {
   app.get('/setlocale/:locale', routes.setlocale);
   app.get('/submit', census.submit);
   app.post('/submit', census.submitPost);
-  app.get('/submission/:id', census.submission);
-  app.get('/submission/:submissionid/review', census.review);
+  app.get('/submission/:submissionid', census.submission);
   app.post('/submission/:submissionid/review', census.reviewPost);
   app.get('/login', census.login);
   app.post('/login', census.anonLogin);
