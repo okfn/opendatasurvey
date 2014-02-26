@@ -189,8 +189,10 @@ exports.entryByPlaceDataset = function(req, res) {
     if (obj) { // we might have a got a 404 etc
       prefill = _.extend(obj, prefill);
     } else {
-      res.send(404, 'There is no entry for ' + req.params.place + ' and ' + req.params.dataset);
-      return;
+      return res.send(404, res.locals.format('There is no entry for %(place)s and %(dataset)s', {
+        place: req.params.place,
+       dataset: req.params.dataset
+      }, req.locale));
     }
 
     model.backend.getSubmissions({
