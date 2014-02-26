@@ -123,7 +123,7 @@ describe('Basics', function() {
   testRedirect('/country/overview/gb', '/place/gb');
   testRedirect('/country/gb/timetables', '/entry/gb/timetables');
   testRedirect('/country/submit', '/submit');
-  testRedirect('/country/review/xyz', '/submission/xyz/review');
+  testRedirect('/country/review/xyz', '/submission/xyz');
 });
 
 function checkContent(res, expected) {
@@ -178,24 +178,31 @@ describe('Permissions', function() {
         done();
       });
   });
-  it('requires login for review', function(done) {
+  it('Anonymous review has no buttons', function(done) {
     config.set('test:testing', false);
     request(app)
-      .get('/submission/testid-1/review')
-      .expect(302)
+      .get('/submission/testid-1')
+      .expect(200)
       .end(function(err, res) {
         if (err) return done(err);
         config.set('test:testing', true);
-        assert.equal(res.headers['location'], '/login/?next=%2Fsubmission%2Ftestid-1%2Freview');
+        assert(res.text.indexOf('<button') < 0, 'button found');
+        assert(res.text.indexOf('<form') < 0, 'form found');
         done();
       });
   });
   it('Non-reviewer cannot review', function(done) {
     config.set('test:user', {userid: 'jones'});
     request(app)
-      .get('/submission/testid-1/review')
-      .expect(401, done)
-    ;
+      .get('/submission/testid-1')
+      .expect(200)
+      .end(function(err, res) {
+        if (err) return done(err);
+
+        assert(res.text.indexOf('<button') < 0, 'button found');
+        assert(res.text.indexOf('<form') < 0, 'form found');
+        done();
+      });
   });
   it('405s is anon login without anonymous_submissions: true', function(done) {
     config.set('anonymous_submissions', 'FALSE');
@@ -314,6 +321,7 @@ describe('Census Pages', function() {
         // all test regex tests are rather hacky ...
         assert(res.text.match('value="%s" selected="true"'.replace('%s', prefill.place)), 'place not set');
         assert(res.text.match('value="emissions" selected="true"'), 'dataset not set');
+        debugger;
         testRadio(res.text, 'exists', prefill.exists);
         testRadio(res.text, 'digital', prefill.digital);
         testRadio(res.text, 'online', prefill.online);
@@ -372,7 +380,7 @@ describe('Census Pages', function() {
   });
 
   it('GET review', function(done) {
-    var url = '/submission/2948d308-ce1c-46fb-b131-dc0f846da788/review';
+    var url = '/submission/2948d308-ce1c-46fb-b131-dc0f846da788';
     request(app)
       .get(url)
       .expect(200)
@@ -385,7 +393,7 @@ describe('Census Pages', function() {
   });
 
   it('POST review', function(done) {
-    var url = '/submission/' + fixSubmission.submissionid + '/review';
+    var url = '/submission/' + fixSubmission.submissionid;
     request(app)
       .post(url)
       .type('form')

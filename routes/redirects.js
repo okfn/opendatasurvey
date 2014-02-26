@@ -14,7 +14,7 @@ exports.addRoutes = function(app) {
   });
 
   app.get('/country/review/:submissionid', function(req, res) {
-    res.redirect('/submission/' + req.params.submissionid + '/review');
+    res.redirect('/submission/' + req.params.submissionid);
   });
 
   app.get('/country/login', function(req, res) {

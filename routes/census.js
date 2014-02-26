@@ -20,6 +20,7 @@ exports.submit = function(req, res) {
 
   function render(prefill_) {
     res.render('submission/create.html', {
+      canReview: exports.canReview(req.user),
       submitInstructions: config.get('submit_page', req.locale),
       places: util.translateRows(model.data.places, req.locale),
       ynquestions: util.translateRows(ynquestions, req.locale),
@@ -84,8 +85,6 @@ exports.submitPost = function(req, res) {
 
 // Compare & update page
 exports.submission = function(req, res) {
-  if (requireLoggedIn(req, res)) return;
-
   var ynquestions = model.data.questions.slice(0,9);
 
   model.backend.getSubmission({submissionid: req.params.submissionid}, function(err, obj) {
@@ -255,6 +254,10 @@ function requireLoggedIn(req, res) {
 
 exports.canReview = function(user) {
   var reviewers = config.get('reviewers') || [];
+
+  if (!user) {
+    return false;
+  }
 
   return !!(~reviewers.indexOf(user.userid) || ~reviewers.indexOf(user.email));
 }
