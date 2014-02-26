@@ -254,6 +254,10 @@ function requireLoggedIn(req, res) {
 exports.canReview = function(user) {
   var reviewers = config.get('reviewers') || [];
 
+  if (!user) {
+    return false;
+  }
+
   return !!(~reviewers.indexOf(user.userid) || ~reviewers.indexOf(user.email));
 }
 
