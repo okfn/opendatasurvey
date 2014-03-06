@@ -99,6 +99,7 @@ describe('Backend Entry', function() {
 
 describe('getAllEntrysWithInfo', function() {
   var db = {};
+  this.timeout(base.LONG_TIMEOUT);
 
   before(function(done) {
     base.setFixtures();
@@ -125,20 +126,6 @@ describe('getAllEntrysWithInfo', function() {
     // console.log(db.entries.summary);
     assert(db.entries.summary.open >= 0 && db.entries.summary.open <= db.entries.summary.entries);
     assert(db.entries.summary.open_percent >= 0.0);
-  });
-
-  it('entries.places is ok ', function(){
-    // test places / countries
-    assert.equal(db.entries.places.length, 1);
-  });
-
-  it('entries.places is sorted by score, descending ', function(){
-    // test places / countries
-    var scores = db.entries.places.map(function (n) { return db.entries.byplace[n].score; });
-    var scoresCopy = scores.slice(0);
-    // sort scoresCopy descending, in-place
-    scoresCopy.sort().reverse();
-    assert.deepEqual(scoresCopy, scores);
   });
 
   it('entries.byplace is ok ', function(){
