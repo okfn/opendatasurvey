@@ -17,7 +17,7 @@
     "nconf": "",
     "connect-flash": "",
     "q": "0.9.x",
-    "google-spreadsheet": "https://github.com/mattfullerton/node-google-spreadsheets/tarball/master",
+    "google-spreadsheet": "0.2.7",
     "scrypt": "~1.7.4",
     "passport": "",
     "passport-google-oauth": "",
