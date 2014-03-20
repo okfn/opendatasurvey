@@ -39,14 +39,16 @@ describe('Backend Entry', function() {
     // TODO: delete all Germany entries
     backend.getEntrys({place: 'de'}, function(err, rows) {
       if (rows.length == 0) {
-        done();
+        return done();
       }
-      rows.forEach(function(entry) {
+      rows.forEach(function(entry, i) {
         entry.del(function(err) {
           if(err) {
             console.log(err);
           }
-          done();
+          if (i === rows.length - 1) {
+            done();
+          }
         });
       });
     });
