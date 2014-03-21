@@ -239,6 +239,7 @@ describe('Submissions', function() {
   it('processSubmission', function(done) {
     this.timeout(base.LONG_TIMEOUT);
     var data = {
+      exactyear: true,
       year: 2012,
       dataset: 'timetables',
       place: 'de',
