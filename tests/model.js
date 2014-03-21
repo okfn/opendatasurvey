@@ -97,6 +97,34 @@ describe('Backend Entry', function() {
       });
     });
   });
+  it('two entries, choose the later year', function(done) {
+    var earlier = {
+      year: 2012,
+      dataset: 'spending',
+      place: 'de',
+      details: 'Some details',
+    };
+    var later = {
+      year: 2013,
+      dataset: 'spending',
+      place: 'de',
+      details: 'New details',
+    };
+
+    backend.insertEntry(later, function(err) {
+      //TODO: Test that something was inserted
+      assert.ok(!err, err);
+      backend.insertEntry(earlier, function(err) {
+        //TODO: Test that something was inserted
+        assert.ok(!err, err);
+        backend.getEntry(earlier, function(err, entry) {
+          assert.equal(entry.details, 'New details', entry);
+          assert.equal(entry.year, '2013', entry);
+          done();
+        });
+      });
+    });
+  });
 });
 
 describe('getAllEntrysWithInfo', function() {
