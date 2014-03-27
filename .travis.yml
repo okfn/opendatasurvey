@@ -4,6 +4,6 @@ node_js:
 env:
   global:
     # GOOGLE_USER
-    - secure: YY57z+8ime6MbirPzTOMc80810bJ/l7/TQGIhGPxe8ZlqGYOCBIKMezDohBjCBmVH6BVfe7fAhXCIUT0zl+Uw/kyvDZkvzgr7DSjB/ufuzNVdCi4roVoF/j52YeBbzdCsQgxSC1IyTVZ9RoIBJ5suXj2+dvtNF8bd4brx63KfFw=
+    - secure: "EYs7L6vW8RQNmZs08ctEz55VTi0lS2HTlvsgprXq/B5iaFsNZgSlzA407xvNjNh51PUJZ+CLAI5QfBKU5TTAwHS4EZW1ObyOlHmVl2PfRmpsC97HYOkfgPD94axnAwRoHnNbXYqf2Dq3mnvYYdyDYs3Eo43bRN/tyPSsMmAUF4U="
     # GOOGLE_PASSWORD
-    - secure: hXhWFk9jQVcuj9qX5Db7hIWS5lWbrzr4PWqd5IUcXhBWaEboIHP3M7G6nUi+00m9CC99eD4D7mKIUr6cVVbM3qWcbtyn3ZYq9GOzrr8WeM//urQzkGpLoj+Fenx2WVFfS4JPBlXxvHcvOOAFMIFxci6Px11ucJXCtaqMfIsYy7U=
+    - secure: "By8qN+uDdvbGlIDjAwSd/GOgaqmilUc4MKuyvpyBQh3VLM9NZw/JNmTnWdvUNLhApPCVZA57ov46fKVepaUmj3KipKouOndXhJV2Lc63zHeB7jKlUKKLt2vR+q+DPYe3+Wt5Q6I5buyM/lhmk/wxHqL2LN42sSWLZQBxpywDvGc="
