@@ -27,7 +27,31 @@
     </div>
   </div>
 
-  <p>The {{ sitename }} is an initiative of the <a href="http://okfn.org/">Open Knowledge Foundation</a> based on contributions from <a href="http://okfn.org/opendata/">open data</a> advocates and experts around the world.{% if not readonly %} If you want to <strong>add, change or improve an entry</strong> please see the <a href="/contribute/">instructions</a>. The results of the {{ sitename_short }} are used to create the <a href="http://index.okfn.org/">Open Data Index</a>, last published on October 28th 2013. {% else %} The {{ sitename_short }} results were compiled from the data collected from the <a href="http://census.okfn.org/">Open Data Census</a>. {% endif %} You can see a list of our global community of contributors <a href="/contributors">here</a>.</p>
+  <p>
+  The {{ sitename }} is an initiative of the 
+  <a href="http://okfn.org/">Open Knowledge Foundation</a> based on
+  contributions from 
+  <a href="http://okfn.org/opendata/">open data</a> advocates and experts around
+  the world.
+  {% if not readonly %}
+  If you want to
+  <strong>add, change or improve an entry</strong> please see the
+  <a href="/contribute/">instructions</a>. The results of the
+  {{ sitename_short }} are used to create the
+  <a href="http://index.okfn.org/">Open Data Index</a>, last published on
+  October 28th 2013.
+  {% else %}
+  The {{ sitename_short }} results are a fixed snapshot from October 28th, 2013,
+  compiled from the data collected from the national
+  <a href="http://national.census.okfn.org/">Open Data Census</a>. 
+  {% endif %}
+  You can see a list of our global community of contributors
+  <a href="/contributors">here</a>.
+  {% if readonly %}
+  We cannot make any changes to this data, but encourage you to contribute to 
+  the national Open Data Census if you spot any outdated information.
+  {% endif %}
+  </p>
 
   <div class="pull-left">{% include '_snippets/key.html' %}
   </div>

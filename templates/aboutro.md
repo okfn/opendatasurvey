@@ -40,6 +40,7 @@
       <li>[How does the scoring system work?](#scoring)</li>
       <li>[How can I get the data?](#getting-the-data)</li>
       <li>[How can I get more involved?](#getting-involved)</li>
+      <li>[Can I re-use the code of the Index](#code-reuse)</li>
       <li>[If you want to learn more about Open Data...](#learning-more)</li>
     </ul>
   </div>
@@ -252,6 +253,10 @@ If the data is not open, then this question will instead describe the date the d
 <h3 id="getting-involved">How can I get more involved?</h3>
 
 <p>There are several ways to become involved. Everyone is welcome to make submissions, and to apply to become a Country Reviewer. The Open Data Index and Index is discussed in the community via this [discussion list](http://lists.okfn.org/mailman/listinfo/open-data-census), which is open for anyone to join. You can also privately email the Index Team at the Open Knowledge Foundation on <a href="mailto:index@okfn.org">index@okfn.org</a>.</p>
+
+<h3 id="code-reuse">Can I re-use the code of the Index?</h3>
+
+<p>Yes, the Open Data Index is open source and you can [fork the project on GitHub](https://github.com/okfn/opendatacensus). We encourage you, however, to propose any ideas on use of the code on the [Open Data Census discussion list](http://lists.okfn.org/mailman/listinfo/open-data-census), so that the community can weigh in &mdash; and we can collaborate.</p>
 
 <h3 id="learning-more">If you want to learn more about Open Data...</h3>
 
