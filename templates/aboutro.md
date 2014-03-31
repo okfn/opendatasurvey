@@ -40,7 +40,7 @@
       <li>[How does the scoring system work?](#scoring)</li>
       <li>[How can I get the data?](#getting-the-data)</li>
       <li>[How can I get more involved?](#getting-involved)</li>
-      <li>[Can I re-use the code of the Index](#code-reuse)</li>
+      <li>[Can I re-use the code of the Index?](#code-reuse)</li>
       <li>[If you want to learn more about Open Data...](#learning-more)</li>
     </ul>
   </div>
