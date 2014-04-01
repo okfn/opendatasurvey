@@ -147,13 +147,6 @@ Right now we're focussed on the 2013 Census and so the information on the site
 and in this FAQ mostly is about 2013. In 2012 we looked at fewer datasets and
 some of the details of methodology were a little different.
 
-### I see you are referring to a Census push or spring in the 'autumn of 2013', which can be a bit ambiguous depending on geographic location  - when is that exactly?
-
-By 'autumn' we are referring to the northern hemisphere autumn/fall, which was a
-term originating in preliminary internal correspondance. Since then we've tried
-to replace this term with 'October 2013', and apologize if single instances are
-still to be found across the site.
-
 <h2 id="submit">Submitting information to the Census</h2>
 
 At the moment we are only working on 2013 information.
