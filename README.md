@@ -11,6 +11,13 @@ This also includes various ancillary information providing an overview of what
 is happening with release of open government data around the world (and
 initiatives related to it).
 
+## Demo Site
+
+If you want to check out what an Open Data Census site looks like we have a
+demo site running at:
+
+<http://demo.census.okfn.org/>
+
 ## Overview
 
 See `doc/admin.md`
