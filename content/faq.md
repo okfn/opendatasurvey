@@ -147,11 +147,11 @@ Right now we're focussed on the 2013 Census and so the information on the site
 and in this FAQ mostly is about 2013. In 2012 we looked at fewer datasets and
 some of the details of methodology were a little different.
 
-### I see you are referring to a Census push or spring in the ‘autumn of 2013’, which can be a bit ambiguous depending on geographic location  - when is that exactly?
+### I see you are referring to a Census push or spring in the 'autumn of 2013', which can be a bit ambiguous depending on geographic location  - when is that exactly?
 
-By ‘autumn’ we are referring to the northern hemisphere autumn/fall, which was a
-term originating in preliminary internal correspondance. Since then we’ve tried
-to replace this term with ‘October 2013’, and apologize if single instances are
+By 'autumn' we are referring to the northern hemisphere autumn/fall, which was a
+term originating in preliminary internal correspondance. Since then we've tried
+to replace this term with 'October 2013', and apologize if single instances are
 still to be found across the site.
 
 <h2 id="submit">Submitting information to the Census</h2>
@@ -182,7 +182,7 @@ add it! Anyone can submit new information to the Census.
 
 * Select your country in [the list](/contribute/) and click on it.
 * You are now on the Country overview page for that country
-* Click the blue “Submit Information” button on the right next to the appropriate category.
+* Click the blue “Submit Information" button on the right next to the appropriate category.
 * Fill the form based on the dataset you have found (there are detailed instructions on the page).
 * Click Submit. Your submission is now waiting for review, and will be visible in the table as 'awaiting review' after a few minutes.
 
@@ -193,7 +193,7 @@ Census.
 
 * Select your country in [the list](/contribute/) and click on it.
 * Go to the correct country by clicking it.
-* On the Country overview page, click the blue “Submit Information” button on the right next to the appropriate category.
+* On the Country overview page, click the blue “Submit Information" button on the right next to the appropriate category.
 * Fill in the form based on the changes you want to make to the existing data.
 * Click Submit. Your submission is now waiting for review, and will be visible in the table as 'awaiting review' after a few minutes.
 
@@ -209,13 +209,13 @@ Comparing datasets between countries are, as mentioned, a complex and often
 difficult task. This is why the comments/details field is public, so that
 submitters and reviewers can explain the reasoning for their choices. In other
 words, the comments/details field is your main tool to ensure that your
-Country’s entries and scores can be compared to other countries’. We therefore
+Country's entries and scores can be compared to other countries'. We therefore
 strongly encourage you to be thorough in your comments, as that will reflect on
 how your country is perceived and compared.
 
 Tip: Try to see the comments of countries with similar score in the given
 category, or go to countries whose data systems and governance structure may be
-similar to your country’s.
+similar to your country's.
 
 ### Questions about the assessment of openness
 
@@ -242,7 +242,7 @@ thereby is not directly reusable.
 
 CSV, XML and XLS would usually count as machine readable, but not always.
 Consult the [Census discussion
-list](http://lists.okfn.org/mailman/listinfo/open-data-census) if you’re in
+list](http://lists.okfn.org/mailman/listinfo/open-data-census) if you're in
 doubt.
 
 An API might well count for machine-readable (though probably not for bulk) but
@@ -304,7 +304,7 @@ country together.
 ### How can I get more involved?
 
 If you'd like to be more involved you could become a Country Editor for the
-Census. Only Census Country Editors can review submissions. If you’d like to
+Census. Only Census Country Editors can review submissions. If you'd like to
 become an editor, email the Census team on census@okfn.org
 
 If there's already an editor for the country you are interested in, don't worry
@@ -351,11 +351,11 @@ The score algorithm is:
 As the weightings indicate, timeliness is now included with a weighting of 10.
 
 One of the aims of the questions for each dataset is to provide a increasing set
-of requirements leading up to full openness (excluding ‘timely’ which is
+of requirements leading up to full openness (excluding 'timely' which is
 important but not a requirement for open data). It should be noted that this
 does not mean each question directly builds on the previous since some of are
 parallel (e.g. digital form and publicly available) but in general there is a
-progression, so ”No” on an earlier question may well imply ”No” on a later
+progression, so "No" on an earlier question may well imply "No" on a later
 question.
 
 <h2 id="more">If you are intrigued by Open Data...</h2>
