@@ -39,14 +39,16 @@ describe('Backend Entry', function() {
     // TODO: delete all Germany entries
     backend.getEntrys({place: 'de'}, function(err, rows) {
       if (rows.length == 0) {
-        done();
+        return done();
       }
-      rows.forEach(function(entry) {
+      rows.forEach(function(entry, i) {
         entry.del(function(err) {
           if(err) {
             console.log(err);
           }
-          done();
+          if (i === rows.length - 1) {
+            done();
+          }
         });
       });
     });
@@ -90,6 +92,34 @@ describe('Backend Entry', function() {
         //Test that field was 'changed' (we didn't check the original value yet, TODO)
         backend.getEntry(data, function(err, entry) {
           assert.equal(entry.details, 'New details', entry);
+          done();
+        });
+      });
+    });
+  });
+  it('two entries, choose the later year', function(done) {
+    var earlier = {
+      year: 2012,
+      dataset: 'spending',
+      place: 'de',
+      details: 'Some details',
+    };
+    var later = {
+      year: 2013,
+      dataset: 'spending',
+      place: 'de',
+      details: 'New details',
+    };
+
+    backend.insertEntry(later, function(err) {
+      //TODO: Test that something was inserted
+      assert.ok(!err, err);
+      backend.insertEntry(earlier, function(err) {
+        //TODO: Test that something was inserted
+        assert.ok(!err, err);
+        backend.getEntry(earlier, function(err, entry) {
+          assert.equal(entry.details, 'New details', entry);
+          assert.equal(entry.year, '2013', entry);
           done();
         });
       });
@@ -224,6 +254,7 @@ describe('Submissions', function() {
   it('processSubmission', function(done) {
     this.timeout(base.LONG_TIMEOUT);
     var data = {
+      exactyear: true,
       year: 2012,
       dataset: 'timetables',
       place: 'de',
