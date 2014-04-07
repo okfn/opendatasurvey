@@ -9,6 +9,7 @@ request <http://meta.census.okfn.org/request/>
 [config]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdG5FYWF5M0o1cHBvQkZLTUdOYWtlNmc
 [db]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdFgwSjlabk0wY3NfT2owbktCME5MY2c
 [instance]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdHZoLXhLMjNVNjVPQzVlaU0tSjNUYlE#gid=0
+[city-config]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdE16XzdsOFgtWGpGVVJ3YVRIQW1jZkE&usp=drive_web
 
 ## Before you start
 
@@ -29,19 +30,18 @@ IMPORTANT: to make a Google Spreadsheet 'Public on the Web' you must:
 * Open the [census instance spreadsheet][instance]. You should add relevant
   info to this as you do next steps.
 
-* Boot a config spreadsheet (copy the [template][config])
+* Boot a config spreadsheet (copy the template config - [city template][city-config] or [generic template][config])
 
-  * Add sheets for general config and for places, datasets and questions (see
-    [template][config])
+  * Name in standard way e.g. '{2-digit-iso-code} - City - Config - Open Data Census'
   * Make the sheet 'Public on the Web' (see above)
-  * Set essential config that should not be changed e.g. `site_url`
+  * Put it in the relevant folder
+  * Add link to this spreadsheet to your instances database sheet
 
 * [optional - you can skip if you use common DB] Create a Database spreadsheet (copy the [DB template][db])
 
   * Add relevant google user (e.g. opendatacensusapp@gmail.com) as read/write user
   * Make the sheet 'Public on the Web' and world readable
-
-* Add Database spreadsheet to your config spreadsheet
+  * Add Database spreadsheet link to your config spreadsheet
 
 * Setup auth - you will need to register the app with Google - see
    https://developers.google.com/accounts/docs/OAuth2#basicsteps
