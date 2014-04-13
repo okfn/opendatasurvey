@@ -17,8 +17,9 @@ var argv = optimist
       '',
       'Where command is one of:',
       '',
-      '  create {slug}   Interactively create a census deployment named slug',
-      '  config {slug}   Set environment based config for an existing census deployment',
+      '  create {slug}  Interactively create a census deployment named slug',
+      '  config {slug}  Set environment based config for an existing census deployment',
+      '  remotes        Sync your local list of heroku remotes from the instance db',
     ].join(os.EOL)
   )
   .alias('h', 'help').describe('h', 'print usage')
