@@ -8,7 +8,8 @@
 {% block content %}
 
 <h1>
-  <a href="/overview/" data-toggle="tooltip" class="count-0" title="Return to results overview">Datasets</a> / {{ dataset.title }}
+  <a href="{{urlFor('overview')}}" data-toggle="tooltip" class="count-0"
+    title="Return to results overview">{{gettext("Datasets")}}</a> / {{ dataset.title }}
 </h1>
       <div id="spacer"></div>
       <div class="tabbable"> <!-- Only required for left/right tabs -->
