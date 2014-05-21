@@ -101,8 +101,9 @@ exports.submission = function(req, res) {
         var dataset = _.findWhere(model.data.datasets, {
           id: obj.dataset
         });
+
         res.render('submission/review.html', {
-          canReview: exports.canReview(req.user),
+          canReview: exports.canReview(req.user, obj.place),
           reviewInstructions: config.get('review_page', req.locale),
           ynquestions: util.translateRows(ynquestions, req.locale),
           questions: util.translateRows(model.data.questions, req.locale),
@@ -252,17 +253,34 @@ function requireLoggedIn(req, res) {
   }
 }
 
-exports.canReview = function(user) {
-  var reviewers = config.get('reviewers') || [];
+function getLocalReviewers (user, currentPlaceName) {
+  // Get the local reviewers of a specific place.
+  var places = model.data.places;
+  for (i in places) {
+    if (places[i].id == currentPlaceName) {
+      // Not all places have a reviewers column
+      if (places[i].hasOwnProperty('reviewers')){
+        return places[i].reviewers.split(",");
+      } else {
+        return []
+      }
+    }
+  }
+}
+
+exports.canReview = function(user, currentPlaceName) {
+  // Get both the main reviewers list and the local place reviewers
+  var mainReviewers = config.get('reviewers');
+  var localReviewers = getLocalReviewers(user, currentPlaceName)
+  var allReviewers = mainReviewers.concat(localReviewers);
 
   if (!user) {
     return false;
   }
 
-  return !!(~reviewers.indexOf(user.userid) || ~reviewers.indexOf(user.email));
+  return !!(~allReviewers.indexOf(user.userid) || ~allReviewers.indexOf(user.email));
 }
 
 function isAdmin(user) {
   return (config.get('admins').indexOf(user.userid) !== -1);
 }
-
