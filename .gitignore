@@ -6,3 +6,4 @@ settings.json*
 sandbox/*
 .env*
 .deploy.js
+.DS_Store
