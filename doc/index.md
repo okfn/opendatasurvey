@@ -228,6 +228,12 @@ These questions will then be used instead of the standard questions.
 
 The spreadsheet MUST follow structure as in the [default questions spreadsheet][template-questions].
 
+### `approve_first_submission`
+
+Determines whether the first submission requires review by a reviewer.
+
+Default is FALSE i.e. the first submission is auto-approved.
+
 ### `overview_page`
 
 Content for the overview on the home page (this is just content for top of page above results summary table).
