@@ -72,7 +72,7 @@ Working Group](http://opengovernmentdata.org/), and undergoes a process of peer
 review and evidence checking to ensure high quality results. An annual
 announcement of the results (the Index) creates a focus for debate and review.
 
-The Census was launched in 2012 and is undergoing active development. The Census 
+The Census was launched in 2012 and is undergoing active development. The Census
 lays the foundation of the **Open Data Index** which is snap-shot released annually, most
 recently in October 2013.
 
@@ -175,7 +175,7 @@ add it! Anyone can submit new information to the Census.
 
 * Select your country in [the list](/contribute/) and click on it.
 * You are now on the Country overview page for that country
-* Click the blue “Submit Information" button on the right next to the appropriate category.
+* Click the blue "Submit Information" button on the right next to the appropriate category.
 * Fill the form based on the dataset you have found (there are detailed instructions on the page).
 * Click Submit. Your submission is now waiting for review, and will be visible in the table as 'awaiting review' after a few minutes.
 
@@ -186,7 +186,7 @@ Census.
 
 * Select your country in [the list](/contribute/) and click on it.
 * Go to the correct country by clicking it.
-* On the Country overview page, click the blue “Submit Information" button on the right next to the appropriate category.
+* On the Country overview page, click the blue "Submit Information" button on the right next to the appropriate category.
 * Fill in the form based on the changes you want to make to the existing data.
 * Click Submit. Your submission is now waiting for review, and will be visible in the table as 'awaiting review' after a few minutes.
 
