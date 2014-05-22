@@ -1,0 +1,11 @@
+.navbar ul.nav.pull-right {
+  margin-right: 42px;
+}
+
+.hero-unit {
+  background-color: #ddd;
+}
+
+.hero-unit h1 {
+  margin-bottom: 20px;
+}
