@@ -5,7 +5,7 @@
 Webapp for doing [Open Data Censuses][] including submission workflow,
 presentation of results and some visualization.
 
-[Open Data Census]: http://census.okfn.org/
+[Open Data Censuses]: http://census.okfn.org/
 
 This also includes various ancillary information providing an overview of what
 is happening with release of open government data around the world (and
@@ -20,7 +20,7 @@ demo site running at:
 
 ## Overview
 
-See `doc/admin.md`
+See: <http://meta.census.okfn.org/doc/>
 
 ### Developer Stuff
 
@@ -94,7 +94,7 @@ own local config using a `settings.json` as follows:
 Note this will **not** work for Heroku - instead you need to do everything via
 environment variables: https://devcenter.heroku.com/articles/config-vars
 
-### i18n For Templates 
+### i18n For Templates
 
 When templates change, the translations have to be changed. Extract the files by running this command:
 
@@ -102,7 +102,7 @@ When templates change, the translations have to be changed. Extract the files by
 
 You will need the GNU gettext commands. See [here](https://github.com/mozilla/i18n-abide/blob/master/docs/GETTEXT.md) for more information.
 
-To generate the .po files and compile them to json, run the following command: 
+To generate the .po files and compile them to json, run the following command:
 
     ./generate-translations.sh
 

@@ -39,11 +39,11 @@ Yes, we'll host the census for you.
 
 #### Will I be able to compare cities (or regions) in my country?
 
-Yes, you will. That's exactly what the local census will allow you to do?
+Yes, you will. That's exactly what the local census will allow you to do!
 
-#### Can I have separate city and region censuses for your country?
+#### Can I have separate city and region censuses for my country?
 
-Yes. For example, for the United States you might want a census for cities and a census for the states as both cities and states are releasing open data.
+Yes. For example, for the United States you might want a census for cities and a census for the states, as both cities and states are releasing open data.
 
 #### Can I customize the list of datasets that are surveyed?
 
@@ -76,7 +76,7 @@ We know there is huge variability in how much local data is available not just a
 
 #### What's the Relation with the National Open Data Census?
 
-The [National Open data Census][national-open-data-census] surveys the availability of key datasets at the national, country, level. It has been run annually since 2012 by the Open Knowledge Foundation it is used to produce the 2013 [Open Data Index][open-data-index], the global reference for the state of open data release by national governments.
+The [National Open data Census][national-open-data-census] surveys the availability of key datasets at the national, country, level. It has been run annually since 2012 by the Open Knowledge Foundation. It is used to produce the [Open Data Index][open-data-index], the global reference for the state of open data released by national governments.
 
 The Index (and Census) answer questions like: which key datasets are being released? Is the available data legally and technically usable so that citizens, civil society and businesses can realise the full benefits of the information?
 

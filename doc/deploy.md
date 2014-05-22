@@ -15,8 +15,8 @@ Before you start:
 
 ## Deploying a New Census Instance
 
-If you are **not** a developer but want a Census booted please visit and make a
-request <http://meta.census.okfn.org/request/>
+If you are **not** a developer but want a Census booted please make a
+request: <{{site.baseurl}}/>
 
 [config]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdG5FYWF5M0o1cHBvQkZLTUdOYWtlNmc
 [db]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdFgwSjlabk0wY3NfT2owbktCME5MY2c
@@ -43,7 +43,7 @@ IMPORTANT: to make a Google Spreadsheet 'Public on the Web' you must:
 * Boot a config spreadsheet (copy the template config - [city template][city-config] or [generic template][config])
 
   * Name in standard way e.g. '{2-digit-iso-code} - City - Config - Open Data Census'
-  * Make the sheet 'Public on the Web' (see above)
+  * Make the sheet 'Public on the Web' ([see above](#before-you-start))
   * Put it in the relevant folder
   * Add link to this spreadsheet to your instances database sheet
 
@@ -53,8 +53,8 @@ IMPORTANT: to make a Google Spreadsheet 'Public on the Web' you must:
   * Make the sheet 'Public on the Web' and world readable
   * Add Database spreadsheet link to your config spreadsheet
 
-* Setup auth - you will need to register the app with Google - see
-   https://developers.google.com/accounts/docs/OAuth2#basicsteps
+* Setup auth - you will need to register the app with Google - see:
+   <https://developers.google.com/accounts/docs/OAuth2#basicsteps>
 
   * Register as a developer
   * Go to [Google cloud console](https://cloud.google.com/console)

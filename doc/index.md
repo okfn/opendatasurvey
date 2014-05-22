@@ -77,7 +77,7 @@ Our primary storage backend is Google Spreadsheets.
 
 For the Census to work properly you need to do some initial basic configuration:
 
- * Add a list of places for the Census to cover – see Setting up Places below
+ * Add a list of places for the Census to cover – see [Setting up Places](#setting-up-places) below
  * Set `title` value in your General Config as appropriate e.g. "US City Open Data Census"
 
 Next steps:
@@ -86,8 +86,8 @@ Next steps:
 
 Extras – set additional content e.g.
 
- * Add a logo – set `navbar_logo` config
- * See some short text on the front page – 3-4 sentences about what this is – `overview_page` config variable
+ * Add a logo – `navbar_logo` config variable
+ * Some short text on the front page – 3-4 sentences about what this is – `overview_page` config variable
  * About page – `about_page` config variable
  * FAQ page – `faq_page` config variable
 
