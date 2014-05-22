@@ -9,9 +9,11 @@
   "license": "MIT",
   "dependencies": {
     "express": "3.x",
+    "execSync": "",
     "nunjucks": "0.1.8",
     "marked": "",
     "csv": "0.3.6",
+    "colors": "",
     "request": "",
     "underscore": "",
     "nconf": "",
