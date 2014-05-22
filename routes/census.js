@@ -121,10 +121,13 @@ exports.submission = function(req, res) {
 
 exports.reviewPost = function(req, res) {
   if (requireLoggedIn(req, res)) return;
-  if (!exports.canReview(req.user)) {
-    res.send(401, 'Sorry, you are not an authorized reviewer');
-    return;
-  }
+  // Get the submission's place, so we can find the local reviewers
+  model.backend.getSubmission({submissionid: req.params.submissionid}, function(err, obj) {
+    if (!exports.canReview(req.user, obj.place)) {
+      res.send(401, 'Sorry, you are not an authorized reviewer');
+      return;
+    }
+  });
 
   var acceptSubmission = req.body['submit'] === 'Publish';
   model.backend.processSubmission(req.user, acceptSubmission, req.params.submissionid, req.body, function(err) {
