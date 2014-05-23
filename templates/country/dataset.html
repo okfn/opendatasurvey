@@ -54,15 +54,14 @@
       {{ entrysummary(dataset, place, record, scoredQuestions) }}
       {% if not readonly %}
       <td>
-        {% if record %}
-        <a id="submit-{{ dataset.id }}" href="/country/submit/?dataset={{ dataset.id }}&place={{ place }}" class="btn btn-mini btn-primary">
-          <!-- <i class="icon-plus"></i> -->Propose Revisions
+        <a id="submit-{{ dataset.id }}" href="/submit/?dataset={{ dataset.id }}&place={{ place.id }}" class="btn btn-mini btn-primary">
+          <!-- <i class="icon-plus"></i> -->
+          {% if record %}
+            Propose Revisions
+          {% else %}
+            Submit information
+          {% endif %}
         </a>
-        {% else %}
-        <a id="submit-{{ dataset.id }}" href="/country/submit/?dataset={{ dataset.id }}&place={{ place }}" class="btn btn-mini btn-primary">
-          <!-- <i class="icon-plus"></i> -->Submit information
-        </a>
-        {% endif %}
       </td>
       {% endif %}
     </tr>
