@@ -28,7 +28,8 @@ exports.submit = function(req, res) {
       questionsById: util.translateObject(model.data.questionsById, req.locale),
       datasets: util.translateRows(model.data.datasets, req.locale),
       year: year,
-      prefill: prefill_
+      prefill: prefill_,
+      currrecord: prefill_
     });
   }
 
@@ -38,12 +39,12 @@ exports.submit = function(req, res) {
       place: prefill.place,
       dataset: prefill.dataset,
       year: year,
-    }, function(err, obj) {
+    }, function(err, entry) {
       // we allow query args to override entry values
       // might be useful (e.g. if we started having form errors and
       // redirecting here ...)
-      if (obj) { // we might have a got a 404 etc
-        prefill = _.extend(obj, prefill);
+      if (entry) { // we might have a got a 404 etc
+        prefill = _.extend(entry, prefill);
       }
       render(prefill);
     });
