@@ -36,7 +36,7 @@ When a `Submission` has been reviewed and deemed accurate it becomes an `Entry` 
 #### Reviewing a submission
 
  * A reviewer visits the place page for a given place (e.g. `/place/gb`) – normally they will do this via the front page
- * A reviewer clicks on the "review now" button next to the ![census-review]({{site.baseurl}}/files/2014/02/census-review.png)
+ * A reviewer clicks on the "review now" button next to the ![census-review](/files/2014/02/census-review.png)
  * A reviewer visits the review page for a submission
     * You must be logged in to review
     * You must be an authorized reviewer to review (see `reviewers` config option below)

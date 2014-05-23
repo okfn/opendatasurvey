@@ -9,7 +9,7 @@ title: Local Open Data Census
 
 More is being prepared and will be announced shortly.
 
-To get your own Local Census, go [here][home].
+To get your own Local Census, go [here][get-started].
 
 ## Instructions for Census Administrators
 
@@ -32,6 +32,6 @@ Mailing lists:
  * You should also join the public open-data-census list – this is the primary place for general discussion
 
 
-[docs-census-structure]: {{site.baseurl}}/doc/#overview-of-how-a-census-is-structured
-[docs-census-config]: {{site.baseurl}}/doc/#configuring-your-census
-[home]: {{site.baseurl}}/
+[docs-census-structure]: /doc/#overview-of-how-a-census-is-structured
+[docs-census-config]: /doc/#configuring-your-census
+[get-started]: /#get-started

@@ -106,7 +106,7 @@ Yes! Because the Census is built with open source tools, you can of course help 
 If you'd like to use these tools to run your own census, perhaps focusing on different datasets or a particular region or topic, [we'd love to hear from you][contact-us].
 
 
-[contact-us]: {{site.baseurl}}/contact/
+[contact-us]: /contact/
 [okf]: https://okfn.org
 [open-data-index]: http://index.okfn.org/
 [national-open-data-census]: http://census.okfn.org/

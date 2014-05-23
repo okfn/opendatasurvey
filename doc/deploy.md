@@ -16,7 +16,7 @@ Before you start:
 ## Deploying a New Census Instance
 
 If you are **not** a developer but want a Census booted please make a
-request: <{{site.baseurl}}/>
+request: <http://meta.census.okfn.org/>
 
 [config]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdG5FYWF5M0o1cHBvQkZLTUdOYWtlNmc
 [db]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdFgwSjlabk0wY3NfT2owbktCME5MY2c
