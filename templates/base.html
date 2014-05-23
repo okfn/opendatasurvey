@@ -111,7 +111,8 @@
         <ul class="pull-right">
           <li>
             {% if currentUser %}
-            {{format("Logged in as %(name)s", { name: currentUser.name })}}
+            {{format("Logged in as %(name)s.", { name: currentUser.name })}}
+            <a href="/auth/logout">{{gettext("Log out")}}</a>
             {% else %}
             <a href="/login">{{gettext("Login")}}</a>
             {% endif %}
