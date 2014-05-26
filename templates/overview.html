@@ -39,7 +39,7 @@
   <table class="response-summary table">
 <thead>
   <tr>
-    <th>&nbsp;</th>
+    <th colspan="2">&nbsp;</th>
     {% for dataset in datasets %}
       <th><div><a href="/dataset/{{dataset.id}}">{{ dataset.title|rotate }}</a></div></th>
     {% endfor %}
@@ -49,7 +49,7 @@
 <tbody>
   {% if places.length == 0 %}
   <tr>
-    <td></td>
+    <td colspan="2"></td>
     <td colspan="10">
       <strong><em>{{gettext("The Census Admin needs to add some places to the Places configuration sheet")}}</em></strong>
     </td>
@@ -67,6 +67,7 @@
       #}
       data-score="{{placeScore}}"
       data-area="{{place.name}}">
+      <td>{{ loop.index }}</td>
       <th class="area-name">
         {% if place %}
           <a href="/place/{{ place.id }}">{{place.name}}</a>
@@ -109,7 +110,7 @@
 </tbody>
 <tfoot>
   <tr>
-    <th>&nbsp;</th>
+    <th colspan="2">&nbsp;</th>
     {% for dataset in datasets %}
       <th><div><a href="/dataset/{{dataset.id}}">{{ dataset.title|rotate }}</a></div></th>
     {% endfor %}
