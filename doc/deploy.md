@@ -47,14 +47,14 @@ IMPORTANT: to make a Google Spreadsheet 'Public on the Web' you must:
   * Put it in the relevant folder
   * Add link to this spreadsheet to your instances database sheet
 
-* \[optional - you can skip if you use common DB\] Create a Database spreadsheet (copy the [DB template][db])
+* [optional - you can skip if you use common DB] Create a Database spreadsheet (copy the [DB template][db])
 
   * Add relevant google user (e.g. opendatacensusapp@gmail.com) as read/write user
   * Make the sheet 'Public on the Web' and world readable
   * Add Database spreadsheet link to your config spreadsheet
 
 * Setup auth - you will need to register the app with Google - see:
-   [https://developers.google.com/accounts/docs/OAuth2#basicsteps](https://developers.google.com/accounts/docs/OAuth2#basicsteps)
+   <https://developers.google.com/accounts/docs/OAuth2#basicsteps>
 
   * Register as a developer
   * Go to [Google cloud console](https://cloud.google.com/console)

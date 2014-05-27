@@ -170,7 +170,7 @@ Note: here is the [Standard City Datsets sheet][template-city]
 
 These are the config variables you can set in the the "General Config" sheet of your config spreadsheet (a Google Spreadsheet or online CSV file).
 
-Those marked with a (\*) must be set.
+Those marked with a (*) must be set.
 
 Some definitions:
 
@@ -308,7 +308,7 @@ Custom footer content
 
 Supply a google analytics key to use on the site
 
-### database (\*)
+### database (*)
 
 __This will normally be set for you by the deployer. Do not change its value unless you know what you are doing!__
 

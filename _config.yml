@@ -1,4 +1,4 @@
 title: Open Data Census – Meta
-markdown: maruku
+markdown: kramdown
 analytics: UA-33874954-7
 exclude: ['node_modules']
