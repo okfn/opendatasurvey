@@ -261,8 +261,8 @@ You can use markdown or HTML format.
 
 Note: you have access to 2 special variables that can be used in your html or markdown:
 
-  * `{{questions}}` – this will be replaced by a table of all the questions
-  * `{{datasets}}` – this will be replaced by a table of all the datasets
+  * `{{ "{{questions" }}}}` - this will be replaced by a table of all the questions
+  * `{{ "{{datasets" }}}}` - this will be replaced by a table of all the datasets
 
 ### about_page
 

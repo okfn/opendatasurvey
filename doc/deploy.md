@@ -54,7 +54,7 @@ IMPORTANT: to make a Google Spreadsheet 'Public on the Web' you must:
   * Add Database spreadsheet link to your config spreadsheet
 
 * Setup auth - you will need to register the app with Google - see:
-   <https://developers.google.com/accounts/docs/OAuth2#basicsteps>
+   [https://developers.google.com/accounts/docs/OAuth2#basicsteps](https://developers.google.com/accounts/docs/OAuth2#basicsteps)
 
   * Register as a developer
   * Go to [Google cloud console](https://cloud.google.com/console)
