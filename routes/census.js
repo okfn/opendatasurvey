@@ -266,4 +266,3 @@ exports.canReview = function(user) {
 function isAdmin(user) {
   return (config.get('admins').indexOf(user.userid) !== -1);
 }
-
