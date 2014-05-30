@@ -132,6 +132,8 @@ exports.dataset = function(req, res) {
     return;
   }
 
+  dataset = util.translate(dataset, req.locale);
+
   model.backend.getEntrys({
     dataset: req.params.dataset,
     year: config.get('display_year')
@@ -144,7 +146,8 @@ exports.dataset = function(req, res) {
       bydataset: entriesForThisDataset,
       placesById: util.translateObject(model.data.placesById, req.locale),
       scoredQuestions: util.translateRows(model.data.scoredQuestions, req.locale),
-      dataset: util.translate(dataset, req.locale)
+      dataset: dataset,
+      long_description: marked(dataset.long_description || '')
     });
   });
 };
