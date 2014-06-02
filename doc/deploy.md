@@ -35,6 +35,8 @@ IMPORTANT: to make a Google Spreadsheet 'Public on the Web' you must:
 * Go to sharing and make world readable
 * Go to File Menu => "Publish to the Web" and click "Start Publishing"
 
+It's useful to check the "Automatically republish when changes are made" box. However, note that **republishing doesn't always happen immediately**. You can always revisit File Menu => "Publish to the Web" and click "Republish now".
+
 ### Step-by-Step
 
 * Open the [census instance spreadsheet][instance]. You should add relevant
