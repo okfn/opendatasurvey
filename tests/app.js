@@ -12,12 +12,11 @@ config.set('test:testing', true);
 // only require after setting config ...
 var model = require('../lib/model.js').OpenDataCensus;
 
-var app = require('../app.js').app;
-
 describe('Basics', function() {
   before(function(done) {
     base.setFixtures();
     model.load(function() {
+      app = require('../app.js').app;
       done();
     });
   });
