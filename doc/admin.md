@@ -62,6 +62,10 @@ online CSV file containing a list of places to ask questions about.
 The structure should follow that in
 https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&usp=drive_web#gid=7
 
+You can _optionally_ add a Reviewers column that accepts a comma separated list
+of emails. These users will then have access to approve or reject revisions
+submitted for datasets in that place.
+
 ### `questions`
 
 URL to a Google Spreadsheet (make sure url is to *actual* sheet your want) or
