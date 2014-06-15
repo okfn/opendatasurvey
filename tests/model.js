@@ -87,12 +87,15 @@ describe('Backend Entry', function() {
       assert.ok(!err, err);
       //N.B. We need to delete this anyway for getEntry, but having newlines in the query string, even when encoded, causes HTTP 400 error
       delete data['details'];
-      backend.updateEntry(data, newData, function(err) {
-        assert.ok(!err);
-        //Test that field was 'changed' (we didn't check the original value yet, TODO)
-        backend.getEntry(data, function(err, entry) {
-          assert.equal(entry.details, 'New details', entry);
-          done();
+      backend.getEntry(data, function(err, entry) {
+        assert.ok(!err, err);
+        backend.updateEntry(entry, newData, function(err) {
+          assert.ok(!err);
+          //Test that field was 'changed' (we didn't check the original value yet, TODO)
+          backend.getEntry(entry, function(err, updatedEntry) {
+            assert.equal(updatedEntry.details, 'New details');
+            done();
+          });
         });
       });
     });
