@@ -97,7 +97,7 @@ describe('Backend Entry', function() {
       });
     });
   });
-  it('two entries, choose the later year', function(done) {
+  it('two entries, choose the earlier year', function(done) {
     var earlier = {
       year: 2012,
       dataset: 'spending',
@@ -118,8 +118,8 @@ describe('Backend Entry', function() {
         //TODO: Test that something was inserted
         assert.ok(!err, err);
         backend.getEntry(earlier, function(err, entry) {
-          assert.equal(entry.details, 'New details', entry);
-          assert.equal(entry.year, '2013', entry);
+          assert.equal(entry.details, 'Some details');
+          assert.equal(entry.year, '2012');
           done();
         });
       });
