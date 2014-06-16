@@ -67,7 +67,7 @@ describe('Backend Entry', function() {
     backend.getEntry({year: 2013, dataset: 'maps', place: 'gb'}, function(err, entry) {
       assert.ok(!err, err);
       assert.ok(entry!=null, 'No entry (entry is null)');
-      assert.equal(entry.public, 'Yes', entry);
+      assert.equal(entry.public, 'Yes');
       done();
     });
   });
@@ -91,7 +91,7 @@ describe('Backend Entry', function() {
         assert.ok(!err);
         //Test that field was 'changed' (we didn't check the original value yet, TODO)
         backend.getEntry(data, function(err, entry) {
-          assert.equal(entry.details, 'New details', entry);
+          assert.equal(entry.details, 'New details');
           done();
         });
       });
@@ -211,8 +211,8 @@ describe('Submissions', function() {
     model.backend.getSubmission({submissionid: 'testid-1'}, function(err, entry) {
       assert.ok(!err);
       assert.ok(entry!=null, 'No entry (entry is null)');
-      assert.equal(entry.dataset, 'timetables', entry);
-      assert.equal(entry.public, 'Yes', entry);
+      assert.equal(entry.dataset, 'timetables');
+      assert.equal(entry.public, 'Yes');
       done();
     });
   });
