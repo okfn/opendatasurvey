@@ -219,6 +219,10 @@ URL to a Google Spreadsheet (make sure url is to the *actual* sheet you want) or
 
 The structure should follow that in https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&usp=drive_web#gid=7
 
+You can _optionally_ add a Reviewers column that accepts a comma separated list
+of emails. These users will then have access to approve or reject revisions
+submitted for datasets in that place.
+
 ### questions
 
 __We strongly recommend against customizing the questions. The app may well break if you change the questions.__
