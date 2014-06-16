@@ -17,6 +17,14 @@
         <div class="tab-content">
           <div class="tab-pane active" id="table-overview">
             <div class="table">
+
+{% if long_description %}
+  <h3>Dataset Description</h3>
+  {{long_description}}
+{% endif %}
+
+<h3>Dataset Info</h3>
+
 <p>On this page you can see the state of open data for {{ dataset.title }} across all countries for which we have information (displayed down the left hand side). Each icon in the data availability column represents important factors indicating data accessibility or availability - mouse over the icons to see what they are and the colours correspond to yes / no / unsure / no data.</p>
 
 {% if not readonly %}

@@ -1,8 +1,7 @@
 var model = require('./lib/model').OpenDataCensus
-  , app = require('./app').app
   , census = require('./routes/census')
   , config = require('./lib/config')
-  ; 
+  ;
 
 // Booting up
 // ========================================================
@@ -15,6 +14,9 @@ model.load(function(err) {
     console.error('Failed to load dataset info');
     throw err;
   }
+
+  app = require('./app').app
+
   // Passport Auth Stuff (Facebook etc)
   // set up here rather than app.js as must be after config load to
   // get site_url

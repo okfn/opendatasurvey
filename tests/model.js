@@ -67,7 +67,7 @@ describe('Backend Entry', function() {
     backend.getEntry({year: 2013, dataset: 'maps', place: 'gb'}, function(err, entry) {
       assert.ok(!err, err);
       assert.ok(entry!=null, 'No entry (entry is null)');
-      assert.equal(entry.public, 'Yes', entry);
+      assert.equal(entry.public, 'Yes');
       done();
     });
   });
@@ -100,7 +100,7 @@ describe('Backend Entry', function() {
       });
     });
   });
-  it('two entries, choose the later year', function(done) {
+  it('two entries, choose the earlier year', function(done) {
     var earlier = {
       year: 2012,
       dataset: 'spending',
@@ -121,8 +121,8 @@ describe('Backend Entry', function() {
         //TODO: Test that something was inserted
         assert.ok(!err, err);
         backend.getEntry(earlier, function(err, entry) {
-          assert.equal(entry.details, 'New details', entry);
-          assert.equal(entry.year, '2013', entry);
+          assert.equal(entry.details, 'Some details');
+          assert.equal(entry.year, '2012');
           done();
         });
       });
@@ -214,8 +214,8 @@ describe('Submissions', function() {
     model.backend.getSubmission({submissionid: 'testid-1'}, function(err, entry) {
       assert.ok(!err);
       assert.ok(entry!=null, 'No entry (entry is null)');
-      assert.equal(entry.dataset, 'timetables', entry);
-      assert.equal(entry.public, 'Yes', entry);
+      assert.equal(entry.dataset, 'timetables');
+      assert.equal(entry.public, 'Yes');
       done();
     });
   });

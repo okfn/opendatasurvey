@@ -16,7 +16,7 @@ jQuery(document).ready(function($) {
     } // else do nothing
   }
 
-  $('input[name=public], input[name=online]').change(function() {
+  function publicAndOnline() {
     var public = $('input[name=public]:checked').val() === 'Yes'
       , online = $('input[name=online]:checked').val() === 'Yes'
       , $url = $('input[name=url]')
@@ -30,9 +30,9 @@ jQuery(document).ready(function($) {
       $url.removeAttr('required');
       $header.removeClass('required');
     }
-  });
+  }
 
-  $('input[name=openlicense]').change(function() {
+  function openLicense() {
     var open = $('input[name=openlicense]:checked').val() === 'Yes'
       , $url = $('input[name=licenseurl]')
       , $header = $url.prev('h4')
@@ -45,7 +45,10 @@ jQuery(document).ready(function($) {
       $url.removeAttr('required');
       $header.removeClass('required');
     }
-  });
+  }
+
+  $('input[name=public], input[name=online]').change(publicAndOnline);
+  $('input[name=openlicense]').change(openLicense);
 
   var $select = $('#dataset-select');
   $select.change(function(e) {
@@ -59,6 +62,8 @@ jQuery(document).ready(function($) {
     $('.js-dataset-' + val).show('slow');
   }
 
+  publicAndOnline();
+  openLicense();
   showHideAvailabilityTable();
   showCurrentDatasetInfo();
 });

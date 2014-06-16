@@ -793,7 +793,7 @@ table.cell-summary {
 
 table.table th.area-name {
 	text-align: left;
-	min-width: 140px;
+	min-width: 120px;
 	border-left: none;
 }
 
