@@ -261,7 +261,7 @@ function _getLocalReviewers(user, currentPlaceName) {
   // Get the local reviewers of a specific place.
   place = model.data.placesById[currentPlaceName];
   // Not all places have a reviewers column
-  return (place.hasOwnProperty('reviewers')) ? place.reviewers.split(",") : [];
+  return (place.hasOwnProperty('reviewers')) ? place.reviewers.trim().split(/[\s,]+/) : [];
 }
 
 exports.canReview = function(user, currentPlaceName) {
