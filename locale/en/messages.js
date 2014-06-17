@@ -95,6 +95,10 @@
          null,
          "Source code"
       ],
+      "CSV": [
+         null,
+         "CSV"
+      ],
       "This site is part of the <a href=\"http://meta.census.okfn.org/\">Open Data Census project</a> run by the Open Knowledge Foundation.": [
          null,
          "This site is part of the <a href=\"http://meta.census.okfn.org/\">Open Data Census project</a> run by the Open Knowledge Foundation."
