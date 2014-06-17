@@ -257,32 +257,31 @@ function requireLoggedIn(req, res) {
   }
 }
 
-function getLocalReviewers (user, currentPlaceName) {
+function _getLocalReviewers(user, currentPlaceName) {
   // Get the local reviewers of a specific place.
-  var places = model.data.places;
-  for (i in places) {
-    if (places[i].id == currentPlaceName) {
-      // Not all places have a reviewers column
-      if (places[i].hasOwnProperty('reviewers')){
-        return places[i].reviewers.split(",");
-      } else {
-        return []
-      }
-    }
-  }
+  place = model.data.placesById[currentPlaceName];
+  // Not all places have a reviewers column
+  return (place.hasOwnProperty('reviewers')) ? place.reviewers.split(",") : [];
 }
 
 exports.canReview = function(user, currentPlaceName) {
-  // Get both the main reviewers list and the local place reviewers
-  var mainReviewers = config.get('reviewers');
-  var localReviewers = getLocalReviewers(user, currentPlaceName)
-  var allReviewers = mainReviewers.concat(localReviewers);
-
   if (!user) {
     return false;
   }
 
-  return !!(~allReviewers.indexOf(user.userid) || ~allReviewers.indexOf(user.email));
+  // Get both the main reviewers list...
+  var reviewers = config.get('reviewers') || [];
+  if (!!(~reviewers.indexOf(user.userid) || ~reviewers.indexOf(user.email))) {
+    return true;
+  }
+
+  // ...and the local place reviewers
+  if (currentPlaceName) {
+    var localReviewers = _getLocalReviewers(user, currentPlaceName)
+    return !!(~localReviewers.indexOf(user.userid) || ~localReviewers.indexOf(user.email));
+  }
+
+  return false;
 }
 
 function isAdmin(user) {
