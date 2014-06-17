@@ -102,8 +102,9 @@ exports.submission = function(req, res) {
         var dataset = _.findWhere(model.data.datasets, {
           id: obj.dataset
         });
+
         res.render('submission/review.html', {
-          canReview: exports.canReview(req.user),
+          canReview: exports.canReview(req.user, obj.place),
           reviewInstructions: config.get('review_page', req.locale),
           ynquestions: util.translateRows(ynquestions, req.locale),
           questions: util.translateRows(model.data.questions, req.locale),
@@ -121,10 +122,13 @@ exports.submission = function(req, res) {
 
 exports.reviewPost = function(req, res) {
   if (requireLoggedIn(req, res)) return;
-  if (!exports.canReview(req.user)) {
-    res.send(401, 'Sorry, you are not an authorized reviewer');
-    return;
-  }
+  // Get the submission's place, so we can find the local reviewers
+  model.backend.getSubmission({submissionid: req.params.submissionid}, function(err, obj) {
+    if (!exports.canReview(req.user, obj.place)) {
+      res.send(401, 'Sorry, you are not an authorized reviewer');
+      return;
+    }
+  });
 
   var acceptSubmission = req.body['submit'] === 'Publish';
   model.backend.processSubmission(req.user, acceptSubmission, req.params.submissionid, req.body, function(err) {
@@ -253,14 +257,31 @@ function requireLoggedIn(req, res) {
   }
 }
 
-exports.canReview = function(user) {
-  var reviewers = config.get('reviewers') || [];
+function _getLocalReviewers(user, currentPlaceName) {
+  // Get the local reviewers of a specific place.
+  place = model.data.placesById[currentPlaceName];
+  // Not all places have a reviewers column
+  return (place.hasOwnProperty('reviewers')) ? place.reviewers.trim().split(/[\s,]+/) : [];
+}
 
+exports.canReview = function(user, currentPlaceName) {
   if (!user) {
     return false;
   }
 
-  return !!(~reviewers.indexOf(user.userid) || ~reviewers.indexOf(user.email));
+  // Get both the main reviewers list...
+  var reviewers = config.get('reviewers') || [];
+  if (!!(~reviewers.indexOf(user.userid) || ~reviewers.indexOf(user.email))) {
+    return true;
+  }
+
+  // ...and the local place reviewers
+  if (currentPlaceName) {
+    var localReviewers = _getLocalReviewers(user, currentPlaceName)
+    return !!(~localReviewers.indexOf(user.userid) || ~localReviewers.indexOf(user.email));
+  }
+
+  return false;
 }
 
 function isAdmin(user) {
