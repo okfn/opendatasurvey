@@ -50,11 +50,9 @@ and set various config. See config section below for detail.
 
 To install do the following:
 
-1. Get the code and init the submodules (for recline vendor library)
+1. Get the code
 
         git clone https://github.com/okfn/opendatacensus
-        git submodule init
-        git submodule update
 
 2. Install node dependencies
 
