@@ -6,7 +6,7 @@
     <ul class="availability icons">
       {% for qu in scoredQuestions %}
         {% set state = record[qu.id] %}
-        <a data-toggle="tooltip" title="{{ qu.question }}">
+        <a data-toggle="tooltip" title="{{ qu.description|escape }}">
         <li class="{% if state == 'Yes' %}yes{% elif state == 'No' %}no{% elif state == 'Unsure' %}maybe{% endif %}">
           <i class="icon-{{ qu.icon }}"></i>
           <span class="text">{{ state }}</span>
