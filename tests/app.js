@@ -315,6 +315,17 @@ describe('Census Pages', function() {
       ;
   });
 
+  it('GET recent changes page', function(done) {
+    request(app)
+      .get('/changes')
+      .expect(200)
+      .end(function(err, res) {
+        checkContent(res, 'a569103b-20d5-4f63-aa42-6bda28c526d4', 'Page should include a link to an unreviewed submission.');
+        checkContent(res, '/entry/de/timetables', 'Page should include a link to a recent entry.');
+        done();
+      });
+  });
+
   function testRadio(text, name, value) {
     var exp = 'name="%name" value="%value" checked="true"'
       .replace('%name', name)

@@ -176,6 +176,7 @@ app.get('/', routes.overview);
 app.get('/about', routes.about);
 app.get('/api/entries.:format', routes.api);
 app.get('/faq', routes.faq);
+app.get('/changes', routes.changes);
 app.get('/overview.json', routes.resultJson);
 app.get('/place/:place', routes.place);
 app.get('/dataset/:dataset', routes.dataset);

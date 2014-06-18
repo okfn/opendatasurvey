@@ -93,6 +93,35 @@ exports.faq = function(req, res) {
   });
 };
 
+exports.changes = function(req, res) {
+  // fetch all unreviewed submissions
+  model.backend.getSubmissions({
+    reviewed: ''
+  }, function(err, submissions) {
+    submissions = _.sortBy(submissions, function(submission) {
+      return submission.timestamp;
+    }).reverse();
+
+    // fetch the 10 most recent entries
+    var entries = _.sortBy(model.data.entries.results, function(entry) {
+      return entry.timestamp;
+    }).slice(-10).reverse();
+
+    res.render('changes.html', {
+      submissions: addPlaceAndName(submissions),
+      entries: addPlaceAndName(entries)
+    });
+  });
+
+  function addPlaceAndName(entries) {
+    return _.each(entries, function(entry) {
+      entry.dataset_title = util.translate(model.data.datasetsById[entry.dataset], req.locale).title;
+      entry.place_name = util.translate(model.data.placesById[entry.place], req.locale).name;
+      return entry;
+    });
+  }
+};
+
 exports.contribute = function(req, res) {
   var text = config.get('contribute_page', req.locale);
   var content = marked(text);
