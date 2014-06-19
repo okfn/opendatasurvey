@@ -13,11 +13,7 @@ var model = require('../lib/model.js').OpenDataCensus
   , Backend = require('../lib/model.js').Backend
   ;
 
-dboptions = {
- 'key': '0AqR8dXc6Ji4JdHR5WWdUU2dYUElPaFluUlBJbkFOMUE',
- 'userDbKey': '0AqR8dXc6Ji4JdE5IdEhuQTZCTGp1em84VEZZcC04aUE',
- censusid: 'test'
-};
+dboptions = base.options;
 
 config.set('approve_first_submission', 'TRUE');
 
