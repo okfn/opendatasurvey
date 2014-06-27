@@ -2,118 +2,107 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Language-Team: none\n"
-"PO-Revision-Date: 2014-02-21 04:48+0000\n"
+"PO-Revision-Date: 2014-06-18 16:57+0000\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2014-02-21 04:48+0000\n"
+"POT-Creation-Date: 2014-06-18 16:57+0000\n"
 "Last-Translator: Automatically generated\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/datasets.html:4
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:42
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/create.html:32
+#: templates/_snippets/datasets.html:4 templates/country/place.html:41
+#: templates/submission/create.html:32
 msgid "Dataset"
 msgstr "Dataset"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/datasets.html:5
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/entry-summary-row.html:46
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/questions.html:5
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/entry.html:49
+#: templates/_snippets/datasets.html:5
+#: templates/_snippets/entry-summary-row.html:51
+#: templates/_snippets/questions.html:5 templates/country/entry.html:49
 msgid "Details"
 msgstr "Details"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/entry-summary-row.html:27
+#: templates/_snippets/entry-summary-row.html:32
 msgid "Date available:"
 msgstr "Date available:"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/entry-summary-row.html:29
+#: templates/_snippets/entry-summary-row.html:34
 msgid "No date available given"
 msgstr "No date available given"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/entry-summary-row.html:38
+#: templates/_snippets/entry-summary-row.html:43
 msgid "No data format given"
 msgstr "No data format given"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/entry-summary-row.html:50
+#: templates/_snippets/entry-summary-row.html:55
 msgid "No details"
 msgstr "No details"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/key.html:2
+#: templates/_snippets/key.html:2
 msgid "Key:"
 msgstr "Key:"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/key.html:4
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/form-core.html:8
+#: templates/_snippets/key.html:4 templates/submission/form-core.html:8
 msgid "Yes"
 msgstr "Yes"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/key.html:5
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/form-core.html:9
+#: templates/_snippets/key.html:5 templates/submission/form-core.html:9
 msgid "No"
 msgstr "No"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/key.html:6
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/form-core.html:10
+#: templates/_snippets/key.html:6 templates/submission/form-core.html:10
 msgid "Unsure"
 msgstr "Unsure"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/key.html:7
+#: templates/_snippets/key.html:7
 msgid "No data"
 msgstr "No data"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/missing_place_button.html:4
+#: templates/_snippets/missing_place_button.html:3
 msgid "Add new location"
 msgstr "Add new location"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/questions.html:4
+#: templates/_snippets/questions.html:4
 msgid "Question"
 msgstr "Question"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/questions.html:6
+#: templates/_snippets/questions.html:6
 msgid "Weighting"
 msgstr "Weighting"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:36
+#: templates/base.html:36
 msgid "Home"
 msgstr "Home"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:37
+#: templates/base.html:37
 msgid "About"
 msgstr "About"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:39
+#: templates/base.html:39
 msgid "FAQ"
 msgstr "FAQ"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:76
+#: templates/base.html:76
 msgid "Change language:"
 msgstr "Change language:"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:79
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:81
-msgid "locale"
-msgstr "locale"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:87
+#: templates/base.html:87
 msgid "Open Online Software Service"
 msgstr "Open Online Software Service"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:90
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:93
+#: templates/base.html:90 templates/base.html:93
 msgid "Open Definition"
 msgstr "Open Definition"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:97
+#: templates/base.html:97
 msgid "Data License (Public Domain)"
 msgstr "Data License (Public Domain)"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:99
+#: templates/base.html:99
 msgid "Source code"
 msgstr "Source code"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:102
+#: templates/base.html:102
 msgid ""
 "This site is part of the <a href=\"http://meta.census.okfn.org/\">Open Data "
 "Census project</a> run by the Open Knowledge Foundation."
@@ -121,96 +110,104 @@ msgstr ""
 "This site is part of the <a href=\"http://meta.census.okfn.org/\">Open Data "
 "Census project</a> run by the Open Knowledge Foundation."
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:105
+#: templates/base.html:105
 msgid "An Open Knowledge Foundation Project"
 msgstr "An Open Knowledge Foundation Project"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:106
+#: templates/base.html:106
 msgid "Open Knowledge Foundation logo"
 msgstr "Open Knowledge Foundation logo"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:116
-#: /Users/wombleton/gunslinging/opendatacensus/templates/login.html:4
-#: /Users/wombleton/gunslinging/opendatacensus/templates/login.html:9
+#: templates/base.html:115
+msgid "Log out"
+msgstr "Log out"
+
+#: templates/base.html:117 templates/login.html:4 templates/login.html:9
 msgid "Login"
 msgstr "Login"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:119
+#: templates/base.html:120
 msgid "More about Open Data"
 msgstr "More about Open Data"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:119
+#: templates/base.html:120
 msgid "What is Open Data"
 msgstr "What is Open Data"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:120
+#: templates/base.html:121
 msgid "Run Your Own<br />Local Open Data Census"
 msgstr "Run Your Own<br />Local Open Data Census"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/entry.html:10
+#: templates/country/dataset.html:12
+msgid "Datasets"
+msgstr "Datasets"
+
+#: templates/country/entry.html:10
 msgid "Return to dataset overview"
 msgstr "Return to dataset overview"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/entry.html:16
+#: templates/country/entry.html:16
 msgid "Data Location"
 msgstr "Data Location"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/entry.html:19
+#: templates/country/entry.html:19
 msgid "Comments"
 msgstr "Comments"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/entry.html:22
+#: templates/country/entry.html:22
 msgid "Data Availability"
 msgstr "Data Availability"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/entry.html:51
+#: templates/country/entry.html:51
 msgid "Date the data became available"
 msgstr "Date the data became available"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/entry.html:51
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/entry.html:52
+#: templates/country/entry.html:51 templates/country/entry.html:52
+#: templates/country/entry.html:54
 msgid "Unknown"
 msgstr "Unknown"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/entry.html:52
+#: templates/country/entry.html:52
 msgid "Format of data"
 msgstr "Format of data"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/entry.html:53
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:109
+#: templates/country/entry.html:53 templates/country/place.html:109
 msgid "Contributors"
 msgstr "Contributors"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/entry.html:53
+#: templates/country/entry.html:53
 msgid "(Editors)"
 msgstr "(Editors)"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/entry.html:53
+#: templates/country/entry.html:53
 msgid "(Submitters)"
 msgstr "(Submitters)"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:5
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:12
+#: templates/country/entry.html:54
+msgid "Last modified"
+msgstr "Last modified"
+
+#: templates/country/place.html:5 templates/country/place.html:12
 msgid "Places"
 msgstr "Places"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:22
+#: templates/country/place.html:21
 msgid ""
 "This is the overview page where you can see the state of open data across "
 "each key dataset (displayed down the left hand side). To find out more about "
 "each dataset, click on the info icon.\n"
-"Each icon in the data availability column represents important factors "
+" Each icon in the data availability column represents important factors "
 "indicating data accessibility or availability - mouse over the icons to see "
 "what they are and the colours correspond to yes / no / unsure / no data."
 msgstr ""
 "This is the overview page where you can see the state of open data across "
 "each key dataset (displayed down the left hand side). To find out more about "
 "each dataset, click on the info icon.\n"
-"Each icon in the data availability column represents important factors "
+" Each icon in the data availability column represents important factors "
 "indicating data accessibility or availability - mouse over the icons to see "
 "what they are and the colours correspond to yes / no / unsure / no data."
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:26
+#: templates/country/place.html:24
 msgid ""
 "Is something missing or is the data incorrect? Then please hit either "
 "'submit information' or 'propose revisions' on the right and contribute more "
@@ -224,7 +221,7 @@ msgstr ""
 "data - so make sure to include this! Click the link icon under Location to "
 "see the current entry."
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:28
+#: templates/country/place.html:26
 msgid ""
 "Greyed out queued entries are submissions that are waiting approval by our "
 "editor team - but you can see the entry now and judge whether anything is "
@@ -234,71 +231,79 @@ msgstr ""
 "editor team - but you can see the entry now and judge whether anything is "
 "missing."
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:43
+#: templates/country/place.html:42
 msgid "Score"
 msgstr "Score"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:44
+#: templates/country/place.html:43
 msgid "Breakdown"
 msgstr "Breakdown"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:45
+#: templates/country/place.html:45
 msgid "Location (URL)"
 msgstr "Location (URL)"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:46
+#: templates/country/place.html:46
 msgid "Information"
 msgstr "Information"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:72
+#: templates/country/place.html:72
 msgid "Propose Revisions"
 msgstr "Propose Revisions"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:76
+#: templates/country/place.html:76
 msgid "Submit information"
 msgstr "Submit information"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:86
+#: templates/country/place.html:86
 msgid "&#8627; Awaiting review"
 msgstr "&#8627; Awaiting review"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:91
-msgid "Review Now"
-msgstr "Review Now"
+#: templates/country/place.html:91
+msgid "View Submission"
+msgstr "View Submission"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:114
+#: templates/country/place.html:96
+msgid ""
+"Sorry, only one submission can be waiting for review at a time - please come "
+"back in a few days to submit new information"
+msgstr ""
+"Sorry, only one submission can be waiting for review at a time - please come "
+"back in a few days to submit new information"
+
+#: templates/country/place.html:114
 msgid "With submissions from:"
 msgstr "With submissions from:"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/login.html:19
+#: templates/login.html:19
 msgid "Login with Google"
 msgstr "Login with Google"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/login.html:20
+#: templates/login.html:20
 msgid "Login with your existing google account in a few seconds."
 msgstr "Login with your existing google account in a few seconds."
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/login.html:21
+#: templates/login.html:21
 msgid "Login with Google &raquo;"
 msgstr "Login with Google &raquo;"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/login.html:25
+#: templates/login.html:25
 msgid "&ndash; or &ndash;"
 msgstr "&ndash; or &ndash;"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/login.html:28
+#: templates/login.html:28
 msgid "Skip Login"
 msgstr "Skip Login"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/login.html:29
+#: templates/login.html:29
 msgid "Continue without logging in."
 msgstr "Continue without logging in."
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/login.html:32
+#: templates/login.html:32
 msgid "Name (optional)"
 msgstr "Name (optional)"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/login.html:33
+#: templates/login.html:33
 msgid ""
 "If you provide a name we can credit you for your contribution (if not "
 "provided you'll be listed as Anonymous)."
@@ -306,77 +311,74 @@ msgstr ""
 "If you provide a name we can credit you for your contribution (if not "
 "provided you'll be listed as Anonymous)."
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/login.html:34
+#: templates/login.html:34
 msgid "Joe Bloggs"
 msgstr "Joe Bloggs"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/login.html:36
+#: templates/login.html:36
 msgid "Continue &raquo;"
 msgstr "Continue &raquo;"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/overview.html:3
+#: templates/overview.html:3
 msgid "Overview"
 msgstr "Overview"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/overview.html:11
+#: templates/overview.html:11
 msgid "Number of places"
 msgstr "Number of places"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/overview.html:13
+#: templates/overview.html:13
 msgid "Number of datasets"
 msgstr "Number of datasets"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/overview.html:15
+#: templates/overview.html:15
 msgid "Number of open datasets"
 msgstr "Number of open datasets"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/overview.html:17
+#: templates/overview.html:17
 msgid "Percentage"
 msgstr "Percentage"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/overview.html:17
+#: templates/overview.html:17
 msgid "open"
 msgstr "open"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/overview.html:46
-#: /Users/wombleton/gunslinging/opendatacensus/templates/overview.html:106
+#: templates/overview.html:50 templates/overview.html:121
 msgid "Total Score"
 msgstr "Total Score"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/overview.html:54
+#: templates/overview.html:58
 msgid ""
 "The Census Admin needs to add some places to the Places configuration sheet"
 msgstr ""
 "The Census Admin needs to add some places to the Places configuration sheet"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/overview.html:74
+#: templates/overview.html:79
 msgid "Click here to add to the census!"
 msgstr "Click here to add to the census!"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/overview.html:74
+#: templates/overview.html:79
 msgid "Add new"
 msgstr "Add new"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/create.html:4
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/create.html:63
+#: templates/submission/create.html:4 templates/submission/create.html:63
 msgid "Submit"
 msgstr "Submit"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/create.html:19
+#: templates/submission/create.html:19
 msgid "Place and Dataset"
 msgstr "Place and Dataset"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/create.html:24
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/create.html:34
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/form-core.html:94
+#: templates/submission/create.html:24 templates/submission/create.html:34
+#: templates/submission/form-core.html:94
 msgid "Please select"
 msgstr "Please select"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/create.html:60
+#: templates/submission/create.html:60
 msgid "This will be public."
 msgstr "This will be public."
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/create.html:64
+#: templates/submission/create.html:64
 msgid ""
 "By submitting material to the index you agreeing to <a href=\"http://okfn."
 "org/terms-of-use/\">terms of use</a> and also to license your contribution "
@@ -390,51 +392,56 @@ msgstr ""
 "opendatacommons.org/licenses/pddl/1.0/\">Open Data Commons Public Domain "
 "Dedication and License</a>."
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/form-core.html:2
+#: templates/submission/form-core.html:2
 msgid "Data Availability Questions"
 msgstr "Data Availability Questions"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/form-core.html:11
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/form-core.html:40
+#: templates/submission/form-core.html:11
+#: templates/submission/form-core.html:39
 msgid "Current Entry"
 msgstr "Current Entry"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/form-core.html:77
+#: templates/submission/form-core.html:45
+#: templates/submission/form-core.html:48
+msgid "No entry"
+msgstr "No entry"
+
+#: templates/submission/form-core.html:84
 msgid "Publisher Information"
 msgstr "Publisher Information"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/form-core.html:87
+#: templates/submission/form-core.html:87
 msgid "Data Quality"
 msgstr "Data Quality"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/review.html:4
+#: templates/submission/review.html:4
 msgid "Review Submission"
 msgstr "Review Submission"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/review.html:30
+#: templates/submission/review.html:35
 msgid "This will be logged and displayed"
 msgstr "This will be logged and displayed"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/review.html:32
+#: templates/submission/review.html:37
 msgid "Publish"
 msgstr "Publish"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/review.html:40
+#: templates/submission/review.html:41
 msgid ""
 "If this submission makes no changes to the current entry then please "
 "'Reject' it rather than 'Accept'.\n"
-"        <br />\n"
-"        Note that you edit the submission before accepting it. In "
-"particular, please correct any spelling mistakes.\n"
-"        <br />\n"
-"        <strong>Publish will overwrite the whole current entry with the data "
-"in this form.</strong>"
+" <br />\n"
+" Note that you edit the submission before accepting it. In particular, "
+"please correct any spelling mistakes.\n"
+" <br />\n"
+" <strong>Publish will overwrite the whole current entry with the data in "
+"this form.</strong>"
 msgstr ""
 "If this submission makes no changes to the current entry then please "
 "'Reject' it rather than 'Accept'.\n"
-"        <br />\n"
-"        Note that you edit the submission before accepting it. In "
-"particular, please correct any spelling mistakes.\n"
-"        <br />\n"
-"        <strong>Publish will overwrite the whole current entry with the data "
-"in this form.</strong>"
+" <br />\n"
+" Note that you edit the submission before accepting it. In particular, "
+"please correct any spelling mistakes.\n"
+" <br />\n"
+" <strong>Publish will overwrite the whole current entry with the data in "
+"this form.</strong>"
