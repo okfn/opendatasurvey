@@ -347,6 +347,7 @@ describe('Census Pages', function() {
         assert(!err);
         // all test regex tests are rather hacky ...
         assert(res.text.match('value="%s" selected="true"'.replace('%s', prefill.place)), 'place not set');
+        assert(res.text.match('<em>national-level</em>', 'Dataset description not parsed as markdown');
         testRadio(res.text, 'exists', 'Yes');
         testRadio(res.text, 'openlicense', 'No');
         assert(res.text.match('name="url" value="' + url + '"'), 'url not set');
