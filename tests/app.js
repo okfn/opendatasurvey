@@ -89,8 +89,8 @@ describe('Basics', function() {
       .get('/place/gb')
       .expect(200)
       .end(function(err, res) {
-        assert(res.text.match('/ United Kingdom'), 'Place name not present');
-        assert(res.text.match('Transport Timetables'), 'Dataset list missing');
+        checkContent(res, '/ United Kingdom', 'Place name not present');
+        checkContent(res, 'Transport Timetables', 'Dataset list missing');
         done();
       })
       ;
@@ -100,7 +100,7 @@ describe('Basics', function() {
       .get('/dataset/timetables')
       .expect(200)
       .end(function(err, res) {
-        assert(res.text.match('/ Transport Timetables'), 'Dataset name not present');
+        checkContent(res, '/ Transport Timetables', 'Dataset name not present');
         done();
       })
       ;
@@ -110,7 +110,7 @@ describe('Basics', function() {
       .get('/login')
       .expect(200)
       .end(function(err, res) {
-        assert(res.text.match('Login with Facebook'));
+        checkContent(res, 'Login with Facebook');
         done();
       });
       ;
@@ -125,11 +125,14 @@ describe('Basics', function() {
   testRedirect('/country/review/xyz', '/submission/xyz');
 });
 
-function checkContent(res, expected) {
+function checkContent(res, expected, errMsg) {
+  if (!errMsg) {
+    errMsg = '<<' + expected + '>> not found in page';
+  }
   var found = res.text.match(expected)
   if (!found) {
     // console.log(res.text);
-    assert(false, '<<' + expected + '>> not found in page');
+    assert(false, errMsg);
   }
 }
 
@@ -277,7 +280,7 @@ describe('Census Pages', function() {
       .get('/submit/')
       .expect(200)
       .end(function(err, res) {
-        assert(res.text.match('Submit'));
+        checkContent(res, 'Submit');
         checkContent(res, config.get('submit_page'));
         done();
       });
@@ -318,16 +321,15 @@ describe('Census Pages', function() {
       .end(function(err, res) {
         assert(!err);
         // all test regex tests are rather hacky ...
-        assert(res.text.match('value="%s" selected="true"'.replace('%s', prefill.place)), 'place not set');
-        assert(res.text.match('value="emissions" selected="true"'), 'dataset not set');
-        debugger;
+        checkContent(res, 'value="%s" selected="true"'.replace('%s', prefill.place), 'place not set');
+        checkContent(res, 'value="emissions" selected="true"', 'dataset not set');
         testRadio(res.text, 'exists', prefill.exists);
         testRadio(res.text, 'digital', prefill.digital);
         testRadio(res.text, 'online', prefill.online);
-        assert(res.text.match('name="url" value="' + prefill.url + '"'), 'url not set');
-        assert(res.text.match('name="licenseurl" value="' + prefill.licenseurl + '"'), 'license url not set');
-        assert(res.text.match('value="5" selected="true"'), 'quality info not set');
-        assert(res.text.match(prefill.details + '</textarea>'), 'details not set');
+        checkContent(res, 'name="url" value="' + prefill.url + '"', 'url not set');
+        checkContent(res, 'name="licenseurl" value="' + prefill.licenseurl + '"', 'license url not set');
+        checkContent(res, 'value="5" selected="true"', 'quality info not set');
+        checkContent(res, prefill.details + '</textarea>', 'details not set');
         done();
       });
   });
@@ -346,11 +348,11 @@ describe('Census Pages', function() {
       .end(function(err, res) {
         assert(!err);
         // all test regex tests are rather hacky ...
-        assert(res.text.match('value="%s" selected="true"'.replace('%s', prefill.place)), 'place not set');
-        assert(res.text.match('<em>national-level</em>', 'Dataset description not parsed as markdown');
+        checkContent(res, 'value="%s" selected="true"'.replace('%s', prefill.place), 'place not set');
+        checkContent(res, '<em>national-level</em>', 'Dataset description not parsed as markdown');
         testRadio(res.text, 'exists', 'Yes');
         testRadio(res.text, 'openlicense', 'No');
-        assert(res.text.match('name="url" value="' + url + '"'), 'url not set');
+        checkContent(res, 'name="url" value="' + url + '"', 'url not set');
         done();
       });
   });
@@ -386,8 +388,8 @@ describe('Census Pages', function() {
       .expect(200)
       .end(function(err, res) {
         checkContent(res, config.get('review_page'));
-        assert(res.text.match('Publish will overwrite the whole current entry'), 'on review page');
-        assert(res.text.match('National government budget at a high level'), 'correct dataset shows up');
+        checkContent(res, 'Publish will overwrite the whole current entry', 'on review page');
+        checkContent(res, 'National government budget at a high level', 'correct dataset shows up');
         done();
       });
   });
