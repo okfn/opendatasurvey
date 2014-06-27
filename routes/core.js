@@ -47,7 +47,7 @@ exports.faq = function(req, res) {
   var dataTmpl = env.getTemplate('_snippets/datasets.html');
   var dataInfo = dataTmpl.render({
     gettext: res.locals.gettext,
-    datasets: util.translateRows(model.data.datasets, req.locale)
+    datasets: util.markupRows(util.translateRows(model.data.datasets, req.locale))
   });
   var missingPageHtml = config.get('missing_place_html', req.locale);
   var content = marked(config.get('faq_page', req.locale))
@@ -132,8 +132,6 @@ exports.dataset = function(req, res) {
     return;
   }
 
-  dataset = util.translate(dataset, req.locale);
-
   model.backend.getEntrys({
     dataset: req.params.dataset,
     year: config.get('display_year')
@@ -146,8 +144,7 @@ exports.dataset = function(req, res) {
       bydataset: entriesForThisDataset,
       placesById: util.translateObject(model.data.placesById, req.locale),
       scoredQuestions: util.translateRows(model.data.scoredQuestions, req.locale),
-      dataset: dataset,
-      long_description: marked(dataset.long_description || '')
+      dataset: util.markup(util.translate(dataset, req.locale))
     });
   });
 };
@@ -174,7 +171,7 @@ exports.entryByPlaceDataset = function(req, res) {
       questions: util.translateRows(model.data.questions, req.locale),
       scoredQuestions: util.translateRows(model.data.scoredQuestions, req.locale),
       datasets: util.translateRows(model.data.datasets, req.locale),
-      dataset: util.translate(dataset, req.locale),
+      dataset: util.markup(util.translate(dataset, req.locale)),
       place: util.translate(place, req.locale),
       prefill: prefill_
     });

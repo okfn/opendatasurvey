@@ -26,7 +26,7 @@ exports.submit = function(req, res) {
       ynquestions: util.translateRows(ynquestions, req.locale),
       questions: util.translateRows(model.data.questions, req.locale),
       questionsById: util.translateObject(model.data.questionsById, req.locale),
-      datasets: util.translateRows(model.data.datasets, req.locale),
+      datasets: util.markupRows(util.translateRows(model.data.datasets, req.locale)),
       year: year,
       prefill: prefill_,
       currrecord: prefill_
@@ -111,7 +111,7 @@ exports.submission = function(req, res) {
           questionsById: util.translateObject(model.data.questionsById, req.locale),
           prefill: obj,
           currrecord: entry,
-          dataset: util.translate(dataset, req.locale),
+          dataset: util.markup(util.translate(dataset, req.locale)),
           place: util.translate(model.data.placesById[obj.place], req.locale),
           disqus_shortname: config.get('disqus_shortname')
         });
