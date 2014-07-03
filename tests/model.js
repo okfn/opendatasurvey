@@ -1,4 +1,5 @@
-var assert = require('assert')
+var request = require('supertest')
+  , assert = require('assert')
   , config = require('../lib/config.js')
   , mocha = require('mocha')
   , _ = require('underscore')
@@ -8,6 +9,7 @@ var assert = require('assert')
   , Q = require('q')
   ;
 
+config.set('test:testing', true);
 // only require after setting config ...
 var model = require('../lib/model.js').OpenDataCensus
   , Backend = require('../lib/model.js').Backend
@@ -83,12 +85,15 @@ describe('Backend Entry', function() {
       assert.ok(!err, err);
       //N.B. We need to delete this anyway for getEntry, but having newlines in the query string, even when encoded, causes HTTP 400 error
       delete data['details'];
-      backend.updateEntry(data, newData, function(err) {
-        assert.ok(!err);
-        //Test that field was 'changed' (we didn't check the original value yet, TODO)
-        backend.getEntry(data, function(err, entry) {
-          assert.equal(entry.details, 'New details');
-          done();
+      backend.getEntry(data, function(err, entry) {
+        assert.ok(!err, err);
+        backend.updateEntry(entry, newData, function(err) {
+          assert.ok(!err);
+          //Test that field was 'changed' (we didn't check the original value yet, TODO)
+          backend.getEntry(entry, function(err, updatedEntry) {
+            assert.equal(updatedEntry.details, 'New details');
+            done();
+          });
         });
       });
     });
@@ -186,9 +191,8 @@ describe('Submissions', function() {
     base.setFixtures();
     // we have to load config stuff as questions need for acceptSubmission
     model.load(function() {
-      model.backend.login(function(err){
-        done(err);
-      });
+      app = require('../app.js').app;
+      model.backend.login(done);
     });
   });
   after(function(done) {
@@ -288,7 +292,16 @@ describe('Submissions', function() {
               model.backend.getEntrys({dataset: data.dataset, place: data.place, year: data.year}, function(err, rows) {
                 assert.equal(rows.length, 1);
                 assert.equal(rows[0].online, 'No');
-                done();
+
+                request(app)
+                  .get('/')
+                  .expect(200)
+                  .end(function(err, res) {
+                    // check the new entry is shown on homepage
+                    assert.equal(res.text.match(/\/submit\/\?dataset=timetables&place=de/), null, 'New entry not shown on homepage');
+                    done();
+                  })
+                ;
               });
             });
           });
