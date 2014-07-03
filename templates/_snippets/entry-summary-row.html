@@ -1,6 +1,10 @@
 {% macro entrysummary(dataset, place, record, scoredQuestions) -%}
   <td>
+    {% if record %}
       {{ record.ycount }}%
+    {% else %}
+      -
+    {% endif %}
   </td>
   <td{% if record %} data-place="{{ record.place }}" data-dataset="{{ record.dataset }}" data-datasetTitle="{{ dataset.title }}"{% endif %}>
     <ul class="availability icons">
