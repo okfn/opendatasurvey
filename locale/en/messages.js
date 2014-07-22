@@ -1,7 +1,7 @@
 ;var json_locale_data = {
    "messages": {
       "": {
-         "Project-Id-Version": " PACKAGE VERSION\nLanguage-Team: none\nPO-Revision-Date: 2014-07-03 22:59+0000\nLanguage: en\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPOT-Creation-Date: 2014-07-03 22:59+0000\nLast-Translator: Automatically generated\nPlural-Forms: nplurals=2; plural=(n != 1);\n"
+         "Project-Id-Version": " PACKAGE VERSION\nLanguage-Team: none\nPO-Revision-Date: 2014-07-22 18:25+0000\nLanguage: en\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPOT-Creation-Date: 2014-07-22 18:25+0000\nLast-Translator: Automatically generated\nPlural-Forms: nplurals=2; plural=(n != 1);\n"
       },
       "Dataset": [
          null,
@@ -90,6 +90,14 @@
       "Source code": [
          null,
          "Source code"
+      ],
+      "Download Data (CSV)": [
+         null,
+         "Download Data (CSV)"
+      ],
+      "Download Data (JSON)": [
+         null,
+         "Download Data (JSON)"
       ],
       "This site is part of the <a href=\"http://meta.census.okfn.org/\">Open Data Census project</a> run by the Open Knowledge Foundation.": [
          null,
