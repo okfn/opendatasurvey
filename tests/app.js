@@ -115,6 +115,28 @@ describe('Basics', function() {
       });
       ;
   });
+  it('API csv works', function(done) {
+    request(app)
+      .get('/api/entries.csv')
+      .expect(200)
+      .end(function(err, res) {
+        // check the header row
+        checkContent(res, 'id,title,censusid,timestamp,year,place,dataset,exists,digital,public,online,free,machinereadable,');
+        done();
+      })
+      ;
+  });
+  it('API json works', function(done) {
+    request(app)
+      .get('/api/entries.json')
+      .expect(200)
+      .end(function(err, res) {
+        // check a random snippet of json
+        checkContent(res, '"url": "http://www.ordnancesurvey.co.uk/opendata/",');
+        done();
+      })
+      ;
+  });
 
   // test redirects
   testRedirect('/country/', '/');
