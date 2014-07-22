@@ -78,7 +78,7 @@ exports.resultJson = function(req, res) {
 // TODO: want this at simply /country/{place} but need to make sure we don't
 // interfere with other urls
 exports.place = function(req, res) {
-  if (!(req.params.place) in model.data.placesById) {
+  if (!(req.params.place in model.data.placesById)) {
     res.send(404, 'There is no place with ID ' + place + ' in our database. Are you sure you have spelled it correctly? Please check the <a href="/country/">place page</a> for the list of places');
     return;
   }
