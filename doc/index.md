@@ -312,6 +312,12 @@ Custom footer content
 
 Supply a google analytics key to use on the site
 
+### disqus_shortname
+
+Use an alternative Disqus forum for comments.
+
+Default is `opendatacensus`
+
 ### database (*)
 
 __This will normally be set for you by the deployer. Do not change its value unless you know what you are doing!__
