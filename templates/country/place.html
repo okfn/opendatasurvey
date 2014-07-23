@@ -18,13 +18,7 @@
   <div class="tab-content">
     <div class="tab-pane active" id="table-overview">
       <div class="table">
-        <p>{{gettext("This is the overview page where you can see the state of open data across each key dataset (displayed down the left hand side). To find out more about each dataset, click on the info icon.\n Each icon in the data availability column represents important factors indicating data accessibility or availability - mouse over the icons to see what they are and the colours correspond to yes / no / unsure / no data.")}}</p>
-
-        {% if not readonly %}
-        <p>{{gettext("Is something missing or is the data incorrect? Then please hit either 'submit information' or 'propose revisions' on the right and contribute more information. We need a correct direct link to the official source of the data - so make sure to include this! Click the link icon under Location to see the current entry.")}}</p>
-
-        <p>{{gettext("Greyed out queued entries are submissions that are waiting approval by our editor team - but you can see the entry now and judge whether anything is missing.")}}</p>
-        {% endif %}
+        <p>{{gettext("This is the overview page where you can see the state of open data across each key dataset.")}}</p>
 
         <table class="table table-striped">
           <colgroup>
