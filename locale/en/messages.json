@@ -1,7 +1,7 @@
 {
    "messages": {
       "": {
-         "Project-Id-Version": " PACKAGE VERSION\nLanguage-Team: none\nPO-Revision-Date: 2014-07-22 18:25+0000\nLanguage: en\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPOT-Creation-Date: 2014-07-22 18:25+0000\nLast-Translator: Automatically generated\nPlural-Forms: nplurals=2; plural=(n != 1);\n"
+         "Project-Id-Version": " PACKAGE VERSION\nLanguage-Team: none\nPO-Revision-Date: 2014-07-23 10:16+0000\nLanguage: en\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPOT-Creation-Date: 2014-07-23 10:16+0000\nLast-Translator: Automatically generated\nPlural-Forms: nplurals=2; plural=(n != 1);\n"
       },
       "Dataset": [
          null,
@@ -183,17 +183,9 @@
          null,
          "Places"
       ],
-      "This is the overview page where you can see the state of open data across each key dataset (displayed down the left hand side). To find out more about each dataset, click on the info icon.\n Each icon in the data availability column represents important factors indicating data accessibility or availability - mouse over the icons to see what they are and the colours correspond to yes / no / unsure / no data.": [
+      "This is the overview page where you can see the state of open data across each key dataset.": [
          null,
-         "This is the overview page where you can see the state of open data across each key dataset (displayed down the left hand side). To find out more about each dataset, click on the info icon.\n Each icon in the data availability column represents important factors indicating data accessibility or availability - mouse over the icons to see what they are and the colours correspond to yes / no / unsure / no data."
-      ],
-      "Is something missing or is the data incorrect? Then please hit either 'submit information' or 'propose revisions' on the right and contribute more information. We need a correct direct link to the official source of the data - so make sure to include this! Click the link icon under Location to see the current entry.": [
-         null,
-         "Is something missing or is the data incorrect? Then please hit either 'submit information' or 'propose revisions' on the right and contribute more information. We need a correct direct link to the official source of the data - so make sure to include this! Click the link icon under Location to see the current entry."
-      ],
-      "Greyed out queued entries are submissions that are waiting approval by our editor team - but you can see the entry now and judge whether anything is missing.": [
-         null,
-         "Greyed out queued entries are submissions that are waiting approval by our editor team - but you can see the entry now and judge whether anything is missing."
+         "This is the overview page where you can see the state of open data across each key dataset."
       ],
       "Score": [
          null,

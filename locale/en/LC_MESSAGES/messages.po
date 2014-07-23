@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Language-Team: none\n"
-"PO-Revision-Date: 2014-07-22 18:25+0000\n"
+"PO-Revision-Date: 2014-07-23 10:16+0000\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2014-07-22 18:25+0000\n"
+"POT-Creation-Date: 2014-07-23 10:16+0000\n"
 "Last-Translator: Automatically generated\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: templates/_snippets/datasets.html:4 templates/country/place.html:41
+#: templates/_snippets/datasets.html:4 templates/country/place.html:35
 #: templates/submission/create.html:32
 msgid "Dataset"
 msgstr "Dataset"
@@ -179,7 +179,7 @@ msgstr "Unknown"
 msgid "Format of data"
 msgstr "Format of data"
 
-#: templates/country/entry.html:53 templates/country/place.html:109
+#: templates/country/entry.html:53 templates/country/place.html:103
 msgid "Contributors"
 msgstr "Contributors"
 
@@ -202,76 +202,44 @@ msgstr "Places"
 #: templates/country/place.html:21
 msgid ""
 "This is the overview page where you can see the state of open data across "
-"each key dataset (displayed down the left hand side). To find out more about "
-"each dataset, click on the info icon.\n"
-" Each icon in the data availability column represents important factors "
-"indicating data accessibility or availability - mouse over the icons to see "
-"what they are and the colours correspond to yes / no / unsure / no data."
+"each key dataset."
 msgstr ""
 "This is the overview page where you can see the state of open data across "
-"each key dataset (displayed down the left hand side). To find out more about "
-"each dataset, click on the info icon.\n"
-" Each icon in the data availability column represents important factors "
-"indicating data accessibility or availability - mouse over the icons to see "
-"what they are and the colours correspond to yes / no / unsure / no data."
+"each key dataset."
 
-#: templates/country/place.html:24
-msgid ""
-"Is something missing or is the data incorrect? Then please hit either "
-"'submit information' or 'propose revisions' on the right and contribute more "
-"information. We need a correct direct link to the official source of the "
-"data - so make sure to include this! Click the link icon under Location to "
-"see the current entry."
-msgstr ""
-"Is something missing or is the data incorrect? Then please hit either "
-"'submit information' or 'propose revisions' on the right and contribute more "
-"information. We need a correct direct link to the official source of the "
-"data - so make sure to include this! Click the link icon under Location to "
-"see the current entry."
-
-#: templates/country/place.html:26
-msgid ""
-"Greyed out queued entries are submissions that are waiting approval by our "
-"editor team - but you can see the entry now and judge whether anything is "
-"missing."
-msgstr ""
-"Greyed out queued entries are submissions that are waiting approval by our "
-"editor team - but you can see the entry now and judge whether anything is "
-"missing."
-
-#: templates/country/place.html:42
+#: templates/country/place.html:36
 msgid "Score"
 msgstr "Score"
 
-#: templates/country/place.html:43
+#: templates/country/place.html:37
 msgid "Breakdown"
 msgstr "Breakdown"
 
-#: templates/country/place.html:45
+#: templates/country/place.html:39
 msgid "Location (URL)"
 msgstr "Location (URL)"
 
-#: templates/country/place.html:46
+#: templates/country/place.html:40
 msgid "Information"
 msgstr "Information"
 
-#: templates/country/place.html:72
+#: templates/country/place.html:66
 msgid "Propose Revisions"
 msgstr "Propose Revisions"
 
-#: templates/country/place.html:76
+#: templates/country/place.html:70
 msgid "Submit information"
 msgstr "Submit information"
 
-#: templates/country/place.html:86
+#: templates/country/place.html:80
 msgid "&#8627; Awaiting review"
 msgstr "&#8627; Awaiting review"
 
-#: templates/country/place.html:91
+#: templates/country/place.html:85
 msgid "View Submission"
 msgstr "View Submission"
 
-#: templates/country/place.html:96
+#: templates/country/place.html:90
 msgid ""
 "Sorry, only one submission can be waiting for review at a time - please come "
 "back in a few days to submit new information"
@@ -279,7 +247,7 @@ msgstr ""
 "Sorry, only one submission can be waiting for review at a time - please come "
 "back in a few days to submit new information"
 
-#: templates/country/place.html:114
+#: templates/country/place.html:108
 msgid "With submissions from:"
 msgstr "With submissions from:"
 
