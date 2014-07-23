@@ -2,7 +2,7 @@
 {% include '_snippets/entry-summary-row.html' %}
 
 {% block title %}
-{{dataset.title}} - Datasets
+{{dataset.title}} &mdash; {{gettext("Datasets")}}
 {% endblock %}
 
 {% block content %}
@@ -21,7 +21,7 @@
 <p>{{format("On this page you can see the state of open data for %(dataset)s in all the places for which we have information.", { dataset: dataset.title}) }}</p>
 
 {% if dataset.description %}
-  <h3>Dataset Description</h3>
+  <h3>{{gettext("Dataset Description")}}</h3>
   {{dataset.description}}
 {% endif %}
 
@@ -36,11 +36,11 @@
   </colgroup>
   <thead>
     <tr>
-      <th>Place</th>
-      <th>Score</th>
-      <th>Breakdown</th>
-      <th>Location (URL)</th>
-      <th>Information</th>
+      <th>{{gettext("Place")}}</th>
+      <th>{{gettext("Score")}}</th>
+      <th>{{gettext("Breakdown")}}</th>
+      <th>{{gettext("Location (URL)")}}</th>
+      <th>{{gettext("Information")}}</th>
       {% if not readonly %}<th></th>{% endif %}
     </tr>
   </thead>
@@ -57,9 +57,9 @@
         <a id="submit-{{ dataset.id }}" href="/submit/?dataset={{ dataset.id }}&place={{ place.id }}" class="btn btn-mini btn-primary">
           <!-- <i class="icon-plus"></i> -->
           {% if record %}
-            Propose Revisions
+            {{gettext("Propose Revisions")}}
           {% else %}
-            Submit information
+            {{gettext("Submit information")}}
           {% endif %}
         </a>
       </td>

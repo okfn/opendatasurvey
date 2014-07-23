@@ -1,7 +1,7 @@
 ;var json_locale_data = {
    "messages": {
       "": {
-         "Project-Id-Version": " PACKAGE VERSION\nLanguage-Team: none\nPO-Revision-Date: 2014-07-23 10:16+0000\nLanguage: en\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPOT-Creation-Date: 2014-07-23 10:16+0000\nLast-Translator: Automatically generated\nPlural-Forms: nplurals=2; plural=(n != 1);\n"
+         "Project-Id-Version": " PACKAGE VERSION\nLanguage-Team: none\nPO-Revision-Date: 2014-07-23 10:29+0000\nLanguage: en\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPOT-Creation-Date: 2014-07-23 10:29+0000\nLast-Translator: Automatically generated\nPlural-Forms: nplurals=2; plural=(n != 1);\n"
       },
       "Dataset": [
          null,
@@ -135,6 +135,38 @@
          null,
          "Datasets"
       ],
+      "Dataset Description": [
+         null,
+         "Dataset Description"
+      ],
+      "Place": [
+         null,
+         "Place"
+      ],
+      "Score": [
+         null,
+         "Score"
+      ],
+      "Breakdown": [
+         null,
+         "Breakdown"
+      ],
+      "Location (URL)": [
+         null,
+         "Location (URL)"
+      ],
+      "Information": [
+         null,
+         "Information"
+      ],
+      "Propose Revisions": [
+         null,
+         "Propose Revisions"
+      ],
+      "Submit information": [
+         null,
+         "Submit information"
+      ],
       "Return to dataset overview": [
          null,
          "Return to dataset overview"
@@ -186,30 +218,6 @@
       "This is the overview page where you can see the state of open data across each key dataset.": [
          null,
          "This is the overview page where you can see the state of open data across each key dataset."
-      ],
-      "Score": [
-         null,
-         "Score"
-      ],
-      "Breakdown": [
-         null,
-         "Breakdown"
-      ],
-      "Location (URL)": [
-         null,
-         "Location (URL)"
-      ],
-      "Information": [
-         null,
-         "Information"
-      ],
-      "Propose Revisions": [
-         null,
-         "Propose Revisions"
-      ],
-      "Submit information": [
-         null,
-         "Submit information"
       ],
       "&#8627; Awaiting review": [
          null,
