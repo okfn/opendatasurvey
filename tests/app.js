@@ -321,7 +321,7 @@ describe('Census Pages', function() {
       .expect(200)
       .end(function(err, res) {
         checkContent(res, 'a569103b-20d5-4f63-aa42-6bda28c526d4', 'Page should include a link to an unreviewed submission.');
-        checkContent(res, '/entry/de/timetables', 'Page should include a link to a recent entry.');
+        checkContent(res, '/entry/gb/timetables', 'Page should include a link to a recent entry.');
         done();
       });
   });
