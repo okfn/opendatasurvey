@@ -122,26 +122,22 @@ exports.place = function(req, res) {
       return;
     }
 
-    var entrys = {},
-        submissions = {};
-
     // TODO: move this to model
-    _.each(model.data.datasets, function(dataset) {
-      _.each(info.entrys, function(entry) {
-        if (entry.dataset == dataset.id) {
-          entry['ycount'] = util.scoreOpenness(model.data, entry);
+    var entrys = _.reduce(info.entrys, function(o, entry) {
+      var existing = o[entry.dataset];
+      // assign if no entry or year is later
+      if (!existing || parseInt(entry.year, 10) >= parseInt(existing.year, 10)) {
+        entry['ycount'] = util.scoreOpenness(model.data, entry);
+        o[entry.dataset] = entry;
+      }
+      return o;
+    }, {});
 
-          var existing = entrys[dataset.id];
-          // assign if no entry or year is later
-          if (!existing || parseInt(entry.year, 10) >= parseInt(existing.year, 10)) {
-            entrys[dataset.id] = entry;
-          }
-        }
-      });
-      submissions[dataset.id] = _.filter(info.submissions, function(submission) {
-        return (submission.dataset == dataset.id);
-      });
-    });
+    var submissions = _.reduce(info.submissions, function(o, submission) {
+      if (!(submission.dataset in o)) o[submission.dataset] = [];
+      o[submission.dataset].push(submission);
+      return o;
+    }, {});
 
     res.render('country/place.html', {
       info: model.data.entries,
