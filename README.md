@@ -100,11 +100,11 @@ When templates change, the translations have to be changed. Extract the files by
 
 You will need the GNU gettext commands. See [here](https://github.com/mozilla/i18n-abide/blob/master/docs/GETTEXT.md) for more information.
 
-To generate the .po files and compile them to json, run the following command:
+To update the existing .po files, run:
 
-    ./generate-translations.sh
+    ./node_modules/.bin/merge-po locale
 
-To update the list of languages, modify line `#4` to add more in the for loop.
+To copy the `locale/en` directory to new one for adding a new language.
 
 ### i18n For Config
 

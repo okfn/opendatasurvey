@@ -7,3 +7,4 @@ sandbox/*
 .env*
 .deploy.js
 .DS_Store
+i18n
