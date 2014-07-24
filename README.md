@@ -104,7 +104,7 @@ To update the existing .po files, run:
 
     ./node_modules/.bin/merge-po locale
 
-To copy the `locale/en` directory to new one for adding a new language.
+To add a new language, copy the `locale/en` directory to `locale/[language-code]`.
 
 ### i18n For Config
 
