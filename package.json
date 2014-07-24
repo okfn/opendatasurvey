@@ -38,6 +38,6 @@
   },
   "scripts": {
     "test": "mocha tests/",
-    "postinstall": "mkdir -p i18n; compile-json locale i18n"
+    "postinstall": "rm -rf i18n; mkdir -p i18n; compile-json locale i18n"
   }
 }
