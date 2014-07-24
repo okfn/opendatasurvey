@@ -146,6 +146,27 @@ msgstr "What is Open Data"
 msgid "Run Your Own<br />Local Open Data Census"
 msgstr "Run Your Own<br />Local Open Data Census"
 
+#: templates/changes.html:4
+#, fuzzy
+msgid "Recent Changes"
+msgstr "Percentage"
+
+#: templates/changes.html:8
+msgid "Submissions to be reviewed"
+msgstr ""
+
+#: templates/changes.html:19
+msgid "There are no submissions awaiting review."
+msgstr ""
+
+#: templates/changes.html:22
+msgid "Recent Entries"
+msgstr ""
+
+#: templates/changes.html:33
+msgid "There are no entries in this census."
+msgstr ""
+
 #: templates/country/dataset.html:5 templates/country/dataset.html:12
 msgid "Datasets"
 msgstr "Datasets"
