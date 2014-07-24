@@ -37,7 +37,7 @@
     "npm": ""
   },
   "scripts": {
-    "test": "mocha tests/",
+    "test": "mocha tests --patient",
     "postinstall": "rm -rf i18n; mkdir -p i18n; compile-json locale i18n"
   }
 }
