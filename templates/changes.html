@@ -11,7 +11,7 @@
 <ul>
   {% for submission in submissions %}
   <li>
-    <a href="/submission/{{submission.submissionid}}">{{submission.dataset_title}}</a> – {{submission.place_name}} <em>({{submission.timestamp | dateformat(currentLocale, 'Do MMM YYYY')}})</em>
+    <a href="/submission/{{submission.submissionid}}">{{submission.dataset_title}} – {{submission.place_name}}</a> <em>({{submission.timestamp | dateformat(currentLocale, 'Do MMM YYYY')}})</em>
   </li>
   {% endfor %}
 </ul>
@@ -25,7 +25,7 @@
 <ul>
   {% for entry in entries %}
   <li>
-    <a href="{{entry.details_url}}">{{entry.dataset_title}}</a> – {{entry.place_name}} <em>({{entry.timestamp | dateformat(currentLocale, 'Do MMM YYYY')}})</em>
+    <a href="{{entry.details_url}}">{{entry.dataset_title}} – {{entry.place_name}}</a> <em>({{entry.timestamp | dateformat(currentLocale, 'Do MMM YYYY')}})</em>
   </li>
   {% endfor %}
 </ul>
