@@ -70,9 +70,10 @@
         arab emirates should come under 'u' but its iso code is 'ae'
       #}
       data-score="{{placeScore}}"
-      data-area="{{place.name}}">
+      data-place="{{place.id}}"
+      data-placename="{{place.name}}">
       <td>{{ loop.index }}</td>
-      <th class="area-name">
+      <th class="place-name">
         {% if place %}
           <a href="/place/{{ place.id }}">{{place.name}}</a>
         {% else %}
@@ -86,7 +87,6 @@
       ycount-{{record.ycount}}
       showpopover
       "
-      data-place="{{record.place}}"
       data-dataset="{{record.dataset}}"
       data-datasetTitle="{{dataset.title}}"
       >
