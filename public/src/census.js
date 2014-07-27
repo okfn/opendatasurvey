@@ -85,7 +85,7 @@ $(document).ready(function($) {
 
   var summary;
 
-  $.getJSON('/country/results.json', function(data) {
+  $.getJSON('/overview.json', function(data) {
     var $table = $('.response-summary');
     summaryTable($table, data);
     // now sort
