@@ -33,15 +33,16 @@ $(document).ready(function($) {
 
     $('.showpopover').each(function(idx, td) {
       var $td = $(td);
-      if (typeof data.byplace[$td.data('place')] != 'undefined') {
-        var record = data.byplace[$td.data('place')].datasets[$td.data('dataset')];
+      var $tr = $td.parent();
+      if (typeof data.byplace[$tr.data('place')] != 'undefined') {
+        var record = data.byplace[$tr.data('place')].datasets[$td.data('dataset')];
         var datasetTitle = $td.data('datasettitle');
         $td.popover({
           html: true,
           placement: 'bottom',
           container: 'body',
           title: function(e){
-            title = '<strong>' + datasetTitle + '</strong> in <strong>' + record.place + '</strong>';
+            title = '<strong>' + datasetTitle + '</strong> in <strong>' + $tr.data('placename') + '</strong>';
             return title;
           },
           content: function(){
@@ -97,18 +98,18 @@ $(document).ready(function($) {
 function sortTable(table, sortBy) {
   var sortFunc;
 
-  var sortByArea = function(a, b) {
-      return $(a).data('area').toUpperCase().localeCompare($(b).data('area').toUpperCase());
+  var sortByPlaceName = function(a, b) {
+      return $(a).data('placename').toUpperCase().localeCompare($(b).data('placename').toUpperCase());
     };
 
   if (sortBy === 'score') {
     // sort by score then name
     sortFunc = function(a, b) {
       var comp = parseInt($(b).data('score'), 10) - parseInt($(a).data('score'), 10);
-      return comp !== 0 ? comp : sortByArea(a,b);
+      return comp !== 0 ? comp : sortByPlaceName(a,b);
     };
   } else {
-    sortFunc = sortByArea;
+    sortFunc = sortByPlaceName;
   }
 
   $('.sort-table').attr('checked', false);
