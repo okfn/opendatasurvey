@@ -86,6 +86,8 @@
                  </a>
                  <script>
                   $("#submit-{{ dataset.id }}").addClass("disabled");
+                  $("#submit-{{ dataset.id }}").attr("onclick", "return false");
+                  $("#submit-{{ dataset.id }}").attr("href", "#");
                   $("#submit-{{ dataset.id }}").attr("data-toggle", "tooltip");
                   $("#submit-{{ dataset.id }}").attr("title", '{{gettext("Sorry, only one submission can be waiting for review at a time - please come back in a few days to submit new information")}}');
                  </script>
