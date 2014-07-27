@@ -102,9 +102,10 @@ exports.submission = function(req, res) {
         var dataset = _.findWhere(model.data.datasets, {
           id: obj.dataset
         });
+        var place = model.data.placesById[obj.place];
 
         res.render('submission/review.html', {
-          canReview: exports.canReview(req.user, obj.place),
+          canReview: exports.canReview(req.user, place),
           reviewInstructions: config.get('review_page', req.locale),
           ynquestions: util.translateRows(ynquestions, req.locale),
           questions: util.translateRows(model.data.questions, req.locale),
@@ -112,7 +113,7 @@ exports.submission = function(req, res) {
           prefill: obj,
           currrecord: entry,
           dataset: util.markup(util.translate(dataset, req.locale)),
-          place: util.translate(model.data.placesById[obj.place], req.locale),
+          place: util.translate(place, req.locale),
           disqus_shortname: config.get('disqus_shortname')
         });
       });
@@ -124,7 +125,7 @@ exports.reviewPost = function(req, res) {
   if (requireLoggedIn(req, res)) return;
   // Get the submission's place, so we can find the local reviewers
   model.backend.getSubmission({submissionid: req.params.submissionid}, function(err, obj) {
-    if (!exports.canReview(req.user, obj.place)) {
+    if (!exports.canReview(req.user, model.data.placesById[obj.place])) {
       res.send(401, 'Sorry, you are not an authorized reviewer');
       return;
     }
@@ -257,14 +258,13 @@ function requireLoggedIn(req, res) {
   }
 }
 
-function _getLocalReviewers(user, currentPlaceName) {
+function _getLocalReviewers(place) {
   // Get the local reviewers of a specific place.
-  place = model.data.placesById[currentPlaceName];
   // Not all places have a reviewers column
   return (place.hasOwnProperty('reviewers')) ? place.reviewers.trim().split(/[\s,]+/) : [];
 }
 
-exports.canReview = function(user, currentPlaceName) {
+exports.canReview = function(user, place) {
   if (!user) {
     return false;
   }
@@ -276,8 +276,8 @@ exports.canReview = function(user, currentPlaceName) {
   }
 
   // ...and the local place reviewers
-  if (currentPlaceName) {
-    var localReviewers = _getLocalReviewers(user, currentPlaceName)
+  if (place) {
+    var localReviewers = _getLocalReviewers(place)
     return !!(~localReviewers.indexOf(user.userid) || ~localReviewers.indexOf(user.email));
   }
 

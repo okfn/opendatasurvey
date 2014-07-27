@@ -40,14 +40,14 @@ describe('census', function() {
     config.set('reviewers', ['tester']);
     assert(census.canReview({
       userid: 'belgium_tester@example.com'
-    }, 'be'), 'tester should be able to review');
+    }, model.data.placesById['be']), 'tester should be able to review');
     done();
   });
   it('census#canReview returns false for Belgium Tester in Morocco', function(done) {
     config.set('reviewers', ['tester']);
     assert(!census.canReview({
       userid: 'belgium_tester@example.com'
-    }, 'ma'), 'tester should not be able to review');
+    }, model.data.placesById['ma']), 'tester should not be able to review');
     done();
   });
   it('census#canReview returns true for email foo@bar.com', function(done) {
