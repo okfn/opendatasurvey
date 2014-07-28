@@ -3,6 +3,7 @@
 var path = require('path')
   , express = require('express')
   , flash = require('connect-flash')
+  , compression = require('compression')
   , scrypt = require('scrypt')
   , passport = require('passport')
 
@@ -45,6 +46,7 @@ var BasicAuth = express.basicAuth(function(user, pass) {
 app.configure(function() {
   app.set('port', config.get('appconfig:port'));
   app.set('views', __dirname + '/templates');
+  app.use(compression());
   if (config.get('appconfig:auth_on')) {
     app.use(BasicAuth);
   }
