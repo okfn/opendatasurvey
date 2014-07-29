@@ -21,7 +21,7 @@
     "scrypt": "~1.7.4",
     "passport": "",
     "passport-google-oauth": "",
-    "i18n-abide": "0.0.21",
+    "i18n-abide": "~0.0.22",
     "moment": "~2.5.1"
   },
   "devDependencies": {
@@ -38,6 +38,6 @@
   },
   "scripts": {
     "test": "mocha tests --patient",
-    "postinstall": "rm -rf i18n; mkdir -p i18n; compile-json locale i18n"
+    "postinstall": "mkdir -p i18n; compile-json locale i18n"
   }
 }
