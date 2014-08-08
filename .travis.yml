@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - '0.10'
 script:
-  - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && npm test'
+  - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && npm test || false'
 env:
   global:
     # GOOGLE_USER
