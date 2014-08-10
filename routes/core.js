@@ -161,6 +161,7 @@ exports.place = function(req, res) {
     }, {});
 
     var submissions = _.reduce(info.submissions, function(o, submission) {
+      submission['ycount'] = util.scoreOpenness(model.data, submission);
       if (!(submission.dataset in o)) o[submission.dataset] = [];
       o[submission.dataset].push(submission);
       return o;
