@@ -66,12 +66,18 @@
 </div>
 <div class="container">
   <div class="content">
-    <div class="banner page-header">
-      <h1>
-        {{page.title}}
-      </h1>
+    <div class="row">
+      <div class="span8 offset2">
+        {% if page.notitle != true %}
+        <div class="banner page-header">
+          <h1>
+            {{page.title}}
+          </h1>
+        </div>
+        {% endif %}
+        {{content}}
+      </div>
     </div>
-    {{content}}
   </div>
 </div><!-- /container -->
 
