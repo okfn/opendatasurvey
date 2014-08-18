@@ -41,40 +41,31 @@ It's useful to check the "Automatically republish when changes are made" box. Ho
 
 * Open the [census instance spreadsheet][instance]. You should add relevant
   info to this as you do next steps.
-
 * Boot a config spreadsheet (copy the template config - [city template][city-config] or [generic template][config])
-
   * Name in standard way e.g. '{2-digit-iso-code} - City - Config - Open Data Census'
   * Make the sheet 'Public on the Web' ([see above](#before-you-start))
   * Put it in the relevant folder
   * Add link to this spreadsheet to your instances database sheet
-
 * [optional - you can skip if you use common DB] Create a Database spreadsheet (copy the [DB template][db])
-
   * Add relevant google user (e.g. opendatacensusapp@gmail.com) as read/write user
   * Make the sheet 'Public on the Web' and world readable
   * Add Database spreadsheet link to your config spreadsheet
-
 * Setup auth - you will need to register the app with Google - see:
    <https://developers.google.com/accounts/docs/OAuth2#basicsteps>
-
   * Register as a developer
   * Go to [Google cloud console](https://cloud.google.com/console)
   * Create a Project (we suggest id `opendatacensus-{slug}`
   * Go to "APIs & auth" => "Credentials" and click "Create New Client ID" and
     then select "Web Application" and configure.
-
     * Authorized origins should be: the `site_url` plus the heroku url `opendatacensus-{slug}.herokuapp.com`
     * Note redirect urls should be the site urls plus /auth/google/callback
-
 * Run the `create` script (this will output further instructions)
-
+    
         bin/census create {SLUG}
 
 Optional:
 
 * Set up the DNS so that app is at http://{slug}.census.okfn.org/
-
    * Contact sysadmin team at Open Knowledge Foundation and request CNAME alias
      of {slug}.census.okfn.org to opendatacensus-{slug}.herokuapp.com
    * For heroku run the command
