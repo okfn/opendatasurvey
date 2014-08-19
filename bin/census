@@ -20,6 +20,8 @@ var argv = optimist
       '  create {slug}  Interactively create a census deployment named slug',
       '  config {slug}  Set environment based config for an existing census deployment',
       '  remotes        Sync your local list of heroku remotes from the instance db',
+      '  remotes        Sync your local list of heroku remotes from the instance db',
+      '  sharing {email} {slug} Add heroku collaborator {email} on instance {slug} (use all for all instances) ',
     ].join(os.EOL)
   )
   .alias('h', 'help').describe('h', 'print usage')
@@ -31,7 +33,7 @@ if(argv.h){
 }
 
 if(argv._.length > 0 && argv._[0] in cli) {
-  cli[argv._[0]](argv._[1]);
+  cli[argv._[0]](argv._[1], argv._[2]);
 } else {
   console.error('Error: No command specified'.red);
   console.log('');
