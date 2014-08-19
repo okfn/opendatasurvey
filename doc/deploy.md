@@ -52,11 +52,16 @@ It's useful to check the "Automatically republish when changes are made" box. Ho
   * Add Database spreadsheet link to your config spreadsheet
 * Setup auth - you will need to register the app with Google - see:
    <https://developers.google.com/accounts/docs/OAuth2#basicsteps>
-  * Register as a developer
-  * Go to [Google cloud console](https://cloud.google.com/console)
-  * Create a Project (we suggest id `opendatacensus-{slug}`
-  * Go to "APIs & auth" => "Credentials" and click "Create New Client ID" and
-    then select "Web Application" and configure.
+  * Step 1:
+    * EITHER: you are doing this as part of the Open Data Census "farm"
+      * Vist the existing ["Open Data Census - Shared" project in the cloud console](https://console.developers.google.com/project/apps~opendatacensus-shared)
+    * OR: General instructions (if you are doing this from scratch)
+      * Go to [Google cloud console](https://cloud.google.com/console) and login
+        * Register as a developer (if you have not before)
+      * Once logged in Create a Project (we suggest id `opendatacensus-{slug}`
+  * Step 2:
+    * Go to "APIs & auth" => "Credentials" and click "Create New Client ID" and
+      then select "Web Application" and configure.
     * Authorized origins should be: the `site_url` plus the heroku url `opendatacensus-{slug}.herokuapp.com`
     * Note redirect urls should be the site urls plus /auth/google/callback
 * Run the `create` script (this will output further instructions)
