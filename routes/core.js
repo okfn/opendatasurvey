@@ -14,13 +14,18 @@ var fs = require('fs')
   ;
 
 exports.overview = function(req, res) {
+  // sort places by score
+  var sortedPlaces = _.sortBy(model.data.places, function(place) {
+    return model.data.entries.byplace[place.id].score * -1;
+  });
+
   var extraWidth = (model.data.datasets.length > 12);
   // note: model.data.places and model.data.entries.places are different
   // the latter only has places for which we have some actual results
   res.render('overview.html', {
     summary: model.data.entries.summary,
     extraWidth: extraWidth,
-    places: util.translateRows(model.data.places, req.locale),
+    places: util.translateRows(sortedPlaces, req.locale),
     byplace: model.data.entries.byplace,
     datasets: util.translateRows(model.data.datasets, req.locale),
     scoredQuestions: util.translateRows(model.data.scoredQuestions, req.locale),
