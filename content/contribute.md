@@ -63,9 +63,9 @@
   <p>Only Census editors can review submissions. If you'd like to become an editor email the <a href="mailto:census@okfn.org">Census team</a>.</p>
   <ol>
     <li>Select your country in the <a href="#countries">list below</a></li>
-    <li>On your Country overview page click "Review Now" on a pending submission
+    <li>On your Country overview page click "View Submission" on a pending submission
     <ul>
-      <li>No "Review now" visible? This means there are no pending submissions and nothing for you do do! All done!</li>
+      <li>No "View Submission" visible? This means there are no pending submissions and nothing for you to do! All done!</li>
       <li>You will be prompted to log in if you are not logged in at this point</li>
     </ul>
     <li>You will be taken to the review page where there will be instructions</li>
