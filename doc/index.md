@@ -236,6 +236,14 @@ These questions will then be used instead of the standard questions.
 
 The spreadsheet MUST follow structure as in the [default questions spreadsheet][template-questions].
 
+### anonymous_submissions
+
+Allow submissions by anonymous users i.e. users who have not logged in via the
+login process. (Note: even with anonymous submissions we allow (but do not
+enforce) users to add their name when making a submission).
+
+Default is `TRUE`. Set to any other value e.g. `FALSE` to turn off.
+
 ### approve_first_submission
 
 Determines whether the first submission requires review by a reviewer.
