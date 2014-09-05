@@ -76,11 +76,11 @@ $(document).ready(function($) {
 
     // Fix widths of table cells so that when thead becomes "position: fixed;"
     // it still displays correctly
-    var widths = $(table).find('tbody tr:nth-child(1) > *').map(function () {
+    var widths = $(table).find('thead tr:nth-child(1) > *').map(function () {
       return $(this).width();
     });
     for (var i = 0, max = widths.length; i < max; i++) {
-      $(table).find('tr > *:nth-child(' + (i+1) + ')').width(widths[i]);
+      $(table).find('thead tr > *:nth-child(' + (i+1) + ')').width(widths[i]);
     }
   };
 
