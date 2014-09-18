@@ -46,6 +46,8 @@ and set various config. See config section below for detail.
 
 ## Developing the Code
 
+Read the overview section of the main docs: <http://meta.census.okfn.org/doc/>
+
 ### Install Locally
 
 To install do the following:
@@ -59,11 +61,28 @@ To install do the following:
         cd opendatacensus
         npm install .
 
+3. Set up basic developer configuration
+
+   1. Make sure you have a google account (you will use this to login to spreadsheets)
+   2. Create a Config Spreadsheet based on this [template](https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdG5FYWF5M0o1cHBvQkZLTUdOYWtlNmc) (copy and paste)
+   3. Create a Database Spreadsheet based on this [template](https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdFgwSjlabk0wY3NfT2owbktCME5MY2c). Make this "public on the web".
+   4. Add link to DB spreadsheet to the config spreadsheet (database attribute)
+   5. Add your google account as read/write user on the DB spreadsheet
+   6. Create a `settings.json` file
+
+        {
+          "configUrl": "replace-with-your-config-spreadsheet-url",
+          "google": {
+            "user": "your-user-name",
+            "password": "your-password"
+          }
+        }
+
 3. Run the app
 
         node run.js
 
-4. Should now be running at <http://localhost:5000>
+4. Open <http://localhost:5000> in your browser
 
 
 ### Configuration
@@ -72,6 +91,7 @@ Core configuration is listed in lib/config.js which loads from environment
 variables and then via `lib/util.js` `load` method to pull in config from CSV
 files.
 
+Information on general configuration can be found in http://meta.census.okfn.org/doc/
 
 #### Over-riding for development
 
