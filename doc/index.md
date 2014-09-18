@@ -27,6 +27,10 @@ When a `Submission` has been reviewed and deemed accurate it becomes an `Entry` 
 
 ### Workflow
 
+<img src="https://docs.google.com/drawings/d/1lZoANjVRT5P_Y6YcCuRSKTYu7HcGFpeNx9yDaBM2oiU/pub?w=906&amp;h=693" alt="" />
+
+<p class="font-size: x-small; text-align: center;"><a href="https://docs.google.com/a/okfn.org/drawings/d/1lZoANjVRT5P_Y6YcCuRSKTYu7HcGFpeNx9yDaBM2oiU/edit">Source</a></p>
+
 #### New submissions
 
  * Contributors visit the `/submit/` page to make a new `Submission`
