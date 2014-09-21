@@ -1,3 +1,7 @@
+*.sublime-project
+*.sublime-workspace
+*.iml
+.idea
 _site/
 utils/env
 *.swp
