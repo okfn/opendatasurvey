@@ -104,8 +104,17 @@
 
   <div class="row-fluid">
   <h3>{{questionsById.details.question}}</h3>
-  <textarea name="details" class="span12" {% if canReview != true %}disabled="disabled"{% endif %}
-    style="min-height: 150px;">{{prefill.details}}</textarea>
+  <div id="markdown-preview-container">
+    <textarea id="details" name="details" class="span12"
+              {% if canReview != true %}disabled="disabled"{% endif %}
+              style="min-height: 150px;">
+      {{prefill.details}}
+    </textarea>
+    <a id="toggle-markdown-preview">
+        {{gettext("Show Markdown Preview")}}
+    </a>
+    <div id="markdown-preview"></div>
+  </div>
   <span class="help-block">{{questionsById.details.description}}</span>
   {{ currentEntry(questionsById.details) }}
   </div>

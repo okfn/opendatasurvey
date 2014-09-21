@@ -62,9 +62,37 @@ jQuery(document).ready(function($) {
     $('.js-dataset-' + val).show('slow');
   }
 
+  function enableMarkdownPreview() {
+
+    // Adds a preview pane so the user can validate markdown in
+    // the comment field before submitting
+
+      $('#toggle-markdown-preview').click(function() {
+
+      var user_input = $('#details').val(),
+          $preview_pane = $('#markdown-preview'),
+          $edit_pane = $('#details'),
+          show_preview_msg = 'Show Markdown Preview',
+          hide_preview_msg = 'Hide Markdown Preview';
+
+      $preview_pane.toggle().html(marked(user_input));
+
+      if ($preview_pane.is(':visible')) {
+        $(this).html(hide_preview_msg);
+        $edit_pane.attr('disabled', 'disabled')
+      } else {
+        $(this).html(show_preview_msg);
+        $edit_pane.removeAttr('disabled', 'disabled')
+      }
+
+    });
+
+  }
+
   publicAndOnline();
   openLicense();
   showHideAvailabilityTable();
   showCurrentDatasetInfo();
+  enableMarkdownPreview();
 });
 

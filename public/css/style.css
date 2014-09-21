@@ -1025,3 +1025,29 @@ table.faq-table tr td:first-child {
   font-weight: bold;
   padding-left: 3px;
 }
+
+#markdown-preview-container {
+    position: relative;
+}
+
+#toggle-markdown-preview {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: grey;
+    color: white;
+    height: 1.5em;
+    line-height: 1.5em;
+    font-size: 0.75em;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 0.25em 0.75em;
+}
+
+#markdown-preview {
+  display: none;
+  padding: 1em;
+  margin: 1em;
+  background-color: #ebfaff;
+  border: 1px solid #e5e5e5;
+}
