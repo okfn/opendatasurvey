@@ -65,7 +65,7 @@ To install do the following:
 
    1. Make sure you have a google account (you will use this to login to spreadsheets)
    2. Create a Config Spreadsheet based on this [template](https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdG5FYWF5M0o1cHBvQkZLTUdOYWtlNmc) (copy and paste)
-   3. Create a Database Spreadsheet based on this [template](https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdFgwSjlabk0wY3NfT2owbktCME5MY2c). Make this "public on the web".
+   3. Create a Database Spreadsheet based on this [template](https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdFgwSjlabk0wY3NfT2owbktCME5MY2c). Make this "public on the web" *and* "publish on the web".
    4. Add link to DB spreadsheet to the config spreadsheet (database attribute)
    5. Add your google account as read/write user on the DB spreadsheet
    6. Create a `settings.json` file
@@ -78,11 +78,15 @@ To install do the following:
           }
         }
 
-3. Run the app
+   *Note*: It is recommended to *copy* the Config and Database spreadsheets via the UI in Google Drive, using the "Make a copy" action. This will ensure that your spreadsheets use the 'old' Google Drive URL format.
+
+   There is an [open ticket](https://github.com/okfn/opendatacensus/issues/429) to support the new URL format.
+
+4. Run the app
 
         node run.js
 
-4. Open <http://localhost:5000> in your browser
+5. Open <http://localhost:5000> in your browser
 
 
 ### Configuration
