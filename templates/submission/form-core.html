@@ -64,9 +64,15 @@
 
 <fieldset class="data-details">
   {% for qu in questions.slice(9, 13) %}
+
+  {% if qu.id == 'dateavailable' %}
+  {% else %}
+
   <div class="row-fluid">
     {{ question(qu) }}
   </div>
+  {% endif %}
+
   {% endfor %}
 
   <datalist id="formats">
@@ -84,23 +90,9 @@
   <h3>{{gettext("Publisher Information")}}</h3>
     {{question(questionsById.publisher)}}
     {{question(questionsById.title)}}
-  <h3>{{gettext("Data Quality")}}</h3>
   </div>
-  {% for quid in ['qualityinfo', 'qualitystructure'] %}
-  {% set qu = questionsById[quid] %}
-    <div class="row-fluid">
-      <h4>{{qu.question}}</h4>
-      <select name="{{qu.id}}" autocomplete="off"  {% if canReview != true %}disabled="disabled"{% endif %}>
-        <option value="">{{gettext("Please select")}}</option>
-        {% for xval in [1,2,3,4,5,6,7,8,9,10] %}
-        <option value="{{xval}}" {% if xval == prefill[qu.id] %}selected="true"{% endif %}
-          >{{xval}}</option>
-        {% endfor %}
-      </select>
-      <span class="help-block">{{qu.description}}</span>
-      {{ currentEntry(qu) }}
-    </div>
-  {% endfor %}
+
+  {% for quid in ['qualityinfo', 'qualitystructure'] %}{% endfor %}
 
   <div class="row-fluid">
   <h3>{{questionsById.details.question}}</h3>
