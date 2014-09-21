@@ -64,7 +64,7 @@ To install do the following:
 3. Set up basic developer configuration
 
    1. Make sure you have a google account (you will use this to login to spreadsheets)
-   2. Create a Config Spreadsheet based on this [template](https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdG5FYWF5M0o1cHBvQkZLTUdOYWtlNmc) (copy and paste)
+   2. Create a Config Spreadsheet based on this [template](https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdG5FYWF5M0o1cHBvQkZLTUdOYWtlNmc) (copy and paste). Make this "public on the web" *and* "publish on the web".
    3. Create a Database Spreadsheet based on this [template](https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdFgwSjlabk0wY3NfT2owbktCME5MY2c). Make this "public on the web" *and* "publish on the web".
    4. Add link to DB spreadsheet to the config spreadsheet (database attribute)
    5. Add your google account as read/write user on the DB spreadsheet
