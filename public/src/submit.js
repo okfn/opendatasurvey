@@ -1,9 +1,48 @@
 jQuery(document).ready(function($) {
-  var $yninputs = $('.yntable .js-dependent');
-  var $existsInput = $('input[name="exists"]');
+
+  var $yninputs = $('.yntable .js-dependent'),
+      $choiceSwitches = $('.Yes, .No, .Unsure'),
+      $existsInput = $('input[name="exists"]');
+
   $existsInput.change(function() {
     showHideAvailabilityTable();
   });
+
+  $choiceSwitches.on('click', function() {
+      manageDependants($(this));
+      answerDiff($(this));
+  });
+
+  function initializeDependants($els) {
+      $els.each(function(index) {
+          manageDependants($(this));
+      });
+  }
+
+  function manageDependants($el) {
+      var $dependants = $el.parent().siblings('.submission-dependant'),
+          $dependant_inputs = $dependants.find(':input');
+
+      if ($el.hasClass('Yes') && $el.is(':checked')) {
+          $dependants.show();
+      } else {
+          $dependants.hide();
+          $dependant_inputs.each(function(index) {
+              $(this).removeAttr('value');
+          });
+      }
+  }
+
+  function answerDiff($el) {
+      var $currentEntry = $el.parent().siblings('.submission-current').first(),
+          currentValue = $currentEntry.text().trim();
+
+      if (!currentValue === 'No entry' && !$el.hasClass(currentValue) && $el.is(':checked')) {
+          $currentEntry.css('backgroundColor', '#FFCDCA');
+      } else {
+          $currentEntry.css('backgroundColor', '');
+      }
+  }
 
   function showHideAvailabilityTable() {
     var val = $('input[name="exists"]:checked').val();
@@ -94,5 +133,6 @@ jQuery(document).ready(function($) {
   showHideAvailabilityTable();
   showCurrentDatasetInfo();
   enableMarkdownPreview();
+  initializeDependants($choiceSwitches);
 });
 
