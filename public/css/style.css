@@ -948,9 +948,108 @@ div.historic-entries div.current-entry:last-child .textarea {
 	border-bottom-left-radius: 4px;
 }
 
+table.submission {
+    table-layout: fixed;
+    width: 940px;
+}
+
+table.submission {table-layout:fixed; width:90px;}/*Setting the table width is important!*/
+table.submission td {}/*Hide text outside the cell.*/
+table.submission td:nth-of-type(1) {width:200px;}/*Setting the width of column 1.*/
+table.submission td:nth-of-type(2) {width:42px;background-color: green;}/*Setting the width of column 2.*/
+table.submission td:nth-of-type(3) {width:42px;background-color: red;}/*Setting the width of column 3.*/
+table.submission td:nth-of-type(4) {width:42px;background-color: yellow}/*Setting the width of column 3.*/
+table.submission td:nth-of-type(5) {width:42px;background-color: cornflowerblue}/*Setting the width of column 3.*/
+table.submission td:nth-of-type(6) {width:476px;}/*Setting the width of column 3.*/
+td.dependant {width:924px !important;}/*Setting the width of column 3.*/
+
+
+.submission-create, .submission-review {
+    float: left;
+}
+
+.submission-row {
+    float: left;
+}
+
+.submission-question, .submission-option, .submission-current,
+.submission-info, .submission-dependant {
+    float: left;
+    min-height: 2em;
+    padding-top: 0.5em;
+}
+
+.submission-row {
+    min-height: 3em;
+}
+
+.submission-question {
+    width: 24%;
+    padding-left: 1%;
+}
+
+.submission-option {
+    width: 7%;
+    text-align: center
+}
+
+.submission-current {
+    width: 12%;
+    text-align: center;
+}
+
+.submission-info {
+    width: 41%;
+    padding-right: 1%;
+}
+
+.submission-dependant {
+    width: 96%;
+    display: none;
+    padding: 1%;
+    margin: 1%;
+    background-color: #ebfaff;
+    border: 1px solid #e5e5e5;
+}
+
+.submission-dependant h4, .submission-dependant label {
+    height: 2em;
+    line-height: 2em;
+    font-size: 1em;
+    margin-top: 0;
+}
+
+.submission-dependant input {
+    width: 90%;
+}
+
+.submission-dependant .span12 {
+    margin-left: 0;
+}
+
+.submission-dependant .current-entry-value {
+    height: 2em;
+    line-height: 2em;
+}
+
+
+.submission-row.head {
+    height: 3em;
+    line-height: 3em;
+    background-color: #e6e6e6 !important;
+    font-weight: bold;
+    font-size: 1.25em;
+}
+
+.submission-row:nth-child(odd) {
+    background-color: #f4f4f4;
+}
+
+
 .yntable tr td:first-child {
-	width: 150px;
-	white-space: nowrap;
+	/*width: 150px;*/
+	/*white-space: nowrap;*/
+    word-break:break-all;
 }
 
 .help-block, .help-inline {
@@ -1046,8 +1145,8 @@ table.faq-table tr td:first-child {
 
 #markdown-preview {
   display: none;
-  padding: 1em;
-  margin: 1em;
+  padding: 2%;
+  margin: 1%;
   background-color: #ebfaff;
   border: 1px solid #e5e5e5;
 }
