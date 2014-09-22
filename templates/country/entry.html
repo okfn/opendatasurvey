@@ -11,13 +11,13 @@
   {% endif %}
 </div>
 
-<p>{{dataset.description}}</p>
+<p>{{dataset.description|marked}}</p>
 
 <h3>{{gettext("Data Location")}}</h3>
 <a href="{{prefill.url}}">{{prefill.url}}</a>
 
 <h3>{{gettext("Comments")}}</h3>
-<p>{{prefill.details | urlize}}</p>
+<p>{{prefill.details|marked|urlize}}</p>
 
 <h3>{{gettext("Data Availability")}}</h3>
 <ul class="data-availability clearfix unstyled">
@@ -34,7 +34,7 @@
       </span>
       {% for qu2 in ynquestions %}
         {% if qu2.id == qu.id %}
-          <a href="javascript:;" data-toggle="popover" data-content="{{ qu2.description }}" data-placement="top">
+          <a href="javascript:;" data-toggle="popover" data-content="{{ qu2.description|marked }}" data-placement="top">
             <i class="icon-info-sign"></i>
           </a>
         {% endif %}
