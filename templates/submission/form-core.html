@@ -1,112 +1,122 @@
-<fieldset>
-<h3>{{gettext("Data Availability Questions")}}</h3>
-
-<table class="table table-striped yntable availability-form">
-<thead>
-  <tr>
-    <td></td>
-    <td>{{gettext("Yes")}}</td>
-    <td>{{gettext("No")}}</td>
-    <td>{{gettext("Unsure")}}</td>
-    <td class="current-entry">{{gettext("Current Entry")}}</td>
-    <td>Info</td>
-  </tr>
-</thead>
-<tbody id="dataset-properties">
-  {% for qu in ynquestions %}
-  <tr {% if loop.index0 != 0 %}class="hide js-dependent"{% endif %}>
-    <td>{{qu.question}}?</td>
-    {% for val in ['Yes', 'No', 'Unsure'] %}
-    <td>
-      <input type="radio" name="{{qu.id}}" value="{{val}}"{% if canReview != true %} disabled="disabled"{% endif %} {% if prefill[qu.id] == val %}checked="true"{% endif %}
-        required>
-    </td>
-    {% endfor %}
-    <td class="current-entry">
-      {{ currrecord[qu.id] }}
-    </td>
-    <td class="info">
-      <span class="help-block">{{qu.description|marked}}</span>
-    </td>
-  </tr>
-  {% endfor %}
-</tbody>
-</table>
-</fieldset>
-
 {% macro currentEntry(qu) %}
-  <div class="current-entry">
+<div class="current-entry">
     <label>{{gettext("Current Entry")}}</label>
-    <div>
-      {% if currrecord %}
+    <div class="current-entry-value">
+        {% if currrecord %}
         {% if currrecord[qu.id] %}
-          {{currrecord[qu.id]}}
+        {{currrecord[qu.id]}}
         {% else %}
-          {{ gettext("No entry") }}
-        {% endif %}
-      {% else %}
         {{ gettext("No entry") }}
-      {% endif %}
+        {% endif %}
+        {% else %}
+        {{ gettext("No entry") }}
+        {% endif %}
     </div>
-  </div>
+</div>
 {%- endmacro  %}
+
 
 {% macro question(qu) -%}
+<div class="span6">
     <h4>{{qu.question}}</h4>
-    <input type="{{qu.type}}"
-      title="{{qu.placeholder}}"
-      name="{{qu.id}}" value="{{prefill[qu.id]}}"
-      {% if canReview != true %}disabled="disabled"{% endif %} 
-      placeholder="{{qu.placeholder}}" {% if qu.id=='format' %} list="formats" {% endif %} />
+    <input type="{{qu.type}}" title="{{qu.placeholder}}" name="{{qu.id}}" value="{{prefill[qu.id]}}" {% if canReview != true %}disabled="disabled"{% endif %} placeholder="{{qu.placeholder}}" {% if qu.id=='format' %} list="formats" {% endif %} />
+</div>
+<div class="span6">
     {{ currentEntry(qu) }}
+</div>
+<div class="span12">
     <span class="help-block">{{qu.description}}</span>
+</div>
 {%- endmacro  %}
 
-<fieldset class="data-details">
-  {% for qu in questions.slice(9, 13) %}
 
-  {% if qu.id == 'dateavailable' %}
-  {% else %}
+<fieldset>
 
-  <div class="row-fluid">
-    {{ question(qu) }}
-  </div>
-  {% endif %}
+    <h3>{{gettext("Data Availability Questions")}}</h3>
 
-  {% endfor %}
+    <div class="row-fluid submission-row head">
+        <div class="span12">
+            <div class="submission-question">Question</div>
+            <div class="submission-option">{{gettext("Yes")}}</div>
+            <div class="submission-option">{{gettext("No")}}</div>
+            <div class="submission-option">{{gettext("Unsure")}}</div>
+            <div class="submission-current">{{gettext("Current Entry")}}</div>
+            <div class="submission-info">{{gettext("Information")}}</div>
+        </div>
+    </div>
 
-  <datalist id="formats">
-    <option value="CSV">
-    <option value="Excel">
-    <option value="HTML">
-    <option value="PDF">
-    <option value="json">
-    <option value="geojson">
-    <option value="shapefiles">
-  </datalist>
+    <div class="yntable">
+        {% for qu in ynquestions %}
+        <div class="row-fluid submission-row{% if loop.index0 != 0 %} hide js-dependent{% endif %}">
+            <div class="span12">
+                <div class="submission-question">{{ qu.question }}?</div>
+                {% for val in ['Yes', 'No', 'Unsure'] %}
+                <div class="submission-option">
+                    <input type="radio" name="{{qu.id}}" value="{{val}}"
+                           class="{{ val }}"
+                           {% if canReview != true %} disabled="disabled"{% endif %}
+                           {% if prefill[qu.id] == val %}checked="true"{% endif %}
+                           required>
+                </div>
+                {% endfor %}
+                <div class="submission-current">
+                   {{ currrecord[qu.id] or 'No entry' }}
+                </div>
+                <div class="submission-info">
+                    <span class="help-block">{{qu.description|marked}}</span>
+                </div>
+                {% for dependant in qu.dependants %}
+                <div class="row-fluid submission-dependant">
+                    {{ question(dependant) }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+
 </fieldset>
 
-  <div class="row-fluid">
-  <h3>{{gettext("Publisher Information")}}</h3>
-    {{question(questionsById.publisher)}}
-    {{question(questionsById.title)}}
-  </div>
+<fieldset>
+    <div class="row-fluid">
+        <h3>{{questionsById.details.question}}</h3>
+        <div id="markdown-preview-container">
+        <textarea id="details" name="details" class="span12" {% if canReview != true %}disabled="disabled"{% endif %} style="min-height: 150px;">{{prefill.details}}</textarea>
+        <a id="toggle-markdown-preview">
+            {{gettext("Show Markdown Preview")}}
+        </a>
+        <div id="markdown-preview"></div>
+        </div>
+        <span class="help-block">{{questionsById.details.description}}</span>
+        {{ currentEntry(questionsById.details) }}
+    </div>
+</fieldset>
 
-  {% for quid in ['qualityinfo', 'qualitystructure'] %}{% endfor %}
+<fieldset>
+    <div class="row-fluid">
+        <h3>{{questionsById.reviewcomments.question}}</h3>
+        <div id="markdown-preview-container_reviewcomments">
+            <textarea id="reviewcomments" name="reviewcomments" class="span12" {% if canReview != true %}disabled="disabled"{% endif %} style="min-height: 150px;">{{prefill.details}}</textarea>
+            <a id="toggle-markdown-preview_reviewcomments">
+                {{gettext("Show Markdown Preview")}}
+            </a>
+            <div id="markdown-preview_reviewcomments"></div>
+        </div>
+        <span class="help-block">{{questionsById.reviewcomments.description}}</span>
+        {{ currentEntry(questionsById.reviewcomments) }}
+    </div>
+</fieldset>
 
-  <div class="row-fluid">
-  <h3>{{questionsById.details.question}}</h3>
-  <div id="markdown-preview-container">
-    <textarea id="details" name="details" class="span12"
-              {% if canReview != true %}disabled="disabled"{% endif %}
-              style="min-height: 150px;">
-      {{prefill.details}}
-    </textarea>
-    <a id="toggle-markdown-preview">
-        {{gettext("Show Markdown Preview")}}
-    </a>
-    <div id="markdown-preview"></div>
-  </div>
-  <span class="help-block">{{questionsById.details.description}}</span>
-  {{ currentEntry(questionsById.details) }}
-  </div>
+
+<fieldset class="data-details">
+    <datalist id="formats">
+        <option value="CSV">
+        <option value="Excel">
+        <option value="HTML">
+        <option value="PDF">
+        <option value="json">
+        <option value="geojson">
+        <option value="shapefiles">
+    </datalist>
+</fieldset>
