@@ -63,7 +63,7 @@
                    {{ currrecord[qu.id] or 'No entry' }}
                 </div>
                 <div class="submission-info">
-                    <span class="help-block">{{qu.description|marked}}</span>
+                    <span class="help-block readmore">{{qu.description|marked}}</span>
                 </div>
                 {% for dependant in qu.dependants %}
                 <div class="row-fluid submission-dependant">

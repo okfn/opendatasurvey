@@ -2,7 +2,15 @@ jQuery(document).ready(function($) {
 
   var $yninputs = $('.yntable .js-dependent'),
       $choiceSwitches = $('.Yes, .No, .Unsure'),
-      $existsInput = $('input[name="exists"]');
+      $existsInput = $('input[name="exists"]'),
+      readmoreConfig = {
+          maxHeight: 42,
+          embedCSS: false,
+          moreLink: '<a href="#">Show more</a>',
+          lessLink: '<a href="#">Hide</a>'
+      };
+
+  $('.readmore').readmore(readmoreConfig);
 
   $existsInput.change(function() {
     showHideAvailabilityTable();
@@ -11,6 +19,7 @@ jQuery(document).ready(function($) {
   $choiceSwitches.on('click', function() {
       manageDependants($(this));
       answerDiff($(this));
+      $('.readmore').readmore(readmoreConfig);
   });
 
   function initializeDependants($els) {

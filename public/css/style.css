@@ -975,8 +975,15 @@ td.dependant {width:924px !important;}/*Setting the width of column 3.*/
 .submission-question, .submission-option, .submission-current,
 .submission-info, .submission-dependant {
     float: left;
-    min-height: 2em;
-    padding-top: 0.5em;
+    min-height: 42px;
+    padding-top: 2em;
+}
+
+.head .submission-question, .head .submission-option, .head .submission-current,
+.head .submission-info, .head .submission-dependant {
+    float: left;
+    min-height: 42px;
+    padding-top: 0;
 }
 
 .submission-row {
@@ -1000,6 +1007,12 @@ td.dependant {width:924px !important;}/*Setting the width of column 3.*/
 
 .submission-info {
     width: 41%;
+    padding-left: 1%;
+    position: relative;
+    float: right;
+}
+
+.submission-info .help-block {
     padding-right: 1%;
 }
 
@@ -1149,4 +1162,34 @@ table.faq-table tr td:first-child {
   margin: 1%;
   background-color: #ebfaff;
   border: 1px solid #e5e5e5;
+}
+
+.readmore-js-toggle, .readmore-js-section {
+    display: inline-block;
+}
+
+a.readmore-js-toggle {
+    text-decoration: none;
+
+}
+
+a.readmore-js-toggle:hover {
+    color: white;
+}
+
+.readmore-js-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: grey;
+    color: white;
+    height: 1.5em;
+    line-height: 1.5em;
+    font-size: 0.75em;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 0.25em 0.75em;
+}
+.readmore-js-section {
+    overflow: hidden;
 }
