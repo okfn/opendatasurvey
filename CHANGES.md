@@ -2,6 +2,13 @@
 
 Note: we haven't yet really done proper releases or tagging.
 
+## form/ux changes
+
+### Migrations
+
+* Added `Dependants` field to the schema for questions
+* Added `reviewcomments` field to the schema for submissions - supports the new `reviewcomments` question
+
 ## v3.1
 
 * Translation
