@@ -114,7 +114,8 @@ exports.submission = function(req, res) {
           currrecord: entry,
           dataset: util.markup(util.translate(dataset, req.locale)),
           place: util.translate(place, req.locale),
-          disqus_shortname: config.get('disqus_shortname')
+          disqus_shortname: config.get('disqus_shortname'),
+          reviewState: true
         });
       });
     }
