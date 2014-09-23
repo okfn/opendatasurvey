@@ -77,20 +77,26 @@
 </fieldset>
 
 <fieldset>
-    <div class="row-fluid">
+
+    <div class="row">
         <hr />
         <h4>{{questionsById.details.question}}</h4>
         <span class="help-block">{{questionsById.details.description|marked}}</span>
-        <div id="markdown-preview-container">
-        <textarea id="details" name="details" class="span12" {% if canReview != true %}disabled="disabled"{% endif %} style="min-height: 150px;">{{prefill.details}}</textarea>
-        <a id="toggle-markdown-preview">
-            {{gettext("Show Markdown Preview")}}
-        </a>
-        <div id="markdown-preview"></div>
+        <div class="span6 no-margin-left">
+            <div class="wmd-panel">
+                <div id="wmd-button-bar"></div>
+                <textarea class="wmd-input" id="wmd-input" name="details" {% if canReview != true %}disabled="disabled"{% endif %} style="min-height: 150px;">{{prefill.details}}</textarea>
+            </div>
         </div>
-        {{ currentEntry(questionsById.details) }}
+        <div class="span6">
+            <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
+        </div>
+        <div class="span12 no-margin-left">
+            {{ currentEntry(questionsById.details) }}
+        </div>
     </div>
 </fieldset>
+
 
 <fieldset class="data-details">
     <datalist id="formats">

@@ -147,6 +147,13 @@ jQuery(document).ready(function($) {
 
   }
 
+  // POSTDOWN
+  (function () {
+      var mdConverter = Markdown.getSanitizingConverter();
+      var mdEditor = new Markdown.Editor(mdConverter);
+      mdEditor.run();
+  })();
+
   publicAndOnline();
   openLicense();
   showHideAvailabilityTable();
