@@ -15,14 +15,17 @@ jQuery(document).ready(function($) {
 
   function initializeDependants($els) {
       $els.each(function(index) {
-          manageDependants($(this));
-          answerDiff($(this));
+          if ($(this).hasClass('Yes') && $(this).is(':checked')) {
+              manageDependants($(this));
+          }
       });
   }
 
   function initializeAnswerDiff($els) {
        $els.each(function(index) {
-          answerDiff($(this));
+          if ($(this).is(':checked')) {
+              answerDiff($(this));
+          }
       });
   }
 
