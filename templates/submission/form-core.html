@@ -93,6 +93,7 @@
     </div>
 </fieldset>
 
+{% if reviewState %}
 <fieldset>
     <div class="row-fluid">
         <h3>{{questionsById.reviewcomments.question}}</h3>
@@ -107,6 +108,7 @@
         {{ currentEntry(questionsById.reviewcomments) }}
     </div>
 </fieldset>
+{% endif %}
 
 
 <fieldset class="data-details">

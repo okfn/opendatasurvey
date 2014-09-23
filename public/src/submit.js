@@ -16,6 +16,13 @@ jQuery(document).ready(function($) {
   function initializeDependants($els) {
       $els.each(function(index) {
           manageDependants($(this));
+          answerDiff($(this));
+      });
+  }
+
+  function initializeAnswerDiff($els) {
+       $els.each(function(index) {
+          answerDiff($(this));
       });
   }
 
@@ -37,7 +44,8 @@ jQuery(document).ready(function($) {
       var $currentEntry = $el.parent().siblings('.submission-current').first(),
           currentValue = $currentEntry.text().trim();
 
-      if (!currentValue === 'No entry' && !$el.hasClass(currentValue) && $el.is(':checked')) {
+      if ($.inArray(currentValue, ['Yes', 'No', 'Unsure']) !== -1  &&
+          !$el.hasClass(currentValue) && $el.is(':checked')) {
           $currentEntry.css('backgroundColor', '#FFCDCA');
       } else {
           $currentEntry.css('backgroundColor', '');
@@ -132,27 +140,27 @@ jQuery(document).ready(function($) {
       });
   }
 
-    function markdownPreviewReviewComments() {
-        $('#toggle-markdown-preview_reviewcomments').click(function() {
+  function markdownPreviewReviewComments() {
+      $('#toggle-markdown-preview_reviewcomments').click(function() {
 
-            var user_input = $('#reviewcomments').val(),
-                $preview_pane = $('#markdown-preview_reviewcomments'),
-                $edit_pane = $('#reviewcomments'),
-                show_preview_msg = 'Show Markdown Preview',
-                hide_preview_msg = 'Hide Markdown Preview';
+          var user_input = $('#reviewcomments').val(),
+              $preview_pane = $('#markdown-preview_reviewcomments'),
+              $edit_pane = $('#reviewcomments'),
+              show_preview_msg = 'Show Markdown Preview',
+              hide_preview_msg = 'Hide Markdown Preview';
 
-            $preview_pane.toggle().html(marked(user_input));
+          $preview_pane.toggle().html(marked(user_input));
 
-            if ($preview_pane.is(':visible')) {
-                $(this).html(hide_preview_msg);
-                $edit_pane.attr('disabled', 'disabled')
-            } else {
-                $(this).html(show_preview_msg);
-                $edit_pane.removeAttr('disabled', 'disabled')
-            }
+          if ($preview_pane.is(':visible')) {
+              $(this).html(hide_preview_msg);
+              $edit_pane.attr('disabled', 'disabled')
+          } else {
+              $(this).html(show_preview_msg);
+              $edit_pane.removeAttr('disabled', 'disabled')
+          }
 
-        });
-    }
+      });
+  }
 
   publicAndOnline();
   openLicense();
@@ -160,5 +168,7 @@ jQuery(document).ready(function($) {
   showCurrentDatasetInfo();
   enableMarkdownPreview();
   initializeDependants($choiceSwitches);
+  initializeAnswerDiff($choiceSwitches);
+
 });
 

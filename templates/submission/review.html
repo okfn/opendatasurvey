@@ -13,7 +13,7 @@
     {{ dataset.title }}
   </h1>
   <p>
-      Submitted by {{prefill['submitter']}} at {{prefill['timestamp']|dateformat}}. Current status is {% if prefill['reviewresult'] %}prefill['reviewresult']{% else %}pending{% endif %}.
+      Submitted by {{prefill['submitter']}}  {{prefill['timestamp']|dateformat}}. Current status is {% if prefill['reviewresult'] %}prefill['reviewresult']{% else %}pending{% endif %}.
   </p>
 </div>
 
@@ -50,11 +50,16 @@
       <h3>{{dataset.title}}</h3>
       <p>{{dataset.description}}</p>
 
+      {% if canReview %}
+      {% include '_snippets/reviewer_actions.html' %}
+      {% endif %}
+
       {% include 'submission/form-core.html' %}
 
       {% if canReview %}
       {% include '_snippets/reviewer_actions.html' %}
       {% endif %}
+
       {% if canReview %}
     </form>
     {% endif %}
