@@ -1125,11 +1125,11 @@ table.faq-table tr td:first-child {
   padding-left: 3px;
 }
 
-#markdown-preview-container {
+#markdown-preview-container_details, #markdown-preview-container_reviewcomments {
     position: relative;
 }
 
-#toggle-markdown-preview {
+#toggle-markdown-preview_details, #toggle-markdown-preview_reviewcomments {
     position: absolute;
     top: 0;
     right: 0;
@@ -1143,7 +1143,7 @@ table.faq-table tr td:first-child {
     padding: 0.25em 0.75em;
 }
 
-#markdown-preview {
+#markdown-preview_details, #markdown-preview_reviewcomments {
   display: none;
   padding: 2%;
   margin: 1%;

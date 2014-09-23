@@ -81,12 +81,12 @@
 <fieldset>
     <div class="row-fluid">
         <h3>{{questionsById.details.question}}</h3>
-        <div id="markdown-preview-container">
+        <div id="markdown-preview-container_details">
         <textarea id="details" name="details" class="span12" {% if canReview != true %}disabled="disabled"{% endif %} style="min-height: 150px;">{{prefill.details}}</textarea>
-        <a id="toggle-markdown-preview">
+        <a id="toggle-markdown-preview_details">
             {{gettext("Show Markdown Preview")}}
         </a>
-        <div id="markdown-preview"></div>
+        <div id="markdown-preview_details"></div>
         </div>
         <span class="help-block">{{questionsById.details.description}}</span>
         {{ currentEntry(questionsById.details) }}

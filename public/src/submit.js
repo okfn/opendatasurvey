@@ -105,28 +105,54 @@ jQuery(document).ready(function($) {
 
     // Adds a preview pane so the user can validate markdown in
     // the comment field before submitting
-
-      $('#toggle-markdown-preview').click(function() {
-
-      var user_input = $('#details').val(),
-          $preview_pane = $('#markdown-preview'),
-          $edit_pane = $('#details'),
-          show_preview_msg = 'Show Markdown Preview',
-          hide_preview_msg = 'Hide Markdown Preview';
-
-      $preview_pane.toggle().html(marked(user_input));
-
-      if ($preview_pane.is(':visible')) {
-        $(this).html(hide_preview_msg);
-        $edit_pane.attr('disabled', 'disabled')
-      } else {
-        $(this).html(show_preview_msg);
-        $edit_pane.removeAttr('disabled', 'disabled')
-      }
-
-    });
+    markdownPreviewDetails();
+    markdownPreviewReviewComments();
 
   }
+
+  function markdownPreviewDetails() {
+      $('#toggle-markdown-preview_details').click(function() {
+
+          var user_input = $('#details').val(),
+              $preview_pane = $('#markdown-preview_details'),
+              $edit_pane = $('#details'),
+              show_preview_msg = 'Show Markdown Preview',
+              hide_preview_msg = 'Hide Markdown Preview';
+
+          $preview_pane.toggle().html(marked(user_input));
+
+          if ($preview_pane.is(':visible')) {
+              $(this).html(hide_preview_msg);
+              $edit_pane.attr('disabled', 'disabled')
+          } else {
+              $(this).html(show_preview_msg);
+              $edit_pane.removeAttr('disabled', 'disabled')
+          }
+
+      });
+  }
+
+    function markdownPreviewReviewComments() {
+        $('#toggle-markdown-preview_reviewcomments').click(function() {
+
+            var user_input = $('#reviewcomments').val(),
+                $preview_pane = $('#markdown-preview_reviewcomments'),
+                $edit_pane = $('#reviewcomments'),
+                show_preview_msg = 'Show Markdown Preview',
+                hide_preview_msg = 'Hide Markdown Preview';
+
+            $preview_pane.toggle().html(marked(user_input));
+
+            if ($preview_pane.is(':visible')) {
+                $(this).html(hide_preview_msg);
+                $edit_pane.attr('disabled', 'disabled')
+            } else {
+                $(this).html(show_preview_msg);
+                $edit_pane.removeAttr('disabled', 'disabled')
+            }
+
+        });
+    }
 
   publicAndOnline();
   openLicense();
