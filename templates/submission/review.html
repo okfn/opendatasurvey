@@ -50,10 +50,6 @@
       <h3>{{dataset.title}}</h3>
       <p>{{dataset.description}}</p>
 
-      {% if canReview %}
-      {% include '_snippets/reviewer_actions.html' %}
-      {% endif %}
-
       {% include 'submission/form-core.html' %}
 
       {% if canReview %}
