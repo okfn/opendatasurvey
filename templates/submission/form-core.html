@@ -32,8 +32,6 @@
 
 <fieldset>
 
-    <h3>{{gettext("Data Availability Questions")}}</h3>
-
     <div class="row-fluid submission-row head">
         <div class="span12">
             <div class="submission-question">Question</div>
@@ -80,36 +78,19 @@
 
 <fieldset>
     <div class="row-fluid">
-        <h3>{{questionsById.details.question}}</h3>
-        <div id="markdown-preview-container_details">
+        <hr />
+        <h4>{{questionsById.details.question}}</h4>
+        <span class="help-block">{{questionsById.details.description|marked}}</span>
+        <div id="markdown-preview-container">
         <textarea id="details" name="details" class="span12" {% if canReview != true %}disabled="disabled"{% endif %} style="min-height: 150px;">{{prefill.details}}</textarea>
-        <a id="toggle-markdown-preview_details">
+        <a id="toggle-markdown-preview">
             {{gettext("Show Markdown Preview")}}
         </a>
-        <div id="markdown-preview_details"></div>
+        <div id="markdown-preview"></div>
         </div>
-        <span class="help-block">{{questionsById.details.description}}</span>
         {{ currentEntry(questionsById.details) }}
     </div>
 </fieldset>
-
-{% if reviewState %}
-<fieldset>
-    <div class="row-fluid">
-        <h3>{{questionsById.reviewcomments.question}}</h3>
-        <div id="markdown-preview-container_reviewcomments">
-            <textarea id="reviewcomments" name="reviewcomments" class="span12" {% if canReview != true %}disabled="disabled"{% endif %} style="min-height: 150px;">{{prefill.details}}</textarea>
-            <a id="toggle-markdown-preview_reviewcomments">
-                {{gettext("Show Markdown Preview")}}
-            </a>
-            <div id="markdown-preview_reviewcomments"></div>
-        </div>
-        <span class="help-block">{{questionsById.reviewcomments.description}}</span>
-        {{ currentEntry(questionsById.reviewcomments) }}
-    </div>
-</fieldset>
-{% endif %}
-
 
 <fieldset class="data-details">
     <datalist id="formats">

@@ -7,17 +7,21 @@
 {% block content %}
 <div class="page-header">
   <h1>
-    <span class="muted">
-      <a href="/place/{{ place.id }}">{{ place.name }}</a> /
-    </span>
-    {{ dataset.title }}
+      {{ gettext("Submission") }}:
+      <a href="/submission/{{ prefill['submissionid'] }}">{{ prefill['submissionid']|truncate(8) }}</a>
+      [<a href="/place/{{ place.id }}">{{ place.name }}</a> /
+      {{ dataset.title }}]
   </h1>
   <p>
-      Submitted by {{prefill['submitter']}}  {{prefill['timestamp']|dateformat}}. Current status is {% if prefill['reviewresult'] %}prefill['reviewresult']{% else %}pending{% endif %}.
+      {{ dataset.description }}
   </p>
+  <ul>
+      <li><strong>{{ gettext("Status") }}:</strong> <span class="label label-{% if prefill['reviewresult'] %}success['reviewresult']{% else %}warning{% endif %}">{% if prefill['reviewresult'] %}prefill['reviewresult']{% else %}pending{% endif %}</span></li>
+      <li><strong>{{ gettext("Submission date") }}:</strong> {{prefill['timestamp']|dateformat}}</li>
+      <li><strong>{{ gettext("Reviewer") }}:</strong> {{prefill['submitter']}}</li>
+      <li><strong>{{ gettext("Review comments") }}:</strong> {{prefill['reviewcomments']}}</li>
+  </ul>
 </div>
-
-
 
 <div class="row">
     <div class="span12">
@@ -47,8 +51,6 @@
     {% if canReview %}
     <form action="" method="post" class="submission-review">
       {% endif %}
-      <h3>{{dataset.title}}</h3>
-      <p>{{dataset.description}}</p>
 
       {% include 'submission/form-core.html' %}
 

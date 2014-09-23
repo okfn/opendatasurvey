@@ -1138,11 +1138,11 @@ table.faq-table tr td:first-child {
   padding-left: 3px;
 }
 
-#markdown-preview-container_details, #markdown-preview-container_reviewcomments {
+#markdown-preview-container {
     position: relative;
 }
 
-#toggle-markdown-preview_details, #toggle-markdown-preview_reviewcomments {
+#toggle-markdown-preview {
     position: absolute;
     top: 0;
     right: 0;
@@ -1156,7 +1156,7 @@ table.faq-table tr td:first-child {
     padding: 0.25em 0.75em;
 }
 
-#markdown-preview_details, #markdown-preview_reviewcomments {
+#markdown-preview {
   display: none;
   padding: 2%;
   margin: 1%;
@@ -1192,4 +1192,15 @@ a.readmore-js-toggle:hover {
 }
 .readmore-js-section {
     overflow: hidden;
+}
+
+#reviewcomments {
+    height: 80px;
+}
+
+.review-heading {
+    height: 2em;
+    line-height: 2em;
+    padding: 0;
+    margin: 0;
 }
