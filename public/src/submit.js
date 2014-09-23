@@ -4,7 +4,7 @@ jQuery(document).ready(function($) {
       $choiceSwitches = $('.Yes, .No, .Unsure'),
       $existsInput = $('input[name="exists"]'),
       readmoreConfig = {
-          maxHeight: 42,
+          maxHeight: 58,
           embedCSS: false,
           moreLink: '<a href="#">Show more</a>',
           lessLink: '<a href="#">Hide</a>'

@@ -975,14 +975,14 @@ td.dependant {width:924px !important;}/*Setting the width of column 3.*/
 .submission-question, .submission-option, .submission-current,
 .submission-info, .submission-dependant {
     float: left;
-    min-height: 42px;
+    min-height: 72px;
     padding-top: 2em;
 }
 
 .head .submission-question, .head .submission-option, .head .submission-current,
 .head .submission-info, .head .submission-dependant {
     float: left;
-    min-height: 42px;
+    min-height: 58px;
     padding-top: 0;
 }
 
@@ -1050,7 +1050,7 @@ td.dependant {width:924px !important;}/*Setting the width of column 3.*/
     height: 3em;
     line-height: 3em;
     background-color: #e6e6e6 !important;
-    font-weight: bold;
+    font-weight: normal;
     font-size: 1.25em;
 }
 
