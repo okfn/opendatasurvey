@@ -4,5 +4,5 @@ Questions should be answered on the basis of the situation as of today. Do **not
 
 If you are a new user, please use our tutorial here. 
 
-<p style="text-align: center;">For more details, please see the <a href="/faq">FAQ</a> or  <a href="/faq">Mrthodology</a></p>  
+<p style="text-align: center;">For more details, please see the <a href="/faq">FAQ</a> or  <a href="/faq">Methodology</a></p>  
 
