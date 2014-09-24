@@ -52,7 +52,7 @@
 
     {% if canReview %}
     <form action="" method="post" class="submission-review">
-      {% endif %}
+    {% endif %}
 
       {% include 'submission/form-core.html' %}
 
@@ -60,9 +60,10 @@
       {% include '_snippets/reviewer_actions.html' %}
       {% endif %}
 
-      {% if canReview %}
+    {% if canReview %}
     </form>
     {% endif %}
+
   </div>
     <div class="span12">
         <hr />
