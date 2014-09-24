@@ -79,19 +79,22 @@
 <fieldset>
 
     <div class="row">
-        <hr />
-        <h4>{{questionsById.details.question}}</h4>
-        <span class="help-block">{{questionsById.details.description|marked}}</span>
-        <div class="span6 no-margin-left">
+        <div class="span12">
+            <hr />
+            <h4>{{questionsById.details.question}}</h4>
+            <span class="help-block">{{questionsById.details.description|marked}}</span>
+        </div>
+        <div class="span6">
             <div class="wmd-panel">
                 <div id="wmd-button-bar"></div>
                 <textarea class="wmd-input" id="wmd-input" name="details" {% if canReview != true %}disabled="disabled"{% endif %} style="min-height: 150px;">{{prefill.details}}</textarea>
             </div>
         </div>
         <div class="span6">
+            <h4>{{ gettext("Preview")}}</h4>
             <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
         </div>
-        <div class="span12 no-margin-left">
+        <div class="span12">
             {{ currentEntry(questionsById.details) }}
         </div>
     </div>

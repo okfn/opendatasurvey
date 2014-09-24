@@ -1211,7 +1211,7 @@ a.readmore-js-toggle:hover {
     /*margin-left: 25%;
     //margin-right: 25%;
     //min-width: 500px;*/
-    width: 100%;
+    width: 450px;
     float:left;
 }
 
@@ -1229,7 +1229,7 @@ a.readmore-js-toggle:hover {
 .wmd-preview {
     background-color: #EBFAFF;
     border: 1px solid #e5e5e5;
-    margin-top: 35px;
+    margin-top: 6px;
 }
 
 .wmd-button-row {
@@ -1284,9 +1284,6 @@ a.readmore-js-toggle:hover {
 .wmd-spacer3 {
     left: 300px;
 }
-
-
-
 
 .wmd-prompt-background
 {
