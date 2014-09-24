@@ -9,9 +9,11 @@
   <h1>{{format("Make a Submission &ndash; %(sitename)s", { sitename: sitename }) }}</h1>
 </div>
 
+{% if submitInstructions %}
 <div class="alert alert-warning">
   {{ submitInstructions }}
 </div>
+{% endif %}
 
 <form action="" method="POST" class="form submission-create" autocomplete="on">
 
