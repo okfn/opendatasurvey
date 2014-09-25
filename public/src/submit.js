@@ -10,8 +10,6 @@ jQuery(document).ready(function($) {
           lessLink: '<a href="#">Hide</a>'
       };
 
-  $('.readmore').readmore(readmoreConfig);
-
   $existsInput.change(function() {
     showHideAvailabilityTable();
   });
@@ -165,6 +163,7 @@ jQuery(document).ready(function($) {
   enableMarkdownPreview();
   initializeDependants($choiceSwitches);
   initializeAnswerDiff($choiceSwitches);
+  $('.readmore').readmore(readmoreConfig);
 
 });
 
