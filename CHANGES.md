@@ -7,7 +7,7 @@ Note: we haven't yet really done proper releases or tagging.
 ### Migrations
 
 * Added `Dependants` field to the schema for questions
-* Added `reviewcomments` field to the schema for submissions - supports the new `reviewcomments` question
+* Added `reviewcomments` field to the schema for submissions
 
 ## v3.1
 
