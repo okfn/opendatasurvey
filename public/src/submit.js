@@ -149,8 +149,12 @@ jQuery(document).ready(function($) {
 
   // POSTDOWN
   (function () {
+      var help = function () { return window.open("http://stackoverflow.com/editing-help", "_blank"); },
+      options = {
+          helpButton: { handler: help }
+      };
       var mdConverter = Markdown.getSanitizingConverter();
-      var mdEditor = new Markdown.Editor(mdConverter);
+      var mdEditor = new Markdown.Editor(mdConverter, null, options);
       mdEditor.run();
   })();
 
