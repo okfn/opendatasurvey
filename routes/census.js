@@ -92,9 +92,13 @@ exports.submission = function(req, res) {
     if (err) {
       res.send(500, 'There was an error ' + err);
     } else if (!obj) {
-      res.send(404, 'There is no submission with id ' + req.params.submissionid);
+        res.send(404, 'There is no submission with id ' + req.params.submissionid);
+    } else if (obj.reviewresult) {
+        // If the object has been reviewed, we do not want it to be accessible here.
+        res.send(403, 'This submission has already been reviewed');
     } else {
-      // let's see if there was an entry
+
+      // see if there is an entry
       model.backend.getEntry(obj, function(err, entry) {
         if (!entry) {
           entry = {};
