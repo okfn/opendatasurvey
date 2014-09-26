@@ -15,18 +15,22 @@
 </div>
 
 <div class="row">
+  <div class="span12">
+      <h4>
+          {{ gettext("Please login to contribute to the") }} {{ siteTitle }}
+      </h4>
+      <p>&nbsp;</p>
+  </div>
   <div class="span5">
-    <h3>{{gettext("Login with Google")}}</h3>
-    <p>{{gettext("Login with your existing google account in a few seconds.")}}</p>
     <a class="btn btn-primary" href="/auth/google">{{gettext("Login with Google &raquo;")}}</a>
+    <p>&nbsp;</p>
+    <p>{{gettext("Login with your existing Google account in a few seconds. We will not share your email with any third party. For more information see the")}} <a href="https://okfn.org/terms-of-use/" title="{{ gettext("terms of use") }}">{{ gettext("terms of use")}}</a>.</p>
   </div>
   {% if anonymous_submissions %}
   <div class="span2" style="text-align: center;">
     <h3>{{gettext("&ndash; or &ndash;")}}</h3>
   </div>
   <div class="span5">
-    <h3>{{gettext("Skip Login")}}</h3>
-    <p>{{gettext("Continue without logging in.")}}</p>
     <form method="POST">
       <div>
         <label>{{gettext("Name (optional)")}}</label>
@@ -35,6 +39,8 @@
       </div>
       <button type="submit" class="btn btn-primary">{{gettext("Continue &raquo;")}}</button>
     </form>
+    <p>&nbsp;</p>
+    <p>{{gettext("Continue without logging in.")}}</p>
   </div>
   {% endif %}
 </div>
