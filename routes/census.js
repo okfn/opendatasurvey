@@ -58,20 +58,28 @@ exports.submitPost = function(req, res) {
 
   var submissionData = req.body;
   model.backend.insertSubmission(submissionData, req.user, function(err, data) {
-    var msg;
+    var msg,
+        msg_tmpl,
+        redirect_path;
     // TODO: Do flash messages properly
     if (err) {
       console.log(err);
       msg = 'There was an error! ' + err;
       req.flash('error', msg);
     } else {
-      msg = 'Thank-you for your submission which has been received.';
+
+      msg_tmpl = 'Thanks for your submission.REVIEWED You can check back here any time to see the current status.';
+
       if (!data.reviewed) {
-        msg += ' It will now be reviewed before being published.';
+        msg = msg_tmpl.replace('REVIEWED',  ' It will now be reviewed by the editors.');
+        redirect_path = '/submission/' + data.submissionid;
+      } else {
+        msg = msg_tmpl.replace('REVIEWED',  '');
+        redirect_path = '/place/' + data.place
       }
       req.flash('info', msg);
     }
-    res.redirect('/place/' + submissionData.place);
+    res.redirect(redirect_path);
   });
 };
 
@@ -86,17 +94,20 @@ exports.submitPost = function(req, res) {
 
 // Compare & update page
 exports.submission = function(req, res) {
-  var ynquestions = model.data.questions.slice(0,9);
+  var ynquestions = model.data.questions.slice(0,9),
+      reviewClosed;
 
   model.backend.getSubmission({submissionid: req.params.submissionid}, function(err, obj) {
     if (err) {
       res.send(500, 'There was an error ' + err);
     } else if (!obj) {
         res.send(404, 'There is no submission with id ' + req.params.submissionid);
-    } else if (obj.reviewresult) {
-        // If the object has been reviewed, we do not want it to be accessible here.
-        res.send(403, 'This submission has already been reviewed');
     } else {
+
+      if (obj.reviewresult) {
+          // If the object has been reviewed, we close further reviews.
+          reviewClosed = true;
+      }
 
       // see if there is an entry
       model.backend.getEntry(obj, function(err, entry) {
@@ -110,6 +121,7 @@ exports.submission = function(req, res) {
 
         res.render('submission/review.html', {
           canReview: exports.canReview(req.user, place),
+          reviewClosed: reviewClosed,
           reviewInstructions: config.get('review_page', req.locale),
           ynquestions: util.translateRows(ynquestions, req.locale),
           questions: util.translateRows(model.data.questions, req.locale),

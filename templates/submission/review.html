@@ -16,7 +16,7 @@
       {{ dataset.description }}
   </p>
   <ul>
-      <li><strong>{{ gettext("Status") }}:</strong> <span class="label label-{% if prefill['reviewresult'] %}success['reviewresult']{% else %}warning{% endif %}">{% if prefill['reviewresult'] %}prefill['reviewresult']{% else %}pending{% endif %}</span></li>
+      <li><strong>{{ gettext("Status") }}:</strong> <span class="label label-{% if prefill['reviewresult'] %}success{% else %}warning{% endif %}">{% if prefill['reviewresult'] %}{{ prefill['reviewresult'] }}{% else %}pending{% endif %}</span></li>
       <li><strong>{{ gettext("Submission date") }}:</strong> {{prefill['timestamp']|dateformat}}</li>
       <li><strong>{{ gettext("Reviewer") }}:</strong> {{prefill['submitter']}}</li>
       <li><strong>{{ gettext("Review comments") }}:</strong> {{prefill['reviewcomments']}}</li>
@@ -50,17 +50,17 @@
     </div>
     {% endif %}
 
-    {% if canReview %}
+    {% if canReview and not reviewClosed %}
     <form action="" method="post" class="submission-review">
     {% endif %}
 
       {% include 'submission/form-core.html' %}
 
-      {% if canReview %}
+      {% if canReview and not reviewClosed %}
       {% include '_snippets/reviewer_actions.html' %}
       {% endif %}
 
-    {% if canReview %}
+    {% if canReview and not reviewClosed %}
     </form>
     {% endif %}
 
