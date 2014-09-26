@@ -200,8 +200,7 @@ exports.login = function(req, res) {
   // TODO: use this stored next url properly ...
   req.session.nextUrl = req.query.next;
   res.render('login.html', {
-    anonymous_submissions: config.get('anonymous_submissions') === 'TRUE',
-    siteTitle: config.get('title')
+    anonymous_submissions: config.get('anonymous_submissions') === 'TRUE'
   });
 };
 
