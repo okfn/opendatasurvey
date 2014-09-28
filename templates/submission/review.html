@@ -17,9 +17,12 @@
   </p>
   <ul>
       <li><strong>{{ gettext("Status") }}:</strong> <span class="label label-{% if prefill['reviewresult'] %}success{% else %}warning{% endif %}">{% if prefill['reviewresult'] %}{{ prefill['reviewresult'] }}{% else %}pending{% endif %}</span></li>
-      <li><strong>{{ gettext("Submission date") }}:</strong> {{prefill['timestamp']|dateformat}}</li>
-      <li><strong>{{ gettext("Reviewer") }}:</strong> {{prefill['submitter']}}</li>
-      <li><strong>{{ gettext("Review comments") }}:</strong> {{prefill['reviewcomments']}}</li>
+      <li><strong>{{ gettext("Submission date") }}:</strong> {{ prefill['timestamp']|dateformat }}</li>
+      <li><strong>{{ gettext("Submitter") }}:</strong> {{ prefill['submitter'] }}</li>
+      {% if prefill['reviewer'] %}
+      <li><strong>{{ gettext("Reviewer") }}:</strong> {{ prefill['reviewer'] }}</li>
+      <li><strong>{{ gettext("Review comments") }}:</strong> {{ prefill['reviewcomments'] }}</li>
+      {% endif %}
   </ul>
 </div>
 
