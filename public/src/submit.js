@@ -2,6 +2,7 @@ jQuery(document).ready(function($) {
 
   var $yninputs = $('.yntable .js-dependent'),
       $choiceSwitches = $('.Yes, .No, .Unsure'),
+      $dataInputs = $('input[type=text], input[type=url]');
       $existsInput = $('input[name="exists"]'),
       readmoreConfig = {
           maxHeight: 58,
@@ -20,6 +21,10 @@ jQuery(document).ready(function($) {
       $('.readmore').readmore(readmoreConfig);
   });
 
+  $dataInputs.on('keyup', function () {
+     inputDiff($(this));
+  });
+
   function initializeDependants($els) {
       $els.each(function(index) {
           if ($(this).hasClass('Yes') && $(this).is(':checked')) {
@@ -33,6 +38,12 @@ jQuery(document).ready(function($) {
           if ($(this).is(':checked')) {
               answerDiff($(this));
           }
+      });
+  }
+
+  function initializeInputDiff($els) {
+      $els.each(function(index) {
+          inputDiff($(this));
       });
   }
 
@@ -56,6 +67,18 @@ jQuery(document).ready(function($) {
 
       if ($.inArray(currentValue, ['Yes', 'No', 'Unsure']) !== -1  &&
           !$el.hasClass(currentValue) && $el.is(':checked')) {
+          $currentEntry.css('backgroundColor', '#FFCDCA');
+      } else {
+          $currentEntry.css('backgroundColor', '');
+      }
+  }
+
+  function inputDiff($el) {
+      var $currentEntry = $el.closest('.submission-dependant').find('.current-entry-value').first(),
+          currentValue = $currentEntry.text().trim(),
+          thisValue = $el.val().trim();
+
+      if (thisValue && currentValue !== $el.val().trim()) {
           $currentEntry.css('backgroundColor', '#FFCDCA');
       } else {
           $currentEntry.css('backgroundColor', '');
@@ -163,6 +186,7 @@ jQuery(document).ready(function($) {
   enableMarkdownPreview();
   initializeDependants($choiceSwitches);
   initializeAnswerDiff($choiceSwitches);
+  initializeInputDiff($dataInputs);
   $('.readmore').readmore(readmoreConfig);
 
 });
