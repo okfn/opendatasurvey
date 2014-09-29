@@ -402,13 +402,13 @@ describe('Census Pages', function() {
       .field('details', testString)
       .expect(302)
       .end(function(err, res) {
-        assert.equal(res.header['location'], '/place/de');
         model.backend.getSubmissions({place: 'de', dataset: 'timetables'}, function(err, rows) {
           assert.equal(rows.length, 1);
           // test user
           assert.equal(rows[0].submitter, config.get('test:user').name);
           assert.equal(rows[0].submitterid, config.get('test:user').userid);
           assert.equal(rows[0].details, testString);
+          assert.equal(res.header['location'], '/submission/' + rows[0].submissionid);
           done();
         });
       });
