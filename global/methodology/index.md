@@ -1,5 +1,9 @@
-# Methodology 
+---
+layout: default
+title: Methodology - Global Open Data Index
+---
 
+# Methodology 
 
 The Global Open Data Index collects and presents information on the evolution and current state of open data release around the world. The Index is run by Open Knowledge and it is curated and reviewed by volunteers from the Open Knowledge network and around the world. [The first Open Data Index](http://index.okfn.org), based on the census results, was released on October 28, 2013.
 
