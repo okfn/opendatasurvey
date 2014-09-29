@@ -19,7 +19,7 @@
 {% macro question(qu) -%}
 <div class="span6">
     <h4 class="submission-label">{{qu.question}}</h4>
-    <input type="{{qu.type}}" title="{{qu.placeholder}}" name="{{qu.id}}" value="{{prefill[qu.id]}}" {% if canReview != true or reviewClosed %}disabled="disabled"{% endif %} placeholder="{{qu.placeholder}}" {% if qu.id=='format' %} list="formats" {% endif %} />
+    <input type="{{qu.type}}" title="{{qu.placeholder}}" name="{{qu.id}}" value="{% if formData %}{{formData[qu.id]}}{% else %}{{prefill[qu.id]}}{% endif %}" {% if canReview != true or reviewClosed %}disabled="disabled"{% endif %} placeholder="{{qu.placeholder}}" {% if qu.id=='format' %} list="formats" {% endif %} />
 </div>
 <div class="span6">
     {{ currentEntry(qu) }}
@@ -53,7 +53,11 @@
                     <input type="radio" name="{{qu.id}}" value="{{val}}"
                            class="{{ val }}"
                            {% if canReview != true or reviewClosed %} disabled="disabled"{% endif %}
-                           {% if prefill[qu.id] == val %}checked="true"{% endif %}
+                           {% if formData and formData[qu.id] == val %}
+                           checked="true"
+                           {% elif prefill[qu.id] == val %}
+                           checked="true"
+                           {% endif %}
                            required>
                 </div>
                 {% endfor %}

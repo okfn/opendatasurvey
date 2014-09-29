@@ -9,6 +9,19 @@
   <h1>{{format("Make a Submission &ndash; %(sitename)s", { sitename: sitename }) }}</h1>
 </div>
 
+{% if errors %}
+<div class="flash alert alert-error">
+    <p>
+        {{ gettext("The form has missing or incorrect data")}}:
+    </p>
+    {% for error in errors %}
+    <ul>
+        <li>{{ error.param }}: {{ error.msg }} (Current is '{{ error.value }}')</li>
+    </ul>
+    {% endfor %}
+</div>
+{% endif %}
+
 {% if submitInstructions %}
 <div class="alert alert-warning">
   {{ submitInstructions }}
@@ -25,7 +38,7 @@
         <select name="place" required autocomplete="off">
           <option value="">{{gettext("Please select")}}</option>
           {% for place in places %}
-          <option value="{{place.id}}" {% if place.id == prefill.place %}selected="true"{% endif %}>{{place.name}}</option>
+          <option value="{{place.id}}" {% if formData and place.id == formData.place %}selected="true"{% elif place.id == prefill.place %}selected="true"{% endif %}>{{place.name}}</option>
           {% endfor %}
         </select>
       </label>
@@ -35,7 +48,7 @@
         <select name="dataset" id="dataset-select" required>
           <option value="">{{gettext("Please select")}}</option>
           {% for dataset in datasets %}
-          <option value="{{dataset.id}}" {% if dataset.id == prefill.dataset %}selected="true"{% endif %}>{{dataset.title}}</option>
+          <option value="{{dataset.id}}" {% if formData and dataset.id == formData.dataset %}selected="true"{% elif dataset.id == prefill.dataset %}selected="true"{% endif %}>{{dataset.title}}</option>
           {% endfor %}
         </select>
 

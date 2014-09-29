@@ -10,6 +10,7 @@ var path = require('path')
   , config = require('./lib/config')
   , i18n = require('./lib/i18n')
   , env = require('./lib/templateenv')
+  , expressValidator = require('express-validator')
   ;
 
 var app = express();
@@ -55,6 +56,18 @@ app.configure(function() {
   }
   app.use(express.favicon());
   app.use(express.bodyParser());
+  app.use(expressValidator({
+      customValidators: {
+          isChoice: function(value) {
+              var choices = ['Yes', 'No', 'Unsure'];
+              if (choices.indexOf(value) > -1) {
+                  return true;
+              } else {
+                  return false;
+              }
+          }
+      }
+  }));
 
   if (!config.get('appconfig:readonly')) {
     app.use(express.methodOverride());
@@ -131,7 +144,7 @@ if (!config.get('appconfig:readonly')) {
   app.get('/contribute', routes.contribute);
   app.get('/setlocale/:locale', routes.setlocale);
   app.get('/submit', census.submit);
-  app.post('/submit', census.submitPost);
+  app.post('/submit', census.submit);
   app.get('/submission/:submissionid', census.submission);
   app.post('/submission/:submissionid', census.reviewPost);
   app.get('/login', census.login);

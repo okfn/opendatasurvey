@@ -23,7 +23,8 @@
     "passport": "",
     "passport-google-oauth": "",
     "i18n-abide": "~0.0.22",
-    "moment": "~2.5.1"
+    "moment": "~2.5.1",
+    "express-validator": ""
   },
   "devDependencies": {
     "colors": "",
