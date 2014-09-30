@@ -63,25 +63,31 @@ jQuery(document).ready(function($) {
 
   function answerDiff($el) {
       var $currentEntry = $el.parent().siblings('.submission-current').first(),
-          currentValue = $currentEntry.text().trim();
+          currentValue = $currentEntry.text().trim(),
+          diff_msg = 'The new value differs from the one currently on record.',
+          diff_bg = '#EFE0D3';
 
       if ($.inArray(currentValue, ['Yes', 'No', 'Unsure']) !== -1  &&
           !$el.hasClass(currentValue) && $el.is(':checked')) {
-          $currentEntry.css('backgroundColor', '#FFCDCA');
+          $el.attr('title', diff_msg).parent().attr('title', diff_msg).css({'cursor': 'pointer', 'backgroundColor': diff_bg});
+          $el.parent().siblings().removeAttr('title').css('backgroundColor', '').find('input[type=radio]').removeAttr('title').css({'cursor': 'auto', 'backgroundColor': ''});
+
       } else {
-          $currentEntry.css('backgroundColor', '');
+          $el.parent().siblings().removeAttr('title').css('backgroundColor', '').find('input[type=radio]').removeAttr('title').css({'cursor': 'auto', 'backgroundColor': ''});
       }
   }
 
   function inputDiff($el) {
       var $currentEntry = $el.closest('.submission-dependant').find('.current-entry-value').first(),
           currentValue = $currentEntry.text().trim(),
-          thisValue = $el.val().trim();
+          thisValue = $el.val().trim(),
+          diff_msg = 'The new value differs from the one currently on record.',
+          diff_bg = '#EFE0D3';
 
       if (thisValue && currentValue !== $el.val().trim()) {
-          $currentEntry.css('backgroundColor', '#FFCDCA');
+          $el.attr('title', diff_msg).css('backgroundColor', diff_bg);
       } else {
-          $currentEntry.css('backgroundColor', '');
+          $el.attr('title', '').css('backgroundColor', '');
       }
   }
 
