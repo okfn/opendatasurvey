@@ -99,22 +99,58 @@ exports.faq = function(req, res) {
 };
 
 exports.changes = function(req, res) {
-  // fetch all unreviewed submissions
-  model.backend.getSubmissions({
-    reviewed: ''
-  }, function(err, submissions) {
-    submissions = _.sortBy(submissions, function(submission) {
-      return submission.timestamp;
-    }).reverse();
 
-    // fetch the 10 most recent entries
+    var changeItems = [];
+
+    // fetch all submissions
+    model.backend.getSubmissions({}, function(err, submissions) {
+        submissions = _.sortBy(submissions, function(submission) {
+        return submission.timestamp;
+    });
+
+    // fetch all entries
     var entries = _.sortBy(model.data.entries.results, function(entry) {
       return entry.timestamp;
-    }).slice(-10).reverse();
+    });
+
+    submissions = addPlaceAndName(submissions);
+    entries = addPlaceAndName(entries);
+
+    submissions.forEach(function(submission) {
+        changeItems.push(transformToChangeItem(submission, 'Submission'));
+    });
+
+    entries.forEach(function(entry) {
+        changeItems.push(transformToChangeItem(entry, 'Entry'));
+    });
+
+    function transformToChangeItem(obj, type) {
+        return {
+            type: type,
+            timestamp: obj.timestamp,
+            dataset_title: obj.dataset_title,
+            place_name: obj.place_name,
+            url: obj.details_url || '/submission/ID'.replace('ID', obj.submissionid),
+            status: obj.reviewresult,
+            submitter: obj.submitter,
+            reviewer: obj.reviewer
+        };
+    }
+
+    function sortByDate(a, b) {
+        var date_a = Date.parse(a.timestamp),
+            date_b = Date.parse(b.timestamp);
+        if (date_a > date_b) {
+            return 1;
+        }
+        if (date_a < date_b) {
+            return -1;
+        }
+        return 0;
+    }
 
     res.render('changes.html', {
-      submissions: addPlaceAndName(submissions),
-      entries: addPlaceAndName(entries)
+        changeitems: changeItems.sort(sortByDate).slice(0, 500)
     });
   });
 

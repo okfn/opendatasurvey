@@ -5,32 +5,31 @@
 {% endblock %}
 
 {% block content %}
-<h1>{{gettext("Submissions to be reviewed")}}</h1>
-
-{% if submissions %}
-<ul>
-  {% for submission in submissions %}
-  <li>
-    <a href="/submission/{{submission.submissionid}}">{{submission.dataset_title}} – {{submission.place_name}}</a> <em>({{submission.timestamp | dateformat(currentLocale, 'Do MMM YYYY')}})</em>
-  </li>
-  {% endfor %}
+<h1>{{gettext("Changelog")}}</h1>
+<p>
+    {{ gettext("A log of the most recent submission and entry activity.") }}
+</p>
+<ul class="change-list">
+    {% for item in changeitems %}
+    <li>
+        <h5>
+            <strong>{{ item.type }}</strong>
+            <span class="label label-info">
+            {% if item.type == 'Submission' %}
+            {% if item.status %}{{ item.status }}{% else %}{{ gettext("pending") }}{% endif%}
+            {% else %}
+            {{ gettext("new") }}
+            {% endif %}
+            </span>
+        </h5>
+        <a href="{{ item.url }}">
+           <strong>{{ item.dataset_title }} – {{ item.place_name }}</strong>
+        </a>
+        <br />
+        <span class="changelist-date">
+            {{ gettext("On") }} {{ item.timestamp | dateformat(currentLocale, 'Do MMM YYYY') }} {{ gettext("by") }} {% if item.type == 'Submission' %}{{ item.submitter }}{% if item.reviewer %} ({{ gettext("Reviewed by") }} {{ item.reviewer }}){% endif %}{% endif %}</span>
+    </li>
+    {% endfor %}
 </ul>
-{% else %}
-<p>{{gettext("There are no submissions awaiting review.")}}</p>
-{% endif %}
-
-<h1>{{gettext("Recent Entries")}}</h1>
-
-{% if entries %}
-<ul>
-  {% for entry in entries %}
-  <li>
-    <a href="{{entry.details_url}}">{{entry.dataset_title}} – {{entry.place_name}}</a> <em>({{entry.timestamp | dateformat(currentLocale, 'Do MMM YYYY')}})</em>
-  </li>
-  {% endfor %}
-</ul>
-{% else %}
-<p>{{gettext("There are no entries in this census.")}}</p>
-{% endif %}
 
 {% endblock %}

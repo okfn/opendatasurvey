@@ -1321,3 +1321,12 @@ a.readmore-js-toggle:hover {
 .no-margin-left {
     margin-left: 0;
 }
+
+.change-list li {
+    margin-bottom: 10px;
+}
+
+.changelist-date {
+    font-size: 12px;
+    color: #5d5d5d;
+}
