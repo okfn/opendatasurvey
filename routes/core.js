@@ -150,7 +150,7 @@ exports.changes = function(req, res) {
     }
 
     res.render('changes.html', {
-        changeitems: changeItems.sort(sortByDate).slice(-100).reverse()
+        changeitems: changeItems.sort(sortByDate).slice(-100)
     });
   });
 
