@@ -14,11 +14,11 @@
     <li>
         <h5>
             <strong>{{ item.type }}</strong>
-            <span class="label label-info">
+            <span class="label label-{% if item.type == 'Submission' %}{% if item.status == 'accepted' %}success{% elif item.status == 'rejected' %}important{% else %}info{% endif %}{% else %}success{% endif %}">
             {% if item.type == 'Submission' %}
-            {% if item.status %}{{ item.status }}{% else %}{{ gettext("pending") }}{% endif%}
+            {% if item.status %}{{ item.status }}{% else %}{{ gettext("new") }}{% endif %}
             {% else %}
-            {{ gettext("new") }}
+            {{ gettext("added") }}
             {% endif %}
             </span>
         </h5>
