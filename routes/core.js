@@ -106,12 +106,12 @@ exports.changes = function(req, res) {
     model.backend.getSubmissions({}, function(err, submissions) {
         submissions = _.sortBy(submissions, function(submission) {
         return submission.timestamp;
-    }).slice(-100);
+    });
 
     // fetch all entries
     var entries = _.sortBy(model.data.entries.results, function(entry) {
       return entry.timestamp;
-    }).slice(-100);
+    });
 
     submissions = addPlaceAndName(submissions);
     entries = addPlaceAndName(entries);
@@ -150,7 +150,7 @@ exports.changes = function(req, res) {
     }
 
     res.render('changes.html', {
-        changeitems: changeItems.sort(sortByDate).slice(-100).reverse()
+        changeitems: changeItems.sort(sortByDate).slice(-150).reverse()
     });
   });
 
