@@ -7,11 +7,11 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2014-07-24 16:45+0000\n"
+"POT-Creation-Date: 2014-10-04 16:26+0000\n"
 
 #: templates/_snippets/datasets.html:4
 #: templates/country/place.html:35
-#: templates/submission/create.html:32
+#: templates/submission/create.html:47
 msgid "Dataset"
 msgstr ""
 
@@ -43,17 +43,17 @@ msgid "Key:"
 msgstr ""
 
 #: templates/_snippets/key.html:4
-#: templates/submission/form-core.html:8
+#: templates/submission/form-core.html:38
 msgid "Yes"
 msgstr ""
 
 #: templates/_snippets/key.html:5
-#: templates/submission/form-core.html:9
+#: templates/submission/form-core.html:39
 msgid "No"
 msgstr ""
 
 #: templates/_snippets/key.html:6
-#: templates/submission/form-core.html:10
+#: templates/submission/form-core.html:40
 msgid "Unsure"
 msgstr ""
 
@@ -73,80 +73,123 @@ msgstr ""
 msgid "Weighting"
 msgstr ""
 
-#: templates/base.html:36
-msgid "Home"
+#: templates/_snippets/reviewer_actions.html:3
+msgid "Review"
 msgstr ""
 
-#: templates/base.html:37
-msgid "About"
+#: templates/_snippets/reviewer_actions.html:7
+msgid "Actions"
+msgstr ""
+
+#: templates/_snippets/reviewer_actions.html:8
+msgid ""
+"Please add a short comment as to why you are accepting or rejecting this "
+"submission. **Note that your message will be publicly visible**."
+msgstr ""
+
+#: templates/_snippets/reviewer_actions.html:10
+msgid "Publish"
+msgstr ""
+
+#: templates/_snippets/reviewer_actions.html:11
+msgid "Reject"
+msgstr ""
+
+#: templates/_snippets/reviewer_actions.html:15
+msgid "Important"
+msgstr ""
+
+#: templates/_snippets/reviewer_actions.html:18
+msgid ""
+"If this submission makes no changes to the current entry then please "
+"'Reject' it rather than 'Accept'"
+msgstr ""
+
+#: templates/_snippets/reviewer_actions.html:19
+msgid ""
+"Note that you edit the submission before accepting it. In particular, "
+"please correct any spelling mistakes"
+msgstr ""
+
+#: templates/_snippets/reviewer_actions.html:20
+msgid "Publish will overwrite the whole current entry with the data in this form"
 msgstr ""
 
 #: templates/base.html:39
+msgid "Home"
+msgstr ""
+
+#: templates/base.html:40
+msgid "About"
+msgstr ""
+
+#: templates/base.html:41
+msgid "Changes"
+msgstr ""
+
+#: templates/base.html:43
 msgid "FAQ"
 msgstr ""
 
-#: templates/base.html:76
+#: templates/base.html:80
 msgid "Change language:"
 msgstr ""
 
-#: templates/base.html:87
+#: templates/base.html:91
 msgid "Open Online Software Service"
 msgstr ""
 
-#: templates/base.html:90
-#: templates/base.html:93
+#: templates/base.html:94
+#: templates/base.html:97
 msgid "Open Definition"
 msgstr ""
 
-#: templates/base.html:97
+#: templates/base.html:101
 msgid "Data License (Public Domain)"
 msgstr ""
 
-#: templates/base.html:99
+#: templates/base.html:103
 msgid "Source code"
 msgstr ""
 
-#: templates/base.html:102
+#: templates/base.html:106
 msgid "Download Data (CSV)"
 msgstr ""
 
-#: templates/base.html:104
+#: templates/base.html:108
 msgid "Download Data (JSON)"
 msgstr ""
 
-#: templates/base.html:107
-msgid ""
-"This site is part of the <a href=\"http://meta.census.okfn.org/\">Open Data "
-"Census project</a> run by the Open Knowledge Foundation."
-msgstr ""
-
-#: templates/base.html:110
-msgid "An Open Knowledge Foundation Project"
-msgstr ""
-
 #: templates/base.html:111
-msgid "Open Knowledge Foundation logo"
+msgid ""
+"Part of the <a href=\"http://census.okfn.org/\">Open Data Census "
+"project</a> run by Open Knowledge."
 msgstr ""
 
-#: templates/base.html:120
+#: templates/base.html:114
+msgid "An Open Knowledge Project"
+msgstr ""
+
+#: templates/base.html:124
 msgid "Log out"
 msgstr ""
 
-#: templates/base.html:122
+#: templates/base.html:126
 #: templates/login.html:4
 #: templates/login.html:9
+#: templates/submission/review.html:40
 msgid "Login"
 msgstr ""
 
-#: templates/base.html:125
+#: templates/base.html:129
 msgid "More about Open Data"
 msgstr ""
 
-#: templates/base.html:125
+#: templates/base.html:129
 msgid "What is Open Data"
 msgstr ""
 
-#: templates/base.html:126
+#: templates/base.html:130
 msgid "Run Your Own<br />Local Open Data Census"
 msgstr ""
 
@@ -155,19 +198,31 @@ msgid "Recent Changes"
 msgstr ""
 
 #: templates/changes.html:8
-msgid "Submissions to be reviewed"
+msgid "Changelog"
+msgstr ""
+
+#: templates/changes.html:10
+msgid "A log of the most recent submission and entry activity."
 msgstr ""
 
 #: templates/changes.html:19
-msgid "There are no submissions awaiting review."
+msgid "new"
 msgstr ""
 
-#: templates/changes.html:22
-msgid "Recent Entries"
+#: templates/changes.html:21
+msgid "added"
 msgstr ""
 
-#: templates/changes.html:33
-msgid "There are no entries in this census."
+#: templates/changes.html:30
+msgid "On"
+msgstr ""
+
+#: templates/changes.html:30
+msgid "by"
+msgstr ""
+
+#: templates/changes.html:30
+msgid "Reviewed by"
 msgstr ""
 
 #: templates/country/dataset.html:5
@@ -180,7 +235,7 @@ msgid "Dataset Description"
 msgstr ""
 
 #: templates/country/dataset.html:39
-#: templates/submission/create.html:22
+#: templates/submission/create.html:37
 msgid "Place"
 msgstr ""
 
@@ -201,6 +256,7 @@ msgstr ""
 
 #: templates/country/dataset.html:43
 #: templates/country/place.html:40
+#: templates/submission/form-core.html:42
 msgid "Information"
 msgstr ""
 
@@ -223,6 +279,7 @@ msgid "Data Location"
 msgstr ""
 
 #: templates/country/entry.html:19
+#: templates/submission/review.html:73
 msgid "Comments"
 msgstr ""
 
@@ -245,7 +302,7 @@ msgid "Format of data"
 msgstr ""
 
 #: templates/country/entry.html:53
-#: templates/country/place.html:103
+#: templates/country/place.html:105
 msgid "Contributors"
 msgstr ""
 
@@ -280,56 +337,58 @@ msgstr ""
 msgid "View Submission"
 msgstr ""
 
-#: templates/country/place.html:90
+#: templates/country/place.html:92
 msgid ""
 "Sorry, only one submission can be waiting for review at a time - please "
 "come back in a few days to submit new information"
 msgstr ""
 
-#: templates/country/place.html:108
+#: templates/country/place.html:110
 msgid "With submissions from:"
 msgstr ""
 
-#: templates/login.html:19
-msgid "Login with Google"
-msgstr ""
-
 #: templates/login.html:20
-msgid "Login with your existing google account in a few seconds."
-msgstr ""
-
-#: templates/login.html:21
-msgid "Login with Google &raquo;"
+msgid "Please login to contribute to the"
 msgstr ""
 
 #: templates/login.html:25
+msgid "Login with Google &raquo;"
+msgstr ""
+
+#: templates/login.html:27
+msgid ""
+"Login with your existing Google account in a few seconds. We will not share "
+"your email with any third party. For more information see the"
+msgstr ""
+
+#: templates/login.html:27
+msgid "terms of use"
+msgstr ""
+
+#: templates/login.html:31
 msgid "&ndash; or &ndash;"
 msgstr ""
 
-#: templates/login.html:28
-msgid "Skip Login"
-msgstr ""
-
-#: templates/login.html:29
-msgid "Continue without logging in."
-msgstr ""
-
-#: templates/login.html:32
+#: templates/login.html:36
 msgid "Name (optional)"
 msgstr ""
 
-#: templates/login.html:33
+#: templates/login.html:37
 msgid ""
 "If you provide a name we can credit you for your contribution (if not "
 "provided you'll be listed as Anonymous)."
 msgstr ""
 
-#: templates/login.html:34
+#: templates/login.html:38
 msgid "Joe Bloggs"
 msgstr ""
 
-#: templates/login.html:36
+#: templates/login.html:40
 msgid "Continue &raquo;"
+msgstr ""
+
+#: templates/login.html:43
+msgid "Continue without logging in."
 msgstr ""
 
 #: templates/overview.html:3
@@ -356,6 +415,10 @@ msgstr ""
 msgid "open"
 msgstr ""
 
+#: templates/overview.html:34
+msgid "Add information"
+msgstr ""
+
 #: templates/overview.html:50
 #: templates/overview.html:121
 msgid "Total Score"
@@ -365,34 +428,37 @@ msgstr ""
 msgid "The Census Admin needs to add some places to the Places configuration sheet"
 msgstr ""
 
-#: templates/overview.html:79
+#: templates/overview.html:80
 msgid "Click here to add to the census!"
 msgstr ""
 
-#: templates/overview.html:79
+#: templates/overview.html:80
 msgid "Add new"
 msgstr ""
 
 #: templates/submission/create.html:4
-#: templates/submission/create.html:63
+#: templates/submission/create.html:78
 msgid "Submit"
 msgstr ""
 
-#: templates/submission/create.html:19
+#: templates/submission/create.html:15
+msgid "The form has missing or incorrect data"
+msgstr ""
+
+#: templates/submission/create.html:34
 msgid "Place and Dataset"
 msgstr ""
 
-#: templates/submission/create.html:24
-#: templates/submission/create.html:34
-#: templates/submission/form-core.html:94
+#: templates/submission/create.html:39
+#: templates/submission/create.html:49
 msgid "Please select"
 msgstr ""
 
-#: templates/submission/create.html:60
+#: templates/submission/create.html:75
 msgid "This will be public."
 msgstr ""
 
-#: templates/submission/create.html:64
+#: templates/submission/create.html:79
 msgid ""
 "By submitting material to the index you agreeing to <a "
 "href=\"http://okfn.org/terms-of-use/\">terms of use</a> and also to license "
@@ -401,48 +467,51 @@ msgid ""
 "Public Domain Dedication and License</a>."
 msgstr ""
 
-#: templates/submission/form-core.html:2
-msgid "Data Availability Questions"
-msgstr ""
-
-#: templates/submission/form-core.html:11
-#: templates/submission/form-core.html:39
+#: templates/submission/form-core.html:3
 msgid "Current Entry"
 msgstr ""
 
-#: templates/submission/form-core.html:45
-#: templates/submission/form-core.html:48
+#: templates/submission/form-core.html:9
+#: templates/submission/form-core.html:12
 msgid "No entry"
 msgstr ""
 
-#: templates/submission/form-core.html:84
-msgid "Publisher Information"
+#: templates/submission/form-core.html:41
+msgid "Current"
 msgstr ""
 
-#: templates/submission/form-core.html:87
-msgid "Data Quality"
+#: templates/submission/form-core.html:98
+msgid "Preview"
 msgstr ""
 
 #: templates/submission/review.html:4
 msgid "Review Submission"
 msgstr ""
 
-#: templates/submission/review.html:35
-msgid "This will be logged and displayed"
+#: templates/submission/review.html:10
+msgid "Submission"
 msgstr ""
 
-#: templates/submission/review.html:37
-msgid "Publish"
+#: templates/submission/review.html:19
+msgid "Status"
 msgstr ""
 
-#: templates/submission/review.html:41
-msgid ""
-"If this submission makes no changes to the current entry then please "
-"'Reject' it rather than 'Accept'.\n"
-" <br />\n"
-" Note that you edit the submission before accepting it. In particular, "
-"please correct any spelling mistakes.\n"
-" <br />\n"
-" <strong>Publish will overwrite the whole current entry with the data in "
-"this form.</strong>"
+#: templates/submission/review.html:20
+msgid "Submission date"
+msgstr ""
+
+#: templates/submission/review.html:21
+msgid "Submitter"
+msgstr ""
+
+#: templates/submission/review.html:23
+msgid "Reviewer"
+msgstr ""
+
+#: templates/submission/review.html:24
+msgid "Review comments"
+msgstr ""
+
+#: templates/submission/review.html:36
+msgid "If you are a reviewer, please login to review"
 msgstr ""
