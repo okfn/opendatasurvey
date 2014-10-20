@@ -301,6 +301,10 @@ Set to `true` to add an “Add new location” button to the overview, linking t
 
 Default is false
 
+### banner_text
+
+Text to display in a banner across the top of all pages. This text is parsed as markdown.
+
 ### navbar_logo
 
 HTML for logo at top right of navbar

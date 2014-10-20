@@ -131,6 +131,7 @@ app.all('*', function(req, res, next) {
   res.locals.google_analytics_key = config.get('google_analytics_key');
   res.locals.custom_footer = config.get('custom_footer', req.locale);
   res.locals.navbar_logo = config.get('navbar_logo', req.locale);
+  res.locals.banner_text = config.get('banner_text', req.locale);
   res.locals.error_messages = req.flash('error');
   res.locals.info_messages = req.flash('info');
   next();

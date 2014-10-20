@@ -67,6 +67,12 @@
     </div>
     {% endif %}
 
+    {% if banner_text %}
+    <div id="banner" class="row">
+      {{ banner_text|marked }}
+    </div>
+    {% endif %}
+
     {% block content %}{{content}}{% endblock %}
   </div>
   </div><!-- /content -->

@@ -1330,3 +1330,10 @@ a.readmore-js-toggle:hover {
     font-size: 12px;
     color: #5d5d5d;
 }
+
+#banner {
+	border: 3px solid #f3f3f3;
+	background-color: #f1fefb;
+	padding: 16px;
+	margin-top: 24px;
+}
