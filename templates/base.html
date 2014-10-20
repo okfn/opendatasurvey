@@ -56,6 +56,15 @@
 <div class="container">
 <div class="content">
   <div class="page">
+
+    {% if banner_text %}
+    <div class="row">
+      <div id="banner" class="span12">
+        {{ banner_text|marked }}
+      </div>
+    </div>
+    {% endif %}
+
     {% if error_messages.length > 0 %}
     <div class="flash alert alert-error">
       {{ error_messages }}
@@ -67,14 +76,6 @@
       {% if url_query.post_submission %}
       {% include '_snippets/share_submission_buttons.html' %}
       {% endif %}
-    </div>
-    {% endif %}
-
-    {% if banner_text %}
-    <div class="row">
-      <div id="banner" class="span12">
-        {{ banner_text|marked }}
-      </div>
     </div>
     {% endif %}
 

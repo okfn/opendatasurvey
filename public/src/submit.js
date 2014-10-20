@@ -65,7 +65,7 @@ jQuery(document).ready(function($) {
       var $currentEntry = $el.parent().siblings('.submission-current').first(),
           currentValue = $currentEntry.text().trim(),
           diff_msg = 'The new value differs from the one currently on record.',
-          diff_bg = '#EFE0D3';
+          diff_bg = '#EFED8A';
 
       if ($.inArray(currentValue, ['Yes', 'No', 'Unsure']) !== -1  &&
           !$el.hasClass(currentValue) && $el.is(':checked')) {
@@ -82,7 +82,7 @@ jQuery(document).ready(function($) {
           currentValue = $currentEntry.text().trim(),
           thisValue = $el.val().trim(),
           diff_msg = 'The new value differs from the one currently on record.',
-          diff_bg = '#EFE0D3';
+          diff_bg = '#EFED8A';
 
       if (thisValue && currentValue !== $el.val().trim()) {
           $el.attr('title', diff_msg).css('backgroundColor', diff_bg);
