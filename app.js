@@ -114,6 +114,15 @@ app.all('*', function(req, res, next) {
     req.session = {};
     req.session.loggedin = false;
   }
+
+  if (config.get('contribute_page') === '<h1>To set content for this page update your configuration file</h1>' ||
+    config.get('contribute_page') === '' ||
+    config.get('contribute_page') === undefined) {
+    res.locals.has_contribute_page = false;
+  } else {
+    res.locals.has_contribute_page = true;
+  }
+
   res.locals.locales = config.get('locales');
   res.locals.currentLocale = req.locale;
   res.locals.sitename = config.get('title', req.locale);

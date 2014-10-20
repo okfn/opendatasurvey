@@ -42,6 +42,9 @@
         {% if not readonly %}
         <li><a href="/faq/">{{gettext("FAQ")}}</a></li>
         {% endif %}
+        {% if has_contribute_page %}
+        <li><a href="/contribute/">{{gettext("Contribute")}}</a></li>
+        {% endif %}
       </ul>
       <div class="nav-logo">
         {{ navbar_logo }}
