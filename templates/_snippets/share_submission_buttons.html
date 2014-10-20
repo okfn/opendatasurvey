@@ -1,0 +1,17 @@
+{% if post_submission_info %}
+<br /><br />
+{{ post_submission_info|marked }}
+&nbsp;
+<a href="http://twitter.com/share?url={{ current_domain }}{{ url_query.post_submission }}&text={{ share_submission_template }}" title="{{ gettext('Share on Twitter') }}">
+    <i class="icon icon-twitter-sign"></i> {{ gettext('Twitter') }}
+</a>
+&nbsp;
+{# FACEBOOK only allows sharing the current url. In most cases, this is the submission URL anyway. #}
+<a href="http://www.facebook.com/sharer/sharer.php?u={{ current_url }}" title="{{ gettext('Share on Facebook') }}">
+    <i class="icon icon-facebook-sign"></i> {{ gettext('Facebook') }}
+</a>
+&nbsp;
+<a href="https://plus.google.com/share?url={{ current_domain }}{{ url_query.post_submission }}" title="{{ gettext('Share on Google+') }}">
+    <i class="icon icon-google-plus-sign"></i> {{ gettext('Google+') }}
+</a>
+{% endif %}

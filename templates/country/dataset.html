@@ -10,6 +10,10 @@
 <h1>
   <a href="{{urlFor('overview')}}" data-toggle="tooltip" class="count-0"
     title="Return to results overview">{{gettext("Datasets")}}</a> / {{ dataset.title }}
+
+    <span class="pull-right">
+      {% include '_snippets/share_page_buttons.html' %}
+    </span>
 </h1>
       <div id="spacer"></div>
       <div class="tabbable"> <!-- Only required for left/right tabs -->

@@ -8,6 +8,7 @@ var fs = require('fs')
   , env = require('../lib/templateenv')
   , util =  require('../lib/util.js')
   , model = require('../lib/model').OpenDataCensus
+  , marked = require('marked')
   ;
 
 exports.submit = function(req, res) {
@@ -53,14 +54,15 @@ exports.submit = function(req, res) {
             msg_tmpl = 'Thanks for your submission.REVIEWED You can check back here any time to see the current status.';
             if (!data.reviewed) {
                 msg = msg_tmpl.replace('REVIEWED',  ' It will now be reviewed by the editors.');
-                redirect_path = '/submission/' + data.submissionid;
+                submission_path = '/submission/' + data.submissionid;
+                redirect_path = submission_path;
             } else {
                 msg = msg_tmpl.replace('REVIEWED',  '');
                 redirect_path = '/place/' + data.place
             }
             req.flash('info', msg);
         }
-        res.redirect(redirect_path);
+        res.redirect(redirect_path + '?post_submission=' + submission_path);
     }
 
   // validate the POST data and put the results on `errors`

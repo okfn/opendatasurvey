@@ -1332,8 +1332,10 @@ a.readmore-js-toggle:hover {
 }
 
 #banner {
+	width: 918px;
 	border: 3px solid #f3f3f3;
 	background-color: #f1fefb;
-	padding: 16px;
 	margin-top: 24px;
+	margin-bottom: 24px;
+	padding: 8px;
 }

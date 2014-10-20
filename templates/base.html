@@ -64,12 +64,17 @@
     {% if info_messages.length > 0 %}
     <div class="flash alert alert-info">
       {{ info_messages }}
+      {% if url_query.post_submission %}
+      {% include '_snippets/share_submission_buttons.html' %}
+      {% endif %}
     </div>
     {% endif %}
 
     {% if banner_text %}
-    <div id="banner" class="row">
-      {{ banner_text|marked }}
+    <div class="row">
+      <div id="banner" class="span12">
+        {{ banner_text|marked }}
+      </div>
     </div>
     {% endif %}
 

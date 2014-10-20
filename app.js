@@ -132,6 +132,12 @@ app.all('*', function(req, res, next) {
   res.locals.custom_footer = config.get('custom_footer', req.locale);
   res.locals.navbar_logo = config.get('navbar_logo', req.locale);
   res.locals.banner_text = config.get('banner_text', req.locale);
+  res.locals.current_url = 'SCHEME://DOMAIN_PATH'.replace('SCHEME', req.protocol).replace('DOMAIN_', req.get('host')).replace('PATH', req.path);
+  res.locals.current_domain = 'SCHEME://DOMAIN_'.replace('SCHEME', req.protocol).replace('DOMAIN_', req.get('host'));
+  res.locals.post_submission_info = config.get('post_submission_info');
+  res.locals.share_submission_template = config.get('share_submission_template', req.locale);
+  res.locals.share_page_template = config.get('share_page_template', req.locale);
+  res.locals.url_query = req.query;
   res.locals.error_messages = req.flash('error');
   res.locals.info_messages = req.flash('info');
   next();

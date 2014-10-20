@@ -5,26 +5,6 @@
 {% endblock %}
 
 {% block content %}
-<div class="page-header">
-  <h1>
-      {{ gettext("Submission") }}:
-      <a href="/submission/{{ prefill['submissionid'] }}">{{ prefill['submissionid']|truncate(8) }}</a>
-      [<a href="/place/{{ place.id }}">{{ place.name }}</a> /
-      {{ dataset.title }}]
-  </h1>
-  <p>
-      {{ dataset.description }}
-  </p>
-  <ul>
-      <li><strong>{{ gettext("Status") }}:</strong> <span class="label label-{% if prefill['reviewresult'] %}success{% else %}warning{% endif %}">{% if prefill['reviewresult'] %}{{ prefill['reviewresult'] }}{% else %}pending{% endif %}</span></li>
-      <li><strong>{{ gettext("Submission date") }}:</strong> {{ prefill['timestamp']|dateformat }}</li>
-      <li><strong>{{ gettext("Submitter") }}:</strong> {{ prefill['submitter'] }}</li>
-      {% if prefill['reviewer'] %}
-      <li><strong>{{ gettext("Reviewer") }}:</strong> {{ prefill['reviewer'] }}</li>
-      <li><strong>{{ gettext("Review comments") }}:</strong> {{ prefill['reviewcomments'] }}</li>
-      {% endif %}
-  </ul>
-</div>
 
 <div class="row">
     <div class="span12">
@@ -44,6 +24,32 @@
     </div>
 </div>
 
+<div class="page-header">
+  <h1>
+      {{ gettext("Submission") }}:
+      <a href="/submission/{{ prefill['submissionid'] }}">{{ prefill['submissionid']|truncate(8) }}</a>
+      [<a href="/place/{{ place.id }}">{{ place.name }}</a> /
+      {{ dataset.title }}]
+
+      <span class="pull-right">
+        {% include '_snippets/share_page_buttons.html' %}
+      </span>
+  </h1>
+
+  <p>
+      {{ dataset.description }}
+  </p>
+
+  <ul>
+      <li><strong>{{ gettext("Status") }}:</strong> <span class="label label-{% if prefill['reviewresult'] %}success{% else %}warning{% endif %}">{% if prefill['reviewresult'] %}{{ prefill['reviewresult'] }}{% else %}pending{% endif %}</span></li>
+      <li><strong>{{ gettext("Submission date") }}:</strong> {{ prefill['timestamp']|dateformat }}</li>
+      <li><strong>{{ gettext("Submitter") }}:</strong> {{ prefill['submitter'] }}</li>
+      {% if prefill['reviewer'] %}
+      <li><strong>{{ gettext("Reviewer") }}:</strong> {{ prefill['reviewer'] }}</li>
+      <li><strong>{{ gettext("Review comments") }}:</strong> {{ prefill['reviewcomments'] }}</li>
+      {% endif %}
+  </ul>
+</div>
 
 <div class="row">
   <div class="span12">
