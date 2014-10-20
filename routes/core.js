@@ -231,7 +231,7 @@ exports.dataset = function(req, res) {
 
   model.backend.getEntrys({
     dataset: req.params.dataset,
-    year: config.get('display_year')
+    year: {'<=': config.get('display_year')}
   }, function(err, entriesForThisDataset) {
     if (err) throw err;
     entriesForThisDataset.forEach(function(entry) {
