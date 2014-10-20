@@ -67,7 +67,23 @@ table {
 
 table tr.queued td,
 table tr.queued th {
-	opacity: 0.3;
+	opacity: 0.5;
+}
+
+table tr.queued td:first-child {
+	opacity: 1.0;
+}
+
+table tr.queued td:last-child {
+	opacity: 0.8;
+}
+
+table tr.queued:nth-child(odd) {
+	background-color: #ffffe5;
+}
+
+table tr.queued:nth-child(even) {
+	background-color: #ffffdb;
 }
 
 table tr.queued:hover td,
@@ -1338,4 +1354,9 @@ a.readmore-js-toggle:hover {
 	margin-top: 24px;
 	margin-bottom: 24px;
 	padding: 8px;
+}
+
+.queued-context {
+	font-size: 0.75em;
+	cursor: help;
 }

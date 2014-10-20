@@ -78,10 +78,20 @@
               {% endif %}
             </tr>
             {% if not readonly %}
-            {% for submission in submissions[dataset.id] %}
+            {% for submission in submissions[dataset.id]|reverse %}
             <tr class="queued">
               <td>
-                {{gettext("&#8627; Awaiting review")}}
+                <strong>{{gettext("&#8627; Awaiting review")}}</strong><br />
+
+                <span title="{{ gettext('Submitted by')}} {{ submission.submitter}}" class="queued-context">
+                  <i class="icon icon-user"></i>&nbsp;
+                  {{ submission.submitter }}
+                </span>
+                <br />
+                <span title="{{ gettext('Submitted on')}} {{ submission.timestamp|dateformat }}" class="queued-context">
+                  <i class="icon icon-time"></i>&nbsp;
+                  {{ submission.timestamp|simpledelta }}
+                </span>
               </td>
               {{entrysummary(dataset, place, submission, scoredQuestions)}}
               <td>
