@@ -58,6 +58,7 @@ exports.submit = function(req, res) {
                 redirect_path = submission_path;
             } else {
                 msg = msg_tmpl.replace('REVIEWED',  '');
+                submission_path = '/submission/' + data.submissionid;
                 redirect_path = '/place/' + data.place
             }
             req.flash('info', msg);
