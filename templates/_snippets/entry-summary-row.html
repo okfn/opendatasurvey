@@ -21,7 +21,7 @@
   </td>
     <td>
     {% if record %}
-      {% if record.year < display_year %}<div class="badge" title="{{record.year}}">{{record.year|dateformat(currentLocale, "'YY")}}</div>{% endif %}
+      <div class="badge" title="{{ record.year }}">{{record.year|dateformat(currentLocale, "'YY")}}</div>
     {% endif %}
     </td>
     {% if record and record.url %}
