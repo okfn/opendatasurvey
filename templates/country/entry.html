@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-{{format("Entry for %(place)s / %(title)s", { place: prefill.place, title: dataset.title}) }}
+{{format("Entry for %(place)s / %(title)s", { place: place.name, title: dataset.title}) }}
 {% endblock %}
 
 {% block content %}
