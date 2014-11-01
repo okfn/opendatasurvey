@@ -42,7 +42,7 @@
       </span>
       {% for qu2 in ynquestions %}
         {% if qu2.id == qu.id %}
-          <a href="javascript:;" data-toggle="popover" data-content="{{ qu2.description|marked }}" data-placement="top">
+          <a href="javascript:;" data-toggle="popover" data-content="{{ qu2.description|marked| replace ('\"', '\'') }}" data-placement="top" data-html="true">
             <i class="icon-info-sign"></i>
           </a>
         {% endif %}
