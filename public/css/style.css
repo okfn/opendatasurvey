@@ -91,6 +91,10 @@ table tr.queued:hover th {
 	opacity: 1;
 }
 
+td[data-place] {
+	white-space: nowrap;
+}
+
 td.recordurl {
 	font-size: 12px;
 	max-width: 100px;
