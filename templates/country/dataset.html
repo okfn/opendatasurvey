@@ -49,8 +49,8 @@
     </tr>
   </thead>
   <tbody>
-    {% for record in bydataset %}
-    {% set place = placesById[record.place] %}
+    {% for place in places %}
+    {% set record = datasetbyplace[place.id] %}
     <tr>
       <td>
         <a href="/place/{{place.id}}">{{place.name}}</a>
