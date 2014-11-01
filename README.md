@@ -120,7 +120,7 @@ environment variables: https://devcenter.heroku.com/articles/config-vars
 
 When templates change, the translations have to be changed. Extract the files by running this command:
 
-    ./node_modules/.bin/extract-pot --output=../messages.pot --locale locale -t jinja -f html templates
+    gulp pot
 
 You will need the GNU gettext commands. See [here](https://github.com/mozilla/i18n-abide/blob/master/docs/GETTEXT.md) for more information.
 
