@@ -79,7 +79,7 @@ exports.faq = function(req, res) {
   var tmpl = env.getTemplate('_snippets/questions.html');
   var questionInfo = tmpl.render({
     gettext: res.locals.gettext,
-    questions: util.translateRows(model.data.questions, req.locale)
+    questions: util.translateQuestions(model.data.questions, req.locale)
   });
   var dataTmpl = env.getTemplate('_snippets/datasets.html');
   var dataInfo = dataTmpl.render({
@@ -264,8 +264,8 @@ exports.entryByPlaceDataset = function(req, res) {
 
   function render(prefill_) {
     res.render('country/entry.html', {
-      ynquestions: util.translateRows(ynquestions, req.locale),
-      questions: util.translateRows(model.data.questions, req.locale),
+      ynquestions: util.translateQuestions(ynquestions, req.locale),
+      questions: util.translateQuestions(model.data.questions, req.locale),
       scoredQuestions: util.translateRows(model.data.scoredQuestions, req.locale),
       datasets: util.translateRows(model.data.datasets, req.locale),
       dataset: util.markup(util.translate(dataset, req.locale)),
