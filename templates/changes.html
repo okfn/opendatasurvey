@@ -13,13 +13,9 @@
     {% for item in changeitems %}
     <li>
         <h5>
-            <strong>{{ item.type }}</strong>
-            <span class="label label-{% if item.type == 'Submission' %}{% if item.status == 'accepted' %}success{% elif item.status == 'rejected' %}important{% else %}info{% endif %}{% else %}success{% endif %}">
-            {% if item.type == 'Submission' %}
+            <strong>{% if item.status == 'accepted' %}{{ gettext('Entry') }}{% else %}{{ gettext('Submission') }}{% endif %}</strong>
+            <span class="label label-{% if item.status == 'accepted' %}success{% elif item.status == 'rejected' %}important{% else %}info{% endif %}">
             {% if item.status %}{{ item.status }}{% else %}{{ gettext("new") }}{% endif %}
-            {% else %}
-            {{ gettext("added") }}
-            {% endif %}
             </span>
         </h5>
         <a href="{{ item.url }}">
@@ -27,7 +23,7 @@
         </a>
         <br />
         <span class="changelist-date">
-            {{ gettext("On") }} {{ item.timestamp | dateformat(currentLocale, 'Do MMM YYYY') }} {{ gettext("by") }} {% if item.type == 'Submission' %}{{ item.submitter }}{% if item.reviewer %} ({{ gettext("Reviewed by") }} {{ item.reviewer }}){% endif %}{% endif %}</span>
+            {{ gettext("On") }} {{ item.timestamp | dateformat(currentLocale, 'Do MMM YYYY') }} {{ gettext("submitted by") }} {{ item.submitter }} {% if item.status == 'accepted' %}{{ gettext("and reviewed by") }} {{ item.reviewer }}{% endif %}</span>
     </li>
     {% endfor %}
 </ul>
