@@ -104,7 +104,7 @@ exports.changes = function(req, res) {
 
     // fetch all submissions
     model.backend.getSubmissions({
-      year: config.get('display_year')
+      year: config.get('submit_year')
     }, function(err, submissions) {
         submissions = _.sortBy(submissions, function(submission) {
         return submission.timestamp;
@@ -127,12 +127,20 @@ exports.changes = function(req, res) {
     // });
 
     function transformToChangeItem(obj, type) {
+      var url;
+        if (obj.reviewresult === 'accepted') {
+          url = '/entry/PLACE/DATASET'
+                  .replace('PLACE', obj.place)
+                  .replace('DATASET', obj.dataset)
+        } else {
+          url = obj.details_url || '/submission/ID'.replace('ID', obj.submissionid);
+        }
         return {
             type: type,
             timestamp: obj.timestamp,
             dataset_title: obj.dataset_title,
             place_name: obj.place_name,
-            url: obj.details_url || '/submission/ID'.replace('ID', obj.submissionid),
+            url: url,
             status: obj.reviewresult,
             submitter: obj.submitter,
             reviewer: obj.reviewer
