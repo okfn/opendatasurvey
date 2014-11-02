@@ -27,12 +27,13 @@
     "express-validator": ""
   },
   "devDependencies": {
+    "chai": "^1.9.2",
     "colors": "",
     "execSync": "",
-    "supertest": "",
     "mocha": "",
+    "optimist": "~0.6.1",
     "sinon": "",
-    "optimist": "~0.6.1"
+    "supertest": ""
   },
   "engines": {
     "node": "0.10.17",
