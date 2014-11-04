@@ -160,7 +160,7 @@ exports.changes = function(req, res) {
     }
 
     res.render('changes.html', {
-        changeitems: changeItems.sort(sortByDate).slice(-150).reverse()
+        changeitems: changeItems.sort(sortByDate).slice(-250).reverse()
     });
   });
 
