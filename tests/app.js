@@ -122,7 +122,7 @@ describe('Basics', function() {
       .expect(200)
       .end(function(err, res) {
         // check the header row
-        checkContent(res, 'id,title,censusid,timestamp,year,place,dataset,exists,digital,public,online,free,machinereadable,');
+        checkContent(res, 'id,officialtitle,censusid,timestamp,year,place,dataset,exists,digital,public,online,free,machinereadable,');
         done();
       })
       ;
@@ -406,7 +406,7 @@ describe('Census Pages', function() {
       .field('public', 'Yes')
       .field('free', 'Yes')
       .field('online', 'Yes')
-      .field('title', 'The Title')
+      .field('officialtitle', 'The Title')
       .field('url', 'http://www.url.com')
       .field('machinereadable', 'Yes')
       .field('bulk', 'Yes')
@@ -422,8 +422,7 @@ describe('Census Pages', function() {
           assert.equal(rows[0].details, testString);
           assert.equal(rows[0].exists, 'Yes');
           assert.equal(rows[0].online, 'Yes');
-          // Requires https://github.com/okfn/opendatacensus/issues/473
-          // assert.equal(rows[0].title, 'The Title');
+          assert.equal(rows[0].officialtitle, 'The Title');
           assert.equal(rows[0].url, 'http://www.url.com');
           assert.include(res.header['location'],
                          '/submission/ID'.replace('ID', rows[0].submissionid));
