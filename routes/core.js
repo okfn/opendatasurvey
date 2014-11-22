@@ -247,9 +247,14 @@ exports.dataset = function(req, res) {
     entriesForThisDataset.forEach(function(entry) {
       entry.ycount = util.scoreOpenness(model.data, entry);
     });
+    var datasetByPlace = _.indexBy(entriesForThisDataset, 'place');
+    var sortedPlaces = _.sortBy(model.data.places, function(place) {
+      return datasetByPlace[place.id] ? datasetByPlace[place.id].ycount * -1 : 0;
+    });
     res.render('country/dataset.html', {
-      bydataset: entriesForThisDataset,
-      placesById: util.translateObject(model.data.placesById, req.locale),
+      datasetbyplace: datasetByPlace,
+      places: util.translateRows(sortedPlaces, req.locale),
+      byplace: model.data.entries.byplace,
       scoredQuestions: util.translateRows(model.data.scoredQuestions, req.locale),
       dataset: util.markup(util.translate(dataset, req.locale))
     });
