@@ -234,6 +234,46 @@ exports.place = function(req, res) {
 //Show details per dataset
 exports.dataset = function(req, res) {
   var dataset = model.data.datasetsById[req.params.dataset];
+
+  function cleanResultSet(results) {
+        var lookup = _.pluck(results, 'place'),
+            redundants = findRedundants(lookup),
+            clean_results = [];
+
+    function sorter(a, b) {
+        if (a.ycount > b.ycount)
+           return -1;
+        if (a.ycount < b.ycount)
+          return 1;
+        return 0;
+    }
+
+    function findRedundants(lookup) {
+        var _redundants = [];
+        _.each(lookup, function(key) {
+          var r;
+          r = _.filter(lookup, function(x){if (x === key){return x}});
+          if (r.length > 1) {
+            _redundants.push(key);
+          }
+        });
+        return _redundants;
+    }
+
+    function removeRedundants(results) {
+        _.each(results, function(entry) {
+          if (_.contains(redundants, entry.place) &&
+              entry.year !== config.get('submit_year')) {
+              // dont want it!
+          } else {
+            clean_results.push(entry);
+          }
+        });
+        return clean_results;
+    }
+    return removeRedundants(results).sort(sorter);
+  }
+
   if (!dataset) {
     res.send(404, 'Dataset not found. Are you sure you have spelled it correctly?');
     return;
@@ -248,7 +288,7 @@ exports.dataset = function(req, res) {
       entry.ycount = util.scoreOpenness(model.data, entry);
     });
     res.render('country/dataset.html', {
-      bydataset: entriesForThisDataset,
+      bydataset: cleanResultSet(entriesForThisDataset),
       placesById: util.translateObject(model.data.placesById, req.locale),
       scoredQuestions: util.translateRows(model.data.scoredQuestions, req.locale),
       dataset: util.markup(util.translate(dataset, req.locale))
