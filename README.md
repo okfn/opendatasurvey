@@ -126,7 +126,7 @@ You will need the GNU gettext commands. See [here](https://github.com/mozilla/i1
 
 To update the existing .po files, run:
 
-    ./node_modules/.bin/merge-po locale
+    gulp update-po
 
 To add a new language, copy the `locale/en` directory to `locale/[language-code]`.
 
