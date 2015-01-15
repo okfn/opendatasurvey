@@ -54,7 +54,7 @@
                 </div>
                 {% endfor %}
                 <div class="submission-current">
-                   {{ currrecord[qu.id] or 'No entry' }}
+                   {{ currrecord[qu.id] or gettext('No entry') }}
                 </div>
                 <div class="submission-info">
                     <span class="help-block readmore">{{qu.description|marked}}</span>
