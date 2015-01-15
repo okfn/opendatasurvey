@@ -132,7 +132,8 @@ describe('Misc', function(){
     out = util.parseSpreadsheetUrl(base.simpleConfigUrl);
     exp = {
       key: '0AqR8dXc6Ji4JdEg2elXXXX',
-      sheet: 2
+      sheet: 2,
+      new_format: false
     };
     assert.deepEqual(out, exp);
   });
