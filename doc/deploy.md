@@ -39,6 +39,10 @@ It's useful to check the "Automatically republish when changes are made" box. Ho
 
 ### Step-by-Step
 
+* Ensure that you have access to all accounts required to complete the deployment of a census instance to the Census Farm. You will need:
+    * The ability to deploy an instance to Heroku, and subsequently collaborate (share access) with sysadmin@okfn.org
+    * The ability to access the 'opendatacensus-shared' Google Cloud account, in order to configure the auth flow for the instance
+    * If you are maintaining multiple instances, you will need to have already been added as a collaborator on each of them. Write to census@okfn.org if you are unsure (you can also try to read the logs via `heroku logs --app {app_name}`, which will not work if you do not have correct permissions)
 * Open the [census instance spreadsheet][instance]. You should add relevant
   info to this as you do next steps.
 * Boot a config spreadsheet (copy the template config - [city template][city-config] or [generic template][config])
