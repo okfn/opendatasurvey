@@ -36,3 +36,7 @@
  * [United Kingdom City Census](http://gb-city.census.okfn.org/)
  * [United States City Census](http://us-city.census.okfn.org/)
  * [Uruguay City Census](http://uy-city.census.okfn.org/)
+ * [Hungary City Census](http://hu-city.census.okfn.org/)
+ * [Czech Republic City Census](http://cz-city.census.okfn.org/)
+ * [Australian Regional Census](http://australia.census.okfn.org/)
+ * [Carribean Regional Census](http://carribean.census.okfn.org/)
