@@ -37,10 +37,7 @@ Config boot sequence:
 
 ### Auth
 
-For user Auth we use Google and their OAuth 2.0.
-
-you will need to create an App on Facebook developers section
-and set various config. See config section below for detail.
+For user Auth we use Google and their OAuth 2.0, which requires that the app be registered with Google. See [the deployment documentation](http://census.okfn.org/doc/deploy.html) for instructions.
 
 ------
 
