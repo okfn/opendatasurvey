@@ -166,7 +166,7 @@ exports.reviewPost = function(req, res) {
     }
   });
 
-  var acceptSubmission = req.body['submit'] === 'Publish';
+  var acceptSubmission = req.body['submitAccept'];
   model.backend.processSubmission(req.user, acceptSubmission, req.params.submissionid, req.body, function(err) {
     if (err) {
       if (err.code) {
