@@ -7,7 +7,6 @@
  * [Brazil City Census](http://br-city.census.okfn.org/)
  * [Burkino Faso City Census](http://bf-city.census.okfn.org/)
  * [Canada City Census](http://ca-city.census.okfn.org/)
- * [Caribbean Region Census](http://car-region.census.okfn.org/)
  * [China City Census](http://cn-city.census.okfn.org/)
  * [Croatia City Census](http://hr-city.census.okfn.org/)
  * [Egypt City Census](http://eg-city.census.okfn.org/)
