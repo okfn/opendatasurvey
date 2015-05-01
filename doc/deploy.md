@@ -62,20 +62,19 @@ It's useful to check the "Automatically republish when changes are made" box. Ho
   * Step 2:
     * Go to "APIs & auth" => "Credentials" and click "Create New Client ID" and
       then select "Web Application" and configure.
-    * Authorized origins should be: the `site_url` plus the heroku url `opendatacensus-{slug}.herokuapp.com`
-    * Note redirect urls should be the site urls plus /auth/google/callback
+    * Authorized origins should be: the `site_url`.
+    * Note redirect urls should be the `site url` plus /auth/google/callback.
 * Run the `create` script (this will output further instructions)
-    
+
         bin/census create {SLUG}
 
 Optional:
 
 * Set up the DNS so that app is at http://{slug}.census.okfn.org/
+   * The `bin/census create` command will already have setup the domain on
+     Heroku.
    * Contact sysadmin team at Open Knowledge Foundation and request CNAME alias
      of {slug}.census.okfn.org to opendatacensus-{slug}.herokuapp.com
-   * For heroku run the command
-
-     `heroku domains:add {slug}.census.okfn.org`
 
 ## Managing Existing Instances
 
