@@ -1,0 +1,11 @@
+var path = require('path');
+var config = require('./lib/config');
+var configObj = {
+  'config' : __filename,
+  'migrations-path': path.resolve('./', 'migrations'),
+  'models-path': path.resolve('./', 'models')
+};
+
+configObj[config.get('env')] = config.get('database');
+
+module.exports = configObj;
