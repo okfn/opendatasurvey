@@ -1,103 +1,74 @@
-"use strict";
+'use strict';
 
-var path = require('path')
-  , express = require('express')
-  , flash = require('connect-flash')
-  , compression = require('compression')
-  , scrypt = require('scrypt')
-  , passport = require('passport')
+var path = require('path');
+var express = require('express');
+var session = require('express-session');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
+var logger = require('morgan');
+var cors = require('cors');
+var favicon = require('serve-favicon');
+var flash = require('connect-flash');
+var compression = require('compression');
+var passport = require('passport');
+var expressValidator = require('express-validator');
 
-  , config = require('./lib/config')
-  , i18n = require('./lib/i18n')
-  , env = require('./lib/templateenv')
-  , expressValidator = require('express-validator')
-  ;
-
+var config = require('./lib/config');
+var i18n = require('./lib/i18n');
+var env = require('./lib/templateenv');
 var app = express();
-
-// CORS middleware
-var CORSSupport = function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-};
-
-// Cache-Control header middleware
-var CacheControl = function (maxAge) {
-  maxAge = parseInt(maxAge, 10);
-
-  return function(req, res, next) {
-    if (typeof res.get('Cache-Control') === 'undefined') {
-      res.set('Cache-Control', 'public, max-age=' + maxAge);
+var cacheAge = 3600 * 1000; // in milliseconds
+var staticRoot = path.join(__dirname, 'public');
+var sessionSecret = process.env.SESSION_SECRET || 'dummysecret';
+var viewPath = __dirname + '/templates';
+var faviconPath = __dirname + '/public/favicon.ico';
+var validatorOptions = {
+  customValidators: {
+    isChoice: function(value) {
+        var choices = ['Yes', 'No', 'Unsure'];
+        if (choices.indexOf(value) > -1) {
+          return true;
+        } else {
+          return false;
+        }
     }
-    next();
-  };
+  }
 };
 
-var BasicAuth = express.basicAuth(function(user, pass) {
-  var validUser = (user === config.get('appconfig:auth_user'));
-  var validPass = scrypt.verifyHashSync(
-    config.get('appconfig:auth_passhash'),
-    pass
-  );
-  return validUser && validPass;
-});
 
-app.configure(function() {
-  app.set('port', config.get('appconfig:port'));
-  app.set('views', __dirname + '/templates');
-  app.use(compression());
-  if (config.get('appconfig:auth_on')) {
-    app.use(BasicAuth);
+function urlFor(name) {
+  if (name === 'overview') {
+    return '/';
   }
-  if (!config.get('test:testing')) {
-    app.use(express.logger('dev'));
-  }
-  app.use(express.favicon());
-  app.use(express.bodyParser());
-  app.use(expressValidator({
-      customValidators: {
-          isChoice: function(value) {
-              var choices = ['Yes', 'No', 'Unsure'];
-              if (choices.indexOf(value) > -1) {
-                  return true;
-              } else {
-                  return false;
-              }
-          }
-      }
-  }));
+  return undefined;
+}
 
-  if (!config.get('appconfig:readonly')) {
-    app.use(express.methodOverride());
-    app.use(express.cookieParser());
-    app.use(express.session({
-      secret: process.env.SESSION_SECRET || 'dummysecret'
-    }));
-    app.use(passport.initialize());
-    app.use(passport.session());
-  }
-  i18n.init(app);
+app.set('port', config.get('appconfig:port'));
+app.set('views', viewPath);
 
-  app.use(CORSSupport);
-  app.use(flash());
+app.use(express.static(staticRoot, {maxage: cacheAge}));
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(methodOverride());
+app.use(session({secret: sessionSecret, resave: true, saveUninitialized: true}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+app.use(expressValidator(validatorOptions));
+app.use(cors());
+app.use(compression());
+app.use(favicon(faviconPath));
 
-  var staticRoot = path.join(__dirname, 'public');
-  var staticOpts = {};
-  if (config.get('appconfig:readonly')) {
-    staticOpts.maxAge = 3600 * 1000;
-  }
-  app.use(express['static'](staticRoot, staticOpts));
+if (!config.get('test:testing')) {
+  app.use(logger('dev'));
+}
 
-  if (config.get('appconfig:readonly')) {
-    app.use(CacheControl(1800));
-  }
-
-  app.locals.urlFor = urlFor;
-});
-
+app.locals.urlFor = urlFor;
+i18n.init(app);
 env.express(app);
+
 
 app.all('*', function(req, res, next) {
   if (config.get('test:testing') === true && !req.user && config.get('test:user')) {
@@ -152,56 +123,39 @@ var routes = require('./routes/core');
 
 // Census specific routes must come first ...
 
-// If we are NOT running in readonly mode, then load the "census" routes
-if (!config.get('appconfig:readonly')) {
-  console.log("WARNING: Loading in census mode. Data will be editable.");
-  var census = require('./routes/census');
+var census = require('./routes/census');
 
-  app.get('/contribute', routes.contribute);
-  app.get('/setlocale/:locale', routes.setlocale);
-  app.get('/submit', census.submit);
-  app.post('/submit', census.submit);
-  app.get('/submission/:submissionid', census.submission);
-  app.post('/submission/:submissionid', census.reviewPost);
-  app.get('/login', census.login);
-  app.post('/login', census.anonLogin);
-  app.get('/auth/logout', census.logout);
-  app.get('/auth/loggedin', census.loggedin);
+app.get('/contribute', routes.contribute);
+app.get('/setlocale/:locale', routes.setlocale);
+app.get('/submit', census.submit);
+app.post('/submit', census.submit);
+app.get('/submission/:submissionid', census.submission);
+app.post('/submission/:submissionid', census.reviewPost);
+app.get('/login', census.login);
+app.post('/login', census.anonLogin);
+app.get('/auth/logout', census.logout);
+app.get('/auth/loggedin', census.loggedin);
 
-  // admin
-  app.get('/admin/reload', census.reload);
+// admin
+app.get('/admin/reload', census.reload);
 
-  app.get('/auth/google',
-    passport.authenticate('google', { scope: [
-        'https://www.googleapis.com/auth/userinfo.profile',
-        'https://www.googleapis.com/auth/userinfo.email'
-      ]}
-    )
-  );
-  app.get('/auth/google/callback',
-    passport.authenticate('google', {
-        successRedirect: '/auth/loggedin',
-        failureRedirect: '/login',
-        failureFlash: true,
-        successFlash: true
-      }
-    )
-  );
+app.get('/auth/google',
+        passport.authenticate('google', { scope: [
+            'https://www.googleapis.com/auth/userinfo.profile',
+            'https://www.googleapis.com/auth/userinfo.email'
+        ]}
+                             )
+       );
+app.get('/auth/google/callback',
+        passport.authenticate('google', {
+            successRedirect: '/auth/loggedin',
+            failureRedirect: '/login',
+            failureFlash: true,
+            successFlash: true
+        }
+                             )
+       );
 
-  // not using atm
-//  app.get('/auth/facebook',
-//      passport.authenticate('facebook', {scope: ['email']})
-//  );
-//  app.get('/auth/facebook/callback',
-//    passport.authenticate('facebook', {
-//        successRedirect: '/auth/loggedin',
-//        failureRedirect: '/login',
-//        failureFlash: true,
-//        successFlash: true
-//      }
-//    )
-//  );
-}
 
 app.get('/', routes.overview);
 app.get('/about', routes.about);
@@ -216,13 +170,5 @@ app.get('/entry/:place/:dataset', routes.entryByPlaceDataset);
 var redirects = require('./routes/redirects');
 redirects.addRoutes(app);
 
-function urlFor(name) {
-  if (name === 'overview') {
-    return '/';
-  }
-}
-
-// ========================================================
 
 exports.app = app;
-
