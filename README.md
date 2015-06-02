@@ -44,7 +44,9 @@ Get a local server setup with the following steps:
     "database": "opendatacensus",
     "host": "localhost",
     "port": 5432,
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "underscored": true,
+    "freezeTableName": true
   }
 }
 ```
