@@ -24,7 +24,9 @@ See: <http://meta.census.okfn.org/doc/>
 
 Open Data Census is a Node.js app, running Express v4 and Postgres 9.4 for the database.
 
-Get a local server running with the following steps:
+Get a local server setup with the following steps:
+
+**NOTE**: While we are in development, after cloning, make sure you switch to the `feature/database` branch!
 
 1. Install Postgres 9.4 on your machine
 2. Create a local directory called `opendatacensus` and move into it with `cd opendatacensus`
@@ -47,8 +49,10 @@ Get a local server running with the following steps:
 }
 ```
 
-6. Run the app with `node run.js`
-7. Visit the app in your browser at `http://127.0.0.1:5000/`
+Now we should be ready to run the server:
+
+1. Run the app with `node run.js`
+2. Visit the app in your browser at `http://127.0.0.1:5000/`
 
 
 ### i18n For Templates
