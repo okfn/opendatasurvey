@@ -11,7 +11,7 @@ var db = {};
 fs
   .readdirSync(__dirname)
   .filter(function(file) {
-    return (file.indexOf('.') !== 0) && (file !== basename);
+    return (file.indexOf('.') !== 0) && (file.slice(-1) !=='~') && (file !== basename);
   })
     .forEach(function(file) {
         console.log(file);
