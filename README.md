@@ -29,10 +29,11 @@ Get a local server setup with the following steps:
 **NOTE**: While we are in development, after cloning, make sure you switch to the `feature/database` branch!
 
 1. Install Postgres 9.4 on your machine
-2. Create a local directory called `opendatacensus` and move into it with `cd opendatacensus`
-3. Clone the code with `git clone https://github.com/okfn/opendatacensus .`
-4. Install the dependencies with `npm install`
-5. Create a `settings.json` file with these contents, changing any database connection values as required:
+2. Add this line to your hosts file: `127.0.0.1 demo.dev.census.org gb-city.dev.census.org`
+3. Create a local directory called `opendatacensus` and move into it with `cd opendatacensus`
+4. Clone the code with `git clone https://github.com/okfn/opendatacensus .`
+5. Install the dependencies with `npm install`
+6. Create a `settings.json` file with these contents, changing any database connection values as required:
 
 ```
 {
@@ -54,8 +55,9 @@ Get a local server setup with the following steps:
 Now we should be ready to run the server:
 
 1. Run the app with `node run.js`
-2. Visit the app in your browser at `http://127.0.0.1:5000/`
+2. Visit the app in your browser at `http://demo.dev.census.org:5000/`
 
+**NOTE**: Each app instance manages multiple census sites via subdomains. Hence, we require mapping in your hosts file for this. The mappings created above, `demo` and `gb-city` are just for example. Create whatever mapping you will need, and ensure that these are matched by entries in the Registry and Site models (TBD).
 
 ### i18n For Templates
 
