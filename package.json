@@ -29,6 +29,7 @@
     "passport": "^0.2.2",
     "passport-google-oauth": "^0.2.0",
     "pg": "^4.3.0",
+    "pg-hstore": "^2.3.2",
     "q": "^1.4.1",
     "request": "^2.56.0",
     "scrypt": "^4.0.7",

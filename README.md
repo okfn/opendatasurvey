@@ -29,11 +29,12 @@ Get a local server setup with the following steps:
 **NOTE**: While we are in development, after cloning, make sure you switch to the `feature/database` branch!
 
 1. Install Postgres 9.4 on your machine
-2. Add this line to your hosts file: `127.0.0.1 demo.dev.census.org gb-city.dev.census.org`
-3. Create a local directory called `opendatacensus` and move into it with `cd opendatacensus`
-4. Clone the code with `git clone https://github.com/okfn/opendatacensus .`
-5. Install the dependencies with `npm install`
-6. Create a `settings.json` file with these contents, changing any database connection values as required:
+2. Create a database with `createdb opendatacensus`
+3. Add this line to your hosts file: `127.0.0.1 demo.dev.census.org gb-city.dev.census.org`
+4. Create a local directory called `opendatacensus` and move into it with `cd opendatacensus`
+5. Clone the code with `git clone https://github.com/okfn/opendatacensus .`
+6. Install the dependencies with `npm install`
+7. Create a `settings.json` file with these contents, changing any database connection values as required:
 
 ```
 {
