@@ -17,7 +17,6 @@
     "csv": "^0.3.7",
     "express": "^4.12.4",
     "express-session": "^1.11.2",
-    "express-subdomain": "^1.0.3",
     "express-validator": "^2.10.0",
     "google-spreadsheet": "0.2.7",
     "i18n-abide": "0.0.23",
@@ -37,6 +36,7 @@
     "sequelize-cli": "^1.7.0",
     "sequelize-heroku": "^1.0.0",
     "serve-favicon": "^2.2.1",
+    "subdomain": "^1.2.0",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
