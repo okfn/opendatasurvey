@@ -2,6 +2,7 @@
 
 var path = require('path');
 var express = require('express');
+var subdomain = require('subdomain');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -13,16 +14,20 @@ var flash = require('connect-flash');
 var compression = require('compression');
 var passport = require('passport');
 var expressValidator = require('express-validator');
-
 var config = require('./lib/config');
 var i18n = require('./lib/i18n');
 var env = require('./lib/templateenv');
+var routes = require('./routes');
+var routeUtils = require('./routes/utils');
 var app = express();
 var cacheAge = 3600 * 1000; // in milliseconds
 var staticRoot = path.join(__dirname, 'public');
 var sessionSecret = process.env.SESSION_SECRET || 'dummysecret';
 var viewPath = __dirname + '/templates';
 var faviconPath = __dirname + '/public/favicon.ico';
+var subdomainOptions = {
+  base: config.get('base_domain')
+};
 var validatorOptions = {
   customValidators: {
     isChoice: function(value) {
@@ -34,6 +39,22 @@ var validatorOptions = {
         }
     }
   }
+},
+authScope = {
+  google: {
+    scope: [
+      'https://www.googleapis.com/auth/userinfo.profile',
+      'https://www.googleapis.com/auth/userinfo.email'
+    ]
+  }
+},
+authConfig = {
+  google: {
+    successRedirect: '/auth/loggedin',
+    failureRedirect: '/login',
+    failureFlash: true,
+    successFlash: true
+  }
 };
 
 
@@ -42,6 +63,10 @@ function urlFor(name) {
     return '/';
   }
   return undefined;
+}
+
+function scopedPath(relativePath) {
+  return '/subdomain/:domain{PATH}'.replace('{PATH}', relativePath);
 }
 
 app.set('port', config.get('appconfig:port'));
@@ -60,6 +85,7 @@ app.use(expressValidator(validatorOptions));
 app.use(cors());
 app.use(compression());
 app.use(favicon(faviconPath));
+app.use(subdomain(subdomainOptions));
 
 if (!config.get('test:testing')) {
   app.use(logger('dev'));
@@ -114,61 +140,55 @@ app.all('*', function(req, res, next) {
   next();
 });
 
+// ADMIN ACTIONS
+app.get(scopedPath('/admin/reload'), routes.reload);
 
-// ========================================================
-// Start routes
-// ========================================================
+// AUTH ENDPOINTS
+app.get(scopedPath('/auth/google'), passport.authenticate('google', authScope.google));
+app.get(scopedPath('/auth/google/callback'), passport.authenticate('google', authConfig.google));
+console.log(scopedPath('/'));
+app.get(scopedPath('/contribute'), routes.contribute);
+app.get(scopedPath('/setlocale/:locale'), routes.setLocale);
+app.get(scopedPath('/submit'), routes.submit);
+app.post(scopedPath('/submit'), routes.submit);
+app.get(scopedPath('/submission/:submissionid'), routes.submission);
+app.post(scopedPath('/submission/:submissionid'), routes.reviewPost);
+app.get(scopedPath('/login'), routes.login);
+app.post(scopedPath('/login'), routes.anonLogin);
+app.get(scopedPath('/auth/logout'), routes.logout);
+app.get(scopedPath('/auth/loggedin'), routes.loggedin);
+app.get(scopedPath('/'), routes.overview);
+app.get(scopedPath('/about'), routes.about);
+app.get(scopedPath('/api/entries.:format'), routes.api);
+app.get(scopedPath('/faq'), routes.faq);
+app.get(scopedPath('/changes'), routes.changes);
+app.get(scopedPath('/overview.json'), routes.resultJson);
+app.get(scopedPath('/place/:place'), routes.place);
+app.get(scopedPath('/dataset/:dataset'), routes.dataset);
+app.get(scopedPath('/entry/:place/:dataset'), routes.entryByPlaceDataset);
 
-var routes = require('./routes/core');
-
-// Census specific routes must come first ...
-
-var census = require('./routes/census');
-
-app.get('/contribute', routes.contribute);
-app.get('/setlocale/:locale', routes.setlocale);
-app.get('/submit', census.submit);
-app.post('/submit', census.submit);
-app.get('/submission/:submissionid', census.submission);
-app.post('/submission/:submissionid', census.reviewPost);
-app.get('/login', census.login);
-app.post('/login', census.anonLogin);
-app.get('/auth/logout', census.logout);
-app.get('/auth/loggedin', census.loggedin);
-
-// admin
-app.get('/admin/reload', census.reload);
-
-app.get('/auth/google',
-        passport.authenticate('google', { scope: [
-            'https://www.googleapis.com/auth/userinfo.profile',
-            'https://www.googleapis.com/auth/userinfo.email'
-        ]}
-                             )
-       );
-app.get('/auth/google/callback',
-        passport.authenticate('google', {
-            successRedirect: '/auth/loggedin',
-            failureRedirect: '/login',
-            failureFlash: true,
-            successFlash: true
-        }
-                             )
-       );
-
-
-app.get('/', routes.overview);
-app.get('/about', routes.about);
-app.get('/api/entries.:format', routes.api);
-app.get('/faq', routes.faq);
-app.get('/changes', routes.changes);
-app.get('/overview.json', routes.resultJson);
-app.get('/place/:place', routes.place);
-app.get('/dataset/:dataset', routes.dataset);
-app.get('/entry/:place/:dataset', routes.entryByPlaceDataset);
-
-var redirects = require('./routes/redirects');
-redirects.addRoutes(app);
+// REDIRECTS FROM PREVIOUS VERSIONS
+app.get(scopedPath('/country'), routeUtils.makeRedirect(scopedPath('/')));
+app.get(scopedPath('/country/results.json'), routeUtils.makeRedirect(scopedPath('/overview.json')));
+app.get(scopedPath('/country/overview/:place'), function(req, res) {
+  res.redirect(scopedPath('/place/' + req.params.place));
+});
+app.get(scopedPath('/country/dataset/:dataset'), function(req, res) {
+  res.redirect(scopedPath('/dataset/' + req.params.dataset));
+});
+app.get(scopedPath('/country/review/:submissionid'), function(req, res) {
+  res.redirect(scopedPath('/submission/' + req.params.submissionid));
+});
+app.get(scopedPath('/country/login'), function(req, res) {
+  res.redirect(scopedPath('/login?next=' + req.query.next));
+});
+app.get(scopedPath('/country/submit'), routeUtils.makeRedirect('/submit'));
+app.get(scopedPath('/country/submission/:id'), function(req, res) {
+  res.redirect(scopedPath('/submission/' + req.params.id));
+});
+app.get(scopedPath('/country/:place/:dataset'), function(req, res) {
+  res.redirect(scopedPath('/entry/' + req.params.place + '/' + req.params.dataset));
+});
 
 
 exports.app = app;

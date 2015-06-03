@@ -1,7 +1,7 @@
 'use strict';
 
 var model = require('./lib/model').OpenDataCensus;
-var census = require('./routes/census');
+var routeUtils = require('./routes/utils');
 var config = require('./lib/config');
 var models = require('./models');
 var app = require('./app').app;
@@ -17,7 +17,7 @@ model.load(function(err) {
     throw err;
   }
 
-  census.setupAuth();
+  routeUtils.setupAuth();
 
   models.sequelize.sync().then(function () {
       app.listen(app.get('port'), function() {
