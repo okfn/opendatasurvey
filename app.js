@@ -146,7 +146,6 @@ app.get(scopedPath('/admin/reload'), routes.reload);
 // AUTH ENDPOINTS
 app.get(scopedPath('/auth/google'), passport.authenticate('google', authScope.google));
 app.get(scopedPath('/auth/google/callback'), passport.authenticate('google', authConfig.google));
-console.log(scopedPath('/'));
 app.get(scopedPath('/contribute'), routes.contribute);
 app.get(scopedPath('/setlocale/:locale'), routes.setLocale);
 app.get(scopedPath('/submit'), routes.submit);
