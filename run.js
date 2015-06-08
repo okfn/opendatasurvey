@@ -10,7 +10,6 @@ var app = require('./app').app;
 if (config.get('debug')) {
   console.log(config.get());
 }
-
 model.load(function(err) {
   if (err) {
     console.error('Failed to load dataset info');
