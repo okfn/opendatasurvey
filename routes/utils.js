@@ -1,10 +1,10 @@
 'use strict';
 
-var passport = require('passport');
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-var config = require('../lib/config.js');
-var util = require('../lib/util');
-var model = require('../lib/model').OpenDataCensus;
+var passport            = require('passport');
+var GoogleStrategy      = require('passport-google-oauth').OAuth2Strategy;
+var config              = require('../lib/config.js');
+var util                = require('../lib/util');
+var model               = require('../lib/model').OpenDataCensus;
 
 
 var makeRedirect = function (dest) {
@@ -75,19 +75,6 @@ var isAdmin = function (user) {
 };
 
 var requireLoggedIn = function (req, res) {
-
-    var mainLoader = require('../loaders/index');
-    mainLoader.saveRegistryToDb()
-            .then(function (err, result) {
-                if (err) {
-                    console.log('ERROR!!!');
-                    console.log(err);
-                } else {
-                    //console.log(result);
-                    console.log('RESULT!!!');
-                    console.log(result);
-                }
-            });
 
     if (!req.user) {
         res.redirect('/login/?next=' + encodeURIComponent(req.url));

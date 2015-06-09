@@ -1,5 +1,5 @@
-var model = require('../../lib/model').OpenDataCensus;
-var models = require('../../models');
+var model           = require('../../lib/model').OpenDataCensus;
+var models          = require('../../models');
 
 var dbTransactions = {
     savePlaces: function (places) {
@@ -7,28 +7,35 @@ var dbTransactions = {
             entity: models.Place,
             data: places
         };
-        return saveEntityToDb(params);
+        return saveBulkEntitiesToDb(params);
     },
     saveDatasets: function (datasets) {
         var params = {
             entity: models.Dataset,
             data: datasets
         };
-        return saveEntityToDb(params);
+        return saveBulkEntitiesToDb(params);
     },
     saveQuestions: function (questions) {
         var params = {
             entity: models.Question,
             data: questions
         };
-        return saveEntityToDb(params);
+        return saveBulkEntitiesToDb(params);
     },
     saveRegistry: function (registryObjects) {
         var params = {
             entity: models.Registry,
             data: registryObjects
         };
-        return saveEntityToDb(params);
+        return saveBulkEntitiesToDb(params);
+    },
+    saveConfig: function (configObject) {
+        var params = {
+            entity: models.Site,
+            data: configObject
+        };
+        return saveSingleEntityToDb(params);
     },
     getAllPlaces: function () {
         return models.sequelize.sync().then(function () {
@@ -59,16 +66,35 @@ var dbTransactions = {
                 return [false, registry];
             });
         });
+    },
+    getAllConfigs: function () {
+        return models.sequelize.sync().then(function () {
+            return models.Site.findAll().then(function (config) {
+                return [false, config];
+            });
+        });
     }
 
 };
 
-function saveEntityToDb(params) {
+function saveBulkEntitiesToDb(params) {
     var Entity = params['entity'];
     var data = params['data'];
     if (data) {
         return models.sequelize.sync().then(function () {
             return Entity.bulkCreate(data);
+        });
+    } else {
+        return ['no data received', false];
+    }
+}
+
+function saveSingleEntityToDb(params) {
+    var Entity = params['entity'];
+    var data = params['data'];
+    if (data) {
+        return models.sequelize.sync().then(function () {
+            return Entity.create(data);
         });
     } else {
         return ['no data received', false];

@@ -1,10 +1,11 @@
-var Promise = require('bluebird');
-var util = require('../../lib/util');
+var Promise         = require('bluebird');
+var util            = require('../../lib/util');
 
 var spreadSheetHandler = {
     parse: function (fileUrl) {
         return new Promise(function (resolve, reject) {
-            var formattedUrl = util.getCsvUrlForGoogleSheet(fileUrl);
+            var formattedUrl = util.parseSpreadsheetUrl(fileUrl);
+            formattedUrl = util.getCsvUrlForGoogleSheet(fileUrl);
             util.getCsvData(formattedUrl, function (err, result) {
                 if (err) {
                     resolve([err, false]);

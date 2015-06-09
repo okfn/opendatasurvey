@@ -32,8 +32,6 @@ var main = {
         } else {
             return false;
         }
-
-        return dataset;
     },
     mapQuestionObject: function (object) {
         var question = {};
@@ -54,8 +52,6 @@ var main = {
         } else {
             return false;
         }
-
-        return question;
     },
     mapRegistryObject: function (object) {
         var registry = {};
@@ -79,9 +75,41 @@ var main = {
             return false;
         }
 
-        return registry;
+    },
+    mapConfig: function (object) {
+        var settings = {};
+        var configId = false;
+        var output = {};
+
+        for (var key in object) {
+            if (key === 'id') {
+                configId = object[key];
+            } else {
+                settings[key] = object[key];
+            }
+        }
+
+        if (configId) {
+            output['id'] = configId;
+            output['settings'] = settings;
+            return output;
+        } else {
+            return false;
+        }
     }
 };
+
+function clearEmptyObjects(object) {
+    var output = {};
+
+    for (var key in object) {
+        if (key.length && object[key]) {
+            output[key] = object[key];
+        }
+    }
+
+    return output;
+}
 
 function splitDependants(dependants) {
     var split = false;

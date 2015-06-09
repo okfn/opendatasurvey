@@ -1,11 +1,12 @@
 'use strict';
-var config = require('../lib/config');
-var entitiesConstructor = require('./includes/entitiesConstructor');
-var spreadSheetHandler = require('./includes/spreadSheetHandler');
-var dbTransactions = require('./includes/dbTransactions');
-var Promise = require('bluebird');
+var config                  = require('../lib/config');
+var entitiesConstructor     = require('./includes/entitiesConstructor');
+var spreadSheetHandler      = require('./includes/spreadSheetHandler');
+var dbTransactions          = require('./includes/dbTransactions');
+var Promise                 = require('bluebird');
 
 var REGISTRY_FULL_DATA = false;
+var MAIN_CONFIG_FULL_DATA = false;
 
 var indexLoader = {
     loadRegistryData: function () {
@@ -126,6 +127,35 @@ var indexLoader = {
                 });
             }
         });
+    },
+    saveConfigToDb: function () {
+        return this.loadRegistryData().spread(function (err, loadResult) {
+            if (err) {
+                return [err, false];
+            } else {
+                var registryData = getRegistryFullData();
+                return Promise.each(registryData, function (signleRegistryObject) {
+                    var configUrl = getConfigUrlFromRegistry(signleRegistryObject);
+                    return spreadSheetHandler.parse(configUrl).spread(function (err, parsedConfig) {
+                        if (err) {
+                            return [err, false];
+                        } else {
+                            var mappedConfig = false;
+                            var deparsedConfig = false;
+                            var site = getSiteValue(signleRegistryObject);
+                            
+                            deparsedConfig = entitiesConstructor.deparseConfig(parsedConfig);
+                            deparsedConfig = entitiesConstructor.setConfigId(deparsedConfig, site);
+                            mappedConfig = entitiesConstructor.mapConfig(deparsedConfig);
+
+                            return dbTransactions.saveConfig(mappedConfig);
+                        }
+                    });
+                }).then(function () {
+                    return dbTransactions.getAllConfigs();
+                });
+            }
+        });
     }
 };
 
@@ -133,9 +163,18 @@ function setRegistryFullData(data) {
     REGISTRY_FULL_DATA = data;
 }
 
+function setMainConfigFullData(data) {
+    MAIN_CONFIG_FULL_DATA = data;
+}
+
 function getRegistryFullData() {
     return REGISTRY_FULL_DATA;
 }
+
+function getMainConfigFullData() {
+    return MAIN_CONFIG_FULL_DATA;
+}
+
 
 function getConfigUrlFromRegistry(registry) {
     var configUrl = false;

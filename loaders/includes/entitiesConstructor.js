@@ -1,4 +1,5 @@
-var mainDataMapper = require('../dataMapper/main');
+var mainDataMapper  = require('../dataMapper/main');
+var _               = require('underscore');
 
 var entitiesConstructor = {
     mapPlaces: function (places) {
@@ -52,7 +53,7 @@ var entitiesConstructor = {
             return false;
         }
     },
-    mapRegistry: function mapRegistry(registryObjects) {
+    mapRegistry: function (registryObjects) {
         var mappedObject = [];
         if (registryObjects && registryObjects.length) {
             var length = registryObjects.length;
@@ -68,12 +69,39 @@ var entitiesConstructor = {
             return false;
         }
     },
+    deparseConfig: function (configArray) {
+        var deparsedConfigObject = {};
+        for (var i = 0; i < configArray.length; i++) {
+            var key = configArray[i]['key'];
+            var value = configArray[i]['value'];
+
+            if (key) {
+                deparsedConfigObject[key] = value;
+            }
+        }
+
+        return deparsedConfigObject;
+    },
+    mapConfig: function (configObject) {
+        var mappedObject = false;
+
+        if (_.isObject(configObject) && _.keys(configObject).length) {
+            mappedObject = mainDataMapper.mapConfig(configObject);
+            return mappedObject;
+        } else {
+            return false;
+        }
+    },
     setSiteValue: function (entitiesArray, site) {
         for (var i = 0; i < entitiesArray.length; i++) {
             entitiesArray[i]['site'] = site;
         }
 
         return entitiesArray;
+    },
+    setConfigId: function (configObject, id) {
+        configObject['id'] = id;
+        return configObject;
     }
 };
 
