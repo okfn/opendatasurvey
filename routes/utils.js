@@ -77,7 +77,7 @@ var isAdmin = function (user) {
 var requireLoggedIn = function (req, res) {
 
     var mainLoader = require('../loaders/index');
-    mainLoader.savePlacesToDb()
+    mainLoader.saveQuestionsToDb()
             .then(function (err, result) {
                 if (err) {
                     console.log('ERROR!!!');
@@ -85,6 +85,7 @@ var requireLoggedIn = function (req, res) {
                 } else {
                     //console.log(result);
                     console.log('RESULT!!!');
+                    console.log(result);
                 }
             });
 

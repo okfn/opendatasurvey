@@ -39,10 +39,10 @@ var indexLoader = {
                         if (err) {
                             return [err, false];
                         } else {
-                            var site = signleRegistryObject['censusid'];
+                            var site = getSiteValue(signleRegistryObject);
                             var mappedPlaces = false;
 
-                            parsedPlaces = setPlacesSite(parsedPlaces, site);
+                            parsedPlaces = setSiteValue(parsedPlaces, site);
                             mappedPlaces = mapPlaces(parsedPlaces);
                             if (mappedPlaces) {
                                 return models.sequelize.sync().then(function () {
@@ -72,20 +72,39 @@ var indexLoader = {
                 var registryData = getRegistryFullData();
                 return Promise.each(registryData, function (signleRegistryObject) {
                     var configUrl = signleRegistryObject['configurl'];
-                    parseSpreadSheet(configUrl).spread(function (err, parsedConfig) {
+                    var configSheetInfo = util.parseSpreadsheetUrl(configUrl);
+                    var datasetsUrlKey = configSheetInfo['key'];
+                    var datasetsSpreadSheetUrl = getDatasetsSpreadSheetUrl(datasetsUrlKey);
+
+                    return parseSpreadSheet(datasetsSpreadSheetUrl).spread(function (err, parsedDatasets) {
                         if (err) {
                             return [err, false];
                         } else {
+                            var site = getSiteValue(signleRegistryObject);
+                            var mappedDatasets = false;
 
+                            parsedDatasets = setSiteValue(parsedDatasets, site);
+                            mappedDatasets = mapDatasetsObject(parsedDatasets);
+
+                            if (mappedDatasets) {
+                                return models.sequelize.sync().then(function () {
+                                    return models.Dataset.bulkCreate(mappedDatasets);
+                                });
+                            } else {
+                                return ['no data received', false];
+                            }
                         }
                     });
+                }).then(function () {
+                    return models.sequelize.sync().then(function () {
+                        models.Dataset.findAll().then(function (datasets) {
+                            return [false, datasets];
+                        });
 
+                    });
                 });
-
             }
         });
-//        console.log('dataSetsUrl');
-//        console.log(dataSetsUrl);
     },
     saveQuestionsToDb: function () {
         return this.loadRegistryData().spread(function (err, loadResult) {
@@ -95,26 +114,52 @@ var indexLoader = {
                 var registryData = getRegistryFullData();
                 return Promise.each(registryData, function (signleRegistryObject) {
                     var configUrl = signleRegistryObject['configurl'];
-                    parseSpreadSheet(configUrl).spread(function (err, parsedConfig) {
+                    var configSheetInfo = util.parseSpreadsheetUrl(configUrl);
+                    var questionsUrlKey = configSheetInfo['key'];
+                    var questionsSpreadSheetUrl = getQuestionsSpreadSheetUrl(questionsUrlKey);
+
+                    return parseSpreadSheet(questionsSpreadSheetUrl).spread(function (err, parsedQuestions) {
                         if (err) {
                             return [err, false];
                         } else {
+                            var site = getSiteValue(signleRegistryObject);
+                            var mappedQuestions = false;
 
+                            parsedQuestions = setSiteValue(parsedQuestions, site);
+                            mappedQuestions = mapQuestionsObject(parsedQuestions);
+
+                            if (mappedQuestions) {
+                                return models.sequelize.sync().then(function () {
+                                    return models.Question.bulkCreate(mappedQuestions);
+                                });
+                            } else {
+                                return ['no data received', false];
+                            }
                         }
                     });
+                }).then(function () {
+                    return models.sequelize.sync().then(function () {
+                        models.Question.findAll().then(function (datasets) {
+                            return [false, datasets];
+                        });
 
+                    });
                 });
-
             }
         });
-//        console.log('questionsUrl');
-//        console.log(questionsUrl);
     },
-    saveRegistryToDb: function (cb) {
+    saveRegistryToDb: function () {
         var registryUrl = getRegistryUrl();
     }
 };
 
+function setSiteValue(placesArray, site) {
+    for (var i = 0; i < placesArray.length; i++) {
+        placesArray[i]['site'] = site;
+    }
+
+    return placesArray;
+}
 
 function setRegistryFullData(data) {
     REGISTRY_FULL_DATA = data;
@@ -124,18 +169,25 @@ function getRegistryFullData() {
     return REGISTRY_FULL_DATA;
 }
 
+function getSiteValue(object) {
+    var site = false;
+    site = object['censusid'];
+    return site;
+}
+
 function getPlacesSheetIndex() {
     var index = 1;
     return  index;
 }
 
+function getDatasetsSheetIndex() {
+    var index = 2;
+    return  index;
+}
 
-function setPlacesSite(placesArray, site) {
-    for (var i = 0; i < placesArray.length; i++) {
-        placesArray[i]['site'] = site;
-    }
-
-    return placesArray;
+function getQuestionsSheetIndex() {
+    var index = 4;
+    return  index;
 }
 
 function getPlacesSpreadSheetUrl(urlKey) {
@@ -151,21 +203,84 @@ function getPlacesSpreadSheetUrl(urlKey) {
     return placesSpreadSheetUrl;
 }
 
+function getDatasetsSpreadSheetUrl(urlKey) {
+    var spreadSheetUrl = false;
+    var spreadSheetIndex = false;
+
+    spreadSheetIndex = getDatasetsSheetIndex();
+    spreadSheetUrl = util.getSpreadSheetPage({
+        index: spreadSheetIndex,
+        key: urlKey
+    });
+
+    return spreadSheetUrl;
+}
+
+function getQuestionsSpreadSheetUrl(urlKey) {
+    var spreadSheetUrl = false;
+    var spreadSheetIndex = false;
+
+    spreadSheetIndex = getQuestionsSheetIndex();
+    spreadSheetUrl = util.getSpreadSheetPage({
+        index: spreadSheetIndex,
+        key: urlKey
+    });
+
+    return spreadSheetUrl;
+}
+
 function mapPlaces(places) {
-    var mappedPlaces = [];
+    var mappedObject = [];
     if (places && places.length) {
-        var placesLength = places.length;
-        for (var i = 0; i < placesLength; i++) {
-            var currentPlace = places[i];
-            var mappedCurrentPlace = mainDataMapper.mapPlaceObject(currentPlace);
-            mappedPlaces.push(mappedCurrentPlace);
+        var length = places.length;
+        for (var i = 0; i < length; i++) {
+            var currentObject = places[i];
+            var mappedCurrentObject = mainDataMapper.mapPlaceObject(currentObject);
+            if (mappedCurrentObject) {
+                mappedObject.push(mappedCurrentObject);
+            }
         }
 
-        return mappedPlaces;
+        return mappedObject;
     } else {
         return false;
     }
+}
 
+function mapDatasetsObject(datasets) {
+    var mappedObject = [];
+    if (datasets && datasets.length) {
+        var length = datasets.length;
+        for (var i = 0; i < length; i++) {
+            var currentObject = datasets[i];
+            var mappedCurrentObject = mainDataMapper.mapDatasetsObject(currentObject);
+            if (mappedCurrentObject) {
+                mappedObject.push(mappedCurrentObject);
+            }
+        }
+
+        return mappedObject;
+    } else {
+        return false;
+    }
+}
+
+function mapQuestionsObject(questions) {
+    var mappedObject = [];
+    if (questions && questions.length) {
+        var length = questions.length;
+        for (var i = 0; i < length; i++) {
+            var currentObject = questions[i];
+            var mappedCurrentObject = mainDataMapper.mapQuestionObject(currentObject);
+            if (mappedCurrentObject) {
+                mappedObject.push(mappedCurrentObject);
+            }
+        }
+
+        return mappedObject;
+    } else {
+        return false;
+    }
 }
 
 function getRegistryUrl() {
@@ -174,29 +289,23 @@ function getRegistryUrl() {
     return registryUrl;
 }
 
-function getConfigUrlFromParsedCsv(singleDataObject) {
-    var configUrl = false;
-
-    return configUrl;
-}
-
-//function getPlacesConfigUrl() {
+//function getConfigUrlFromParsedCsv(singleDataObject) {
 //    var configUrl = false;
-//    configUrl = config.get('places') || false;
+//
 //    return configUrl;
 //}
-
-function getDatasetsConfigUrl() {
-    var configUrl = false;
-    configUrl = config.get('datasets') || false;
-    return configUrl;
-}
-
-function getQuestionsConfigUrl() {
-    var configUrl = false;
-    configUrl = config.get('questions') || false;
-    return configUrl;
-}
+//
+//function getDatasetsConfigUrl() {
+//    var configUrl = false;
+//    configUrl = config.get('datasets') || false;
+//    return configUrl;
+//}
+//
+//function getQuestionsConfigUrl() {
+//    var configUrl = false;
+//    configUrl = config.get('questions') || false;
+//    return configUrl;
+//}
 
 function parseSpreadSheet(fileUrl) {
     return new Promise(function (resolve, reject) {
