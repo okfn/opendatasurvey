@@ -6,60 +6,107 @@ var model = require('../lib/model').OpenDataCensus;
 var models = require('../models');
 var Promise = require('bluebird');
 
+var REGISTRY_FULL_DATA = false;
 
 var indexLoader = {
-    savePlacesToDb: function () {
-        var registryUrl = false;
+    loadRegistryData: function () {
         var registryUrl = getRegistryUrl();
-        //var placesUrl = false;
-        //placesUrl = getPlacesConfigUrl();
-        if (registryUrl) {
-            try {
-                console.log('registryUrl');
-                console.log(registryUrl);
-                //process.exit();
-                return parseSpreadSheet(registryUrl).spread(function(err, parsedRegistry){
-                    console.log(parsedRegistry);
-                });
-                
-                
-//                return parseSpreadSheet(placesUrl).spread(function (err, parsedPlaces) {
-//                    if (err) {
-//                        return [err, false];
-//                    } else {
-//                        var mappedPlaces = [];
-//                        mappedPlaces = mapPlaces(parsedPlaces);
-//                        if (mappedPlaces) {
-//                            models.sequelize.sync().then(function () {
-//                                models.Place.bulkCreate(mappedPlaces).then(function () {
-//                                    models.Place.findAll().then(function (places) {
-//                                        return [false, places];
-//                                    });
-//                                });
-//                            });
-//                        } else {
-//                            return ['no data received', false];
-//                        }
-//                    }
-//                });
-            } catch (e) {
-                console.log('Loader Error: ', e);
-                throw e;
-            }
-        } else {
+
+        try {
+            return parseSpreadSheet(registryUrl).spread(function (err, parsedRegistry) {
+                setRegistryFullData(parsedRegistry);
+                return [false, true];
+            });
+        } catch (e) {
             return new Promise(function (resolve, reject) {
-                resolve(['no URL received', false]);
+                resolve(['request failed', false]);
             });
         }
-
     },
-    saveDatasetsToDb: function (cb) {
-        var dataSetsUrl = getDatasetsConfigUrl();
+    savePlacesToDb: function () {
+        return this.loadRegistryData().spread(function (err, loadResult) {
+            if (err) {
+                return [err, false];
+            } else {
+                var registryData = getRegistryFullData();
+                return Promise.each(registryData, function (signleRegistryObject) {
+                    var configUrl = signleRegistryObject['configurl'];
+                    var configSheetInfo = util.parseSpreadsheetUrl(configUrl);
+                    var placesUrlKey = configSheetInfo['key'];
+                    var placesSpreadSheetUrl = getPlacesSpreadSheetUrl(placesUrlKey);
+
+                    return parseSpreadSheet(placesSpreadSheetUrl).spread(function (err, parsedPlaces) {
+                        if (err) {
+                            return [err, false];
+                        } else {
+                            var site = signleRegistryObject['censusid'];
+                            var mappedPlaces = false;
+
+                            parsedPlaces = setPlacesSite(parsedPlaces, site);
+                            mappedPlaces = mapPlaces(parsedPlaces);
+                            if (mappedPlaces) {
+                                return models.sequelize.sync().then(function () {
+                                    models.Place.bulkCreate(mappedPlaces);
+                                });
+                            } else {
+                                return ['no data received', false];
+                            }
+                        }
+                    });
+                }).then(function () {
+                    return models.sequelize.sync().then(function () {
+                        models.Place.findAll().then(function (places) {
+                            return [false, places];
+                        });
+
+                    });
+                });
+            }
+        });
+    },
+    saveDatasetsToDb: function () {
+        return this.loadRegistryData().spread(function (err, loadResult) {
+            if (err) {
+                return [err, false];
+            } else {
+                var registryData = getRegistryFullData();
+                return Promise.each(registryData, function (signleRegistryObject) {
+                    var configUrl = signleRegistryObject['configurl'];
+                    parseSpreadSheet(configUrl).spread(function (err, parsedConfig) {
+                        if (err) {
+                            return [err, false];
+                        } else {
+
+                        }
+                    });
+
+                });
+
+            }
+        });
 //        console.log('dataSetsUrl');
 //        console.log(dataSetsUrl);
     },
-    saveQuestionsToDb: function (cb) {
-        var questionsUrl = getQuestionsConfigUrl();
+    saveQuestionsToDb: function () {
+        return this.loadRegistryData().spread(function (err, loadResult) {
+            if (err) {
+                return [err, false];
+            } else {
+                var registryData = getRegistryFullData();
+                return Promise.each(registryData, function (signleRegistryObject) {
+                    var configUrl = signleRegistryObject['configurl'];
+                    parseSpreadSheet(configUrl).spread(function (err, parsedConfig) {
+                        if (err) {
+                            return [err, false];
+                        } else {
+
+                        }
+                    });
+
+                });
+
+            }
+        });
 //        console.log('questionsUrl');
 //        console.log(questionsUrl);
     },
@@ -69,6 +116,40 @@ var indexLoader = {
 };
 
 
+function setRegistryFullData(data) {
+    REGISTRY_FULL_DATA = data;
+}
+
+function getRegistryFullData() {
+    return REGISTRY_FULL_DATA;
+}
+
+function getPlacesSheetIndex() {
+    var index = 1;
+    return  index;
+}
+
+
+function setPlacesSite(placesArray, site) {
+    for (var i = 0; i < placesArray.length; i++) {
+        placesArray[i]['site'] = site;
+    }
+
+    return placesArray;
+}
+
+function getPlacesSpreadSheetUrl(urlKey) {
+    var placesSpreadSheetUrl = false;
+    var placesSheetIndex = false;
+
+    placesSheetIndex = getPlacesSheetIndex();
+    placesSpreadSheetUrl = util.getSpreadSheetPage({
+        index: placesSheetIndex,
+        key: urlKey
+    });
+
+    return placesSpreadSheetUrl;
+}
 
 function mapPlaces(places) {
     var mappedPlaces = [];
@@ -118,15 +199,12 @@ function getQuestionsConfigUrl() {
 }
 
 function parseSpreadSheet(fileUrl) {
-    console.log('parseSpreadSheet');
-    console.log('PRSE URL', fileUrl);
     return new Promise(function (resolve, reject) {
-        util.getCsvData(fileUrl, function (err, result) {
+        var formattedUrl = util.getCsvUrlForGoogleSheet(fileUrl);
+        util.getCsvData(formattedUrl, function (err, result) {
             if (err) {
-                console.log('ERR');
                 resolve([err, false]);
             } else {
-                console.log('RESOLVE');
                 resolve([false, result]);
             }
         });

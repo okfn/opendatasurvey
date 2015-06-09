@@ -75,17 +75,19 @@ var isAdmin = function (user) {
 };
 
 var requireLoggedIn = function (req, res) {
-    
+
     var mainLoader = require('../loaders/index');
     mainLoader.savePlacesToDb()
-            .then(function(err, result){
-        if(err){
-            console.log('ERROR!!!');
-        } else {
-            console.log('RESULT!!!');
-        }
-    });
-    
+            .then(function (err, result) {
+                if (err) {
+                    console.log('ERROR!!!');
+                    console.log(err);
+                } else {
+                    //console.log(result);
+                    console.log('RESULT!!!');
+                }
+            });
+
 //    mainLoader.saveDatasetsToDb(function(err, result){
 //        
 //    });
@@ -93,7 +95,7 @@ var requireLoggedIn = function (req, res) {
 //    mainLoader.saveQuestionsToDb(function(err, result){
 //        
 //    });
-    
+
     if (!req.user) {
         res.redirect('/login/?next=' + encodeURIComponent(req.url));
         return true;

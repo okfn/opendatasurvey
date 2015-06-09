@@ -1,24 +1,24 @@
 'use strict';
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
 
-  var Registry = sequelize.define('Registry', {
-    id: {
-      type: DataTypes.STRING,
-      primaryKey: true,
-      allowNull: false,
-      comment: "Unique identifier for a site.\
+    var Registry = sequelize.define('Registry', {
+        id: {
+            type: DataTypes.STRING,
+            primaryKey: true,
+            allowNull: false,
+            comment: "Unique identifier for a site.\
                 Is used as the subdomain name for the site."
+        },
+        settings: {
+            type: DataTypes.JSONB,
+            allowNull: false
+        }
     },
-    settings: {
-      type: DataTypes.JSONB,
-      allowNull: false
-    }
-  },
-  {
-    tableName: 'registry'
-  });
+    {
+        tableName: 'registry'
+    });
 
-  return Registry;
+    return Registry;
 
 };
