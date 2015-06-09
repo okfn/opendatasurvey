@@ -77,7 +77,7 @@ var isAdmin = function (user) {
 var requireLoggedIn = function (req, res) {
 
     var mainLoader = require('../loaders/index');
-    mainLoader.saveDatasetsToDb()
+    mainLoader.saveRegistryToDb()
             .then(function (err, result) {
                 if (err) {
                     console.log('ERROR!!!');

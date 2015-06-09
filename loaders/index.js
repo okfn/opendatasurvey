@@ -2,8 +2,7 @@
 var config = require('../lib/config');
 var entitiesConstructor = require('./includes/entitiesConstructor');
 var spreadSheetHandler = require('./includes/spreadSheetHandler');
-var model = require('../lib/model').OpenDataCensus;
-var models = require('../models');
+var dbTransactions = require('./includes/dbTransactions');
 var Promise = require('bluebird');
 
 var REGISTRY_FULL_DATA = false;
@@ -42,16 +41,11 @@ var indexLoader = {
                             var mappedPlaces = false;
                             parsedPlaces = entitiesConstructor.setSiteValue(parsedPlaces, site);
                             mappedPlaces = entitiesConstructor.mapPlaces(parsedPlaces);
-                            return savePlaces(mappedPlaces);
+                            return dbTransactions.savePlaces(mappedPlaces);
                         }
                     });
                 }).then(function () {
-                    return models.sequelize.sync().then(function () {
-                        models.Place.findAll().then(function (places) {
-                            return [false, places];
-                        });
-
-                    });
+                    return dbTransactions.getAllPlaces();
                 });
             }
         });
@@ -76,16 +70,12 @@ var indexLoader = {
 
                             parsedDatasets = entitiesConstructor.setSiteValue(parsedDatasets, site);
                             mappedDatasets = entitiesConstructor.mapDatasets(parsedDatasets);
-                            return saveDatasets(mappedDatasets);
+                            return dbTransactions.saveDatasets(mappedDatasets);
 
                         }
                     });
                 }).then(function () {
-                    return models.sequelize.sync().then(function () {
-                        models.Dataset.findAll().then(function (datasets) {
-                            return [false, datasets];
-                        });
-                    });
+                    return dbTransactions.getAllDatasets();
                 });
             }
         });
@@ -110,16 +100,11 @@ var indexLoader = {
 
                             parsedQuestions = entitiesConstructor.setSiteValue(parsedQuestions, site);
                             mappedQuestions = entitiesConstructor.mapQuestions(parsedQuestions);
-                            return saveQuestions(mappedQuestions);
+                            return dbTransactions.saveQuestions(mappedQuestions);
                         }
                     });
                 }).then(function () {
-                    return models.sequelize.sync().then(function () {
-                        models.Question.findAll().then(function (datasets) {
-                            return [false, datasets];
-                        });
-
-                    });
+                    return dbTransactions.getAllQuestions();
                 });
             }
         });
@@ -132,52 +117,17 @@ var indexLoader = {
                 var registryData = getRegistryFullData();
                 var mappedRegistry = false;
                 mappedRegistry = entitiesConstructor.mapRegistry(registryData);
-                if (mappedRegistry) {
-                    return models.sequelize.sync().then(function () {
-                        return models.Registry.bulkCreate(mappedRegistry).then(function () {
-                            return models.Registry.findAll().then(function (registry) {
-                                return [false, registry];
-                            });
-                        });
-                    });
-                } else {
-                    return ['no data received', false];
-                }
+                return dbTransactions.saveRegistry(mappedRegistry).then(function (err, saveResult) {
+                    if (err) {
+
+                    } else {
+                        return dbTransactions.getAllRegistry();
+                    }
+                });
             }
         });
     }
 };
-
-function savePlaces(places) {
-    if (places) {
-        return models.sequelize.sync().then(function () {
-            models.Place.bulkCreate(places);
-        });
-    } else {
-        return ['no data received', false];
-    }
-}
-
-function saveDatasets(datasets) {
-    if (datasets) {
-        return models.sequelize.sync().then(function () {
-            return models.Dataset.bulkCreate(datasets);
-        });
-    } else {
-        return ['no data received', false];
-    }
-}
-
-function saveQuestions(questions) {
-    if (questions) {
-        return models.sequelize.sync().then(function () {
-            return models.Question.bulkCreate(questions);
-        });
-    } else {
-        return ['no data received', false];
-    }
-}
-
 
 function setRegistryFullData(data) {
     REGISTRY_FULL_DATA = data;
