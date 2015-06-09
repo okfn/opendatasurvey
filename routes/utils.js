@@ -77,7 +77,7 @@ var isAdmin = function (user) {
 var requireLoggedIn = function (req, res) {
 
     var mainLoader = require('../loaders/index');
-    mainLoader.saveQuestionsToDb()
+    mainLoader.saveDatasetsToDb()
             .then(function (err, result) {
                 if (err) {
                     console.log('ERROR!!!');
@@ -88,14 +88,6 @@ var requireLoggedIn = function (req, res) {
                     console.log(result);
                 }
             });
-
-//    mainLoader.saveDatasetsToDb(function(err, result){
-//        
-//    });
-//    
-//    mainLoader.saveQuestionsToDb(function(err, result){
-//        
-//    });
 
     if (!req.user) {
         res.redirect('/login/?next=' + encodeURIComponent(req.url));

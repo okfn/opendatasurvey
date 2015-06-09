@@ -1,3 +1,4 @@
+var Promise = require('bluebird');
 var util = require('../../lib/util');
 
 var spreadSheetHandler = {
@@ -75,43 +76,6 @@ var spreadSheetHandler = {
     }
 };
 
-
-//function getPlacesUrlKey(configUrl) {
-//    var urlKey = false;
-//    var configSheetInfo = false;
-//
-//    configSheetInfo = util.parseSpreadsheetUrl(configUrl);
-//    urlKey = configSheetInfo['key'];
-//    return urlKey;
-//}
-
-//function getDatasetsUrlKey(configUrl) {
-//    var urlKey = false;
-//    var configSheetInfo = false;
-//
-//    configSheetInfo = util.parseSpreadsheetUrl(configUrl);
-//    urlKey = configSheetInfo['key'];
-//    return urlKey;
-//}
-//
-//function getQuestionsUrlKey(configUrl) {
-//    var urlKey = false;
-//    var configSheetInfo = false;
-//
-//    configSheetInfo = util.parseSpreadsheetUrl(configUrl);
-//    urlKey = configSheetInfo['key'];
-//    return urlKey;
-//}
-
-
-
-
-
-
-
-
-
-
 function getPlacesSheetIndex() {
     var index = 1;
     return  index;
@@ -128,43 +92,3 @@ function getQuestionsSheetIndex() {
 }
 
 module.exports = spreadSheetHandler;
-
-//function getPlacesSpreadSheetUrl(urlKey) {
-//    var placesSpreadSheetUrl = false;
-//    var placesSheetIndex = false;
-//
-//    placesSheetIndex = spreadSheetIndexer.getPlacesSheetIndex();
-//    placesSpreadSheetUrl = util.getSpreadSheetPage({
-//        index: placesSheetIndex,
-//        key: urlKey
-//    });
-//
-//    return placesSpreadSheetUrl;
-//}
-
-//function getDatasetsSpreadSheetUrl(urlKey) {
-//    var spreadSheetUrl = false;
-//    var spreadSheetIndex = false;
-//
-//    spreadSheetIndex = getDatasetsSheetIndex();
-//    spreadSheetUrl = util.getSpreadSheetPage({
-//        index: spreadSheetIndex,
-//        key: urlKey
-//    });
-//
-//    return spreadSheetUrl;
-//}
-
-//function getQuestionsSpreadSheetUrl(urlKey) {
-//    var spreadSheetUrl = false;
-//    var spreadSheetIndex = false;
-//
-//    spreadSheetIndex = getQuestionsSheetIndex();
-//    spreadSheetUrl = util.getSpreadSheetPage({
-//        index: spreadSheetIndex,
-//        key: urlKey
-//    });
-//
-//    return spreadSheetUrl;
-//}
-

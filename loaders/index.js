@@ -1,7 +1,5 @@
 'use strict';
-var util = require('../lib/util');
 var config = require('../lib/config');
-//var mainDataMapper = require('./dataMapper/main');
 var entitiesConstructor = require('./includes/entitiesConstructor');
 var spreadSheetHandler = require('./includes/spreadSheetHandler');
 var model = require('../lib/model').OpenDataCensus;
@@ -42,16 +40,9 @@ var indexLoader = {
                         } else {
                             var site = getSiteValue(signleRegistryObject);
                             var mappedPlaces = false;
-
                             parsedPlaces = entitiesConstructor.setSiteValue(parsedPlaces, site);
                             mappedPlaces = entitiesConstructor.mapPlaces(parsedPlaces);
-                            if (mappedPlaces) {
-                                return models.sequelize.sync().then(function () {
-                                    models.Place.bulkCreate(mappedPlaces);
-                                });
-                            } else {
-                                return ['no data received', false];
-                            }
+                            return savePlaces(mappedPlaces);
                         }
                     });
                 }).then(function () {
@@ -85,14 +76,8 @@ var indexLoader = {
 
                             parsedDatasets = entitiesConstructor.setSiteValue(parsedDatasets, site);
                             mappedDatasets = entitiesConstructor.mapDatasets(parsedDatasets);
+                            return saveDatasets(mappedDatasets);
 
-                            if (mappedDatasets) {
-                                return models.sequelize.sync().then(function () {
-                                    return models.Dataset.bulkCreate(mappedDatasets);
-                                });
-                            } else {
-                                return ['no data received', false];
-                            }
                         }
                     });
                 }).then(function () {
@@ -125,14 +110,7 @@ var indexLoader = {
 
                             parsedQuestions = entitiesConstructor.setSiteValue(parsedQuestions, site);
                             mappedQuestions = entitiesConstructor.mapQuestions(parsedQuestions);
-
-                            if (mappedQuestions) {
-                                return models.sequelize.sync().then(function () {
-                                    return models.Question.bulkCreate(mappedQuestions);
-                                });
-                            } else {
-                                return ['no data received', false];
-                            }
+                            return saveQuestions(mappedQuestions);
                         }
                     });
                 }).then(function () {
@@ -170,6 +148,37 @@ var indexLoader = {
     }
 };
 
+function savePlaces(places) {
+    if (places) {
+        return models.sequelize.sync().then(function () {
+            models.Place.bulkCreate(places);
+        });
+    } else {
+        return ['no data received', false];
+    }
+}
+
+function saveDatasets(datasets) {
+    if (datasets) {
+        return models.sequelize.sync().then(function () {
+            return models.Dataset.bulkCreate(datasets);
+        });
+    } else {
+        return ['no data received', false];
+    }
+}
+
+function saveQuestions(questions) {
+    if (questions) {
+        return models.sequelize.sync().then(function () {
+            return models.Question.bulkCreate(questions);
+        });
+    } else {
+        return ['no data received', false];
+    }
+}
+
+
 function setRegistryFullData(data) {
     REGISTRY_FULL_DATA = data;
 }
@@ -195,6 +204,8 @@ function getRegistryUrl() {
     registryUrl = config.get('registryUrl') || false;
     return registryUrl;
 }
+
+module.exports = indexLoader;
 
 //var getRegistry = function() {
 //
@@ -224,5 +235,3 @@ function getRegistryUrl() {
 //
 //};
 
-
-module.exports = indexLoader;
