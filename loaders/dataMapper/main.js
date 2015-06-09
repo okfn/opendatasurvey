@@ -1,8 +1,4 @@
 var main = {
-//    \id: 'emissions',
-//    title: 'Pollutant Emissions',
-//    category: 'Environment',
-//    description:
     mapPlaceObject: function (object) {
         var place = {};
         if (checkIfValidObject(object)) {
@@ -60,6 +56,30 @@ var main = {
         }
 
         return question;
+    },
+    mapRegistryObject: function (object) {
+        var registry = {};
+
+        if (checkIfValidObject(object)) {
+            var settings = {};
+
+            for (var key in object) {
+                if (key === 'censusid') {
+                    registry.id = object.censusid || false;
+                } else {
+                    settings[key] = object[key];
+                }
+            }
+
+            registry.settings = settings;
+
+            return checkIfHasId(registry);
+
+        } else {
+            return false;
+        }
+
+        return registry;
     }
 };
 

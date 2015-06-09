@@ -1,7 +1,9 @@
 'use strict';
 var util = require('../lib/util');
 var config = require('../lib/config');
-var mainDataMapper = require('./dataMapper/main');
+//var mainDataMapper = require('./dataMapper/main');
+var entitiesConstructor = require('./includes/entitiesConstructor');
+var spreadSheetHandler = require('./includes/spreadSheetHandler');
 var model = require('../lib/model').OpenDataCensus;
 var models = require('../models');
 var Promise = require('bluebird');
@@ -13,7 +15,7 @@ var indexLoader = {
         var registryUrl = getRegistryUrl();
 
         try {
-            return parseSpreadSheet(registryUrl).spread(function (err, parsedRegistry) {
+            return spreadSheetHandler.parse(registryUrl).spread(function (err, parsedRegistry) {
                 setRegistryFullData(parsedRegistry);
                 return [false, true];
             });
@@ -30,20 +32,19 @@ var indexLoader = {
             } else {
                 var registryData = getRegistryFullData();
                 return Promise.each(registryData, function (signleRegistryObject) {
-                    var configUrl = signleRegistryObject['configurl'];
-                    var configSheetInfo = util.parseSpreadsheetUrl(configUrl);
-                    var placesUrlKey = configSheetInfo['key'];
-                    var placesSpreadSheetUrl = getPlacesSpreadSheetUrl(placesUrlKey);
+                    var configUrl = getConfigUrlFromRegistry(signleRegistryObject);
+                    var placesUrlKey = spreadSheetHandler.getPlacesUrlKey(configUrl);
+                    var placesSpreadSheetUrl = spreadSheetHandler.getPlacesSpreadSheetUrl(placesUrlKey);
 
-                    return parseSpreadSheet(placesSpreadSheetUrl).spread(function (err, parsedPlaces) {
+                    return spreadSheetHandler.parse(placesSpreadSheetUrl).spread(function (err, parsedPlaces) {
                         if (err) {
                             return [err, false];
                         } else {
                             var site = getSiteValue(signleRegistryObject);
                             var mappedPlaces = false;
 
-                            parsedPlaces = setSiteValue(parsedPlaces, site);
-                            mappedPlaces = mapPlaces(parsedPlaces);
+                            parsedPlaces = entitiesConstructor.setSiteValue(parsedPlaces, site);
+                            mappedPlaces = entitiesConstructor.mapPlaces(parsedPlaces);
                             if (mappedPlaces) {
                                 return models.sequelize.sync().then(function () {
                                     models.Place.bulkCreate(mappedPlaces);
@@ -71,20 +72,19 @@ var indexLoader = {
             } else {
                 var registryData = getRegistryFullData();
                 return Promise.each(registryData, function (signleRegistryObject) {
-                    var configUrl = signleRegistryObject['configurl'];
-                    var configSheetInfo = util.parseSpreadsheetUrl(configUrl);
-                    var datasetsUrlKey = configSheetInfo['key'];
-                    var datasetsSpreadSheetUrl = getDatasetsSpreadSheetUrl(datasetsUrlKey);
+                    var configUrl = getConfigUrlFromRegistry(signleRegistryObject);
+                    var datasetsUrlKey = spreadSheetHandler.getDatasetsUrlKey(configUrl);
+                    var datasetsSpreadSheetUrl = spreadSheetHandler.getDatasetsSpreadSheetUrl(datasetsUrlKey);
 
-                    return parseSpreadSheet(datasetsSpreadSheetUrl).spread(function (err, parsedDatasets) {
+                    return spreadSheetHandler.parse(datasetsSpreadSheetUrl).spread(function (err, parsedDatasets) {
                         if (err) {
                             return [err, false];
                         } else {
                             var site = getSiteValue(signleRegistryObject);
                             var mappedDatasets = false;
 
-                            parsedDatasets = setSiteValue(parsedDatasets, site);
-                            mappedDatasets = mapDatasetsObject(parsedDatasets);
+                            parsedDatasets = entitiesConstructor.setSiteValue(parsedDatasets, site);
+                            mappedDatasets = entitiesConstructor.mapDatasets(parsedDatasets);
 
                             if (mappedDatasets) {
                                 return models.sequelize.sync().then(function () {
@@ -100,7 +100,6 @@ var indexLoader = {
                         models.Dataset.findAll().then(function (datasets) {
                             return [false, datasets];
                         });
-
                     });
                 });
             }
@@ -113,20 +112,19 @@ var indexLoader = {
             } else {
                 var registryData = getRegistryFullData();
                 return Promise.each(registryData, function (signleRegistryObject) {
-                    var configUrl = signleRegistryObject['configurl'];
-                    var configSheetInfo = util.parseSpreadsheetUrl(configUrl);
-                    var questionsUrlKey = configSheetInfo['key'];
-                    var questionsSpreadSheetUrl = getQuestionsSpreadSheetUrl(questionsUrlKey);
+                    var configUrl = getConfigUrlFromRegistry(signleRegistryObject);
+                    var questionsUrlKey = spreadSheetHandler.getQuestionsUrlKey(configUrl);
+                    var questionsSpreadSheetUrl = spreadSheetHandler.getQuestionsSpreadSheetUrl(questionsUrlKey);
 
-                    return parseSpreadSheet(questionsSpreadSheetUrl).spread(function (err, parsedQuestions) {
+                    return spreadSheetHandler.parse(questionsSpreadSheetUrl).spread(function (err, parsedQuestions) {
                         if (err) {
                             return [err, false];
                         } else {
                             var site = getSiteValue(signleRegistryObject);
                             var mappedQuestions = false;
 
-                            parsedQuestions = setSiteValue(parsedQuestions, site);
-                            mappedQuestions = mapQuestionsObject(parsedQuestions);
+                            parsedQuestions = entitiesConstructor.setSiteValue(parsedQuestions, site);
+                            mappedQuestions = entitiesConstructor.mapQuestions(parsedQuestions);
 
                             if (mappedQuestions) {
                                 return models.sequelize.sync().then(function () {
@@ -149,17 +147,28 @@ var indexLoader = {
         });
     },
     saveRegistryToDb: function () {
-        var registryUrl = getRegistryUrl();
+        return this.loadRegistryData().spread(function (err, loadResult) {
+            if (err) {
+                return [err, false];
+            } else {
+                var registryData = getRegistryFullData();
+                var mappedRegistry = false;
+                mappedRegistry = entitiesConstructor.mapRegistry(registryData);
+                if (mappedRegistry) {
+                    return models.sequelize.sync().then(function () {
+                        return models.Registry.bulkCreate(mappedRegistry).then(function () {
+                            return models.Registry.findAll().then(function (registry) {
+                                return [false, registry];
+                            });
+                        });
+                    });
+                } else {
+                    return ['no data received', false];
+                }
+            }
+        });
     }
 };
-
-function setSiteValue(placesArray, site) {
-    for (var i = 0; i < placesArray.length; i++) {
-        placesArray[i]['site'] = site;
-    }
-
-    return placesArray;
-}
 
 function setRegistryFullData(data) {
     REGISTRY_FULL_DATA = data;
@@ -169,159 +178,22 @@ function getRegistryFullData() {
     return REGISTRY_FULL_DATA;
 }
 
+function getConfigUrlFromRegistry(registry) {
+    var configUrl = false;
+    configUrl = registry['configurl'] || false;
+    return configUrl;
+}
+
 function getSiteValue(object) {
     var site = false;
     site = object['censusid'];
     return site;
 }
 
-function getPlacesSheetIndex() {
-    var index = 1;
-    return  index;
-}
-
-function getDatasetsSheetIndex() {
-    var index = 2;
-    return  index;
-}
-
-function getQuestionsSheetIndex() {
-    var index = 4;
-    return  index;
-}
-
-function getPlacesSpreadSheetUrl(urlKey) {
-    var placesSpreadSheetUrl = false;
-    var placesSheetIndex = false;
-
-    placesSheetIndex = getPlacesSheetIndex();
-    placesSpreadSheetUrl = util.getSpreadSheetPage({
-        index: placesSheetIndex,
-        key: urlKey
-    });
-
-    return placesSpreadSheetUrl;
-}
-
-function getDatasetsSpreadSheetUrl(urlKey) {
-    var spreadSheetUrl = false;
-    var spreadSheetIndex = false;
-
-    spreadSheetIndex = getDatasetsSheetIndex();
-    spreadSheetUrl = util.getSpreadSheetPage({
-        index: spreadSheetIndex,
-        key: urlKey
-    });
-
-    return spreadSheetUrl;
-}
-
-function getQuestionsSpreadSheetUrl(urlKey) {
-    var spreadSheetUrl = false;
-    var spreadSheetIndex = false;
-
-    spreadSheetIndex = getQuestionsSheetIndex();
-    spreadSheetUrl = util.getSpreadSheetPage({
-        index: spreadSheetIndex,
-        key: urlKey
-    });
-
-    return spreadSheetUrl;
-}
-
-function mapPlaces(places) {
-    var mappedObject = [];
-    if (places && places.length) {
-        var length = places.length;
-        for (var i = 0; i < length; i++) {
-            var currentObject = places[i];
-            var mappedCurrentObject = mainDataMapper.mapPlaceObject(currentObject);
-            if (mappedCurrentObject) {
-                mappedObject.push(mappedCurrentObject);
-            }
-        }
-
-        return mappedObject;
-    } else {
-        return false;
-    }
-}
-
-function mapDatasetsObject(datasets) {
-    var mappedObject = [];
-    if (datasets && datasets.length) {
-        var length = datasets.length;
-        for (var i = 0; i < length; i++) {
-            var currentObject = datasets[i];
-            var mappedCurrentObject = mainDataMapper.mapDatasetsObject(currentObject);
-            if (mappedCurrentObject) {
-                mappedObject.push(mappedCurrentObject);
-            }
-        }
-
-        return mappedObject;
-    } else {
-        return false;
-    }
-}
-
-function mapQuestionsObject(questions) {
-    var mappedObject = [];
-    if (questions && questions.length) {
-        var length = questions.length;
-        for (var i = 0; i < length; i++) {
-            var currentObject = questions[i];
-            var mappedCurrentObject = mainDataMapper.mapQuestionObject(currentObject);
-            if (mappedCurrentObject) {
-                mappedObject.push(mappedCurrentObject);
-            }
-        }
-
-        return mappedObject;
-    } else {
-        return false;
-    }
-}
-
 function getRegistryUrl() {
     var registryUrl = false;
     registryUrl = config.get('registryUrl') || false;
     return registryUrl;
-}
-
-//function getConfigUrlFromParsedCsv(singleDataObject) {
-//    var configUrl = false;
-//
-//    return configUrl;
-//}
-//
-//function getDatasetsConfigUrl() {
-//    var configUrl = false;
-//    configUrl = config.get('datasets') || false;
-//    return configUrl;
-//}
-//
-//function getQuestionsConfigUrl() {
-//    var configUrl = false;
-//    configUrl = config.get('questions') || false;
-//    return configUrl;
-//}
-
-function parseSpreadSheet(fileUrl) {
-    return new Promise(function (resolve, reject) {
-        var formattedUrl = util.getCsvUrlForGoogleSheet(fileUrl);
-        util.getCsvData(formattedUrl, function (err, result) {
-            if (err) {
-                resolve([err, false]);
-            } else {
-                resolve([false, result]);
-            }
-        });
-    });
-}
-
-function insertDbRecord() {
-
 }
 
 //var getRegistry = function() {
