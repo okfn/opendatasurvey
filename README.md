@@ -39,6 +39,7 @@ Get a local server setup with the following steps:
 
 ```
 {
+  "system_administrator" : "james.heatfield@domain.tld",    
   "configUrl": "https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=1QvZFGyICiuZmRxVll6peXkND_6QmHl7IQ_BYCw5Sso4&usp=sharing#gid=0",
   "censusid": "demo",
   "base_domain": "dev.census.org",

@@ -142,6 +142,8 @@ app.all('*', function(req, res, next) {
 
 // ADMIN ACTIONS
 app.get(scopedPath('/admin/reload'), routes.reload);
+app.get(scopedPath('/reload'), routes.loadReloadDashboard);
+app.get(scopedPath('/reload/places'), routes.reloadPlaces);
 
 // AUTH ENDPOINTS
 app.get(scopedPath('/auth/google'), passport.authenticate('google', authScope.google));

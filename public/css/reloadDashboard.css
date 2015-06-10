@@ -1,0 +1,31 @@
+.reload-area {
+    padding: 5px 5px 10px 5px;
+    margin: 5px;
+    width: 300px;
+    border-radius: 2px;
+    border: 2px solid black;
+}
+.reload-entity {
+    margin-bottom: 8px;
+    width: 100%;
+    height: 35px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.reload-result-area {
+    
+    
+}
+
+#reload-status-wrapper {
+    margin: 5px 0px 5px 0px; 
+    padding: 5px 5px 5px 5px;
+    height: 25px;
+    text-transform: uppercase;
+    background-color: yellow;
+}
+
+#reload-status {
+    
+}

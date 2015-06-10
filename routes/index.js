@@ -3,121 +3,122 @@
 var _ = require('underscore');
 var config = require('../lib/config');
 var env = require('../lib/templateenv');
-var util =  require('../lib/util');
+var util = require('../lib/util');
 var model = require('../lib/model').OpenDataCensus;
 var marked = require('marked');
 var csv = require('csv');
 var routeUtils = require('./utils');
 
 
-var submit = function(req, res) {
-    if (routeUtils.requireLoggedIn(req, res)) return;
+var submit = function (req, res) {
+  if (routeUtils.requireLoggedIn(req, res))
+    return;
 
-  var ynquestions = model.data.questions.slice(0,9);
+  var ynquestions = model.data.questions.slice(0, 9);
   var prefill = req.query;
   var year = prefill.year || config.get('submit_year');
   var submissionData = req.body,
-      errors,
-      reboundFormData,
-      response_status = 200;
+    errors,
+    reboundFormData,
+    response_status = 200;
 
-    function render(prefill_, status) {
-        res.statusCode = status;
-        res.render('submission/create.html', {
-            canReview: true, // flag always on for submission
-            submitInstructions: config.get('submit_page', req.locale),
-            places: util.translateRows(model.data.places, req.locale),
-            ynquestions: util.translateQuestions(ynquestions, req.locale),
-            questions: util.translateQuestions(model.data.questions, req.locale),
-            questionsById: util.translateObject(model.data.questionsById, req.locale),
-            datasets: util.markupRows(util.translateRows(model.data.datasets, req.locale)),
-            year: year,
-            prefill: prefill_,
-            currrecord: prefill_,
-            errors: errors,
-            formData: reboundFormData
-        });
-    }
+  function render(prefill_, status) {
+    res.statusCode = status;
+    res.render('submission/create.html', {
+      canReview: true, // flag always on for submission
+      submitInstructions: config.get('submit_page', req.locale),
+      places: util.translateRows(model.data.places, req.locale),
+      ynquestions: util.translateQuestions(ynquestions, req.locale),
+      questions: util.translateQuestions(model.data.questions, req.locale),
+      questionsById: util.translateObject(model.data.questionsById, req.locale),
+      datasets: util.markupRows(util.translateRows(model.data.datasets, req.locale)),
+      year: year,
+      prefill: prefill_,
+      currrecord: prefill_,
+      errors: errors,
+      formData: reboundFormData
+    });
+  }
 
-    function insertSubmissionCallback(err, data) {
-        var msg,
-            msg_tmpl,
-                    redirect_path,
-                    submission_path;
-        // TODO: Do flash messages properly
-        if (err) {
-            console.log(err);
-            msg = 'There was an error! ' + err;
-            req.flash('error', msg);
-        } else {
-            msg_tmpl = 'Thanks for your submission.REVIEWED You can check back here any time to see the current status.';
-            if (!data.reviewed) {
-                msg = msg_tmpl.replace('REVIEWED',  ' It will now be reviewed by the editors.');
-                submission_path = '/submission/' + data.submissionid;
-                redirect_path = submission_path;
-            } else {
-                msg = msg_tmpl.replace('REVIEWED',  '');
-                submission_path = '/submission/' + data.submissionid;
-                    redirect_path = '/place/' + data.place;
-            }
-            req.flash('info', msg);
-        }
-        res.redirect(redirect_path + '?post_submission=' + submission_path);
+  function insertSubmissionCallback(err, data) {
+    var msg,
+      msg_tmpl,
+      redirect_path,
+      submission_path;
+    // TODO: Do flash messages properly
+    if (err) {
+      console.log(err);
+      msg = 'There was an error! ' + err;
+      req.flash('error', msg);
+    } else {
+      msg_tmpl = 'Thanks for your submission.REVIEWED You can check back here any time to see the current status.';
+      if (!data.reviewed) {
+        msg = msg_tmpl.replace('REVIEWED', ' It will now be reviewed by the editors.');
+        submission_path = '/submission/' + data.submissionid;
+        redirect_path = submission_path;
+      } else {
+        msg = msg_tmpl.replace('REVIEWED', '');
+        submission_path = '/submission/' + data.submissionid;
+        redirect_path = '/place/' + data.place;
+      }
+      req.flash('info', msg);
     }
+    res.redirect(redirect_path + '?post_submission=' + submission_path);
+  }
 
   // validate the POST data and put the results on `errors`
   if (req.method === 'POST') {
-          errors = routeUtils.validateSubmitForm(req);
-      if (errors) {
-          reboundFormData = submissionData;
-          response_status = 400;
-      }
+    errors = routeUtils.validateSubmitForm(req);
+    if (errors) {
+      reboundFormData = submissionData;
+      response_status = 400;
+    }
   }
 
   if (req.method === 'POST' && !errors) {
-          model.backend.insertSubmission(submissionData, req.user,
-              insertSubmissionCallback);
+    model.backend.insertSubmission(submissionData, req.user,
+      insertSubmissionCallback);
 
   } else if (prefill.dataset && prefill.place) {
-      model.backend.getEntry({
-          place: prefill.place,
-          dataset: prefill.dataset,
-          year: year
-      }, function (err, entry) {
-          // we allow query args to override entry values
-          // might be useful (e.g. if we started having form errors and
-          // redirecting here ...)
-          if (entry) { // we might have a got a 404 etc
-              prefill = _.extend(entry, prefill);
-          }
-          render(prefill, response_status);
-      });
+    model.backend.getEntry({
+      place: prefill.place,
+      dataset: prefill.dataset,
+      year: year
+    }, function (err, entry) {
+      // we allow query args to override entry values
+      // might be useful (e.g. if we started having form errors and
+      // redirecting here ...)
+      if (entry) { // we might have a got a 404 etc
+        prefill = _.extend(entry, prefill);
+      }
+      render(prefill, response_status);
+    });
 
   } else {
-      render(prefill, response_status);
+    render(prefill, response_status);
   }
 
 };
 
 // Compare & update page
-var submission = function(req, res) {
-  var ynquestions = model.data.questions.slice(0,9),
-      reviewClosed;
+var submission = function (req, res) {
+  var ynquestions = model.data.questions.slice(0, 9),
+    reviewClosed;
 
-  model.backend.getSubmission({submissionid: req.params.submissionid}, function(err, obj) {
+  model.backend.getSubmission({submissionid: req.params.submissionid}, function (err, obj) {
     if (err) {
       res.send(500, 'There was an error ' + err);
     } else if (!obj) {
-        res.send(404, 'There is no submission with id ' + req.params.submissionid);
+      res.send(404, 'There is no submission with id ' + req.params.submissionid);
     } else {
 
       if (obj.reviewresult) {
-          // If the object has been reviewed, we close further reviews.
-          reviewClosed = true;
+        // If the object has been reviewed, we close further reviews.
+        reviewClosed = true;
       }
 
       // see if there is an entry
-      model.backend.getEntry(obj, function(err, entry) {
+      model.backend.getEntry(obj, function (err, entry) {
         if (!entry) {
           entry = {};
         }
@@ -145,10 +146,11 @@ var submission = function(req, res) {
   });
 };
 
-var reviewPost = function(req, res) {
-    if (routeUtils.requireLoggedIn(req, res)) return;
+var reviewPost = function (req, res) {
+  if (routeUtils.requireLoggedIn(req, res))
+    return;
   // Get the submission's place, so we can find the local reviewers
-  model.backend.getSubmission({submissionid: req.params.submissionid}, function(err, obj) {
+  model.backend.getSubmission({submissionid: req.params.submissionid}, function (err, obj) {
     if (!routeUtils.canReview(req.user, model.data.placesById[obj.place])) {
       res.send(401, 'Sorry, you are not an authorized reviewer');
       return;
@@ -156,7 +158,7 @@ var reviewPost = function(req, res) {
   });
 
   var acceptSubmission = req.body['submit'] === 'Publish';
-  model.backend.processSubmission(req.user, acceptSubmission, req.params.submissionid, req.body, function(err) {
+  model.backend.processSubmission(req.user, acceptSubmission, req.params.submissionid, req.body, function (err) {
     if (err) {
       if (err.code) {
         res.send(err.code, err.message);
@@ -173,16 +175,17 @@ var reviewPost = function(req, res) {
       }
       // TODO: find a better way to update cached data
       // model.load(function() {
-        res.redirect('/');
+      res.redirect('/');
       // });
     }
   });
 };
 
 
-var overview = function(req, res) {
+var overview = function (req, res) {
+  console.log('overview');
   // sort places by score
-  var sortedPlaces = _.sortBy(model.data.places, function(place) {
+  var sortedPlaces = _.sortBy(model.data.places, function (place) {
     return model.data.entries.byplace[place.id].score * -1;
   });
 
@@ -202,19 +205,19 @@ var overview = function(req, res) {
   });
 };
 
-var api = function(req, res) {
+var api = function (req, res) {
   var entries = model.data.entries.results;
   var headers = [];
   if (entries !== []) {
     // create a list of omitted keys
     var omissions = [];
-    _.each(entries[0], function(v, k) {
+    _.each(entries[0], function (v, k) {
       if (typeof v === 'function' || k[0] === '_' || _.contains(['content'], k)) {
         omissions.push(k);
       }
     });
     // remove omissions
-    entries = _.map(entries, function(i) {
+    entries = _.map(entries, function (i) {
       return _.omit(i, omissions);
     });
     // get a list of headers
@@ -227,13 +230,13 @@ var api = function(req, res) {
     return csv()
       .from.array(entries, {columns: headers})
       .to.stream(res, {header: true})
-    ;
+      ;
   } else {
     return res.send(404);
   }
 };
 
-var about = function(req, res) {
+var about = function (req, res) {
   var text = config.get('about_page', req.locale);
   var content = marked(text);
   res.render('base.html', {
@@ -242,7 +245,7 @@ var about = function(req, res) {
   });
 };
 
-var faq = function(req, res) {
+var faq = function (req, res) {
   var tmpl = env.getTemplate('_snippets/questions.html');
   var questionInfo = tmpl.render({
     gettext: res.locals.gettext,
@@ -265,16 +268,16 @@ var faq = function(req, res) {
   });
 };
 
-var changes = function(req, res) {
+var changes = function (req, res) {
 
-    var changeItems = [];
+  var changeItems = [];
 
-    // fetch all submissions
-    model.backend.getSubmissions({
-      year: config.get('submit_year')
-    }, function(err, submissions) {
-        submissions = _.sortBy(submissions, function(submission) {
-        return submission.timestamp;
+  // fetch all submissions
+  model.backend.getSubmissions({
+    year: config.get('submit_year')
+  }, function (err, submissions) {
+    submissions = _.sortBy(submissions, function (submission) {
+      return submission.timestamp;
     });
 
     // fetch all entries
@@ -285,8 +288,8 @@ var changes = function(req, res) {
     submissions = addPlaceAndName(submissions);
     // entries = addPlaceAndName(entries);
 
-    submissions.forEach(function(submission) {
-        changeItems.push(transformToChangeItem(submission, 'Submission'));
+    submissions.forEach(function (submission) {
+      changeItems.push(transformToChangeItem(submission, 'Submission'));
     });
 
     // entries.forEach(function(entry) {
@@ -295,44 +298,44 @@ var changes = function(req, res) {
 
     function transformToChangeItem(obj, type) {
       var url;
-        if (obj.reviewresult === 'accepted') {
-          url = '/entry/PLACE/DATASET'
-                  .replace('PLACE', obj.place)
-                      .replace('DATASET', obj.dataset);
-        } else {
-          url = obj.details_url || '/submission/ID'.replace('ID', obj.submissionid);
-        }
-        return {
-            type: type,
-            timestamp: obj.timestamp,
-            dataset_title: obj.dataset_title,
-            place_name: obj.place_name,
-            url: url,
-            status: obj.reviewresult,
-            submitter: obj.submitter,
-            reviewer: obj.reviewer
-        };
+      if (obj.reviewresult === 'accepted') {
+        url = '/entry/PLACE/DATASET'
+          .replace('PLACE', obj.place)
+          .replace('DATASET', obj.dataset);
+      } else {
+        url = obj.details_url || '/submission/ID'.replace('ID', obj.submissionid);
+      }
+      return {
+        type: type,
+        timestamp: obj.timestamp,
+        dataset_title: obj.dataset_title,
+        place_name: obj.place_name,
+        url: url,
+        status: obj.reviewresult,
+        submitter: obj.submitter,
+        reviewer: obj.reviewer
+      };
     }
 
     function sortByDate(a, b) {
-        var date_a = Date.parse(a.timestamp),
-            date_b = Date.parse(b.timestamp);
-        if (date_a > date_b) {
-            return 1;
-        }
-        if (date_a < date_b) {
-            return -1;
-        }
-        return 0;
+      var date_a = Date.parse(a.timestamp),
+        date_b = Date.parse(b.timestamp);
+      if (date_a > date_b) {
+        return 1;
+      }
+      if (date_a < date_b) {
+        return -1;
+      }
+      return 0;
     }
 
     res.render('changes.html', {
-        changeitems: changeItems.sort(sortByDate).slice(-500).reverse()
+      changeitems: changeItems.sort(sortByDate).slice(-500).reverse()
     });
   });
 
   function addPlaceAndName(entries) {
-    return _.each(entries, function(entry) {
+    return _.each(entries, function (entry) {
       entry.dataset_title = util.translate(model.data.datasetsById[entry.dataset], req.locale).title;
       entry.place_name = util.translate(model.data.placesById[entry.place], req.locale).name;
       return entry;
@@ -340,7 +343,7 @@ var changes = function(req, res) {
   }
 };
 
-var contribute = function(req, res) {
+var contribute = function (req, res) {
   var text = config.get('contribute_page', req.locale);
   var content = marked(text);
   res.render('base.html', {
@@ -349,26 +352,26 @@ var contribute = function(req, res) {
   });
 };
 
-var resultJson = function(req, res) {
+var resultJson = function (req, res) {
   res.json(model.data.entries);
 };
 
 //Show details per country. Extra/different functionality for reviewers.
-var place = function(req, res) {
+var place = function (req, res) {
   if (!(req.params.place) in model.data.placesById) {
     res.send(404, 'There is no place with ID ' + place + ' in our database. Are you sure you have spelled it correctly? Please check the <a href="/">overview page</a> for the list of places');
     return;
   }
   var place = model.data.placesById[req.params.place];
 
-  model.backend.getPlace(place.id, function(err, info) {
+  model.backend.getPlace(place.id, function (err, info) {
     if (err) {
       res.send(500, err);
       return;
     }
 
     // TODO: move this to model
-    var entrys = _.reduce(info.entrys, function(o, entry) {
+    var entrys = _.reduce(info.entrys, function (o, entry) {
       var existing = o[entry.dataset];
       // assign if no entry or year is later
       if (!existing || parseInt(entry.year, 10) >= parseInt(existing.year, 10)) {
@@ -378,9 +381,10 @@ var place = function(req, res) {
       return o;
     }, {});
 
-    var submissions = _.reduce(info.submissions, function(o, submission) {
+    var submissions = _.reduce(info.submissions, function (o, submission) {
       submission['ycount'] = util.scoreOpenness(model.data, submission);
-      if (!(submission.dataset in o)) o[submission.dataset] = [];
+      if (!(submission.dataset in o))
+        o[submission.dataset] = [];
       o[submission.dataset].push(submission);
       return o;
     }, {});
@@ -399,44 +403,48 @@ var place = function(req, res) {
 };
 
 //Show details per dataset
-var dataset = function(req, res) {
+var dataset = function (req, res) {
   var dataset = model.data.datasetsById[req.params.dataset];
 
   function cleanResultSet(results) {
-        var lookup = _.pluck(results, 'place'),
-            redundants = findRedundants(lookup),
-            clean_results = [];
+    var lookup = _.pluck(results, 'place'),
+      redundants = findRedundants(lookup),
+      clean_results = [];
 
     function sorter(a, b) {
-        if (a.ycount > b.ycount)
-           return -1;
-        if (a.ycount < b.ycount)
-          return 1;
-        return 0;
+      if (a.ycount > b.ycount)
+        return -1;
+      if (a.ycount < b.ycount)
+        return 1;
+      return 0;
     }
 
     function findRedundants(lookup) {
-        var _redundants = [];
-        _.each(lookup, function(key) {
-          var r;
-          r = _.filter(lookup, function(x){if (x === key){return x}});
-          if (r.length > 1) {
-            _redundants.push(key);
+      var _redundants = [];
+      _.each(lookup, function (key) {
+        var r;
+        r = _.filter(lookup, function (x) {
+          if (x === key) {
+            return x
           }
         });
-        return _redundants;
+        if (r.length > 1) {
+          _redundants.push(key);
+        }
+      });
+      return _redundants;
     }
 
     function removeRedundants(results) {
-        _.each(results, function(entry) {
-          if (_.contains(redundants, entry.place) &&
-              entry.year !== config.get('submit_year')) {
-              // dont want it!
-          } else {
-            clean_results.push(entry);
-          }
-        });
-        return clean_results;
+      _.each(results, function (entry) {
+        if (_.contains(redundants, entry.place) &&
+          entry.year !== config.get('submit_year')) {
+          // dont want it!
+        } else {
+          clean_results.push(entry);
+        }
+      });
+      return clean_results;
     }
     return removeRedundants(results).sort(sorter);
   }
@@ -449,9 +457,10 @@ var dataset = function(req, res) {
   model.backend.getEntrys({
     dataset: req.params.dataset,
     year: {'<=': config.get('display_year')}
-  }, function(err, entriesForThisDataset) {
-    if (err) throw err;
-    entriesForThisDataset.forEach(function(entry) {
+  }, function (err, entriesForThisDataset) {
+    if (err)
+      throw err;
+    entriesForThisDataset.forEach(function (entry) {
       entry.ycount = util.scoreOpenness(model.data, entry);
     });
     res.render('country/dataset.html', {
@@ -464,14 +473,14 @@ var dataset = function(req, res) {
 };
 
 /* Single Entry Page */
-var entryByPlaceDataset = function(req, res) {
+var entryByPlaceDataset = function (req, res) {
   var dataset = _.findWhere(model.data.datasets, {
     id: req.params.dataset
   });
   if (!dataset) {
     return res.send(404, res.locals.format('There is no entry for %(place)s and %(dataset)s', {
       place: req.params.place,
-     dataset: req.params.dataset
+      dataset: req.params.dataset
     }, req.locale));
   }
 
@@ -498,13 +507,13 @@ var entryByPlaceDataset = function(req, res) {
     dataset: req.params.dataset,
     //TODO: next year, extend to /2013/, etc.
     year: config.get('display_year')
-  }, function(err, obj) {
+  }, function (err, obj) {
     if (obj) { // we might have a got a 404 etc
       prefill = _.extend(obj, prefill);
     } else {
       return res.send(404, res.locals.format('There is no entry for %(place)s and %(dataset)s', {
         place: req.params.place,
-       dataset: req.params.dataset
+        dataset: req.params.dataset
       }, req.locale));
     }
 
@@ -513,7 +522,7 @@ var entryByPlaceDataset = function(req, res) {
       dataset: req.params.dataset,
       //TODO: next year, extend to /2013/, etc.
       year: config.get('display_year')
-    }, function(err, obj) {
+    }, function (err, obj) {
       // we allow query args to override entry values
       // might be useful (e.g. if we started having form errors and redirecting
       // here ...)
@@ -521,15 +530,19 @@ var entryByPlaceDataset = function(req, res) {
         prefill['reviewers'] = [];
         prefill['submitters'] = [];
 
-        _.each(obj, function(val) {
-          if (val['reviewer'] !== "") prefill['reviewers'].push(val['reviewer']);
-          if (val['submitter'] !== "") prefill['submitters'].push(val['submitter']);
+        _.each(obj, function (val) {
+          if (val['reviewer'] !== "")
+            prefill['reviewers'].push(val['reviewer']);
+          if (val['submitter'] !== "")
+            prefill['submitters'].push(val['submitter']);
         });
 
         prefill['reviewers'] = _.uniq(prefill['reviewers']);
         prefill['submitters'] = _.uniq(prefill['submitters']);
-        if (prefill['reviewers'].length === 0) prefill['noreviewers'] = true;
-        if (prefill['submitters'].length === 0) prefill['nosubmitters'] = true;
+        if (prefill['reviewers'].length === 0)
+          prefill['noreviewers'] = true;
+        if (prefill['submitters'].length === 0)
+          prefill['nosubmitters'] = true;
         render(prefill);
       } else {
         res.send(404, 'There is no entry for ' + req.params.place + ' and ' + req.params.dataset);
@@ -539,7 +552,7 @@ var entryByPlaceDataset = function(req, res) {
   });
 };
 
-var anonLogin = function(req, res) {
+var anonLogin = function (req, res) {
   if (config.get('anonymous_submissions') !== 'TRUE') {
     return res.send(405);
   }
@@ -554,7 +567,7 @@ var anonLogin = function(req, res) {
 
   req.session.nextUrl = req.query.next;
 
-  req.login(user, function(err) {
+  req.login(user, function (err) {
     if (err) {
       return res.send(err.code || 500, err.message || err);
     }
@@ -563,7 +576,7 @@ var anonLogin = function(req, res) {
   });
 };
 
-var login = function(req, res) {
+var login = function (req, res) {
   // TODO: use this stored next url properly ...
   req.session.nextUrl = req.query.next;
   res.render('login.html', {
@@ -571,12 +584,12 @@ var login = function(req, res) {
   });
 };
 
-var logout = function(req, res){
+var logout = function (req, res) {
   req.logout();
   res.redirect('/');
 };
 
-var loggedin = function(req, res) {
+var loggedin = function (req, res) {
   if (req.session.nextUrl) {
     res.redirect(req.session.nextUrl);
   } else {
@@ -585,8 +598,8 @@ var loggedin = function(req, res) {
 };
 
 
-var reload = function(req, res) {
-  model.load(function(err) {
+var reload = function (req, res) {
+  model.load(function (err) {
     var msg = 'Reloaded OK &ndash; <a href="/">Back to home page</a>';
     if (err) {
       console.error('Failed to reload config info');
@@ -596,7 +609,19 @@ var reload = function(req, res) {
   });
 };
 
-var setLocale = function(req, res) {
+var loadReloadDashboard = function(req, res){
+  res.sendfile('./public/reloadDashboard.html');
+};
+
+var reloadPlaces = function(req, res){
+  var subDomain = req.params.domain;
+  res.send({
+    status: 'ok',
+    message: 'error message'
+  });
+};
+
+var setLocale = function (req, res) {
   res.cookie('lang', req.params.locale);
   res.redirect(req.headers.referer || '/');
 };
@@ -614,6 +639,8 @@ module.exports = {
   api: api,
   overview: overview,
   reload: reload,
+  loadReloadDashboard: loadReloadDashboard,
+  reloadPlaces: reloadPlaces,
   anonLogin: anonLogin,
   login: login,
   logout: logout,
