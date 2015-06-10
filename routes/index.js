@@ -615,6 +615,9 @@ var loadReloadDashboard = function(req, res){
 
 var reloadPlaces = function(req, res){
   var subDomain = req.params.domain;
+  console.log('reloadPlaces');
+  console.log(req.isSubDomainExists);
+  console.log(req.params.domain);
   res.send({
     status: 'ok',
     message: 'error message'
