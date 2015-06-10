@@ -5,6 +5,7 @@ var models = require('../models');
 var subDomain = {
   checkIfSubDomainExists: function (req, res, next) {
     var subDomain = getSubDomain(req);
+    var errorResponse = {status: 'error', message: 'You requested an unknown census'};
     if (subDomain) {
       return checkIfSubDomainIsInDb(subDomain).spread(function (err, searchResult) {
         if (err) {
@@ -14,12 +15,16 @@ var subDomain = {
             req.isSubDomainExists = true;
           } else {
             req.isSubDomainExists = false;
+            res.status(404).send(errorResponse);
+            return;
           }
         }
         next();
       });
     } else {
+      res.status(404).send(errorResponse);
       req.isSubDomainExists = false;
+      return;
       next();
     }
   }

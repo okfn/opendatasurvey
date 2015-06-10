@@ -8,6 +8,7 @@ var model = require('../lib/model').OpenDataCensus;
 var marked = require('marked');
 var csv = require('csv');
 var routeUtils = require('./utils');
+var indexLoader = require('../loaders/index');
 
 
 var submit = function (req, res) {
@@ -614,14 +615,7 @@ var loadReloadDashboard = function(req, res){
 };
 
 var reloadPlaces = function(req, res){
-  var subDomain = req.params.domain;
-  console.log('reloadPlaces');
-  console.log(req.isSubDomainExists);
-  console.log(req.params.domain);
-  res.send({
-    status: 'ok',
-    message: 'error message'
-  });
+  indexLoader.loadPlace('placeId');
 };
 
 var setLocale = function (req, res) {

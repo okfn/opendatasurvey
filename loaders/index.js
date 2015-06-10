@@ -10,7 +10,8 @@ var MAIN_CONFIG_FULL_DATA = false;
 
 var indexLoader = {
   loadPlace: function (site_id) {
-
+    console.log('loadPlace');
+    console.log(site_id);
   }
 };
 module.exports = indexLoader;
