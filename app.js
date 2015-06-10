@@ -26,6 +26,7 @@ var sessionSecret = process.env.SESSION_SECRET || 'dummysecret';
 var viewPath = __dirname + '/templates';
 var faviconPath = __dirname + '/public/favicon.ico';
 var subDomainMiddleware = require('./middlewares/subDomain');
+var reloadEntities = require('./middlewares/reloadEntities');
 
 var subdomainOptions = {
   base: config.get('base_domain')
@@ -89,6 +90,7 @@ app.use(compression());
 app.use(favicon(faviconPath));
 app.use(subdomain(subdomainOptions));
 app.use(subDomainMiddleware.checkIfSubDomainExists);
+app.use(reloadEntities.setConfigUrl);
 
 
 

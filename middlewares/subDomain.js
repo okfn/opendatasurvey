@@ -12,6 +12,7 @@ var subDomain = {
           req.isSubDomainExists = false;
         } else {
           if (searchResult) {
+            req.subDomain = subDomain;
             req.isSubDomainExists = true;
           } else {
             req.isSubDomainExists = false;

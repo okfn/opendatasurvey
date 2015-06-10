@@ -610,12 +610,14 @@ var reload = function (req, res) {
   });
 };
 
-var loadReloadDashboard = function(req, res){
+var loadReloadDashboard = function (req, res) {
   res.sendfile('./public/reloadDashboard.html');
 };
 
-var reloadPlaces = function(req, res){
-  indexLoader.loadPlace('placeId');
+var reloadPlaces = function (req, res) {
+  var subDomain = req.subDomain;
+  console.log(req.registryConfig);
+  //indexLoader.loadPlaces(subDomain);
 };
 
 var setLocale = function (req, res) {
