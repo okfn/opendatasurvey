@@ -5,6 +5,10 @@ var ReloadActions = (function () {
       var status = getDefaultReloadStatus();
       $('#reload-status').text(status);
     },
+    setLoadingReloadStatus: function (status) {
+      setNewReloadStatus(status);
+      $('#reload-status-wrapper').css('background-color', 'yellow');
+    },
     setSuccessReloadStatus: function (status) {
       setNewReloadStatus(status);
       $('#reload-status-wrapper').css('background-color', 'yellowgreen');
@@ -16,8 +20,11 @@ var ReloadActions = (function () {
     getSuccessReloadStatus: function () {
       return 'success';
     },
-    getFailedDefaultStatus: function () {
+    getFailedReloadStatus: function () {
       return 'fail';
+    },
+    getloadingReloadStatus: function () {
+      return 'loading...';
     },
     reloadPlaces: function (callback) {
       var url = Routes.getReloadPlacesRoute();
@@ -28,7 +35,7 @@ var ReloadActions = (function () {
         callback(response);
       });
     },
-    reloadDatasets: function () {
+    reloadDatasets: function (callback) {
       var url = Routes.getReloadDatasetsRoute();
       var params = {
         url: url
@@ -37,7 +44,7 @@ var ReloadActions = (function () {
         callback(response);
       });
     },
-    reloadQuestions: function () {
+    reloadQuestions: function (callback) {
       var url = Routes.getReloadQuestionsRoute();
       var params = {
         url: url
@@ -46,7 +53,7 @@ var ReloadActions = (function () {
         callback(response);
       });
     },
-    reloadRegistry: function () {
+    reloadRegistry: function (callback) {
       var url = Routes.getReloadRegistryRoute();
       var params = {
         url: url
@@ -55,7 +62,7 @@ var ReloadActions = (function () {
         callback(response);
       });
     },
-    reloadConfig: function () {
+    reloadConfig: function (callback) {
       var url = Routes.getReloadConfigRoute();
       var params = {
         url: url
@@ -80,6 +87,9 @@ var ReloadActions = (function () {
       cache: false,
       success: function (response) {
         callback(response);
+      },
+      error: function (err) {
+        callback(err);
       }
     });
   }

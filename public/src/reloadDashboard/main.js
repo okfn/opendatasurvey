@@ -13,6 +13,8 @@ var ReloadDashboard = (function () {
 
 function listenToReloadEntitiesRequest() {
   $('.reload-entity').on('click', function () {
+    var newStatus = ReloadActions.getloadingReloadStatus();
+    ReloadActions.setSuccessReloadStatus(newStatus);
     var entityId = $(this).attr('id');
     var reloadCallback = function (response) {
       handleReloadResponse(response);
@@ -45,7 +47,7 @@ function handleReloadResponse(response) {
     newStatus = ReloadActions.getSuccessReloadStatus();
     ReloadActions.setSuccessReloadStatus(newStatus);
   } else {
-    newStatus = ReloadActions.getFailedDefaultStatus() + ' ' + response.message;
+    newStatus = ReloadActions.getFailedReloadStatus() + ' ' + response.message;
     ReloadActions.setFailedReloadStatus(newStatus);
   }
 

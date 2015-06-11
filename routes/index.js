@@ -636,14 +636,11 @@ var reloadPlaces = function (req, res) {
     subDomain: req.subDomain,
     configUrl: req.registryConfig
   };
-//  return indexLoader.loadPlaces(params).spread(function (err, reloadResult) {
-//    var reloadResponse = createReloadResultRepsonse(err, reloadResult);
-//    res.send(reloadResponse);
-//  });
 
-  var batchReload = require('../loaders/batchLoader');
-  batchReload.saveRegistryToDb();
-
+  return indexLoader.loadPlaces(params).spread(function (err, reloadResult) {
+    var reloadResponse = createReloadResultRepsonse(err, reloadResult);
+    res.send(reloadResponse);
+  });
 };
 
 /*

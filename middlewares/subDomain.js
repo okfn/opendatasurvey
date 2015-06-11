@@ -3,6 +3,9 @@ var model = require('../lib/model').OpenDataCensus;
 var models = require('../models');
 
 var subDomain = {
+  /*
+   * check if sub-domain exists in database
+   */
   checkIfSubDomainExists: function (req, res, next) {
     var subDomain = getSubDomain(req);
     var errorResponse = {status: 'error', message: 'You requested an unknown census'};

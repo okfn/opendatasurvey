@@ -9,6 +9,9 @@ var REGISTRY_FULL_DATA = false;
 var MAIN_CONFIG_FULL_DATA = false;
 
 var indexLoader = {
+  /*
+   * load Places from sheet to DB
+   */
   loadPlaces: function (params) {
     var configUrl = params['configUrl'] || false;
     if (configUrl) {
@@ -44,6 +47,9 @@ var indexLoader = {
     }
 
   },
+  /*
+   * load Datasets from sheet to DB
+   */
   loadDatasets: function (params) {
     var configUrl = params['configUrl'];
     var datasetsUrlKey = spreadSheetHandler.getDatasetsUrlKey(configUrl);
@@ -57,7 +63,7 @@ var indexLoader = {
           var site = params['subDomain'];
           var mappedDataset = false;
           parsedDatasets = entitiesConstructor.setSiteValue(parsedDatasets, site);
-          mappedDataset = entitiesConstructor.mapPlaces(parsedDatasets);
+          mappedDataset = entitiesConstructor.mapDatasets(parsedDatasets);
           return Promise.each(mappedDataset, function (signleMappedDataset) {
             return dbTransactions.checkIfDatasetExist(signleMappedDataset['site'])
               .spread(function (err, isRecordExist, recordData) {
@@ -73,10 +79,13 @@ var indexLoader = {
         }
       });
   },
+  /*
+   * load Questions from sheet to DB
+   */
   loadQuestions: function (params) {
     var configUrl = params['configUrl'];
     var questionsUrlKey = spreadSheetHandler.getDatasetsUrlKey(configUrl);
-    var questionsSpreadSheetUrl = spreadSheetHandler.getDatasetsSpreadSheetUrl(questionsUrlKey);
+    var questionsSpreadSheetUrl = spreadSheetHandler.getQuestionsSpreadSheetUrl(questionsUrlKey);
 
     return spreadSheetHandler.parse(questionsSpreadSheetUrl)
       .spread(function (err, parsedQuestions) {
@@ -86,7 +95,7 @@ var indexLoader = {
           var site = params['subDomain'];
           var mappedQuestions = false;
           parsedQuestions = entitiesConstructor.setSiteValue(parsedQuestions, site);
-          mappedQuestions = entitiesConstructor.mapPlaces(parsedQuestions);
+          mappedQuestions = entitiesConstructor.mapQuestions(parsedQuestions);
           return Promise.each(mappedQuestions, function (signleMappedQuestion) {
             return dbTransactions.checkIfQuestionExist(signleMappedQuestion['site'])
               .spread(function (err, isRecordExist, recordData) {
@@ -102,6 +111,9 @@ var indexLoader = {
         }
       });
   },
+  /*
+   * load Registry from sheet to DB
+   */
   loadRegistry: function (params) {
     var site = params['subDomain'];
     var registryUrl = configActions.getRegistryUrl();
@@ -131,6 +143,9 @@ var indexLoader = {
         }
       });
   },
+  /*
+   * load Config (Site) from sheet to DB
+   */
   loadConfig: function (params) {
     var site = params['subDomain'];
     var configUrl = params['configUrl'];
@@ -146,8 +161,7 @@ var indexLoader = {
           deparsedConfig = entitiesConstructor.deparseConfig(configData);
           deparsedConfig = entitiesConstructor.setConfigId(deparsedConfig, site);
           mappedConfig = entitiesConstructor.mapConfig(deparsedConfig);
-
-          console.log(mappedConfig);
+          
           if (mappedConfig) {
             return dbTransactions.checkIfConfigExist(site)
               .spread(function (err, isRecordExist, recordData) {
@@ -166,7 +180,7 @@ var indexLoader = {
       });
   }
 };
-
+//get suitable registry from registry array
 function pullRequiredRegistryFromArray(registryArray, siteId) {
   var result = false;
   for (var i = 0; i < registryArray.length; i++) {
@@ -179,6 +193,7 @@ function pullRequiredRegistryFromArray(registryArray, siteId) {
   return result;
 }
 
+//check if entity exists in database
 function handleCheckIfExistResult(isRecordExist, recordData) {
   if (isRecordExist) {
     return dbTransactions.deleteRecord(recordData);
@@ -187,6 +202,7 @@ function handleCheckIfExistResult(isRecordExist, recordData) {
   }
 }
 
+//process places creation
 function voidSavePlacesProcess(object) {
   return dbTransactions.savePlaces(object)
     .spread(function (err, saveResult) {
@@ -194,6 +210,7 @@ function voidSavePlacesProcess(object) {
     });
 }
 
+//process datasets creation
 function voidSaveDatasetsProcess(object) {
   return dbTransactions.saveDatasets(object)
     .spread(function (err, saveResult) {
@@ -201,6 +218,7 @@ function voidSaveDatasetsProcess(object) {
     });
 }
 
+//process questions creation
 function voidSaveQuestionsProcess(object) {
   return dbTransactions.saveQuestions(object)
     .spread(function (err, saveResult) {
@@ -208,6 +226,7 @@ function voidSaveQuestionsProcess(object) {
     });
 }
 
+//process registry creation
 function voidSaveRegistryProcess(object) {
   return dbTransactions.saveRegistry(object)
     .spread(function (err, saveResult) {
@@ -215,6 +234,7 @@ function voidSaveRegistryProcess(object) {
     });
 }
 
+//process config creation
 function voidSaveConfigProcess(object) {
   return dbTransactions.saveConfig(object)
     .spread(function (err, saveResult) {
@@ -222,6 +242,7 @@ function voidSaveConfigProcess(object) {
     });
 }
 
+//handle results of save functionality
 function handleSaveResult(err, saveResult) {
   var result = false;
   if (err) {

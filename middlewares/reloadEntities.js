@@ -3,6 +3,9 @@ var model = require('../lib/model').OpenDataCensus;
 var models = require('../models');
 
 var reloadEntities = {
+  /*
+   * check subDomain exists in Database and sets 'registryConfig' url
+   */
   setConfigUrl: function (req, res, next) {
     var originalUrl = getOriginalUrl(req);
     if (originalUrl && checkIfReloadActions(originalUrl)) {
@@ -40,7 +43,7 @@ function findSubDomaisInRegistry(subDomain) {
   return models.Registry.find(searchQuery).then(function (searchResult) {
     var data = false;
     if (searchResult && searchResult['dataValues']) {
-      data = true;
+      data = searchResult['dataValues'];
     }
     return [false, data];
   });

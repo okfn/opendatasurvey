@@ -7,6 +7,9 @@ var models = require('../../models');
 var _ = require('underscore');
 
 var dbTransactions = {
+  /*
+   * save entities block
+   */
   savePlaces: function (places) {
     var params = {
       entity: models.Place,
@@ -52,6 +55,9 @@ var dbTransactions = {
       return saveSingleEntityToDb(params);
     }
   },
+  /*
+   * get (find) entities block
+   */
   getAllPlaces: function () {
     return models.sequelize.sync().then(function () {
       models.Place.findAll().then(function (places) {
@@ -89,6 +95,9 @@ var dbTransactions = {
       });
     });
   },
+  /*
+   * check if exists block
+   */
   checkIfPlaceExist: function (siteId) {
     var params = {
       siteId: siteId,
@@ -124,6 +133,9 @@ var dbTransactions = {
     };
     return checkIfEntityExistById(params);
   },
+  /*
+   * delete entity from DB
+   */
   deleteRecord: function (recordObject) {
     return recordObject.destroy({force: true});
   }
@@ -135,11 +147,18 @@ function saveBulkEntitiesToDb(params) {
   var data = params['data'];
   if (data) {
     return models.sequelize.sync().then(function () {
-      return Entity.bulkCreate(data).then(function () {
-        return [false, true];
+      return Entity.bulkCreate(data).catch(function (e) {
+        if (e) {
+          return 'error';
+        }
+      }).then(function (e) {
+        if (e === 'error') {
+          return ['could not save data', false];
+        } else {
+          return [false, true];
+        }
+
       });
-    }).catch(function (e) {
-      return ['could not save data', false];
     });
   } else {
     return ['no data received', false];
@@ -176,15 +195,16 @@ function checkIfEntityExistBySite(params) {
   var Model = params['model'];
   var searchQuery = {where: {site: siteId}};
   return Model.find(searchQuery).catch(function (e) {
-    return false;
+    if (e) {
+      return false;
+    }
   }).then(function (searchResult) {
-    if (!searchResult) {
-      var isExist = false;
-      var recordObject = false;
+    var isExist = false;
+    var recordObject = false;
+    if (searchResult) {
       if (searchResult && searchResult['dataValues']) {
         isExist = true;
         recordObject = searchResult;
-
       }
       return [false, isExist, recordObject];
     } else {
