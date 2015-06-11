@@ -19,11 +19,15 @@
 }
 
 #reload-status-wrapper {
-    margin: 5px 0px 5px 0px; 
+    
     padding: 5px 5px 5px 5px;
     height: 25px;
     text-transform: uppercase;
     background-color: yellow;
+    font-family: arial;
+    color: black;
+    vertical-align: middle;
+    font-size: 14px;
 }
 
 #reload-status {
