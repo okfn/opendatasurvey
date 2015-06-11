@@ -28,7 +28,7 @@ function getOriginalUrl(req) {
 }
 
 function checkIfReloadActions(url) {
-  if (url.indexOf('reload/') > -1) {
+  if (url.indexOf('/reload') > -1) {
     return true;
   } else {
     return false;

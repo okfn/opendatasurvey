@@ -610,13 +610,72 @@ var reload = function (req, res) {
   });
 };
 
+/*
+ * reload entities functionality
+ */
+
+//show reload dashboard
 var loadReloadDashboard = function (req, res) {
   res.sendfile('./public/reloadDashboard.html');
 };
 
-var reloadPlaces = function (req, res) {
-  //indexLoader.loadPlaces(subDomain);
+
+var createReloadResultRepsonse = function (err, reloadResult) {
+  var response = false;
+  if (err) {
+    response = {status: 'error', message: err};
+  } else {
+    response = {status: 'ok', data: 'ok'};
+  }
+  return response;
 };
+/*
+ * reload places
+ */
+var reloadPlaces = function (req, res) {
+  var params = {
+    subDomain: req.subDomain,
+    configUrl: req.registryConfig
+  };
+
+  return indexLoader.loadPlaces(params).spread(function (err, reloadResult) {
+    var reloadResponse = createReloadResultRepsonse(err, reloadResult);
+    res.send(reloadResponse);
+  });
+
+};
+
+/*
+ * reload datasets
+ */
+var reloadDatasets = function (req, res) {
+  var params = {
+    subDomain: req.subDomain,
+    configUrl: req.registryConfig
+  };
+
+  return indexLoader.loadDatasets(params).spread(function (err, reloadResult) {
+    var reloadResponse = createReloadResultRepsonse(err, reloadResult);
+    res.send(reloadResponse);
+  });
+};
+
+/*
+ * reload Questions
+ */
+var reloadQuestions = function (req, res) {
+  var params = {
+    subDomain: req.subDomain,
+    configUrl: req.registryConfig
+  };
+
+  return indexLoader.loadQuestions(params).spread(function (err, reloadResult) {
+    var reloadResponse = createReloadResultRepsonse(err, reloadResult);
+    res.send(reloadResponse);
+  });
+};
+
+
 
 var setLocale = function (req, res) {
   res.cookie('lang', req.params.locale);
@@ -638,6 +697,10 @@ module.exports = {
   reload: reload,
   loadReloadDashboard: loadReloadDashboard,
   reloadPlaces: reloadPlaces,
+  reloadDatasets: reloadDatasets,
+  reloadQuestions: reloadQuestions,
+  //reloadRegistry: reloadRegistry,
+  //reloadConfig: reloadConfig,
   anonLogin: anonLogin,
   login: login,
   logout: logout,

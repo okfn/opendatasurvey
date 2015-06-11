@@ -77,6 +77,44 @@ var dbTransactions = {
         return [false, config];
       });
     });
+  },
+  checkIfPlaceExist: function (siteId) {
+    var params = {
+      siteId: siteId,
+      model: models.Place
+    };
+    return checkIfEntityExistBySite(params);
+  },
+  checkIfDatasetExist: function (siteId) {
+    var params = {
+      siteId: siteId,
+      model: models.Dataset
+    };
+    return checkIfEntityExistBySite(params);
+  },
+  checkIfQuestionExist: function (siteId) {
+    var params = {
+      siteId: siteId,
+      model: models.Question
+    };
+    return checkIfEntityExistBySite(params);
+  },
+  checkIfRegistryExist: function (siteId) {
+    var params = {
+      siteId: siteId,
+      model: models.Registry
+    };
+    return checkIfEntityExistBySite(params);
+  },
+  checkIfConfigExist: function (siteId) {
+    var params = {
+      siteId: siteId,
+      model: models.Site
+    };
+    return checkIfEntityExistBySite(params);
+  },
+  deleteRecord: function (recordObject) {
+    return recordObject.destroy({force: true});
   }
 
 };
@@ -86,7 +124,11 @@ function saveBulkEntitiesToDb(params) {
   var data = params['data'];
   if (data) {
     return models.sequelize.sync().then(function () {
-      return Entity.bulkCreate(data);
+      return Entity.bulkCreate(data).then(function () {
+        return [false, true];
+      });
+    }).catch(function (e) {
+      return ['could not save data', false];
     });
   } else {
     return ['no data received', false];
@@ -104,6 +146,23 @@ function saveSingleEntityToDb(params) {
     return ['no data received', false];
   }
 }
+
+function checkIfEntityExistBySite(params) {
+  var siteId = params['siteId'];
+  var Model = params['model'];
+  var searchQuery = {where: {site: siteId}};
+  return Model.find(searchQuery).then(function (searchResult) {
+    var isExist = false;
+    var recordObject = false;
+    if (searchResult && searchResult['dataValues']) {
+      isExist = true;
+      recordObject = searchResult;
+
+    }
+    return [false, isExist, recordObject];
+  });
+}
+
 
 
 module.exports = dbTransactions;
