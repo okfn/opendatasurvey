@@ -615,8 +615,6 @@ var loadReloadDashboard = function (req, res) {
 };
 
 var reloadPlaces = function (req, res) {
-  var subDomain = req.subDomain;
-  console.log(req.registryConfig);
   //indexLoader.loadPlaces(subDomain);
 };
 
