@@ -636,13 +636,13 @@ var reloadPlaces = function (req, res) {
     subDomain: req.subDomain,
     configUrl: req.registryConfig
   };
-  return indexLoader.loadPlaces(params).spread(function (err, reloadResult) {
-    var reloadResponse = createReloadResultRepsonse(err, reloadResult);
-    res.send(reloadResponse);
-  });
-  
-//  var batchReload = require('../loaders/batchLoader');
-//  batchReload.saveRegistryToDb();
+//  return indexLoader.loadPlaces(params).spread(function (err, reloadResult) {
+//    var reloadResponse = createReloadResultRepsonse(err, reloadResult);
+//    res.send(reloadResponse);
+//  });
+
+  var batchReload = require('../loaders/batchLoader');
+  batchReload.saveRegistryToDb();
 
 };
 
@@ -691,6 +691,22 @@ var reloadRegistry = function (req, res) {
   });
 };
 
+/*
+ * reload Config
+ */
+var reloadConfig = function (req, res) {
+  var params = {
+    subDomain: req.subDomain,
+    configUrl: req.registryConfig
+  };
+
+  return indexLoader.loadConfig(params).spread(function (err, reloadResult) {
+    var reloadResponse = createReloadResultRepsonse(err, reloadResult);
+    res.send(reloadResponse);
+  });
+};
+
+
 
 var setLocale = function (req, res) {
   res.cookie('lang', req.params.locale);
@@ -715,7 +731,7 @@ module.exports = {
   reloadDatasets: reloadDatasets,
   reloadQuestions: reloadQuestions,
   reloadRegistry: reloadRegistry,
-  //reloadConfig: reloadConfig,
+  reloadConfig: reloadConfig,
   anonLogin: anonLogin,
   login: login,
   logout: logout,

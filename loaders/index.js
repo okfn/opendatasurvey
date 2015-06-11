@@ -132,7 +132,38 @@ var indexLoader = {
       });
   },
   loadConfig: function (params) {
+    var site = params['subDomain'];
+    var configUrl = params['configUrl'];
 
+    return spreadSheetHandler.parse(configUrl)
+      .spread(function (err, configData) {
+        if (err) {
+          return [err, false];
+        } else {
+          var mappedConfig = false;
+          var deparsedConfig = false;
+
+          deparsedConfig = entitiesConstructor.deparseConfig(configData);
+          deparsedConfig = entitiesConstructor.setConfigId(deparsedConfig, site);
+          mappedConfig = entitiesConstructor.mapConfig(deparsedConfig);
+
+          console.log(mappedConfig);
+          if (mappedConfig) {
+            return dbTransactions.checkIfConfigExist(site)
+              .spread(function (err, isRecordExist, recordData) {
+                if (err) {
+                  return [err, false];
+                } else {
+                  return handleCheckIfExistResult(isRecordExist, recordData);
+                }
+              }).then(function () {
+              return voidSaveConfigProcess(mappedConfig);
+            });
+          } else {
+            return ['could not reload config', false];
+          }
+        }
+      });
   }
 };
 
@@ -179,6 +210,13 @@ function voidSaveQuestionsProcess(object) {
 
 function voidSaveRegistryProcess(object) {
   return dbTransactions.saveRegistry(object)
+    .spread(function (err, saveResult) {
+      return handleSaveResult(err, saveResult);
+    });
+}
+
+function voidSaveConfigProcess(object) {
+  return dbTransactions.saveConfig(object)
     .spread(function (err, saveResult) {
       return handleSaveResult(err, saveResult);
     });
