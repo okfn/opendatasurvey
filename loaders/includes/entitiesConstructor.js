@@ -69,18 +69,13 @@ var entitiesConstructor = {
   /*
    * map registry to get only required by DB model fields
    */
-  mapRegistry: function (registryObjects) {
-    var mappedObject = [];
-    if (registryObjects && registryObjects.length) {
-      var length = registryObjects.length;
-      for (var i = 0; i < length; i++) {
-        var currentObject = registryObjects[i];
-        var mappedCurrentObject = mainDataMapper.mapRegistryObject(currentObject);
-        if (mappedCurrentObject) {
-          mappedObject.push(mappedCurrentObject);
-        }
+  mapRegistry: function (registry) {
+    if (registry) {
+      if (_.isArray(registry)) {
+        return mapRegistryArray(registry);
+      } else if (_.isObject(registry)) {
+        return  mapRegistryObject(registry);
       }
-      return mappedObject;
     } else {
       return false;
     }
@@ -117,12 +112,18 @@ var entitiesConstructor = {
   /*
    * add 'site' key and value in object
    */
-  setSiteValue: function (entitiesArray, site) {
-    for (var i = 0; i < entitiesArray.length; i++) {
-      entitiesArray[i]['site'] = site;
+  setSiteValue: function (entities, site) {
+    if (_.isObject(entities)) {
+      entities['site'] = site;
     }
 
-    return entitiesArray;
+    if (_.isArray(entities)) {
+      for (var i = 0; i < entities.length; i++) {
+        entities[i]['site'] = site;
+      }
+    }
+
+    return entities;
   },
   /*
    * add 'id' to config object
@@ -132,5 +133,24 @@ var entitiesConstructor = {
     return configObject;
   }
 };
+
+function mapRegistryArray(registryObjectsArray) {
+  var mappedObject = [];
+  var length = registryObjectsArray.length;
+  for (var i = 0; i < length; i++) {
+    var currentObject = registryObjectsArray[i];
+    var mappedCurrentObject = mainDataMapper.mapRegistryObject(currentObject);
+    if (mappedCurrentObject) {
+      mappedObject.push(mappedCurrentObject);
+    }
+  }
+  return mappedObject;
+}
+
+function mapRegistryObject(registryObject) {
+  var mappedObject = false;
+  mappedObject = mainDataMapper.mapRegistryObject(registryObject);
+  return mappedObject;
+}
 
 module.exports = entitiesConstructor;

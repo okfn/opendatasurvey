@@ -7,7 +7,7 @@ var reloadEntities = {
     var originalUrl = getOriginalUrl(req);
     if (originalUrl && checkIfReloadActions(originalUrl)) {
       var subDomain = req.subDomain;
-      return findSubDomainInRegistry(subDomain).spread(function (err, searchResult) {
+      return findSubDomaisInRegistry(subDomain).spread(function (err, searchResult) {
         if (err) {
 
         } else {
@@ -35,16 +35,22 @@ function checkIfReloadActions(url) {
   }
 }
 
-function findSubDomainInRegistry(subDomain) {
+function findSubDomaisInRegistry(subDomain) {
   var searchQuery = {where: {id: subDomain}};
   return models.Registry.find(searchQuery).then(function (searchResult) {
-    var data = searchResult['dataValues'] || false;
+    var data = false;
+    if (searchResult && searchResult['dataValues']) {
+      data = true;
+    }
     return [false, data];
   });
 }
 
 function getConfigFromRegistry(registry) {
-  var configUrl = registry['settings']['configurl'] || false;
+  var configUrl = false;
+  if (registry && registry['settings']) {
+    configUrl = registry['settings']['configurl'] || false;
+  }
   return configUrl;
 }
 

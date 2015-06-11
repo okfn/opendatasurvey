@@ -4,6 +4,7 @@
 
 var model = require('../../lib/model').OpenDataCensus;
 var models = require('../../models');
+var _ = require('underscore');
 
 var dbTransactions = {
   savePlaces: function (places) {
@@ -32,7 +33,12 @@ var dbTransactions = {
       entity: models.Registry,
       data: registryObjects
     };
-    return saveBulkEntitiesToDb(params);
+
+    if (_.isArray(registryObjects)) {
+      return saveBulkEntitiesToDb(params);
+    } else if (_.isObject(registryObjects)) {
+      return saveSingleEntityToDb(params);
+    }
   },
   saveConfig: function (configObject) {
     var params = {
@@ -104,7 +110,7 @@ var dbTransactions = {
       siteId: siteId,
       model: models.Registry
     };
-    return checkIfEntityExistBySite(params);
+    return checkIfEntityExistById(params);
   },
   checkIfConfigExist: function (siteId) {
     var params = {
@@ -136,11 +142,23 @@ function saveBulkEntitiesToDb(params) {
 }
 
 function saveSingleEntityToDb(params) {
+  console.log('saveSingleEntityToDb');
+
   var Entity = params['entity'];
   var data = params['data'];
   if (data) {
     return models.sequelize.sync().then(function () {
-      return Entity.create(data);
+      return Entity.create(data)
+        .catch(function (e) {
+          return 'could not save data';
+        }).then(function (e) {
+        if (e) {
+          return [e, false];
+        } else {
+          return [false, true];
+        }
+
+      });
     });
   } else {
     return ['no data received', false];
@@ -163,6 +181,21 @@ function checkIfEntityExistBySite(params) {
   });
 }
 
+function checkIfEntityExistById(params) {
+  var siteId = params['siteId'];
+  var Model = params['model'];
+  var searchQuery = {where: {id: siteId}};
+  return Model.find(searchQuery).then(function (searchResult) {
+    var isExist = false;
+    var recordObject = false;
+    if (searchResult && searchResult['dataValues']) {
+      isExist = true;
+      recordObject = searchResult;
+
+    }
+    return [false, isExist, recordObject];
+  });
+}
 
 
 module.exports = dbTransactions;

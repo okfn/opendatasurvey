@@ -152,7 +152,7 @@ app.get(scopedPath('/reload'), routes.loadReloadDashboard);
 app.get(scopedPath('/reload/places'), routes.reloadPlaces);
 app.get(scopedPath('/reload/datasets'), routes.reloadDatasets);
 app.get(scopedPath('/reload/questions'), routes.reloadQuestions);
-//app.get(scopedPath('/reload/registry'), routes.reloadRegistry);
+app.get(scopedPath('/reload/registry'), routes.reloadRegistry);
 //app.get(scopedPath('/reload/config'), routes.reloadConfig);
 
 // AUTH ENDPOINTS

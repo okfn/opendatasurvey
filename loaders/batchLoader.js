@@ -1,5 +1,5 @@
 'use strict';
-var config = require('../lib/config');
+var configActions = require('./includes/configActions');
 var entitiesConstructor = require('./includes/entitiesConstructor');
 var spreadSheetHandler = require('./includes/spreadSheetHandler');
 var dbTransactions = require('./includes/dbTransactions');
@@ -13,7 +13,7 @@ var batchLoader = {
    * Load Full Registry Data from Spreasheet to REGISTRY_FULL_DATA const
    */
   loadRegistryData: function () {
-    var registryUrl = getRegistryUrl();
+    var registryUrl = configActions.getRegistryUrl();
 
     try {
       return spreadSheetHandler.parse(registryUrl).spread(function (err, parsedRegistry) {
@@ -139,7 +139,7 @@ var batchLoader = {
         return dbTransactions.saveRegistry(mappedRegistry)
           .then(function (err, saveResult) {
             if (err) {
-
+              return [err, false];
             } else {
               return dbTransactions.getAllRegistry();
             }

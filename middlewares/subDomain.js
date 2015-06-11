@@ -42,7 +42,10 @@ function getSubDomain(req) {
 function checkIfSubDomainIsInDb(subDomain) {
   var searchQuery = {where: {id: subDomain}};
   return models.Registry.find(searchQuery).then(function (searchResult) {
-    var data = searchResult['dataValues'] || false;
+    var data = false;
+    if(searchResult && searchResult['dataValues']){
+      data = true;
+    }
     return [false, data];
   });
 }

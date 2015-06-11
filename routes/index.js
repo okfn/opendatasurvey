@@ -184,7 +184,6 @@ var reviewPost = function (req, res) {
 
 
 var overview = function (req, res) {
-  console.log('overview');
   // sort places by score
   var sortedPlaces = _.sortBy(model.data.places, function (place) {
     return model.data.entries.byplace[place.id].score * -1;
@@ -637,11 +636,13 @@ var reloadPlaces = function (req, res) {
     subDomain: req.subDomain,
     configUrl: req.registryConfig
   };
-
   return indexLoader.loadPlaces(params).spread(function (err, reloadResult) {
     var reloadResponse = createReloadResultRepsonse(err, reloadResult);
     res.send(reloadResponse);
   });
+  
+//  var batchReload = require('../loaders/batchLoader');
+//  batchReload.saveRegistryToDb();
 
 };
 
@@ -675,6 +676,20 @@ var reloadQuestions = function (req, res) {
   });
 };
 
+/*
+ * reload Registry
+ */
+var reloadRegistry = function (req, res) {
+  var params = {
+    subDomain: req.subDomain,
+    configUrl: req.registryConfig
+  };
+
+  return indexLoader.loadRegistry(params).spread(function (err, reloadResult) {
+    var reloadResponse = createReloadResultRepsonse(err, reloadResult);
+    res.send(reloadResponse);
+  });
+};
 
 
 var setLocale = function (req, res) {
@@ -699,7 +714,7 @@ module.exports = {
   reloadPlaces: reloadPlaces,
   reloadDatasets: reloadDatasets,
   reloadQuestions: reloadQuestions,
-  //reloadRegistry: reloadRegistry,
+  reloadRegistry: reloadRegistry,
   //reloadConfig: reloadConfig,
   anonLogin: anonLogin,
   login: login,
