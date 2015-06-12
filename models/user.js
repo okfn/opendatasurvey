@@ -26,6 +26,12 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
+    },
+    authentication_hash: {
+      type: DataTypes.STRING
+    },
+    authentication_salt: {
+      type: DataTypes.STRING
     }
   },
   {

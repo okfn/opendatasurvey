@@ -165,7 +165,8 @@ app.post(scopedPath('/submit'), routes.submit);
 app.get(scopedPath('/submission/:submissionid'), routes.submission);
 app.post(scopedPath('/submission/:submissionid'), routes.reviewPost);
 app.get(scopedPath('/login'), routes.login);
-app.post(scopedPath('/login'), routes.anonLogin);
+//to remove
+//app.post(scopedPath('/login'), routes.anonLogin);
 app.get(scopedPath('/auth/logout'), routes.logout);
 app.get(scopedPath('/auth/loggedin'), routes.loggedin);
 app.get(scopedPath('/'), routes.overview);
