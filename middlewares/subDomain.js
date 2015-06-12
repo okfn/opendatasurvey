@@ -36,9 +36,13 @@ var subDomain = {
 
 
 function getSubDomain(req) {
-  var host = req['headers']['host'];
-  var hostParts = host.split('.');
-  return hostParts[0];
+  var output = false;
+  var host = req['headers']['host'] || false;
+  if (host) {
+    var hostParts = host.split('.');
+    output = hostParts[0];
+  }
+  return output;
 }
 
 
@@ -46,7 +50,7 @@ function checkIfSubDomainIsInDb(subDomain) {
   var searchQuery = {where: {id: subDomain}};
   return models.Registry.find(searchQuery).then(function (searchResult) {
     var data = false;
-    if(searchResult && searchResult['dataValues']){
+    if (searchResult && searchResult['dataValues']) {
       data = true;
     }
     return [false, data];

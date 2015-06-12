@@ -108,9 +108,7 @@ var setupAuth = function () {
       } else {
         done(null, userobj);
       }
-    }
-    )
-    );
+    }));
 
   // At the moment we get all user info on auth and store to cookie so these are both no-ops ...
   passport.serializeUser(function (user, done) {

@@ -26,7 +26,10 @@ var reloadEntities = {
 };
 
 function getOriginalUrl(req) {
-  var originalUrl = req['headers']['referer'] || false;
+  var originalUrl = false;
+  if (req['headers'] && req['headers']['referer']) {
+    originalUrl = req['headers']['referer'];
+  }
   return originalUrl;
 }
 
