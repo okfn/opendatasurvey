@@ -711,6 +711,19 @@ var setLocale = function (req, res) {
   res.redirect(req.headers.referer || '/');
 };
 
+
+//test local login
+var testLocalLogin = function (req, res, next, passport) {
+  passport.authenticate('local-login', function (err, user, info) {
+    if (err) {
+      res.send(err);
+      return;
+    } else {
+      
+    }
+  })(req, res, next);
+};
+
 module.exports = {
   setLocale: setLocale,
   entryByPlaceDataset: entryByPlaceDataset,
@@ -731,6 +744,7 @@ module.exports = {
   reloadRegistry: reloadRegistry,
   reloadConfig: reloadConfig,
   //to remove
+  testLocalLogin: testLocalLogin,
   //anonLogin: anonLogin,
   login: login,
   logout: logout,
