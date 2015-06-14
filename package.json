@@ -63,6 +63,7 @@
     "npm": "2.10.1"
   },
   "scripts": {
+    "start": "node run.js",
     "test": "mocha tests --patient",
     "postinstall": "compile-json locale i18n"
   }

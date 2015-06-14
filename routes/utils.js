@@ -15,6 +15,15 @@ var makeRedirect = function (dest) {
   };
 };
 
+
+var scopedPath = function(relativePath) {
+  if (relativePath == 'tets-login') {
+    console.log('/subdomain/:domain{PATH}'.replace('{PATH}', relativePath));
+  }
+  return '/subdomain/:domain{PATH}'.replace('{PATH}', relativePath);
+};
+
+
 var validateSubmitForm = function (req) {
   /**
    * Ensures validation data is submitted by checking the POST data on
@@ -169,7 +178,7 @@ var setupAuth = function () {
           done(null, false, message);
           return;
         }
-        
+
 //        user.validPassword(password).then(function () {
 //          if (!result) {
 //            var message = 'login credentials not valid';
@@ -199,6 +208,51 @@ var setupAuth = function () {
 
 };
 
+var setLocals = function(req, res, next) {
+  if (config.get('test:testing') === true && !req.user && config.get('test:user')) {
+    req.user = config.get('test:user');
+  }
+  if (req.cookies.lang) {
+    req.locale = req.cookies.lang;
+  }
+  res.locals.currentUser = req.user ? req.user : null;
+
+  if (config.get('appconfig:readonly')) {
+    res.locals.readonly = true;
+    // No session support in readonly mode, so fake it out:
+    req.session = {};
+    req.session.loggedin = false;
+  }
+
+  if (config.get('contribute_page') === '<h1>To set content for this page update your configuration file</h1>' ||
+    config.get('contribute_page') === '' ||
+    config.get('contribute_page') === undefined) {
+    res.locals.has_contribute_page = false;
+  } else {
+    res.locals.has_contribute_page = true;
+  }
+
+  res.locals.locales = config.get('locales');
+  res.locals.currentLocale = req.locale;
+  res.locals.sitename = config.get('title', req.locale);
+  res.locals.sitename_short = config.get('title_short', req.locale);
+  res.locals.custom_css = config.get('custom_css');
+  res.locals.google_analytics_key = config.get('google_analytics_key');
+  res.locals.custom_footer = config.get('custom_footer', req.locale);
+  res.locals.navbar_logo = config.get('navbar_logo', req.locale);
+  res.locals.banner_text = config.get('banner_text', req.locale);
+  res.locals.current_url = 'SCHEME://DOMAIN_PATH'.replace('SCHEME', req.protocol).replace('DOMAIN_', req.get('host')).replace('PATH', req.path);
+  res.locals.current_domain = 'SCHEME://DOMAIN_'.replace('SCHEME', req.protocol).replace('DOMAIN_', req.get('host'));
+  res.locals.post_submission_info = config.get('post_submission_info');
+  res.locals.share_submission_template = config.get('share_submission_template', req.locale);
+  res.locals.share_page_template = config.get('share_page_template', req.locale);
+  res.locals.url_query = req.query;
+  res.locals.error_messages = req.flash('error');
+  res.locals.info_messages = req.flash('info');
+  next();
+
+};
+
 
 module.exports = {
   makeRedirect: makeRedirect,
@@ -206,5 +260,7 @@ module.exports = {
   canReview: canReview,
   validateSubmitForm: validateSubmitForm,
   setupAuth: setupAuth,
-  requireLoggedIn: requireLoggedIn
+  requireLoggedIn: requireLoggedIn,
+  scoped: scopedPath,
+  setLocals: setLocals
 };
