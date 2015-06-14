@@ -4,7 +4,7 @@ var Sequelize = require('sequelize');
 var Site = require('./site');
 
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
 
   var Question = sequelize.define('Question', {
     id: {

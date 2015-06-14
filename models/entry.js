@@ -1,7 +1,7 @@
 'use strict';
 
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
 
   var Entry = sequelize.define('Entry', {
     id: {
@@ -74,7 +74,7 @@ module.exports = function(sequelize, DataTypes) {
   },
   {
     classMethods: {
-      associate: function(models) {
+      associate: function (models) {
 
         Entry.belongsTo(models.User, {
           as: 'Submitter',

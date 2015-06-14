@@ -4,7 +4,7 @@ var Sequelize = require('sequelize');
 var Site = require('./site');
 
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
 
   var Place = sequelize.define('Place', {
     id: {
@@ -24,9 +24,9 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       comment: "The name of the place."
     },
-    description: {
+    slug: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       comment: "A slug of this place name."
     },
     region: {

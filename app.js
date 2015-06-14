@@ -25,18 +25,21 @@ var staticRoot = path.join(__dirname, 'public');
 var sessionSecret = process.env.SESSION_SECRET || 'dummysecret';
 var viewPath = __dirname + '/templates';
 var faviconPath = __dirname + '/public/favicon.ico';
+var subDomainMiddleware = require('./middlewares/subDomain');
+var reloadEntities = require('./middlewares/reloadEntities');
+
 var subdomainOptions = {
   base: config.get('base_domain')
 };
 var validatorOptions = {
   customValidators: {
-    isChoice: function(value) {
-        var choices = ['Yes', 'No', 'Unsure'];
-        if (choices.indexOf(value) > -1) {
-          return true;
-        } else {
-          return false;
-        }
+    isChoice: function (value) {
+      var choices = ['Yes', 'No', 'Unsure'];
+      if (choices.indexOf(value) > -1) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 },
@@ -86,6 +89,10 @@ app.use(cors());
 app.use(compression());
 app.use(favicon(faviconPath));
 app.use(subdomain(subdomainOptions));
+app.use(subDomainMiddleware.checkIfSubDomainExists);
+app.use(reloadEntities.setConfigUrl);
+
+
 
 if (!config.get('test:testing')) {
   app.use(logger('dev'));
@@ -95,8 +102,7 @@ app.locals.urlFor = urlFor;
 i18n.init(app);
 env.express(app);
 
-
-app.all('*', function(req, res, next) {
+app.all('*', function (req, res, next) {
   if (config.get('test:testing') === true && !req.user && config.get('test:user')) {
     req.user = config.get('test:user');
   }
@@ -142,6 +148,12 @@ app.all('*', function(req, res, next) {
 
 // ADMIN ACTIONS
 app.get(scopedPath('/admin/reload'), routes.reload);
+app.get(scopedPath('/reload'), routes.loadReloadDashboard);
+app.get(scopedPath('/reload/places'), routes.reloadPlaces);
+app.get(scopedPath('/reload/datasets'), routes.reloadDatasets);
+app.get(scopedPath('/reload/questions'), routes.reloadQuestions);
+app.get(scopedPath('/reload/registry'), routes.reloadRegistry);
+app.get(scopedPath('/reload/config'), routes.reloadConfig);
 
 // AUTH ENDPOINTS
 app.get(scopedPath('/auth/google'), passport.authenticate('google', authScope.google));
@@ -169,25 +181,23 @@ app.get(scopedPath('/entry/:place/:dataset'), routes.entryByPlaceDataset);
 // REDIRECTS FROM PREVIOUS VERSIONS
 app.get(scopedPath('/country'), routeUtils.makeRedirect(scopedPath('/')));
 app.get(scopedPath('/country/results.json'), routeUtils.makeRedirect(scopedPath('/overview.json')));
-app.get(scopedPath('/country/overview/:place'), function(req, res) {
+app.get(scopedPath('/country/overview/:place'), function (req, res) {
   res.redirect(scopedPath('/place/' + req.params.place));
 });
-app.get(scopedPath('/country/dataset/:dataset'), function(req, res) {
+app.get(scopedPath('/country/dataset/:dataset'), function (req, res) {
   res.redirect(scopedPath('/dataset/' + req.params.dataset));
 });
-app.get(scopedPath('/country/review/:submissionid'), function(req, res) {
+app.get(scopedPath('/country/review/:submissionid'), function (req, res) {
   res.redirect(scopedPath('/submission/' + req.params.submissionid));
 });
-app.get(scopedPath('/country/login'), function(req, res) {
+app.get(scopedPath('/country/login'), function (req, res) {
   res.redirect(scopedPath('/login?next=' + req.query.next));
 });
 app.get(scopedPath('/country/submit'), routeUtils.makeRedirect('/submit'));
-app.get(scopedPath('/country/submission/:id'), function(req, res) {
+app.get(scopedPath('/country/submission/:id'), function (req, res) {
   res.redirect(scopedPath('/submission/' + req.params.id));
 });
-app.get(scopedPath('/country/:place/:dataset'), function(req, res) {
+app.get(scopedPath('/country/:place/:dataset'), function (req, res) {
   res.redirect(scopedPath('/entry/' + req.params.place + '/' + req.params.dataset));
 });
-
-
 exports.app = app;

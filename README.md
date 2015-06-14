@@ -41,6 +41,7 @@ Get a local server setup with the following steps:
 
 ```
 {
+  "system_administrator" : "james.heatfield@domain.tld",    
   "configUrl": "https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=1QvZFGyICiuZmRxVll6peXkND_6QmHl7IQ_BYCw5Sso4&usp=sharing#gid=0",
   "registryUrl": "https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=18jINMw7ifwUoqizc4xaQE8XtF4apPfsmMN43EM-9Pmc&usp=sharing#gid=0",
   "censusid": "demo",
