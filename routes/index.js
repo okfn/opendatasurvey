@@ -552,29 +552,30 @@ var entryByPlaceDataset = function (req, res) {
   });
 };
 
-var anonLogin = function (req, res) {
-  if (config.get('anonymous_submissions') !== 'TRUE') {
-    return res.send(405);
-  }
-
-  var name = req.body.displayName || 'Anonymous';
-  var user = util.makeUserObject({
-    id: 'anonymous',
-    provider: 'okfn',
-    username: 'anonymous',
-    displayName: name
-  });
-
-  req.session.nextUrl = req.query.next;
-
-  req.login(user, function (err) {
-    if (err) {
-      return res.send(err.code || 500, err.message || err);
-    }
-
-    loggedin(req, res);
-  });
-};
+//to remove
+//var anonLogin = function (req, res) {
+//  if (config.get('anonymous_submissions') !== 'TRUE') {
+//    return res.send(405);
+//  }
+//
+//  var name = req.body.displayName || 'Anonymous';
+//  var user = util.makeUserObject({
+//    id: 'anonymous',
+//    provider: 'okfn',
+//    username: 'anonymous',
+//    displayName: name
+//  });
+//
+//  req.session.nextUrl = req.query.next;
+//
+//  req.login(user, function (err) {
+//    if (err) {
+//      return res.send(err.code || 500, err.message || err);
+//    }
+//
+//    loggedin(req, res);
+//  });
+//};
 
 var login = function (req, res) {
   // TODO: use this stored next url properly ...
@@ -710,6 +711,19 @@ var setLocale = function (req, res) {
   res.redirect(req.headers.referer || '/');
 };
 
+
+//test local login
+var testLocalLogin = function (req, res, next, passport) {
+  passport.authenticate('local-login', function (err, user, info) {
+    if (err) {
+      res.send(err);
+      return;
+    } else {
+      
+    }
+  })(req, res, next);
+};
+
 module.exports = {
   setLocale: setLocale,
   entryByPlaceDataset: entryByPlaceDataset,
@@ -729,7 +743,9 @@ module.exports = {
   reloadQuestions: reloadQuestions,
   reloadRegistry: reloadRegistry,
   reloadConfig: reloadConfig,
-  anonLogin: anonLogin,
+  //to remove
+  testLocalLogin: testLocalLogin,
+  //anonLogin: anonLogin,
   login: login,
   logout: logout,
   loggedin: loggedin,

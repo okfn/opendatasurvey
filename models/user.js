@@ -21,6 +21,17 @@ module.exports = function (sequelize, DataTypes) {
     },
     lastName: {
       type: DataTypes.STRING
+    },
+    anonymous: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
+    authentication_hash: {
+      type: DataTypes.STRING
+    },
+    authentication_salt: {
+      type: DataTypes.STRING
     }
   },
   {

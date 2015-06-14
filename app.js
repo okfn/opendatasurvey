@@ -69,6 +69,9 @@ function urlFor(name) {
 }
 
 function scopedPath(relativePath) {
+  if (relativePath == 'tets-login') {
+    console.log('/subdomain/:domain{PATH}'.replace('{PATH}', relativePath));
+  }
   return '/subdomain/:domain{PATH}'.replace('{PATH}', relativePath);
 }
 
@@ -157,6 +160,8 @@ app.get(scopedPath('/reload/config'), routes.reloadConfig);
 
 // AUTH ENDPOINTS
 app.get(scopedPath('/auth/google'), passport.authenticate('google', authScope.google));
+//app.get(scopedPath('/auth/facebook'),);
+//app.get(scopedPath('/auth/local'), );
 app.get(scopedPath('/auth/google/callback'), passport.authenticate('google', authConfig.google));
 app.get(scopedPath('/contribute'), routes.contribute);
 app.get(scopedPath('/setlocale/:locale'), routes.setLocale);
@@ -165,7 +170,6 @@ app.post(scopedPath('/submit'), routes.submit);
 app.get(scopedPath('/submission/:submissionid'), routes.submission);
 app.post(scopedPath('/submission/:submissionid'), routes.reviewPost);
 app.get(scopedPath('/login'), routes.login);
-app.post(scopedPath('/login'), routes.anonLogin);
 app.get(scopedPath('/auth/logout'), routes.logout);
 app.get(scopedPath('/auth/loggedin'), routes.loggedin);
 app.get(scopedPath('/'), routes.overview);

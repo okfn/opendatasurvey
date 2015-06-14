@@ -21,7 +21,7 @@ var ReloadActions = (function () {
       return 'success';
     },
     getFailedReloadStatus: function () {
-      return 'fail';
+      return 'fail - ';
     },
     getloadingReloadStatus: function () {
       return 'loading...';
@@ -76,7 +76,7 @@ var ReloadActions = (function () {
   return main;
 
   function getDefaultReloadStatus() {
-    return 'wating';
+    return 'idle';
   }
 
 
@@ -88,8 +88,10 @@ var ReloadActions = (function () {
       success: function (response) {
         callback(response);
       },
-      error: function (err) {
-        callback(err);
+      error: function (xhr, status, error) {
+        var errorResult = JSON.parse(xhr['responseText'])
+          || {status: 'error', message: error};
+        callback(errorResult);
       }
     });
   }
