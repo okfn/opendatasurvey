@@ -6,7 +6,7 @@ var loaders = require('../loaders');
 
 //show reload dashboard
 var dashboard = function (req, res) {
-  res.sendfile('./public/reloadDashboard.html');
+  res.render('dashboard.html');
 };
 
 
