@@ -2,18 +2,21 @@
 
 var express = require('express');
 var census = require('../controllers/census');
+var utils = require('./utils');
 
-
-var censusRoutes = function() {
+var censusRoutes = function(middlewares) {
 
   var router = express.Router();
 
-  router.get('/submit', census.submit);
-  router.post('/submit', census.submit);
-  router.get('/submission/:submissionid', census.submission);
-  router.post('/submission/:submissionid', census.reviewPost);
+  router.use(middlewares);
+
+  router.get(utils.scoped('/submit'), census.submit);
+  router.post(utils.scoped('/submit'), census.submit);
+  router.get(utils.scoped('/submission/:submissionid'), census.submission);
+  router.post(utils.scoped('/submission/:submissionid'), census.reviewPost);
 
   return router;
+
 };
 
 

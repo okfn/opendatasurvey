@@ -46,34 +46,35 @@ var validatorOptions = {
 app.set('port', config.get('appconfig:port'));
 app.set('views', viewPath);
 
-app.use(express.static(staticRoot, {maxage: cacheAge}));
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
-app.use(methodOverride());
-app.use(session({secret: sessionSecret, resave: true, saveUninitialized: true}));
-app.use(flash());
-app.use(expressValidator(validatorOptions));
-app.use(cors());
-app.use(compression());
-app.use(favicon(faviconPath));
-app.use(subdomain(subdomainOptions));
-app.use(subDomainMiddleware.checkIfSubDomainExists);
-app.use(reloadEntities.setConfigUrl);
+app.use([
+  cookieParser(),
+  bodyParser.urlencoded({extended: true}),
+  bodyParser.json(),
+  methodOverride(),
+  session({secret: sessionSecret, resave: true, saveUninitialized: true}),
+  flash()
+])
 
-if (!config.get('test:testing')) {
-  app.use(logger('dev'));
-}
+var middlewares = [
+  express.static(staticRoot, {maxage: cacheAge}),
+  expressValidator(validatorOptions),
+  cors(),
+  compression(),
+  favicon(faviconPath),
+  subdomain(subdomainOptions),
+  subDomainMiddleware.checkIfSubDomainExists,
+  reloadEntities.setConfigUrl
+];
 
 i18n.init(app);
 env.express(app);
 
 app.all('*', routes.utils.setLocals);
-app.use(routes.utils.scoped(''), routes.pages());
-app.use(routes.utils.scoped('/admin'), routes.admin());
-app.use(routes.utils.scoped('/auth'), routes.auth());
-app.use(routes.utils.scoped('/census'), routes.census());
-app.use(routes.utils.scoped('/api'), routes.api());
-app.use(routes.utils.scoped(''), routes.redirects());
+app.use('/admin', routes.admin(middlewares));
+app.use('/auth', routes.auth(middlewares));
+app.use('/census', routes.census(middlewares));
+app.use('/api', routes.api(middlewares));
+app.use('', routes.pages(middlewares));
+app.use('', routes.redirects(middlewares));
 
 exports.app = app;

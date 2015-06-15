@@ -3,6 +3,7 @@
 var express = require('express');
 var passport = require('passport');
 var auth = require('../controllers/auth');
+var utils = require('./utils');
 var authConfig = {
   google: {
     successRedirect: '/auth/loggedin',
@@ -16,20 +17,22 @@ var authConfig = {
   }
 };
 
-var authRoutes = function() {
+var authRoutes = function(middlewares) {
 
   var router = express.Router();
 
+  router.use(middlewares);
   router.use(passport.initialize());
   router.use(passport.session());
 
-  router.get('/login', auth.login);
-  router.get('/loggedin', auth.loggedin);
-  router.get('/logout', auth.logout);
-  router.get('/google', passport.authenticate('google', authConfig.google.scope));
-  router.get('/google/callback', passport.authenticate('google', authConfig.google));
+  router.get(utils.scoped('/login'), auth.login);
+  router.get(utils.scoped('/loggedin'), auth.loggedin);
+  router.get(utils.scoped('/logout'), auth.logout);
+  router.get(utils.scoped('/google'), passport.authenticate('google', authConfig.google.scope));
+  router.get(utils.scoped('/google/callback'), passport.authenticate('google', authConfig.google));
 
   return router;
+
 };
 
 
