@@ -77,4 +77,6 @@ app.use('/api', routes.api(middlewares));
 app.use('', routes.pages(middlewares));
 app.use('', routes.redirects(middlewares));
 
-exports.app = app;
+module.exports = {
+  app: app
+}
