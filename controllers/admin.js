@@ -6,8 +6,9 @@ var loaderFactory = function(site_id, loader, response) {
   return loader(site_id).spread(function(error, data) {
     if (error) {
       response.send({'status': 'error', message: error});
+    } else {
+      response.send({'status': 'ok', message: 'ok'});
     }
-    response.send({'status': 'ok', message: 'ok'});
   });
 };
 
