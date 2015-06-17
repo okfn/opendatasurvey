@@ -41,7 +41,7 @@ Get a local server setup with the following steps:
 
 ```
 {
-  "system_administrator" : "james.heatfield@domain.tld",    
+  "system_administrator" : "someone@example.com",
   "configUrl": "https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=1QvZFGyICiuZmRxVll6peXkND_6QmHl7IQ_BYCw5Sso4&usp=sharing#gid=0",
   "registryUrl": "https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=18jINMw7ifwUoqizc4xaQE8XtF4apPfsmMN43EM-9Pmc&usp=sharing#gid=0",
   "censusid": "demo",
@@ -61,7 +61,7 @@ Get a local server setup with the following steps:
 
 Now we should be ready to run the server:
 
-1. Run the app with `node run.js`
+1. Run the app with `npm start`
 2. Visit the app in your browser at `http://demo.dev.census.org:5000/`
 
 **NOTE**: Each app instance manages multiple census sites via subdomains. Hence, we require mapping in your hosts file for this. The mappings created above, `demo` and `gb-city` are just for example. Create whatever mapping you will need, and ensure that these are matched by entries in the Registry and Site models (TBD).
