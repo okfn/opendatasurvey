@@ -58,33 +58,22 @@ var indexLoader = {
         if (err)
           return [err, false];
 
-        var cleanObject = function(value, key, list) {
-          if (key === 'censusid') {
-            delete list[key]
-          }
-        };
-
-        var prepData = function(element, index, list) {
-          var treated = {};
-          treated.id = element.censusid;
-          treated.settings = _.each(element, cleanObject);
-          list[index] = treated;
-        };
-
-        var normalized = _.each(registry, prepData);
-
-        if (!normalized)
+        if (!registry)
           return ['could not reload registry', false];
 
-        var queryResults = [];
-
         return models.Registry.count().then(function(C) {
-          if(!hasPermissions && Boolean(C))
+          if (!hasPermissions && Boolean(C))
             return ['You don\'t have enough permissions'];
 
           // Make each upsert (can't do a bulk with upsert, but that is ok for our needs here)
-          return Promise.all(_.map(normalized, function(R) { return new Promise(function(RS, RJ) {
-            models.Registry.upsert(R).then(function() { RS(false); });
+          return Promise.all(_.map(registry, function(R) { return new Promise(function(RS, RJ) {
+
+            // Normalize data before upsert
+            models.Registry.upsert(_.extend(R, {
+              id: R.censusid,
+              settings: _.omit(R, 'censusid')
+            })).then(function() { RS(false); });
+
           }); }));
         });        
       });
