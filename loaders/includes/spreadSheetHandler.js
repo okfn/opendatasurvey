@@ -1,5 +1,4 @@
 var Promise = require('bluebird');
-var util = require('../../lib/util');
 
 var spreadSheetHandler = {
   /*

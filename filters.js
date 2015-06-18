@@ -1,50 +1,52 @@
-var nunjucks = require('nunjucks')
-  , _ = require('underscore')
-  , moment = require('moment')
-  , marked = require('marked')
-;
+'use strict';
 
-var env = new nunjucks.Environment(new nunjucks.FileSystemLoader('templates'));
+var _ = require('underscore');
 
-// linkify plugin for jQuery - automatically finds and changes URLs in text
-// content into proper hyperlinks
-//
-//   Version: 1.0
-//
-//   Copyright (c) 2009
-//     Már Örlygsson (http://mar.anomy.net/) &
-//     Hugsmiðjan ehf. (http://www.hugsmidjan.is)
-//
-// Dual licensed under a MIT licence (http://en.wikipedia.org/wiki/MIT_License)
-// and GPL 2.0 or above (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html).
-(function () {
+
+var urlize = function(str) {
+
+  // linkify plugin for jQuery - automatically finds and changes URLs in text
+  // content into proper hyperlinks
+  //
+  //   Version: 1.0
+  //
+  //   Copyright (c) 2009
+  //     Már Örlygsson (http://mar.anomy.net/) &
+  //     Hugsmiðjan ehf. (http://www.hugsmidjan.is)
+  //
+  // Dual licensed under a MIT licence (http://en.wikipedia.org/wiki/MIT_License)
+  // and GPL 2.0 or above (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html).
+
   var noProtocolUrl = /(^|["'(\s]|&lt;)(www\..+?\..+?)((?:[:?]|\.+)?(?:\s|$)|&gt;|[)"',])/g,
       httpOrMailtoUrl = /(^|["'(\s]|&lt;)((?:(?:https?|ftp):\/\/|mailto:).+?)((?:[:?]|\.+)?(?:\s|$)|&gt;|[)"',])/g;
 
-  //TODO: Parameterize the targetting
-  env.addFilter('urlize', function(str) {
-    return str
-      .replace(noProtocolUrl, '$1<a href=\'<``>://$2\' target=\'_blank\'>$2</a>$3')  // NOTE: we escape `"http` as `"<``>
-      .replace(httpOrMailtoUrl, '$1<a href=\'$2\' target=\'_blank\'>$2</a>$3')
-      .replace(/'<``>/g, '\'http');  // reinsert `"http`
-  });
-}());
+  return str
+    .replace(noProtocolUrl, '$1<a href=\'<``>://$2\' target=\'_blank\'>$2</a>$3')  // NOTE: we escape `"http` as `"<``>
+    .replace(httpOrMailtoUrl, '$1<a href=\'$2\' target=\'_blank\'>$2</a>$3')
+    .replace(/'<``>/g, '\'http');  // reinsert `"http`
+
+};
 
 
-// Addition of wordwrap, also missing from nunjucks
-// Taken from http://james.padolsey.com/javascript/wordwrap-for-javascript/
-env.addFilter('wordwrap', function(str, width, brk, cut) {
+var wordwrap = function(str, width, brk, cut) {
+
+  // Addition of wordwrap, also missing from nunjucks
+  // Taken from http://james.padolsey.com/javascript/wordwrap-for-javascript/
+
   brk = brk || '\n';
   width = width || 75;
   cut = cut || false;
+
   if (!str) {
     return str;
   }
   var regex = '.{1,' +width+ '}(\\s|$)' + (cut ? '|.{' +width+ '}|.+$' : '|\\S+?(\\s|$)');
   return str.match( RegExp(regex, 'g') ).join( brk );
-});
 
-env.addFilter('truncate', function(str, width) {
+};
+
+
+var truncate = function(str, width) {
   width = width || 100;
   if (!str) {
     return str;
@@ -54,11 +56,12 @@ env.addFilter('truncate', function(str, width) {
   } else {
     return str.substr(0,width-1) + "...";
   }
-});
+};
+
 
 // Why? Rotated Heading Cells are hard.
 // every token after "halfway" joined with &nbsp;
-env.addFilter('rotate', function(str) {
+var rotate = function(str) {
   var parts = str.split(/\s+/)
     , split = Math.ceil(parts.length / 2);
 
@@ -69,28 +72,30 @@ env.addFilter('rotate', function(str) {
   } else {
     return str;
   }
-});
+};
 
-env.addFilter('dateformat', function(str, lang, fmt) {
+
+var dateformat = function(str, lang, fmt) {
   fmt = fmt || 'h:mma on Do MMM YYYY';
   lang = lang || 'en';
   return moment(str).lang(lang).format(fmt);
-});
+};
 
 
 // parse the output as markdown
-env.addFilter('marked', function(str) {
+var marked = function(str) {
     return marked(str);
-});
+};
 
 
 // split strings into arrays
-env.addFilter('split', function(str) {
+var split = function(str) {
     return str.split(',');
-});
+};
+
 
 // parse the output as markdown
-env.addFilter('simpledelta', function(str) {
+var simpledelta = function(str) {
     var now = Date.now(),
     then = new Date(str),
     delta = Math.abs(now - then),
@@ -105,7 +110,16 @@ env.addFilter('simpledelta', function(str) {
       return 'COUNT days ago'.replace('COUNT', days)
     }
 
-});
+};
 
 
-module.exports = env;
+module.exports = {
+  urlize: urlize,
+  wordwrap: wordwrap,
+  truncate: truncate,
+  rotate: rotate,
+  dateformat: dateformat,
+  marked: marked,
+  split: split,
+  simpledelta: simpledelta
+};

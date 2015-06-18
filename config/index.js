@@ -24,7 +24,7 @@ nconf.defaults({
   approve_first_submission: 'FALSE',
   anonymous_submissions: 'TRUE',
   reviewers: '',
-  locales: 'en',
+  locales: ['en'],
   disqus_shortname: 'opendatacensus',
   about_page: '<h1>To set content for this page update your configuration file</h1>',
   contribute_page: '<h1>To set content for this page update your configuration file</h1>',
