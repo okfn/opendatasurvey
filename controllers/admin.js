@@ -1,5 +1,11 @@
 'use strict';
 
+function promisedLoad(res, options) {
+  return loaders.loadData(options)
+    .then(function() { res.send({status: 'ok', message: 'ok'}); })
+    .catch(function(E) { res.send({status: 'error', message: E}); });
+}
+
 var _ = require('underscore');
 var loaders = require('../loaders');
 var models = require('../models');
@@ -33,16 +39,12 @@ var loadPlaces = function (req, res) {
   return loaderFactory(req.params.domain, loaders.loadPlaces, res);
 };
 
-var loadDatasets = function (req, res) {
-  return loaders.loadData({
-    mapper : function(D) { return _.extend(D, {name: D.title}) },
-    Model  : models.Dataset,
-    setting: 'datasets',
-    site   : req.params.domain
-  })
-    .then(function() { res.send({status: 'ok', message: 'ok'}); })
-    .catch(function(E) { res.send({status: 'error', message: E}); });
-};
+var loadDatasets = function (req, res) { return promisedLoad(res, {
+  mapper : function(D) { return _.extend(D, {name: D.title}) },
+  Model  : models.Dataset,
+  setting: 'datasets',
+  site   : req.params.domain
+}); };
 
 var loadQuestions = function (req, res) {
   return loaderFactory(req.params.domain, loaders.loadQuestions, res);
