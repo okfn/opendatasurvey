@@ -48,6 +48,9 @@ var indexLoader = {
   },
 
   loadRegistry: function () {
+    // WARN Implement actual permissions check here
+    var hasPermissions = false;
+
     var registryUrl = config.get('registryUrl') || false;
 
     return spreadSheetHandler.parse(registryUrl)
@@ -68,11 +71,6 @@ var indexLoader = {
           list[index] = treated;
         };
 
-        var queryHandler = function(result) {
-          console.log('query handler');
-          console.log(result);
-        };
-
         var normalized = _.each(registry, prepData);
 
         if (!normalized)
@@ -80,22 +78,15 @@ var indexLoader = {
 
         var queryResults = [];
 
-        // make each upsert (can't do a bulk with upsert, but that is ok for our needs here)
-        // _.each(registry, queryHandler);
-        // return the array of promises, or whatever, so the view just calls spread and responds
+        return models.Registry.count().then(function(C) {
+          if(!hasPermissions && Boolean(C))
+            return ['You don\'t have enough permissions'];
 
-        //return models.Registry.upsert(normalized[0]).then(queryHandler);
-
-        // dbTransactions.checkIfRegistryExist(site)
-        //   .spread(function (err, isRecordExist, recordData) {
-        //     if (err) {
-        //       return [err, false];
-        //     } else {
-        //       return handleCheckIfExistResult(isRecordExist, recordData);
-        //     }
-        //   }).then(function () {
-        //     return voidSaveRegistryProcess(mappedRegistry);
-        //   });
+          // Make each upsert (can't do a bulk with upsert, but that is ok for our needs here)
+          return Promise.all(_.map(normalized, function(R) { return new Promise(function(RS, RJ) {
+            models.Registry.upsert(R).then(function() { RS(false); });
+          }); }));
+        });        
       });
   },
 
