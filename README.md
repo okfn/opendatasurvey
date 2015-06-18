@@ -41,11 +41,9 @@ Get a local server setup with the following steps:
 
 ```
 {
-  "system_administrator" : "someone@example.com",
-  "configUrl": "https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=1QvZFGyICiuZmRxVll6peXkND_6QmHl7IQ_BYCw5Sso4&usp=sharing#gid=0",
+  "sysAdmin" : "someone@example.com",
   "registryUrl": "https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=18jINMw7ifwUoqizc4xaQE8XtF4apPfsmMN43EM-9Pmc&usp=sharing#gid=0",
-  "censusid": "demo",
-  "base_domain": "dev.census.org",
+  "baseDomain": "dev.census.org",
   "database": {
     "username": "",
     "password": "",
@@ -53,10 +51,15 @@ Get a local server setup with the following steps:
     "host": "localhost",
     "port": 5432,
     "dialect": "postgres",
-    "underscored": true,
-    "freezeTableName": true
+    "define": {
+      "underscored": true,
+      "charset": "utf-8",
+      "collate": "utf8_general_ci",
+      "timestamps": true
+    }
   }
 }
+
 ```
 
 Now we should be ready to run the server:

@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('underscore');
 var path = require('path');
 var express = require('express');
 var subdomain = require('subdomain');
@@ -13,22 +14,23 @@ var favicon = require('serve-favicon');
 var flash = require('connect-flash');
 var compression = require('compression');
 var expressValidator = require('express-validator');
-var config = require('./lib/config');
-var i18n = require('./lib/i18n');
-var env = require('./lib/templateenv');
+var config = require('./config');
+var i18n = require('i18n-abide');
 var routes = require('./routes');
-
+var nunjucks = require('nunjucks');
+var env;
+var templateFilters = require('./filters');
 var app = express();
 var cacheAge = 3600 * 1000; // in milliseconds
 var staticRoot = path.join(__dirname, 'public');
 var sessionSecret = process.env.SESSION_SECRET || 'dummysecret';
-var viewPath = __dirname + '/templates';
+var viewPath = __dirname + '/views';
 var faviconPath = __dirname + '/public/favicon.ico';
-var subDomainMiddleware = require('./middlewares/subDomain');
-var reloadEntities = require('./middlewares/reloadEntities');
-
+var models = require('./models');
+var middlewares = require('./middlewares');
+var currentYear = new Date().getFullYear();
 var subdomainOptions = {
-  base: config.get('base_domain')
+  base: config.get('baseDomain')
 };
 var validatorOptions = {
   customValidators: {
@@ -43,8 +45,22 @@ var validatorOptions = {
   }
 };
 
+app.set('config', config);
 app.set('port', config.get('appconfig:port'));
 app.set('views', viewPath);
+app.set('models', models);
+app.set('year', currentYear);
+
+env = nunjucks.configure('views', {
+    // autoescape: true,
+    express: app
+});
+
+_.each(templateFilters, function(value, key, list) {
+  env.addFilter(key, value);
+});
+
+app.set('view_env', env);
 
 app.use([
   cookieParser(),
@@ -52,30 +68,40 @@ app.use([
   bodyParser.json(),
   methodOverride(),
   session({secret: sessionSecret, resave: true, saveUninitialized: true}),
-  flash()
+  flash(),
+  i18n.abide({
+    supported_languages: config.get('locales'),
+    default_lang: _.first(config.get('locales')),
+    translation_directory: 'locales'
+  })
 ])
 
-var middlewares = [
+var coreMiddlewares = [
   express.static(staticRoot, {maxage: cacheAge}),
   expressValidator(validatorOptions),
   cors(),
   compression(),
   favicon(faviconPath),
   subdomain(subdomainOptions),
-  // subDomainMiddleware.checkIfSubDomainExists,
-  reloadEntities.setConfigUrl
+  middlewares.reloadEntities.setConfigUrl
 ];
 
-i18n.init(app);
-env.express(app);
 
 app.all('*', routes.utils.setLocals);
-app.use('/admin', routes.admin(middlewares));
-app.use('/auth', routes.auth(middlewares));
-app.use('/census', routes.census(middlewares));
-app.use('/api', routes.api(middlewares));
-app.use('', routes.pages(middlewares));
-app.use('', routes.redirects(middlewares));
+app.use('/admin', routes.admin(coreMiddlewares));
+app.use('/auth', routes.auth(coreMiddlewares));
+app.use('/census', routes.census(coreMiddlewares));
+app.use('/api', routes.api(coreMiddlewares));
+app.use('', routes.pages(coreMiddlewares));
+app.use('', routes.redirects(coreMiddlewares));
+
+routes.utils.setupAuth();
+
+app.get('models').sequelize.sync().then(function () {
+  app.listen(app.get('port'), function () {
+    console.log("Listening on " + app.get('port'));
+  });
+});
 
 module.exports = {
   app: app

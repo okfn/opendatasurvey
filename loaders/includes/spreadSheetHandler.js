@@ -1,5 +1,8 @@
+'use strict';
+
 var Promise = require('bluebird');
-var util = require('../../lib/util');
+var utils = require('../utils');
+
 
 var spreadSheetHandler = {
   /*
@@ -7,9 +10,9 @@ var spreadSheetHandler = {
    */
   parse: function (fileUrl) {
     return new Promise(function (resolve, reject) {
-      var formattedUrl = util.parseSpreadsheetUrl(fileUrl);
-      formattedUrl = util.getCsvUrlForGoogleSheet(fileUrl);
-      util.getCsvData(formattedUrl, function (err, result) {
+      var formattedUrl = utils.parseSpreadsheetUrl(fileUrl);
+      formattedUrl = utils.getCsvUrlForGoogleSheet(fileUrl);
+      utils.getCsvData(formattedUrl, function (err, result) {
         if (err) {
           resolve([err, false]);
         } else {
@@ -26,7 +29,7 @@ var spreadSheetHandler = {
     var placesSheetIndex = false;
 
     placesSheetIndex = getPlacesSheetIndex();
-    placesSpreadSheetUrl = util.getSpreadSheetPage({
+    placesSpreadSheetUrl = utils.getSpreadSheetPage({
       index: placesSheetIndex,
       key: urlKey
     });
@@ -41,7 +44,7 @@ var spreadSheetHandler = {
     var spreadSheetIndex = false;
 
     spreadSheetIndex = getDatasetsSheetIndex();
-    spreadSheetUrl = util.getSpreadSheetPage({
+    spreadSheetUrl = utils.getSpreadSheetPage({
       index: spreadSheetIndex,
       key: urlKey
     });
@@ -56,7 +59,7 @@ var spreadSheetHandler = {
     var spreadSheetIndex = false;
 
     spreadSheetIndex = getQuestionsSheetIndex();
-    spreadSheetUrl = util.getSpreadSheetPage({
+    spreadSheetUrl = utils.getSpreadSheetPage({
       index: spreadSheetIndex,
       key: urlKey
     });
@@ -81,7 +84,7 @@ var spreadSheetHandler = {
     var urlKey = false;
     var configSheetInfo = false;
 
-    configSheetInfo = util.parseSpreadsheetUrl(configUrl);
+    configSheetInfo = utils.parseSpreadsheetUrl(configUrl);
     urlKey = configSheetInfo['key'];
     return urlKey;
   },
@@ -92,7 +95,7 @@ var spreadSheetHandler = {
     var urlKey = false;
     var configSheetInfo = false;
 
-    configSheetInfo = util.parseSpreadsheetUrl(configUrl);
+    configSheetInfo = utils.parseSpreadsheetUrl(configUrl);
     urlKey = configSheetInfo['key'];
     return urlKey;
   }

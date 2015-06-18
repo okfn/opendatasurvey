@@ -3,6 +3,7 @@
 var express = require('express');
 var passport = require('passport');
 var auth = require('../controllers/auth');
+var mixins = require('../controllers/mixins');
 var utils = require('./utils');
 var authConfig = {
   google: {
@@ -17,19 +18,20 @@ var authConfig = {
   }
 };
 
-var authRoutes = function(middlewares) {
+var authRoutes = function(coreMiddlewares) {
 
   var router = express.Router();
+  var coreMixins = [mixins.requireDomain];
 
-  router.use(middlewares);
+  router.use(coreMiddlewares);
   router.use(passport.initialize());
   router.use(passport.session());
 
-  router.get(utils.scoped('/login'), auth.login);
-  router.get(utils.scoped('/loggedin'), auth.loggedin);
-  router.get(utils.scoped('/logout'), auth.logout);
-  router.get(utils.scoped('/google'), passport.authenticate('google', authConfig.google.scope));
-  router.get(utils.scoped('/google/callback'), passport.authenticate('google', authConfig.google));
+  router.get(utils.scoped('/login'), coreMixins, auth.login);
+  router.get(utils.scoped('/loggedin'), coreMixins, auth.loggedin);
+  router.get(utils.scoped('/logout'), coreMixins, auth.logout);
+  router.get(utils.scoped('/google'), coreMixins, passport.authenticate('google', authConfig.google.scope));
+  router.get(utils.scoped('/google/callback'), coreMixins, passport.authenticate('google', authConfig.google));
 
   return router;
 

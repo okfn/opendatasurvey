@@ -1,7 +1,6 @@
 'use strict';
 
-var Sequelize = require('sequelize');
-var Site = require('./site');
+var mixins = require('./mixins');
 
 
 module.exports = function (sequelize, DataTypes) {
@@ -53,10 +52,17 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.ARRAY(DataTypes.TEXT),
       allowNull: true,
       comment: "Questions that depend on this question. Used in UI."
+    },
+    translations: {
+      type: DataTypes.JSONB,
+      allowNull: true
     }
   },
   {
-    tableName: 'question'
+    tableName: 'question',
+    instanceMethods: {
+      translated: mixins.translated
+    }
   });
 
   return Question;

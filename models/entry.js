@@ -40,7 +40,7 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.JSONB,
       allowNull: false
     },
-    submission_notes: {
+    submissionNotes: {
       type: DataTypes.TEXT,
       allowNull: true,
       comment: "A text description from the submitter providing context for this entry."

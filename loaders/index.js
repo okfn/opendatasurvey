@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('underscore');
-var config = require('../lib/config');
+var config = require('../config');
 var models = require('../models');
 var entitiesConstructor = require('./includes/entitiesConstructor');
 var spreadSheetHandler = require('./includes/spreadSheetHandler');
@@ -75,7 +75,7 @@ var indexLoader = {
             })).then(function() { RS(false); });
 
           }); }));
-        });        
+        });
       });
   },
 

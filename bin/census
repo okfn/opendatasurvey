@@ -7,7 +7,7 @@ var path = require('path')
   , os = require('os')
   , colors = require('colors')
 
-  , cli = require('../lib/cli')
+  , cli = require('../cli')
   ;
 
 var argv = optimist
@@ -39,4 +39,3 @@ if(argv._.length > 0 && argv._[0] in cli) {
   console.log(optimist.help());
   process.exit(1);
 }
-

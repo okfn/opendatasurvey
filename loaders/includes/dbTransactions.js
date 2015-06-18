@@ -2,7 +2,6 @@
  * DB Transactions to save and retrieve data
  */
 
-var model = require('../../lib/model').OpenDataCensus;
 var models = require('../../models');
 var _ = require('underscore');
 
@@ -232,4 +231,3 @@ function checkIfEntityExistById(params) {
 
 
 module.exports = dbTransactions;
-

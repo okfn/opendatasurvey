@@ -1,7 +1,6 @@
 'use strict';
 
-var Sequelize = require('sequelize');
-var Site = require('./site');
+var mixins = require('./mixins');
 
 
 module.exports = function (sequelize, DataTypes) {
@@ -38,10 +37,18 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: true,
       comment: "The icon class for this dataset. Used in UI."
+    },
+    translations: {
+      type: DataTypes.JSONB,
+      allowNull: true
     }
+
   },
   {
-    tableName: 'dataset'
+    tableName: 'dataset',
+    instanceMethods: {
+      translated: mixins.translated
+    }
   });
 
   return Dataset;
