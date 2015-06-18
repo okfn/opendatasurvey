@@ -35,9 +35,11 @@ var loadConfig = function (req, res) {
     .catch(function(E) { res.send({'status': 'error', message: E}); });
 };
 
-var loadPlaces = function (req, res) {
-  return loaderFactory(req.params.domain, loaders.loadPlaces, res);
-};
+var loadPlaces = function (req, res) { return promisedLoad(res, {
+  Model: models.Place,
+  setting: 'places',
+  site: req.params.domain
+}); };
 
 var loadDatasets = function (req, res) { return promisedLoad(res, {
   mapper : function(D) { return _.extend(D, {name: D.title}) },
