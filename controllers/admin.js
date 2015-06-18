@@ -48,9 +48,13 @@ var loadDatasets = function (req, res) { return promisedLoad(res, {
   site   : req.params.domain
 }); };
 
-var loadQuestions = function (req, res) {
-  return loaderFactory(req.params.domain, loaders.loadQuestions, res);
-};
+var loadQuestions = function (req, res) { return promisedLoad(res, {
+  mapper : function(D) { return _.extend(D, {dependants: D.dependants.split(','), score: D.score || 0}) },
+  Model  : models.Question,
+  setting: 'questions',
+  site   : req.params.domain
+}); };
+
 
 module.exports = {
   dashboard: dashboard,
