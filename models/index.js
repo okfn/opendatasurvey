@@ -4,14 +4,16 @@ var fs = require('fs');
 var path = require('path');
 var Sequelize = require('sequelize');
 var basename = path.basename(module.filename);
-var config = require('../lib/config').get('database');
+var mixinsFile = path.basename('./mixins.js');
+var config = require('../config').get('database');
 var sequelize = new Sequelize(config.database, config.username, config.password, config);
 var db = {};
 
 fs
   .readdirSync(__dirname)
   .filter(function (file) {
-    return (file.indexOf('.') !== 0) && (file.slice(-1) !== '~') && (file !== basename);
+    return (file.indexOf('.') !== 0) && (file.slice(-1) !== '~')
+      && (file !== basename) && (file !== mixinsFile);
   })
   .forEach(function (file) {
     console.log(file);
