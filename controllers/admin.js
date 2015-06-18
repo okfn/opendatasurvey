@@ -30,7 +30,7 @@ var loadConfig = function (req, res) {
     })
 
     .catch(function(E) {
-      response.send({'status': 'error', message: E});
+      res.send({'status': 'error', message: E});
     });
 };
 
