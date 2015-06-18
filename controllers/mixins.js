@@ -37,7 +37,8 @@ var requireDomain = function(req, res, next) {
 var requireAuth = function (req, res, next) {
 
   if (!req.user) {
-    res.redirect('auth/login/?next=' + encodeURIComponent(req.url));
+    res.redirect('/auth/login/?next=' + encodeURIComponent(req.url));
+    return;
   }
 
   next();
