@@ -4,9 +4,7 @@ var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var LocalStrategy = require('passport-local').Strategy;
-var config = require('../lib/config.js');
-var util = require('../lib/util');
-var model = require('../lib/model').OpenDataCensus;
+var config = require('../config');
 
 
 var makeRedirect = function (dest) {
@@ -17,9 +15,6 @@ var makeRedirect = function (dest) {
 
 
 var scopedPath = function(relativePath) {
-  if (relativePath == 'tets-login') {
-    console.log('/subdomain/:domain{PATH}'.replace('{PATH}', relativePath));
-  }
   return '/subdomain/:domain{PATH}'.replace('{PATH}', relativePath);
 };
 
@@ -61,38 +56,6 @@ var validateSubmitForm = function (req) {
   return errors;
 };
 
-var canReview = function (user, place) {
-  if (!user) {
-    return false;
-  }
-
-  // Get both the main reviewers list...
-  var reviewers = config.get('reviewers') || [];
-  if (!!(~reviewers.indexOf(user.userid) || ~reviewers.indexOf(user.email))) {
-    return true;
-  }
-
-  // ...and the local place reviewers
-  if (place) {
-    var localReviewers = _getLocalReviewers(place);
-    return !!(~localReviewers.indexOf(user.userid) || ~localReviewers.indexOf(user.email));
-  }
-
-  return false;
-};
-
-var isAdmin = function (user) {
-  return (config.get('admins').indexOf(user.userid) !== -1);
-};
-
-var requireLoggedIn = function (req, res) {
-
-  if (!req.user) {
-    res.redirect('/login/?next=' + encodeURIComponent(req.url));
-    return true;
-  }
-};
-
 var _getLocalReviewers = function (place) {
   // Get the local reviewers of a specific place.
   // Not all places have a reviewers column
@@ -108,13 +71,13 @@ var setupAuth = function () {
     profileFields: ['id', 'displayName', 'name', 'username', 'emails', 'photos']
   },
   function (accessToken, refreshToken, profile, done) {
-    var userobj = util.makeUserObject(profile);
+    var userobj = profile;
     if (config.get('user_database_key')) {
-      model.backendUser.createUserIfNotExists(userobj, function (err) {
-        if (err)
-          console.error(err);
-        done(null, userobj);
-      });
+      // model.backendUser.createUserIfNotExists(userobj, function (err) {
+      //   if (err)
+      //     console.error(err);
+      //   done(null, userobj);
+      // });
     } else {
       done(null, userobj);
     }
@@ -156,46 +119,46 @@ var setupAuth = function () {
   /*
    * local strategy
    */
-  passport.use('local', new LocalStrategy({
-    usernameField: 'email',
-    passwordField: 'password',
-    passReqToCallback: true
-  },
-  function (email, password, done) {
-    var searchQuery = {where: {email: email}};
-    model.User.findOne(searchQuery).then(function (user) {
-      if (!user) {
-        var message = 'user not found';
-        done(null, false, message);
-        return;
-      } else {
-        //add some encryption service (encrypt)
-        if(user.authentication_hash === password){
-          done(null, user);
-          return;
-        } else {
-          var message = 'login credentials not valid';
-          done(null, false, message);
-          return;
-        }
+//   passport.use('local', new LocalStrategy({
+//     usernameField: 'email',
+//     passwordField: 'password',
+//     passReqToCallback: true
+//   },
+//   function (email, password, done) {
+//     var searchQuery = {where: {email: email}};
+//     models.User.findOne(searchQuery).then(function (user) {
+//       if (!user) {
+//         var message = 'user not found';
+//         done(null, false, message);
+//         return;
+//       } else {
+//         //add some encryption service (encrypt)
+//         if(user.authentication_hash === password){
+//           done(null, user);
+//           return;
+//         } else {
+//           var message = 'login credentials not valid';
+//           done(null, false, message);
+//           return;
+//         }
 
-//        user.validPassword(password).then(function () {
-//          if (!result) {
-//            var message = 'login credentials not valid';
-//            done(null, false, message);
-//            return;
-//          }
-//
-//          done(null, user);
-//          return;
-//        });
+// //        user.validPassword(password).then(function () {
+// //          if (!result) {
+// //            var message = 'login credentials not valid';
+// //            done(null, false, message);
+// //            return;
+// //          }
+// //
+// //          done(null, user);
+// //          return;
+// //        });
 
-      }
-    }).catch(function (err) {
-      done(err);
-      return;
-    });
-  }));
+//       }
+//     }).catch(function (err) {
+//       done(err);
+//       return;
+//     });
+//   }));
 
   // At the moment we get all user info on auth and store to cookie so these are both no-ops ...
   passport.serializeUser(function (user, done) {
@@ -256,11 +219,8 @@ var setLocals = function(req, res, next) {
 
 module.exports = {
   makeRedirect: makeRedirect,
-  isAdmin: isAdmin,
-  canReview: canReview,
   validateSubmitForm: validateSubmitForm,
   setupAuth: setupAuth,
-  requireLoggedIn: requireLoggedIn,
   scoped: scopedPath,
   setLocals: setLocals
 };
