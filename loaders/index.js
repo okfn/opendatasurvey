@@ -146,38 +146,23 @@ var indexLoader = {
   /*
    * load Config (Site) from sheet to DB
    */
-  loadConfig: function (params) {
-    var site = params['subDomain'];
-    var configUrl = params['configUrl'];
+  loadConfig: function (siteId) {
+    return new Promise(function(RS, RJ) {
+      models.Registry.findById(siteId).then(function(R) {
+        spreadSheetHandler.parse(R.settings.configurl).spread(function (E, C) {
+          if (E)
+            RJ(E);
 
-    return spreadSheetHandler.parse(configUrl)
-      .spread(function (err, configData) {
-        if (err) {
-          return [err, false];
-        } else {
-          var mappedConfig = false;
-          var deparsedConfig = false;
-
-          deparsedConfig = entitiesConstructor.deparseConfig(configData);
-          deparsedConfig = entitiesConstructor.setConfigId(deparsedConfig, site);
-          mappedConfig = entitiesConstructor.mapConfig(deparsedConfig);
-
-          if (mappedConfig) {
-            return dbTransactions.checkIfConfigExist(site)
-              .spread(function (err, isRecordExist, recordData) {
-                if (err) {
-                  return [err, false];
-                } else {
-                  return handleCheckIfExistResult(isRecordExist, recordData);
-                }
-              }).then(function () {
-              return voidSaveConfigProcess(mappedConfig);
-            });
-          } else {
-            return ['could not reload config', false];
-          }
-        }
+          // Insert single record — config for required site
+          models.Site.upsert({
+            id: siteId,
+            settings: _.object(_.zip(_.pluck(C, 'key'), _.pluck(C, 'value')))
+          })
+            .then(function() { RS(false); })
+            .catch(function(E) { RJ(E); });
+        });
       });
+    });
   }
 };
 //get suitable registry from registry array

@@ -20,8 +20,16 @@ var loadRegistry = function (req, res) {
   return loaderFactory(req.params.domain, loaders.loadRegistry, res);
 };
 
+// Config loader doesn't return .spread(), but Promise()
 var loadConfig = function (req, res) {
-  return loaderFactory(req.params.domain, loaders.loadConfig, res);
+  return loaders.loadConfig(req.params.domain)
+    .then(function() {
+      res.send({'status': 'ok', message: 'ok'});
+    })
+
+    .catch(function(E) {
+      response.send({'status': 'error', message: E});
+    });
 };
 
 var loadPlaces = function (req, res) {
