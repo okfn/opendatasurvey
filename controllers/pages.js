@@ -1,49 +1,82 @@
+'use strict';
+
 var _ = require('underscore');
-var config = require('../lib/config');
-var env = require('../lib/templateenv');
-var util = require('../lib/util');
-var model = require('../lib/model').OpenDataCensus;
 var marked = require('marked');
 
 
 var overview = function (req, res) {
-  // sort places by score
-  var sortedPlaces = _.sortBy(model.data.places, function (place) {
-    return model.data.entries.byplace[place.id].score * -1;
+
+  var places = req.app.get('models').Place.findAll({
+    where: {
+      site: req.params.domain
+    }
   });
 
-  var extraWidth = (model.data.datasets.length > 12);
-  // note: model.data.places and model.data.entries.places are different
-  // the latter only has places for which we have some actual results
+  // TODO : sort places by score, for current year
+
+  var datasets = req.app.get('models').Dataset.findAll({
+    where: {
+      site: req.params.domain
+    }
+  });
+
+  // TODO dataset count
+  var extraWidth = (null > 12);
+
+  // TODO: model.data.entries.summary?
+  var summary;
+
+  // TODO: model.data.entries.byplace
+  var byplace;
+
+  // TODO: util.translateRows(model.data.scoredQuestions, req.locale)
+  var questions;
+
+  // TODO: util.translateObject(model.data.placesById, req.locale)
+  var placesById;
+
   res.render('overview.html', {
-    summary: model.data.entries.summary,
+    summary: summary,
     extraWidth: extraWidth,
-    places: util.translateRows(sortedPlaces, req.locale),
-    byplace: model.data.entries.byplace,
-    datasets: util.translateRows(model.data.datasets, req.locale),
-    scoredQuestions: util.translateRows(model.data.scoredQuestions, req.locale),
-    placesById: util.translateObject(model.data.placesById, req.locale),
-    custom_text: config.get('overview_page', req.locale),
-    missing_place_html: config.get('missing_place_html', req.locale)
+    places: places, // TODO: translate
+    byplace: byplace,
+    datasets: datasets, // TODO: translate
+    scoredQuestions: questions,
+    placesById: placesById,
+    custom_text: req.app.get('config').get('overview_page', req.locale),
+    missing_place_html: req.app.get('config').get('missing_place_html', req.locale)
   });
 };
 
+
 var faq = function (req, res) {
-  var tmpl = env.getTemplate('_snippets/questions.html');
-  var questionInfo = tmpl.render({
-    gettext: res.locals.gettext,
-    questions: util.translateQuestions(model.data.questions, req.locale)
+
+  var qTmpl = req.app.get('view_env').getTemplate('_snippets/questions.html');
+  var dTmpl = req.app.get('view_env').getTemplate('_snippets/datasets.html');
+  var gettext = res.locals.gettext;
+
+  // TODO: util.translateQuestions(model.data.questions, req.locale)
+  var questions = req.app.get('models').Question.findAll({
+    where: {
+      site: req.params.domain
+    }
   });
-  var dataTmpl = env.getTemplate('_snippets/datasets.html');
-  var dataInfo = dataTmpl.render({
-    gettext: res.locals.gettext,
-    datasets: util.markupRows(util.translateRows(model.data.datasets, req.locale))
-  });
-  var missingPageHtml = config.get('missing_place_html', req.locale);
-  var content = marked(config.get('faq_page', req.locale))
-    .replace('{{questions}}', questionInfo)
-    .replace('{{datasets}}', dataInfo)
-    .replace('{{missing_place}}', missingPageHtml);
+
+  // TODO: util.markupRows(util.translateRows(model.data.datasets, req.locale))
+  var datasets = req.app.get('models').Dataset.findAll({
+    where: {
+      site: req.params.domain
+    }
+  })
+
+  var qContent = qTmpl.render({gettext: gettext, questions: questions});
+  var dContent = dTmpl.render({gettext: gettext, datasets: datasets});
+  var mContent = req.app.get('config').get('missing_place_html', req.locale);
+
+  var content = marked(req.app.get('config').get('faq_page', req.locale))
+    .replace('{{questions}}', qContent)
+    .replace('{{datasets}}', dContent)
+    .replace('{{missing_place}}', mContent);
 
   res.render('base.html', {
     content: content,
@@ -53,146 +86,150 @@ var faq = function (req, res) {
 
 var changes = function (req, res) {
 
-  var changeItems = [];
-
-  // fetch all submissions
-  model.backend.getSubmissions({
-    year: config.get('submit_year')
-  }, function (err, submissions) {
-    submissions = _.sortBy(submissions, function (submission) {
-      return submission.timestamp;
-    });
-
-    // fetch all entries
-    // var entries = _.sortBy(model.data.entries.results, function(entry) {
-    //   return entry.timestamp;
-    // });
-
-    submissions = addPlaceAndName(submissions);
-    // entries = addPlaceAndName(entries);
-
-    submissions.forEach(function (submission) {
-      changeItems.push(transformToChangeItem(submission, 'Submission'));
-    });
-
-    // entries.forEach(function(entry) {
-    //     changeItems.push(transformToChangeItem(entry, 'Entry'));
-    // });
-
-    function transformToChangeItem(obj, type) {
-      var url;
-      if (obj.reviewresult === 'accepted') {
-        url = '/entry/PLACE/DATASET'
-          .replace('PLACE', obj.place)
-          .replace('DATASET', obj.dataset);
-      } else {
-        url = obj.details_url || '/submission/ID'.replace('ID', obj.submissionid);
-      }
-      return {
-        type: type,
-        timestamp: obj.timestamp,
-        dataset_title: obj.dataset_title,
-        place_name: obj.place_name,
-        url: url,
-        status: obj.reviewresult,
-        submitter: obj.submitter,
-        reviewer: obj.reviewer
-      };
-    }
-
-    function sortByDate(a, b) {
-      var date_a = Date.parse(a.timestamp),
-        date_b = Date.parse(b.timestamp);
-      if (date_a > date_b) {
-        return 1;
-      }
-      if (date_a < date_b) {
-        return -1;
-      }
-      return 0;
-    }
-
-    res.render('changes.html', {
-      changeitems: changeItems.sort(sortByDate).slice(-500).reverse()
-    });
+  var submissions = req.app.get('models').Entry.findAll({
+    where: {
+      site: req.params.domain,
+      year: req.app.get('year'),
+      is_current: false
+    },
+    order: 'updated_at DESC'
   });
 
-  function addPlaceAndName(entries) {
-    return _.each(entries, function (entry) {
-      entry.dataset_title = util.translate(model.data.datasetsById[entry.dataset], req.locale).title;
-      entry.place_name = util.translate(model.data.placesById[entry.place], req.locale).name;
-      return entry;
-    });
+  function transformSubmissions(results) {
+    // adjust for new ORM objects
+    // TODO: check this
+    var results = _.each(results, transformToChangeItem);
   }
+
+  function transformToChangeItem(obj, type) {
+    var url;
+    if (obj.reviewresult === 'accepted') {
+      url = '/entry/PLACE/DATASET'
+        .replace('PLACE', obj.place)
+        .replace('DATASET', obj.dataset);
+    } else {
+      url = obj.details_url || '/submission/ID'.replace('ID', obj.submissionid);
+    }
+    return {
+      type: type,
+      timestamp: obj.timestamp,
+      dataset_title: obj.dataset_title,
+      place_name: obj.place_name,
+      url: url,
+      status: obj.reviewresult,
+      submitter: obj.submitter,
+      reviewer: obj.reviewer
+    };
+  }
+
+  // TODO: transform submissions - is this still relevant?
+  // TODO: fix the promise - I'm just mocking here
+  submissions.then(transformSubmissions).then(
+    res.render('changes.html', {
+      changeitems: submissions
+    })
+  );
+
 };
 
+
 var contribute = function (req, res) {
-  var text = config.get('contribute_page', req.locale);
+
+  var text = req.app.get('config').get('contribute_page', req.locale);
   var content = marked(text);
+
   res.render('base.html', {
     content: content,
     title: 'Contribute'
   });
+
 };
 
+
+var about = function (req, res) {
+  var text = req.app.get('config').get('about_page', req.locale);
+  var content = marked(text);
+  res.render('base.html', {
+    content: content,
+    title: 'About'
+  });
+};
+
+
 var resultJson = function (req, res) {
-  res.json(model.data.entries);
+
+  var entries = req.app.get('models').Entry.findAll({
+    where: {
+      site: req.params.domain,
+      year: req.app.get('year'),
+      is_current: true
+    }
+  });
+
+  entries.then(function(results){
+    res.json(results);
+  });
+
 };
 
 //Show details per country. Extra/different functionality for reviewers.
 var place = function (req, res) {
-  if (!(req.params.place) in model.data.placesById) {
-    res.send(404, 'There is no place with ID ' + place + ' in our database. Are you sure you have spelled it correctly? Please check the <a href="/">overview page</a> for the list of places');
-    return;
-  }
-  var place = model.data.placesById[req.params.place];
 
-  model.backend.getPlace(place.id, function (err, info) {
-    if (err) {
-      res.send(500, err);
-      return;
+  var place = req.app.get('models').Place.findOne({
+    where: {
+      id: req.params.place,
+      site: req.params.domain
+    }
+  });
+
+  // TODO: check this works
+  place.then(function(result) {
+    if (!result) {
+      return res.send(404, 'There is no place with ID ' + place + ' in our database. Are you sure you have spelled it correctly? Please check the <a href="/">overview page</a> for the list of places');
+    } else {
+
+      var placeEntries;
+
+      var placeSubmissions;
+
+      // TODO: util.translateRows(model.data.datasets, req.locale)
+      var placeDatasets;
+
+      // TODO: util.translateRows(model.data.scoredQuestions, req.locale)
+      var placeQuestions;
+
+      // TODO: in final promise
+      res.render('country/place.html', {
+        info: placeEntries,
+        datasets: placeDatasets,
+        submissions: placeSubmissions,
+        entrys: placeEntries, // TODO: ???? check this - what is different from info?
+        place: place, // TODO: util.translate(place, req.locale)
+        scoredQuestions: placeQuestions,
+        loggedin: req.session.loggedin,
+        display_year: req.app.get('year')
+      });
+
     }
 
-    // TODO: move this to model
-    var entrys = _.reduce(info.entrys, function (o, entry) {
-      var existing = o[entry.dataset];
-      // assign if no entry or year is later
-      if (!existing || parseInt(entry.year, 10) >= parseInt(existing.year, 10)) {
-        entry['ycount'] = util.scoreOpenness(model.data, entry);
-        o[entry.dataset] = entry;
-      }
-      return o;
-    }, {});
-
-    var submissions = _.reduce(info.submissions, function (o, submission) {
-      submission['ycount'] = util.scoreOpenness(model.data, submission);
-      if (!(submission.dataset in o))
-        o[submission.dataset] = [];
-      o[submission.dataset].push(submission);
-      return o;
-    }, {});
-
-    res.render('country/place.html', {
-      info: model.data.entries,
-      datasets: util.translateRows(model.data.datasets, req.locale),
-      submissions: submissions,
-      entrys: entrys,
-      place: util.translate(place, req.locale),
-      scoredQuestions: util.translateRows(model.data.scoredQuestions, req.locale),
-      loggedin: req.session.loggedin,
-      display_year: config.get('display_year')
-    });
   });
+
 };
 
 //Show details per dataset
 var dataset = function (req, res) {
-  var dataset = model.data.datasetsById[req.params.dataset];
+
+  var dataset = req.app.get('models').Dataset.findOne({
+    where: {
+      id: req.params.dataset,
+      site: req.params.domain
+    }
+  });
 
   function cleanResultSet(results) {
     var lookup = _.pluck(results, 'place'),
-      redundants = findRedundants(lookup),
-      clean_results = [];
+        redundants = findRedundants(lookup),
+        clean_results = [];
 
     function sorter(a, b) {
       if (a.ycount > b.ycount)
@@ -221,7 +258,7 @@ var dataset = function (req, res) {
     function removeRedundants(results) {
       _.each(results, function (entry) {
         if (_.contains(redundants, entry.place) &&
-          entry.year !== config.get('submit_year')) {
+            entry.year !== req.app.get('year')) {
           // dont want it!
         } else {
           clean_results.push(entry);
@@ -232,117 +269,93 @@ var dataset = function (req, res) {
     return removeRedundants(results).sort(sorter);
   }
 
-  if (!dataset) {
-    res.send(404, 'Dataset not found. Are you sure you have spelled it correctly?');
-    return;
-  }
+  // TODO: check this works
+  dataset.then(function(result) {
+    if (!result) {
+      return res.send(404, 'Dataset not found. Are you sure you have spelled it correctly?');
+    } else {
 
-  model.backend.getEntrys({
-    dataset: req.params.dataset,
-    year: {'<=': config.get('display_year')}
-  }, function (err, entriesForThisDataset) {
-    if (err)
-      throw err;
-    entriesForThisDataset.forEach(function (entry) {
-      entry.ycount = util.scoreOpenness(model.data, entry);
-    });
-    res.render('country/dataset.html', {
-      bydataset: cleanResultSet(entriesForThisDataset),
-      placesById: util.translateObject(model.data.placesById, req.locale),
-      scoredQuestions: util.translateRows(model.data.scoredQuestions, req.locale),
-      dataset: util.markup(util.translate(dataset, req.locale))
-    });
+      // TODO: cleanResultSet(entriesForThisDataset)
+      var datasetEntries;
+
+      // TODO: util.translateObject(model.data.placesById, req.locale)
+      var datasetPlaces;
+
+      // TODO: util.translateRows(model.data.scoredQuestions, req.locale)
+      var datasetQuestions;
+
+      // TODO: util.markup(util.translate(dataset, req.locale))
+      var dataset;
+
+      // TODO: in final promise
+      res.render('country/dataset.html', {
+        bydataset: datasetEntries,
+        placesById: datasetPlaces,
+        scoredQuestions: datasetQuestions,
+        dataset: dataset
+      });
+
+    }
+
   });
+
 };
 
-/* Single Entry Page */
-var entries = function (req, res) {
-  var dataset = _.findWhere(model.data.datasets, {
-    id: req.params.dataset
-  });
-  if (!dataset) {
-    return res.send(404, res.locals.format('There is no entry for %(place)s and %(dataset)s', {
+
+var entry = function (req, res) {
+
+  // TODO: we could break old urls and lookup entries by uuid
+  var entry = req.app.get('models').Entry.findOne({
+    where: {
+      site: req.params.domain,
       place: req.params.place,
-      dataset: req.params.dataset
-    }, req.locale));
-  }
+      dataset: req.params.dataset,
+      is_current: true
+    }
+  });
 
-  var place = model.data.placesById[req.params.place];
-  var ynquestions = model.data.questions.slice(0, 9);
-
-  function render(prefill_) {
-    res.render('country/entry.html', {
-      ynquestions: util.translateQuestions(ynquestions, req.locale),
-      questions: util.translateQuestions(model.data.questions, req.locale),
-      scoredQuestions: util.translateRows(model.data.scoredQuestions, req.locale),
-      datasets: util.translateRows(model.data.datasets, req.locale),
-      dataset: util.markup(util.translate(dataset, req.locale)),
-      place: util.translate(place, req.locale),
-      prefill: prefill_
-    });
-  }
-
-  // look up if there is an entry and if so we use it to prepopulate the form
-  var prefill = [];
-
-  model.backend.getEntry({
-    place: req.params.place,
-    dataset: req.params.dataset,
-    //TODO: next year, extend to /2013/, etc.
-    year: config.get('display_year')
-  }, function (err, obj) {
-    if (obj) { // we might have a got a 404 etc
-      prefill = _.extend(obj, prefill);
-    } else {
+  entry.then(function(result) {
+    if (!result) {
       return res.send(404, res.locals.format('There is no entry for %(place)s and %(dataset)s', {
         place: req.params.place,
         dataset: req.params.dataset
       }, req.locale));
+    } else {
+
+      // TODO: ynquestions = model.data.questions.slice(0, 9);
+      // TODO: util.translateQuestions(ynquestions, req.locale)
+      var ynquestions;
+
+      // TODO: util.translateQuestions(model.data.questions, req.locale)
+      var questions;
+
+      // TODO: util.translateRows(model.data.scoredQuestions, req.locale)
+      var scoredQuestions;
+
+      // TODO: util.translateRows(model.data.datasets, req.locale)
+      var datasets;
+
+      // TODO:util.markup(util.translate(dataset, req.locale))
+      var dataset;
+
+      // TODO: util.translate(place, req.locale)
+      var place;
+
+      res.render('country/entry.html', {
+        ynquestions: ynquestions,
+        questions: questions,
+        scoredQuestions: scoredQuestions,
+        datasets: datasets,
+        dataset: dataset,
+        place: place,
+        prefill: entry
+      });
+
     }
-
-    model.backend.getSubmissions({
-      place: req.params.place,
-      dataset: req.params.dataset,
-      //TODO: next year, extend to /2013/, etc.
-      year: config.get('display_year')
-    }, function (err, obj) {
-      // we allow query args to override entry values
-      // might be useful (e.g. if we started having form errors and redirecting
-      // here ...)
-      if (obj) { // we might have a got a 404 etc
-        prefill['reviewers'] = [];
-        prefill['submitters'] = [];
-
-        _.each(obj, function (val) {
-          if (val['reviewer'] !== "")
-            prefill['reviewers'].push(val['reviewer']);
-          if (val['submitter'] !== "")
-            prefill['submitters'].push(val['submitter']);
-        });
-
-        prefill['reviewers'] = _.uniq(prefill['reviewers']);
-        prefill['submitters'] = _.uniq(prefill['submitters']);
-        if (prefill['reviewers'].length === 0)
-          prefill['noreviewers'] = true;
-        if (prefill['submitters'].length === 0)
-          prefill['nosubmitters'] = true;
-        render(prefill);
-      } else {
-        res.send(404, 'There is no entry for ' + req.params.place + ' and ' + req.params.dataset);
-        return;
-      }
-    });
   });
-};
 
-var about = function (req, res) {
-  var text = config.get('about_page', req.locale);
-  var content = marked(text);
-  res.render('base.html', {
-    content: content,
-    title: 'About'
-  });
-};
+}
+
 
 module.exports = {
   overview: overview,
@@ -353,5 +366,5 @@ module.exports = {
   resultJson: resultJson,
   place: place,
   dataset: dataset,
-  entries: entries
+  entry: entry
 }
