@@ -1,6 +1,7 @@
-var Promise = require('bluebird');
-var model = require('../lib/model').OpenDataCensus;
+'use strict';
+
 var models = require('../models');
+
 
 var reloadEntities = {
   /*
