@@ -11,6 +11,7 @@ var requireDomain = function(req, res, next) {
   } else {
 
     // TEMP
+    // TODO: remove this!
     next();
     return;
     // END TEMP
