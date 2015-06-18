@@ -34,7 +34,6 @@
     "passport-local": "^1.0.0",
     "pg": "^4.3.0",
     "pg-hstore": "^2.3.2",
-    "promise-polyfill": "^2.0.2",
     "q": "^1.4.1",
     "request": "^2.56.0",
     "scrypt": "^4.0.7",
