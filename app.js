@@ -62,7 +62,7 @@ var middlewares = [
   compression(),
   favicon(faviconPath),
   subdomain(subdomainOptions),
-  subDomainMiddleware.checkIfSubDomainExists,
+  // subDomainMiddleware.checkIfSubDomainExists,
   reloadEntities.setConfigUrl
 ];
 
