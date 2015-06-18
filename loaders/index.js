@@ -45,8 +45,40 @@ var indexLoader = {
         resolve(['reload failed', false]);
       });
     }
-
   },
+
+  loadRegistry: function () {
+    // WARN Implement actual permissions check here
+    var hasPermissions = false;
+
+    var registryUrl = config.get('registryUrl') || false;
+
+    return spreadSheetHandler.parse(registryUrl)
+      .spread(function (err, registry) {
+        if (err)
+          return [err, false];
+
+        if (!registry)
+          return ['could not reload registry', false];
+
+        return models.Registry.count().then(function(C) {
+          if (!hasPermissions && Boolean(C))
+            return ['You don\'t have enough permissions'];
+
+          // Make each upsert (can't do a bulk with upsert, but that is ok for our needs here)
+          return Promise.all(_.map(registry, function(R) { return new Promise(function(RS, RJ) {
+
+            // Normalize data before upsert
+            models.Registry.upsert(_.extend(R, {
+              id: R.censusid,
+              settings: _.omit(R, 'censusid')
+            })).then(function() { RS(false); });
+
+          }); }));
+        });        
+      });
+  },
+
   /*
    * load Datasets from sheet to DB
    */
@@ -221,62 +253,4 @@ function handleSaveResult(err, saveResult) {
   return result;
 }
 
-var loadRegistry = function () {
-
-  var registryUrl = config.get('registryUrl') || false;
-
-  return spreadSheetHandler.parse(registryUrl)
-    .spread(function (err, registry) {
-      if (err) {
-        return [err, false];
-      } else {
-
-        var cleanObject = function(value, key, list) {
-          if (key === 'censusid') {
-            delete list[key]
-          }
-        };
-
-        var prepData = function(element, index, list) {
-          var treated = {};
-          treated.id = element.censusid;
-          treated.settings = _.each(element, cleanObject);
-          list[index] = treated;
-        };
-
-        var queryHandler = function(result) {
-          console.log('query handler');
-          console.log(result);
-        };
-
-        var normalized = _.each(registry, prepData);
-        if (normalized) {
-          var queryResults = [];
-
-          // make each upsert (can't do a bulk with upsert, but that is ok for our needs here)
-          // _.each(registry, queryHandler);
-          // return the array of promises, or whatever, so the view just calls spread and responds
-
-          //return models.Registry.upsert(normalized[0]).then(queryHandler);
-
-          // dbTransactions.checkIfRegistryExist(site)
-          //   .spread(function (err, isRecordExist, recordData) {
-          //     if (err) {
-          //       return [err, false];
-          //     } else {
-          //       return handleCheckIfExistResult(isRecordExist, recordData);
-          //     }
-          //   }).then(function () {
-          //     return voidSaveRegistryProcess(mappedRegistry);
-          //   });
-        } else {
-          return ['could not reload registry', false];
-        }
-      }
-    });
-};
-
-
-module.exports = {
-  loadRegistry: loadRegistry
-};
+module.exports = indexLoader;
