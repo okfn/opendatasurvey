@@ -26,6 +26,7 @@ var viewPath = __dirname + '/templates';
 var faviconPath = __dirname + '/public/favicon.ico';
 var subDomainMiddleware = require('./middlewares/subDomain');
 var reloadEntities = require('./middlewares/reloadEntities');
+var models = require('./models');
 
 var subdomainOptions = {
   base: config.get('base_domain')
@@ -45,6 +46,7 @@ var validatorOptions = {
 
 app.set('port', config.get('appconfig:port'));
 app.set('views', viewPath);
+app.set('models', models);
 
 app.use([
   cookieParser(),
@@ -76,6 +78,16 @@ app.use('/census', routes.census(middlewares));
 app.use('/api', routes.api(middlewares));
 app.use('', routes.pages(middlewares));
 app.use('', routes.redirects(middlewares));
+
+
+
+routes.utils.setupAuth();
+
+app.get('models').sequelize.sync().then(function () {
+  app.listen(app.get('port'), function () {
+    console.log("Listening on " + app.get('port'));
+  });
+});
 
 module.exports = {
   app: app
