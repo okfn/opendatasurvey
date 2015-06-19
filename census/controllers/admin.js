@@ -10,22 +10,17 @@ var _ = require('underscore');
 var loaders = require('../loaders');
 var models = require('../models');
 
-var loaderFactory = function(site_id, loader, response) {
-  return loader(site_id).spread(function(error, data) {
-    if (error) {
-      response.send({'status': 'error', message: error});
-    } else {
-      response.send({'status': 'ok', message: 'ok'});
-    }
-  });
-};
-
 var dashboard = function (req, res) {
   res.render('dashboard.html');
 };
 
 var loadRegistry = function (req, res) {
-  return loaderFactory(req.params.domain, loaders.loadRegistry, res);
+  return loaders.loadRegistry(req.params.domain).spread(function(error, data) {
+    if (error)
+      res.send({'status': 'error', message: error});
+    else
+      res.send({'status': 'ok', message: 'ok'});
+  });
 };
 
 // Config loader doesn't return .spread(), but Promise()
