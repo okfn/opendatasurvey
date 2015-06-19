@@ -1,7 +1,7 @@
 'use strict';
 
 function promisedLoad(res, options) {
-  return loaders.loadData(options)
+  return loaders.loadTranslatedData(options)
     .then(function() { res.send({status: 'ok', message: 'ok'}); })
     .catch(function(E) { res.send({status: 'error', message: E}); });
 }
@@ -41,10 +41,11 @@ var loadDatasets = function (req, res) { return promisedLoad(res, {
 }); };
 
 var loadQuestions = function (req, res) { return promisedLoad(res, {
-  mapper : function(D) { return _.extend(D, {dependants: D.dependants.split(','), score: D.score || 0}) },
-  Model  : models.Question,
-  setting: 'questions',
-  site   : req.params.domain
+  mapper   : function(D) { return _.extend(D, {dependants: D.dependants.split(','), score: D.score || 0}) },
+  Model    : models.Question,
+  setting  : 'questions',
+  site     : req.params.domain,
+  translate: true
 }); };
 
 

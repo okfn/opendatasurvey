@@ -75,6 +75,43 @@ module.exports = {
     });
   },
 
+  // There may be translated fields. Map field name <name>@<language>
+  // into translation: {<language>: {<name>: ..., <another name>: ..., ...}}.
+  loadTranslatedData: function(options) {
+    // Avoid recursive call
+    var mapper = options.mapper;
+
+    return module.exports.loadData(_.extend(options, {
+      mapper: function(D) {
+        // Don't forget to call user defined mapper function
+        var mapped = _.isFunction(mapper) ? mapper(D) : D;
+
+        return _.extend(mapped, {
+          translations: _.chain(mapped)
+            .pairs()
+
+            .reduce(function(R, P) {
+              var fieldLang;
+
+              if(!(P[0].indexOf('@') + 1))
+                return R;
+
+              fieldLang = P[0].split('@');
+
+              // Default empty dict
+              R[fieldLang[1]] = R[fieldLang[1]] || {};
+
+              R[fieldLang[1]][fieldLang[0]] = P[1];
+
+              return R;
+            }, {})
+
+            .value()
+        });
+      }
+    }))
+  },
+
   /*
    * load Config (Site) from sheet to DB
    */
