@@ -7,7 +7,8 @@ var entitiesConstructor = require('./includes/entitiesConstructor');
 var spreadSheetHandler = require('./includes/spreadSheetHandler');
 var dbTransactions = require('./includes/dbTransactions');
 
-var indexLoader = {
+
+module.exports = {
   loadRegistry: function () {
     // WARN Implement actual permissions check here
     var hasPermissions = false;
@@ -85,18 +86,3 @@ var indexLoader = {
     });
   }
 };
-//get suitable registry from registry array
-function pullRequiredRegistryFromArray(registryArray, siteId) {
-  var result = false;
-  for (var i = 0; i < registryArray.length; i++) {
-    var currentRegistry = registryArray[0];
-    if (currentRegistry['censusid'] === siteId) {
-      result = currentRegistry;
-      break;
-    }
-  }
-  return result;
-}
-
-
-module.exports = indexLoader;
