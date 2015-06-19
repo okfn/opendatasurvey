@@ -5,12 +5,12 @@ var path = require('path')
   , marked = require('marked')
   ;
 
-function getContent(path) {
-  return marked(fs.readFileSync(path, 'utf8'));
+function getContent(filepath) {
+  return marked(fs.readFileSync(filepath, 'utf8'));
 }
 
 nconf.file({
-  file: path.join(path.dirname(__dirname), '/settings.json')
+  file: path.join(path.dirname(path.dirname(__dirname)), '/settings.json')
 });
 
  // this is the object that you want to override in your own local config
@@ -30,8 +30,8 @@ nconf.defaults({
   contribute_page: '<h1>To set content for this page update your configuration file</h1>',
   faq_page: '<h1>To set content for this page update your configuration file</h1>',
   missing_place_html: '',
-  submit_page: getContent('content/submit.md'),
-  review_page: getContent('content/review.md'),
+  submit_page: getContent('census/content/submit.md'),
+  review_page: getContent('census/content/review.md'),
   // default user db
   user_database_key: '0AqR8dXc6Ji4JdGJXallkcjNOaFlmN1N5MXZkM1ZSbUE',
   questions: process.env.QUESTIONS_URL || 'https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdFI0QkpGUEZyS0wxYWtLdG1nTk9zU3c#gid=0',

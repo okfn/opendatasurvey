@@ -51,7 +51,7 @@ app.set('views', viewPath);
 app.set('models', models);
 app.set('year', currentYear);
 
-env = nunjucks.configure('views', {
+env = nunjucks.configure('census/views', {
     // autoescape: true,
     express: app
 });

@@ -7,7 +7,7 @@ var path = require('path')
   , os = require('os')
   , colors = require('colors')
 
-  , cli = require('../cli')
+  , cli = require('.census/cli')
   ;
 
 var argv = optimist
