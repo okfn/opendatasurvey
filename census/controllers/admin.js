@@ -9,10 +9,7 @@ function promisedLoad(res, options) {
 var _ = require('underscore');
 var loaders = require('../loaders');
 var models = require('../models');
-
-var dashboard = function (req, res) {
-  res.render('dashboard.html');
-};
+var dashboard = function (req, res) { res.render('dashboard.html'); };
 
 var loadRegistry = function (req, res) {
   return loaders.loadRegistry(req.params.domain).spread(function(error, data) {
