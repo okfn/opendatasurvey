@@ -29,10 +29,10 @@ var overview = function (req, res) {
   // TODO: model.data.entries.byplace
   var byplace;
 
-  // TODO: util.translateRows(model.data.scoredQuestions, req.locale)
+  // TODO: question.translated(req.locale) on each object
   var questions;
 
-  // TODO: util.translateObject(model.data.placesById, req.locale)
+  // TODO: result.translated(req.locale)
   var placesById;
 
   res.render('overview.html', {
@@ -55,14 +55,13 @@ var faq = function (req, res) {
   var dTmpl = req.app.get('view_env').getTemplate('_snippets/datasets.html');
   var gettext = res.locals.gettext;
 
-  // TODO: util.translateQuestions(model.data.questions, req.locale)
+  // TODO: question.translated(req.locale) per object
   var questions = req.app.get('models').Question.findAll({
     where: {
       site: req.params.domain
     }
   });
 
-  // TODO: util.markupRows(util.translateRows(model.data.datasets, req.locale))
   var datasets = req.app.get('models').Dataset.findAll({
     where: {
       site: req.params.domain
@@ -192,10 +191,10 @@ var place = function (req, res) {
 
       var placeSubmissions;
 
-      // TODO: util.translateRows(model.data.datasets, req.locale)
+      // TODO: dataset.translated(req.locale) for each
       var placeDatasets;
 
-      // TODO: util.translateRows(model.data.scoredQuestions, req.locale)
+      // TODO: question.translated(req.locale) for each
       var placeQuestions;
 
       // TODO: in final promise
@@ -204,7 +203,7 @@ var place = function (req, res) {
         datasets: placeDatasets,
         submissions: placeSubmissions,
         entrys: placeEntries, // TODO: ???? check this - what is different from info?
-        place: place, // TODO: util.translate(place, req.locale)
+        place: place.translated(req.locale),
         scoredQuestions: placeQuestions,
         loggedin: req.session.loggedin,
         display_year: req.app.get('year')
@@ -275,16 +274,16 @@ var dataset = function (req, res) {
       return res.send(404, 'Dataset not found. Are you sure you have spelled it correctly?');
     } else {
 
-      // TODO: cleanResultSet(entriesForThisDataset)
+      // TODO: entries for dataset
       var datasetEntries;
 
-      // TODO: util.translateObject(model.data.placesById, req.locale)
+      // TODO: for each: result.translated(req.locale)
       var datasetPlaces;
 
-      // TODO: util.translateRows(model.data.scoredQuestions, req.locale)
+      // TODO: for each: result.translated(req.locale)
       var datasetQuestions;
 
-      // TODO: util.markup(util.translate(dataset, req.locale))
+      // TODO: for each: result.translated(req.locale)
       var dataset;
 
       // TODO: in final promise
@@ -323,22 +322,22 @@ var entry = function (req, res) {
     } else {
 
       // TODO: ynquestions = model.data.questions.slice(0, 9);
-      // TODO: util.translateQuestions(ynquestions, req.locale)
+      // TODO: for each: result.translated(req.locale)
       var ynquestions;
 
-      // TODO: util.translateQuestions(model.data.questions, req.locale)
+      // TODO: for each: result.translated(req.locale)util.translateQuestions(model.data.questions, req.locale)
       var questions;
 
-      // TODO: util.translateRows(model.data.scoredQuestions, req.locale)
+      // TODO: for each: result.translated(req.locale)
       var scoredQuestions;
 
-      // TODO: util.translateRows(model.data.datasets, req.locale)
+      // TODO: for each: result.translated(req.locale)
       var datasets;
 
-      // TODO:util.markup(util.translate(dataset, req.locale))
+      // TODO: for each: result.translated(req.locale)
       var dataset;
 
-      // TODO: util.translate(place, req.locale)
+      // TODO: for each: result.translated(req.locale)
       var place;
 
       res.render('country/entry.html', {
