@@ -82,34 +82,24 @@ var indexLoader = {
   /*
    * load Datasets from sheet to DB
    */
-  loadDatasets: function (params) {
-    var configUrl = params['configUrl'];
-    var datasetsUrlKey = spreadSheetHandler.getDatasetsUrlKey(configUrl);
-    var datasetsSpreadSheetUrl = spreadSheetHandler.getDatasetsSpreadSheetUrl(datasetsUrlKey);
+  loadData: function (options) {
+    return new Promise(function(RS, RJ) {
+      models.Site.findById(options.site).then(function(S) {
+        spreadSheetHandler.parse(S.settings[options.setting]).spread(function (E, D) {
+          if (E)
+            RJ(E);
 
-    return spreadSheetHandler.parse(datasetsSpreadSheetUrl)
-      .spread(function (err, parsedDatasets) {
-        if (err) {
-          return [err, false];
-        } else {
-          var site = params['subDomain'];
-          var mappedDataset = false;
-          parsedDatasets = entitiesConstructor.setSiteValue(parsedDatasets, site);
-          mappedDataset = entitiesConstructor.mapDatasets(parsedDatasets);
-          return Promise.each(mappedDataset, function (signleMappedDataset) {
-            return dbTransactions.checkIfDatasetExist(signleMappedDataset['site'])
-              .spread(function (err, isRecordExist, recordData) {
-                if (err) {
-                  return [err, false];
-                } else {
-                  return handleCheckIfExistResult(isRecordExist, recordData);
-                }
-              });
-          }).then(function () {
-            return voidSaveDatasetsProcess(mappedDataset);
-          });
-        }
+          Promise.all(_.map(D, function(DS) { return new Promise(function(RSD, RJD) {
+
+            // Allow custom data maping
+            options.Model.upsert(_.extend(_.isFunction(options.mapper) ? options.mapper(DS) : DS, {
+              site: options.site
+            })).then(RSD).catch(RJD);
+
+          }); })).then(RS).catch(RJ);
+        });
       });
+    });
   },
   /*
    * load Questions from sheet to DB
@@ -146,38 +136,23 @@ var indexLoader = {
   /*
    * load Config (Site) from sheet to DB
    */
-  loadConfig: function (params) {
-    var site = params['subDomain'];
-    var configUrl = params['configUrl'];
+  loadConfig: function (siteId) {
+    return new Promise(function(RS, RJ) {
+      models.Registry.findById(siteId).then(function(R) {
+        spreadSheetHandler.parse(R.settings.configurl).spread(function (E, C) {
+          if (E)
+            RJ(E);
 
-    return spreadSheetHandler.parse(configUrl)
-      .spread(function (err, configData) {
-        if (err) {
-          return [err, false];
-        } else {
-          var mappedConfig = false;
-          var deparsedConfig = false;
-
-          deparsedConfig = entitiesConstructor.deparseConfig(configData);
-          deparsedConfig = entitiesConstructor.setConfigId(deparsedConfig, site);
-          mappedConfig = entitiesConstructor.mapConfig(deparsedConfig);
-
-          if (mappedConfig) {
-            return dbTransactions.checkIfConfigExist(site)
-              .spread(function (err, isRecordExist, recordData) {
-                if (err) {
-                  return [err, false];
-                } else {
-                  return handleCheckIfExistResult(isRecordExist, recordData);
-                }
-              }).then(function () {
-              return voidSaveConfigProcess(mappedConfig);
-            });
-          } else {
-            return ['could not reload config', false];
-          }
-        }
+          // Insert single record — config for required site
+          models.Site.upsert({
+            id: siteId,
+            settings: _.object(_.zip(_.pluck(C, 'key'), _.pluck(C, 'value')))
+          })
+            .then(function() { RS(false); })
+            .catch(function(E) { RJ(E); });
+        });
       });
+    });
   }
 };
 //get suitable registry from registry array
