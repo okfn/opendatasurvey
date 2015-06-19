@@ -54,9 +54,20 @@ module.exports = {
           Promise.all(_.map(D, function(DS) { return new Promise(function(RSD, RJD) {
 
             // Allow custom data maping
-            options.Model.upsert(_.extend(_.isFunction(options.mapper) ? options.mapper(DS) : DS, {
-              site: options.site
-            })).then(RSD).catch(RJD);
+            options.Model.upsert(
+              _.chain(_.isFunction(options.mapper) ? options.mapper(DS) : DS)
+
+                // All records belongs to certain domain
+                .extend({site: options.site})
+
+                .pairs()
+
+                // User may mix up lower cased and upper cased field names
+                .map(function(P) { return [P[0].toLowerCase(), P[1]]; })
+
+                .object()
+                .value()
+            ).then(RSD).catch(RJD);
 
           }); })).then(RS).catch(RJ);
         });
