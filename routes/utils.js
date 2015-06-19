@@ -172,6 +172,9 @@ var setupAuth = function () {
 };
 
 var setLocals = function(req, res, next) {
+
+  var config = req.app.get('config');
+
   if (config.get('test:testing') === true && !req.user && config.get('test:user')) {
     req.user = config.get('test:user');
   }
@@ -179,13 +182,6 @@ var setLocals = function(req, res, next) {
     req.locale = req.cookies.lang;
   }
   res.locals.currentUser = req.user ? req.user : null;
-
-  if (config.get('appconfig:readonly')) {
-    res.locals.readonly = true;
-    // No session support in readonly mode, so fake it out:
-    req.session = {};
-    req.session.loggedin = false;
-  }
 
   if (config.get('contribute_page') === '<h1>To set content for this page update your configuration file</h1>' ||
     config.get('contribute_page') === '' ||
