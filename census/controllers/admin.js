@@ -41,11 +41,10 @@ var loadDatasets = function (req, res) { return promisedLoad(res, {
 }); };
 
 var loadQuestions = function (req, res) { return promisedLoad(res, {
-  mapper   : function(D) { return _.extend(D, {dependants: D.dependants.split(','), score: D.score || 0}) },
-  Model    : models.Question,
-  setting  : 'questions',
-  site     : req.params.domain,
-  translate: true
+  mapper : function(D) { return _.extend(D, {dependants: D.dependants.split(','), score: D.score || 0}) },
+  Model  : models.Question,
+  setting: 'questions',
+  site   : req.params.domain,
 }); };
 
 
