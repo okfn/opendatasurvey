@@ -47,4 +47,54 @@ describe('Data loaded from spread sheet into DB', function(){
       });
     });
   });
+
+  it('Datasets', function(done) {
+    this.timeout(5000);
+
+    models.Site.findById('demo').then(function(S) {
+      spreadSheetHandler.parse(S.settings.datasets).spread(function (E, D) {
+        loaders.loadTranslatedData({
+          mapper : function(D) { return _.extend(D, {name: D.title}); },
+          Model  : models.Dataset,
+          setting: 'datasets',
+          site   : 'demo'
+        }).then(function() {
+          models.Dataset.count().then(function(C) { assert.equal(C, D.length); done(); });
+        });
+      });
+    });
+  });
+
+  it('Places', function(done) {
+    this.timeout(5000);
+
+    models.Site.findById('demo').then(function(S) {
+      spreadSheetHandler.parse(S.settings.places).spread(function (E, D) {
+        loaders.loadTranslatedData({
+          Model: models.Place,
+          setting: 'places',
+          site: 'demo'
+        }).then(function() {
+          models.Place.count().then(function(C) { assert.equal(C, D.length); done(); });
+        });
+      });
+    });
+  });
+
+  it('Questions', function(done) {
+    this.timeout(5000);
+
+    models.Site.findById('demo').then(function(S) {
+      spreadSheetHandler.parse(S.settings.questions).spread(function (E, D) {
+        loaders.loadTranslatedData({
+          mapper : function(D) { return _.extend(D, {dependants: D.dependants.split(','), score: D.score || 0}) },
+          Model  : models.Question,
+          setting: 'questions',
+          site   : 'demo'
+        }).then(function() {
+          models.Question.count().then(function(C) { assert.equal(C, D.length); done(); });
+        });
+      });
+    });
+  });
 });
