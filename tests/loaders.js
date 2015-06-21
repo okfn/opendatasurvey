@@ -5,6 +5,7 @@ var assert = require('chai').assert;
 var config = require('../census/config');
 var loaders = require('../census/loaders');
 var models = require('../census/models');
+var siteID = 'demo';
 var spreadSheetHandler = require('../census/loaders/includes/spreadSheetHandler');
 
 
@@ -17,7 +18,7 @@ describe('Data loaded from spread sheet into DB', function(){
   });
 
   it('Registry', function(done) {
-    this.timeout(10000);
+    this.timeout(5000);
 
     models.Registry.destroy({truncate: true}).then(function() {
       var registryIDs;
@@ -27,6 +28,21 @@ describe('Data loaded from spread sheet into DB', function(){
 
         loaders.loadRegistry('demo').spread(function(E, D) {
           models.Registry.findAll().then(function(D) { assert.deepEqual(registryIDs, _.pluck(D, 'id')); done(); });
+        });
+      });
+    });
+  });
+
+  it('Config', function(done) {
+    this.timeout(5000);
+
+    models.Registry.findById('demo').then(function(R) {
+      spreadSheetHandler.parse(R.settings.configurl).spread(function (E, C) {
+        loaders.loadConfig(siteID).then(function() {
+          models.Site.findById(siteID).then(function(S) {
+            assert.deepEqual(S.settings, _.object(_.zip(_.pluck(C, 'key'), _.pluck(C, 'value'))));
+            done();
+          });
         });
       });
     });
