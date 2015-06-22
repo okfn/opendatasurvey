@@ -6,6 +6,12 @@ var auth = require('../controllers/auth');
 var mixins = require('../controllers/mixins');
 var utils = require('./utils');
 var authConfig = {
+  facebook: {
+    successRedirect: '/auth/loggedin',
+    failureRedirect: '/login',
+    scope: 'public_profile,email'
+  },
+
   google: {
     successRedirect: '/auth/loggedin',
     failureRedirect: '/login',
@@ -30,6 +36,8 @@ var authRoutes = function(coreMiddlewares) {
   router.get(utils.scoped('/login'), coreMixins, auth.login);
   router.get(utils.scoped('/loggedin'), coreMixins, auth.loggedin);
   router.get(utils.scoped('/logout'), coreMixins, auth.logout);
+  router.get(utils.scoped('/facebook'), coreMixins, passport.authenticate('facebook', authConfig.facebook));
+  router.get(utils.scoped('/facebook/callback'), coreMixins, passport.authenticate('facebook', authConfig.facebook));
   router.get(utils.scoped('/google'), coreMixins, passport.authenticate('google', authConfig.google));
   router.get(utils.scoped('/google/callback'), coreMixins, passport.authenticate('google', authConfig.google));
 

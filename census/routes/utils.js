@@ -83,35 +83,19 @@ var setupAuth = function () {
   /*
    * Facebook strategy
    */
-//  passport.use(new FacebookStrategy({
-//    clientID: '',
-//    clientSecret: '',
-//    callbackURL: ''
-//  },
-//  function (accessToken, refreshToken, profile, done) {
-//    process.nextTick(function () {
-//      var searchQuery = {};
-//      model.User.findOne(searchQuery).then(function (user) {
-//        if (user) {
-//          if (!user.facebook_id) {
-//            user.facebook_id = profile.id;
-//            user.save().then(function (err) {
-//              if (err)
-//                throw err;
-//              return done(null, user);
-//            }).catch(function (err) {
-//              return done(err);
-//            });
-//          }
-//          return done(null, user);
-//        } else {
-//          return done(null, false);
-//        }
-//      }).catch(function (err) {
-//        return done(err);
-//      });
-//    });
-//  }));
+  passport.use(new FacebookStrategy({
+    clientID: config.get('facebook:app_id'),
+    clientSecret: config.get('facebook:app_secret'),
+    callbackURL: config.get('site_url').replace(/\/$/, '') + '/auth/facebook/callback',
+  }, function (accessToken, refreshToken, profile, done) {
+    models.User.upsert({
+      anonymous: false,
+      email    : profile.emails[0].value,
+      firstName: profile.name.givenName,
+      id       : profile.profileUrl,
+      lastName : profile.name.familyName
+    }).then(function() { done(null, profile); });
+  }));
 
   /*
    * local strategy
