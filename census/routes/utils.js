@@ -106,8 +106,15 @@ var setupAuth = function () {
     passReqToCallback: true
   }, function (request, email, password, done) {
     models.User.findOne({where: {authentication_hash: password, email: email}})
-      .then(function() { done(null); })
-      .catch(function() { done('Wrong username or passsowrd'); })
+      .then(function(D) {
+        if(!D) {
+          request.flash('error', 'Wrong username or passsowrd');
+          done(null, false);
+          return;
+        }
+
+        done(null);
+      });
   }));
 
   // At the moment we get all user info on auth and store to cookie so these are both no-ops ...

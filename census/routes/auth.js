@@ -44,7 +44,12 @@ var authRoutes = function(coreMiddlewares) {
   router.post(
     utils.scoped('/local'),
     coreMixins,
-    passport.authenticate('local', {successRedirect: '/auth/loggedin', failureRedirect: '/auth/login'})
+
+    passport.authenticate('local', {
+      failureFlash: true,
+      failureRedirect: '/auth/login',
+      successRedirect: '/auth/loggedin'
+    })
   );
 
   return router;
