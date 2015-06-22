@@ -22,7 +22,6 @@ nconf.defaults({
   submit_year: 2014,
   site_url: process.env.SITE_URL || 'http://localhost:5000',
   approve_first_submission: 'FALSE',
-  anonymous_submissions: 'TRUE',
   reviewers: '',
   locales: ['en'],
   disqus_shortname: 'opendatacensus',
