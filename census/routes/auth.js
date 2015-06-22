@@ -30,7 +30,7 @@ var authRoutes = function(coreMiddlewares) {
   router.get(utils.scoped('/login'), coreMixins, auth.login);
   router.get(utils.scoped('/loggedin'), coreMixins, auth.loggedin);
   router.get(utils.scoped('/logout'), coreMixins, auth.logout);
-  router.get(utils.scoped('/google'), coreMixins, passport.authenticate('google', authConfig.google.scope));
+  router.get(utils.scoped('/google'), coreMixins, passport.authenticate('google', authConfig.google));
   router.get(utils.scoped('/google/callback'), coreMixins, passport.authenticate('google', authConfig.google));
 
   return router;
