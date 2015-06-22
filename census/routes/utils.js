@@ -75,8 +75,8 @@ var setupAuth = function () {
       anonymous: false,
       email    : profile.emails[0].value,
       firstName: profile.name.givenName,
-      lastName : profile.name.familyName,
-      id       : profile._json.url
+      id       : profile._json.url,
+      lastName : profile.name.familyName
     }).then(function() { done(null, profile); });
   }));
 
