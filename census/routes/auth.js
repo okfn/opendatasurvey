@@ -41,6 +41,12 @@ var authRoutes = function(coreMiddlewares) {
   router.get(utils.scoped('/google'), coreMixins, passport.authenticate('google', authConfig.google));
   router.get(utils.scoped('/google/callback'), coreMixins, passport.authenticate('google', authConfig.google));
 
+  router.post(
+    utils.scoped('/local'),
+    coreMixins,
+    passport.authenticate('local', {successRedirect: '/auth/loggedin', failureRedirect: '/auth/login'})
+  );
+
   return router;
 
 };

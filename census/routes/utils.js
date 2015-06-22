@@ -100,46 +100,15 @@ var setupAuth = function () {
   /*
    * local strategy
    */
-//   passport.use('local', new LocalStrategy({
-//     usernameField: 'email',
-//     passwordField: 'password',
-//     passReqToCallback: true
-//   },
-//   function (email, password, done) {
-//     var searchQuery = {where: {email: email}};
-//     models.User.findOne(searchQuery).then(function (user) {
-//       if (!user) {
-//         var message = 'user not found';
-//         done(null, false, message);
-//         return;
-//       } else {
-//         //add some encryption service (encrypt)
-//         if(user.authentication_hash === password){
-//           done(null, user);
-//           return;
-//         } else {
-//           var message = 'login credentials not valid';
-//           done(null, false, message);
-//           return;
-//         }
-
-// //        user.validPassword(password).then(function () {
-// //          if (!result) {
-// //            var message = 'login credentials not valid';
-// //            done(null, false, message);
-// //            return;
-// //          }
-// //
-// //          done(null, user);
-// //          return;
-// //        });
-
-//       }
-//     }).catch(function (err) {
-//       done(err);
-//       return;
-//     });
-//   }));
+  passport.use('local', new LocalStrategy({
+    usernameField: 'username',
+    passwordField: 'password',
+    passReqToCallback: true
+  }, function (request, email, password, done) {
+    models.User.findOne({where: {authentication_hash: password, email: email}})
+      .then(function() { done(null); })
+      .catch(function() { done('Wrong username or passsowrd'); })
+  }));
 
   // At the moment we get all user info on auth and store to cookie so these are both no-ops ...
   passport.serializeUser(function (user, done) {

@@ -22,6 +22,19 @@
       <p>&nbsp;</p>
   </div>
   <div class="span5">
+    <form action="/auth/local" method="POST">
+      <div>
+        <label>{{gettext("Username or email")}}</label>
+        <input name="username" class="span5" type="text">
+      </div>
+      <div>
+        <label>{{gettext("Password")}}</label>
+        <input name="password" class="span5" type="password">
+      </div>
+      <button type="submit" class="btn btn-primary">{{gettext("Login &raquo;")}}</button>
+    </form>
+  </div>
+  <div class="span5">
     <a class="btn btn-primary" href="/auth/google">{{gettext("Login with Google &raquo;")}}</a>
     <p>&nbsp;</p>
     <a class="btn btn-primary" href="/auth/facebook">{{gettext("Facebook &raquo;")}}</a>
