@@ -4,6 +4,7 @@ var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var LocalStrategy = require('passport-local').Strategy;
+var models = require('../models');
 var config = require('../config');
 
 
@@ -69,18 +70,14 @@ var setupAuth = function () {
     clientSecret: config.get('google:app_secret'),
     callbackURL: config.get('site_url').replace(/\/$/, '') + '/auth/google/callback',
     profileFields: ['id', 'displayName', 'name', 'username', 'emails', 'photos']
-  },
-  function (accessToken, refreshToken, profile, done) {
-    var userobj = profile;
-    if (config.get('user_database_key')) {
-      // model.backendUser.createUserIfNotExists(userobj, function (err) {
-      //   if (err)
-      //     console.error(err);
-      //   done(null, userobj);
-      // });
-    } else {
-      done(null, userobj);
-    }
+  }, function (accessToken, refreshToken, profile, done) {
+    models.User.upsert({
+      anonymous: false,
+      email    : profile.emails[0].value,
+      firstName: profile.name.givenName,
+      lastName : profile.name.familyName,
+      id       : profile._json.url
+    }).then(function() { done(null, profile); });
   }));
 
   /*
