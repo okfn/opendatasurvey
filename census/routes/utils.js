@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('underscore');
+var bcrypt = require('bcrypt');
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
@@ -105,15 +107,21 @@ var setupAuth = function () {
     passwordField: 'password',
     passReqToCallback: true
   }, function (request, email, password, done) {
-    models.User.findOne({where: {authentication_hash: password, email: email}})
-      .then(function(D) {
-        if(!D) {
+    models.User.findOne({where: {email: email}})
+      .then(function(U) {
+        if(
+          // Such email doesn't exist
+          !U ||
+
+          // Wrong password
+          U.authentication_hash !== bcrypt.hashSync(password, U.authentication_salt)
+        ) {
           request.flash('error', 'Wrong username or passsowrd');
           done(null, false);
           return;
         }
 
-        done(null);
+        done(null, U);
       });
   }));
 

@@ -1,4 +1,5 @@
 'use strict';
+var bcrypt = require('bcrypt');
 
 module.exports = function (sequelize, DataTypes) {
 
@@ -35,6 +36,15 @@ module.exports = function (sequelize, DataTypes) {
     }
   },
   {
+    instanceMethods: {
+      setPassword: function(password) {
+        var salt = bcrypt.genSaltSync(8);
+        
+        this.authentication_hash = bcrypt.hashSync(password, salt);
+        this.authentication_salt = salt;
+      }
+    },
+
     tableName: 'user'
   });
 
