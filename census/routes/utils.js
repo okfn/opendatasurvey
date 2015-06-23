@@ -79,7 +79,7 @@ var setupAuth = function () {
       firstName: profile.name.givenName,
       id       : profile._json.url,
       lastName : profile.name.familyName
-    }).then(function() { done(null, profile); });
+    }).then(function() { done(null, models.User.findById(profile._json.url)); });
   }));
 
   /*
@@ -96,7 +96,7 @@ var setupAuth = function () {
       firstName: profile.name.givenName,
       id       : profile.profileUrl,
       lastName : profile.name.familyName
-    }).then(function() { done(null, profile); });
+    }).then(function() { done(null, models.User.findById(profile.profileUrl)); });
   }));
 
   /*
