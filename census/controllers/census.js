@@ -106,48 +106,33 @@ var submit = function (req, res) {
 
 // Compare & update page
 var submission = function (req, res) {
-  var ynquestions = model.data.questions.slice(0, 9),
-    reviewClosed;
+  models.Entry.findOne({id: req.params.submissionid, is_current: false}).then(function(E) {
 
-  model.backend.getSubmission({submissionid: req.params.submissionid}, function (err, obj) {
-    if (err) {
-      res.send(500, 'There was an error ' + err);
-    } else if (!obj) {
-      res.send(404, 'There is no submission with id ' + req.params.submissionid);
-    } else {
+    if (!E)
+      return res.status(404).send('There is no submission with id ' + req.params.submissionid);
 
-      if (obj.reviewresult) {
-        // If the object has been reviewed, we close further reviews.
-        reviewClosed = true;
-      }
-
-      // see if there is an entry
-      model.backend.getEntry(obj, function (err, entry) {
-        if (!entry) {
-          entry = {};
-        }
-        var dataset = _.findWhere(model.data.datasets, {
-          id: obj.dataset
-        });
-        var place = model.data.placesById[obj.place];
-
-        res.render('submission/review.html', {
-          canReview: routeUtils.canReview(req.user, place),
-          reviewClosed: reviewClosed,
-          reviewInstructions: req.app.get('config').get('review_page', req.locale),
-          ynquestions: util.translateQuestions(ynquestions, req.locale),
-          questions: util.translateQuestions(model.data.questions, req.locale),
-          questionsById: util.translateObject(model.data.questionsById, req.locale),
-          prefill: obj,
-          currrecord: entry,
-          dataset: util.markup(util.translate(dataset, req.locale)),
-          place: util.translate(place, req.locale),
-          disqus_shortname: req.app.get('config').get('disqus_shortname'),
-          reviewState: true
-        });
+    models.utils.loadModels({
+      dataset: models.Dataset.findByID(E.dataset),
+      place: models.Dataset.findByID(E.place),
+      questions: models.Question.findAll(),
+      ynquestions: models.Question.findAll()
+    }).then(function(D) {
+      res.render('submission/review.html', {
+        canReview: routeUtils.canReview(req.user, D.place),
+        reviewClosed: Boolean(E.reviewResult),
+        reviewInstructions: req.app.get('config').get('review_page', req.locale),
+        ynquestions: util.translateQuestions(D.ynquestions, req.locale),
+        questions: util.translateQuestions(D.questions, req.locale),
+        prefill: obj,
+        currrecord: E,
+        dataset: util.markup(util.translate(D.dataset, req.locale)),
+        place: util.translate(D.place, req.locale),
+        disqus_shortname: req.app.get('config').get('disqus_shortname'),
+        reviewState: true
       });
-    }
-  });
+    });
+
+  })
 };
 
 var reviewPost = function (req, res) {

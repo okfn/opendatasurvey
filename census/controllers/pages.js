@@ -93,7 +93,7 @@ var changes = function (req, res) {
       
       return {
         type: type,
-        timestamp: E.timestamp,
+        timestamp: E.updated_at,
         dataset_title: E.dataset_title,
         place_name: E.place_name,
         url: url,
