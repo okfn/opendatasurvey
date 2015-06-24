@@ -189,7 +189,7 @@ var place = function (req, res) {
 //Show details per dataset
 var dataset = function (req, res) {
 
-  var dataset = req.app.get('models').Dataset.findOne({
+  var dataset = models.Dataset.findOne({
     where: {
       id: req.params.dataset,
       site: req.params.domain
