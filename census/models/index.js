@@ -9,6 +9,16 @@ var sequelize = new Sequelize(config.database, config.username, config.password,
 var testSequelize = new Sequelize(config.testDatabase, config.username, config.password, config);
 var db = {test: {}};
 
+
+// Load multiple querysets, return object
+db.utils = {
+  loadModels: function(querysets) {
+    return Promise.all(_(querysets).map(function(V, K) {
+      return new Promise(function(RS, RJ) { V.then(function(D) { RS([K, D]); }); });
+    })).then(function(V) { return _.object(V); });
+  }
+};
+
 fs
   .readdirSync(__dirname)
   .filter(function (file) {

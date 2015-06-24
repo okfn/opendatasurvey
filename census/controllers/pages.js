@@ -18,29 +18,25 @@ var overview = function (req, res) {
   var byplace;
 
   // Wait for all data loaded and render the page
-  Promise.all(_({
+  models.utils.loadModels({
     datasets: models.Dataset.findAll(siteQuery),
 
     // TODO : sort places by score, for current year
     places: models.Place.findAll(siteQuery),
 
     questions: models.Question.findAll(siteQuery)
-  }).map(function(V, K) {
-    return new Promise(function(RS, RJ) { V.then(function(D) { RS([K, D]); }); });
-  })).then(function(V) {
-    var data = _.object(V);
-
+  }).then(function(D) {
     res.render('overview.html', {
       summary: {
-        entries: data.datasets.length,
-        places: data.places.length
+        entries: D.datasets.length,
+        places: D.places.length
       },
 
       extraWidth: extraWidth,
-      places: data.places,
+      places: D.places,
       byplace: byplace,
-      datasets: data.datasets, // TODO: translate
-      scoredQuestions: data.questions,
+      datasets: D.datasets, // TODO: translate
+      scoredQuestions: D.questions,
       custom_text: req.app.get('config').get('overview_page', req.locale),
       missing_place_html: req.app.get('config').get('missing_place_html', req.locale)
     });
