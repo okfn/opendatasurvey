@@ -2,23 +2,11 @@
 
 var _ = require('underscore');
 var marked = require('marked');
-
+var models = require('../models');
+var Promise = require('bluebird');
 
 var overview = function (req, res) {
-
-  var places = req.app.get('models').Place.findAll({
-    where: {
-      site: req.params.domain
-    }
-  });
-
-  // TODO : sort places by score, for current year
-
-  var datasets = req.app.get('models').Dataset.findAll({
-    where: {
-      site: req.params.domain
-    }
-  });
+  var siteQuery = {where: {site: req.params.domain}};
 
   // TODO dataset count
   var extraWidth = (null > 12);
@@ -29,22 +17,33 @@ var overview = function (req, res) {
   // TODO: model.data.entries.byplace
   var byplace;
 
-  // TODO: question.translated(req.locale) on each object
-  var questions;
+  // Wait for all data loaded and render the page
+  Promise.all(_({
+    datasets: models.Dataset.findAll(siteQuery),
 
-  // TODO: result.translated(req.locale)
-  var placesById;
+    // TODO : sort places by score, for current year
+    places: models.Place.findAll(siteQuery),
 
-  res.render('overview.html', {
-    summary: summary,
-    extraWidth: extraWidth,
-    places: places, // TODO: translate
-    byplace: byplace,
-    datasets: datasets, // TODO: translate
-    scoredQuestions: questions,
-    placesById: placesById,
-    custom_text: req.app.get('config').get('overview_page', req.locale),
-    missing_place_html: req.app.get('config').get('missing_place_html', req.locale)
+    questions: models.Question.findAll(siteQuery)
+  }).map(function(V, K) {
+    return new Promise(function(RS, RJ) { V.then(function(D) { RS([K, D]); }); });
+  })).then(function(V) {
+    var data = _.object(V);
+
+    res.render('overview.html', {
+      summary: {
+        entries: data.datasets.length,
+        places: data.places.length
+      },
+
+      extraWidth: extraWidth,
+      places: data.places,
+      byplace: byplace,
+      datasets: data.datasets, // TODO: translate
+      scoredQuestions: data.questions,
+      custom_text: req.app.get('config').get('overview_page', req.locale),
+      missing_place_html: req.app.get('config').get('missing_place_html', req.locale)
+    });
   });
 };
 
