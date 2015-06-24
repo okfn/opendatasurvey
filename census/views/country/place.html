@@ -8,9 +8,9 @@
 {% block content %}
 
 <h1>
-  <a href="{{urlFor('overview')}}" data-toggle="tooltip" class="count-0"
+  {% if overview %}<a href="{{urlFor('overview')}}" data-toggle="tooltip" class="count-0"
     title="Return to results overview">{{gettext("Places")}}</a>
-  / {{ place.name }}
+  / {% endif %}{{ place.name }}
 
   <span class="pull-right">
     {% include '_snippets/share_page_buttons.html' %}

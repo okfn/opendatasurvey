@@ -148,7 +148,7 @@ var resultJson = function (req, res) {
 //Show details per country. Extra/different functionality for reviewers.
 var place = function (req, res) {
 
-  var place = req.app.get('models').Place.findOne({
+  var place = models.Place.findOne({
     where: {
       id: req.params.place,
       site: req.params.domain
@@ -157,33 +157,30 @@ var place = function (req, res) {
 
   // TODO: check this works
   place.then(function(result) {
-    if (!result) {
-      return res.send(404, 'There is no place with ID ' + place + ' in our database. Are you sure you have spelled it correctly? Please check the <a href="/">overview page</a> for the list of places');
-    } else {
+    if (!result)
+      return res.send(404, 'There is no place with ID ' + result.id + ' in our database. Are you sure you have spelled it correctly? Please check the <a href="/">overview page</a> for the list of places');
 
-      var placeEntries;
+    var placeEntries;
 
-      var placeSubmissions;
+    var placeSubmissions;
 
-      // TODO: dataset.translated(req.locale) for each
-      var placeDatasets;
+    // TODO: dataset.translated(req.locale) for each
+    var placeDatasets;
 
-      // TODO: question.translated(req.locale) for each
-      var placeQuestions;
+    // TODO: question.translated(req.locale) for each
+    var placeQuestions;
 
-      // TODO: in final promise
-      res.render('country/place.html', {
-        info: placeEntries,
-        datasets: placeDatasets,
-        submissions: placeSubmissions,
-        entrys: placeEntries, // TODO: ???? check this - what is different from info?
-        place: place.translated(req.locale),
-        scoredQuestions: placeQuestions,
-        loggedin: req.session.loggedin,
-        display_year: req.app.get('year')
-      });
-
-    }
+    // TODO: in final promise
+    res.render('country/place.html', {
+      info: placeEntries,
+      datasets: placeDatasets,
+      submissions: placeSubmissions,
+      entrys: placeEntries, // TODO: ???? check this - what is different from info?
+      place: _.result(_.result(result.translations, req.locale), 'name'),
+      scoredQuestions: placeQuestions,
+      loggedin: req.session.loggedin,
+      display_year: req.app.get('year')
+    });
 
   });
 
