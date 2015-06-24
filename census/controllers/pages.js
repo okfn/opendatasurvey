@@ -5,8 +5,9 @@ var marked = require('marked');
 var models = require('../models');
 var Promise = require('bluebird');
 
+var siteQuery = function(req) { return {where: {site: req.params.domain}}; }
+
 var overview = function (req, res) {
-  var siteQuery = {where: {site: req.params.domain}};
 
   // TODO dataset count
   var extraWidth = (null > 12);
@@ -19,12 +20,12 @@ var overview = function (req, res) {
 
   // Wait for all data loaded and render the page
   models.utils.loadModels({
-    datasets: models.Dataset.findAll(siteQuery),
+    datasets: models.Dataset.findAll(siteQuery(req)),
 
     // TODO : sort places by score, for current year
-    places: models.Place.findAll(siteQuery),
+    places: models.Place.findAll(siteQuery(req)),
 
-    questions: models.Question.findAll(siteQuery)
+    questions: models.Question.findAll(siteQuery(req))
   }).then(function(D) {
     res.render('overview.html', {
       summary: {
@@ -45,36 +46,28 @@ var overview = function (req, res) {
 
 
 var faq = function (req, res) {
-
   var qTmpl = req.app.get('view_env').getTemplate('_snippets/questions.html');
   var dTmpl = req.app.get('view_env').getTemplate('_snippets/datasets.html');
   var gettext = res.locals.gettext;
 
-  // TODO: question.translated(req.locale) per object
-  var questions = req.app.get('models').Question.findAll({
-    where: {
-      site: req.params.domain
-    }
-  });
 
-  var datasets = req.app.get('models').Dataset.findAll({
-    where: {
-      site: req.params.domain
-    }
-  })
+  models.utils.loadModels({
+    datasets: models.Dataset.findAll(siteQuery(req)),
+    questions: models.Question.findAll(siteQuery(req))
+  }).then(function(D) {
+    var qContent = qTmpl.render({gettext: gettext, questions: D.questions});
+    var dContent = dTmpl.render({gettext: gettext, datasets: D.datasets});
+    var mContent = req.app.get('config').get('missing_place_html', req.locale);
 
-  var qContent = qTmpl.render({gettext: gettext, questions: questions});
-  var dContent = dTmpl.render({gettext: gettext, datasets: datasets});
-  var mContent = req.app.get('config').get('missing_place_html', req.locale);
+    var content = marked(req.app.get('config').get('faq_page', req.locale))
+      .replace('{{questions}}', qContent)
+      .replace('{{datasets}}', dContent)
+      .replace('{{missing_place}}', mContent);
 
-  var content = marked(req.app.get('config').get('faq_page', req.locale))
-    .replace('{{questions}}', qContent)
-    .replace('{{datasets}}', dContent)
-    .replace('{{missing_place}}', mContent);
-
-  res.render('base.html', {
-    content: content,
-    title: 'FAQ - Frequently Asked Questions'
+    res.render('base.html', {
+      content: content,
+      title: 'FAQ - Frequently Asked Questions'
+    });
   });
 };
 
