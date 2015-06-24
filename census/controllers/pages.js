@@ -286,7 +286,7 @@ var entry = function (req, res) {
 
   entry.then(function(result) {
     if (!result) {
-      return res.send(404, res.locals.format('There is no entry for %(place)s and %(dataset)s', {
+      return res.status(404).send(res.locals.format('There is no entry for %(place)s and %(dataset)s', {
         place: req.params.place,
         dataset: req.params.dataset
       }, req.locale));
