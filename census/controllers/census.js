@@ -5,16 +5,9 @@ var routeUtils = require('../routes/utils');
 
 var submit = function (req, res) {
 
-
-  // TODO: we want yn questions: model.data.questions.slice(0, 9);
-  var ynquestions = req.app.get('models').Question.findAll({
-    where: {
-      site: req.params.domain
-    }
-  });
-
   var places, questions, datasets;
   var prefill = req.query;
+  var siteQuery = {where: {site: req.params.domain}};
   var year = req.app.get('year');
   var submissionData = req.body,
     errors,
@@ -24,20 +17,30 @@ var submit = function (req, res) {
   function render(prefill_, status) {
 
     res.statusCode = status;
-    res.render('submission/create.html', {
-      canReview: true, // flag always on for submission
-      submitInstructions: req.app.get('config').get('submit_page', req.locale),
-      places: places, // TODO: translated
-      ynquestions: ynquestions,  // TODO: translated
-      questions: questions,  // TODO: translated
-      questionsById: questions,  // TODO: translated
-      datasets: datasets,
-      year: year,
-      prefill: prefill_,
-      currrecord: prefill_,
-      errors: errors,
-      formData: reboundFormData
+
+    models.utils.loadModels({
+      datasets: models.Dataset.findAll(siteQuery),
+      places: models.Place.findAll(siteQuery),
+      questions: models.Question.findAll(siteQuery)
+    }).then(function(D) {
+
+      res.render('submission/create.html', {
+        canReview: true, // flag always on for submission
+        submitInstructions: req.app.get('config').get('submit_page', req.locale),
+        places: D.places, // TODO: translated
+        ynquestions: D.questions,  // TODO: we want yn questions: model.data.questions.slice(0, 9);
+        questions: D.questions,  // TODO: translated
+        questionsById: D.questions,  // TODO: translated
+        datasets: D.datasets,
+        year: year,
+        prefill: prefill_,
+        currrecord: prefill_,
+        errors: errors,
+        formData: reboundFormData
+      });
+
     });
+
   }
 
   function insertSubmissionCallback(err, data) {
@@ -80,17 +83,18 @@ var submit = function (req, res) {
       insertSubmissionCallback);
 
   } else if (prefill.dataset && prefill.place) {
-    model.backend.getEntry({
+    models.Entry.findOne({
       place: prefill.place,
       dataset: prefill.dataset,
       year: year
-    }, function (err, entry) {
+    }).then(function(E) {
       // we allow query args to override entry values
       // might be useful (e.g. if we started having form errors and
       // redirecting here ...)
-      if (entry) { // we might have a got a 404 etc
-        prefill = _.extend(entry, prefill);
+      if (E) { // we might have a got a 404 etc
+        prefill = _.extend(E, prefill);
       }
+
       render(prefill, response_status);
     });
 
