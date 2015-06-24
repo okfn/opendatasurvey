@@ -72,51 +72,37 @@ var faq = function (req, res) {
 };
 
 var changes = function (req, res) {
-
-  var submissions = req.app.get('models').Entry.findAll({
+  models.Entry.findAll({
     where: {
       site: req.params.domain,
       year: req.app.get('year'),
       is_current: false
     },
+
     order: 'updated_at DESC'
+  }).then(function(D) {
+    res.render('changes.html', {changeitems: _.map(D, function(E) {
+      var url;
+
+      if (obj.reviewResult === 'accepted')
+        url = '/entry/PLACE/DATASET'
+          .replace('PLACE', E.place)
+          .replace('DATASET', E.dataset);
+      else
+        url = E.detailsURL || '/submission/ID'.replace('ID', E.submissionid);
+      
+      return {
+        type: type,
+        timestamp: E.timestamp,
+        dataset_title: E.dataset_title,
+        place_name: E.place_name,
+        url: url,
+        status: E.reviewresult,
+        submitter: E.submitter,
+        reviewer: E.reviewer
+      };
+    })});
   });
-
-  function transformSubmissions(results) {
-    // adjust for new ORM objects
-    // TODO: check this
-    var results = _.each(results, transformToChangeItem);
-  }
-
-  function transformToChangeItem(obj, type) {
-    var url;
-    if (obj.reviewresult === 'accepted') {
-      url = '/entry/PLACE/DATASET'
-        .replace('PLACE', obj.place)
-        .replace('DATASET', obj.dataset);
-    } else {
-      url = obj.details_url || '/submission/ID'.replace('ID', obj.submissionid);
-    }
-    return {
-      type: type,
-      timestamp: obj.timestamp,
-      dataset_title: obj.dataset_title,
-      place_name: obj.place_name,
-      url: url,
-      status: obj.reviewresult,
-      submitter: obj.submitter,
-      reviewer: obj.reviewer
-    };
-  }
-
-  // TODO: transform submissions - is this still relevant?
-  // TODO: fix the promise - I'm just mocking here
-  submissions.then(transformSubmissions).then(
-    res.render('changes.html', {
-      changeitems: submissions
-    })
-  );
-
 };
 
 
