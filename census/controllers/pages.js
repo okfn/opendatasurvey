@@ -242,7 +242,7 @@ var dataset = function (req, res) {
   // TODO: check this works
   dataset.then(function(result) {
     if (!result) {
-      return res.send(404, 'Dataset not found. Are you sure you have spelled it correctly?');
+      return res.status(404).send('Dataset not found. Are you sure you have spelled it correctly?');
     } else {
 
       // TODO: entries for dataset
