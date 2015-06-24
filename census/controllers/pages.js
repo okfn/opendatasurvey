@@ -275,7 +275,7 @@ var dataset = function (req, res) {
 var entry = function (req, res) {
 
   // TODO: we could break old urls and lookup entries by uuid
-  var entry = req.app.get('models').Entry.findOne({
+  var entry = models.Entry.findOne({
     where: {
       site: req.params.domain,
       place: req.params.place,
