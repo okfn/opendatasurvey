@@ -193,13 +193,6 @@ var place = function (req, res) {
 //Show details per dataset
 var dataset = function (req, res) {
 
-  var dataset = models.Dataset.findOne({
-    where: {
-      id: req.params.dataset,
-      site: req.params.domain
-    }
-  });
-
   function cleanResultSet(results) {
     var lookup = _.pluck(results, 'place'),
         redundants = findRedundants(lookup),
@@ -243,33 +236,28 @@ var dataset = function (req, res) {
     return removeRedundants(results).sort(sorter);
   }
 
-  // TODO: check this works
-  dataset.then(function(result) {
-    if (!result) {
+  models.utils.loadModels({
+    // TODO: for each: result.translated(req.locale)
+    dataset: models.Dataset.findOne({where: {id: req.params.dataset, site: req.params.domain}}),
+
+    entries: models.Entry.findAll({where: {dataset: req.params.dataset, site: req.params.domain}})
+  }).then(function(D) {
+    if (!D.dataset)
       return res.status(404).send('Dataset not found. Are you sure you have spelled it correctly?');
-    } else {
 
-      // TODO: entries for dataset
-      var datasetEntries;
+    // TODO: for each: result.translated(req.locale)
+    var datasetPlaces;
 
-      // TODO: for each: result.translated(req.locale)
-      var datasetPlaces;
+    // TODO: for each: result.translated(req.locale)
+    var datasetQuestions;
 
-      // TODO: for each: result.translated(req.locale)
-      var datasetQuestions;
-
-      // TODO: for each: result.translated(req.locale)
-      var dataset;
-
-      // TODO: in final promise
-      res.render('country/dataset.html', {
-        bydataset: datasetEntries,
-        placesById: datasetPlaces,
-        scoredQuestions: datasetQuestions,
-        dataset: dataset
-      });
-
-    }
+    // TODO: in final promise
+    res.render('country/dataset.html', {
+      bydataset: D.entries,
+      placesById: datasetPlaces,
+      scoredQuestions: datasetQuestions,
+      dataset: D.dataset
+    });
 
   });
 
