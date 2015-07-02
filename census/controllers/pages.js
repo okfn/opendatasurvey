@@ -32,14 +32,13 @@ var overview = function (req, res) {
         places: D.places.length
       },
 
-      extraWidth: D.entries.length > 12,
+      extraWidth: D.datasets.length > 12,
       places: D.places,
 
       byplace: _.object(_.map(D.places, function(P) { return [P.id, {
         datasets: _.where(D.entries, {place: P.id}).length,
         score: 0
-      }]; }))
-      ,
+      }]; })),
 
       datasets: D.entries, // TODO: translate
       scoredQuestions: D.questions,
