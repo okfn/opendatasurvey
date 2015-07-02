@@ -21,7 +21,7 @@ var overview = function (req, res) {
 
     questions: models.Question.findAll(siteQuery(req))
   }).then(function(D) {
-    var openEntries = _.filter(D.entries, function(E) { return E.is_current; }).length;
+    var openEntries = _.where(D.entries, {is_current: true}).length;
 
 
     res.render('overview.html', {
@@ -36,7 +36,7 @@ var overview = function (req, res) {
       places: D.places,
 
       byplace: _.object(_.map(D.places, function(P) { return [P.id, {
-        datasets: _.filter(D.entries, function(E) { return E.place === P.id; }).length,
+        datasets: _.where(D.entries, {place: P.id}).length,
         score: 0
       }]; }))
       ,
