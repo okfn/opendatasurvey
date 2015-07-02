@@ -9,24 +9,27 @@ var siteQuery = function(req) { return {where: {site: req.params.domain}}; }
 
 var overview = function (req, res) {
 
-  // TODO: model.data.entries.summary?
-  var summary;
-
   // TODO: model.data.entries.byplace
   var byplace;
 
   // Wait for all data loaded and render the page
   models.utils.loadModels({
     datasets: models.Dataset.findAll(siteQuery(req)),
+    entries: models.Entry.findAll(siteQuery(req)),
 
     // TODO : sort places by score, for current year
     places: models.Place.findAll(siteQuery(req)),
 
     questions: models.Question.findAll(siteQuery(req))
   }).then(function(D) {
+    var openEntries = _.filter(D.entries, function(E) { return E.is_current; }).length;
+
+
     res.render('overview.html', {
       summary: {
-        entries: D.datasets.length,
+        entries: D.entries.length,
+        open: openEntries,
+        open_percent: openEntries/D.entries.length || 0,
         places: D.places.length
       },
 
