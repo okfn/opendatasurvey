@@ -14,8 +14,7 @@ var overview = function (req, res) {
 
   // Wait for all data loaded and render the page
   models.utils.loadModels({
-    datasets: models.Dataset.findAll(siteQuery(req)),
-    entries: models.Entry.findAll(siteQuery(req)),
+    datasets: models.Entry.findAll(siteQuery(req)),
 
     // TODO : sort places by score, for current year
     places: models.Place.findAll(siteQuery(req)),
@@ -27,16 +26,22 @@ var overview = function (req, res) {
 
     res.render('overview.html', {
       summary: {
-        entries: D.entries.length,
+        entries: D.datasets.length,
         open: openEntries,
-        open_percent: openEntries/D.entries.length || 0,
+        open_percent: openEntries/D.datasets.length || 0,
         places: D.places.length
       },
 
-      extraWidth: D.datasets.length > 12,
+      extraWidth: D.entries.length > 12,
       places: D.places,
-      byplace: byplace,
-      datasets: D.datasets, // TODO: translate
+
+      byplace: _.object(_.map(D.places, function(P) { return [P.id, {
+        datasets: _.filter(D.entries, function(E) { return E.place === P.id; }).length,
+        score: 0
+      }]; }))
+      ,
+
+      datasets: D.entries, // TODO: translate
       scoredQuestions: D.questions,
       custom_text: req.app.get('config').get('overview_page', req.locale),
       missing_place_html: req.app.get('config').get('missing_place_html', req.locale)
