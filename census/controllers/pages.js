@@ -9,9 +9,6 @@ var siteQuery = function(req) { return {where: {site: req.params.domain}}; }
 
 var overview = function (req, res) {
 
-  // TODO dataset count
-  var extraWidth = (null > 12);
-
   // TODO: model.data.entries.summary?
   var summary;
 
@@ -33,7 +30,7 @@ var overview = function (req, res) {
         places: D.places.length
       },
 
-      extraWidth: extraWidth,
+      extraWidth: D.datasets.length > 12,
       places: D.places,
       byplace: byplace,
       datasets: D.datasets, // TODO: translate
