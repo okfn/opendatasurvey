@@ -246,19 +246,18 @@ var dataset = function (req, res) {
       return res.status(404).send('Dataset not found. Are you sure you have spelled it correctly?');
 
     // TODO: for each: result.translated(req.locale)
-    var datasetPlaces;
-
-    // TODO: for each: result.translated(req.locale)
     var datasetQuestions;
 
-    // TODO: in final promise
-    res.render('country/dataset.html', {
-      bydataset: D.entries,
-      placesById: datasetPlaces,
-      scoredQuestions: datasetQuestions,
-      dataset: D.dataset
-    });
 
+    models.Place.findAll({where: {id: {in: D.entries.map(function(E) { return E.place; })}}}).then(function(PD) {
+      // TODO: in final promise
+      res.render('country/dataset.html', {
+        bydataset: D.entries,
+        placesById: _.object(PD.map(function(P) { return [P.id, P] })),
+        scoredQuestions: datasetQuestions,
+        dataset: D.dataset
+      });  
+    });
   });
 
 };
