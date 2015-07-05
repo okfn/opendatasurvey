@@ -1,14 +1,16 @@
 'use strict';
 
+var _ = require('underscore');
+var loaders = require('../loaders');
+var models = require('../models');
+
+
 function promisedLoad(res, options) {
   return loaders.loadData(options)
     .then(function() { res.send({status: 'ok', message: 'ok'}); })
     .catch(function(E) { res.send({status: 'error', message: E}); });
 }
 
-var _ = require('underscore');
-var loaders = require('../loaders');
-var models = require('../models');
 
 var loaderFactory = function(site_id, loader, response) {
   return loader(site_id).spread(function(error, data) {
