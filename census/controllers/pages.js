@@ -2,133 +2,111 @@
 
 var _ = require('underscore');
 var marked = require('marked');
+var models = require('../models');
+var Promise = require('bluebird');
 
+var siteQuery = function(req) { return {where: {site: req.params.domain}}; }
 
 var overview = function (req, res) {
-
-  var places = req.app.get('models').Place.findAll({
-    where: {
-      site: req.params.domain
-    }
-  });
-
-  // TODO : sort places by score, for current year
-
-  var datasets = req.app.get('models').Dataset.findAll({
-    where: {
-      site: req.params.domain
-    }
-  });
-
-  // TODO dataset count
-  var extraWidth = (null > 12);
-
-  // TODO: model.data.entries.summary?
-  var summary;
 
   // TODO: model.data.entries.byplace
   var byplace;
 
-  // TODO: question.translated(req.locale) on each object
-  var questions;
+  // Wait for all data loaded and render the page
+  models.utils.loadModels({
+    datasets: models.Entry.findAll(siteQuery(req)),
 
-  // TODO: result.translated(req.locale)
-  var placesById;
+    // TODO : sort places by score, for current year
+    places: models.Place.findAll(siteQuery(req)),
 
-  res.render('overview.html', {
-    summary: summary,
-    extraWidth: extraWidth,
-    places: places, // TODO: translate
-    byplace: byplace,
-    datasets: datasets, // TODO: translate
-    scoredQuestions: questions,
-    placesById: placesById,
-    custom_text: req.app.get('config').get('overview_page', req.locale),
-    missing_place_html: req.app.get('config').get('missing_place_html', req.locale)
+    questions: models.Question.findAll(siteQuery(req))
+  }).then(function(D) {
+    var openEntries = _.where(D.entries, {is_current: true}).length;
+
+
+    res.render('overview.html', {
+      summary: {
+        entries: D.datasets.length,
+        open: openEntries,
+        open_percent: openEntries/D.datasets.length || 0,
+        places: D.places.length
+      },
+
+      extraWidth: D.datasets.length > 12,
+      places: D.places,
+
+      byplace: _.object(_.map(D.places, function(P) { return [P.id, {
+        datasets: _.where(D.entries, {place: P.id}).length,
+        score: 0
+      }]; })),
+
+      datasets: D.entries, // TODO: translate
+      scoredQuestions: D.questions,
+      custom_text: req.app.get('config').get('overview_page', req.locale),
+      missing_place_html: req.app.get('config').get('missing_place_html', req.locale)
+    });
   });
 };
 
 
 var faq = function (req, res) {
-
   var qTmpl = req.app.get('view_env').getTemplate('_snippets/questions.html');
   var dTmpl = req.app.get('view_env').getTemplate('_snippets/datasets.html');
   var gettext = res.locals.gettext;
 
-  // TODO: question.translated(req.locale) per object
-  var questions = req.app.get('models').Question.findAll({
-    where: {
-      site: req.params.domain
-    }
-  });
 
-  var datasets = req.app.get('models').Dataset.findAll({
-    where: {
-      site: req.params.domain
-    }
-  })
+  models.utils.loadModels({
+    datasets: models.Dataset.findAll(siteQuery(req)),
+    questions: models.Question.findAll(siteQuery(req))
+  }).then(function(D) {
+    var qContent = qTmpl.render({gettext: gettext, questions: D.questions});
+    var dContent = dTmpl.render({gettext: gettext, datasets: D.datasets});
+    var mContent = req.app.get('config').get('missing_place_html', req.locale);
 
-  var qContent = qTmpl.render({gettext: gettext, questions: questions});
-  var dContent = dTmpl.render({gettext: gettext, datasets: datasets});
-  var mContent = req.app.get('config').get('missing_place_html', req.locale);
+    var content = marked(req.app.get('config').get('faq_page', req.locale))
+      .replace('{{questions}}', qContent)
+      .replace('{{datasets}}', dContent)
+      .replace('{{missing_place}}', mContent);
 
-  var content = marked(req.app.get('config').get('faq_page', req.locale))
-    .replace('{{questions}}', qContent)
-    .replace('{{datasets}}', dContent)
-    .replace('{{missing_place}}', mContent);
-
-  res.render('base.html', {
-    content: content,
-    title: 'FAQ - Frequently Asked Questions'
+    res.render('base.html', {
+      content: content,
+      title: 'FAQ - Frequently Asked Questions'
+    });
   });
 };
 
 var changes = function (req, res) {
-
-  var submissions = req.app.get('models').Entry.findAll({
+  models.Entry.findAll({
     where: {
       site: req.params.domain,
       year: req.app.get('year'),
       is_current: false
     },
+
     order: 'updated_at DESC'
+  }).then(function(D) {
+    res.render('changes.html', {changeitems: _.map(D, function(E) {
+      var url;
+
+      if (obj.reviewResult === 'accepted')
+        url = '/entry/PLACE/DATASET'
+          .replace('PLACE', E.place)
+          .replace('DATASET', E.dataset);
+      else
+        url = E.detailsURL || '/submission/ID'.replace('ID', E.submissionid);
+      
+      return {
+        type: type,
+        timestamp: E.updated_at,
+        dataset_title: E.dataset_title,
+        place_name: E.place_name,
+        url: url,
+        status: E.reviewresult,
+        submitter: E.submitter,
+        reviewer: E.reviewer
+      };
+    })});
   });
-
-  function transformSubmissions(results) {
-    // adjust for new ORM objects
-    // TODO: check this
-    var results = _.each(results, transformToChangeItem);
-  }
-
-  function transformToChangeItem(obj, type) {
-    var url;
-    if (obj.reviewresult === 'accepted') {
-      url = '/entry/PLACE/DATASET'
-        .replace('PLACE', obj.place)
-        .replace('DATASET', obj.dataset);
-    } else {
-      url = obj.details_url || '/submission/ID'.replace('ID', obj.submissionid);
-    }
-    return {
-      type: type,
-      timestamp: obj.timestamp,
-      dataset_title: obj.dataset_title,
-      place_name: obj.place_name,
-      url: url,
-      status: obj.reviewresult,
-      submitter: obj.submitter,
-      reviewer: obj.reviewer
-    };
-  }
-
-  // TODO: transform submissions - is this still relevant?
-  // TODO: fix the promise - I'm just mocking here
-  submissions.then(transformSubmissions).then(
-    res.render('changes.html', {
-      changeitems: submissions
-    })
-  );
-
 };
 
 
@@ -174,7 +152,7 @@ var resultJson = function (req, res) {
 //Show details per country. Extra/different functionality for reviewers.
 var place = function (req, res) {
 
-  var place = req.app.get('models').Place.findOne({
+  var place = models.Place.findOne({
     where: {
       id: req.params.place,
       site: req.params.domain
@@ -183,33 +161,30 @@ var place = function (req, res) {
 
   // TODO: check this works
   place.then(function(result) {
-    if (!result) {
-      return res.send(404, 'There is no place with ID ' + place + ' in our database. Are you sure you have spelled it correctly? Please check the <a href="/">overview page</a> for the list of places');
-    } else {
+    if (!result)
+      return res.send(404, 'There is no place with ID ' + result.id + ' in our database. Are you sure you have spelled it correctly? Please check the <a href="/">overview page</a> for the list of places');
 
-      var placeEntries;
+    var placeEntries;
 
-      var placeSubmissions;
+    var placeSubmissions;
 
-      // TODO: dataset.translated(req.locale) for each
-      var placeDatasets;
+    // TODO: dataset.translated(req.locale) for each
+    var placeDatasets;
 
-      // TODO: question.translated(req.locale) for each
-      var placeQuestions;
+    // TODO: question.translated(req.locale) for each
+    var placeQuestions;
 
-      // TODO: in final promise
-      res.render('country/place.html', {
-        info: placeEntries,
-        datasets: placeDatasets,
-        submissions: placeSubmissions,
-        entrys: placeEntries, // TODO: ???? check this - what is different from info?
-        place: place.translated(req.locale),
-        scoredQuestions: placeQuestions,
-        loggedin: req.session.loggedin,
-        display_year: req.app.get('year')
-      });
-
-    }
+    // TODO: in final promise
+    res.render('country/place.html', {
+      info: placeEntries,
+      datasets: placeDatasets,
+      submissions: placeSubmissions,
+      entrys: placeEntries, // TODO: ???? check this - what is different from info?
+      place: _.result(_.result(result.translations, req.locale), 'name'),
+      scoredQuestions: placeQuestions,
+      loggedin: req.session.loggedin,
+      display_year: req.app.get('year')
+    });
 
   });
 
@@ -217,13 +192,6 @@ var place = function (req, res) {
 
 //Show details per dataset
 var dataset = function (req, res) {
-
-  var dataset = req.app.get('models').Dataset.findOne({
-    where: {
-      id: req.params.dataset,
-      site: req.params.domain
-    }
-  });
 
   function cleanResultSet(results) {
     var lookup = _.pluck(results, 'place'),
@@ -268,34 +236,28 @@ var dataset = function (req, res) {
     return removeRedundants(results).sort(sorter);
   }
 
-  // TODO: check this works
-  dataset.then(function(result) {
-    if (!result) {
-      return res.send(404, 'Dataset not found. Are you sure you have spelled it correctly?');
-    } else {
+  models.utils.loadModels({
+    // TODO: for each: result.translated(req.locale)
+    dataset: models.Dataset.findOne({where: {id: req.params.dataset, site: req.params.domain}}),
 
-      // TODO: entries for dataset
-      var datasetEntries;
+    entries: models.Entry.findAll({where: {dataset: req.params.dataset, site: req.params.domain}})
+  }).then(function(D) {
+    if (!D.dataset)
+      return res.status(404).send('Dataset not found. Are you sure you have spelled it correctly?');
 
-      // TODO: for each: result.translated(req.locale)
-      var datasetPlaces;
+    // TODO: for each: result.translated(req.locale)
+    var datasetQuestions;
 
-      // TODO: for each: result.translated(req.locale)
-      var datasetQuestions;
 
-      // TODO: for each: result.translated(req.locale)
-      var dataset;
-
+    models.Place.findAll({where: {id: {in: D.entries.map(function(E) { return E.place; })}}}).then(function(PD) {
       // TODO: in final promise
       res.render('country/dataset.html', {
-        bydataset: datasetEntries,
-        placesById: datasetPlaces,
+        bydataset: D.entries,
+        placesById: _.object(PD.map(function(P) { return [P.id, P] })),
         scoredQuestions: datasetQuestions,
-        dataset: dataset
-      });
-
-    }
-
+        dataset: D.dataset
+      });  
+    });
   });
 
 };
@@ -304,7 +266,7 @@ var dataset = function (req, res) {
 var entry = function (req, res) {
 
   // TODO: we could break old urls and lookup entries by uuid
-  var entry = req.app.get('models').Entry.findOne({
+  var entry = models.Entry.findOne({
     where: {
       site: req.params.domain,
       place: req.params.place,
@@ -315,7 +277,7 @@ var entry = function (req, res) {
 
   entry.then(function(result) {
     if (!result) {
-      return res.send(404, res.locals.format('There is no entry for %(place)s and %(dataset)s', {
+      return res.status(404).send(res.locals.format('There is no entry for %(place)s and %(dataset)s', {
         place: req.params.place,
         dataset: req.params.dataset
       }, req.locale));

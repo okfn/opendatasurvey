@@ -4,9 +4,7 @@
 var login = function (req, res) {
   // TODO: use this stored next url properly ...
   req.session.nextUrl = req.query.next;
-  res.render('login.html', {
-    anonymous_submissions: req.app.get('config').get('anonymous_submissions') === 'TRUE'
-  });
+  res.render('login.html');
 };
 
 var logout = function (req, res) {

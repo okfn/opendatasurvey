@@ -112,7 +112,6 @@ var simpledelta = function(str) {
 
 };
 
-
 module.exports = {
   urlize: urlize,
   wordwrap: wordwrap,

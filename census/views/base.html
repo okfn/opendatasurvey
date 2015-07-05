@@ -138,7 +138,7 @@
             {{format("Logged in as %(name)s.", { name: currentUser.name })}}
             <a href="/auth/logout">{{gettext("Log out")}}</a>
             {% else %}
-            <a href="/login">{{gettext("Login")}}</a>
+            <a href="/auth/login">{{gettext("Login")}}</a>
             {% endif %}
           </li>
           <li><a href="http://okfn.org/opendata/" title="{{gettext("More about Open Data")}}">{{gettext("What is Open Data")}}</a></li>

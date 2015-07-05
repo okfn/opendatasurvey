@@ -5,16 +5,9 @@ var routeUtils = require('../routes/utils');
 
 var submit = function (req, res) {
 
-
-  // TODO: we want yn questions: model.data.questions.slice(0, 9);
-  var ynquestions = req.app.get('models').Question.findAll({
-    where: {
-      site: req.params.domain
-    }
-  });
-
   var places, questions, datasets;
   var prefill = req.query;
+  var siteQuery = {where: {site: req.params.domain}};
   var year = req.app.get('year');
   var submissionData = req.body,
     errors,
@@ -24,20 +17,30 @@ var submit = function (req, res) {
   function render(prefill_, status) {
 
     res.statusCode = status;
-    res.render('submission/create.html', {
-      canReview: true, // flag always on for submission
-      submitInstructions: req.app.get('config').get('submit_page', req.locale),
-      places: places, // TODO: translated
-      ynquestions: ynquestions,  // TODO: translated
-      questions: questions,  // TODO: translated
-      questionsById: questions,  // TODO: translated
-      datasets: datasets,
-      year: year,
-      prefill: prefill_,
-      currrecord: prefill_,
-      errors: errors,
-      formData: reboundFormData
+
+    models.utils.loadModels({
+      datasets: models.Dataset.findAll(siteQuery),
+      places: models.Place.findAll(siteQuery),
+      questions: models.Question.findAll(siteQuery)
+    }).then(function(D) {
+
+      res.render('submission/create.html', {
+        canReview: true, // flag always on for submission
+        submitInstructions: req.app.get('config').get('submit_page', req.locale),
+        places: D.places, // TODO: translated
+        ynquestions: D.questions,  // TODO: we want yn questions: model.data.questions.slice(0, 9);
+        questions: D.questions,  // TODO: translated
+        questionsById: D.questions,  // TODO: translated
+        datasets: D.datasets,
+        year: year,
+        prefill: prefill_,
+        currrecord: prefill_,
+        errors: errors,
+        formData: reboundFormData
+      });
+
     });
+
   }
 
   function insertSubmissionCallback(err, data) {
@@ -80,17 +83,18 @@ var submit = function (req, res) {
       insertSubmissionCallback);
 
   } else if (prefill.dataset && prefill.place) {
-    model.backend.getEntry({
+    models.Entry.findOne({
       place: prefill.place,
       dataset: prefill.dataset,
       year: year
-    }, function (err, entry) {
+    }).then(function(E) {
       // we allow query args to override entry values
       // might be useful (e.g. if we started having form errors and
       // redirecting here ...)
-      if (entry) { // we might have a got a 404 etc
-        prefill = _.extend(entry, prefill);
+      if (E) { // we might have a got a 404 etc
+        prefill = _.extend(E, prefill);
       }
+
       render(prefill, response_status);
     });
 
@@ -102,48 +106,33 @@ var submit = function (req, res) {
 
 // Compare & update page
 var submission = function (req, res) {
-  var ynquestions = model.data.questions.slice(0, 9),
-    reviewClosed;
+  models.Entry.findOne({id: req.params.submissionid, is_current: false}).then(function(E) {
 
-  model.backend.getSubmission({submissionid: req.params.submissionid}, function (err, obj) {
-    if (err) {
-      res.send(500, 'There was an error ' + err);
-    } else if (!obj) {
-      res.send(404, 'There is no submission with id ' + req.params.submissionid);
-    } else {
+    if (!E)
+      return res.status(404).send('There is no submission with id ' + req.params.submissionid);
 
-      if (obj.reviewresult) {
-        // If the object has been reviewed, we close further reviews.
-        reviewClosed = true;
-      }
-
-      // see if there is an entry
-      model.backend.getEntry(obj, function (err, entry) {
-        if (!entry) {
-          entry = {};
-        }
-        var dataset = _.findWhere(model.data.datasets, {
-          id: obj.dataset
-        });
-        var place = model.data.placesById[obj.place];
-
-        res.render('submission/review.html', {
-          canReview: routeUtils.canReview(req.user, place),
-          reviewClosed: reviewClosed,
-          reviewInstructions: req.app.get('config').get('review_page', req.locale),
-          ynquestions: util.translateQuestions(ynquestions, req.locale),
-          questions: util.translateQuestions(model.data.questions, req.locale),
-          questionsById: util.translateObject(model.data.questionsById, req.locale),
-          prefill: obj,
-          currrecord: entry,
-          dataset: util.markup(util.translate(dataset, req.locale)),
-          place: util.translate(place, req.locale),
-          disqus_shortname: req.app.get('config').get('disqus_shortname'),
-          reviewState: true
-        });
+    models.utils.loadModels({
+      dataset: models.Dataset.findByID(E.dataset),
+      place: models.Dataset.findByID(E.place),
+      questions: models.Question.findAll(),
+      ynquestions: models.Question.findAll()
+    }).then(function(D) {
+      res.render('submission/review.html', {
+        canReview: routeUtils.canReview(req.user, D.place),
+        reviewClosed: Boolean(E.reviewResult),
+        reviewInstructions: req.app.get('config').get('review_page', req.locale),
+        ynquestions: util.translateQuestions(D.ynquestions, req.locale),
+        questions: util.translateQuestions(D.questions, req.locale),
+        prefill: obj,
+        currrecord: E,
+        dataset: util.markup(util.translate(D.dataset, req.locale)),
+        place: util.translate(D.place, req.locale),
+        disqus_shortname: req.app.get('config').get('disqus_shortname'),
+        reviewState: true
       });
-    }
-  });
+    });
+
+  })
 };
 
 var reviewPost = function (req, res) {

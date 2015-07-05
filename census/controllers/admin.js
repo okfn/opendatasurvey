@@ -6,28 +6,22 @@ var models = require('../models');
 
 
 function promisedLoad(res, options) {
-  return loaders.loadData(options)
+  return loaders.loadTranslatedData(options)
     .then(function() { res.send({status: 'ok', message: 'ok'}); })
     .catch(function(E) { res.send({status: 'error', message: E}); });
 }
-
-
-var loaderFactory = function(site_id, loader, response) {
-  return loader(site_id).spread(function(error, data) {
-    if (error) {
-      response.send({'status': 'error', message: error});
-    } else {
-      response.send({'status': 'ok', message: 'ok'});
-    }
-  });
-};
 
 var dashboard = function (req, res) {
   res.render('dashboard.html');
 };
 
 var loadRegistry = function (req, res) {
-  return loaderFactory(req.params.domain, loaders.loadRegistry, res);
+  return loaders.loadRegistry(req.params.domain).spread(function(error, data) {
+    if (error)
+      res.send({'status': 'error', message: error});
+    else
+      res.send({'status': 'ok', message: 'ok'});
+  });
 };
 
 // Config loader doesn't return .spread(), but Promise()
@@ -54,7 +48,7 @@ var loadQuestions = function (req, res) { return promisedLoad(res, {
   mapper : function(D) { return _.extend(D, {dependants: D.dependants.split(','), score: D.score || 0}) },
   Model  : models.Question,
   setting: 'questions',
-  site   : req.params.domain
+  site   : req.params.domain,
 }); };
 
 

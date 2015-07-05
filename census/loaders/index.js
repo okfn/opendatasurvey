@@ -8,45 +8,7 @@ var spreadSheetHandler = require('./includes/spreadSheetHandler');
 var dbTransactions = require('./includes/dbTransactions');
 
 
-var indexLoader = {
-  /*
-   * load Places from sheet to DB
-   */
-  loadPlaces: function (params) {
-    var configUrl = params['configUrl'] || false;
-    if (configUrl) {
-      var placesUrlKey = spreadSheetHandler.getPlacesUrlKey(configUrl);
-      var placesSpreadSheetUrl = spreadSheetHandler.getPlacesSpreadSheetUrl(placesUrlKey);
-      return spreadSheetHandler.parse(placesSpreadSheetUrl)
-        .spread(function (err, parsedPlaces) {
-          if (err) {
-            return [err, false];
-          } else {
-            var site = params['subDomain'];
-            var mappedPlaces = false;
-            parsedPlaces = entitiesConstructor.setSiteValue(parsedPlaces, site);
-            mappedPlaces = entitiesConstructor.mapPlaces(parsedPlaces);
-            return Promise.each(mappedPlaces, function (signleMappedPlace) {
-              return dbTransactions.checkIfPlaceExist(signleMappedPlace['site'])
-                .spread(function (err, isRecordExist, recordData) {
-                  if (err) {
-                    return [err, false];
-                  } else {
-                    return handleCheckIfExistResult(isRecordExist, recordData);
-                  }
-                });
-            }).then(function () {
-              return voidSavePlacesProcess(mappedPlaces);
-            });
-          }
-        });
-    } else {
-      return new Promise(function (resolve, reject) {
-        resolve(['reload failed', false]);
-      });
-    }
-  },
-
+module.exports = {
   loadRegistry: function () {
     // WARN Implement actual permissions check here
     var hasPermissions = false;
@@ -92,47 +54,64 @@ var indexLoader = {
           Promise.all(_.map(D, function(DS) { return new Promise(function(RSD, RJD) {
 
             // Allow custom data maping
-            options.Model.upsert(_.extend(_.isFunction(options.mapper) ? options.mapper(DS) : DS, {
-              site: options.site
-            })).then(RSD).catch(RJD);
+            options.Model.upsert(
+              _.chain(_.isFunction(options.mapper) ? options.mapper(DS) : DS)
+
+                // All records belongs to certain domain
+                .extend({site: options.site})
+
+                .pairs()
+
+                // User may mix up lower cased and upper cased field names
+                .map(function(P) { return [P[0].toLowerCase(), P[1]]; })
+
+                .object()
+                .value()
+            ).then(RSD).catch(RJD);
 
           }); })).then(RS).catch(RJ);
         });
       });
     });
   },
-  /*
-   * load Questions from sheet to DB
-   */
-  loadQuestions: function (params) {
-    var configUrl = params['configUrl'];
-    var questionsUrlKey = spreadSheetHandler.getDatasetsUrlKey(configUrl);
-    var questionsSpreadSheetUrl = spreadSheetHandler.getQuestionsSpreadSheetUrl(questionsUrlKey);
 
-    return spreadSheetHandler.parse(questionsSpreadSheetUrl)
-      .spread(function (err, parsedQuestions) {
-        if (err) {
-          return [err, false];
-        } else {
-          var site = params['subDomain'];
-          var mappedQuestions = false;
-          parsedQuestions = entitiesConstructor.setSiteValue(parsedQuestions, site);
-          mappedQuestions = entitiesConstructor.mapQuestions(parsedQuestions);
-          return Promise.each(mappedQuestions, function (signleMappedQuestion) {
-            return dbTransactions.checkIfQuestionExist(signleMappedQuestion['site'])
-              .spread(function (err, isRecordExist, recordData) {
-                if (err) {
-                  return [err, false];
-                } else {
-                  return handleCheckIfExistResult(isRecordExist, recordData);
-                }
-              });
-          }).then(function () {
-            return voidSaveQuestionsProcess(mappedQuestions);
-          });
-        }
-      });
+  // There may be translated fields. Map field name <name>@<language>
+  // into translation: {<language>: {<name>: ..., <another name>: ..., ...}}.
+  loadTranslatedData: function(options) {
+    // Avoid recursive call
+    var mapper = options.mapper;
+
+    return module.exports.loadData(_.extend(options, {
+      mapper: function(D) {
+        // Don't forget to call user defined mapper function
+        var mapped = _.isFunction(mapper) ? mapper(D) : D;
+
+        return _.extend(mapped, {
+          translations: _.chain(mapped)
+            .pairs()
+
+            .reduce(function(R, P) {
+              var fieldLang;
+
+              if(!(P[0].indexOf('@') + 1))
+                return R;
+
+              fieldLang = P[0].split('@');
+
+              // Default empty dict
+              R[fieldLang[1]] = R[fieldLang[1]] || {};
+
+              R[fieldLang[1]][fieldLang[0]] = P[1];
+
+              return R;
+            }, {})
+
+            .value()
+        });
+      }
+    }))
   },
+
   /*
    * load Config (Site) from sheet to DB
    */
@@ -155,77 +134,3 @@ var indexLoader = {
     });
   }
 };
-//get suitable registry from registry array
-function pullRequiredRegistryFromArray(registryArray, siteId) {
-  var result = false;
-  for (var i = 0; i < registryArray.length; i++) {
-    var currentRegistry = registryArray[0];
-    if (currentRegistry['censusid'] === siteId) {
-      result = currentRegistry;
-      break;
-    }
-  }
-  return result;
-}
-
-//check if entity exists in database
-function handleCheckIfExistResult(isRecordExist, recordData) {
-  if (isRecordExist) {
-    return dbTransactions.deleteRecord(recordData);
-  } else {
-    return [false, true];
-  }
-}
-
-//process places creation
-function voidSavePlacesProcess(object) {
-  return dbTransactions.savePlaces(object)
-    .spread(function (err, saveResult) {
-      return handleSaveResult(err, saveResult);
-    });
-}
-
-//process datasets creation
-function voidSaveDatasetsProcess(object) {
-  return dbTransactions.saveDatasets(object)
-    .spread(function (err, saveResult) {
-      return handleSaveResult(err, saveResult);
-    });
-}
-
-//process questions creation
-function voidSaveQuestionsProcess(object) {
-  return dbTransactions.saveQuestions(object)
-    .spread(function (err, saveResult) {
-      return handleSaveResult(err, saveResult);
-    });
-}
-
-//process registry creation
-function voidSaveRegistryProcess(object) {
-  return dbTransactions.saveRegistry(object)
-    .spread(function (err, saveResult) {
-      return handleSaveResult(err, saveResult);
-    });
-}
-
-//process config creation
-function voidSaveConfigProcess(object) {
-  return dbTransactions.saveConfig(object)
-    .spread(function (err, saveResult) {
-      return handleSaveResult(err, saveResult);
-    });
-}
-
-//handle results of save functionality
-function handleSaveResult(err, saveResult) {
-  var result = false;
-  if (err) {
-    result = [err, false];
-  } else {
-    result = [false, saveResult];
-  }
-  return result;
-}
-
-module.exports = indexLoader;
