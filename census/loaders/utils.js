@@ -1,9 +1,24 @@
 'use strict';
 
+var Promise = require('bluebird');
 var request = require('request');
 var csv = require('csv');
 var _ = require('underscore');
 
+
+var spreadsheetParse = function (fileUrl) {
+  return new Promise(function (resolve, reject) {
+    var formattedUrl = parseSpreadsheetUrl(fileUrl);
+    formattedUrl = getCsvUrlForGoogleSheet(fileUrl);
+    getCsvData(formattedUrl, function (err, result) {
+      if (err) {
+        resolve([err, false]);
+      } else {
+        resolve([false, result]);
+      }
+    });
+  });
+};
 
 var getCsvData = function (url, cb) {
   request.get(url, function (err, res, body) {
@@ -182,6 +197,7 @@ var cleanUpCommon = function (db, records) {
 
 
 module.exports = {
+  spreadsheetParse: spreadsheetParse,
   cleanUpCommon: cleanUpCommon,
   loadConfig: loadConfig,
   getCsvUrlForGoogleSheet: getCsvUrlForGoogleSheet,
