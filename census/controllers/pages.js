@@ -85,27 +85,36 @@ var changes = function (req, res) {
 
     order: 'updated_at DESC'
   }).then(function(D) {
-    res.render('changes.html', {changeitems: _.map(D, function(E) {
-      var url;
+    var whereEntry = function(entity) { return {where: {id: {in: D.map(function(E) { return E[entity]; })}}}; }
 
-      if (obj.reviewResult === 'accepted')
-        url = '/entry/PLACE/DATASET'
-          .replace('PLACE', E.place)
-          .replace('DATASET', E.dataset);
-      else
-        url = E.detailsURL || '/submission/ID'.replace('ID', E.submissionid);
-      
-      return {
-        type: type,
-        timestamp: E.updated_at,
-        dataset_title: E.dataset_title,
-        place_name: E.place_name,
-        url: url,
-        status: E.reviewresult,
-        submitter: E.submitter,
-        reviewer: E.reviewer
-      };
-    })});
+
+    models.utils.loadModels({
+      datasets: models.Dataset.findAll(whereEntry('dataset')),
+      places: models.Place.findAll(whereEntry('place'))
+    }).then(function(ED) {
+      res.render('changes.html', {changeitems: _.map(D, function(E) {
+        var url;
+
+
+        if (obj.reviewResult === 'accepted')
+          url = '/entry/PLACE/DATASET'
+            .replace('PLACE', E.place)
+            .replace('DATASET', E.dataset);
+        else
+          url = E.detailsURL || '/submission/ID'.replace('ID', E.submissionid);
+
+        return {
+          type: type,
+          timestamp: E.updated_at,
+          dataset: _.find(ED.datasets, function(DS) { return DS.id = E.dataset; }),
+          place: _.find(ED.places, function(P) { return P.id = E.place; }),
+          url: url,
+          status: E.reviewresult,
+          submitter: E.submitter,
+          reviewer: E.reviewer
+        };
+      })});
+    });
   });
 };
 
