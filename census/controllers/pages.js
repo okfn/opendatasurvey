@@ -5,60 +5,57 @@ var marked = require('marked');
 var models = require('../models');
 var Promise = require('bluebird');
 
-var siteQuery = function(req) { return {where: {site: req.params.domain}}; }
 
 var overview = function (req, res) {
 
-  // TODO: model.data.entries.byplace
-  var byplace;
-
-  // Wait for all data loaded and render the page
   models.utils.loadModels({
-    datasets: models.Entry.findAll(siteQuery(req)),
 
-    // TODO : sort places by score, for current year
-    places: models.Place.findAll(siteQuery(req)),
+    entries: models.Entry.findAll(models.utils.siteQuery(req, true)),
+    datasets: models.Dataset.findAll(models.utils.siteQuery(req)),
+    places: models.Place.findAll(models.utils.siteQuery(req)), // TODO: sort places by score for year
+    questions: models.Question.findAll(models.utils.siteQuery(req))
 
-    questions: models.Question.findAll(siteQuery(req))
   }).then(function(D) {
-    var openEntries = _.where(D.entries, {is_current: true}).length;
 
+    var openEntries = _.where(D.entries, {is_current: true}).length,
+        byPlace = _.object(_.map(D.places, function(P) { return [P.id, {
+          datasets: _.where(D.entries, {place: P.id}).length,
+          score: 0
+        }]; }));
 
     res.render('overview.html', {
+
+      places: models.utils.translateSet(req, D.places),
+      datasets: models.utils.translateSet(req, D.datasets),
+      scoredQuestions: models.utils.translateSet(req, D.questions),
       summary: {
-        entries: D.datasets.length,
+        entries: D.entries.length,
         open: openEntries,
-        open_percent: openEntries/D.datasets.length || 0,
+        open_percent: openEntries / D.entries.length || 0,
         places: D.places.length
       },
-
       extraWidth: D.datasets.length > 12,
-      places: D.places,
-
-      byplace: _.object(_.map(D.places, function(P) { return [P.id, {
-        datasets: _.where(D.entries, {place: P.id}).length,
-        score: 0
-      }]; })),
-
-      datasets: D.entries, // TODO: translate
-      scoredQuestions: D.questions,
-      custom_text: req.app.get('config').get('overview_page', req.locale),
-      missing_place_html: req.app.get('config').get('missing_place_html', req.locale)
+      byplace: byPlace,
+      custom_text: req.params.site.settings.overview_page,
+      missing_place_html: req.params.site.settings.missing_place_html
     });
   });
 };
 
 
 var faq = function (req, res) {
+
   var qTmpl = req.app.get('view_env').getTemplate('_snippets/questions.html');
   var dTmpl = req.app.get('view_env').getTemplate('_snippets/datasets.html');
   var gettext = res.locals.gettext;
 
-
   models.utils.loadModels({
-    datasets: models.Dataset.findAll(siteQuery(req)),
-    questions: models.Question.findAll(siteQuery(req))
+
+    datasets: models.Dataset.findAll(models.utils.siteQuery(req)),
+    questions: models.Question.findAll(models.utils.siteQuery(req))
+
   }).then(function(D) {
+
     var qContent = qTmpl.render({gettext: gettext, questions: D.questions});
     var dContent = dTmpl.render({gettext: gettext, datasets: D.datasets});
     var mContent = req.app.get('config').get('missing_place_html', req.locale);
@@ -72,6 +69,7 @@ var faq = function (req, res) {
       content: content,
       title: 'FAQ - Frequently Asked Questions'
     });
+
   });
 };
 
@@ -94,7 +92,7 @@ var changes = function (req, res) {
           .replace('DATASET', E.dataset);
       else
         url = E.detailsURL || '/submission/ID'.replace('ID', E.submissionid);
-      
+
       return {
         type: type,
         timestamp: E.updated_at,
@@ -256,7 +254,7 @@ var dataset = function (req, res) {
         placesById: _.object(PD.map(function(P) { return [P.id, P] })),
         scoredQuestions: datasetQuestions,
         dataset: D.dataset
-      });  
+      });
     });
   });
 
