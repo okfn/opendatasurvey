@@ -29,6 +29,8 @@ var faviconPath = __dirname + '/public/favicon.ico';
 var models = require('./models');
 var middlewares = require('./middlewares');
 var currentYear = new Date().getFullYear();
+var startYear = 2012;
+var availableYears = _.range(startYear, currentYear);
 var subdomainOptions = {
   base: config.get('baseDomain')
 };
@@ -50,6 +52,7 @@ app.set('port', config.get('appconfig:port'));
 app.set('views', viewPath);
 app.set('models', models);
 app.set('year', currentYear);
+app.set('years', availableYears);
 
 env = nunjucks.configure('census/views', {
     // autoescape: true,

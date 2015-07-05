@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('underscore');
+
 
 var requireDomain = function(req, res, next) {
 
@@ -73,10 +75,22 @@ var requireAdmin = function (req, res, next) {
   }
 };
 
+var requireAvailableYear = function (req, res, next) {
+
+  req.params.year = parseInt(req.params.year, 10);
+
+  if (req.params.year && _.indexOf(req.app.get('years'), req.params.year) === -1) {
+    return res.status(404).send({status: 'not found', message: 'not found here'});
+  }
+  next();
+  return;
+};
+
 
 module.exports = {
   requireDomain: requireDomain,
   requireAuth: requireAuth,
   requireReviewer: requireReviewer,
-  requireAdmin: requireAdmin
+  requireAdmin: requireAdmin,
+  requireAvailableYear: requireAvailableYear
 }

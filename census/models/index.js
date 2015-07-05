@@ -1,29 +1,24 @@
 var _ = require('underscore');
+var Promise = require('bluebird');
 var fs = require('fs');
 var path = require('path');
 var Sequelize = require('sequelize');
 var basename = path.basename(module.filename);
 var mixinsFile = path.basename('./mixins.js');
+var utilsFile = path.basename('./utils.js');
 var config = require('../config').get('database');
+var utils = require('./utils');
 var sequelize = new Sequelize(config.database, config.username, config.password, config);
 var testSequelize = new Sequelize(config.testDatabase, config.username, config.password, config);
 var db = {test: {}};
 
 
-// Load multiple querysets, return object
-db.utils = {
-  loadModels: function(querysets) {
-    return Promise.all(_(querysets).map(function(V, K) {
-      return new Promise(function(RS, RJ) { V.then(function(D) { RS([K, D]); }); });
-    })).then(function(V) { return _.object(V); });
-  }
-};
-
 fs
   .readdirSync(__dirname)
   .filter(function (file) {
-    return (file.indexOf('.') !== 0) && (file.slice(-1) !== '~')
-      && (file !== basename) && (file !== mixinsFile);
+    return (file.indexOf('.') !== 0) && (file.slice(-1) !== '~') &&
+      (file !== basename) && (file !== mixinsFile) &&
+      (file !== utilsFile);
   })
   .forEach(function (file) {
     console.log(file);
@@ -40,6 +35,7 @@ Object.keys(db).forEach(function (modelName) {
   }
 });
 
+db.utils = utils;
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 db.test.sequelize = testSequelize;
