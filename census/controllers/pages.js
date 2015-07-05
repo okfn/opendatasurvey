@@ -85,7 +85,7 @@ var changes = function (req, res) {
 
     order: 'updated_at DESC'
   }).then(function(D) {
-    var whereEntry = function(entity) { return {where: {id: {in: D.map(function(E) { return E[entity]; })}}}; }
+    var whereEntry = function(entity) { return {where: {id: {in: D.map(function(E) { return E[entity]; })}}}; };
 
 
     models.utils.loadModels({
