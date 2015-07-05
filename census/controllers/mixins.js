@@ -12,25 +12,22 @@ var requireDomain = function(req, res, next) {
 
   } else {
 
-    // TEMP
-    // TODO: remove this!
-    next();
-    return;
-    // END TEMP
-
     var query = req.app.get('models').Registry.findById(req.params.domain);
 
-    query.then(function(result) {
-      if (!result) {
-        res.status(404).send({status: 'error', message: 'There is no matching census in the registry.'});
-        return;
-      } else {
-        // we have a match
-        console.log('found ' + req.params.domain);
-        next();
-        return;
-      }
-    });
+    query
+      .then(function(result) {
+        if (!result) {
+          res.status(404).send({status: 'error', message: 'There is no matching census in the registry.'});
+          return;
+        } else {
+          req.params.site = result;
+          next();
+          return;
+        }
+      })
+      .catch(function() {
+        res.status(404).send({status: 'error', message: 'There is no matching census in the registry SHIT.'});
+      });
 
   }
 
@@ -66,13 +63,15 @@ var requireReviewer = function (req, res, next) {
 };
 
 var requireAdmin = function (req, res, next) {
+
   if (req.app.get('config').get('admins').indexOf(req.user.userid) !== -1) {
-    res.status(403).send({status: 'error', message: 'not allowed'})
-    return;
-  } else {
-    next();
+    res.status(403).send({status: 'error', message: 'not allowed'});
     return;
   }
+
+  next();
+  return;
+
 };
 
 var requireAvailableYear = function (req, res, next) {
@@ -80,10 +79,13 @@ var requireAvailableYear = function (req, res, next) {
   req.params.year = parseInt(req.params.year, 10);
 
   if (req.params.year && _.indexOf(req.app.get('years'), req.params.year) === -1) {
-    return res.status(404).send({status: 'not found', message: 'not found here'});
+    res.status(404).send({status: 'not found', message: 'not found here'});
+    return;
   }
+
   next();
   return;
+
 };
 
 
@@ -93,4 +95,4 @@ module.exports = {
   requireReviewer: requireReviewer,
   requireAdmin: requireAdmin,
   requireAvailableYear: requireAvailableYear
-}
+};
