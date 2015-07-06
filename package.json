@@ -62,6 +62,8 @@
     "npm": "2.11.x"
   },
   "scripts": {
+    "migrate_entries": "node migrations/submissions.js",
+    "migrate_users": "node migrations/users.js",
     "start": "node census/app.js",
     "test": "mocha tests --patient"
   }

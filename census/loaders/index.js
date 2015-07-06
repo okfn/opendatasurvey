@@ -1,12 +1,14 @@
 'use strict';
 
 var _ = require('underscore');
+var Promise = require('bluebird');
 var config = require('../config');
 var models = require('../models');
 var utils = require('./utils');
 
 
 var loadConfig = function (siteId) {
+
   return new Promise(function(RS, RJ) {
     models.Registry.findById(siteId).then(function(R) {
       utils.spreadsheetParse(R.settings.configurl).spread(function (E, C) {
@@ -23,6 +25,7 @@ var loadConfig = function (siteId) {
       });
     });
   });
+
 };
 
 
@@ -56,6 +59,7 @@ var loadRegistry = function () {
 
 
 var loadData = function (options) {
+
   return new Promise(function(RS, RJ) {
     models.Site.findById(options.site).then(function(S) {
       utils.spreadsheetParse(S.settings[options.setting]).spread(function (E, D) {
@@ -84,15 +88,17 @@ var loadData = function (options) {
       });
     });
   });
+
 };
 
 // There may be translated fields. Map field name <name>@<language>
 // into translation: {<language>: {<name>: ..., <another name>: ..., ...}}.
 var  loadTranslatedData = function(options) {
+
   // Avoid recursive call
   var mapper = options.mapper;
 
-  return module.exports.loadData(_.extend(options, {
+  return loadData(_.extend(options, {
     mapper: function(D) {
       // Don't forget to call user defined mapper function
       var mapped = _.isFunction(mapper) ? mapper(D) : D;
@@ -121,6 +127,7 @@ var  loadTranslatedData = function(options) {
       });
     }
   }));
+
 };
 
 
