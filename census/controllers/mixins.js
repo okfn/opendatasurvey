@@ -7,7 +7,7 @@ var requireDomain = function(req, res, next) {
 
   if (!req.params.domain) {
 
-    res.status(404).send({status: 'error', message: 'Each census requires a subdomain to host it.'});
+    res.status(404).render('404.html', {title: 'Not found', message: 'Not found'});
     return;
 
   } else {

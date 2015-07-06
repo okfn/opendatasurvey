@@ -22,7 +22,8 @@ var pageRoutes = function(coreMiddlewares) {
   router.get(utils.scoped('/place/:place/:year?'), byYearMixins, pages.place);
   router.get(utils.scoped('/dataset/:dataset/:year?'), byYearMixins, pages.dataset);
   router.get(utils.scoped('/entry/:place/:dataset/:year?'), byYearMixins, pages.entry);
-  router.get(utils.scoped('/:year?'), byYearMixins, pages.overview);
+  router.get(utils.scoped('/year/:year'), byYearMixins, pages.overview);
+  router.get(utils.scoped('/'), byYearMixins, pages.overview);
 
   return router;
 

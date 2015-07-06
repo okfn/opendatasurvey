@@ -77,7 +77,7 @@ app.use([
     default_lang: _.first(config.get('locales')),
     translation_directory: 'locales'
   })
-])
+]);
 
 var coreMiddlewares = [
   express.static(staticRoot, {maxage: cacheAge}),
@@ -86,9 +86,7 @@ var coreMiddlewares = [
   compression(),
   favicon(faviconPath),
   subdomain(subdomainOptions),
-  middlewares.reloadEntities.setConfigUrl
 ];
-
 
 app.all('*', routes.utils.setLocals);
 app.use('/admin', routes.admin(coreMiddlewares));
@@ -98,6 +96,9 @@ app.use('/api', routes.api(coreMiddlewares));
 app.use('', routes.pages(coreMiddlewares));
 app.use('', routes.redirects(coreMiddlewares));
 
+app.use(middlewares.notFound);
+app.use(middlewares.internalServerError);
+
 routes.utils.setupAuth();
 
 app.get('models').sequelize.sync().then(function () {
@@ -106,6 +107,7 @@ app.get('models').sequelize.sync().then(function () {
   });
 });
 
+
 module.exports = {
   app: app
-}
+};
