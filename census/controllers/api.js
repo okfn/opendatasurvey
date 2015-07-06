@@ -16,18 +16,26 @@ var api = function (req, res) {
   entries.then(function(results){
 
     if (format === 'json') {
-      return res.json(results);
+
+      res.json(results);
+      return;
+
     } else if (format === 'csv') {
+
       // TODO
       // return csv.generate();
       return;
+
     } else {
-      return res.send(404);
+
+      res.send(404);
+      return;
+
     }
-  })
+  });
 
 };
 
 module.exports = {
   api: api
-}
+};

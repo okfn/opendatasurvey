@@ -2,18 +2,18 @@
 
 var _ = require('underscore');
 var marked = require('marked');
-var models = require('../models');
+var modelUtils = require('../models').utils;
 var Promise = require('bluebird');
 
 
 var overview = function (req, res) {
 
-  models.utils.loadModels({
+  modelUtils.loadModels({
 
-    entries: models.Entry.findAll(models.utils.siteQuery(req, true)),
-    datasets: models.Dataset.findAll(models.utils.siteQuery(req)),
-    places: models.Place.findAll(models.utils.siteQuery(req)), // TODO: sort places by score for year
-    questions: models.Question.findAll(models.utils.siteQuery(req))
+    entries: req.app.get('models').Entry.findAll(modelUtils.siteQuery(req, true)),
+    datasets: req.app.get('models').Dataset.findAll(modelUtils.siteQuery(req)),
+    places: req.app.get('models').Place.findAll(modelUtils.siteQuery(req)), // TODO: sort places by score for year
+    questions: req.app.get('models').Question.findAll(modelUtils.siteQuery(req))
 
   }).then(function(D) {
 
@@ -25,9 +25,9 @@ var overview = function (req, res) {
 
     res.render('overview.html', {
 
-      places: models.utils.translateSet(req, D.places),
-      datasets: models.utils.translateSet(req, D.datasets),
-      scoredQuestions: models.utils.translateSet(req, D.questions),
+      places: modelUtils.translateSet(req, D.places),
+      datasets: modelUtils.translateSet(req, D.datasets),
+      scoredQuestions: modelUtils.translateSet(req, D.questions),
       summary: {
         entries: D.entries.length,
         open: openEntries,
@@ -49,18 +49,17 @@ var faq = function (req, res) {
   var dTmpl = req.app.get('view_env').getTemplate('_snippets/datasets.html');
   var gettext = res.locals.gettext;
 
-  models.utils.loadModels({
+  modelUtils.loadModels({
 
-    datasets: models.Dataset.findAll(models.utils.siteQuery(req)),
-    questions: models.Question.findAll(models.utils.siteQuery(req))
+    datasets: req.app.get('models').Dataset.findAll(modelUtils.siteQuery(req)),
+    questions: req.app.get('models').Question.findAll(modelUtils.siteQuery(req))
 
   }).then(function(D) {
 
     var qContent = qTmpl.render({gettext: gettext, questions: D.questions});
     var dContent = dTmpl.render({gettext: gettext, datasets: D.datasets});
-    var mContent = req.app.get('config').get('missing_place_html', req.locale);
-
-    var content = marked(req.app.get('config').get('faq_page', req.locale))
+    var mContent = req.params.site.settings.missing_place_html;
+    var content = marked(req.params.site.settings.faq_page)
       .replace('{{questions}}', qContent)
       .replace('{{datasets}}', dContent)
       .replace('{{missing_place}}', mContent);
@@ -73,55 +72,57 @@ var faq = function (req, res) {
   });
 };
 
-var changes = function (req, res) {
-  models.Entry.findAll({
-    where: {
-      site: req.params.domain,
-      year: req.app.get('year'),
-      is_current: false
-    },
 
-    order: 'updated_at DESC'
+var changes = function (req, res) {
+
+  modelUtils.loadModels({
+
+    places: req.app.get('models').Place.findAll(modelUtils.siteQuery(req)),
+    datasets: req.app.get('models').Dataset.findAll(modelUtils.siteQuery(req)),
+    entries: req.app.get('models').Entry.findAll(modelUtils.siteQuery(req, true))
+
   }).then(function(D) {
 
-    var whereEntry = function(entity) { return {where: {id: {in: D.map(function(E) { return E[entity]; })}}}; };
+    if (!D.place) {
 
+      res.send(404, 'There is no place with ID ' + D.place.id + ' in our database. ' +
+               'Are you sure you have spelled it correctly? Please check the ' +
+               '<a href="/">overview page</a> for the list of places');
+      return;
 
-    models.utils.loadModels({
-      datasets: models.Dataset.findAll(whereEntry('dataset')),
-      places: models.Place.findAll(whereEntry('place'))
-    }).then(function(ED) {
-      res.render('changes.html', {changeitems: _.map(D, function(E) {
-        var url;
+    }
 
+    D.entries = _.each(D.entries, function(result, index, list) {
 
-        if (obj.reviewResult === 'accepted')
-          url = '/entry/PLACE/DATASET'
-            .replace('PLACE', E.place)
-            .replace('DATASET', E.dataset);
-        else
-          url = E.detailsURL || '/submission/ID'.replace('ID', E.submissionid);
+      var url;
+      result.place = _.find(D.places, function(place) {return place.id === result.place;});
+      result.dataset = _.find(D.datasets, function(dataset) {return dataset.id === result.dataset;});
 
-        return {
-          type: type,
-          timestamp: E.updated_at,
-          dataset: _.find(ED.datasets, function(DS) { return DS.id = E.dataset; }),
-          place: _.find(ED.places, function(P) { return P.id = E.place; }),
-          url: url,
-          status: E.reviewresult,
-          submitter: E.submitter,
-          reviewer: E.reviewer
-        };
-      })});
+      if (result.reviewResult) {
+        url = '/entry/PLACE/DATASET'
+          .replace('PLACE', result.place.id)
+          .replace('DATASET', result.dataset.id);
+      } else {
+        url = '/submission/ID'.replace('ID', result.id);
+      }
+
     });
+
+    res.render('changes.html', {
+
+      entries: D.entries,
+      loggedin: req.session.loggedin,
+      year: req.app.get('year')
+
+    });
+
   });
 };
 
 
 var contribute = function (req, res) {
 
-  var text = req.app.get('config').get('contribute_page', req.locale);
-  var content = marked(text);
+  var content = marked(req.params.site.settings.contribute_page);
 
   res.render('base.html', {
     content: content,
@@ -132,12 +133,14 @@ var contribute = function (req, res) {
 
 
 var about = function (req, res) {
-  var text = req.app.get('config').get('about_page', req.locale);
-  var content = marked(text);
+
+  var content = marked(req.params.site.settings.about_page);
+
   res.render('base.html', {
     content: content,
     title: 'About'
   });
+
 };
 
 
@@ -157,115 +160,86 @@ var resultJson = function (req, res) {
 
 };
 
-//Show details per country. Extra/different functionality for reviewers.
+
 var place = function (req, res) {
 
-  var place = models.Place.findOne({
-    where: {
-      id: req.params.place,
-      site: req.params.domain
+  var placeQueryParams = _.extend(modelUtils.siteQuery(req), {where: {id: req.params.place}});
+  var entryQueryParams = _.extend(modelUtils.siteQuery(req, true), {where: {place: req.params.place}});
+
+  modelUtils.loadModels({
+
+    place: req.app.get('models').Place.findOne(placeQueryParams),
+    datasets: req.app.get('models').Dataset.findAll(modelUtils.siteQuery(req)),
+    questions: req.app.get('models').Question.findAll(modelUtils.siteQuery(req)),
+    entries: req.app.get('models').Entry.findAll(entryQueryParams)
+
+  }).then(function(D) {
+
+    if (!D.place) {
+
+      res.send(404, 'There is no place with ID ' + D.place.id + ' in our database. ' +
+               'Are you sure you have spelled it correctly? Please check the ' +
+               '<a href="/">overview page</a> for the list of places');
+      return;
+
     }
-  });
 
-  // TODO: check this works
-  place.then(function(result) {
-    if (!result)
-      return res.send(404, 'There is no place with ID ' + result.id + ' in our database. Are you sure you have spelled it correctly? Please check the <a href="/">overview page</a> for the list of places');
+    _.each(D.datasets, function(result, index, list) {
+      result.entry = _.find(D.entries, function(entry) {return entry.is_current;});
+      result.submissions = _.filter(D.entries, function(entry) {return !entry.is_current;});
+    });
 
-    var placeEntries;
+    res.render('place.html', {
 
-    var placeSubmissions;
-
-    // TODO: dataset.translated(req.locale) for each
-    var placeDatasets;
-
-    // TODO: question.translated(req.locale) for each
-    var placeQuestions;
-
-    // TODO: in final promise
-    res.render('country/place.html', {
-      info: placeEntries,
-      datasets: placeDatasets,
-      submissions: placeSubmissions,
-      entrys: placeEntries, // TODO: ???? check this - what is different from info?
-      place: _.result(_.result(result.translations, req.locale), 'name'),
-      scoredQuestions: placeQuestions,
+      place: D.place.translated(req.locale),
+      questions: modelUtils.translateSet(req, D.questions),
+      datasets: modelUtils.translateSet(req, D.datasets),
       loggedin: req.session.loggedin,
-      display_year: req.app.get('year')
+      year: req.app.get('year')
+
     });
 
   });
-
 };
 
-//Show details per dataset
+
 var dataset = function (req, res) {
 
-  function cleanResultSet(results) {
-    var lookup = _.pluck(results, 'place'),
-        redundants = findRedundants(lookup),
-        clean_results = [];
+  var entryQueryParams = _.extend(modelUtils.siteQuery(req, true), {where: {dataset: req.params.dataset}});
+  var datasetQueryParams = _.extend(modelUtils.siteQuery(req), {where: {id: req.params.dataset}});
 
-    function sorter(a, b) {
-      if (a.ycount > b.ycount)
-        return -1;
-      if (a.ycount < b.ycount)
-        return 1;
-      return 0;
-    }
+  modelUtils.loadModels({
 
-    function findRedundants(lookup) {
-      var _redundants = [];
-      _.each(lookup, function (key) {
-        var r;
-        r = _.filter(lookup, function (x) {
-          if (x === key) {
-            return x
-          }
-        });
-        if (r.length > 1) {
-          _redundants.push(key);
-        }
-      });
-      return _redundants;
-    }
+    dataset: req.app.get('models').Dataset.findOne(datasetQueryParams),
+    places: req.app.get('models').Place.findAll(modelUtils.siteQuery(req)),
+    questions: req.app.get('models').Question.findAll(modelUtils.siteQuery(req)),
+    entries: req.app.get('models').Entry.findAll(entryQueryParams)
 
-    function removeRedundants(results) {
-      _.each(results, function (entry) {
-        if (_.contains(redundants, entry.place) &&
-            entry.year !== req.app.get('year')) {
-          // dont want it!
-        } else {
-          clean_results.push(entry);
-        }
-      });
-      return clean_results;
-    }
-    return removeRedundants(results).sort(sorter);
-  }
-
-  models.utils.loadModels({
-    // TODO: for each: result.translated(req.locale)
-    dataset: models.Dataset.findOne({where: {id: req.params.dataset, site: req.params.domain}}),
-
-    entries: models.Entry.findAll({where: {dataset: req.params.dataset, site: req.params.domain}})
   }).then(function(D) {
-    if (!D.dataset)
-      return res.status(404).send('Dataset not found. Are you sure you have spelled it correctly?');
 
-    // TODO: for each: result.translated(req.locale)
-    var datasetQuestions;
+    if (!D.dataset) {
 
+      res.send(404, 'There is no dataset with ID ' + D.dataset.id + ' in our database. ' +
+               'Are you sure you have spelled it correctly? Please check the ' +
+               '<a href="/">overview page</a> for the list of datasets');
+      return;
 
-    models.Place.findAll({where: {id: {in: D.entries.map(function(E) { return E.place; })}}}).then(function(PD) {
-      // TODO: in final promise
-      res.render('country/dataset.html', {
-        bydataset: D.entries,
-        placesById: _.object(PD.map(function(P) { return [P.id, P] })),
-        scoredQuestions: datasetQuestions,
-        dataset: D.dataset
-      });
+    }
+
+    D.datasets = _.each(D.datasets, function(result, index, list) {
+      result.entry = _.find(D.entries, function(entry) {return entry.is_current;});
+      result.submissions = _.filter(D.entries, function(entry) {return !entry.is_current;});
     });
+
+    res.render('dataset.html', {
+
+      dataset: D.dataset.translated(req.locale),
+      questions: modelUtils.translateSet(req, D.questions),
+      places: modelUtils.translateSet(req, D.places),
+      year: req.params.year || req.app.get('year')
+
+    });
+
   });
 
 };
@@ -273,57 +247,41 @@ var dataset = function (req, res) {
 
 var entry = function (req, res) {
 
-  // TODO: we could break old urls and lookup entries by uuid
-  var entry = models.Entry.findOne({
-    where: {
-      site: req.params.domain,
-      place: req.params.place,
-      dataset: req.params.dataset,
-      is_current: true
-    }
-  });
+  var entryQueryParams = _.extend(modelUtils.siteQuery(req, true), {where: {dataset: req.params.dataset, place: req.params.place, is_current: true}});
+  var datasetQueryParams = _.extend(modelUtils.siteQuery(req), {where: {id: req.params.dataset}});
+  var placeQueryParams = _.extend(modelUtils.siteQuery(req), {where: {id: req.params.place}});
 
-  entry.then(function(result) {
-    if (!result) {
-      return res.status(404).send(res.locals.format('There is no entry for %(place)s and %(dataset)s', {
-        place: req.params.place,
-        dataset: req.params.dataset
-      }, req.locale));
-    } else {
+  modelUtils.loadModels({
 
-      // TODO: ynquestions = model.data.questions.slice(0, 9);
-      // TODO: for each: result.translated(req.locale)
-      var ynquestions;
+    entry: req.app.get('models').Entry.findOne(entryQueryParams),
+    place: req.app.get('models').Place.findOne(placeQueryParams),
+    dataset: req.app.get('models').Dataset.findOne(datasetQueryParams),
+    questions: req.app.get('models').Question.findAll(modelUtils.siteQuery(req))
 
-      // TODO: for each: result.translated(req.locale)util.translateQuestions(model.data.questions, req.locale)
-      var questions;
+  }).then(function(D) {
 
-      // TODO: for each: result.translated(req.locale)
-      var scoredQuestions;
+    if (!D.entry) {
 
-      // TODO: for each: result.translated(req.locale)
-      var datasets;
-
-      // TODO: for each: result.translated(req.locale)
-      var dataset;
-
-      // TODO: for each: result.translated(req.locale)
-      var place;
-
-      res.render('country/entry.html', {
-        ynquestions: ynquestions,
-        questions: questions,
-        scoredQuestions: scoredQuestions,
-        datasets: datasets,
-        dataset: dataset,
-        place: place,
-        prefill: entry
-      });
+      res.send(404, 'There is no matching entry in our database. ' +
+               'Please check the <a href="/">overview page</a> for available entries.');
+      return;
 
     }
+
+    D.entry.place = D.place.translated(req.locale);
+    D.entry.dataset = D.dataset.translated(req.locale);
+
+    res.render('entry.html', {
+
+      entry: D.entry,
+      questions: modelUtils.translateSet(req, D.questions),
+      year: req.params.year || req.app.get('year')
+
+    });
+
   });
 
-}
+};
 
 
 module.exports = {
@@ -336,4 +294,4 @@ module.exports = {
   place: place,
   dataset: dataset,
   entry: entry
-}
+};

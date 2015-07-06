@@ -20,9 +20,11 @@ var requireDomain = function(req, res, next) {
           res.status(404).send({status: 'error', message: 'There is no matching census in the registry.'});
           return;
         } else {
-          req.params.site = result;
-          next();
-          return;
+          req.app.get('models').Site.findById(req.params.domain).then(function(result) {
+            req.params.site = result;
+            next();
+            return;
+          });
         }
       })
       .catch(function() {
@@ -36,10 +38,10 @@ var requireDomain = function(req, res, next) {
 
 var requireAuth = function (req, res, next) {
 
-  if (!req.user) {
-    res.redirect('/auth/login/?next=' + encodeURIComponent(req.url));
-    return;
-  }
+  // if (!req.user) {
+  //   res.redirect('/auth/login/?next=' + encodeURIComponent(req.url));
+  //   return;
+  // }
 
   next();
   return;
