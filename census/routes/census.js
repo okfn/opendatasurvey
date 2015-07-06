@@ -16,8 +16,8 @@ var censusRoutes = function(coreMiddlewares) {
 
   router.get(utils.scoped('/submit'), coreMixins, census.submit);
   router.post(utils.scoped('/submit'), coreMixins, census.submit);
-  router.get(utils.scoped('/submission/:submissionid'), coreMixins, census.submission);
-  router.post(utils.scoped('/submission/:submissionid'), reviewMixins, census.reviewPost);
+  router.get(utils.scoped('/submission/:id'), coreMixins, census.submission);
+  router.post(utils.scoped('/submission/:id'), reviewMixins, census.reviewPost);
 
   return router;
 
