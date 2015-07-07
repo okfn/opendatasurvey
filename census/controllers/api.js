@@ -9,7 +9,7 @@ var api = function (req, res) {
   var entries = req.app.get('models').Entry.findAll({
     where: {
       site: req.params.domain,
-      is_current: true
+      isCurrent: true
     }
   });
 

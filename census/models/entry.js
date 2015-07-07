@@ -65,7 +65,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true,
       comment: "A text description, possibly edited by the reviewer, providing context for this entry."
     },
-    is_current: {
+    isCurrent: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       unique: 'unique_together',

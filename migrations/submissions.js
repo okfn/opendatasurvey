@@ -36,7 +36,7 @@ csv.parse(submissionsData, {columns: true}, function(SER, SD) {
       reviewResult   : S.reviewresult === 'accepted',
       reviewComments : S.reviewcomments,
       details        : '',
-      is_current     : false
+      isCurrent     : false
     })
       .catch(function(E) { console.log(chalk.red('Error while loading data: ' + E)); });
   })
@@ -87,7 +87,7 @@ csv.parse(submissionsData, {columns: true}, function(SER, SD) {
         reviewResult   : E.reviewresult === 'accepted',
         reviewComments : E.reviewcomments || recentSubmission.reviewcomments,
         details        : '',
-        is_current     : true
+        isCurrent     : true
       });
     })
       .then(function() { console.log(chalk.green((ED.length + SD.length - 2) + ' submission(s) successfully loaded!')); })
