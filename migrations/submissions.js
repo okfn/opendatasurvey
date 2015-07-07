@@ -8,15 +8,27 @@ var moment = require('moment');
 var Promise = require('bluebird');
 
 
-csv.parse(fileData, {columns: true}, function(E, D) {
+csv.parse(fileData, {columns: true}, function(ER, D) {
   Promise.each(D, function(E) {
       models.Entry.upsert({
-        id             : E.submissionid.toString(),
-        site           : E.censusid,
-        year           : moment(E.timestamp, moment.ISO_8601).year(),
-        place          : E.place,
-        dataset        : E.dataset,
-        answers        : [],
+        id     : E.submissionid.toString(),
+        site   : E.censusid,
+        year   : moment(E.timestamp, moment.ISO_8601).year(),
+        place  : E.place,
+        dataset: E.dataset,
+
+        answers: _.chain([
+          'exists',
+          'digital',
+          'public',
+          'machinereadable',
+          'bulk',
+          'openlicense',
+          'uptodate',
+          'online',
+          'free'
+        ]).map(function(Q) { return [Q, E[Q]]; }).object().value(),
+
         submissionNotes: E.details,
         reviewed       : parseInt(E.reviewed) === 1,
         reviewResult   : E.reviewresult === 'accepted',
