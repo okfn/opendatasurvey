@@ -1,38 +1,43 @@
 var _ = require('underscore');
 var chalk = require('chalk');
 var csv = require('csv');
-var CSVRow = require('./utils').CSVRow;
 var fs = require('fs');
 var models = require('../census/models');
 var moment = require('moment');
 var Promise = require('bluebird');
+var uuid = require('node-uuid');
+var fileData = fs.readFileSync(process.argv[2], {encoding: 'utf-8'});
 
 
-csv.parse(fs.readFileSync(process.argv[2]), function(E, D) {
-  var columns = (D || [])[0];
+csv.parse(fileData, {columns: true}, function(error, data) {
 
+  _.each(data, function(obj, i, l){
 
-  if(E)
-    RJ(E);
+    var providers = {};
+    providers[obj.provider] = obj.providerid;
 
-  Promise.all([_.rest(D).map(function(U) {
-    var row = CSVRow(U, columns);
+    models.User.upsert({
+      id: uuid.v4(),
+      emails: [obj.email],
+      providers: providers,
+      firstName: obj.givenname,
+      lastName: obj.familyname,
+      homepage: obj.homepage,
+      photo: obj.photo,
+      anonymous: false
+    })
+      .then(function(result) {
 
+        console.log('success on user migration');
+        console.log(result);
 
-    return new Promise(function(RSU, RJU) {
-      models.User.upsert({
-        id       : row('userid'),
-        email    : row('email'),
-        firstName: row('givenname'),
-        homepage : row('homepage'),
-        lastName : row('familyname'),
-        photo    : row('photo'),
-        anonymous: false
       })
-        .then(function() { RSU(false); })
-        .catch(function(E) { RJU(E); });
-    });
-  })])
-    .then(function(C) { console.log(chalk.green((D.length - 1) + ' user(s) successfully loaded!')); })
-		.catch(function(E) { console.log(chalk.red('Error while loading data: ' + E)); });
+      .catch(function(error) {
+
+        console.log('error on user migration:');
+        console.log(error);
+
+      });
+  });
+
 });

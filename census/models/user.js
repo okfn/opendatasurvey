@@ -5,16 +5,20 @@ module.exports = function (sequelize, DataTypes) {
 
   var User = sequelize.define('User', {
     id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       primaryKey: true,
       allowNull: false,
-      comment: "Unique identifier for a user."
+      comment: "Unique identifier for this user."
     },
-    email: {
-      type: DataTypes.STRING,
+    emails: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
       validate: {
         isEmail: true
       },
+      allowNull: false
+    },
+    providers: {
+      type: DataTypes.JSONB,
       allowNull: false
     },
     firstName: {
@@ -39,7 +43,7 @@ module.exports = function (sequelize, DataTypes) {
     instanceMethods: {
       setPassword: function(password) {
         var salt = bcrypt.genSaltSync(8);
-        
+
         this.authentication_hash = bcrypt.hashSync(password, salt);
         this.authentication_salt = salt;
       }
