@@ -1,43 +1,30 @@
 var _ = require('underscore');
 var chalk = require('chalk');
 var csv = require('csv');
-var CSVRow = require('./utils').CSVRow;
 var fs = require('fs');
+var fileData = fs.readFileSync(process.argv[2], {encoding: 'utf-8'});
 var models = require('../census/models');
 var moment = require('moment');
 var Promise = require('bluebird');
 
 
-csv.parse(fs.readFileSync(process.argv[2]), function(E, D) {
-  var columns = (D || [])[0];
-
-
-  if(E)
-    RJ(E);
-
-  Promise.all([_.rest(D).map(function(U) {
-    var row = CSVRow(U, columns);
-
-
-    return new Promise(function(RSU, RJU) {
+csv.parse(fileData, {columns: true}, function(E, D) {
+  Promise.each(D, function(E) {
       models.Entry.upsert({
-        id             : row('submissionid').toString(),
-        site           : row('censusid'),
-        year           : moment(row('timestamp'), moment.ISO_8601).year(),
-        place          : row('place'),
-        dataset        : row('dataset'),
+        id             : E.submissionid.toString(),
+        site           : E.censusid,
+        year           : moment(E.timestamp, moment.ISO_8601).year(),
+        place          : E.place,
+        dataset        : E.dataset,
         answers        : [],
-        submissionNotes: row('details'),
-        reviewed       : parseInt(row('reviewed')) === 1,
-        reviewResult   : row('reviewresult') === 'accepted',
-        reviewComments : row('reviewcomments'),
+        submissionNotes: E.details,
+        reviewed       : parseInt(E.reviewed) === 1,
+        reviewResult   : E.reviewresult === 'accepted',
+        reviewComments : E.reviewcomments,
         details        : '',
-        is_current     : row('reviewresult') === 'accepted'
-      })
-        .then(function() { RSU(); })
-        .catch(function(E) { RJU(E); });
-    });
-  })])
+        is_current     : E.reviewresult === 'accepted'
+      });
+  })
     .then(function() { console.log(chalk.green((D.length - 1) + ' submission(s) successfully loaded!')); })
     .catch(function(E) { console.log(chalk.red('Error while loading data: ' + E)); });
 });
