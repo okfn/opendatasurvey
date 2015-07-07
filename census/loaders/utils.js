@@ -88,8 +88,7 @@ var getSheetParams = function (url) {
   }
 
   matches = url.match(newPattern) || url.match(oldPattern);
-  console.log('SHIT DAWG');
-  console.log(matches);
+
   if (!!matches) {
     out.key = matches[1];
     out.sheet = parseInt(matches[3]);

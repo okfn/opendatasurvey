@@ -10,7 +10,7 @@ var adminRoutes = function(coreMiddlewares) {
   var router = express.Router();
   var coreMixins = [mixins.requireDomain];
   // TODO: JUST TEMPORARY
-  // var coreMixins = [mixins.requireDomain, mixins.requireAuth];
+  // var coreMixins = [mixins.requireDomain, mixins.requireAuth, mixins.requireAdmin];
 
   router.use(coreMiddlewares);
 
