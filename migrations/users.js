@@ -1,41 +1,39 @@
 var _ = require('underscore');
-var chalk = require('chalk');
 var csv = require('csv');
 var fs = require('fs');
 var models = require('../census/models');
-var moment = require('moment');
 var Promise = require('bluebird');
 var uuid = require('node-uuid');
 var fileData = fs.readFileSync(process.argv[2], {encoding: 'utf-8'});
 
 
-csv.parse(fileData, {columns: true}, function(error, data) {
+csv.parse(fileData, {columns: true}, function(E, D) {
 
-  _.each(data, function(obj, i, l){
+  Promise.each(D, function(R) {
 
     var providers = {};
-    providers[obj.provider] = obj.providerid;
+    providers[R.provider] = R.providerid;
 
-    models.User.upsert({
+    return models.User.upsert({
       id: uuid.v4(),
-      emails: [obj.email],
+      emails: [R.email],
       providers: providers,
-      firstName: obj.givenname,
-      lastName: obj.familyname,
-      homepage: obj.homepage,
-      photo: obj.photo,
+      firstName: R.givenname,
+      lastName: R.familyname,
+      homepage: R.homepage,
+      photo: R.photo,
       anonymous: false
     })
-      .then(function(result) {
+      .then(function(R) {
 
         console.log('success on user migration');
-        console.log(result);
+        console.log(R);
 
       })
-      .catch(function(error) {
+      .catch(function(E) {
 
         console.log('error on user migration:');
-        console.log(error);
+        console.log(E);
 
       });
   });
