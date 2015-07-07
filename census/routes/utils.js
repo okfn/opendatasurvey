@@ -148,6 +148,7 @@ var setLocals = function(req, res, next) {
   }
   res.locals.currentUser = req.user ? req.user : null;
 
+  res.locals.sysAdmin = req.app.get('sysAdmin');
   res.locals.locales = config.get('locales');
   res.locals.currentLocale = req.locale;
   res.locals.sitename = config.get('title', req.locale);
