@@ -11,7 +11,7 @@ var fileData = fs.readFileSync(process.argv[2], {encoding: 'utf-8'});
 
 csv.parse(fileData, {columns: true}, function(error, data) {
 
-  Promise.each(data, function(obj){
+  Promise.each(data, function(obj) {
 
     var providers = {};
     providers[obj.provider] = obj.providerid;
