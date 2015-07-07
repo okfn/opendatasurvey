@@ -8,10 +8,18 @@ var mixinsFile = path.basename('./mixins.js');
 var utilsFile = path.basename('./utils.js');
 var config = require('../config').get('database');
 var utils = require('./utils');
-var sequelize = new Sequelize(config.database, config.username, config.password, config);
+var sequelize;
 var testSequelize = new Sequelize(config.testDatabase, config.username, config.password, config);
 var db = {test: {}};
 
+
+if (process.env.DATABASE_URL) {
+  // Use DATABASE_URL if it exists, for Heroku.
+  sequelize = new Sequelize(process.env.DATABASE_URL, config);
+} else {
+  // Fallback to normal config, for local development.
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
+}
 
 fs
   .readdirSync(__dirname)
