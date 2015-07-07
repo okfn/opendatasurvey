@@ -1,6 +1,6 @@
 {
   "name": "opendatacensus",
-  "version": "3.0.0-alpha",
+  "version": "3.0.0-beta",
   "author": "Open Knowledge Foundation",
   "repository": {
     "type": "git",
