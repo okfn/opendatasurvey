@@ -11,12 +11,12 @@ var fileData = fs.readFileSync(process.argv[2], {encoding: 'utf-8'});
 
 csv.parse(fileData, {columns: true}, function(error, data) {
 
-  _.each(data, function(obj, i, l){
+  Promise.each(data, function(obj){
 
     var providers = {};
     providers[obj.provider] = obj.providerid;
 
-    models.User.upsert({
+    return models.User.upsert({
       id: uuid.v4(),
       emails: [obj.email],
       providers: providers,
