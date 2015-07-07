@@ -31,6 +31,8 @@ var middlewares = require('./middlewares');
 var currentYear = new Date().getFullYear();
 var startYear = 2012;
 var availableYears = _.range(startYear, currentYear);
+var rawSysAdmin = process.env.SYS_ADMIN || config.get('sysAdmin') || '';
+var sysAdmin = _.each(rawSysAdmin.split(','), function(e, i, l) {l[i] = e.trim(); return;});
 var subdomainOptions = {
   base: process.env.BASE_DOMAIN || config.get('baseDomain')
 };
@@ -53,6 +55,7 @@ app.set('views', viewPath);
 app.set('models', models);
 app.set('year', currentYear);
 app.set('years', availableYears);
+app.set('sysAdmin', sysAdmin);
 
 env = nunjucks.configure('census/views', {
     // autoescape: true,

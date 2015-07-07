@@ -77,6 +77,7 @@ BASE_DOMAIN
 
 DATABASE_URL
 
+SYS_ADMIN
 
 ### i18n For Templates
 
