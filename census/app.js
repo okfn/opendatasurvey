@@ -32,7 +32,7 @@ var currentYear = new Date().getFullYear();
 var startYear = 2012;
 var availableYears = _.range(startYear, currentYear);
 var subdomainOptions = {
-  base: config.get('baseDomain')
+  base: process.env.BASE_DOMAIN || config.get('baseDomain')
 };
 var validatorOptions = {
   customValidators: {

@@ -69,6 +69,15 @@ Now we should be ready to run the server:
 
 **NOTE**: Each app instance manages multiple census sites via subdomains. Hence, we require mapping in your hosts file for this. The mappings created above, `demo` and `gb-city` are just for example. Create whatever mapping you will need, and ensure that these are matched by entries in the Registry and Site models (TBD).
 
+### Deployment
+
+SESSION_SECRET
+
+BASE_DOMAIN
+
+DATABASE_URL
+
+
 ### i18n For Templates
 
 When templates change, the translations have to be changed. Extract the files by running this command:
