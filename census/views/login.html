@@ -21,8 +21,10 @@
       </h4>
       <p>&nbsp;</p>
   </div>
+
+  {#
   <div class="span5">
-    <form action="/auth/local" method="POST">
+    <form action="{{ authBase }}/local" method="POST">
       <div>
         <label>{{gettext("Username or email")}}</label>
         <input name="username" class="span5" type="text">
@@ -34,31 +36,15 @@
       <button type="submit" class="btn btn-primary">{{gettext("Login &raquo;")}}</button>
     </form>
   </div>
+  #}
+
   <div class="span5">
-    <a class="btn btn-primary" href="/auth/google">{{gettext("Login with Google &raquo;")}}</a>
+    <a class="btn btn-primary" href="{{ authBase }}/google">{{gettext("Google &raquo;")}}</a>
     <p>&nbsp;</p>
-    <a class="btn btn-primary" href="/auth/facebook">{{gettext("Facebook &raquo;")}}</a>
+    <a class="btn btn-primary" href="{{ authBase }}/facebook">{{gettext("Facebook &raquo;")}}</a>
     <p>&nbsp;</p>
     <p>{{gettext("Login with your existing 3rd party account in a few seconds. We will not share your email with any third party. For more information see the")}} <a href="https://okfn.org/terms-of-use/" title="{{ gettext("terms of use") }}">{{ gettext("terms of use")}}</a>.</p>
   </div>
-  {% if anonymous_submissions %}
-  <div class="span2" style="text-align: center;">
-    <h3>{{gettext("&ndash; or &ndash;")}}</h3>
-  </div>
-  <div class="span5">
-    <form method="POST">
-      <div>
-        <label>{{gettext("Name (optional)")}}</label>
-        <span class="help-block">{{gettext("If you provide a name we can credit you for your contribution (if not provided you'll be listed as Anonymous).")}}</span>
-        <input name="displayName" class="span5" type="text" placeholder="{{gettext("Joe Bloggs")}}">
-      </div>
-      <button type="submit" class="btn btn-primary">{{gettext("Continue &raquo;")}}</button>
-    </form>
-    <p>&nbsp;</p>
-    <p>{{gettext("Continue without logging in.")}}</p>
-  </div>
-  {% endif %}
 </div>
-<!--<p><a class="btn btn-primary btn-large" href="/auth/facebook">Login with Facebook &raquo;</a></p> -->
 
 {% endblock %}

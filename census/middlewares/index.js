@@ -17,7 +17,7 @@ var internalServerError = function(err, req, res, next) {
   res.status(500)
     .render('500.html', {
       title:'500: Internal Server Error',
-      message: 'Something is up with the server.'
+      message: 'Something is up with the server.<br />' + err
     });
 
 };

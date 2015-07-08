@@ -8,12 +8,12 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
-var logger = require('morgan');
 var cors = require('cors');
 var favicon = require('serve-favicon');
 var flash = require('connect-flash');
 var compression = require('compression');
 var expressValidator = require('express-validator');
+var passport = require('passport');
 var config = require('./config');
 var i18n = require('i18n-abide');
 var routes = require('./routes');
@@ -73,17 +73,26 @@ app.use([
   bodyParser.urlencoded({extended: true}),
   bodyParser.json(),
   methodOverride(),
-  session({secret: sessionSecret, resave: true, saveUninitialized: true}),
+  session({
+    secret: sessionSecret,
+    resave: true,
+    saveUninitialized: true,
+    cookie: {
+      domain: process.env.BASE_DOMAIN || config.get('baseDomain'),
+      maxAge: 1000*60*60*24*30*12    //one year(ish)
+    }}),
+  passport.initialize(),
+  passport.session(),
   flash(),
   i18n.abide({
     supported_languages: config.get('locales'),
     default_lang: _.first(config.get('locales')),
     translation_directory: 'locales'
-  })
+  }),
+  express.static(staticRoot, {maxage: cacheAge}),
 ]);
 
 var coreMiddlewares = [
-  express.static(staticRoot, {maxage: cacheAge}),
   expressValidator(validatorOptions),
   cors(),
   compression(),
@@ -93,9 +102,9 @@ var coreMiddlewares = [
 
 app.all('*', routes.utils.setLocals);
 app.use('/admin', routes.admin(coreMiddlewares));
-app.use('/auth', routes.auth(coreMiddlewares));
 app.use('/census', routes.census(coreMiddlewares));
 app.use('/api', routes.api(coreMiddlewares));
+app.use('/auth', routes.auth(coreMiddlewares));
 app.use('', routes.pages(coreMiddlewares));
 app.use('', routes.redirects(coreMiddlewares));
 

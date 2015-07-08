@@ -135,10 +135,10 @@
         <ul class="pull-right">
           <li>
             {% if currentUser %}
-            {{format("Logged in as %(name)s.", { name: currentUser.name })}}
-            <a href="/auth/logout">{{gettext("Log out")}}</a>
+            {{format("Logged in as %(name)s.", { name: currentUser.firstName })}}
+            <a href="{{ logoutUrl }}">{{gettext("Log out")}}</a>
             {% else %}
-            <a href="/auth/login">{{gettext("Login")}}</a>
+            <a href="{{ loginUrl }}">{{gettext("Login")}}</a>
             {% endif %}
           </li>
           <li><a href="http://okfn.org/opendata/" title="{{gettext("More about Open Data")}}">{{gettext("What is Open Data")}}</a></li>

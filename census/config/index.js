@@ -16,7 +16,7 @@ nconf.file({
  // this is the object that you want to override in your own local config
 nconf.defaults({
   title_short: 'Census',
-  site_url: process.env.SITE_URL || 'http://localhost:5000',
+  auth_base: process.env.AUTH_BASE || 'http://localhost:5000',
   approve_first_submission: 'FALSE',
   reviewers: '',
   locales: ['en'],
@@ -48,8 +48,6 @@ nconf.defaults({
     review_passhash: process.env.REVIEW_PASSHASH || "c2NyeXB0AAwAAAAIAAAAAcuoRdsxvRZfPTTCD6H8wkZFi1LTuf11n47ODWm44e85eoYUyMlDOgmEbZTyxs99k3vYi0KSb542L5kn0YavUPiOltwF++lWVB1jjzDvFwlo"
   },
   google: {
-    user: process.env.GOOGLE_USER || "unknown",
-    password: process.env.GOOGLE_PASSWORD || "no-password",
     app_id: process.env.GOOGLE_APP_ID || 'unknown',
     app_secret: process.env.GOOGLE_APP_SECRET || 'unknown'
   },

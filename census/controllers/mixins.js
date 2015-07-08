@@ -10,6 +10,12 @@ var requireDomain = function(req, res, next) {
     res.status(404).render('404.html', {title: 'Not found', message: 'Not found'});
     return;
 
+  } else if (req.params.domain === 'id') {
+
+    // auth domain
+    next();
+    return;
+
   } else {
 
     var query = req.app.get('models').Registry.findById(req.params.domain);

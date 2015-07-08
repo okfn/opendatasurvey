@@ -17,8 +17,50 @@ var makeRedirect = function (dest) {
 };
 
 
-var scopedPath = function(relativePath) {
+var scopedPath = function (relativePath) {
   return '/subdomain/:domain{PATH}'.replace('{PATH}', relativePath);
+};
+
+
+var resolveProfile = function (profile, provider, done) {
+
+  var obj = {
+    id: profile.id,
+    anonymous: false,
+    emails: _.each(profile.emails, function(e, i, l) {l[i] = e.value;}),
+    firstName: profile.name.givenName,
+    lastname: profile.name.familyName,
+    homePage: profile.profileUrl,
+    providers: {provider: profile.id}
+  };
+
+  models.User.findOne({
+    where: {
+      emails: {
+        $overlap: obj.emails
+      }
+    }
+  }).then(function (result) {
+
+    if (result) {
+
+      // We have a match. Ensure that the user has this provider saved.
+      result.providers = _.extend(result.providers, obj.providers);
+      result.save().then(function(result) {
+        done(null, result);
+      });
+
+    } else {
+
+      // We had no match. Create a new user.
+      models.User.create(obj).then(function(result) {
+        done(null, result);
+      });
+
+    }
+
+  });
+
 };
 
 
@@ -70,65 +112,51 @@ var setupAuth = function () {
   passport.use(new GoogleStrategy({
     clientID: config.get('google:app_id'),
     clientSecret: config.get('google:app_secret'),
-    callbackURL: config.get('site_url').replace(/\/$/, '') + '/auth/google/callback',
+    callbackURL: config.get('auth_base').replace(/\/$/, '') + '/google/callback',
     profileFields: ['id', 'displayName', 'name', 'username', 'emails', 'photos']
   }, function (accessToken, refreshToken, profile, done) {
-    models.User.upsert({
-      anonymous: false,
-      email    : profile.emails[0].value,
-      firstName: profile.name.givenName,
-      id       : profile._json.url,
-      lastName : profile.name.familyName
-    }).then(function() { done(null, models.User.findById(profile._json.url)); });
+
+    resolveProfile(profile, 'google', done);
+
   }));
 
-  /*
-   * Facebook strategy
-   */
   passport.use(new FacebookStrategy({
     clientID: config.get('facebook:app_id'),
     clientSecret: config.get('facebook:app_secret'),
-    callbackURL: config.get('site_url').replace(/\/$/, '') + '/auth/facebook/callback',
+    callbackURL: config.get('auth_base').replace(/\/$/, '') + '/facebook/callback'
   }, function (accessToken, refreshToken, profile, done) {
-    models.User.upsert({
-      anonymous: false,
-      email    : profile.emails[0].value,
-      firstName: profile.name.givenName,
-      id       : profile.profileUrl,
-      lastName : profile.name.familyName
-    }).then(function() { done(null, models.User.findById(profile.profileUrl)); });
+
+    resolveProfile(profile, 'facebook', done);
+
   }));
 
-  /*
-   * local strategy
-   */
-  passport.use('local', new LocalStrategy({
-    usernameField: 'username',
-    passwordField: 'password',
-    passReqToCallback: true
-  }, function (request, email, password, done) {
-    models.User.findOne({where: {email: email}})
-      .then(function(U) {
-        if(
-          // Such email doesn't exist
-          !U ||
+  // passport.use('local', new LocalStrategy({
+  //   usernameField: 'username',
+  //   passwordField: 'password',
+  //   passReqToCallback: true
+  // }, function (request, email, password, done) {
+  //   models.User.findOne({where: {email: email}})
+  //     .then(function(U) {
+  //       if(
+  //         // Such email doesn't exist
+  //         !U ||
 
-          // Wrong password
-          U.authentication_hash !== bcrypt.hashSync(password, U.authentication_salt)
-        ) {
-          request.flash('error', 'Wrong username or passsowrd');
-          done(null, false);
-          return;
-        }
+  //         // Wrong password
+  //         U.authentication_hash !== bcrypt.hashSync(password, U.authentication_salt)
+  //       ) {
+  //         request.flash('error', 'Wrong username or passsowrd');
+  //         done(null, false);
+  //         return;
+  //       }
 
-        done(null, U);
-      });
-  }));
+  //       done(null, U);
+  //     });
+  // }));
 
-  // At the moment we get all user info on auth and store to cookie so these are both no-ops ...
   passport.serializeUser(function (user, done) {
     done(null, user);
   });
+
   passport.deserializeUser(function (profile, done) {
     var err = null;
     done(err, profile);
@@ -148,6 +176,9 @@ var setLocals = function(req, res, next) {
   }
   res.locals.currentUser = req.user ? req.user : null;
 
+  res.locals.authBase = config.get('auth_base');
+  res.locals.loginUrl = 'AUTH_BASE/login'.replace('AUTH_BASE', config.get('auth_base'));
+  res.locals.logoutUrl = 'AUTH_BASE/logout'.replace('AUTH_BASE', config.get('auth_base'));
   res.locals.sysAdmin = req.app.get('sysAdmin');
   res.locals.locales = config.get('locales');
   res.locals.currentLocale = req.locale;
@@ -168,8 +199,10 @@ var setLocals = function(req, res, next) {
   res.locals.info_messages = req.flash('info');
 
   res.locals.urlFor = function(name) {
-    if (name === 'overview')
+    if (name === 'overview') {
       return '/';
+    }
+    return null;
   };
 
   next();
