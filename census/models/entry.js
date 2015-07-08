@@ -40,6 +40,18 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.JSONB,
       allowNull: false
     },
+    comments: {
+      // all comments by other users, keyed by question id
+      // eg: {"licenseurl": {"USER_ID": "This user comment"}}
+      type: DataTypes.JSONB,
+      allowNull: true
+    },
+    characteristics: {
+      // all characteristic booleans, keyed by type
+      // eg: {"high_resolution": true, "aggregate_data": false}
+      type: DataTypes.JSONB,
+      allowNull: true
+    },
     submissionNotes: {
       type: DataTypes.TEXT,
       allowNull: true,
@@ -65,7 +77,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true,
       comment: "A text description, possibly edited by the reviewer, providing context for this entry."
     },
-    is_current: {
+    isCurrent: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       unique: 'unique_together',
