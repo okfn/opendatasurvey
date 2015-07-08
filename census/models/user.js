@@ -27,6 +27,14 @@ module.exports = function (sequelize, DataTypes) {
     lastName: {
       type: DataTypes.STRING
     },
+    homePage: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    photo: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
     anonymous: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
