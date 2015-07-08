@@ -17,7 +17,7 @@ var overview = function (req, res) {
 
   }).then(function(D) {
 
-    var openEntries = _.where(D.entries, {is_current: true}).length,
+    var openEntries = _.where(D.entries, {isCurrent: true}).length,
         byPlace = _.object(_.map(D.places, function(P) { return [P.id, {
           datasets: _.where(D.entries, {place: P.id}).length,
           score: 0
@@ -150,7 +150,7 @@ var resultJson = function (req, res) {
     where: {
       site: req.params.domain,
       year: req.app.get('year'),
-      is_current: true
+      isCurrent: true
     }
   });
 
@@ -185,8 +185,8 @@ var place = function (req, res) {
     }
 
     _.each(D.datasets, function(result, index, list) {
-      result.entry = _.find(D.entries, function(entry) {return entry.is_current;});
-      result.submissions = _.filter(D.entries, function(entry) {return !entry.is_current;});
+      result.entry = _.find(D.entries, function(entry) {return entry.isCurrent;});
+      result.submissions = _.filter(D.entries, function(entry) {return !entry.isCurrent;});
     });
 
     res.render('place.html', {
@@ -227,8 +227,8 @@ var dataset = function (req, res) {
     }
 
     D.datasets = _.each(D.datasets, function(result, index, list) {
-      result.entry = _.find(D.entries, function(entry) {return entry.is_current;});
-      result.submissions = _.filter(D.entries, function(entry) {return !entry.is_current;});
+      result.entry = _.find(D.entries, function(entry) {return entry.isCurrent;});
+      result.submissions = _.filter(D.entries, function(entry) {return !entry.isCurrent;});
     });
 
     res.render('dataset.html', {
@@ -247,7 +247,7 @@ var dataset = function (req, res) {
 
 var entry = function (req, res) {
 
-  var entryQueryParams = _.extend(modelUtils.siteQuery(req, true), {where: {dataset: req.params.dataset, place: req.params.place, is_current: true}});
+  var entryQueryParams = _.extend(modelUtils.siteQuery(req, true), {where: {dataset: req.params.dataset, place: req.params.place, isCurrent: true}});
   var datasetQueryParams = _.extend(modelUtils.siteQuery(req), {where: {id: req.params.dataset}});
   var placeQueryParams = _.extend(modelUtils.siteQuery(req), {where: {id: req.params.place}});
 
