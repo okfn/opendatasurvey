@@ -42,7 +42,8 @@
     "sequelize-cli": "^1.7.0",
     "serve-favicon": "^2.2.1",
     "subdomain": "^1.2.0",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "validator": "^3.41.2"
   },
   "devDependencies": {
     "chai": "^1.9.2",
