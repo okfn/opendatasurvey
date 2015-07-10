@@ -18,7 +18,6 @@ var adminRoutes = function(coreMiddlewares) {
   router.get(utils.scoped('/load/places'), coreMixins, admin.loadPlaces);
   router.get(utils.scoped('/load/datasets'), coreMixins, admin.loadDatasets);
   router.get(utils.scoped('/load/questions'), coreMixins, admin.loadQuestions);
-  router.get(utils.scoped('/load/registry'), coreMixins, admin.loadRegistry);
   router.get(utils.scoped('/load/config'), coreMixins, admin.loadConfig);
 
   return router;

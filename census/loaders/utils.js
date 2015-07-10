@@ -28,7 +28,8 @@ var getDataAsCsv = function (url, cb) {
   request.get(url, function (err, res, body) {
     var output = [];
     var parser = csv.parse({
-      relax: true
+      relax: true,
+      skip_empty_lines: true
     });
 
     parser

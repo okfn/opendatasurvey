@@ -4,6 +4,9 @@ var express = require('express');
 var pages = require('../controllers/pages');
 var mixins = require('../controllers/mixins');
 var utils = require('./utils');
+var authRoutes = require('./auth');
+var systemRoutes = require('./system');
+var redirectRoutes = require('./redirects');
 
 
 var pageRoutes = function(coreMiddlewares) {
@@ -13,6 +16,9 @@ var pageRoutes = function(coreMiddlewares) {
   var byYearMixins = coreMixins.concat(mixins.requireAvailableYear);
 
   router.use(coreMiddlewares);
+
+  authRoutes(router);
+  systemRoutes(router);
 
   router.get(utils.scoped('/about'), coreMixins, pages.about);
   router.get(utils.scoped('/faq'), coreMixins, pages.faq);
@@ -24,6 +30,8 @@ var pageRoutes = function(coreMiddlewares) {
   router.get(utils.scoped('/entry/:place/:dataset/:year?'), byYearMixins, pages.entry);
   router.get(utils.scoped('/year/:year'), byYearMixins, pages.overview);
   router.get(utils.scoped('/'), byYearMixins, pages.overview);
+
+  redirectRoutes(router);
 
   return router;
 

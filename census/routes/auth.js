@@ -1,6 +1,5 @@
 'use strict';
 
-var express = require('express');
 var passport = require('passport');
 var auth = require('../controllers/auth');
 var mixins = require('../controllers/mixins');
@@ -25,12 +24,9 @@ var authConfig = {
   }
 };
 
-var authRoutes = function(coreMiddlewares) {
+var authRoutes = function(router) {
 
-  var router = express.Router();
-  var coreMixins = [mixins.requireDomain];
-
-  router.use(coreMiddlewares);
+  var coreMixins = [mixins.requireAuthDomain, mixins.requireDomain];
 
   router.get(utils.scoped('/login'), coreMixins, auth.login);
   router.get(utils.scoped('/loggedin'), coreMixins, auth.loggedin);

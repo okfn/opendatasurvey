@@ -3,11 +3,10 @@
 var _ = require('underscore');
 var Promise = require('bluebird');
 var config = require('../config');
-var models = require('../models');
 var utils = require('./utils');
 
 
-var loadConfig = function (siteId) {
+var loadConfig = function (siteId, models) {
 
   return new Promise(function(RS, RJ) {
     models.Registry.findById(siteId).then(function(R) {
@@ -29,7 +28,7 @@ var loadConfig = function (siteId) {
 };
 
 
-var loadRegistry = function () {
+var loadRegistry = function (models) {
 
   var registryUrl = config.get('registryUrl') || false;
 
@@ -58,7 +57,7 @@ var loadRegistry = function () {
 };
 
 
-var loadData = function (options) {
+var loadData = function (options, models) {
 
   return new Promise(function(RS, RJ) {
     models.Site.findById(options.site).then(function(S) {
@@ -93,7 +92,7 @@ var loadData = function (options) {
 
 // There may be translated fields. Map field name <name>@<language>
 // into translation: {<language>: {<name>: ..., <another name>: ..., ...}}.
-var  loadTranslatedData = function(options) {
+var  loadTranslatedData = function(options, models) {
 
   // Avoid recursive call
   var mapper = options.mapper;
@@ -126,7 +125,7 @@ var  loadTranslatedData = function(options) {
           .value()
       });
     }
-  }));
+  }), models);
 
 };
 

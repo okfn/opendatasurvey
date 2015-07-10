@@ -3,12 +3,12 @@
 var _ = require('underscore');
 var bcrypt = require('bcrypt');
 var passport = require('passport');
+var uuid = require('node-uuid');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var LocalStrategy = require('passport-local').Strategy;
 var models = require('../models');
 var config = require('../config');
-
 
 var makeRedirect = function (dest) {
   return function (req, res) {
@@ -25,7 +25,7 @@ var scopedPath = function (relativePath) {
 var resolveProfile = function (profile, provider, done) {
 
   var obj = {
-    id: profile.id,
+    id: uuid.v4(),
     anonymous: false,
     emails: _.each(profile.emails, function(e, i, l) {l[i] = e.value;}),
     firstName: profile.name.givenName,
@@ -112,7 +112,11 @@ var setupAuth = function () {
   passport.use(new GoogleStrategy({
     clientID: config.get('google:app_id'),
     clientSecret: config.get('google:app_secret'),
-    callbackURL: config.get('auth_base').replace(/\/$/, '') + '/google/callback',
+    callbackURL:  config.get('urlTmpl')
+      .replace('SCHEME', config.get('connection_scheme'))
+      .replace('SUB', config.get('auth_domain'))
+      .replace('DOMAIN', config.get('base_domain'))
+      .replace('PATH', 'google/callback'),
     profileFields: ['id', 'displayName', 'name', 'username', 'emails', 'photos']
   }, function (accessToken, refreshToken, profile, done) {
 
@@ -123,7 +127,11 @@ var setupAuth = function () {
   passport.use(new FacebookStrategy({
     clientID: config.get('facebook:app_id'),
     clientSecret: config.get('facebook:app_secret'),
-    callbackURL: config.get('auth_base').replace(/\/$/, '') + '/facebook/callback'
+    callbackURL:  config.get('urlTmpl')
+      .replace('SCHEME', config.get('connection_scheme'))
+      .replace('SUB', config.get('auth_domain'))
+      .replace('DOMAIN', config.get('base_domain'))
+      .replace('PATH', 'facebook/callback')
   }, function (accessToken, refreshToken, profile, done) {
 
     resolveProfile(profile, 'facebook', done);
@@ -176,9 +184,29 @@ var setLocals = function(req, res, next) {
   }
   res.locals.currentUser = req.user ? req.user : null;
 
-  res.locals.authBase = config.get('auth_base');
-  res.locals.loginUrl = 'AUTH_BASE/login'.replace('AUTH_BASE', config.get('auth_base'));
-  res.locals.logoutUrl = 'AUTH_BASE/logout'.replace('AUTH_BASE', config.get('auth_base'));
+  res.locals.baseDomain =  config.get('base_domain');
+  res.locals.authDomain = config.get('auth_domain');
+  res.locals.systemDomain = config.get('system_domain');
+  res.locals.loginUrl = config.get('urlTmpl')
+    .replace('SCHEME', req.protocol)
+    .replace('SUB', config.get('auth_domain'))
+    .replace('DOMAIN', config.get('base_domain'))
+    .replace('PATH', 'login');
+  res.locals.logoutUrl = config.get('urlTmpl')
+    .replace('SCHEME', req.protocol)
+    .replace('SUB', config.get('auth_domain'))
+    .replace('DOMAIN', config.get('base_domain'))
+    .replace('PATH', 'logout');
+  res.locals.profileUrl = config.get('urlTmpl')
+    .replace('SCHEME', req.protocol)
+    .replace('SUB', config.get('auth_domain'))
+    .replace('DOMAIN', config.get('base_domain'))
+    .replace('PATH', 'profile');
+  res.locals.systemUrl = config.get('urlTmpl')
+    .replace('SCHEME', req.protocol)
+    .replace('SUB', config.get('system_domain'))
+    .replace('DOMAIN', config.get('base_domain'))
+    .replace('PATH', '');
   res.locals.sysAdmin = req.app.get('sysAdmin');
   res.locals.locales = config.get('locales');
   res.locals.currentLocale = req.locale;

@@ -40,10 +40,10 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       defaultValue: false
     },
-    authentication_hash: {
+    authenticationHash: {
       type: DataTypes.STRING
     },
-    authentication_salt: {
+    authenticationSalt: {
       type: DataTypes.STRING
     }
   },
@@ -52,8 +52,8 @@ module.exports = function (sequelize, DataTypes) {
       setPassword: function(password) {
         var salt = bcrypt.genSaltSync(8);
 
-        this.authentication_hash = bcrypt.hashSync(password, salt);
-        this.authentication_salt = salt;
+        this.authenticationHash = bcrypt.hashSync(password, salt);
+        this.authenticationSalt = salt;
       }
     },
 

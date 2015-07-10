@@ -2,12 +2,12 @@
 
 var _ = require('underscore');
 var loaders = require('../loaders');
-var models = require('../models');
+var Promise = require('bluebird');
 
 
-var _promisedLoad = function(res, options) {
+var _promisedLoad = function(req, res, options) {
 
-  return loaders.loadTranslatedData(options)
+  return loaders.loadTranslatedData(options, req.app.get('models'))
     .then(function() { res.send({status: 'ok', message: 'ok'}); })
     .catch(function(E) { res.send({status: 'error', message: E}); });
 
@@ -16,35 +16,24 @@ var _promisedLoad = function(res, options) {
 
 var dashboard = function (req, res) {
 
-  res.render('dashboard.html');
-
-};
-
-
-var loadRegistry = function (req, res) {
-
-  return loaders.loadRegistry(req.params.domain).spread(function(error, data) {
-    if (error)
-      res.send({'status': 'error', message: error});
-    else
-      res.send({'status': 'ok', message: 'ok'});
-  });
+  res.render('admin.html');
 
 };
 
 
 var loadConfig = function (req, res) {
 
-  return loaders.loadConfig(req.params.domain)
+  return loaders.loadConfig(req.params.domain, req.app.get('models'))
     .then(function() { res.send({'status': 'ok', message: 'ok'}); })
     .catch(function(E) { res.send({'status': 'error', message: E}); });
 
 };
 
+
 var loadPlaces = function (req, res) {
 
-  return _promisedLoad(res, {
-    Model: models.Place,
+  return _promisedLoad(req, res, {
+    Model: req.app.get('models').Place,
     setting: 'places',
     site: req.params.domain
   });
@@ -53,20 +42,25 @@ var loadPlaces = function (req, res) {
 
 var loadDatasets = function (req, res) {
 
-  return _promisedLoad(res, {
+  return _promisedLoad(req, res, {
     mapper: function(D) {return _.extend(D, {name: D.title});},
-    Model: models.Dataset,
+    Model: req.app.get('models').Dataset,
     setting: 'datasets',
     site: req.params.domain
   });
 
 };
 
+
 var loadQuestions = function (req, res) {
 
-  return _promisedLoad(res, {
-    mapper: function(D) { return _.extend(D, {dependants: D.dependants.split(','), score: D.score || 0}); },
-    Model: models.Question,
+  return _promisedLoad(req, res, {
+    mapper: function(D) {
+      var dependants = null;
+      if(D.dependants !== ''){ dependants = D.dependants.split(',');}
+      return _.extend(D, {dependants: dependants, score: D.score || 0});
+    },
+    Model: req.app.get('models').Question,
     setting: 'questions',
     site: req.params.domain
   });
@@ -76,7 +70,6 @@ var loadQuestions = function (req, res) {
 
 module.exports = {
   dashboard: dashboard,
-  loadRegistry: loadRegistry,
   loadConfig: loadConfig,
   loadPlaces: loadPlaces,
   loadDatasets: loadDatasets,

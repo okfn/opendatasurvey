@@ -1,9 +1,11 @@
-var path = require('path')
-  , _ = require('underscore')
-  , nconf = require('nconf')
-  , fs = require('fs')
-  , marked = require('marked')
-  ;
+'use strict';
+
+var path = require('path');
+var _ = require('lodash');
+var nconf = require('nconf');
+var fs = require('fs');
+var marked = require('marked');
+
 
 function getContent(filepath) {
   return marked(fs.readFileSync(filepath, 'utf8'));
@@ -16,7 +18,10 @@ nconf.file({
  // this is the object that you want to override in your own local config
 nconf.defaults({
   title_short: 'Census',
-  auth_base: process.env.AUTH_BASE || 'http://localhost:5000',
+  urlTmpl: 'SCHEME://SUB.DOMAIN/PATH',
+  auth_subdomain: process.env.AUTH_SUBDOMAIN || 'id',
+  system_subdomain: process.env.SYSTEM_SUBDOMAIN || 'system',
+  connection_scheme:  process.env.CONNECTION_SCHEME || 'http',
   approve_first_submission: 'FALSE',
   reviewers: '',
   locales: ['en'],

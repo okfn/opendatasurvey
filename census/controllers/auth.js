@@ -3,7 +3,12 @@
 
 var login = function (req, res) {
 
-  req.session.nextUrl = req.query.next;
+  req.session.nextUrl = req.app.get('urlTmpl')
+      .replace('SCHEME', req.app.get('config').get('connection_scheme'))
+      .replace('SUB', req.session.activeSite)
+      .replace('DOMAIN', req.app.get('config').get('base_domain'))
+      .replace('PATH', req.query.next || '');
+
   res.render('login.html');
 
 };
@@ -11,7 +16,14 @@ var login = function (req, res) {
 var logout = function (req, res) {
 
   req.logout();
-  res.redirect('/');
+
+  req.session.nextUrl = req.app.get('urlTmpl')
+    .replace('SCHEME', req.app.get('config').get('connection_scheme'))
+    .replace('SUB', req.session.activeSite)
+    .replace('DOMAIN', req.app.get('config').get('base_domain'))
+    .replace('PATH', req.query.next || '');
+
+  res.redirect(req.session.nextUrl);
 
 };
 

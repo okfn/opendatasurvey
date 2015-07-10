@@ -5,12 +5,9 @@ var mixins = require('../controllers/mixins');
 var utils = require('./utils');
 
 
-var redirectRoutes = function(coreMiddlewares) {
+var redirectRoutes = function(router) {
 
-  var router = express.Router();
   var coreMixins = [mixins.requireDomain];
-
-  router.use(coreMiddlewares);
 
   router.get(utils.scoped('/country'), coreMixins, utils.makeRedirect(utils.scoped('/')));
   router.get(utils.scoped('/country/results.json'), coreMixins, utils.makeRedirect(utils.scoped('/overview.json')));

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ gettext('Dashboard') }}
+{% endblock %}
+
+{% block content %}
+<h1>{{ gettext('System Admin Dashboard') }}</h1>
+<ul>
+  <li><a href="/load/registry">Registry</a></li>
+  <li><a href="/load/all">Load All</a></li>
+</ul>
+
+{% endblock %}

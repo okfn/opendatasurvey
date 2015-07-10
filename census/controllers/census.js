@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('underscore');
+var uuid = require('node-uuid');
 var routeUtils = require('../routes/utils');
 var modelUtils = require('../models').utils;
 

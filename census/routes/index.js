@@ -17,5 +17,5 @@ module.exports = {
   auth: auth,
   i18n: i18n,
   redirects: redirects,
-  utils: utils,
+  utils: utils
 };

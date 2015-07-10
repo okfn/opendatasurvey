@@ -34,7 +34,7 @@ var availableYears = _.range(startYear, currentYear);
 var rawSysAdmin = process.env.SYS_ADMIN || config.get('sysAdmin') || '';
 var sysAdmin = _.each(rawSysAdmin.split(','), function(e, i, l) {l[i] = e.trim(); return;});
 var subdomainOptions = {
-  base: process.env.BASE_DOMAIN || config.get('baseDomain')
+  base: config.get('base_domain')
 };
 var validatorOptions = {
   customValidators: {
@@ -56,6 +56,9 @@ app.set('models', models);
 app.set('year', currentYear);
 app.set('years', availableYears);
 app.set('sysAdmin', sysAdmin);
+app.set('authDomain', config.get('auth_domain'));
+app.set('systemDomain', config.get('system_domain'));
+app.set('urlTmpl', config.get('urlTmpl'));
 
 env = nunjucks.configure('census/views', {
     // autoescape: true,
@@ -78,7 +81,7 @@ app.use([
     resave: true,
     saveUninitialized: true,
     cookie: {
-      domain: process.env.BASE_DOMAIN || config.get('baseDomain'),
+      domain: '.BASE'.replace('BASE', config.get('base_domain').split(':')[0]),
       maxAge: 1000*60*60*24*30*12    //one year(ish)
     }}),
   passport.initialize(),
@@ -104,9 +107,8 @@ app.all('*', routes.utils.setLocals);
 app.use('/admin', routes.admin(coreMiddlewares));
 app.use('/census', routes.census(coreMiddlewares));
 app.use('/api', routes.api(coreMiddlewares));
-app.use('/auth', routes.auth(coreMiddlewares));
+// pages also has auth and redirect routes
 app.use('', routes.pages(coreMiddlewares));
-app.use('', routes.redirects(coreMiddlewares));
 
 app.use(middlewares.notFound);
 app.use(middlewares.internalServerError);

@@ -19,7 +19,7 @@ var siteQuery = function(req, byYear) {
   };
 
   if (byYear && req.params.year) {
-    whereParams.year = req.params.year || req.app.get('year');
+    whereParams.year = req.params.year;
   }
 
   return {where: whereParams};
