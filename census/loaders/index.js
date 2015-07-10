@@ -1,6 +1,6 @@
 'use strict';
 
-var _ = require('underscore');
+var _ = require('lodash');
 var Promise = require('bluebird');
 var config = require('../config');
 var utils = require('./utils');

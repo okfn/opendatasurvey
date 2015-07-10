@@ -1,11 +1,11 @@
 'use strict';
 
-var _ = require('underscore');
+var _ = require('lodash');
 
 
 var loadModels = function(querysets) {
 
-  return Promise.all(_(querysets).map(function(V, K) {
+  return Promise.all(_.map(querysets, function(V, K) {
     return new Promise(function(RS, RJ) { V.then(function(D) { RS([K, D]); }); });
   })).then(function(V) { return _.object(V); });
 
