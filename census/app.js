@@ -18,6 +18,7 @@ var config = require('./config');
 var i18n = require('i18n-abide');
 var routes = require('./routes');
 var nunjucks = require('nunjucks');
+var raven = require('raven');
 var env;
 var templateFilters = require('./filters');
 var app = express();
@@ -29,8 +30,8 @@ var faviconPath = __dirname + '/public/favicon.ico';
 var models = require('./models');
 var middlewares = require('./middlewares');
 var currentYear = new Date().getFullYear();
-var startYear = 2012;
-var availableYears = _.range(startYear, currentYear);
+var startYear = 2013;
+var availableYears = _.range(startYear, currentYear + 1);
 var rawSysAdmin = process.env.SYS_ADMIN || config.get('sysAdmin') || '';
 var sysAdmin = _.each(rawSysAdmin.split(','), function(e, i, l) {l[i] = e.trim(); return;});
 var subdomainOptions = {
