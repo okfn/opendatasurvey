@@ -1,176 +1,165 @@
-// var request = require('supertest')
-//   , passport = require('passport')
-//   , chai = require('chai')
-//   , assert = chai.assert
-//   , config = require('../lib/config.js')
-//   // importing base sets the test db
-//   , base = require('./base.js')
-//   ;
+var request = require('supertest')
+  , passport = require('passport')
+  , chai = require('chai')
+  , app = require('../census/app.js').app
+  , assert = chai.assert
+  , config = require('../census/config')
+  // importing base sets the test db
+  , base = require('./base.js')
+  ;
 
-// config.set('test:testing', true);
-// // config.set('appconfig:port', 5001 + Math.floor(Math.random() * 1000));
+config.set('test:testing', true);
+// config.set('appconfig:port', 5001 + Math.floor(Math.random() * 1000));
 
-// // only require after setting config ...
-// var model = require('../lib/model.js').OpenDataCensus;
+describe('Basics', function() {
+  it('front page works', function(done) {
+    request(app)
+      .get('/')
+      .set('Host', 'national.dev.census.org')
+      .expect(200)
+      .end(function(err, res) {
+      	console.log(res.text);
+        checkContent(res, config.get('overview_page'));
+        // check overview table works
+        checkContent(res, 'United Kingdom');
+        checkContent(res, 'Zambia');
+        done();
+      })
+      ;
+  });
+  it('about page ok', function(done) {
+    request(app)
+      .get('/about')
+      .expect(200)
+      .end(function(err, res) {
+        checkContent(res, config.get('about_page'));
+        done();
+      })
+      ;
+  });
+  it('faq page ok', function(done) {
+    request(app)
+      .get('/faq')
+      .expect(200)
+      .end(function(err, res) {
+        checkContent(res, config.get('faq_page'));
+        done();
+      })
+      ;
+  });
+  it('contribute page ok', function(done) {
+    request(app)
+      .get('/contribute')
+      .expect(200)
+      .end(function(err, res) {
+        checkContent(res, config.get('contribute_page'));
+        done();
+      })
+      ;
+  });
+  it('custom content works', function(done) {
+    request(app)
+      .get('/')
+      .expect(200)
+      .end(function(err, res) {
+        checkContent(res, config.get('custom_css'));
+        checkContent(res, config.get('custom_footer'));
+        checkContent(res, config.get('google_analytics_key'));
+        checkContent(res, config.get('navbar_logo'));
+        done();
+      })
+      ;
+  });
 
-// describe('Basics', function() {
-//   before(function(done) {
-//     base.setFixtures();
-//     model.load(function() {
-//       app = require('../app.js').app;
-//       done();
-//     });
-//   });
-//   after(function(done) {
-//     base.unsetFixtures();
-//     done();
-//   });
-//   it('front page works', function(done) {
-//     request(app)
-//       .get('/')
-//       .expect(200)
-//       .end(function(err, res) {
-//         checkContent(res, config.get('overview_page'));
-//         // check overview table works
-//         checkContent(res, 'United Kingdom');
-//         checkContent(res, 'Zambia');
-//         done();
-//       })
-//       ;
-//   });
-//   it('about page ok', function(done) {
-//     request(app)
-//       .get('/about')
-//       .expect(200)
-//       .end(function(err, res) {
-//         checkContent(res, config.get('about_page'));
-//         done();
-//       })
-//       ;
-//   });
-//   it('faq page ok', function(done) {
-//     request(app)
-//       .get('/faq')
-//       .expect(200)
-//       .end(function(err, res) {
-//         checkContent(res, config.get('faq_page'));
-//         done();
-//       })
-//       ;
-//   });
-//   it('contribute page ok', function(done) {
-//     request(app)
-//       .get('/contribute')
-//       .expect(200)
-//       .end(function(err, res) {
-//         checkContent(res, config.get('contribute_page'));
-//         done();
-//       })
-//       ;
-//   });
-//   it('custom content works', function(done) {
-//     request(app)
-//       .get('/')
-//       .expect(200)
-//       .end(function(err, res) {
-//         checkContent(res, config.get('custom_css'));
-//         checkContent(res, config.get('custom_footer'));
-//         checkContent(res, config.get('google_analytics_key'));
-//         checkContent(res, config.get('navbar_logo'));
-//         done();
-//       })
-//       ;
-//   });
+  // ========================
+  // More complex pages
 
-//   // ========================
-//   // More complex pages
+  it('place page works', function(done) {
+    request(app)
+      .get('/place/gb')
+      .expect(200)
+      .end(function(err, res) {
+        checkContent(res, '/ United Kingdom', 'Place name not present');
+        checkContent(res, 'Transport Timetables', 'Dataset list missing');
+        done();
+      })
+      ;
+  });
+  it('dataset page works', function(done) {
+    request(app)
+      .get('/dataset/timetables')
+      .expect(200)
+      .end(function(err, res) {
+        checkContent(res, '/ Transport Timetables', 'Dataset name not present');
+        done();
+      })
+      ;
+  });
+  it('login works', function(done) {
+    request(app)
+      .get('/login')
+      .expect(200)
+      .end(function(err, res) {
+        checkContent(res, 'Login with Facebook');
+        done();
+      });
+      ;
+  });
+  it('API csv works', function(done) {
+    request(app)
+      .get('/api/entries.csv')
+      .expect(200)
+      .end(function(err, res) {
+        // check the header row
+        checkContent(res, 'id,officialtitle,censusid,timestamp,year,place,dataset,exists,digital,public,online,free,machinereadable,');
+        done();
+      })
+      ;
+  });
+  it('API json works', function(done) {
+    request(app)
+      .get('/api/entries.json')
+      .expect(200)
+      .end(function(err, res) {
+        // check a random snippet of json
+        checkContent(res, '"url": "http://www.ordnancesurvey.co.uk/opendata/",');
+        done();
+      })
+      ;
+  });
 
-//   it('place page works', function(done) {
-//     request(app)
-//       .get('/place/gb')
-//       .expect(200)
-//       .end(function(err, res) {
-//         checkContent(res, '/ United Kingdom', 'Place name not present');
-//         checkContent(res, 'Transport Timetables', 'Dataset list missing');
-//         done();
-//       })
-//       ;
-//   });
-//   it('dataset page works', function(done) {
-//     request(app)
-//       .get('/dataset/timetables')
-//       .expect(200)
-//       .end(function(err, res) {
-//         checkContent(res, '/ Transport Timetables', 'Dataset name not present');
-//         done();
-//       })
-//       ;
-//   });
-//   it('login works', function(done) {
-//     request(app)
-//       .get('/login')
-//       .expect(200)
-//       .end(function(err, res) {
-//         checkContent(res, 'Login with Facebook');
-//         done();
-//       });
-//       ;
-//   });
-//   it('API csv works', function(done) {
-//     request(app)
-//       .get('/api/entries.csv')
-//       .expect(200)
-//       .end(function(err, res) {
-//         // check the header row
-//         checkContent(res, 'id,officialtitle,censusid,timestamp,year,place,dataset,exists,digital,public,online,free,machinereadable,');
-//         done();
-//       })
-//       ;
-//   });
-//   it('API json works', function(done) {
-//     request(app)
-//       .get('/api/entries.json')
-//       .expect(200)
-//       .end(function(err, res) {
-//         // check a random snippet of json
-//         checkContent(res, '"url": "http://www.ordnancesurvey.co.uk/opendata/",');
-//         done();
-//       })
-//       ;
-//   });
+  // test redirects
+  testRedirect('/country/', '/');
+  testRedirect('/country/results.json', '/overview.json');
+  testRedirect('/country/overview/gb', '/place/gb');
+  testRedirect('/country/gb/timetables', '/entry/gb/timetables');
+  testRedirect('/country/submit', '/submit');
+  testRedirect('/country/review/xyz', '/submission/xyz');
+});
 
-//   // test redirects
-//   testRedirect('/country/', '/');
-//   testRedirect('/country/results.json', '/overview.json');
-//   testRedirect('/country/overview/gb', '/place/gb');
-//   testRedirect('/country/gb/timetables', '/entry/gb/timetables');
-//   testRedirect('/country/submit', '/submit');
-//   testRedirect('/country/review/xyz', '/submission/xyz');
-// });
+function checkContent(res, expected, errMsg) {
+  if (!errMsg) {
+    errMsg = '<<' + expected + '>> not found in page';
+  }
+  var found = res.text.match(expected)
+  if (!found) {
+    assert(false, errMsg);
+  }
+}
 
-// function checkContent(res, expected, errMsg) {
-//   if (!errMsg) {
-//     errMsg = '<<' + expected + '>> not found in page';
-//   }
-//   var found = res.text.match(expected)
-//   if (!found) {
-//     assert(false, errMsg);
-//   }
-// }
-
-// function testRedirect(src, dest) {
-//   it('redirect from ' + src + ' to ' + dest, function(done) {
-//     request(app)
-//       .get(src)
-//       .expect(302)
-//       .end(function(err, res) {
-//         if (err) return done(err);
-//         assert.equal(res.header['location'], dest);
-//         done();
-//       })
-//       ;
-//   });
-// };
+function testRedirect(src, dest) {
+  it('redirect from ' + src + ' to ' + dest, function(done) {
+    request(app)
+      .get(src)
+      .expect(302)
+      .end(function(err, res) {
+        if (err) return done(err);
+        assert.equal(res.header['location'], dest);
+        done();
+      })
+      ;
+  });
+};
 
 // describe('Permissions', function() {
 //   this.timeout(base.TIMEOUT);
