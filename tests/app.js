@@ -87,6 +87,7 @@ describe('Basics', function() {
   it('place page works', function(done) {
     request(app)
       .get('/place/gb')
+      .set('Host', 'national.dev.census.org')
       .expect(200)
       .end(function(err, res) {
         checkContent(res, '/ United Kingdom', 'Place name not present');
@@ -98,6 +99,7 @@ describe('Basics', function() {
   it('dataset page works', function(done) {
     request(app)
       .get('/dataset/timetables')
+      .set('Host', 'national.dev.census.org')
       .expect(200)
       .end(function(err, res) {
         checkContent(res, '/ Transport Timetables', 'Dataset name not present');
@@ -108,6 +110,7 @@ describe('Basics', function() {
   it('login works', function(done) {
     request(app)
       .get('/login')
+      .set('Host', 'national.dev.census.org')
       .expect(200)
       .end(function(err, res) {
         checkContent(res, 'Login with Facebook');
@@ -118,6 +121,7 @@ describe('Basics', function() {
   it('API csv works', function(done) {
     request(app)
       .get('/api/entries.csv')
+      .set('Host', 'national.dev.census.org')
       .expect(200)
       .end(function(err, res) {
         // check the header row
@@ -129,6 +133,7 @@ describe('Basics', function() {
   it('API json works', function(done) {
     request(app)
       .get('/api/entries.json')
+      .set('Host', 'national.dev.census.org')
       .expect(200)
       .end(function(err, res) {
         // check a random snippet of json
@@ -161,6 +166,7 @@ function testRedirect(src, dest) {
   it('redirect from ' + src + ' to ' + dest, function(done) {
     request(app)
       .get(src)
+      .set('Host', 'national.dev.census.org')
       .expect(302)
       .end(function(err, res) {
         if (err) return done(err);
