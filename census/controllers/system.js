@@ -39,8 +39,7 @@ var loadAll = function (req, res) {
         res.send({'status': 'ok', message: 'ok'});
       });
 
-    })
-    .catch(function(error){console.log(error);});
+    }).catch(console.log.bind(console));
 
 };
 

@@ -10,7 +10,7 @@
     {{ gettext("A log of the most recent submission and entry activity.") }}
 </p>
 <ul class="change-list">
-    {% for item in changeitems %}
+    {% for item in entries %}
     <li>
         <h5>
             <strong>{% if item.status == 'accepted' %}{{ gettext('Entry') }}{% else %}{{ gettext('Submission') }}{% endif %}</strong>
@@ -19,11 +19,11 @@
             </span>
         </h5>
         <a href="{{ item.url }}">
-           <strong>{{ item.dataset.translated.title }} – {{ item.place.translated.name }}</strong>
+           <strong>{{ item.dataset.title }} – {{ item.place.name }}</strong>
         </a>
         <br />
         <span class="changelist-date">
-            {{ gettext("On") }} {{ item.timestamp | dateformat(currentLocale, 'Do MMM YYYY') }} {{ gettext("submitted by") }} {{ item.submitter }} {% if item.status == 'accepted' %}{{ gettext("and reviewed by") }} {{ item.reviewer }}{% endif %}</span>
+            {{ gettext("On") }} {{ gettext("submitted by") }} {{ item.submitter_id }} {% if item.rewiewResult %}{{ gettext("and reviewed by") }} {{ item.reviewer.id }}{% endif %}</span>
     </li>
     {% endfor %}
 </ul>

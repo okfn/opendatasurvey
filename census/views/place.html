@@ -10,7 +10,7 @@
 <h1>
   {% if overview %}<a href="{{urlFor('overview')}}" data-toggle="tooltip" class="count-0"
     title="Return to results overview">{{gettext("Places")}}</a>
-  / {% endif %}{{ place.name }}
+  / {% endif %}{{ place.name }} / {{ year }}
 
   <span class="pull-right">
     {% include '_snippets/share_page_buttons.html' %}
@@ -32,7 +32,7 @@
             <col />
             <col />
             <col width="13%" />
-            {% if not readonly %}<col width="15%" />{% endif %}
+            <col width="15%" />
           </colgroup>
           <thead>
             <tr>
@@ -42,19 +42,20 @@
               <th></th>
               <th>{{gettext("Location (URL)")}}</th>
               <th>{{gettext("Information")}}</th>
-              {% if not readonly %}<th></th>{% endif %}
+              <th></th>
             </tr>
           </thead>
           <tbody>
             {% for dataset in datasets %}
-            {% set record = entrys[dataset.id] %}
+
+            {% set currentEntry = entries|find({'dataset': dataset.id, 'isCurrent': true}) %}
+            {% set pendingEntries = entries|find({'dataset': dataset.id, 'isCurrent': false, 'reviewed': false, 'reviewResult': false}) %}
+
             <tr>
               <td>
-                {% if record %}
-                <a href="/entry/{{place.id}}/{{dataset.id}}">{% endif %}
-                  {{ dataset.title }}{% if record %}
-                </a>
-                {% endif %}
+                {% if currentEntry %}<a href="/entry/{{place.id}}/{{dataset.id}}">{% endif %}
+                  {{ dataset.name }}
+                {% if currentEntry %}</a>{% endif %}
                 &nbsp;
                 <a href="javascript:;"
                   data-toggle="popover"
@@ -62,11 +63,13 @@
                   data-content="{{ dataset.description }}"
                   title="{{ dataset.title }}"><i class="icon-info-sign"></i></a>
               </td>
-              {{entrysummary(dataset, place, record, scoredQuestions)}}
-              {% if not readonly %}
+              {{entrysummary(dataset, place, currentEntry, questions)}}
+
               <td>
-                {% if record %}
-                <a id="submit-{{ dataset.id }}" href="/submit/?dataset={{ dataset.id }}&place={{ place.id }}" class="btn btn-mini btn-primary">
+                {% if submissionsAllowed %}
+
+                {% if currentEntry %}
+                <a id="submit-{{ dataset.id }}" href="/census/submit/?dataset={{ dataset.id }}&place={{ place.id }}" class="btn btn-mini btn-primary">
                   <!-- <i class="icon-plus"></i> -->{{gettext("Propose Revisions")}}
                 </a>
               {% else %}
@@ -74,28 +77,31 @@
                   <!-- <i class="icon-plus"></i> -->{{gettext("Submit information")}}
                 </a>
                 {% endif %}
+
+                {% else %}
+                <i class="muted">{{ gettext('Closed') }}</i>
+                {% endif %}
               </td>
-              {% endif %}
+
             </tr>
-            {% if not readonly %}
-            {% for submission in submissions[dataset.id]|reverse %}
+            {% for pendingEntry in pendingEntries %}
             <tr class="queued">
               <td>
                 <strong>{{gettext("&#8627; Awaiting review")}}</strong><br />
 
                 <span title="{{ gettext('Submitted by')}} {{ submission.submitter}}" class="queued-context">
                   <i class="icon icon-user"></i>&nbsp;
-                  {{ submission.submitter }}
+                  {{ pendingEntry.submitter.firstName }}
                 </span>
                 <br />
                 <span title="{{ gettext('Submitted on')}} {{ submission.timestamp|dateformat }}" class="queued-context">
                   <i class="icon icon-time"></i>&nbsp;
-                  {{ submission.timestamp|simpledelta }}
+                  {{ pendingEntry.timestamp|simpledelta }}
                 </span>
               </td>
-              {{entrysummary(dataset, place, submission, scoredQuestions)}}
+              {{entrysummary(dataset, place, pendingEntry, questions)}}
               <td>
-                 <a href="/submission/{{submission.submissionid}}" class="btn btn-mini btn-danger">
+                 <a href="/submission/{{pendingEntry.id}}" class="btn btn-mini btn-danger">
                   {{gettext("View Submission")}}
                  </a>
                  <script>
@@ -108,7 +114,6 @@
               </td>
             </tr>
             {% endfor %}
-            {% endif %}
 
             {% endfor %}
           </tbody>

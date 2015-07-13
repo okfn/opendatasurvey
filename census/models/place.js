@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('lodash');
 var mixins = require('./mixins');
 
 
@@ -46,7 +47,12 @@ module.exports = function (sequelize, DataTypes) {
   {
     tableName: 'place',
     instanceMethods: {
-      translated: mixins.translated
+      translated: mixins.translated,
+      score: function(entries, questions) {
+        var self = this;
+        return _.sum(_.map(_.where(entries, {'place': self.id}), function(e) {return e.yCount(questions);}));
+      }
+
     }
   });
 

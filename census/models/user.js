@@ -54,7 +54,11 @@ module.exports = function (sequelize, DataTypes) {
 
         this.authenticationHash = bcrypt.hashSync(password, salt);
         this.authenticationSalt = salt;
+      },
+      fullName: function() {
+        return 'F L'.replace('F', this.firstName).replace('L', this.lastName);
       }
+
     },
 
     tableName: 'user'

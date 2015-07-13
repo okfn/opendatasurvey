@@ -130,45 +130,10 @@ var getCsvFromSheetParams = function(info) {
 };
 
 
-var cleanUpCommon = function (db, records) {
-  var correcter = {
-    'yes': 'Y',
-    'yes ': 'Y',
-    'no': 'N',
-    'no ': 'N',
-    'unsure': '?'
-  };
-  var out = records.map(function (record) {
-    // fix up y/n
-    db.scoredQuestions.forEach(function (qu) {
-      if (qu.id in record && record[qu.id].toLowerCase() in correcter) {
-        record[qu.id] = correcter[record[qu.id].toLowerCase()];
-      }
-    });
-
-    if (record.place != record.place.toLowerCase()) {
-      console.warn('place attribute on record is not lower case');
-      console.log(record);
-    }
-    record.ycount = exports.scoreOpenness(db, record);
-    // Data is exists, is open, and publicly available, machine readable etc
-    record.isopen =
-      (record['exists'] == 'Y') &&
-      (record['openlicense'] == 'Y') &&
-      (record.public == 'Y') &&
-      (record['machinereadable'] == 'Y')
-      ;
-    return record;
-  });
-  return out;
-};
-
-
 module.exports = {
   spreadsheetParse: spreadsheetParse,
   getCsvFromSheetParams: getCsvFromSheetParams,
   getSheetParams: getSheetParams,
   getCsvForGoogleSheet: getCsvForGoogleSheet,
-  getDataAsCsv: getDataAsCsv,
-  cleanUpCommon: cleanUpCommon
+  getDataAsCsv: getDataAsCsv
 };

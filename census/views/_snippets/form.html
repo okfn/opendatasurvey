@@ -25,10 +25,9 @@
   {{ currentEntry(qu) }}
 </div>
 <div class="span12">
-  <span class="help-block">{{qu.description|marked}}</span>
+  <span class="help-block">{{qu.description}}</span>
 </div>
 {%- endmacro  %}
-
 
 <fieldset>
   <div class="row-fluid submission-row head">
@@ -44,6 +43,7 @@
 
   <div class="yntable">
     {% for qu in questions %}
+    {% if qu.type == '' %}
     <div class="row-fluid submission-row{% if loop.index0 != 0 %} hide js-dependent{% endif %}">
       <div class="span12">
         <div class="submission-question submission-label">{{ qu.question }}?</div>
@@ -56,15 +56,18 @@
           {{ currrecord[qu.id] or gettext('No entry') }}
         </div>
         <div class="submission-info">
-          <span class="help-block readmore">{{qu.description|marked}}</span>
+          <span class="help-block readmore">{{qu.description}}</span>
         </div>
+        {% if qu.dependants %}
         {% for dependant in qu.dependants %}
         <div class="row-fluid submission-dependant">
           {{ question(dependant) }}
         </div>
         {% endfor %}
+        {% endif %}
       </div>
     </div>
+    {% endif %}
     {% endfor %}
   </div>
 
@@ -75,8 +78,8 @@
   <div class="row">
     <div class="span12">
       <hr />
-      <h4>{{questionsById.details.question}}</h4>
-      <span class="help-block">{{questionsById.details.description|marked}}</span>
+      <h4>{{addDetails.question}}</h4>
+      <span class="help-block">{{addDetails.description}}</span>
     </div>
     <div class="span6">
       <div class="wmd-panel">
@@ -89,7 +92,7 @@
       <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
     </div>
     <div class="span12">
-      {{ currentEntry(questionsById.details)|marked }}
+      {{ currentEntry(addDetails) }}
     </div>
   </div>
 </fieldset>

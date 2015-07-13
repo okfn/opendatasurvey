@@ -1,39 +1,60 @@
-{% macro entrysummary(dataset, place, record, scoredQuestions) -%}
+{% macro entrysummary(dataset, place, entry, questions) -%}
   <td>
-    {% if record %}
-      {{ record.ycount }}%
+    {% if entry %}
+      {{ entry.computedYCount }}%
     {% else %}
       -
     {% endif %}
   </td>
-  <td{% if record %} data-place="{{ record.place }}" data-dataset="{{ record.dataset }}" data-datasetTitle="{{ dataset.title }}"{% endif %}>
+  <td{% if entry %} data-place="{{ entry.place }}" data-dataset="{{ entry.dataset }}" data-datasetTitle="{{ dataset.name }}"{% endif %}>
     <ul class="availability icons">
-      {% for qu in scoredQuestions %}
-        {% set state = record[qu.id] %}
+      {% for qu in questions %}
+
+      {% if entry %}
+
+      {% set state = entry.answers[qu.id] %}
+      {% if state == true %}
+        {% set stateClass = 'yes' %}
+        {% set stateDisplay = 'Y' %}
+      {% elif state == false %}
+        {% set stateClass = 'no' %}
+        {% set stateDisplay = 'N' %}
+      {% elif state == null %}
+        {% set stateClass = 'maybe' %}
+        {% set stateDisplay = '?' %}
+      {% endif %}
+
+      {% else %}
+
+      {% set stateClass = '' %}
+      {% set stateDisplay = 'No data' %}
+
+      {% endif %}
+
         <a data-toggle="tooltip" title="{{ qu.description|escape }}">
-        <li class="{% if state == 'Yes' %}yes{% elif state == 'No' %}no{% elif state == 'Unsure' %}maybe{% endif %}">
+        <li class="{{ stateClass }}">
           <i class="icon-{{ qu.icon }}"></i>
-          <span class="text">{{ state }}</span>
+          <span class="text">{{ stateDisplay }}</span>
         </li>
         </a>
       {% endfor %}
     </ul>
   </td>
     <td>
-    {% if record %}
-      <div class="badge" title="{{ record.year }}">{{record.year|dateformat(currentLocale, "'YY")}}</div>
+    {% if entry %}
+      <div class="badge" title="{{ entry.year }}">{{entry.year}}</div>
     {% endif %}
     </td>
-    {% if record and record.url %}
-      <td class="recordurl"><a href="{{record.url}}" title="{{record.url}}" target="_blank">{{record.url }}</a></td>
+    {% if entry and entry.answers.url %}
+      <td class="recordurl"><a href="{{entry.answers.url}}" title="{{entry.answers.url}}" target="_blank">{{ entry.answers.url }}</a></td>
     {% else %}
       <td><!-- No URL given --></td>
     {% endif %}
   <td>
     <ul class="icons">
       <li>
-        {% if record and record.dateavailable %}
-          <a class="icon-hover" title="{{gettext("Date available:")}} {{ record.dateavailable }}" data-toggle="tooltip"><i class="icon-calendar"></i></a>
+        {% if entry and entry.answers.dateavailable %}
+          <a class="icon-hover" title="{{gettext("Date available:")}} {{ entry.answers.dateavailable }}" data-toggle="tooltip"><i class="icon-calendar"></i></a>
         {% else %}
           <a class="icon-hover" data-toggle="tooltip" data-trigger="hover" title="{{gettext("No date available given")}}">
             <i class="icon-calendar icons-nodata"></i>
@@ -41,8 +62,8 @@
         {% endif %}
       </li>
       <li>
-        {% if record and record.format %}
-          <a class="icon-hover" title="Data format: {{ record.format }}" data-toggle="tooltip"><i class="icon-file"></i></a>
+        {% if entry and entry.answers.format %}
+          <a class="icon-hover" title="Data format: {{ entry.answers.format }}" data-toggle="tooltip"><i class="icon-file"></i></a>
         {% else %}
           <a class="icon-hover" data-toggle="tooltip" data-trigger="hover" title="{{gettext("No data format given")}}">
             <i class="icon-file icons-nodata"></i>
@@ -50,8 +71,8 @@
         {% endif %}
       </li>
       <li>
-        {% if record and record.details and (record.details | trim | length) > 0 %}
-          {% set content = record.details | urlize | replace('\n', '<br>') | replace ('\"', '\'') | wordwrap(100, '\n', true) %}
+        {% if entry and entry.answers.details and (entry.answers.details | trim | length) > 0 %}
+          {% set content = entry.answers.details | urlize | replace('\n', '<br>') | replace ('\"', '\'') | wordwrap(100, '\n', true) %}
           <a href="javascript:;" class="count-0" title="{{gettext("Details")}}" data-toggle="popover" data-content="{{ content }}" data-html="true" data-placement="left">
             <i class="icon-info-sign"></i>
           </a>

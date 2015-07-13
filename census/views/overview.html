@@ -9,32 +9,31 @@
   <div class="summary featured">
     <dl>
       <dt>{{gettext("Number of places")}}</dt>
-      <dd id="nc">{{ summary.places }}</dd>
+      <dd id="nc">{{ placeCount }}</dd>
       <dt>{{gettext("Number of datasets")}}</dt>
-      <dd id="nds">{{ summary.entries }}</dd>
+      <dd id="nds">{{ currentEntryCount }}</dd>
       <dt>{{gettext("Number of open datasets")}}</dt>
-      <dd id="nok">{{ summary.open }}</dd>
+      <dd id="nok">{{ currentEntryOpenCount }}</dd>
       <dt>{{gettext("Percentage")}} <a href="http://okfn.org/opendata/">{{gettext("open")}}</a></dt>
-      <dd id="nokpercent">{{ summary.open_percent }}%</dd>
+      <dd id="nokpercent">{{ openDataPercent }}%</dd>
     </dl>
   </div>
 </div>
 
-{% if custom_text %}
+{% if customText %}
 <div class="custom-intro">
-  {{ custom_text }}
+  {{ customText }}
 </div>
 {% endif %}
 
-<div class="pull-left">{% include '_snippets/key.html' %}
-</div>
+<div class="pull-left">{% include '_snippets/key.html' %}</div>
 
 <div class="pull-right">
-  <a href="/submit/" class="btn btn-primary">
+  <a href="/census/submit/" class="btn btn-primary">
     <i class="icon-plus"></i> {{ gettext("Add information") }}
   </a>
 
-  {% if missing_place_html %}
+  {% if missingPlaceText %}
   {% include '_snippets/missing_place_button.html' %}
   {% endif %}
 </div>
@@ -45,7 +44,7 @@
     <tr>
       <th colspan="2">&nbsp;</th>
       {% for dataset in datasets %}
-      <th><div><a href="/dataset/{{dataset.id}}">{{ dataset.name|rotate }}</a></div></th>
+      <th><div><a href="/dataset/{{dataset.id}}">{{ dataset.name }}</a></div></th>
       {% endfor %}
       <th><div><strong>{{gettext("Total Score")}}</strong></div>
     </tr>
@@ -61,7 +60,6 @@
     {% endif %}
 
     {% for place in places %}
-    {% set placeScore = byplace[place.id].score %}
     <tr
        {#
        data-* are values needed for doing sorting
@@ -69,7 +67,7 @@
        note we have place name not by id to avoid odd ux (e.g. united
        arab emirates should come under 'u' but its iso code is 'ae'
        #}
-       data-score="{{placeScore}}"
+       data-score="{{place.computedScore}}"
        data-place="{{place.id}}"
        data-placename="{{place.name}}">
       <td>{{ loop.index }}</td>
@@ -81,22 +79,35 @@
         {% endif %}
       </th>
       {% for dataset in datasets %}
-      {% set record = byplace[place.id].datasets[dataset.id] %}
+
+      {% set entry = entries|find({'dataset': dataset.id , 'place': place.id }) %}
       <td
          class="
-                ycount-{{record.ycount}}
+                ycount-{{entry.computedYCount}}
                 showpopover
                 "
-         data-dataset="{{record.dataset}}"
+         data-dataset="{{entry.dataset}}"
          data-datasetTitle="{{dataset.title}}"
          >
-        {% if record %}
+        {% if entry %}
         <ul class="availability icons mini">
-          {% for qu in scoredQuestions %}
-          {% set state = record[qu.id] %}
-          <li class="{% if state == 'Y' %}yes{% elif state == 'N' %}no{% elif state == '?' %}maybe{% endif %}" data-toggle="tooltip" title="{{ qu.question }}">
+          {% for qu in questions %}
+          {% set state = entry.answers[qu.id] %}
+
+          {% if state == true %}
+            {% set stateClass = 'yes' %}
+            {% set stateDisplay = 'Y' %}
+          {% elif state == false %}
+            {% set stateClass = 'no' %}
+            {% set stateDisplay = 'N' %}
+          {% elif state == null %}
+            {% set stateClass = 'maybe' %}
+            {% set stateDisplay = '?' %}
+          {% endif %}
+
+          <li class="{{ stateClass }}" data-toggle="tooltip" title="{{ qu.question }}">
             <i class="icon-{{ qu.icon }}"></i>
-            <span class="text">{{ state }}</span>
+            <span class="text">{{ stateDisplay }}</span>
           </li>
           {% endfor %}
         </ul>
@@ -108,7 +119,7 @@
         {% endif %}
       </td>
       {% endfor %}
-      <td class="placescore" data-score="{{placeScore}}"><span>{{placeScore}}</span></td>
+      <td class="placescore" data-score="{{place.computedScore}}"><span>{{place.computedScore}}</span></td>
     </tr>
     {% endfor %}
   </tbody>
@@ -116,7 +127,7 @@
     <tr>
       <th colspan="2">&nbsp;</th>
       {% for dataset in datasets %}
-      <th><div><a href="/dataset/{{dataset.id}}">{{ dataset.name|rotate }}</a></div></th>
+      <th><div><a href="/dataset/{{dataset.id}}">{{ dataset.name }}</a></div></th>
       {% endfor %}
       <th><div><strong>{{gettext("Total Score")}}</strong></div>
     </tr>

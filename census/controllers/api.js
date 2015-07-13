@@ -32,7 +32,7 @@ var api = function (req, res) {
       return;
 
     }
-  });
+  }).catch(console.log.bind(console));
 
 };
 

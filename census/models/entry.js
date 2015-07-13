@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('lodash');
+
 
 module.exports = function (sequelize, DataTypes) {
 
@@ -83,25 +85,47 @@ module.exports = function (sequelize, DataTypes) {
   {
     instanceMethods: {
       isOpen: function() {
-        if (this.answers.exists === 'Y' && this.answers.openlicense === 'Y' &&
-            this.answers.public === 'Y' && this.answers.machinereadable === 'Y' ) {
+
+        if (this.answers.exists === true && this.answers.openlicense === true &&
+            this.answers.public === true && this.answers.machinereadable === true ) {
+
           return true;
+
         } else {
+
           return false;
+
         }
+      },
+      yCount: function(questions) {
+
+        var scores = [],
+            self = this;
+
+        _.each(questions, function(q) {
+
+          if (self.answers[q.id] === true && q.score) {
+            scores.push(q.score);
+          }
+        });
+
+        return _.sum(scores);
+
       }
     },
     classMethods: {
       associate: function (models) {
 
         Entry.belongsTo(models.User, {
-          as: 'submitter',
-          foreignKey: 'submitterId'
+          as: 'Submitter',
+          foreignKey: 'submitterId',
+          allowNull: false
         });
 
         Entry.belongsTo(models.User, {
-          as: 'reviewer',
-          foreignKey: 'reviewerId'
+          as: 'Reviewer',
+          foreignKey: 'reviewerId',
+          allowNull: false
         });
 
       }

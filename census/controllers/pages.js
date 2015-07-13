@@ -6,43 +6,6 @@ var modelUtils = require('../models').utils;
 var Promise = require('bluebird');
 
 
-var overview = function (req, res) {
-
-  modelUtils.loadModels({
-
-    entries: req.app.get('models').Entry.findAll(modelUtils.siteQuery(req, true)),
-    datasets: req.app.get('models').Dataset.findAll(modelUtils.siteQuery(req)),
-    places: req.app.get('models').Place.findAll(modelUtils.siteQuery(req)), // TODO: sort places by score for year
-    questions: req.app.get('models').Question.findAll(modelUtils.siteQuery(req))
-
-  }).then(function(D) {
-
-    var openEntries = _.where(D.entries, {isCurrent: true}).length,
-        byPlace = _.object(_.map(D.places, function(P) { return [P.id, {
-          datasets: _.where(D.entries, {place: P.id}).length,
-          score: 0
-        }]; }));
-
-    res.render('overview.html', {
-
-      places: modelUtils.translateSet(req, D.places),
-      datasets: modelUtils.translateSet(req, D.datasets),
-      scoredQuestions: modelUtils.translateSet(req, D.questions),
-      summary: {
-        entries: D.entries.length,
-        open: openEntries,
-        open_percent: openEntries / D.entries.length || 0,
-        places: D.places.length
-      },
-      extraWidth: D.datasets.length > 12,
-      byplace: byPlace,
-      custom_text: req.params.site.settings.overview_page,
-      missing_place_html: req.params.site.settings.missing_place_html
-    });
-  });
-};
-
-
 var faq = function (req, res) {
 
   var qTmpl = req.app.get('view_env').getTemplate('_snippets/questions.html');
@@ -69,7 +32,7 @@ var faq = function (req, res) {
       title: 'FAQ - Frequently Asked Questions'
     });
 
-  });
+  }).catch(console.log.bind(console));
 };
 
 
@@ -82,15 +45,6 @@ var changes = function (req, res) {
     entries: req.app.get('models').Entry.findAll(modelUtils.siteQuery(req, true))
 
   }).then(function(D) {
-
-    if (!D.place) {
-
-      res.send(404, 'There is no place with ID ' + D.place.id + ' in our database. ' +
-               'Are you sure you have spelled it correctly? Please check the ' +
-               '<a href="/">overview page</a> for the list of places');
-      return;
-
-    }
 
     D.entries = _.each(D.entries, function(result, index, list) {
 
@@ -116,7 +70,7 @@ var changes = function (req, res) {
 
     });
 
-  });
+  }).catch(console.log.bind(console));
 };
 
 
@@ -149,31 +103,109 @@ var resultJson = function (req, res) {
   var entries = req.app.get('models').Entry.findAll({
     where: {
       site: req.params.domain,
-      year: req.app.get('year'),
+      year: req.params.year,
       isCurrent: true
     }
   });
 
   entries.then(function(results){
     res.json(results);
-  });
+  }).catch(console.log.bind(console));
 
+};
+
+
+var overview = function (req, res) {
+
+  var entryQueryParams = _.merge(modelUtils.siteQuery(req, true), {where: {isCurrent: true}});
+  var questionQueryParams = _.merge(modelUtils.siteQuery(req), {where: {type: ''}, order: 'score DESC'});
+
+  modelUtils.loadModels({
+
+    entries: req.app.get('models').Entry.findAll(entryQueryParams),
+    datasets: req.app.get('models').Dataset.findAll(modelUtils.siteQuery(req)),
+    places: req.app.get('models').Place.findAll(modelUtils.siteQuery(req)),
+    questions: req.app.get('models').Question.findAll(questionQueryParams)
+
+  }).then(function(D) {
+
+    var placeCount,
+        currentEntryCount,
+        currentEntryOpenCount,
+        openDataPercentCount,
+        openDataPercent;
+
+    if (Array.isArray(D.entries)) {
+
+      currentEntryCount = D.entries.length;
+      currentEntryOpenCount = _.filter(D.entries, function(e) {return e.isOpen() === true;}).length;
+      openDataPercent = parseInt((currentEntryOpenCount / currentEntryCount) * 100, 10);
+
+      _.each(D.entries, function(e) {
+        e.computedYCount = e.yCount(D.questions);
+      });
+
+    } else {
+
+      currentEntryCount = 0;
+      currentEntryOpenCount = 0;
+      openDataPercentCount = 0;
+
+    }
+
+    if (Array.isArray(D.places)) {
+
+      placeCount = D.places.length;
+
+      _.each(D.places, function(p) {
+        p.computedScore = p.score(D.entries, D.questions);
+      });
+
+    } else {
+
+      placeCount = 0;
+
+    }
+
+    res.render('overview.html', {
+
+      placeCount: placeCount,
+      currentEntryCount: currentEntryCount,
+      currentEntryOpenCount: currentEntryOpenCount,
+      openDataPercent: openDataPercent,
+      extraWidth: D.datasets > 12,
+      customText: req.params.site.settings.overview_page,
+      missingPlaceText: req.params.site.settings.missing_place_html,
+      places: _.sortByOrder(modelUtils.translateSet(req, D.places), 'computedScore', 'desc'),
+      datasets: modelUtils.translateSet(req, D.datasets),
+      questions: modelUtils.translateSet(req, D.questions),
+      entries: D.entries
+
+    });
+  }).catch(console.log.bind(console));
 };
 
 
 var place = function (req, res) {
 
-  var placeQueryParams = _.extend(modelUtils.siteQuery(req), {where: {id: req.params.place}});
-  var entryQueryParams = _.extend(modelUtils.siteQuery(req, true), {where: {place: req.params.place}});
+  var placeQueryParams = _.merge(modelUtils.siteQuery(req), {where: {id: req.params.place}});
+  var entryQueryParams = _.merge(modelUtils.siteQuery(req, true),
+                                 {where: {place: req.params.place},
+                                  include: [{model: req.app.get('models').User, as: 'Submitter'},
+                                            {model: req.app.get('models').User, as: 'Reviewer'}]});
+  var questionQueryParams = _.merge(modelUtils.siteQuery(req), {where: {type: ''}, order: 'score DESC'});
 
   modelUtils.loadModels({
 
     place: req.app.get('models').Place.findOne(placeQueryParams),
     datasets: req.app.get('models').Dataset.findAll(modelUtils.siteQuery(req)),
-    questions: req.app.get('models').Question.findAll(modelUtils.siteQuery(req)),
+    questions: req.app.get('models').Question.findAll(questionQueryParams),
     entries: req.app.get('models').Entry.findAll(entryQueryParams)
 
   }).then(function(D) {
+
+    var reviewers = [],
+        submitters = [];
 
     if (!D.place) {
 
@@ -184,38 +216,57 @@ var place = function (req, res) {
 
     }
 
-    _.each(D.datasets, function(result, index, list) {
-      result.entry = _.find(D.entries, function(entry) {return entry.isCurrent;});
-      result.submissions = _.filter(D.entries, function(entry) {return !entry.isCurrent;});
-    });
+    if (Array.isArray(D.entries)) {
+
+      _.each(D.entries, function(e, i, l) {
+        e.computedYCount = e.yCount(D.questions);
+        reviewers.push(e.reviewer);
+        submitters.push(e.submitter);
+      });
+
+    }
+
+    D.place.computedScore = D.place.score(D.entries, D.questions);
 
     res.render('place.html', {
 
+      entries: D.entries,
       place: D.place.translated(req.locale),
       questions: modelUtils.translateSet(req, D.questions),
       datasets: modelUtils.translateSet(req, D.datasets),
       loggedin: req.session.loggedin,
-      year: req.app.get('year')
-
+      year: req.params.year,
+      submissionsAllowed: (req.params.year === req.app.get('year')),
+      reviewers: reviewers,
+      submitters: submitters
     });
 
-  });
+  }).catch(console.log.bind(console));
 };
 
 
 var dataset = function (req, res) {
 
-  var entryQueryParams = _.extend(modelUtils.siteQuery(req, true), {where: {dataset: req.params.dataset}});
-  var datasetQueryParams = _.extend(modelUtils.siteQuery(req), {where: {id: req.params.dataset}});
+  var datasetQueryParams = _.merge(modelUtils.siteQuery(req), {where: {id: req.params.dataset}});
+  var entryQueryParams = _.merge(modelUtils.siteQuery(req, true),
+                                 {where: {dataset: req.params.dataset},
+                                  include: [{model: req.app.get('models').User, as: 'Submitter'},
+                                            {model: req.app.get('models').User, as: 'Reviewer'}]});
+  var questionQueryParams = _.merge(modelUtils.siteQuery(req), {where: {type: ''}, order: 'score DESC'});
 
   modelUtils.loadModels({
 
     dataset: req.app.get('models').Dataset.findOne(datasetQueryParams),
     places: req.app.get('models').Place.findAll(modelUtils.siteQuery(req)),
-    questions: req.app.get('models').Question.findAll(modelUtils.siteQuery(req)),
+    questions: req.app.get('models').Question.findAll(questionQueryParams),
     entries: req.app.get('models').Entry.findAll(entryQueryParams)
 
   }).then(function(D) {
+
+    var reviewers = [],
+        submitters = [],
+        currentEntries,
+        pendingEntries;
 
     if (!D.dataset) {
 
@@ -226,37 +277,57 @@ var dataset = function (req, res) {
 
     }
 
-    D.datasets = _.each(D.datasets, function(result, index, list) {
-      result.entry = _.find(D.entries, function(entry) {return entry.isCurrent;});
-      result.submissions = _.filter(D.entries, function(entry) {return !entry.isCurrent;});
-    });
+    if (Array.isArray(D.entries)) {
+
+      _.each(D.entries, function(e, i, l) {
+        e.computedYCount = e.yCount(D.questions);
+        reviewers.push(e.reviewer);
+        submitters.push(e.submitter);
+      });
+
+    }
+
+    if (Array.isArray(D.places)) {
+
+      _.each(D.places, function(p) {
+        p.computedScore = p.score(D.entries, D.questions);
+      });
+
+    }
+
+    currentEntries = _.where(D.entries, {'isCurrent': true});
+    pendingEntries = _.where(D.entries, {'isCurrent': false, 'reviewed': false, 'reviewResult': true});
 
     res.render('dataset.html', {
 
+      currentEntries: _.sortByOrder(currentEntries, function(e) {return e.yCount(D.questions);}, 'desc'),
+      pendingEntries: _.sortByOrder(pendingEntries, function(e) {return e.yCount(D.questions);}, 'desc'),
       dataset: D.dataset.translated(req.locale),
       questions: modelUtils.translateSet(req, D.questions),
-      places: modelUtils.translateSet(req, D.places),
-      year: req.params.year || req.app.get('year')
+      places: _.sortByOrder(modelUtils.translateSet(req, D.places), 'computedScore', 'desc'),
+      year: req.params.year,
+      submissionsAllowed: (req.params.year === req.app.get('year'))
 
     });
 
-  });
+  }).catch(console.log.bind(console));
 
 };
 
 
 var entry = function (req, res) {
 
-  var entryQueryParams = _.extend(modelUtils.siteQuery(req, true), {where: {dataset: req.params.dataset, place: req.params.place, isCurrent: true}});
-  var datasetQueryParams = _.extend(modelUtils.siteQuery(req), {where: {id: req.params.dataset}});
-  var placeQueryParams = _.extend(modelUtils.siteQuery(req), {where: {id: req.params.place}});
+  var entryQueryParams = _.merge(modelUtils.siteQuery(req, true), {where: {dataset: req.params.dataset, place: req.params.place, isCurrent: true}});
+  var datasetQueryParams = _.merge(modelUtils.siteQuery(req), {where: {id: req.params.dataset}});
+  var placeQueryParams = _.merge(modelUtils.siteQuery(req), {where: {id: req.params.place}});
+  var questionQueryParams = _.merge(modelUtils.siteQuery(req), {order: 'score DESC'});
 
   modelUtils.loadModels({
 
     entry: req.app.get('models').Entry.findOne(entryQueryParams),
     place: req.app.get('models').Place.findOne(placeQueryParams),
     dataset: req.app.get('models').Dataset.findOne(datasetQueryParams),
-    questions: req.app.get('models').Question.findAll(modelUtils.siteQuery(req))
+    questions: req.app.get('models').Question.findAll(questionQueryParams)
 
   }).then(function(D) {
 
@@ -268,18 +339,17 @@ var entry = function (req, res) {
 
     }
 
-    D.entry.place = D.place.translated(req.locale);
-    D.entry.dataset = D.dataset.translated(req.locale);
-
     res.render('entry.html', {
 
       entry: D.entry,
+      place: D.place.translated(req.locale),
+      dataset: D.dataset.translated(req.locale),
       questions: modelUtils.translateSet(req, D.questions),
-      year: req.params.year || req.app.get('year')
+      year: req.params.year
 
     });
 
-  });
+  }).catch(console.log.bind(console));
 
 };
 
