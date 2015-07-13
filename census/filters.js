@@ -1,30 +1,22 @@
 'use strict';
 
-var _ = require('underscore');
+var _ = require('lodash');
+var moment = require('moment');
+var markedlib = require('marked');
+var linkifyStr = require('linkifyjs/string');
+
+var find = function(list, args) {
+  return _.find(list, args);
+};
+
+
+var where = function(list, args) {
+  return _.where(list, args);
+};
 
 
 var urlize = function(str) {
-
-  // linkify plugin for jQuery - automatically finds and changes URLs in text
-  // content into proper hyperlinks
-  //
-  //   Version: 1.0
-  //
-  //   Copyright (c) 2009
-  //     Már Örlygsson (http://mar.anomy.net/) &
-  //     Hugsmiðjan ehf. (http://www.hugsmidjan.is)
-  //
-  // Dual licensed under a MIT licence (http://en.wikipedia.org/wiki/MIT_License)
-  // and GPL 2.0 or above (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html).
-
-  var noProtocolUrl = /(^|["'(\s]|&lt;)(www\..+?\..+?)((?:[:?]|\.+)?(?:\s|$)|&gt;|[)"',])/g,
-      httpOrMailtoUrl = /(^|["'(\s]|&lt;)((?:(?:https?|ftp):\/\/|mailto:).+?)((?:[:?]|\.+)?(?:\s|$)|&gt;|[)"',])/g;
-
-  return str
-    .replace(noProtocolUrl, '$1<a href=\'<``>://$2\' target=\'_blank\'>$2</a>$3')  // NOTE: we escape `"http` as `"<``>
-    .replace(httpOrMailtoUrl, '$1<a href=\'$2\' target=\'_blank\'>$2</a>$3')
-    .replace(/'<``>/g, '\'http');  // reinsert `"http`
-
+  return linkifyStr(str);
 };
 
 
@@ -84,7 +76,7 @@ var dateformat = function(str, lang, fmt) {
 
 // parse the output as markdown
 var marked = function(str) {
-    return marked(str);
+    return markedlib(str);
 };
 
 
@@ -107,12 +99,14 @@ var simpledelta = function(str) {
     } else if (days === 1) {
       return 'Yesterday';
     } else {
-      return 'COUNT days ago'.replace('COUNT', days)
+      return 'COUNT days ago'.replace('COUNT', days);
     }
 
 };
 
 module.exports = {
+  find: find,
+  where: where,
   urlize: urlize,
   wordwrap: wordwrap,
   truncate: truncate,

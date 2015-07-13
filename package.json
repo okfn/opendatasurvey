@@ -22,6 +22,7 @@
     "express-session": "^1.11.2",
     "express-validator": "^2.10.0",
     "i18n-abide": "0.0.23",
+    "linkifyjs": "^2.0.0-beta.4",
     "lodash": "^3.10.0",
     "marked": "^0.3.3",
     "method-override": "^2.3.3",
