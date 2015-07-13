@@ -73,6 +73,8 @@ _.each(templateFilters, function(value, key, list) {
 app.set('view_env', env);
 
 app.use([
+  raven.middleware.express.requestHandler(config.get('sentry_dsn')),
+  raven.middleware.express.errorHandler(config.get('sentry_dsn')),
   cookieParser(),
   bodyParser.urlencoded({extended: true}),
   bodyParser.json(),
