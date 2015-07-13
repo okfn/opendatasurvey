@@ -9,19 +9,43 @@ var modelUtils = require('../models').utils;
 var submit = function (req, res) {
 
   var prefill = req.query,
-      entryQueryParams = {where: {place: prefill.place, dataset: prefill.dataset, year: req.app.get('year')}},
+      entryQueryParams = _.extend(modelUtils.siteQuery(req, true), {where: {place: prefill.place, dataset: prefill.dataset}}),
       submissionData = req.body,
+      objToSave = {},
       errors,
       reboundFormData,
       response_status = 200;
 
   var render = function(data, current, status) {
+
+    var addDetails;
+
+    // resolve dependant questions
+    data.questions = modelUtils.translateSet(req, data.questions);
+    _.each(data.questions, function(obj, index, list) {
+      _.each(obj.dependants, function(d, i, l) {
+        if (d) {
+          l[i] = _.find(data.questions, function(o) {
+            if ((o.id === d)) {
+              // remove the dependant from the top-level array
+              data.questions = _.reject(data.questions, function(q) {return q.id === o.id;});
+              return true;
+            }
+            return;
+          });
+        }
+      });
+    });
+
+    addDetails = _.find(data.questions, function(q) {return q.id === 'details';});
+
     res.statusCode = status;
     res.render('create.html', {
       canReview: true, // flag always on for submission
       submitInstructions: req.params.site.submit_page,
       places: modelUtils.translateSet(req, data.places),
-      questions: modelUtils.translateSet(req, data.questions),
+      questions: data.questions,
+      addDetails: addDetails,
       datasets: modelUtils.translateSet(req, data.datasets),
       year: req.app.get('year'),
       current: current,
@@ -53,7 +77,32 @@ var submit = function (req, res) {
 
     if (req.method === 'POST' && !errors) {
 
-      req.app.get('models').Entry.insert(submissionData)
+      console.log('get stuff');
+      console.log(submissionData);
+
+      objToSave.id = uuid.v4();
+      objToSave.site = req.params.site.id;
+      objToSave.place = submissionData.place;
+      objToSave.dataset = submissionData.dataset;
+      objToSave.year = req.app.get('year');
+      objToSave.isCurrent = false;
+      objToSave.submitter = req.user;
+
+      delete submissionData['place'];
+      delete submissionData['dataset'];
+      delete submissionData['year'];
+      objToSave.answers = submissionData;
+
+      console.log('modified');
+      console.log(objToSave);
+      console.log('does we have entry??');
+
+      // TODO, logic to update entry
+      // etc.
+
+      console.log(D.entry);
+
+      req.app.get('models').Entry.create(objToSave)
         .then(function(result) {
 
           var msg,
@@ -91,6 +140,10 @@ var submit = function (req, res) {
           res.redirect(redirect_path + '?post_submission=' + submission_path);
           return;
 
+        })
+        .catch(function(error) {
+          console.log('catching error');
+          console.log(error);
         });
 
     } else if (prefill.dataset && prefill.place) {

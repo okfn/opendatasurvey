@@ -81,11 +81,24 @@ userQuery
         revId = obj.reviewerid.split(':');
         revName = obj.reviewer.split(' ');
 
+        console.log('this is the object we have');
+        console.log(subId);
+
         // resolve our info on submitters and reviewers into user objects
         if (subId[1] === 'anonymous' || subId[0] === '') {
-          submitter = _.find(users, function(user) {return user.id === anonymousUserId;});
+          submitter = _.find(users, function(user) {
+            console.log('1');
+            return user.id === anonymousUserId;});
         } else {
-          submitter = _.find(users, function(user) {return user.providers === {'google': subId[1]};});
+          submitter = _.find(users, function(user) {
+
+            // console.log('SUBMITTER');
+            // console.log(user.providers);
+            // console.log({'google': subId[1]});
+            console.log('1');
+
+            return user.providers === {'google': subId[1]};});
+
         }
 
         if (!revId[0]) {
@@ -95,10 +108,34 @@ userQuery
         }
 
         if (revLookup === 'anonymous' || revId[0] === '' && subId[0] === '') {
-          reviewer = _.find(users, function(user) {return user.id === anonymousUserId;});
+          reviewer = _.find(users, function(user) {
+            console.log('2');
+            return user.id === anonymousUserId;});
         } else {
-          reviewer = _.find(users, function(user) {return user.providers === {'google': revLookup};});
+          reviewer = _.find(users, function(user) {
+            console.log('2');
+            return user.providers === {'google': revLookup};});
         }
+
+        // normalize the answers to questions
+        obj.answers = _.chain(questions).map(function(Q) {
+
+          console.log('3');
+          var correcter = {
+            'yes': true,
+            'no': false,
+            'unsure': null
+          };
+
+          if (obj[Q] && (_.indexOf(_.keys(correcter), obj[Q].trim().toLowerCase())) >= 0) {
+
+            obj[Q] = correcter[obj[Q].trim().toLowerCase()];
+
+          }
+
+          return [Q, obj[Q]];
+
+        }).object().value();
 
         // now let's explicitly set the data we want to save
         submissionData.id = obj.submissionid;
@@ -107,7 +144,7 @@ userQuery
         submissionData.year = obj.year;
         submissionData.place = obj.place;
         submissionData.dataset = obj.dataset;
-        submissionData.answers = _.chain(questions).map(function(Q) { return [Q, obj[Q]]; }).object().value();
+        submissionData.answers = obj.answers;
         submissionData.submissionNotes = obj.details;
         submissionData.reviewed = parseInt(obj.reviewed) === 1;
         submissionData.reviewResult = obj.reviewresult === 'accepted';
@@ -117,19 +154,29 @@ userQuery
         submissionData.submitter = submitter;
         submissionData.reviewer = reviewer;
 
+        //console.log('the peoplez');
+        //console.log(submitter);
+        //console.log(reviewer);
+
         return models.Entry.create(submissionData)
           .then(function(entry) {
 
-            console.log('saved new entry');
-            console.log(entry.createdAt);
-            console.log(' --- ');
+            console.log('4');
+            entry.setSubmitter(submitter)
+              .then(function(r){
+                //console.log(r);
+                return entry.setReviewer(reviewer);
+              }).then(function() {
+                console.log('saved new entry');
+                console.log(entry.createdAt);
+                console.log(' --- ');
+              });
 
-          })
-          .catch(function(error) {console.log('error::::');console.log(error);});
+          }).catch(console.log.bind(console));
 
       });
 
     });
 
   })
-  .catch(function(error) {console.log(error);});
+  .catch(console.log.bind(console));

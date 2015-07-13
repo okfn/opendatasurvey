@@ -1,41 +1,58 @@
-var _ = require('underscore');
+var _ = require('lodash');
 var csv = require('csv');
 var fs = require('fs');
 var models = require('../census/models');
 var Promise = require('bluebird');
 var uuid = require('node-uuid');
 var fileData = fs.readFileSync(process.argv[2], {encoding: 'utf-8'});
+var anonymousUserId = '0e7c393e-71dd-4368-93a9-fcfff59f9fff';
 
 
 csv.parse(fileData, {columns: true}, function(E, D) {
 
-  Promise.each(D, function(R) {
+  // Ensure we have our anonymous user.
+  models.User.upsert({
 
-    var providers = {};
-    providers[R.provider] = R.providerid;
+    id: anonymousUserId,
+    emails: ['anonymous@example.com'],
+    providers: {'okfn': 'anonymous'},
+    firstName: 'anonymous',
+    lastName: 'anonymous',
+    anonymous: false
 
-    return models.User.upsert({
-      id: uuid.v4(),
-      emails: [R.email],
-      providers: providers,
-      firstName: R.givenname,
-      lastName: R.familyname,
-      homepage: R.homepage,
-      photo: R.photo,
-      anonymous: false
-    })
-      .then(function(R) {
+  })
+    .then(function(result) {
 
-        console.log('success on user migration');
-        console.log(R);
+      Promise.each(D, function(R) {
 
-      })
-      .catch(function(E) {
+        var providers = {};
+        providers[R.provider] = R.providerid;
 
-        console.log('error on user migration:');
-        console.log(E);
+        return models.User.create({
+          id: uuid.v4(),
+          emails: [R.email],
+          providers: providers,
+          firstName: R.givenname,
+          lastName: R.familyname,
+          homePage: R.homepage,
+          photo: R.photo,
+          anonymous: false
+        })
+          .then(function(R) {
 
+            console.log('success on user migration');
+            console.log(R.emails);
+            console.log(R.providers);
+
+          })
+          .catch(function(E) {
+
+            console.log('error on user migration:');
+            console.log(E);
+
+          });
       });
-  });
+
+    });
 
 });
