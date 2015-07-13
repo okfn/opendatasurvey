@@ -34,35 +34,42 @@ describe('Basics', function() {
       .set('Host', 'national.dev.census.org')
       .expect(200)
       .end(function(err, res) {
-      	models.Site.findById('national').then(function(R) {
-	        checkContent(res, marked(R.settings.about_page));
-	        done();
-      	});
+        models.Site.findById('national').then(function(R) {
+          checkContent(res, marked(R.settings.about_page));
+          done();
+        });
       });
   });
   it('faq page ok', function(done) {
     request(app)
       .get('/faq')
+      .set('Host', 'national.dev.census.org')
       .expect(200)
       .end(function(err, res) {
-        checkContent(res, config.get('faq_page'));
-        done();
+        models.Site.findById('national').then(function(R) {
+          checkContent(res, marked(R.settings.faq_page));
+          done();
+        });
       })
       ;
   });
   it('contribute page ok', function(done) {
     request(app)
       .get('/contribute')
+      .set('Host', 'national.dev.census.org')
       .expect(200)
       .end(function(err, res) {
-        checkContent(res, config.get('contribute_page'));
-        done();
+        models.Site.findById('national').then(function(R) {
+          checkContent(res, marked(R.settings.contribute_page));
+          done();
+        });
       })
       ;
   });
   it('custom content works', function(done) {
     request(app)
       .get('/')
+      .set('Host', 'national.dev.census.org')
       .expect(200)
       .end(function(err, res) {
         checkContent(res, config.get('custom_css'));
