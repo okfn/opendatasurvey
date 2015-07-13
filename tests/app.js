@@ -3,6 +3,8 @@ var request = require('supertest')
   , chai = require('chai')
   , app = require('../census/app.js').app
   , assert = chai.assert
+  , marked = require('marked')
+  , models = require('../census/models')
   , config = require('../census/config')
   // importing base sets the test db
   , base = require('./base.js')
@@ -18,7 +20,6 @@ describe('Basics', function() {
       .set('Host', 'national.dev.census.org')
       .expect(200)
       .end(function(err, res) {
-      	console.log(res.text);
         checkContent(res, config.get('overview_page'));
         // check overview table works
         checkContent(res, 'United Kingdom');
@@ -30,12 +31,14 @@ describe('Basics', function() {
   it('about page ok', function(done) {
     request(app)
       .get('/about')
+      .set('Host', 'national.dev.census.org')
       .expect(200)
       .end(function(err, res) {
-        checkContent(res, config.get('about_page'));
-        done();
-      })
-      ;
+      	models.Site.findById('national').then(function(R) {
+	        checkContent(res, marked(R.settings.about_page));
+	        done();
+      	});
+      });
   });
   it('faq page ok', function(done) {
     request(app)
@@ -141,7 +144,7 @@ function checkContent(res, expected, errMsg) {
   if (!errMsg) {
     errMsg = '<<' + expected + '>> not found in page';
   }
-  var found = res.text.match(expected)
+  var found = escape(res.text).match(escape((expected || '')));
   if (!found) {
     assert(false, errMsg);
   }
