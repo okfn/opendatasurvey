@@ -57,8 +57,8 @@ app.set('models', models);
 app.set('year', currentYear);
 app.set('years', availableYears);
 app.set('sysAdmin', sysAdmin);
-app.set('authDomain', config.get('auth_domain'));
-app.set('systemDomain', config.get('system_domain'));
+app.set('authDomain', config.get('auth_subdomain'));
+app.set('systemDomain', config.get('system_subdomain'));
 app.set('urlTmpl', config.get('urlTmpl'));
 
 env = nunjucks.configure('census/views', {
