@@ -14,6 +14,7 @@ var pageRoutes = function(coreMiddlewares) {
   var router = express.Router();
   var coreMixins = [mixins.requireDomain];
   var byYearMixins = coreMixins.concat(mixins.requireAvailableYear);
+  var rootRouteMixins = byYearMixins.concat(mixins.requireSiteDomain);
 
   router.use(coreMiddlewares);
 
@@ -29,7 +30,7 @@ var pageRoutes = function(coreMiddlewares) {
   router.get(utils.scoped('/dataset/:dataset/:year?'), byYearMixins, pages.dataset);
   router.get(utils.scoped('/entry/:place/:dataset/:year?'), byYearMixins, pages.entry);
   router.get(utils.scoped('/year/:year'), byYearMixins, pages.overview);
-  router.get(utils.scoped('/'), byYearMixins, pages.overview);
+  router.get(utils.scoped('/'), rootRouteMixins, pages.overview);
 
   redirectRoutes(router);
 

@@ -169,6 +169,37 @@ var requireSystemDomain = function(req, res, next) {
 };
 
 
+var requireSystemDomain = function(req, res, next) {
+
+  if (req.params.domain !== req.app.get('systemDomain')) {
+    res.status(404).render('404.html', {
+      title: 'Not found',
+      message: 'SYSTEM ROUTE ONLY'
+    });
+    return;
+  }
+
+  next();
+  return;
+};
+
+
+var requireSiteDomain = function(req, res, next) {
+  console.log('site domains!!');
+  if (req.params.domain === req.app.get('authDomain') ||
+      req.params.domain === req.app.get('systemDomain')) {
+
+    res.send('This route does not exist on this domain.');
+    return;
+
+  }
+
+  next();
+  return;
+
+};
+
+
 module.exports = {
   requireDomain: requireDomain,
   requireAuth: requireAuth,
@@ -176,5 +207,6 @@ module.exports = {
   requireAdmin: requireAdmin,
   requireAvailableYear: requireAvailableYear,
   requireAuthDomain: requireAuthDomain,
-  requireSystemDomain: requireSystemDomain
+  requireSystemDomain: requireSystemDomain,
+  requireSiteDomain: requireSiteDomain
 };
