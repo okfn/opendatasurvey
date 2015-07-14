@@ -281,7 +281,8 @@ describe('Census Pages', function() {
 
   it('GET Entry', function(done) {
     request(app)
-      .get('/entry/gb/timetables')
+      .get('/entry/gb/timetables/2014')
+      .set('Host', 'national.dev.census.org')
       .expect(200, done)
       ;
   });
@@ -289,9 +290,10 @@ describe('Census Pages', function() {
   it('GET recent changes page', function(done) {
     request(app)
       .get('/changes')
+      .set('Host', 'national.dev.census.org')
       .expect(200)
-      .end(function(err, res) {
-        checkContent(res, '2948d308-ce1c-46fb-b131-dc0f846da788', 'Page should include a link to a submission.');
+      .then(function(res) {
+        checkContent(res, '0e7c393e-71dd-4368-93a9-fcfff59f9fff', 'Page should include a link to a submission.');
         // ARGGGH
         // checkContent(res, '/entry/af/timetables', 'Page should include a link to a recent entry.');
         done();
