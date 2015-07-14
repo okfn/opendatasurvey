@@ -1,4 +1,4 @@
-var request = require('supertest')
+var request = require('supertest-as-promised')
   , passport = require('passport')
   , chai = require('chai')
   , app = require('../census/app.js').app
@@ -19,7 +19,7 @@ describe('Basics', function() {
       .get('/')
       .set('Host', 'national.dev.census.org')
       .expect(200)
-      .end(function(err, res) {
+      .then(function(res) {
         checkContent(res, config.get('overview_page'));
         // check overview table works
         checkContent(res, 'United Kingdom');
@@ -33,7 +33,7 @@ describe('Basics', function() {
       .get('/about')
       .set('Host', 'national.dev.census.org')
       .expect(200)
-      .end(function(err, res) {
+      .then(function(res) {
         models.Site.findById('national').then(function(R) {
           checkContent(res, marked(R.settings.about_page));
           done();
@@ -45,7 +45,7 @@ describe('Basics', function() {
       .get('/faq')
       .set('Host', 'national.dev.census.org')
       .expect(200)
-      .end(function(err, res) {
+      .then(function(res) {
         models.Site.findById('national').then(function(R) {
           checkContent(res, marked(R.settings.faq_page));
           done();
@@ -58,7 +58,7 @@ describe('Basics', function() {
       .get('/contribute')
       .set('Host', 'national.dev.census.org')
       .expect(200)
-      .end(function(err, res) {
+      .then(function(res) {
         models.Site.findById('national').then(function(R) {
           checkContent(res, marked(R.settings.contribute_page));
           done();
@@ -71,7 +71,7 @@ describe('Basics', function() {
       .get('/')
       .set('Host', 'national.dev.census.org')
       .expect(200)
-      .end(function(err, res) {
+      .then(function(res) {
         checkContent(res, config.get('custom_css'));
         checkContent(res, config.get('custom_footer'));
         checkContent(res, config.get('google_analytics_key'));
@@ -89,7 +89,7 @@ describe('Basics', function() {
       .get('/place/gb')
       .set('Host', 'national.dev.census.org')
       .expect(200)
-      .end(function(err, res) {
+      .then(function(res) {
         checkContent(res, '/ United Kingdom', 'Place name not present');
         checkContent(res, 'Transport Timetables', 'Dataset list missing');
         done();
@@ -101,7 +101,7 @@ describe('Basics', function() {
       .get('/dataset/timetables')
       .set('Host', 'national.dev.census.org')
       .expect(200)
-      .end(function(err, res) {
+      .then(function(res) {
         checkContent(res, '/ Transport Timetables', 'Dataset name not present');
         done();
       })
@@ -112,7 +112,7 @@ describe('Basics', function() {
       .get('/login')
       .set('Host', 'national.dev.census.org')
       .expect(200)
-      .end(function(err, res) {
+      .then(function(res) {
         checkContent(res, 'Login with Facebook');
         done();
       });
@@ -123,7 +123,7 @@ describe('Basics', function() {
       .get('/api/entries.csv')
       .set('Host', 'national.dev.census.org')
       .expect(200)
-      .end(function(err, res) {
+      .then(function(res) {
         // check the header row
         checkContent(res, 'id,officialtitle,censusid,timestamp,year,place,dataset,exists,digital,public,online,free,machinereadable,');
         done();
@@ -135,7 +135,7 @@ describe('Basics', function() {
       .get('/api/entries.json')
       .set('Host', 'national.dev.census.org')
       .expect(200)
-      .end(function(err, res) {
+      .then(function(res) {
         // check a random snippet of json
         checkContent(res, '"url": "http://www.ordnancesurvey.co.uk/opendata/",');
         done();
