@@ -7,7 +7,7 @@ var utils = require('./utils');
 
 var systemRoutes = function(router) {
 
-  var coreMixins = [mixins.requireSystemDomain, mixins.requireDomain];
+  var coreMixins = [mixins.requireSystemDomain, mixins.requireDomain, mixins.requireAdmin];
 
   router.get(utils.scoped('/control'), coreMixins, system.admin);
   router.get(utils.scoped('/load/registry'), coreMixins, system.loadRegistry);

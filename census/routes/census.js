@@ -9,7 +9,7 @@ var utils = require('./utils');
 var censusRoutes = function(coreMiddlewares) {
 
   var router = express.Router();
-  var coreMixins = [mixins.requireDomain];//[mixins.requireDomain, mixins.requireAuth];
+  var coreMixins = [mixins.requireDomain, mixins.requireAuth];
   var reviewMixins = coreMixins.concat(mixins.requireReviewer);
 
   router.use(coreMiddlewares);

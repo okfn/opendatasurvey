@@ -114,7 +114,7 @@ var setupAuth = function () {
     clientSecret: config.get('google:app_secret'),
     callbackURL:  config.get('urlTmpl')
       .replace('SCHEME', config.get('connection_scheme'))
-      .replace('SUB', config.get('auth_domain'))
+      .replace('SUB', config.get('auth_subdomain'))
       .replace('DOMAIN', config.get('base_domain'))
       .replace('PATH', 'google/callback'),
     profileFields: ['id', 'displayName', 'name', 'username', 'emails', 'photos']
@@ -129,7 +129,7 @@ var setupAuth = function () {
     clientSecret: config.get('facebook:app_secret'),
     callbackURL:  config.get('urlTmpl')
       .replace('SCHEME', config.get('connection_scheme'))
-      .replace('SUB', config.get('auth_domain'))
+      .replace('SUB', config.get('auth_subdomain'))
       .replace('DOMAIN', config.get('base_domain'))
       .replace('PATH', 'facebook/callback')
   }, function (accessToken, refreshToken, profile, done) {
@@ -185,26 +185,26 @@ var setLocals = function(req, res, next) {
   res.locals.currentUser = req.user ? req.user : null;
 
   res.locals.baseDomain =  config.get('base_domain');
-  res.locals.authDomain = config.get('auth_domain');
-  res.locals.systemDomain = config.get('system_domain');
+  res.locals.authDomain = config.get('auth_subdomain');
+  res.locals.systemDomain = config.get('system_subdomain');
   res.locals.loginUrl = config.get('urlTmpl')
     .replace('SCHEME', req.protocol)
-    .replace('SUB', config.get('auth_domain'))
+    .replace('SUB', config.get('auth_subdomain'))
     .replace('DOMAIN', config.get('base_domain'))
     .replace('PATH', 'login');
   res.locals.logoutUrl = config.get('urlTmpl')
     .replace('SCHEME', req.protocol)
-    .replace('SUB', config.get('auth_domain'))
+    .replace('SUB', config.get('auth_subdomain'))
     .replace('DOMAIN', config.get('base_domain'))
     .replace('PATH', 'logout');
   res.locals.profileUrl = config.get('urlTmpl')
     .replace('SCHEME', req.protocol)
-    .replace('SUB', config.get('auth_domain'))
+    .replace('SUB', config.get('auth_subdomain'))
     .replace('DOMAIN', config.get('base_domain'))
     .replace('PATH', 'profile');
   res.locals.systemUrl = config.get('urlTmpl')
     .replace('SCHEME', req.protocol)
-    .replace('SUB', config.get('system_domain'))
+    .replace('SUB', config.get('system_subdomain'))
     .replace('DOMAIN', config.get('base_domain'))
     .replace('PATH', '');
   res.locals.sysAdmin = req.app.get('sysAdmin');

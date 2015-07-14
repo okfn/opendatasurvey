@@ -13,6 +13,8 @@ var requireDomain = function(req, res, next) {
   } else if (req.params.domain === req.app.get('authDomain') ||
              req.params.domain === req.app.get('systemDomain')) {
 
+    req.params.siteAdmin = [];
+
     next();
     return;
 
@@ -70,7 +72,14 @@ var requireDomain = function(req, res, next) {
 var requireAuth = function (req, res, next) {
 
   if (!req.user) {
-    res.redirect('/auth/login/?next=' + encodeURIComponent(req.url));
+
+    var redirectTo = req.app.get('urlTmpl')
+        .replace('SCHEME', req.app.get('config').get('connection_scheme'))
+        .replace('SUB', req.app.get('config').get('auth_subdomain'))
+        .replace('DOMAIN', req.app.get('config').get('base_domain'))
+          .replace('PATH', 'login?next=N'.replace('N', encodeURIComponent(req.originalUrl.slice(1))));
+
+    res.redirect(redirectTo);
     return;
   }
 
@@ -82,7 +91,7 @@ var requireAuth = function (req, res, next) {
 
 var requireReviewer = function (req, res, next) {
 
-  if (_.indexOf(req.params.site.settings.reviewers, req.user.email) !== -1) {
+  if (_.intersection(req.params.site.settings.reviewers, req.user.emails) !== -1) {
 
     return true;
 
@@ -94,17 +103,18 @@ var requireReviewer = function (req, res, next) {
 
 var requireAdmin = function (req, res, next) {
 
-  if (_.indexOf(req.app.get('sysAdmin'), req.user.email) === -1 ||
-      _.indexOf(req.params.siteAdmin, req.user.email) === -1) {
+  if (req.user && (_.intersection(req.app.get('sysAdmin'), req.user.emails) ||
+                   _.intersection(req.params.siteAdmin, req.user.emails))) {
 
-    // User must be a sysAdmin or siteAdmin.
+    next();
+    return;
+
+  } else {
+
     res.status(403).send({status: 'error', message: 'not allowed'});
     return;
 
   }
-
-  next();
-  return;
 
 };
 
