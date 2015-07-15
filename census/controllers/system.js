@@ -34,7 +34,7 @@ var loadAll = function (req, res) {
           .then(function(r) {
             console.log(r);
           })
-          .catch(function(error) {console.log(error);});
+          .catch(console.log.bind(console));
       }).then(function(result) {
         res.send({'status': 'ok', message: 'ok'});
       });
