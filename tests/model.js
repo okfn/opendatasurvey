@@ -20,10 +20,8 @@ describe('Backend Entry', function() {
     });
   });
   it('getEntry', function(done) {
-    backend.getEntry({year: 2013, dataset: 'maps', place: 'gb'}, function(err, entry) {
-      assert.ok(!err, err);
-      assert.ok(entry!=null, 'No entry (entry is null)');
-      assert.equal(entry.public, 'Yes');
+    models.Entry.findOne({where: {isCurrent: true, year: 2014, dataset: 'map', place: 'gb'}}).then(function(R) {
+      assert(R);
       done();
     });
   });
