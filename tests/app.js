@@ -323,13 +323,13 @@ describe('Census Pages', function() {
       , details: 'Lots of random stuff\n\nincluding line breaks'
     };
     request(app)
-      .get('/submit/')
+      .get('/census/submit/')
+      .set('Host', 'national.dev.census.org')
       .query(prefill)
       .expect(200)
-      .end(function(err, res) {
-        assert(!err);
+      .then(function(res) {
         // all test regex tests are rather hacky ...
-        checkContent(res, 'value="%s" selected="true"'.replace('%s', prefill.place), 'place not set');
+        checkContent(res, 'value="%s" selected='.replace('%s', prefill.place), 'place not set');
         checkContent(res, 'value="emissions" selected="true"', 'dataset not set');
         testRadio(res.text, 'exists', prefill.exists);
         testRadio(res.text, 'digital', prefill.digital);

@@ -44,6 +44,7 @@ var submit = function (req, res) {
       canReview: true, // flag always on for submission
       submitInstructions: req.params.site.settings.submit_page,
       places: modelUtils.translateSet(req, data.places),
+      prefill: prefill,
       questions: data.questions,
       addDetails: addDetails,
       datasets: modelUtils.translateSet(req, data.datasets),
