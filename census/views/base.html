@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>
       {% block title%}{{title}}{% endblock %}
-      - {{ sitename }}</title>
+      - {{ site.settings.title }}</title>
     <meta name="author" content="Open Knowledge">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -25,7 +25,7 @@
     <link href="/css/style.css" rel="stylesheet">
 
     <style type="text/css">
-      {{ custom_css }}
+      {{ site.settings.custom_css }}
     </style>
   </head>
 
@@ -34,20 +34,18 @@
 <div class="navbar navbar-static-top">
   <div class="navbar-inner">
     <div class="container">
-      <a class="brand" href="/">{{ sitename }}</a>
+      <a class="brand" href="/">{{ site.settings.title }}</a>
       <ul class="nav">
         <li><a href="/">{{gettext("Home")}}</a></li>
         <li><a href="/about/">{{gettext("About")}}</a></li>
         <li><a href="/changes/">{{gettext("Changes")}}</a></li>
-        {% if not readonly %}
         <li><a href="/faq/">{{gettext("FAQ")}}</a></li>
-        {% endif %}
-        {% if has_contribute_page %}
+        {% if site.settings.contribute_page %}
         <li><a href="/contribute/">{{gettext("Contribute")}}</a></li>
         {% endif %}
       </ul>
       <div class="nav-logo">
-        {{ navbar_logo }}
+        {{ site.settings.navbar_logo }}
       </div>
     </div>
   </div>
@@ -57,10 +55,10 @@
 <div class="content">
   <div class="page">
 
-    {% if banner_text %}
+    {% if site.settings.banner_text %}
     <div class="row">
       <div id="banner" class="span12">
-        {{ banner_text|marked }}
+        {{ site.settings.banner_text|marked }}
       </div>
     </div>
     {% endif %}
@@ -86,7 +84,7 @@
 <footer>
   <div class="container">
     <div class="row">
-      {{ custom_footer }}
+      {{ site.settings.custom_footer }}
     </div>
     <div class="row common-footer">
       <div class="span9">
@@ -148,11 +146,11 @@
     </div>
   </div>
 </footer>
-{% if google_analytics_key %}
+{% if site.settings.google_analytics_key %}
 <!-- configured goolge analytics specific to this deployment -->
 <script type="text/javascript">
   var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', '{{google_analytics_key}}']);
+  _gaq.push(['_setAccount', '{{site.settings.google_analytics_key}}']);
   _gaq.push(['_trackPageview']);
 
   (function() {

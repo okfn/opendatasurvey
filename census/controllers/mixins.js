@@ -55,6 +55,7 @@ var requireDomain = function(req, res, next) {
             }
 
             req.params.site = result;
+            res.locals.site = result;
             next();
             return;
           });

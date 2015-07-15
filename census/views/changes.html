@@ -13,17 +13,17 @@
     {% for item in entries %}
     <li>
         <h5>
-            <strong>{% if item.status == 'accepted' %}{{ gettext('Entry') }}{% else %}{{ gettext('Submission') }}{% endif %}</strong>
-            <span class="label label-{% if item.status == 'accepted' %}success{% elif item.status == 'rejected' %}important{% else %}info{% endif %}">
-            {% if item.status %}{{ item.status }}{% else %}{{ gettext("new") }}{% endif %}
+            <strong>{% if item.isCurrent %}{{ gettext('Entry') }}{% else %}{{ gettext('Submission') }}{% endif %}</strong>
+            <span class="label label-{% if item.reviewResult %}success{% else %}info{% endif %}">
+            {% if item.reviewResult %}accepted{% else %}{{ gettext("new") }}{% endif %}
             </span>
         </h5>
         <a href="{{ item.url }}">
-           <strong>{{ item.dataset.title }} – {{ item.place.name }}</strong>
+           <strong>{{ item.dataset.name }} – {{ item.place.name }}</strong>
         </a>
         <br />
         <span class="changelist-date">
-            {{ gettext("On") }} {{ gettext("submitted by") }} {{ item.submitterId }} {% if item.rewiewResult %}{{ gettext("and reviewed by") }} {{ item.reviewer.id }}{% endif %}</span>
+            {{ gettext("Submitted by") }} {{ item.Submitter.fullName() }} {% if item.rewiewResult %}{{ gettext("and reviewed by") }} {{ item.Reviewer.fullName() }}{% endif %}</span>
     </li>
     {% endfor %}
 </ul>
