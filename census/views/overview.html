@@ -49,7 +49,7 @@
     <tr>
       <th colspan="2">&nbsp;</th>
       {% for dataset in datasets %}
-      <th><div><a href="/dataset/{{dataset.id}}">{{ dataset.name }}</a></div></th>
+      <th><div><a href="/dataset/{{dataset.id}}/{{ year }}">{{ dataset.name }}</a></div></th>
       {% endfor %}
       <th><div><strong>{{gettext("Total Score")}}</strong></div>
     </tr>
@@ -78,7 +78,7 @@
       <td>{{ loop.index }}</td>
       <th class="place-name">
         {% if place %}
-        <a href="/place/{{ place.id }}">{{place.name}}</a>
+        <a href="/place/{{ place.id }}/{{ year }}">{{place.name}}</a>
         {% else %}
         <a href="submit/" data-toggle="tooltip" class="unknown no-data count-0" title="{{gettext("Click here to add to the census!")}}">{{gettext("Add new")}}</a>
         {% endif %}
