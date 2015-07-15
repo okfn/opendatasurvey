@@ -45,6 +45,7 @@
     "sequelize-cli": "^1.7.0",
     "serve-favicon": "^2.2.1",
     "subdomain": "^1.2.0",
+    "supertest-as-promised": "^2.0.2",
     "underscore": "^1.8.3",
     "validator": "^3.41.2"
   },

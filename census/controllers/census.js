@@ -42,7 +42,7 @@ var submit = function (req, res) {
     res.statusCode = status;
     res.render('create.html', {
       canReview: true, // flag always on for submission
-      submitInstructions: req.params.site.submit_page,
+      submitInstructions: req.params.site.settings.submit_page,
       places: modelUtils.translateSet(req, data.places),
       questions: data.questions,
       addDetails: addDetails,
