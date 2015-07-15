@@ -185,7 +185,7 @@ var requireSystemDomain = function(req, res, next) {
 
 
 var requireSiteDomain = function(req, res, next) {
-  console.log('site domains!!');
+
   if (req.params.domain === req.app.get('authDomain') ||
       req.params.domain === req.app.get('systemDomain')) {
 
