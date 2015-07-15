@@ -18,6 +18,7 @@ nconf.file({
  // this is the object that you want to override in your own local config
 nconf.defaults({
   title_short: 'Census',
+  base_domain: process.env.BASE_DOMAIN || 'dev.census.org:5000',
   urlTmpl: 'SCHEME://SUB.DOMAIN/PATH',
   auth_subdomain: process.env.AUTH_SUBDOMAIN || 'id',
   system_subdomain: process.env.SYSTEM_SUBDOMAIN || 'system',
