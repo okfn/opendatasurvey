@@ -5,7 +5,7 @@ var models = require('../census/models');
 var Promise = require('bluebird');
 var uuid = require('node-uuid');
 var fileData = fs.readFileSync(process.argv[2], {encoding: 'utf-8'});
-var anonymousUserId = '0e7c393e-71dd-4368-93a9-fcfff59f9fff';
+var utils = require('./utils');
 
 
 csv.parse(fileData, {columns: true}, function(E, D) {
@@ -13,7 +13,7 @@ csv.parse(fileData, {columns: true}, function(E, D) {
   // Ensure we have our anonymous user.
   models.User.upsert({
 
-    id: anonymousUserId,
+    id: utils.anonymousUserId,
     emails: ['anonymous@example.com'],
     providers: {'okfn': 'anonymous'},
     firstName: 'anonymous',
@@ -42,15 +42,8 @@ csv.parse(fileData, {columns: true}, function(E, D) {
 
             console.log('success on user migration');
             console.log(R.emails);
-            console.log(R.providers);
 
-          })
-          .catch(function(E) {
-
-            console.log('error on user migration:');
-            console.log(E);
-
-          });
+          }).catch(console.log.bind(console));
       });
 
     });

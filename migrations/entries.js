@@ -1,144 +1,161 @@
 var _ = require('lodash');
-var csv = require('csv');
 var fs = require('fs');
 var models = require('../census/models');
 var moment = require('moment');
 var Promise = require('bluebird');
+var csv = require('csv');
 var uuid = require('node-uuid');
 var validator = require('validator');
 var entriesData = fs.readFileSync(process.argv[2], {encoding: 'utf-8'});
-var anonymousUserId = '0e7c393e-71dd-4368-93a9-fcfff59f9fff';
-var questions = [
-  'exists',
-  'digital',
-  'public',
-  'machinereadable',
-  'bulk',
-  'openlicense',
-  'uptodate',
-  'online',
-  'free',
-  'url',
-  'format',
-  'licenseurl',
-  'dateavailable',
-  'officialtitle',
-  'publisher',
-  'qualityinfo',
-  'qualitystructure',
-  'details'
-];
+var parser = Promise.promisify(csv.parse);
+var utils = require('./utils');
 
 
-var submissionQuery = models.Entry.findAll(
-  {
-    where: {
-      isCurrent: false
-      //reviewResult: true
+var cleanEntry = function(obj) {
+
+  var entryData = {},
+      normalized_timestamp,
+      matches,
+      match;
+
+  // normalize timestamps
+  if (obj.timestamp) {
+    normalized_timestamp = moment(obj.timestamp.trim());
+    if (normalized_timestamp.format() === "Invalid date") {
+      normalized_timestamp = moment(obj.timestamp.trim(), 'DD/MM/YYYY HH:mm:ss');
     }
+    obj.timestamp = normalized_timestamp.format();
   }
-);
+
+  // assign year correctly to fix old issues with mistmatched timestamp + year
+  if (obj.timestamp && normalized_timestamp.year() <= 2013) {
+    obj.year = 2013;
+  } else if (normalized_timestamp) {
+    obj.year = normalized_timestamp.year();
+  }
+
+  // normalize the answers to questions
+  obj.answers = _.chain(utils.questions).map(function(Q) {
+    if (obj[Q] && (_.indexOf(_.keys(utils.qCorrecter), obj[Q].trim().toLowerCase())) >= 0) {
+      obj[Q] = utils.qCorrecter[obj[Q].trim().toLowerCase()];
+    }
+    return [Q, obj[Q]];
+  }).object().value();
+
+  return obj;
+
+};
 
 
-submissionQuery
-  .then(function(submissions) {
+utils.loadData({
 
-    csv.parse(entriesData, {columns: true}, function(R, D) {
+  submissions: models.Entry.findAll(),
+  entries: parser(entriesData, {columns: true})
 
-      console.log('Entry count:');
-      console.log(D.length);
+}).then(function(D) {
 
-      Promise.each(D, function(obj) {
+  console.log('submission count: ' + D.submissions.length);
+  console.log('entry count: ' + D.entries.length);
 
-        var entryData = {},
-            normalized_timestamp,
-            matches,
-            match;
+  var matches = [];
 
-        // normalize timestamps
-        if (obj.timestamp) {
-          normalized_timestamp = moment(obj.timestamp.trim());
-          if (normalized_timestamp.format() === "Invalid date") {
-            normalized_timestamp = moment(obj.timestamp.trim(), 'DD/MM/YYYY HH:mm:ss');
-          }
-          obj.timestamp = normalized_timestamp.format();
-        }
+  _.each(D.entries, function(obj) {
 
-        if (!obj) {console.log('not');console.log(obj);}
+    obj = cleanEntry(obj);
+    matches.push({
+      entry: obj,
+      submissions: _.filter(D.submissions, function(s) {
+        return (s.site === obj.censusid) && (s.place === obj.place) &&
+          (s.dataset === obj.dataset);
+        })
+      });
+  });
 
-        // assign year correctly to fix old issues with mistmatched submission timestamp + year
-        if (obj.timestamp && normalized_timestamp.year() <= 2013) {
-          obj.year = 2013;
-        } else if (normalized_timestamp) {
-          obj.year = normalized_timestamp.year();
-        }
+  _.each(matches, function(m, i, l) {
 
-        matches = _.filter(submissions, function(s) {
-          return (s.year === parseInt(obj.year, 10)) && (s.site === obj.censusid) &&
-            (s.place === obj.place) && (s.dataset === obj.dataset);
-        });
+    var entryYear = parseInt(m.entry.year, 10),
+        submissionYears = _.map(m.submissions, function(s) {return s.year;}),
+        matchYear,
+        candidates,
+        candidate;
 
-        // normalize the answers to questions
-        obj.answers = _.chain(questions).map(function(Q) {
+    if (m.submissions.length === 0 ||
+       _.indexOf(submissionYears, entryYear) === -1) {
 
-          var correcter = {
-            'yes': true,
-            'no': false,
-            'unsure': null
-          };
+      // some census instances have entries with no submissions!
+      // and, some have only matching future submissions (which is actually the same)!
+      // Looking at you global census, 2013 :)
+      console.log('Entry has no matching submission');
+      console.log(m.entry.year, m.entry.censusid, m.entry.place, m.entry.dataset);
+      console.log('  ------  ');
 
-          if (obj[Q] && (_.indexOf(_.keys(correcter), obj[Q].trim().toLowerCase())) >= 0) {
+      m.toSave = _.merge(m.entry, {
+        id: uuid.v4(),
+        site: m.entry.censusid,
+        submitterId: utils.anonymousUserId,
+        reviewerId: utils.anonymousUserId,
+        reviewed: true,
+        reviewResult: true,
+        isCurrent: true
+      });
+      m.saveStrategy = 'create';
 
-            obj[Q] = correcter[obj[Q].trim().toLowerCase()];
+    } else {
 
-          }
+      if (_.indexOf(submissionYears, entryYear) >= 0) {
+        matchYear = entryYear;
+      } else if  (_.indexOf(submissionYears, (entryYear - 1)) >= 0) {
+        matchYear = entryYear - 1;
+      } else if (_.indexOf(submissionYears, (entryYear - 2)) >= 0) {
+        matchYear = entryYear - 2;
+      } else {
+        console.log('we should never get here!');
+        console.log('matchYear is ' + matchYear);
+      }
 
-          return [Q, obj[Q]];
+      console.log('For ' + entryYear + ', the matching year is: ' + matchYear);
 
-        }).object().value();
+      candidates = _.filter(m.submissions, function(s) {return s.year === matchYear;});
+      candidate = _.first(_.sortBy(candidates, function(o) {return -o.createdAt;}));
 
-        // matches = _.sortBy(matches, function(s) {
-        //   if (s.timestamp) {
-        //     return moment(s.timestamp);
-        //   } else {
-        //     return moment('01-01-2012 00:00:00');
-        //   }
-        // });
+      if (!candidate) {
+        console.log('somehow we do not have a candidate match. This should not happen.');
+      } else {
 
-        if (matches.length === 0) {
+        if (matchYear === entryYear) {
 
-          console.log(obj.year, obj.censusid, obj.place, obj.dataset, obj.timestamp);
-          console.log(matches.length);
+          candidate.answers = m.entry.answers;
+          candidate.details = m.entry.details;
+          candidate.isCurrent = true;
+          m.toSave = candidate;
+          m.saveStrategy = 'update';
 
         } else {
 
-          matches[0].details = obj.details;
-          matches[0].answers = obj.answers;
-          matches[0].reviewed = true;
-          matches[0].reviewResult = true;
-          matches[0].details = obj.details;
-          matches[0].isCurrent = true;
+          m.toSave = _.merge(candidate.dataValues, {
+            id: uuid.v4(),
+            reviewed: true,
+            reviewResult: true,
+            isCurrent: true
+          });
+          m.saveStrategy = 'create';
 
-          matches[0].save()
-            .then(function(obj) {
-              console.log('SAVED AS ENTRY');
-              console.log(obj.year, obj.censusid, obj.place, obj.dataset, obj.updatedAt);
-            });
         }
 
-        // return models.Entry.create(submissionData)
-        //   .then(function(entry) {
+      }
 
-        //     console.log('saved new entry');
-        //     console.log(entry.createdAt);
-        //     console.log(' --- ');
+    }
+  });
 
-        //   })
-        //   .catch(function(error) {console.log('error::::');console.log(error);});
+  Promise.each(matches, function(m) {
 
-      });
+    if (m.saveStrategy === 'create') {
+      return models.Entry.create(m.toSave).then(function(r){console.log('created');}).catch(console.log.bind(console));
+    } else {
+      // update
+      return m.toSave.save().then(function(r) {console.log('updated');}).catch(console.log.bind(console));
+    }
 
-    });
+  });
 
-  })
-  .catch(function(error) {console.log(error);});
+}).catch(console.log.bind(console));
