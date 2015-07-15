@@ -5,6 +5,7 @@ var request = require('supertest')
   , mocha = require('mocha')
   , models = require('../census/models')
   , _ = require('underscore')
+  ,uuid = require('node-uuid')
   ;
 
 config.set('test:testing', true);
@@ -28,31 +29,48 @@ describe('Backend Entry', function() {
   it('insertEntry and updateEntry', function(done) {
     //Deliberately include new line in details field
     var data = {
+      answers: {},
+      id: uuid.v4(),
+      isCurrent: false,
       year: 2012,
       dataset: 'spending',
       place: 'de',
-      details: 'Some \ndetails',
+      site: 'national',
+      details: 'Some \ndetails'
     };
     var newData = {
+      id: data.id,
       details: 'New details'
     }
-    backend.insertEntry(data, function(err) {
-      //TODO: Test that something was inserted
-      assert.ok(!err, err);
-      //N.B. We need to delete this anyway for getEntry, but having newlines in the query string, even when encoded, causes HTTP 400 error
-      delete data['details'];
-      backend.getEntry(data, function(err, entry) {
-        assert.ok(!err, err);
-        backend.updateEntry(entry, newData, function(err) {
-          assert.ok(!err);
-          //Test that field was 'changed' (we didn't check the original value yet, TODO)
-          backend.getEntry(entry, function(err, updatedEntry) {
-            assert.equal(updatedEntry.details, 'New details');
-            done();
-          });
-        });
+
+    models.Entry.create(data).then(function(R) {
+      assert(R.id);
+
+      models.Entry.update(newData, {where: {id: data.id}}).then(function(R) {
+        models.Entry.findOne({where: {id: data.id}}).then(function(E) {
+          assert.equal(E.details, newData.details);
+          done();
+        })
       });
     });
+
+    // backend.insertEntry(data, function(err) {
+    //   //TODO: Test that something was inserted
+    //   assert.ok(!err, err);
+    //   //N.B. We need to delete this anyway for getEntry, but having newlines in the query string, even when encoded, causes HTTP 400 error
+    //   delete data['details'];
+    //   backend.getEntry(data, function(err, entry) {
+    //     assert.ok(!err, err);
+    //     backend.updateEntry(entry, newData, function(err) {
+    //       assert.ok(!err);
+    //       //Test that field was 'changed' (we didn't check the original value yet, TODO)
+    //       backend.getEntry(entry, function(err, updatedEntry) {
+    //         assert.equal(updatedEntry.details, 'New details');
+    //         done();
+    //       });
+    //     });
+    //   });
+    // });
   });
   it('two entries, choose the earlier year', function(done) {
     var earlier = {
