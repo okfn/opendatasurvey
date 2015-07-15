@@ -173,6 +173,7 @@ var overview = function (req, res) {
 
     res.render('overview.html', {
 
+      submissionsAllowed: (req.params.year === req.app.get('year')),
       placeCount: placeCount,
       currentEntryCount: currentEntryCount,
       currentEntryOpenCount: currentEntryOpenCount,
@@ -225,8 +226,8 @@ var place = function (req, res) {
 
       _.each(D.entries, function(e, i, l) {
         e.computedYCount = e.yCount(D.questions);
-        reviewers.push(e.reviewer);
-        submitters.push(e.submitter);
+        reviewers.push(e.Reviewer);
+        submitters.push(e.Submitter);
       });
 
     }
@@ -322,7 +323,10 @@ var dataset = function (req, res) {
 
 var entry = function (req, res) {
 
-  var entryQueryParams = _.merge(modelUtils.siteQuery(req, true), {where: {dataset: req.params.dataset, place: req.params.place, isCurrent: true}});
+  var entryQueryParams = _.merge(modelUtils.siteQuery(req, true),
+                                 {where: {dataset: req.params.dataset, place: req.params.place, isCurrent: true},
+                                  include: [{model: req.app.get('models').User, as: 'Submitter'},
+                                            {model: req.app.get('models').User, as: 'Reviewer'}]});
   var datasetQueryParams = _.merge(modelUtils.siteQuery(req), {where: {id: req.params.dataset}});
   var placeQueryParams = _.merge(modelUtils.siteQuery(req), {where: {id: req.params.place}});
   var questionQueryParams = _.merge(modelUtils.siteQuery(req), {order: 'score DESC'});

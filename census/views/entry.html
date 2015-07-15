@@ -78,10 +78,11 @@
 
 <h3>{{gettext("Details")}}</h3>
 <table class="table table-striped yntable">
-  <tr><td>{{gettext("Date the data became available")}}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.dateavailable %}{{ entry.dateavailable }}{% else %}{{gettext("Unknown")}}{% endif %}</td></tr>
-  <tr><td>{{gettext("Format of data")}}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.format %}{{ entry.format }}{% else %}{{gettext("Unknown")}}{% endif %}</td></tr>
-  <tr><td>{{gettext("Reviewers")}}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.reviewers %}{% for reviewer in entry.reviewers %}{% if loop.index>1 %}, {% endif %}{{reviewer.fullName()}}{% endfor %} {{gettext("(Submitters)")}}; {% endif %}{% if entry.submitters %}{% for submitter in entry.submitters %}{% if loop.index>1 %}, {% endif %}{{submitter.fullName()}}{% endfor %} {{gettext("(Submitters)")}}{% endif %}</td></tr>
-  <tr><td>{{gettext("Last modified")}}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.timestamp %}{{ entry.timestamp }}{% else %}{{gettext("Unknown")}}{% endif %}</td></tr>
+  <tr><td>{{gettext("Date the data became available")}}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.answers.dateavailable %}{{ entry.answers.dateavailable }}{% else %}{{gettext("Unknown")}}{% endif %}</td></tr>
+  <tr><td>{{gettext("Format of data")}}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.answers.format %}{{ entry.answers.format }}{% else %}{{gettext("Unknown")}}{% endif %}</td></tr>
+  <tr><td>{{gettext("Reviewer")}}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.Reviewer %}{{entry.Reviewer.fullName()}}{% endif %}</td></tr>
+  <tr><td>{{gettext("Submitters")}}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.Submitter %}{{entry.Submitter.fullName()}}{% endif %}</td></tr>
+  <tr><td>{{gettext("Last modified")}}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.createdAt %}{{ entry.createdAt }}{% else %}{{gettext("Unknown")}}{% endif %}</td></tr>
 </table>
 
 <script src="{{page.root}}/src/common.js"></script>
