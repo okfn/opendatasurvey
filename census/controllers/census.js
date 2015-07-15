@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var config = require('../config');
 var uuid = require('node-uuid');
 var routeUtils = require('../routes/utils');
 var modelUtils = require('../models').utils;
@@ -195,19 +196,19 @@ var submission = function (req, res) {
       }).then(function(D) {
 
         res.render('review.html', {
-          canReview: routeUtils.canReview(req.user, D.place),
           reviewClosed: result.reviewResult,
-          reviewInstructions: req.params.site.settings.review_page,
+          reviewInstructions: config.get('review_page'),
           questions: modelUtils.translateSet(D.questions),
           prefill: result,
           currrecord: result,
-          dataset: D.dataset.translated(req.locale),
-          place: D.place.translated(req.locale),
+          dataset: D.dataset && D.dataset.translated(req.locale),
+          place: D.place && D.place.translated(req.locale),
           disqus_shortname: req.app.get('config').get('disqus_shortname'),
           reviewState: true
         });
+        return;
 
-      });
+      }).catch(function(E) { console.log(E); });
 
     });
 };
