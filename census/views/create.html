@@ -55,7 +55,7 @@
           {% for dataset in datasets %}
           <div class="dataset-description js-dataset-{{dataset.id}}" style="display: none;">
             <span class="help-block">
-              {{dataset.description}}
+              {{dataset.description|marked}}
             </span>
           </div>
           {% endfor %}

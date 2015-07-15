@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var config = require('../config');
 var uuid = require('node-uuid');
 var routeUtils = require('../routes/utils');
 var modelUtils = require('../models').utils;
@@ -14,6 +15,7 @@ var _renderSubmit = function(req, res, data, current, status, errors, formData) 
       canReview: true, // flag always on for submission
       submitInstructions: req.params.site.settings.submit_page,
       places: modelUtils.translateSet(req, data.places),
+      prefill: req.query,
       datasets: modelUtils.translateSet(req, data.datasets),
       questions: data.questions,
       addDetails: addDetails,
@@ -53,19 +55,19 @@ var pendingEntry = function (req, res) {
       }).then(function(D) {
 
         res.render('review.html', {
-          canReview: routeUtils.canReview(req.user, D.place),
+          canReview: true,
           reviewClosed: result.reviewResult,
-          reviewInstructions: req.params.site.settings.review_page,
+          reviewInstructions: config.get('review_page'),
           questions: modelUtils.translateSet(D.questions),
           prefill: result,
           currrecord: result,
-          dataset: D.dataset.translated(req.locale),
-          place: D.place.translated(req.locale),
+          dataset: D.dataset && D.dataset.translated(req.locale),
+          place: D.place && D.place.translated(req.locale),
           disqus_shortname: req.app.get('config').get('disqus_shortname'),
           reviewState: true
         });
 
-      });
+      }).catch(function(E) { console.log(E); });
 
     });
 };
@@ -216,7 +218,6 @@ var submit = function (req, res) {
     }
 
   }).catch(console.log.bind(console));
-
 };
 
 
