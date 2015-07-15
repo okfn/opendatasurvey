@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('lodash');
 var loaders = require('../loaders');
 var Promise = require('bluebird');
 
@@ -24,7 +25,7 @@ var loadRegistry = function (req, res) {
 };
 
 
-var loadAll = function (req, res) {
+var loadAllConfigs = function (req, res) {
 
   req.app.get('models').Registry.findAll()
     .then(function(results) {
@@ -44,8 +45,85 @@ var loadAll = function (req, res) {
 };
 
 
+var loadAllPlaces = function (req, res) {
+
+  req.app.get('models').Site.findAll()
+    .then(function(results) {
+
+      Promise.each(results, function(result) {
+        var options = {
+          Model: req.app.get('models').Place,
+          setting: 'places',
+          site: result.id
+        };
+
+        return loaders.loadTranslatedData(options, req.app.get('models'))
+          .then(function() {console.log('one loaded');});
+
+      })
+        .then(function() { res.send({status: 'ok', message: 'ok'}); })
+        .catch(function(E) { res.send({status: 'error', message: E}); });
+    });
+};
+
+
+var loadAllDatasets = function (req, res) {
+
+  req.app.get('models').Site.findAll()
+    .then(function(results) {
+
+      Promise.each(results, function(result) {
+
+        var options = {
+          mapper: function(D) {return _.extend(D, {name: D.title});},
+          Model: req.app.get('models').Dataset,
+          setting: 'datasets',
+          site: result.id
+        };
+
+        return loaders.loadTranslatedData(options, req.app.get('models'))
+          .then(function() {console.log('one loaded');});
+
+      })
+        .then(function() { res.send({status: 'ok', message: 'ok'}); })
+        .catch(function(E) { res.send({status: 'error', message: E}); });
+    });
+};
+
+
+var loadAllQuestions = function (req, res) {
+
+  req.app.get('models').Site.findAll()
+    .then(function(results) {
+
+      Promise.each(results, function(result) {
+
+        var options = {
+          mapper: function(D) {
+            var dependants = null;
+            if(D.dependants){ dependants = D.dependants.split(',');}
+            return _.extend(D, {dependants: dependants, score: D.score || 0, order: D.order || 100});
+          },
+          Model: req.app.get('models').Question,
+          setting: 'questions',
+          site: result.id
+        };
+
+        return loaders.loadTranslatedData(options, req.app.get('models'))
+          .then(function() {console.log('one loaded');}).catch(console.log.bind(console));
+
+      })
+        .then(function() { res.send({status: 'ok', message: 'ok'}); })
+        .catch(function(E) { res.send({status: 'error', message: E}); });
+    });
+};
+
+
 module.exports = {
   admin: admin,
   loadRegistry: loadRegistry,
-  loadAll: loadAll
+  loadAllConfigs: loadAllConfigs,
+  loadAllPlaces: loadAllPlaces,
+  loadAllDatasets: loadAllDatasets,
+  loadAllQuestions: loadAllQuestions
 };

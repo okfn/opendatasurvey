@@ -11,7 +11,10 @@ var systemRoutes = function(router) {
 
   router.get(utils.scoped('/control'), coreMixins, system.admin);
   router.get(utils.scoped('/load/registry'), coreMixins, system.loadRegistry);
-  router.get(utils.scoped('/load/all'), coreMixins, system.loadAll);
+  router.get(utils.scoped('/load/configs'), coreMixins, system.loadAllConfigs);
+  router.get(utils.scoped('/load/places'), coreMixins, system.loadAllPlaces);
+  router.get(utils.scoped('/load/datasets'), coreMixins, system.loadAllDatasets);
+  router.get(utils.scoped('/load/questions'), coreMixins, system.loadAllQuestions);
 
   return router;
 

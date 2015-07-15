@@ -19,6 +19,7 @@ var argv = optimist
       '',
       '  create {slug}  Interactively create a census deployment named slug',
       '  config {slug}  Set environment based config for an existing census deployment',
+      '  restart {slug} Restart instances - use all to restart all',
       '  remotes        Sync your local list of heroku remotes from the instance db',
       '  sharing {email} {slug} Add heroku collaborator {email} on instance {slug} (use all for all instances) ',
     ].join(os.EOL)

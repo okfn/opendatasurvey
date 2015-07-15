@@ -6,103 +6,160 @@ var uuid = require('node-uuid');
 var routeUtils = require('../routes/utils');
 var modelUtils = require('../models').utils;
 
+var _renderSubmit = function(req, res, data, current, status, errors, formData) {
 
-var submit = function (req, res) {
-
-  var prefill = req.query,
-      entryQueryParams = _.extend(modelUtils.siteQuery(req, true), {where: {place: prefill.place, dataset: prefill.dataset}}),
-      submissionData = req.body,
-      objToSave = {},
-      errors,
-      reboundFormData,
-      response_status = 200;
-
-  var render = function(data, current, status) {
-
-    var addDetails;
-
-    // resolve dependant questions
-    data.questions = modelUtils.translateSet(req, data.questions);
-    _.each(data.questions, function(obj, index, list) {
-      _.each(obj.dependants, function(d, i, l) {
-        if (d) {
-          l[i] = _.find(data.questions, function(o) {
-            if ((o.id === d)) {
-              // remove the dependant from the top-level array
-              data.questions = _.reject(data.questions, function(q) {return q.id === o.id;});
-              return true;
-            }
-            return;
-          });
-        }
-      });
-    });
-
-    addDetails = _.find(data.questions, function(q) {return q.id === 'details';});
+  var addDetails = _.find(data.questions, function(q) {return q.id === 'details';});
 
     res.statusCode = status;
     res.render('create.html', {
       canReview: true, // flag always on for submission
       submitInstructions: req.params.site.settings.submit_page,
       places: modelUtils.translateSet(req, data.places),
-      prefill: prefill,
+      prefill: req.query,
+      datasets: modelUtils.translateSet(req, data.datasets),
       questions: data.questions,
       addDetails: addDetails,
-      datasets: modelUtils.translateSet(req, data.datasets),
       year: req.app.get('year'),
       current: current,
       errors: errors,
-      formData: reboundFormData
+      formData: formData
     });
-    return;
-  };
+  return;
+};
+
+
+var pendingEntry = function (req, res) {
+
+  var placeQueryParams,
+      datasetQueryParams;
+
+  req.app.get('models').Entry.findById(req.params.id)
+    .then(function(result) {
+
+      if (!result) {
+
+        res.status(404).send('There is no submission with id ' + req.params.id);
+        return;
+
+      }
+
+      placeQueryParams = _.merge(modelUtils.siteQuery(req), {where: {id: result.place}});
+      datasetQueryParams = _.merge(modelUtils.siteQuery(req), {where: {id: result.dataset}});
+
+      modelUtils.loadModels({
+
+        dataset: req.app.get('models').Dataset.findOne(datasetQueryParams),
+        place: req.app.get('models').Dataset.findOne(placeQueryParams),
+        questions: req.app.get('models').Question.findAll(modelUtils.siteQuery(req))
+
+      }).then(function(D) {
+
+        res.render('review.html', {
+          canReview: true,
+          reviewClosed: result.reviewResult,
+          reviewInstructions: config.get('review_page'),
+          questions: modelUtils.translateSet(D.questions),
+          prefill: result,
+          currrecord: result,
+          dataset: D.dataset && D.dataset.translated(req.locale),
+          place: D.place && D.place.translated(req.locale),
+          disqus_shortname: req.app.get('config').get('disqus_shortname'),
+          reviewState: true
+        });
+
+      }).catch(function(E) { console.log(E); });
+
+    });
+};
+
+
+var submit = function (req, res) {
+
+  var prefill = req.query,
+      entryQueryParams = _.merge(modelUtils.siteQuery(req), {where: {place: prefill.place, dataset: prefill.dataset}}),
+      questionQueryParams = modelUtils.siteQuery(req),
+      objToSave = {},
+      answers,
+      errors,
+      reboundFormData,
+      responseStatus = 200;
 
   modelUtils.loadModels({
 
     datasets: req.app.get('models').Dataset.findAll(modelUtils.siteQuery(req)),
     places: req.app.get('models').Place.findAll(modelUtils.siteQuery(req)),
-    questions: req.app.get('models').Question.findAll(modelUtils.siteQuery(req)),
-    entry: req.app.get('models').Entry.findOne(entryQueryParams)
+    questions: req.app.get('models').Question.findAll(questionQueryParams),
+    entries: req.app.get('models').Entry.findAll(entryQueryParams)
 
   }).then(function(D) {
+
+    // resolve question dependants, and filter dependants out of top-level list
+    D.questions = modelUtils.translateSet(req, D.questions);
+    _.each(D.questions, function(q) {
+      if (q.dependants) {
+        _.each(q.dependants, function(d, i, l) {
+          l[i] = _.find(D.questions, function(_q) {
+            if (_q.id === d) {
+              //D.questions = _.reject(D.questions, function(__q) {return __q.id === _q.id;});
+              return true;
+            }
+            return false;
+          });
+        });
+      }
+    });
+
+    // need to sort by order for the form
+    D.questions = _.sortBy(D.questions, function(q) {return q.order;});
 
     // validate the POST data and put the results on `errors`
     if (req.method === 'POST') {
 
       errors = routeUtils.validateSubmitForm(req);
       if (errors) {
-        reboundFormData = submissionData;
-        response_status = 400;
+        reboundFormData = req.body;
+        responseStatus = 400;
       }
 
     }
 
     if (req.method === 'POST' && !errors) {
 
-      console.log('get stuff');
-      console.log(submissionData);
-
       objToSave.id = uuid.v4();
       objToSave.site = req.params.site.id;
-      objToSave.place = submissionData.place;
-      objToSave.dataset = submissionData.dataset;
+      objToSave.place = req.body.place;
+      objToSave.dataset = req.body.dataset;
       objToSave.year = req.app.get('year');
       objToSave.isCurrent = false;
       objToSave.submitter = req.user;
 
-      delete submissionData['place'];
-      delete submissionData['dataset'];
-      delete submissionData['year'];
-      objToSave.answers = submissionData;
+      answers = req.body;
+      delete answers['place'];
+      delete answers['dataset'];
+      delete answers['year'];
+      objToSave.answers = answers;
 
       console.log('modified');
       console.log(objToSave);
       console.log('does we have entry??');
 
-      // TODO, logic to update entry
-      // etc.
+      // if current entry is same year as now year
 
-      console.log(D.entry);
+        // if current entry isCurrent = true;
+          // set current entry isCurrent to false;
+          // set new entry isCurrent to true;
+
+        // if current entry isCurrent = false;
+          // set new entry isCurrent to true;
+          // don't have to change current entry;
+          // but the entries SHOULD have he same id!!!!
+
+      // else if current entry is previous year to now year
+
+      // else if current entry is future year to now year
+
+
+      console.log(D.entries);
 
       req.app.get('models').Entry.create(objToSave)
         .then(function(result) {
@@ -142,11 +199,7 @@ var submit = function (req, res) {
           res.redirect(redirect_path + '?post_submission=' + submission_path);
           return;
 
-        })
-        .catch(function(error) {
-          console.log('catching error');
-          console.log(error);
-        });
+        }).catch(console.log.bind(console));
 
     } else if (prefill.dataset && prefill.place) {
 
@@ -156,61 +209,15 @@ var submit = function (req, res) {
 
       }
 
-      render(D, prefill, response_status);
+      _renderSubmit(req, res, D, prefill, responseStatus, errors, reboundFormData);
 
     } else {
 
-      render(D, prefill, response_status);
+      _renderSubmit(req, res, D, prefill, responseStatus, errors, reboundFormData);
 
     }
 
-  });
-
-};
-
-
-var submission = function (req, res) {
-
-  var placeQueryParams,
-      datasetQueryParams;
-
-  req.app.get('models').Entry.findById(req.params.id)
-    .then(function(result) {
-
-      if (!result) {
-
-        res.status(404).send('There is no submission with id ' + req.params.id);
-        return;
-
-      }
-
-      placeQueryParams = _.extend(modelUtils.siteQuery(req), {where: {id: result.place}});
-      datasetQueryParams = _.extend(modelUtils.siteQuery(req), {where: {id: result.dataset}});
-
-      modelUtils.loadModels({
-
-        dataset: req.app.get('models').Dataset.findOne(datasetQueryParams),
-        place: req.app.get('models').Dataset.findOne(placeQueryParams),
-        questions: req.app.get('models').Question.findAll(modelUtils.siteQuery(req))
-
-      }).then(function(D) {
-
-        res.render('review.html', {
-          reviewClosed: result.reviewResult,
-          reviewInstructions: config.get('review_page'),
-          questions: modelUtils.translateSet(D.questions),
-          prefill: result,
-          currrecord: result,
-          dataset: D.dataset && D.dataset.translated(req.locale),
-          place: D.place && D.place.translated(req.locale),
-          disqus_shortname: req.app.get('config').get('disqus_shortname'),
-          reviewState: true
-        });
-        return;
-
-      }).catch(function(E) { console.log(E); });
-
-    });
+  }).catch(console.log.bind(console));
 };
 
 
@@ -226,6 +233,6 @@ var reviewPost = function (req, res) {
 
 module.exports = {
   submit: submit,
-  submission: submission,
+  pendingEntry: pendingEntry,
   reviewPost: reviewPost
 };

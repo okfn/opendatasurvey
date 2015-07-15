@@ -179,7 +179,8 @@ var overview = function (req, res) {
       places: _.sortByOrder(modelUtils.translateSet(req, D.places), 'computedScore', 'desc'),
       datasets: modelUtils.translateSet(req, D.datasets),
       questions: modelUtils.translateSet(req, D.questions),
-      entries: D.entries
+      entries: D.entries,
+      year: req.params.year
 
     });
   }).catch(console.log.bind(console));

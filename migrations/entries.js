@@ -18,6 +18,12 @@ var cleanEntry = function(obj) {
       matches,
       match;
 
+  // correct identifiers
+  if (_.indexOf(_.keys(utils.idMapper), obj.censusid) >= 0) {
+    console.log('correct id :: ' + obj.censusid);
+    obj.censusid = utils.idMapper[obj.censusid];
+  }
+
   // normalize timestamps
   if (obj.timestamp) {
     normalized_timestamp = moment(obj.timestamp.trim());

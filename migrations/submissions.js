@@ -20,6 +20,12 @@ var cleanSubmission = function(obj, users) {
       revName,
       revLookup;
 
+  // correct identifiers
+  if (_.indexOf(_.keys(utils.idMapper), obj.censusid) >= 0) {
+    console.log('correct id ' + obj.censusid);
+    obj.censusid = utils.idMapper[obj.censusid];
+  }
+
   // fix old ids that are ints as strings
   if (!validator.isUUID(obj.submissionid, 4)) {
     obj.submissionid = uuid.v4();
