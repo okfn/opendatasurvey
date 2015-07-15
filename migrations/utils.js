@@ -47,5 +47,10 @@ module.exports = {
     'yes': true,
     'no': false,
     'unsure': null
+  },
+  idMapper: {
+    'national': 'global',
+    'aus-region': 'australia',
+    'car-region': 'caribbean'
   }
 };
