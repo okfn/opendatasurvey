@@ -43,6 +43,12 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       comment: "The score for this question. Used for calculations."
     },
+    order: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      default: 100,
+      comment: "The order for this question relative to others. Used for submission form."
+    },
     icon: {
       type: DataTypes.STRING,
       allowNull: false,
