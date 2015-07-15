@@ -347,19 +347,19 @@ describe('Census Pages', function() {
       // country in our test db for default year
         place: 'gb'
       , dataset: 'maps'
+      , exists: 'Yes'
     };
     var url = 'http://www.ordnancesurvey.co.uk/opendata/';
     request(app)
-      .get('/submit/')
+      .get('/census/submit/')
+      .set('Host', 'national.dev.census.org')
       .query(prefill)
       .expect(200)
-      .end(function(err, res) {
-        assert(!err);
+      .then(function(res) {
         // all test regex tests are rather hacky ...
         checkContent(res, 'value="%s" selected="true"'.replace('%s', prefill.place), 'place not set');
         checkContent(res, '<em>national-level</em>', 'Dataset description not parsed as markdown');
         testRadio(res.text, 'exists', 'Yes');
-        testRadio(res.text, 'openlicense', 'No');
         // REMOVED AS THESE FIELDS DEPEND ON UI INTERACTIONS
         // checkContent(res, 'name="url" value="' + url + '"', 'url not set');
         done();
