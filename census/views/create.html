@@ -6,7 +6,7 @@
 
 {% block content %}
 <div class="page-header">
-  <h1>{{format("Make a Submission &ndash; %(sitename)s", { sitename: sitename }) }}</h1>
+  <h1>{{format("Make a Submission &ndash; %(sitename)s", { sitename: site.settings.title }) }}</h1>
 </div>
 
 {% if errors %}
@@ -62,7 +62,7 @@
         </label>
       </div>
       <div class="span4">
-        <label>{{ format("%(sitename)s Year", { sitename: sitename_short }) }}<br/>
+        <label>{{ format("%(sitename)s Year", { sitename: site.settings.title_short }) }}<br/>
           <strong>{{ year }}</strong>
         </label>
       </div>

@@ -38,11 +38,15 @@ var faq = function (req, res) {
 
 var changes = function (req, res) {
 
+  var entryQueryParams = _.merge(modelUtils.siteQuery(req, true),
+                                 {include: [{model: req.app.get('models').User, as: 'Submitter'},
+                                            {model: req.app.get('models').User, as: 'Reviewer'}]});
+
   modelUtils.loadModels({
 
     places: req.app.get('models').Place.findAll(modelUtils.siteQuery(req)),
     datasets: req.app.get('models').Dataset.findAll(modelUtils.siteQuery(req)),
-    entries: req.app.get('models').Entry.findAll(modelUtils.siteQuery(req, true))
+    entries: req.app.get('models').Entry.findAll(entryQueryParams)
 
   }).then(function(D) {
 

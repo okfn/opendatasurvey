@@ -89,9 +89,9 @@
               <td>
                 <strong>{{gettext("&#8627; Awaiting review")}}</strong><br />
 
-                <span title="{{ gettext('Submitted by')}} {{ submission.submitter}}" class="queued-context">
+                <span title="{{ gettext('Submitted by')}} {{ pendingEntry.submitter.fullName()}}" class="queued-context">
                   <i class="icon icon-user"></i>&nbsp;
-                  {{ pendingEntry.submitter.firstName }}
+                  {{ pendingEntry.submitter.fullName() }}
                 </span>
                 <br />
                 <span title="{{ gettext('Submitted on')}} {{ submission.timestamp|dateformat }}" class="queued-context">
@@ -124,11 +124,11 @@
         <h3>{{gettext("Contributors")}}</h3>
         <h4>{{ format("Editors for %(name)s:", { name: place.name }) }}</h4>
         <p>
-          {% if reviewers %}{% for reviewer in reviewers %}{% if loop.index>1 %}, {% endif %}{{reviewer}}{% endfor %}{% endif %}
+          {% if reviewers %}{% for reviewer in reviewers %}{% if loop.index>1 %}, {% endif %}{{reviewer.fullName()}}{% endfor %}{% endif %}
         </p>
         <h4>{{gettext("With submissions from:")}} </h4>
         <p>
-          {% if submitters %}{% for submitter in submitters %}{% if loop.index>1 %}, {% endif %}{{submitter}}{% endfor %}{% endif %}
+          {% if submitters %}{% for submitter in submitters %}{% if loop.index>1 %}, {% endif %}{{submitter.fullName()}}{% endfor %}{% endif %}
         </p>
       </div>
     </div>
