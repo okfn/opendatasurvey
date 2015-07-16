@@ -51,6 +51,7 @@ var loadAllPlaces = function (req, res) {
     .then(function(results) {
 
       Promise.each(results, function(result) {
+
         var options = {
           Model: req.app.get('models').Place,
           setting: 'places',
@@ -58,7 +59,7 @@ var loadAllPlaces = function (req, res) {
         };
 
         return loaders.loadTranslatedData(options, req.app.get('models'))
-          .then(function() {console.log('one loaded');});
+          .then(function() {console.log('loaded');}).catch(console.log.bind(console));
 
       })
         .then(function() { res.send({status: 'ok', message: 'ok'}); })
