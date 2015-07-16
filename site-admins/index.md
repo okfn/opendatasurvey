@@ -29,7 +29,7 @@ When a `Submission` has been reviewed and deemed accurate it becomes an `Entry` 
 
 #### New submissions
 
- * Contributors visit the `/submit/` page to make a new `Submission`
+ * Contributors visit the `/census/submit/` page to make a new `Submission`
  * This `Submission` is now queued awaiting review by a reviewer (see next item for details of what that will mean)
     * Note: we have recently introduced a change to this workflow so that __the first submission for a given place + dataset is automatically "approved" (without review).__ In this case the Submission won't need to be reviewed and will automatically become the "Entry" for that place + dataset.
     * This behaviour can be disabled by setting `approve_first_submission` config variable to TRUE.
@@ -50,30 +50,20 @@ When a `Submission` has been reviewed and deemed accurate it becomes an `Entry` 
 
 ### Configuration
 
-Configuration is of two types:
+Configuration of a census **site** is down via Google Spreadsheets. Each spreadsheet must be "public on the web" **and** "published to the web" (see Google Spreadsheets for details on how to ensure this).
 
- * 'App Config' – the fundamental app configuration for the site (e.g. site title) plus pointers to the other config files which are …
- * 'Census Config' – the list of Places, Datasets and Questions to use for this census. App Config contains pointers to where to find this.
+We can divide the configuration required for a **site** into two types:
 
-Both types of configuration should be stored in publicly accessible CSV files (one file for app config and one each for places, datasets and questions).
+ * **'Site config'** – the fundamental configuration for a site, such as the title, plus, links to the other config files required (e.g.: places, datasets and questions)
+ * **'Census config'** – the list of Places, Datasets and Questions to use for this census. The site config contains pointers to where to find this.
+
+Both types of configuration should be stored in publicly accessible Google spreadsheets (one file for app config and one each for places, datasets and questions).
 
 Our recommended approach is to have all of these as separate sheets in one large google spreadsheet that is made 'public on the web' (you can then access those sheets as CSV files).
 
 Here is a [Template General Config Spreadsheet][template-config].
 
-The App Config options (the first sheet in that spreadsheet) are fully documented in the Appendix below.
-
-Note: there is some very basic bootstrap (and sensitive) information stored by the developer (like the google username and password for accessing the database).
-
-### Data Storage
-
-Our primary storage backend is Google Spreadsheets.
-
- * Database of responses (`Submission`s and `Entry`s) – stored in a google spreadsheet
-    * WARNING: at present this Database must be world-readable (so we can't store anything sensitive in it …)
- * User database (optional) – also a google spreadsheet
- * [Template Database Spreadsheet][template-db]
-    * Note: must have column headings in Submissions and Entries that correspond to question ids in question sheet
+The Site config options (the first sheet in that spreadsheet) are fully documented in the Appendix below.
 
 ## Howtos
 
@@ -95,12 +85,6 @@ Extras – set additional content e.g.
  * About page – `about_page` config variable
  * FAQ page – `faq_page` config variable
 
-### Reload the Config
-
-The config for the census (including the list of places and datasets) is cached and won't automatically update when you change the spreadsheet. To get the Census app to reload the config visit:
-
-<http://{your-census-site}/admin/reload>
-
 ### Setting up Places
 
  * Add places to the Places sheet in your Config Spreadsheet
@@ -115,7 +99,13 @@ __Remember to reload the config once you have finished to have your new list of 
 
 To give a user Reviewer 'privileges' you must add them to the reviewers config – see below.
 
-__Remember to reload your config once done.__
+### Reload the Config
+
+Once the system administrator has added your new Site to the registry, and you have subsequently configured your Config, Places and Datasets sheets, you need to load your data in to the database.
+
+<http://{your-census-id}.census.okfn.org/admin>
+
+__Remember to reload your config settings here anytime you make a change, so that it is reflected in the database.__
 
 ### Localization
 
@@ -194,21 +184,9 @@ Set list of language locales that should be available for your site. See [Locali
 
 `de en`
 
-### display_year
-
-Year to display information about.
-
-Default is 2014.
-
-### submit_year
-
-Default year to collect information about.
-
-Default is 2014.
-
 ### reviewers
 
-List of reviewer emails (as used on their google account) or user ids (as defined above), separated by spaces or commas.
+List of reviewer emails separated by commas.
 
 ### datasets
 
@@ -235,14 +213,6 @@ __We strongly recommend against customizing the questions. The app may well brea
 These questions will then be used instead of the standard questions.
 
 The spreadsheet MUST follow structure as in the [default questions spreadsheet][template-questions].
-
-### anonymous_submissions
-
-Allow submissions by anonymous users i.e. users who have not logged in via the
-login process. (Note: even with anonymous submissions we allow (but do not
-enforce) users to add their name when making a submission).
-
-Default is `TRUE`. Set to any other value e.g. `FALSE` to turn off.
 
 ### approve_first_submission
 
@@ -323,37 +293,8 @@ Custom footer content
 
 Supply a google analytics key to use on the site
 
-### disqus_shortname
-
-Use an alternative Disqus forum for comments.
-
-Default is `opendatacensus`
-
-### database (*)
-
-__This will normally be set for you by the deployer. Do not change its value unless you know what you are doing!__
-
-The url of the Google docs spreadsheet for the primary results database.
-
-This spreadsheet should be world-readable and read/write for the application google user.
-
-### user_database_key
-
-__This will usually be set in the deployment config so you will not need to set it.__
-
-The key of a Google docs spreadsheet that will be the user database.
-
-This is optional. If not provided, login will still be possible but we won't record user details such as email (we will just store the user id into the submissions and reviews).
-
-The user spreadsheet must be private as it will contain private user info like email addresses.
-
-It should be accessible to the applicate google user.
-
-
-[template-config]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdG5FYWF5M0o1cHBvQkZLTUdOYWtlNmc#gid=0
-[template-db]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdFgwSjlabk0wY3NfT2owbktCME5MY2c&usp=drive_web
-[template-questions]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdFI0QkpGUEZyS0wxYWtLdG1nTk9zU3c&usp=drive_web#gid=0
-[mailing-list]: http://lists.okfn.org/mailman/listinfo/open-data-census
+[template-config]: https://docs.google.com/spreadsheets/d/1CxiF_TcIv-BuQV3VGKd__LnoqZ4x4QUApm2RBVfQQJQ/edit#gid=0
+[template-questions]: https://docs.google.com/spreadsheets/d/1nwmk8uJEK-4K6-5SdBgoLUlUos-BhfYRgjS74YkhDGc/edit#gid=3
+[mailing-list]: https://discuss.okfn.org/c/open-data-index
 [template-city]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdEEwSFF6OTJTMnhYa3h2ZS1temlDS3c&usp=drive_web#gid=0
 [transifex]: https://www.transifex.com/projects/p/open-data-census/
-[find-g-id]: http://ansonalex.com/google-plus/how-do-i-find-my-google-plus-user-id-google/
