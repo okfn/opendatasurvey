@@ -3,32 +3,52 @@ layout: default
 title: Deployment
 ---
 
-# System Adminstration of Census Instances
+# System Adminstration of a Census
 
-These instructions are for Developers. It assumes you already have the code
-installed on your machine.
+These instructions are for Developers. It assumes you already have the code installed on your machine.
 
-Before you start:
+See the [README](https://github.com/okfn/opendatacensus) to get the basic setup.
 
-* Check you have a Google account and that this account has access to the
-  [census instance spreadsheet][instance]
+## DNS
 
-## Deploying a New Census Instance
+The easiest way to configure DNS settings for a Census would be to setup a wildcard entry for all subdomains of the base domain you serve from. Each site, including the `system` and `auth` sites, is served from a subdomain.
+
+## Auth Providers
+
+The Census is configured to use Google and Facebook as auth providers. You must setup these providers.
+
+### Google
+
+Go to your Google Cloud account and "Create a New Client ID" under "APIs & auth > Credentials". The type is "web application", and you need to configure the origins and callbacks for your `auth` subdomain (which is `id` by default. e.g.: `http://id.{your_domain}/login`).
+
+Get the credentials required for your `GOOGLE_APP_ID` and `GOOGLE_APP_SECRET` settings.
+
+### Facebook
+
+Go to your Facebook account and add a new app. As with the Google instructions above, add the appropriate urls/callbacks for auth.
+
+Get the credentials required for your `FACEBOOK_APP_ID` and `FACEBOOK_APP_SECRET` settings.
+
+## Deploying a New Census
 
 If you are **not** a developer but want a Census booted please make a
-request: <http://meta.census.okfn.org/>
+request: <http://census.okfn.org/>
 
-[config]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdG5FYWF5M0o1cHBvQkZLTUdOYWtlNmc
-[db]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdFgwSjlabk0wY3NfT2owbktCME5MY2c
-[instance]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdHZoLXhLMjNVNjVPQzVlaU0tSjNUYlE#gid=0
-[city-config]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdE16XzdsOFgtWGpGVVJ3YVRIQW1jZkE&usp=drive_web
+The census app is multi-tenant, with each tenant ("**site**") served from a subdomain.
+
+In order to serve a site, an entry is needed in the **Registry**.
+
+[The OKFN Registry is here](https://docs.google.com/spreadsheets/d/18jINMw7ifwUoqizc4xaQE8XtF4apPfsmMN43EM-9Pmc/edit#gid=0).
+
+The registry no longer needs senstive information like passwords.
+
+To start your own Census installation, copy the OK Registry and adjust as required.
+
+Notice that each entry in the Registry has a link to the config file for the site.
+
+This then provides the entry point into site-specific configuration.
 
 ### Before you start
-
-* Identify the `slug` for your app. It will usually be `{2-digit-iso}-{type}`
-  where {type} is one of `city` or `region`. The site will then be online at
-  `{slug}.census.okfn.org` (the "`site_url`")
-* Identify the google user account that will be your database user
 
 IMPORTANT: to make a Google Spreadsheet 'Public on the Web' you must:
 
@@ -39,89 +59,12 @@ It's useful to check the "Automatically republish when changes are made" box. Ho
 
 ### Step-by-Step
 
-* Ensure that you have access to all accounts required to complete the deployment of a census instance to the Census Farm. You will need:
-    * The ability to deploy an instance to Heroku, and subsequently collaborate (share access) with sysadmin@okfn.org
-    * The ability to access the 'opendatacensus-shared' Google Cloud account, in order to configure the auth flow for the instance
-    * If you are maintaining multiple instances, you will need to have already been added as a collaborator on each of them. Write to census@okfn.org if you are unsure (you can also try to read the logs via `heroku logs --app {app_name}`, which will not work if you do not have correct permissions)
-* Open the [census instance spreadsheet][instance]. You should add relevant
-  info to this as you do next steps.
-* Boot a config spreadsheet (copy the template config - [city template][city-config] or [generic template][config])
-  * Name in standard way e.g. '{2-digit-iso-code} - City - Config - Open Data Census'
-  * Make the sheet 'Public on the Web' ([see above](#before-you-start))
-  * Put it in the relevant folder
-  * Add link to this spreadsheet to your instances database sheet
-* [optional - you can skip if you use common DB] Create a Database spreadsheet (copy the [DB template][db])
-  * Add relevant google user (e.g. opendatacensusapp@gmail.com) as read/write user
-  * Make the sheet 'Public on the Web' and world readable
-  * Add Database spreadsheet link to your config spreadsheet
-* Setup auth - you will need to register the app with Google - see:
-   <https://developers.google.com/accounts/docs/OAuth2#basicsteps>
-  * Step 1:
-    * EITHER: you are doing this as part of the Open Data Census "farm"
-      * Vist the existing ["Open Data Census - Shared" project in the cloud console](https://console.developers.google.com/project/apps~opendatacensus-shared)
-    * OR: General instructions (if you are doing this from scratch)
-      * Go to [Google cloud console](https://cloud.google.com/console) and login
-        * Register as a developer (if you have not before)
-      * Once logged in Create a Project (we suggest id `opendatacensus-{slug}`
-  * Step 2:
-    * Go to "APIs & auth" => "Credentials" and click "Create New Client ID" and
-      then select "Web Application" and configure.
-    * Authorized origins should be: the `site_url` plus the heroku url `opendatacensus-{slug}.herokuapp.com`
-    * Note redirect urls should be the site urls plus /auth/google/callback
-* Run the `create` script (this will output further instructions)
-    
-        bin/census create {SLUG}
-
-Optional:
-
-* Set up the DNS so that app is at http://{slug}.census.okfn.org/
-   * Contact sysadmin team at Open Knowledge Foundation and request CNAME alias
-     of {slug}.census.okfn.org to opendatacensus-{slug}.herokuapp.com
-   * For heroku run the command
-
-     `heroku domains:add {slug}.census.okfn.org`
-
-## Managing Existing Instances
-
-Before managing an existing instance you must make sure you have the heroku
-remote setup locally. To setup all the heroku remotes for all instances in one
-step do:
-
-    bin/census remotes
-
-### Updating the (Environment) Config for an Instance
-
-Most config for censuses lives in the config spreadsheet for that instance and
-can be managed by a Census Administrator. However, some config lives in the
-Environment (mainly private data). This config data (which is either generated
-or pulled from the Instances Database Spreadsheet) can be updated by doing:
-
-    bin/census config {census-id}
-
-For example, to upgrade the national census config you would do:
-
-    bin/census config national
-
-## Upgrading (Code) a Census Instance
-
-**WARNING:** Make sure you've performed any required upgrades to the "database"
-spreadsheets. For example, fields may have been added or removed. At present
-all database migrations have to be performed manually. See CHANGES.md for a
-full list of database changes.
-
-To upgrade the code for an instance to the current master:
-
-    git push {SLUG}
-
-For example, to upgrade demo to latest master do:
-
-    git push demo
-
-To upgrade the code for an instance to a specific branch:
-
-    git push {SLUG} {BRANCH}
-
-For example, to push the production branch to demo do:
-
-    git push demo production
-
+* Add a new entry to the Registry
+* Reload the Registry on your Census at `http://{system_subdomain}.{base_domain}/control`
+* Ask the Site administrator (who **must** have an email in the `adminemail` field of the Registry entry) to finish all the site-specific configuration and then the site admin must:
+  * Visit `http://{site}.{base_domain}/admin`
+  * Load Config
+  * Load Places
+  * Load Datasets
+  * Load Questions
+* The Site will now be live at: `http://{site}.{base_domain}/`
