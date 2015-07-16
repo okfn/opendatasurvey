@@ -2,6 +2,9 @@ _site/
 utils/env
 *.swp
 node_modules/*
+census/*
+migrations/*
+tests/*
 settings.json*
 sandbox/*
 .env*
