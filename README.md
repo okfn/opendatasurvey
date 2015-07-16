@@ -2,12 +2,13 @@
 
 [![Build Status](https://travis-ci.org/okfn/opendatacensus.png?branch=master)](https://travis-ci.org/okfn/opendatacensus)
 
-Webapp for doing [Open Data Censuses][http://census.okfn.org/] including submission workflow,
-presentation of results and some visualization.
+Open Data Census is a web application that supports a submission and review workflow to collect information on the state of open data.
 
-This also includes various ancillary information providing an overview of what
-is happening with release of open government data around the world (and
-initiatives related to it).
+Some presentation of data is supported, along with partitioning results by year.
+
+The code base supports multiple censuses in a multi-tenant configuration, where each tenant runs a census from a subdomain.
+
+Tenant administrators can customize parts of the app, from look and feel to key texts on various views.
 
 ## Demo Site
 
@@ -18,7 +19,7 @@ demo site running at:
 
 ## Overview
 
-See: <http://meta.census.okfn.org/doc/>
+See: <http://census.okfn.org/>
 
 ### Getting started
 
@@ -26,58 +27,70 @@ Open Data Census is a Node.js app, running Express v4 and Postgres 9.4 for the d
 
 Get a local server setup with the following steps:
 
-**NOTE**: While we are in development, after cloning, make sure you switch to the `feature/database` branch!
-
 **NOTE**: If you need to prefix your commands in your local environment with `sudo`, then do that.
 
-1. Install Postgres 9.4 on your machine
-2. Ensure you are running the supported version of Node.js, which is [declared in the `package.json`](https://github.com/okfn/opendatacensus/blob/feature/database/package.json#L58)
-3. Create a database with `createdb opendatacensus`
-4. Add this line to your hosts file: `127.0.0.1 demo.dev.census.org gb-city.dev.census.org`
-5. Create a local directory called `opendatacensus` and move into it with `cd opendatacensus`
-6. Clone the code with `git clone https://github.com/okfn/opendatacensus .`
-7. Install the dependencies with `npm install`
-8. Create a `settings.json` file with these contents, changing any database connection values as required:
+1. Install Postgres 9.4 on your machine.
+2. Setup to appropriate credentials on Google and Facebook so they are OAuth providers for your app.
+2. Ensure you are running the supported version of Node.js, which is [declared in the `package.json`](https://github.com/okfn/opendatacensus/blob/feature/database/package.json#L58).
+3. Create a database with `createdb opendatacensus`.
+4. Add this line to your hosts file: `127.0.0.1 demo.dev.census.org global.dev.census.org id.dev.census.org system.dev.census.org`.
+5. Create a local directory called `opendatacensus` and move into it with `cd opendatacensus`.
+6. Clone the code with `git clone https://github.com/okfn/opendatacensus .`.
+7. Install the dependencies with `npm install`.
+8. Create a `settings.json` file with these contents, changing any values as required:
 
 ```
 {
-  "sysAdmin" : "someone@example.com",
-  "registryUrl": "https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=18jINMw7ifwUoqizc4xaQE8XtF4apPfsmMN43EM-9Pmc&usp=sharing#gid=0",
-  "baseDomain": "dev.census.org",
+  "sysAdmin": "{YOUR_EMAIL}",
+  "registryUrl": "https://docs.google.com/spreadsheets/d/18jINMw7ifwUoqizc4xaQE8XtF4apPfsmMN43EM-9Pmc/edit#gid=0",
   "database": {
-    "username": "",
-    "password": "",
+    "username": "{DB_USERNAME}",
+    "password": "{DB_PASSWORD}",
     "database": "opendatacensus",
     "host": "localhost",
     "port": 5432,
     "dialect": "postgres",
+    "logging": false,
     "define": {
-      "underscored": true,
       "charset": "utf-8",
       "collate": "utf8_general_ci",
       "timestamps": true
     }
-  }
+  },
+  "google": {
+    "app_id": "{GOOGLE_APP_ID}",
+    "app_secret": "{GOOGLE_APP_SECRET}"
+  },
+  "facebook": {
+    "app_id": "{FACEBOOK_APP_ID}",
+    "app_secret": "{FACEBOOK_APP_SECRET}"
+  },
+  "auth_subdomain": "id",
+  "system_subdomain": "system",
+  "sentry_dsn": ""
 }
-
 ```
 
 Now we should be ready to run the server:
 
 1. Run the app with `npm start`
-2. Visit the app in your browser at `http://demo.dev.census.org:5000/`
+2. Load registry and config data at `http://system.dev.census.org:5000/control` (You'll need to be logged in and the system administrator to access this)
+3. Load the data for a specific site, e.g.: `http://demo.dev.census.org:5000/admin`
+4. Visit the site: `http://demo.dev.census.org:5000/`
 
-**NOTE**: Each app instance manages multiple census sites via subdomains. Hence, we require mapping in your hosts file for this. The mappings created above, `demo` and `gb-city` are just for example. Create whatever mapping you will need, and ensure that these are matched by entries in the Registry and Site models (TBD).
 
 ### Deployment
 
-SESSION_SECRET
+We run deployments on Heroku. The app should run anywhere that you can run Node.js and Postgres. The important thing to remember for deployments is that the `settings.json` file you are using for local development is not available, and therefore you need to configure many settings via environment variables. The key settings you should ensure you set are:
 
-BASE_DOMAIN
-
-DATABASE_URL
-
-SYS_ADMIN
+* `SESSION_SECRET`
+* `BASE_DOMAIN`
+* `DATABASE_URL`
+* `SYS_ADMIN`
+* `FACEBOOK_APP_ID`
+* `FACEBOOK_APP_SECRET`
+* `GOOGLE_APP_ID`
+* `GOOGLE_APP_SECRET`
 
 ### i18n For Templates
 
@@ -99,46 +112,10 @@ Any column can be internationalised by adding another column with `@locale` afte
 
 ### Running Tests
 
-* Install dev dependencies and mocha - `npm install -d`
-* Get the opendatacensustest google user login and add to `settings.json`
-
-Then run the tests:
-
-    mocha tests/
+`npm test`
 
 ------
 
 ## Heroku Deployment
 
-We have multiple apps on Heroku including:
-
-* Production: `opendatacensus` - push there from production branch
-* Staging: `opendatacensus-staging` - push from master
-
-To work with a given remote:
-
-    heroku --remote production ...
-
-To work with these do:
-
-    heroku git:remote -r production -a opendatacensus
-    heroku git:remote -r staging -a opendatacensus-staging
-    # this way git push heroku master will push to staging
-    heroku git:remote -a opendatacensus-staging
-
-To avoid error suggest making the staging app the default:
-
-    git config heroku.remote staging
-
-## Appendix - Why Google Spreadsheets for the DB
-
-Pros
-
-* being easy to hand-edit and view (esp for non-techies)
-* multiple formats
-* versioned (so all changes are recorded)
-
-Cons
-
-* Google Spreadsheets has limited storage (400k cells etc). However, our data
-  requirements are usually quite limited for each census.
+TBD: This section needs to be updated. The basics of deployment now are just to use the normal heroku commands, as now, one codebase powers multiple census sites.
