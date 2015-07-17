@@ -23,7 +23,7 @@
         </a>
         <br />
         <span class="changelist-date">
-            {{ gettext("Submitted by") }} {{ item.Submitter.fullName() }} {% if item.rewiewResult %}{{ gettext("and reviewed by") }} {{ item.Reviewer.fullName() }}{% endif %}</span>
+            {{ gettext("Submitted by") }} {% if item.Submitter %}{{ item.Submitter.fullName() }}{% endif %} {% if item.rewiewResult %}{{ gettext("and reviewed by") }} {{ item.Reviewer.fullName() }}{% endif %}</span>
     </li>
     {% endfor %}
 </ul>

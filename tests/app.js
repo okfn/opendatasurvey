@@ -293,7 +293,7 @@ describe('Census Pages', function() {
       .set('Host', 'national.dev.census.org')
       .expect(200)
       .then(function(res) {
-        checkContent(res, '0e7c393e-71dd-4368-93a9-fcfff59f9fff', 'Page should include a link to a submission.');
+        checkContent(res, '782178d4-6e6b-4c7c-979c-21ddadd1be28', 'Page should include a link to a submission.');
         // ARGGGH
         // checkContent(res, '/entry/af/timetables', 'Page should include a link to a recent entry.');
         done();
