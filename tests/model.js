@@ -53,48 +53,37 @@ describe('Backend Entry', function() {
         })
       });
     });
-
-    // backend.insertEntry(data, function(err) {
-    //   //TODO: Test that something was inserted
-    //   assert.ok(!err, err);
-    //   //N.B. We need to delete this anyway for getEntry, but having newlines in the query string, even when encoded, causes HTTP 400 error
-    //   delete data['details'];
-    //   backend.getEntry(data, function(err, entry) {
-    //     assert.ok(!err, err);
-    //     backend.updateEntry(entry, newData, function(err) {
-    //       assert.ok(!err);
-    //       //Test that field was 'changed' (we didn't check the original value yet, TODO)
-    //       backend.getEntry(entry, function(err, updatedEntry) {
-    //         assert.equal(updatedEntry.details, 'New details');
-    //         done();
-    //       });
-    //     });
-    //   });
-    // });
   });
   it('two entries, choose the earlier year', function(done) {
     var earlier = {
+      answers: {},
+      id: uuid.v4(),
       year: 2012,
       dataset: 'spending',
       place: 'de',
       details: 'Some details',
+      site: 'global',
+      isCurrent: false
     };
     var later = {
+      answers: {},
+      id: uuid.v4(),
       year: 2013,
       dataset: 'spending',
       place: 'de',
       details: 'New details',
+      site: 'global',
+      isCurrent: false
     };
+    models.Entry.create(later).then(function(R) {
+      assert(R.id);
 
-    backend.insertEntry(later, function(err) {
-      //TODO: Test that something was inserted
-      assert.ok(!err, err);
-      backend.insertEntry(earlier, function(err) {
-        //TODO: Test that something was inserted
-        assert.ok(!err, err);
-        backend.getEntry(earlier, function(err, entry) {
-          assert.equal(entry.details, 'Some details');
-          assert.equal(entry.year, '2012');
+      models.Entry.create(earlier).then(function(R) {
+        assert(R.id);
+
+        models.Entry.findOne({where: earlier}).then(function(E) {
+          assert.equal(E.details, 'Some details');
+          assert.equal(E.year, '2012');
           done();
         });
       });

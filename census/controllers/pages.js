@@ -52,18 +52,16 @@ var changes = function (req, res) {
 
     D.entries = _.each(D.entries, function(result, index, list) {
 
-      var url;
       result.place = _.find(D.places, function(place) {return place.id === result.place;});
       result.dataset = _.find(D.datasets, function(dataset) {return dataset.id === result.dataset;});
 
       if (result.reviewResult) {
-        url = '/entry/PLACE/DATASET'
+        result.url = '/entry/PLACE/DATASET'
           .replace('PLACE', result.place.id)
           .replace('DATASET', result.dataset.id);
       } else {
-        url = '/submission/ID'.replace('ID', result.id);
+        result.url = '/submission/ID'.replace('ID', result.id);
       }
-
     });
 
     res.render('changes.html', {
