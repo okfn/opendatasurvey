@@ -121,11 +121,12 @@ var overview = function (req, res) {
 
   var entryQueryParams = _.merge(modelUtils.siteQuery(req, true), {where: {isCurrent: true}});
   var questionQueryParams = _.merge(modelUtils.siteQuery(req), {where: {type: ''}, order: 'score DESC'});
+  var datasetQueryParams = modelUtils.siteQuery(req);
 
   modelUtils.loadModels({
 
     entries: req.app.get('models').Entry.findAll(entryQueryParams),
-    datasets: req.app.get('models').Dataset.findAll(modelUtils.siteQuery(req)),
+    datasets: req.app.get('models').Dataset.findAll(datasetQueryParams),
     places: req.app.get('models').Place.findAll(modelUtils.siteQuery(req)),
     questions: req.app.get('models').Question.findAll(questionQueryParams)
 
@@ -180,7 +181,7 @@ var overview = function (req, res) {
       customText: req.params.site.settings.overview_page,
       missingPlaceText: req.params.site.settings.missing_place_html,
       places: _.sortByOrder(modelUtils.translateSet(req, D.places), 'computedScore', 'desc'),
-      datasets: modelUtils.translateSet(req, D.datasets),
+      datasets: _.sortByOrder(modelUtils.translateSet(req, D.datasets), 'order', 'asc'),
       questions: modelUtils.translateSet(req, D.questions),
       entries: D.entries,
       year: req.params.year
@@ -237,7 +238,7 @@ var place = function (req, res) {
       entries: D.entries,
       place: D.place.translated(req.locale),
       questions: modelUtils.translateSet(req, D.questions),
-      datasets: modelUtils.translateSet(req, D.datasets),
+      datasets: _.sortByOrder(modelUtils.translateSet(req, D.datasets), 'order', 'asc'),
       loggedin: req.session.loggedin,
       year: req.params.year,
       submissionsAllowed: (req.params.year === req.app.get('year')),
