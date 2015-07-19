@@ -77,7 +77,7 @@ var loadAllDatasets = function (req, res) {
       Promise.each(results, function(result) {
 
         var options = {
-          mapper: function(D) {return _.extend(D, {id: D.id.toLowerCase(), name: D.title});},
+          mapper: function(D) {return _.extend(D, {id: D.id.toLowerCase(), name: D.title, order: D.order || 100});},
           Model: req.app.get('models').Dataset,
           setting: 'datasets',
           site: result.id

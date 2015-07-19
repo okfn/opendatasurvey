@@ -38,6 +38,12 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true,
       comment: "The icon class for this dataset. Used in UI."
     },
+    order: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      default: 100,
+      comment: "The order for this dataset relative to others. Used for various table displays."
+    },
     translations: {
       type: DataTypes.JSONB,
       allowNull: true
