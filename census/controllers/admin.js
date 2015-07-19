@@ -25,6 +25,7 @@ var loadConfig = function (req, res) {
 var loadPlaces = function (req, res) {
 
   return _promisedLoad(req, res, {
+    mapper: function(D) {return _.extend(D, {id: D.id.toLowerCase()});},
     Model: req.app.get('models').Place,
     setting: 'places',
     site: req.params.domain
@@ -35,7 +36,7 @@ var loadPlaces = function (req, res) {
 var loadDatasets = function (req, res) {
 
   return _promisedLoad(req, res, {
-    mapper: function(D) {return _.extend(D, {name: D.title});},
+    mapper: function(D) {return _.extend(D, {id: D.id.toLowerCase(), name: D.title});},
     Model: req.app.get('models').Dataset,
     setting: 'datasets',
     site: req.params.domain
@@ -43,14 +44,13 @@ var loadDatasets = function (req, res) {
 
 };
 
-
 var loadQuestions = function (req, res) {
 
   return _promisedLoad(req, res, {
     mapper: function(D) {
       var dependants = null;
-      if(D.dependants !== ''){ dependants = D.dependants.split(',');}
-      return _.extend(D, {dependants: dependants, score: D.score || 0});
+      if(D.dependants){ dependants = D.dependants.split(',');}
+      return _.extend(D, {id: D.id.toLowerCase(), dependants: dependants, score: D.score || 0, order: D.order || 100});
     },
     Model: req.app.get('models').Question,
     setting: 'questions',

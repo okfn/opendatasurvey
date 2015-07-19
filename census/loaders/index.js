@@ -130,19 +130,9 @@ var  loadTranslatedData = function(options, models) {
 };
 
 
-var _promisedLoad = function(req, res, options) {
-
-  return loadTranslatedData(options, req.app.get('models'))
-    .then(function() { res.send({status: 'ok', message: 'ok'}); })
-    .catch(function(E) { res.send({status: 'error', message: E}); });
-
-};
-
-
 module.exports = {
   loadData: loadData,
   loadTranslatedData: loadTranslatedData,
   loadRegistry: loadRegistry,
-  loadConfig: loadConfig,
-  _promisedLoad: _promisedLoad
+  loadConfig: loadConfig
 };
