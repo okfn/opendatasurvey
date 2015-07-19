@@ -178,7 +178,7 @@ var overview = function (req, res) {
       currentEntryCount: currentEntryCount,
       currentEntryOpenCount: currentEntryOpenCount,
       openDataPercent: openDataPercent,
-      extraWidth: D.datasets > 12,
+      extraWidth: D.datasets.length > 12,
       customText: req.params.site.settings.overview_page,
       missingPlaceText: req.params.site.settings.missing_place_html,
       places: _.sortByOrder(modelUtils.translateSet(req, D.places), 'computedScore', 'desc'),
