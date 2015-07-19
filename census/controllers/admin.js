@@ -3,7 +3,15 @@
 var _ = require('lodash');
 var loaders = require('../loaders');
 var Promise = require('bluebird');
-var _promisedLoad = loaders._Load;
+
+
+var _promisedLoad = function(req, res, options) {
+
+  return loaders.loadTranslatedData(options, req.app.get('models'))
+    .then(function() { res.send({status: 'ok', message: 'ok'}); })
+    .catch(function(E) { res.send({status: 'error', message: E}); });
+
+};
 
 
 var dashboard = function (req, res) {
