@@ -122,7 +122,7 @@
         {% include '_snippets/key.html' %}
 
         <h3>{{gettext("Contributors")}}</h3>
-        <h4>{{ format("Editors for %(name)s:", { name: place.name }) }}</h4>
+        <h4>{{ format("Reviewers for %(name)s:", { name: place.name }) }}</h4>
         <p>
           {% if reviewers %}{% for reviewer in reviewers %}{% if loop.index>1 %}, {% endif %}{% if reviewer.isAnonymous() %}{{ reviewer.firstName|title }}{% else %}{{reviewer.fullName()}}{% endif %}{% endfor %}{% endif %}
         </p>
