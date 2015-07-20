@@ -124,11 +124,11 @@
         <h3>{{gettext("Contributors")}}</h3>
         <h4>{{ format("Editors for %(name)s:", { name: place.name }) }}</h4>
         <p>
-          {% if reviewers %}{% for reviewer in reviewers %}{% if loop.index>1 %}, {% endif %}{{reviewer.fullName()}}{% endfor %}{% endif %}
+          {% if reviewers %}{% for reviewer in reviewers %}{% if loop.index>1 %}, {% endif %}{% if reviewer.isAnonymous() %}{{ reviewer.firstName|title }}{% else %}{{reviewer.fullName()}}{% endif %}{% endfor %}{% endif %}
         </p>
         <h4>{{gettext("With submissions from:")}} </h4>
         <p>
-          {% if submitters %}{% for submitter in submitters %}{% if loop.index>1 %}, {% endif %}{{submitter.fullName()}}{% endfor %}{% endif %}
+          {% if submitters %}{% for submitter in submitters %}{% if loop.index>1 %}, {% endif %}{% if submitter.isAnonymous() %}{{ submitter.firstName|title }}{% else %}{{submitter.fullName()}}{% endif %}{% endfor %}{% endif %}
         </p>
       </div>
     </div>

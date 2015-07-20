@@ -80,8 +80,8 @@
 <table class="table table-striped yntable">
   <tr><td>{{gettext("Date the data became available")}}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.answers.dateavailable %}{{ entry.answers.dateavailable }}{% else %}{{gettext("Unknown")}}{% endif %}</td></tr>
   <tr><td>{{gettext("Format of data")}}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.answers.format %}{{ entry.answers.format }}{% else %}{{gettext("Unknown")}}{% endif %}</td></tr>
-  <tr><td>{{gettext("Reviewer")}}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.Reviewer %}{{entry.Reviewer.fullName()}}{% endif %}</td></tr>
-  <tr><td>{{gettext("Submitters")}}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.Submitter %}{{entry.Submitter.fullName()}}{% endif %}</td></tr>
+  <tr><td>{{gettext("Reviewer")}}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.Reviewer %}{% if entry.Reviewer.isAnonymous() %}{{ entry.Reviewer.firstName|title }}{% else %}{{entry.Reviewer.fullName()}}{% endif %}{% endif %}</td></tr>
+  <tr><td>{{gettext("Submitters")}}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.Submitter %}{% if entry.Submitter.isAnonymous() %}{{ entry.Submitter.firstName|title }}{% else %}{{entry.Submitter.fullName()}}{% endif %}{% endif %}</td></tr>
   <tr><td>{{gettext("Last modified")}}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.createdAt %}{{ entry.createdAt }}{% else %}{{gettext("Unknown")}}{% endif %}</td></tr>
 </table>
 

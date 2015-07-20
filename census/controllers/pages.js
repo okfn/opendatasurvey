@@ -242,8 +242,8 @@ var place = function (req, res) {
       loggedin: req.session.loggedin,
       year: req.params.year,
       submissionsAllowed: (req.params.year === req.app.get('year')),
-      reviewers: reviewers,
-      submitters: submitters
+      reviewers: _.uniq(reviewers, 'id'),
+      submitters: _.uniq(submitters, 'id')
     });
 
   }).catch(console.log.bind(console));

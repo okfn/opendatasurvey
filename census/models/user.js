@@ -57,6 +57,9 @@ module.exports = function (sequelize, DataTypes) {
       },
       fullName: function() {
         return 'F L'.replace('F', this.firstName).replace('L', this.lastName);
+      },
+      isAnonymous: function() {
+        return this.firstName === 'anonymous' && this.lastName === 'anonymous';
       }
 
     },
