@@ -41,6 +41,8 @@ var requireDomain = function(req, res, next) {
             return;
           });
 
+          req.params.configUrl = result.settings.configurl;
+          res.locals.configUrl = req.params.configUrl;
           res.locals.siteAdmin = req.params.siteAdmin;
 
           req.app.get('models').Site.findById(req.params.domain).then(function(result) {

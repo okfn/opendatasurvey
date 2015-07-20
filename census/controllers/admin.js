@@ -26,9 +26,9 @@ var dashboard = function (req, res) {
   }).then(function(D) {
 
     res.render('admin.html', {
-      places: D.places,
-      datasets: D.datasets,
-      questions: D.questions
+      places: _.sortByOrder(D.places, 'id', 'asc'),
+      datasets: _.sortByOrder(D.datasets, 'order', 'asc'),
+      questions: _.sortByOrder(D.questions, 'order', 'asc')
     });
 
   }).catch(console.log.bind(console));

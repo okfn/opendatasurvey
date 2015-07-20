@@ -4,13 +4,72 @@
 {{ gettext('Dashboard') }}
 {% endblock %}
 
+
 {% block content %}
 <h1>{{ gettext('Site Admin Dashboard') }}</h1>
-<ul>
-  <li><a href="/admin/load/config">Config</a></li>
-  <li><a href="/admin/load/places">Places</a></li>
-  <li><a href="/admin/load/datasets">Datasets</a></li>
-  <li><a href="/admin/load/questions">Questions</a></li>
-</ul>
 
+<div class="row">
+  <div class="span6">
+    <h2>{{ gettext('Current Config') }}</h2>
+    <a target="_blank" href="{{ configUrl }}">View Spreadsheet</a><br />
+    {% if site %}
+    <ul>
+      {% for k, v in site.settings %}
+      <li>{{ k }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+  <div class="span6">
+    <h2>{{ gettext('Data actions') }}</h2>
+    <ul>
+      <li><a href="/admin/load/config">{{ gettext('Reload Config') }}</a></li>
+      <li><a href="/admin/load/places">{{ gettext('Reload Places') }}</a></li>
+      <li><a href="/admin/load/datasets">{{ gettext('Reload Datasets') }}</a></li>
+      <li><a href="/admin/load/questions">{{ gettext('Reload Questions') }}</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="span6">
+    <h2>{{ gettext('Current Places') }}</h2>
+    <a target="_blank" href="{{ site.settings.places }}">View Spreadsheet</a>
+    {% if places %}
+    <ul>
+      {% for place in places %}
+      <li>{{ place.id }}: {{ place.name }}</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    {{ gettext('No places') }}
+    {% endif %}
+  </div>
+  <div class="span6">
+    <h2>{{ gettext('Current Datasets') }}</h2>
+    <a target="_blank" href="{{ site.settings.datasets }}">View Spreadsheet</a>
+    {% if datasets %}
+    <ul>
+      {% for dataset in datasets %}
+      <li>{{ dataset.id }}: {{ dataset.name }}</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    {{ gettext('No datasets') }}
+    {% endif %}
+  </div>
+  <div class="span6">
+    <h2>{{ gettext('Current Questions') }}</h2>
+    <a target="_blank" href="{{ site.settings.questions }}">View Spreadsheet</a>
+    {% if questions %}
+    <ul>
+      {% for question in questions %}
+      <li>{{ question.id }}: {{ question.question }}</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    {{ gettext('No questions') }}
+    {% endif %}
+  </div>
+</div>
 {% endblock %}
