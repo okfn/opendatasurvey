@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var loaders = require('../loaders');
 var Promise = require('bluebird');
+var modelUtils = require('../models').utils;
 
 
 var _promisedLoad = function(req, res, options) {
@@ -16,7 +17,21 @@ var _promisedLoad = function(req, res, options) {
 
 var dashboard = function (req, res) {
 
-  res.render('admin.html');
+  modelUtils.loadModels({
+
+    places: req.app.get('models').Place.findAll(modelUtils.siteQuery(req)),
+    datasets: req.app.get('models').Dataset.findAll(modelUtils.siteQuery(req)),
+    questions: req.app.get('models').Question.findAll(modelUtils.siteQuery(req))
+
+  }).then(function(D) {
+
+    res.render('admin.html', {
+      places: D.places,
+      datasets: D.datasets,
+      questions: D.questions
+    });
+
+  }).catch(console.log.bind(console));
 
 };
 
