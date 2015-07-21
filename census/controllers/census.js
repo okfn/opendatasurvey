@@ -104,7 +104,7 @@ var _submitPostHandler = function(req, res, current, questions, places, datasets
 
   errors = routeUtils.validateSubmitForm(req);
 
-  if (current.year === req.app.get('year') && current.isCurrent === false) {
+  if (current && current.year === req.app.get('year') && current.isCurrent === false) {
     if (!Array.isArray(errors)) {
       errors = [];
     }
@@ -267,7 +267,7 @@ var pendingEntry = function (req, res) {
       }).then(function(D) {
 
         res.render('review.html', {
-          canReview: true,//(_.intersection(req.params.site.settings.reviewers, req.user.emails).length >= 1),
+          canReview: (_.intersection(req.params.site.settings.reviewers, req.user.emails).length >= 1),
           reviewClosed: result.reviewResult || (result.year !== req.app.get('year')),
           reviewInstructions: config.get('review_page'),
           questions: _getFormQuestions(req, D.questions),

@@ -99,7 +99,7 @@ var requireReviewer = function (req, res, next) {
     return;
   }
 
-  res.send(401, 'Sorry, you are not an authorized reviewer');
+  res.status(401).send('Sorry, you are not an authorized reviewer');
   return;
 
 };
