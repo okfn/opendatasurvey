@@ -106,8 +106,8 @@ var requireReviewer = function (req, res, next) {
 
 var requireAdmin = function (req, res, next) {
 
-  if (req.user && (_.intersection(req.app.get('sysAdmin'), req.user.emails) ||
-                   _.intersection(req.params.siteAdmin, req.user.emails))) {
+  if (req.user && (_.intersection(req.params.siteAdmin, req.user.emails)).length >= 1 ||
+      _.intersection(req.app.get('sysAdmin'), req.user.emails).length >= 1) {
 
     next();
     return;
