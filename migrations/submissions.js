@@ -91,6 +91,7 @@ var cleanSubmission = function(obj, users) {
     return [Q, obj[Q]];
   }).object().value();
 
+  delete obj.answers.details;
   delete obj.submitterid;
   delete obj.reviewerid;
 

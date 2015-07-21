@@ -48,6 +48,8 @@ var cleanEntry = function(obj) {
     return [Q, obj[Q]];
   }).object().value();
 
+  delete obj.answers.details;
+
   return obj;
 
 };
