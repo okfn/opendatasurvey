@@ -75,7 +75,7 @@ var validateSubmitForm = function (req) {
     exists;
 
   // first check exists for a yes answer.
-  if (req.body.hasOwnProperty('exists') && req.body.exists === 'Yes') {
+  if (req.body.hasOwnProperty('exists') && req.body.exists === 'true') {
     exists = true;
   }
 

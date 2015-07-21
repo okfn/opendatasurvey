@@ -94,13 +94,13 @@ var requireAuth = function (req, res, next) {
 
 var requireReviewer = function (req, res, next) {
 
-  if (_.intersection(req.params.site.settings.reviewers, req.user.emails) !== -1) {
-
-    return true;
-
+  if (_.intersection(req.params.site.settings.reviewers, req.user.emails).length >= 1) {
+    next();
+    return;
   }
 
-  return false;
+  res.send(401, 'Sorry, you are not an authorized reviewer');
+  return;
 
 };
 

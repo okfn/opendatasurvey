@@ -1,7 +1,7 @@
 jQuery(document).ready(function($) {
 
   var $yninputs = $('.yntable .js-dependent'),
-      $choiceSwitches = $('.Yes, .No, .Unsure'),
+      $choiceSwitches = $('.true, .false, .null'),
       $dataInputs = $('input[type=text], input[type=url]');
       $existsInput = $('input[name="exists"]'),
       readmoreConfig = {
@@ -27,7 +27,7 @@ jQuery(document).ready(function($) {
 
   function initializeDependants($els) {
       $els.each(function(index) {
-          if ($(this).hasClass('Yes') && $(this).is(':checked')) {
+          if ($(this).hasClass('true') && $(this).is(':checked')) {
               manageDependants($(this));
           }
       });
@@ -51,7 +51,7 @@ jQuery(document).ready(function($) {
       var $dependants = $el.parent().siblings('.submission-dependant'),
           $dependant_inputs = $dependants.find(':input');
 
-      if ($el.hasClass('Yes') && $el.is(':checked')) {
+      if ($el.hasClass('true') && $el.is(':checked')) {
           $dependants.show();
       } else {
           $dependants.hide();
@@ -67,7 +67,7 @@ jQuery(document).ready(function($) {
           diff_msg = 'The new value differs from the one currently on record.',
           diff_bg = '#EFED8A';
 
-      if ($.inArray(currentValue, ['Yes', 'No', 'Unsure']) !== -1  &&
+      if ($.inArray(currentValue, ['true', 'false', 'null']) !== -1  &&
           !$el.hasClass(currentValue) && $el.is(':checked')) {
           $el.attr('title', diff_msg).parent().attr('title', diff_msg).css({'cursor': 'pointer', 'backgroundColor': diff_bg});
           $el.parent().siblings().removeAttr('title').css('backgroundColor', '').find('input[type=radio]').removeAttr('title').css({'cursor': 'auto', 'backgroundColor': ''});
@@ -93,18 +93,18 @@ jQuery(document).ready(function($) {
 
   function showHideAvailabilityTable() {
     var val = $('input[name="exists"]:checked').val();
-    if(val === "No" || val === "Unsure") {
+    if(val === "false" || val === "null") {
       $yninputs.find('input[value="'+ val +'"]')
         .prop('checked', true);
       $yninputs.addClass('hide').slideUp();
-    } else if (val === "Yes") {
+    } else if (val === "true") {
       $yninputs.hide().removeClass('hide').slideDown();
     } // else do nothing
   }
 
   function publicAndOnline() {
-    var public = $('input[name=public]:checked').val() === 'Yes'
-      , online = $('input[name=online]:checked').val() === 'Yes'
+    var public = $('input[name=public]:checked').val() === 'true'
+      , online = $('input[name=online]:checked').val() === 'true'
       , $url = $('input[name=url]')
       , $header = $url.prev('h4')
       ;
@@ -119,7 +119,7 @@ jQuery(document).ready(function($) {
   }
 
   function openLicense() {
-    var open = $('input[name=openlicense]:checked').val() === 'Yes'
+    var open = $('input[name=openlicense]:checked').val() === 'true'
       , $url = $('input[name=licenseurl]')
       , $header = $url.prev('h4')
       ;
@@ -196,4 +196,3 @@ jQuery(document).ready(function($) {
   $('.readmore').readmore(readmoreConfig);
 
 });
-

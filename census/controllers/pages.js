@@ -234,7 +234,6 @@ var place = function (req, res) {
     D.place.computedScore = D.place.score(D.entries, D.questions);
 
     res.render('place.html', {
-
       entries: D.entries,
       place: D.place.translated(req.locale),
       questions: modelUtils.translateSet(req, D.questions),

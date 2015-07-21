@@ -40,7 +40,7 @@ var subdomainOptions = {
 var validatorOptions = {
   customValidators: {
     isChoice: function (value) {
-      var choices = ['Yes', 'No', 'Unsure'];
+      var choices = ['true', 'false', 'null'];
       if (choices.indexOf(value) > -1) {
         return true;
       } else {

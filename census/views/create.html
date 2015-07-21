@@ -16,7 +16,7 @@
     </p>
     {% for error in errors %}
     <ul>
-        <li>{{ error.param }}: {{ error.msg }} (Current is '{{ error.value }}')</li>
+        <li>{{ error.param }}: {{ error.msg }} {% if error.value %}(Current is '{{ error.value }}'){% endif %}</li>
     </ul>
     {% endfor %}
 </div>
@@ -38,7 +38,7 @@
           <select name="place" required autocomplete="off">
             <option value="">{{gettext("Please select")}}</option>
             {% for place in places %}
-            <option value="{{place.id}}" {% if (formData and place.id == formData.place) or (place.id == prefill.place) %}selected="true"{% endif %}>{{place.name}}</option>
+            <option value="{{place.id}}" {% if (current and place.id == current.place) %}selected="true"{% endif %}>{{place.name}}</option>
             {% endfor %}
           </select>
         </label>
@@ -48,7 +48,7 @@
           <select name="dataset" id="dataset-select" required>
             <option value="">{{gettext("Please select")}}</option>
             {% for dataset in datasets %}
-            <option value="{{dataset.id}}" {% if (formData and dataset.id == formData.dataset) or (dataset.id == prefill.dataset) %}selected="true"{% endif %}>{{dataset.name}}</option>
+            <option value="{{dataset.id}}" {% if (current and dataset.id == current.dataset) %}selected="true"{% endif %}>{{dataset.name}}</option>
             {% endfor %}
           </select>
 
@@ -71,8 +71,17 @@
 
   {% include '_snippets/form.html' %}
 
-  <h3>{{ format("Your Name &ndash; %(name)s", { name: currentUser.name}) }} </h3>
-  <span class="help-block">{{gettext("This will be public.")}}</span>
+  <div class="row"><p>&nbsp;</p></div>
+
+  <div class="row">
+    <div class="span12 alert alert-warning">
+    <h4>{{ currentUser.firstName }}, {{ gettext('would you prefer your submission to remain anonymous?') }}</h4>
+    <span class="help-block">{{gettext('By default, submissions to the census are credited to the submitter. If you would prefer to remain anonymous, please indicate so by checking the box.')}}</span>
+    <input type="radio" title="{{ gettext ('Anonymous submission')}}" name="anonymous" value="false" checked /> {{ gettext('Identify me as the submitter') }}
+    <br />
+    <input type="radio" title="{{ gettext ('Anonymous submission')}}" name="anonymous" value="true" /> {{ gettext('Keep my submission anonymous') }}
+    </div>
+  </div>
 
   <div class="controls" style="margin-top: 30px;">
     <button type="submit" class="btn btn-large btn-success" data-loading-text="Saving ..." style="float: left; margin-right: 30px;">{{gettext("Submit")}}</button>

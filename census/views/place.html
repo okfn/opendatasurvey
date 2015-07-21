@@ -49,7 +49,7 @@
             {% for dataset in datasets %}
 
             {% set currentEntry = entries|find({'dataset': dataset.id, 'isCurrent': true}) %}
-            {% set pendingEntries = entries|find({'dataset': dataset.id, 'isCurrent': false, 'reviewed': false, 'reviewResult': false}) %}
+            {% set pendingEntries = entries|where({'dataset': dataset.id, 'isCurrent': false}) %}
 
             <tr>
               <td>
@@ -89,19 +89,19 @@
               <td>
                 <strong>{{gettext("&#8627; Awaiting review")}}</strong><br />
 
-                <span title="{{ gettext('Submitted by')}} {{ pendingEntry.submitter.fullName()}}" class="queued-context">
+                <span title="{{ gettext('Submitted by')}} {{ pendingEntry.Submitter.firstName}}" class="queued-context">
                   <i class="icon icon-user"></i>&nbsp;
-                  {{ pendingEntry.submitter.fullName() }}
+                  {{ pendingEntry.Submitter.firstName }}
                 </span>
                 <br />
-                <span title="{{ gettext('Submitted on')}} {{ submission.timestamp|dateformat }}" class="queued-context">
+                <span title="{{ gettext('Submitted on')}} {{ pendingEntry.createdAt|dateformat }}" class="queued-context">
                   <i class="icon icon-time"></i>&nbsp;
-                  {{ pendingEntry.timestamp|simpledelta }}
+                  {{ pendingEntry.createdAt|simpledelta }}
                 </span>
               </td>
               {{entrysummary(dataset, place, pendingEntry, questions)}}
               <td>
-                 <a href="/submission/{{pendingEntry.id}}" class="btn btn-mini btn-danger">
+                 <a href="/census/submission/{{pendingEntry.id}}" class="btn btn-mini btn-danger">
                   {{gettext("View Submission")}}
                  </a>
                  <script>
@@ -124,11 +124,11 @@
         <h3>{{gettext("Contributors")}}</h3>
         <h4>{{ format("Reviewers for %(name)s:", { name: place.name }) }}</h4>
         <p>
-          {% if reviewers %}{% for reviewer in reviewers %}{% if loop.index>1 %}, {% endif %}{% if reviewer.isAnonymous() %}{{ reviewer.firstName|title }}{% else %}{{reviewer.fullName()}}{% endif %}{% endfor %}{% endif %}
+          {% if reviewers %}{% for reviewer in reviewers %}{% if loop.index>1 %}, {% endif %}{% if reviewer %}{% if reviewer.isAnonymous() %}{{ reviewer.firstName|title }}{% else %}{{reviewer.fullName()}}{% endif %}{% endif %}{% endfor %}{% endif %}
         </p>
         <h4>{{gettext("With submissions from:")}} </h4>
         <p>
-          {% if submitters %}{% for submitter in submitters %}{% if loop.index>1 %}, {% endif %}{% if submitter.isAnonymous() %}{{ submitter.firstName|title }}{% else %}{{submitter.fullName()}}{% endif %}{% endfor %}{% endif %}
+          {% if submitters %}{% for submitter in submitters %}{% if loop.index>1 %}, {% endif %}{% if submitter %}{% if submitter.isAnonymous() %}{{ submitter.firstName|title }}{% else %}{{submitter.fullName()}}{% endif %}{% endif %}{% endfor %}{% endif %}
         </p>
       </div>
     </div>

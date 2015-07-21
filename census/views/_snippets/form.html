@@ -3,8 +3,8 @@
   <label>{{gettext("Current Entry")}}</label>
   <div class="current-entry-value">
     {% if current %}
-    {% if current[qu.id] %}
-    {{current[qu.id]}}
+    {% if current.answers[qu.id] %}
+    {{current.answers[qu.id]}}
     {% else %}
     {{ gettext("No entry") }}
     {% endif %}
@@ -19,7 +19,7 @@
 {% macro question(qu) -%}
 <div class="span6">
   <h4 class="submission-label">{{qu.question}}</h4>
-  <input type="{{qu.type}}" title="{{qu.placeholder}}" name="{{qu.id}}" value="{% if formData %}{{formData[qu.id]}}{% else %}{{prefill[qu.id]}}{% endif %}" {% if canReview != true or reviewClosed %}disabled="disabled"{% endif %} placeholder="{{qu.placeholder}}" {% if qu.id=='format' %} list="formats" {% endif %} />
+  <input type="{{qu.type}}" title="{{qu.placeholder}}" name="{{qu.id}}" value="{% if current %}{{current.answers[qu.id]}}{% endif %}" {% if canReview != true or reviewClosed %}disabled="disabled"{% endif %} placeholder="{{qu.placeholder}}" {% if qu.id=='format' %} list="formats" {% endif %} />
 </div>
 <div class="span6">
   {{ currentEntry(qu) }}
@@ -47,13 +47,13 @@
     <div class="row-fluid submission-row{% if loop.index0 != 0 %} hide js-dependent{% endif %}">
       <div class="span12">
         <div class="submission-question submission-label">{{ qu.question }}?</div>
-        {% for val in ['Yes', 'No', 'Unsure'] %}
+        {% for val in [true, false, null] %}
         <div class="submission-option">
-          <input type="radio" name="{{qu.id}}" value="{{val}}" {% if formData and formData[qu.id] == val %}checked="true" {% elif prefill[qu.id] == val %}checked="true" {% endif %}class="{{ val }}"{% if canReview != true or reviewClosed %} disabled="disabled"{% endif %} required>
+          <input type="radio" name="{{qu.id}}" value="{{val}}" {% if current and current.answers[qu.id] == val %}checked="true" {% endif %}class="{{ val }}"{% if canReview != true or reviewClosed %} disabled="disabled"{% endif %} required>
         </div>
         {% endfor %}
         <div class="submission-current">
-          {{ currrecord[qu.id] or gettext('No entry') }}
+          {{ current.answers[qu.id] or gettext('No entry') }}
         </div>
         <div class="submission-info">
           <span class="help-block readmore">{{qu.description}}</span>
@@ -84,7 +84,7 @@
     <div class="span6">
       <div class="wmd-panel">
         <div id="wmd-button-bar"></div>
-        <textarea class="wmd-input" id="wmd-input" name="details" {% if canReview != true or reviewClosed %}disabled="disabled"{% endif %} style="min-height: 150px;">{{prefill.details}}</textarea>
+        <textarea class="wmd-input" id="wmd-input" name="details" {% if canReview != true or reviewClosed %}disabled="disabled"{% endif %} style="min-height: 150px;">{{current.answers.details}}</textarea>
       </div>
     </div>
     <div class="span6">

@@ -34,7 +34,7 @@ $(document).ready(function($) {
     $('.showpopover').each(function(idx, td) {
       var $td = $(td);
       var $tr = $td.parent();
-      if (typeof data.byplace[$tr.data('place')] != 'undefined') {
+      if (typeof data.byplace[$tr.data('place')] !== 'undefined') {
         var record = data.byplace[$tr.data('place')].datasets[$td.data('dataset')];
         var datasetTitle = $td.data('datasettitle');
         $td.popover({
