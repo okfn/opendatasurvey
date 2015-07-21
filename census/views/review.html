@@ -9,6 +9,18 @@
 <div class="row">
   <div class="span12">
     {% if currentUser %}
+
+    {% if not canReview %}
+    <p>&nbsp;</p>
+    <div class="alert alert-danger" style="height: 40px;line-height: 40px;">
+      <div class="span9">
+        <p>
+          {{ currentUser.firstName }}, {{ gettext("You do not have permissions to review this submission.") }}
+        </p>
+      </div>
+    </div>
+    {% endif %}
+
     {% else %}
     <div class="alert alert-danger" style="height: 40px;line-height: 40px;">
       <div class="span9">
