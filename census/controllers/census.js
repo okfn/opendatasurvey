@@ -156,6 +156,7 @@ var _submitPostHandler = function(req, res, current, questions, places, datasets
       objToSave.site = req.params.site.id;
       objToSave.place = req.body.place;
       objToSave.dataset = req.body.dataset;
+      objToSave.details = req.body.details;
       objToSave.year = req.app.get('year');
       objToSave.submitterId = submitterId;
 
@@ -174,6 +175,7 @@ var _submitPostHandler = function(req, res, current, questions, places, datasets
       objToSave.site = req.params.site.id;
       objToSave.place = req.body.place;
       objToSave.dataset = req.body.dataset;
+      objToSave.details = req.body.details;
       objToSave.year = req.app.get('year');
       objToSave.isCurrent = false;
       objToSave.submitterId = submitterId;
@@ -192,14 +194,12 @@ var _submitPostHandler = function(req, res, current, questions, places, datasets
     }
 
     answers = req.body;
-    console.log(answers);
     delete answers['place'];
     delete answers['dataset'];
     delete answers['year'];
+    delete answers['details'];
     delete answers['anonymous'];
     objToSave.answers = _normalizedAnswers(answers);
-
-    console.log(objToSave);
 
     if (saveStrategy === 'create') {
       query = req.app.get('models').Entry.create(objToSave);
@@ -224,7 +224,7 @@ var _submitPostHandler = function(req, res, current, questions, places, datasets
 
           msg_tmpl = 'Thanks for your submission.REVIEWED You can check back here any time to see the current status.';
 
-          if (!result.reviewed) {
+          if (!result.isCurrent) {
 
             msg = msg_tmpl.replace('REVIEWED', ' It will now be reviewed by the editors.');
             submission_path = '/census/submission/' + result.id;
