@@ -48,7 +48,12 @@ var loadConfig = function (req, res) {
 var loadPlaces = function (req, res) {
 
   return _promisedLoad(req, res, {
-    mapper: function(D) {return _.extend(D, {id: D.id.toLowerCase()});},
+    mapper: function(D) {
+      var reviewers = [];
+      if (D.reviewers) {
+        reviewers = _.each(D.reviewers.split(','), function(r) {r.trim();});
+      }
+      return _.extend(D, {id: D.id.toLowerCase(), reviewers: reviewers});},
     Model: req.app.get('models').Place,
     setting: 'places',
     site: req.params.domain
@@ -59,7 +64,12 @@ var loadPlaces = function (req, res) {
 var loadDatasets = function (req, res) {
 
   return _promisedLoad(req, res, {
-    mapper: function(D) {return _.extend(D, {id: D.id.toLowerCase(), name: D.title, order: D.order || 100});},
+    mapper: function(D) {
+      var reviewers = [];
+      if (D.reviewers) {
+        reviewers = _.each(D.reviewers.split(','), function(r) {r.trim();});
+      }
+      return _.extend(D, {id: D.id.toLowerCase(), name: D.title, order: D.order || 100, reviewers: reviewers});},
     Model: req.app.get('models').Dataset,
     setting: 'datasets',
     site: req.params.domain

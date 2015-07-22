@@ -53,7 +53,12 @@ var loadAllPlaces = function (req, res) {
       Promise.each(results, function(result) {
 
         var options = {
-          mapper: function(D) {return _.extend(D, {id: D.id.toLowerCase()});},
+          mapper: function(D) {
+            var reviewers = [];
+            if (D.reviewers) {
+              reviewers = _.each(D.reviewers.split(','), function(r) {r.trim();});
+            }
+            return _.extend(D, {id: D.id.toLowerCase(), reviewers: reviewers});},
           Model: req.app.get('models').Place,
           setting: 'places',
           site: result.id
@@ -77,7 +82,12 @@ var loadAllDatasets = function (req, res) {
       Promise.each(results, function(result) {
 
         var options = {
-          mapper: function(D) {return _.extend(D, {id: D.id.toLowerCase(), name: D.title, order: D.order || 100});},
+          mapper: function(D) {
+            var reviewers = [];
+            if (D.reviewers) {
+              reviewers = _.each(D.reviewers.split(','), function(r) {r.trim();});
+            }
+            return _.extend(D, {id: D.id.toLowerCase(), name: D.title, order: D.order || 100, reviewers: reviewers});},
           Model: req.app.get('models').Dataset,
           setting: 'datasets',
           site: result.id

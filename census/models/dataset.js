@@ -44,6 +44,11 @@ module.exports = function (sequelize, DataTypes) {
       default: 100,
       comment: "The order for this dataset relative to others. Used for various table displays."
     },
+    reviewers: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: true,
+      comment: "Dataset-specific reviewers."
+    },
     translations: {
       type: DataTypes.JSONB,
       allowNull: true

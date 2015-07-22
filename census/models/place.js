@@ -39,6 +39,11 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true,
       comment: "The continent in which this place is located."
     },
+    reviewers: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: true,
+      comment: "Place-specific reviewers."
+    },
     translations: {
       type: DataTypes.JSONB,
       allowNull: true
