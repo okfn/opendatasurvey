@@ -62,7 +62,7 @@ app.set('systemDomain', config.get('system_subdomain'));
 app.set('urlTmpl', config.get('urlTmpl'));
 
 env = nunjucks.configure('census/views', {
-    // autoescape: true,
+    autoescape: false,
     express: app
 });
 

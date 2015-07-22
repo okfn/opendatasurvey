@@ -5,6 +5,12 @@ var moment = require('moment');
 var markedlib = require('marked');
 var linkifyStr = require('linkifyjs/string');
 
+markedlib.setOptions({
+  gfm: true,
+  sanitize: false
+});
+
+
 var find = function(list, args) {
   return _.find(list, args);
 };
