@@ -49,7 +49,7 @@
         <div class="submission-question submission-label">{{ qu.question }}?</div>
         {% for val in [true, false, null] %}
         <div class="submission-option">
-          <input type="radio" name="{{qu.id}}" value="{{val}}" {% if current and current.answers[qu.id] == val %}checked="true" {% endif %}class="{{ val }}"{% if canReview != true or reviewClosed %} disabled="disabled"{% endif %} required>
+          <input type="radio" name="{{qu.id}}" value="{% if val == null %}null{% else %}{{val}}{% endif %}" {% if current and current.answers[qu.id] == val %}checked="true" {% endif %}class="{{ val }}"{% if canReview != true or reviewClosed %} disabled="disabled"{% endif %} required>
         </div>
         {% endfor %}
         <div class="submission-current">
