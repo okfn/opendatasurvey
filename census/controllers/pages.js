@@ -60,7 +60,7 @@ var changes = function (req, res) {
           .replace('PLACE', result.place.id)
           .replace('DATASET', result.dataset.id);
       } else {
-        result.url = '/submission/ID'.replace('ID', result.id);
+        result.url = '/census/submission/ID'.replace('ID', result.id);
       }
     });
 

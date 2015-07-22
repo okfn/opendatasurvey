@@ -57,17 +57,16 @@ var _getFormQuestions = function(req, questions) {
 
 var _getCurrentMatch = function(entries, queryParams) {
 
-  var match;
+  var match = queryParams,
+      candidate;
 
-  if (!entries) {
-    match = queryParams;
-  } else {
-    entries = _.sortByOrder(entries, 'createdAt', 'desc');
-    match = _.find(entries, function(e) {return e.isCurrent;});
-    if (!match){
-      match = _.first(entries);
+    candidate = _.find(entries, function(e) {return e.isCurrent;});
+    if (!candidate){
+      match = _.first(entries) || match;
+    } else {
+      match = candidate;
     }
-  }
+
   return match;
 
 };
