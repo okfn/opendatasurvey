@@ -41,6 +41,17 @@ var requireDomain = function(req, res, next) {
             return;
           });
 
+          req.params.flags = {'characteristics': false, 'comments': false};
+          if (result.settings.flags) {
+            _.each(result.settings.flags.split(','), function(e, i, l) {
+              var feature = e.trim();
+              if (_.indexOf(_.keys(req.params.flags), feature) >= 0) {
+                req.params.flags[feature] = true;
+              }
+            });
+          }
+
+          res.locals.flags = req.params.flags;
           req.params.configUrl = result.settings.configurl;
           res.locals.configUrl = req.params.configUrl;
           res.locals.siteAdmin = req.params.siteAdmin;
