@@ -60,12 +60,16 @@ var _getCurrentMatch = function(entries, queryParams) {
   var match = queryParams,
       candidate;
 
+  if (!queryParams.place || !queryParams.dataset) {
+    match = {};
+  } else {
     candidate = _.find(entries, function(e) {return e.isCurrent;});
     if (!candidate){
       match = _.first(entries) || match;
     } else {
       match = candidate;
     }
+  }
 
   return match;
 
