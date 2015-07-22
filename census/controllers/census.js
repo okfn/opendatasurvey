@@ -103,7 +103,12 @@ var _submitPostHandler = function(req, res, current, questions, places, datasets
       saveStrategy,
       anonymous = true,
       submitterId = anonymousUserId,
-      query;
+      query,
+      approveFirstSubmission;
+
+  if (req.params.site.settings.approve_first_submission) {
+    approveFirstSubmission = req.params.site.settings.approve_first_submission;
+  }
 
   errors = routeUtils.validateSubmitForm(req);
 
@@ -152,8 +157,13 @@ var _submitPostHandler = function(req, res, current, questions, places, datasets
       objToSave.place = req.body.place;
       objToSave.dataset = req.body.dataset;
       objToSave.year = req.app.get('year');
-      objToSave.isCurrent = false;
       objToSave.submitterId = submitterId;
+
+      if (approveFirstSubmission) {
+        objToSave.isCurrent = true;
+      } else {
+        objToSave.isCurrent = false;
+      }
 
       saveStrategy = 'create';
 
