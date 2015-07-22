@@ -14,10 +14,26 @@ var loadConfig = function (siteId, models) {
         if (E)
           RJ(E);
 
+        var settings = {}, raw;
+        raw = _.object(_.zip(_.pluck(C, 'key'), _.pluck(C, 'value')));
+        _.each(raw, function(v, k) {
+
+
+          if (v && v.toLowerCase() === 'true') {
+            settings[k] = true;
+          } else if (v && v.toLowerCase() === 'false') {
+            settings[k] = false;
+          } else if (v && v.toLowerCase() === 'null') {
+            settings[k] = null;
+          } else {
+            settings[k] = v;
+          }
+
+        });
         // Insert single record — config for required site
         models.Site.upsert({
           id: siteId,
-          settings: _.object(_.zip(_.pluck(C, 'key'), _.pluck(C, 'value')))
+          settings: settings
         })
           .then(function() { RS(false); })
           .catch(function(E) { RJ(E); });
