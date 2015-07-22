@@ -66,7 +66,7 @@ var changes = function (req, res) {
 
     res.render('changes.html', {
 
-      entries: D.entries,
+      entries: _.sortByOrder(D.entries, 'updatedAt', 'desc'),
       loggedin: req.session.loggedin,
       year: req.app.get('year')
 
