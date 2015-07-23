@@ -55,7 +55,7 @@
   <ul>
     <li><strong>{{ gettext("Status") }}:</strong> <span class="label label-{% if current.isCurrent or current.reviewResult %}success{% else %}warning{% endif %}">{% if current.isCurrent or current.reviewResult %}accepted{% else %}pending{% endif %}</span></li>
     <li><strong>{{ gettext("Submission date") }}:</strong> {{ current.createdAt|dateformat }}</li>
-    <li><strong>{{ gettext("Submitter") }}:</strong>{% if current.Submitter %}{% if current.Submitter.isAnonymous() %}{{ current.Submitter.firstName|title }}{% else %}{{ current.Submitter.fullName() }}{% endif %}{% endif %}</li>
+    <li><strong>{{ gettext("Submitter") }}:</strong> {% if current.Submitter %}{% if current.Submitter.isAnonymous() %}{{ current.Submitter.firstName|title }}{% else %}{{ current.Submitter.fullName() }}{% endif %}{% endif %}</li>
     {% if current.Reviewer %}
     <li><strong>{{ gettext("Reviewer") }}:</strong> {% if current.Reviewer %}{% if current.Reviewer.isAnonymous() %}{{ current.Reviewer.firstName|title }}{% else %}{{ current.Reviewer.fullName() }}{% endif %}{% endif %}</li>
     {% if current.reviewComments %}<li><strong>{{ gettext("Review comments") }}:</strong> {{ current.reviewComments }}</li>{% endif %}
