@@ -56,7 +56,7 @@ module.exports = function (sequelize, DataTypes) {
         this.authenticationSalt = salt;
       },
       fullName: function() {
-        return 'F L'.replace('F', this.firstName).replace('L', this.lastName);
+        return 'F L'.replace('F', this.firstName || '').replace('L', this.lastName || '');
       },
       isAnonymous: function() {
         return this.firstName === 'anonymous' && this.lastName === 'anonymous';
