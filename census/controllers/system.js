@@ -7,7 +7,10 @@ var Promise = require('bluebird');
 
 var admin = function (req, res) {
 
-  res.render('system.html');
+  req.app.get('models').Registry.findAll()
+    .then(function(result) {
+      res.render('system.html', {registry: result});
+    });
 
 };
 

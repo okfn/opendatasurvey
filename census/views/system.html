@@ -14,4 +14,10 @@
   <li><a href="/load/questions">Load Questions</a></li>
 </ul>
 
+<h2>{{ gettext('Registry data') }}</h2>
+<ul>
+  {% for entry in registry %}
+  <li><strong>{{ entry.id }} {{ gettext('admin') }}:</strong> {{ entry.settings.adminemail|escape }}</li>
+  {% endfor %}
+</ul>
 {% endblock %}
