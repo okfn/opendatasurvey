@@ -101,13 +101,6 @@ var validateSubmitForm = function (req) {
   return errors;
 };
 
-var _getLocalReviewers = function (place) {
-  // Get the local reviewers of a specific place.
-  // Not all places have a reviewers column
-  return (place.hasOwnProperty('reviewers')) ? place.reviewers.trim().split(/[\s,]+/) : [];
-};
-
-
 var setupAuth = function () {
   passport.use(new GoogleStrategy({
     clientID: config.get('google:app_id'),
