@@ -14,7 +14,7 @@
     <div class="span6">
         <h4 class="review-heading">{{ gettext("Important") }}</h4>
         <ul>
-            <li>{{ format("As the reviewer, your name **(%(name)s)** will be logged and displayed with the entry", { name: currentUser.name })|marked}}</li>
+            <li>{{ format("As the reviewer, your name **(%(name)s)** will be logged and displayed with the entry", { name: currentUser.firstName })|marked}}</li>
             <li>{{ gettext("If this submission makes no changes to the current entry then please 'Reject' it rather than 'Accept'") }}</li>
             <li>{{ gettext("Note that you edit the submission before accepting it. In particular, please correct any spelling mistakes") }}</li>
             <li>{{ gettext("Publish will overwrite the whole current entry with the data in this form") }}</li>
