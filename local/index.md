@@ -15,10 +15,9 @@ Basic configuration of the Census – see the [instructions][docs-census-config]
 
 ### Step 3
 
-Mailing lists:
+Discussion and updates:
 
-* You will be subscribed to (closed) open-data-census-owners list (this is admins only and just for key updates)
-* You should also join the public open-data-census list – this is the primary place for general discussion
+* Please join the discussion forum for the Open Data Index: https://discuss.okfn.org/c/open-data-index
 
 [docs-census-structure]: /doc/#overview-of-how-a-census-is-structured
 [docs-census-config]: /doc/#configuring-your-census
