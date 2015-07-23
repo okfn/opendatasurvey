@@ -196,6 +196,7 @@ var place = function (req, res) {
   var placeQueryParams = _.merge(modelUtils.siteQuery(req), {where: {id: req.params.place}});
   var entryQueryParams = _.merge(modelUtils.siteQuery(req, true),
                                  {where: {place: req.params.place},
+                                  order: '"updatedAt" DESC',
                                   include: [{model: req.app.get('models').User, as: 'Submitter'},
                                             {model: req.app.get('models').User, as: 'Reviewer'}]});
   var questionQueryParams = _.merge(modelUtils.siteQuery(req), {where: {type: ''}, order: 'score DESC'});

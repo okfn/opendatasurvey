@@ -55,30 +55,38 @@ var _getFormQuestions = function(req, questions) {
 };
 
 
-var _getCurrentMatch = function(entries, queryParams) {
+var _getCurrentState = function(entries, req) {
 
-  var match = queryParams,
-      candidate;
+  var match = _.merge(req.query, req.body),
+      candidates,
+      latest,
+      pending;
 
-  if (!queryParams.place || !queryParams.dataset) {
+  if (!match.place || !match.dataset) {
     match = {};
   } else {
-    candidate = _.find(entries, function(e) {return e.isCurrent;});
-    if (!candidate){
-      match = _.first(entries) || match;
-    } else {
-      match = candidate;
+    candidates = _.filter(entries, function(e) {return e.place === match.place && e.dataset === match.dataset;});
+    if (candidates) {
+      latest = _.first(candidates);
+      match = _.find(candidates, function(c) {return c.isCurrent;}) || latest;
+      if (match.id !== latest.id) {
+        pending = true;
+      }
     }
   }
 
-  return match;
+  return {
+    match: match,
+    pending: pending
+  };
 
 };
 
 
-var _submitGetHandler = function(req, res, current, questions, places, datasets) {
+var _submitGetHandler = function(req, res, currentState, questions, places, datasets) {
 
-  var addDetails = _.find(questions, function(q) {return q.id === 'details';});
+  var addDetails = _.find(questions, function(q) {return q.id === 'details';}),
+      current = currentState.match;
 
   res.render('create.html', {
     canReview: true, // flag always on for submission
@@ -95,7 +103,7 @@ var _submitGetHandler = function(req, res, current, questions, places, datasets)
 };
 
 
-var _submitPostHandler = function(req, res, current, questions, places, datasets, anonymousUser) {
+var _submitPostHandler = function(req, res, currentState, questions, places, datasets, anonymousUser) {
 
   var errors,
       objToSave = {},
@@ -104,7 +112,9 @@ var _submitPostHandler = function(req, res, current, questions, places, datasets
       anonymous = true,
       submitterId = anonymousUserId,
       query,
-      approveFirstSubmission;
+      approveFirstSubmission,
+      current = currentState.match,
+      pending = currentState.pending;
 
   if (req.params.site.settings.approve_first_submission) {
     approveFirstSubmission = req.params.site.settings.approve_first_submission;
@@ -112,14 +122,14 @@ var _submitPostHandler = function(req, res, current, questions, places, datasets
 
   errors = routeUtils.validateSubmitForm(req);
 
-  if (current && current.year === req.app.get('year') && current.isCurrent === false) {
+  if (pending) {
     if (!Array.isArray(errors)) {
       errors = [];
     }
     errors.push({
       param: 'conflict',
       msg: 'There is already a queued submission for this data. ' +
-        '<a href="/submission/ID">See the queued submission</a>'.replace('ID', current.id)
+        '<a href="/place/PL/YR">See the queued submission</a>'.replace('PL', current.place).replace('YR', current.year)
     });
   }
 
@@ -296,9 +306,9 @@ var pendingEntry = function (req, res) {
 
 var submit = function (req, res) {
 
-  var current,
+  var currentState,
       questions,
-      entryQueryParams = modelUtils.siteQuery(req);
+      entryQueryParams = _.merge(modelUtils.siteQuery(req), {order: '"updatedAt" DESC'});
 
   if (req.query.place && req.query.dataset) {
     entryQueryParams = _.merge(entryQueryParams, {where: {place: req.query.place, dataset: req.query.dataset}});
@@ -314,12 +324,12 @@ var submit = function (req, res) {
   }).then(function(D) {
 
     questions = _getFormQuestions(req, D.questions);
-    current = _getCurrentMatch(D.entries, req.query);
+    currentState = _getCurrentState(D.entries, req);
 
     if (req.method === 'POST') {
-      _submitPostHandler(req, res, current, questions, D.places, D.datasets);
+      _submitPostHandler(req, res, currentState, questions, D.places, D.datasets);
     } else {
-      _submitGetHandler(req, res, current, questions, D.places, D.datasets);
+      _submitGetHandler(req, res, currentState, questions, D.places, D.datasets);
     }
 
   }).catch(console.log.bind(console));
@@ -328,8 +338,7 @@ var submit = function (req, res) {
 
 var reviewPost = function (req, res) {
 
-  var submissionId,
-      acceptSubmission = req.body['submit'] === 'Publish',
+  var  acceptSubmission = req.body['submit'] === 'Publish',
       answers;
 
   req.app.get('models').Entry.findById(req.params.id).then(function(result){
