@@ -29,7 +29,7 @@ var resolveProfile = function (profile, provider, done) {
     anonymous: false,
     emails: _.each(profile.emails, function(e, i, l) {l[i] = e.value;}),
     firstName: profile.name.givenName,
-    lastname: profile.name.familyName,
+    lastName: profile.name.familyName,
     homePage: profile.profileUrl,
     providers: {provider: profile.id}
   };
