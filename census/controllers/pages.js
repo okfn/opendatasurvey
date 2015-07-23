@@ -19,8 +19,8 @@ var faq = function (req, res) {
 
   }).then(function(D) {
 
-    var qContent = qTmpl.render({gettext: gettext, questions: D.questions});
-    var dContent = dTmpl.render({gettext: gettext, datasets: D.datasets});
+    var qContent = qTmpl.render({gettext: gettext, questions: _.sortByOrder(D.questions, 'order', 'asc')});
+    var dContent = dTmpl.render({gettext: gettext, datasets: _.sortByOrder(D.datasets, 'order', 'asc')});
     var mContent = req.params.site.settings.missing_place_html;
     var content = marked(req.params.site.settings.faq_page)
       .replace('{{questions}}', qContent)
