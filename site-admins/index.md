@@ -128,8 +128,7 @@ This is about translating the question descriptors used in the submission forms 
  * Make a copy of the [standard questions spreadsheet][template-questions]
  * Add a column Question@{LANG} and Description@{LANG} where {LANG} if your 2 digit iso code
  * Enter translations of the english values of Question and Description in your new columns
- * Notify the Open Data Census Managers on the mailing list that the translation is done
- * Email the [open data census mailing list][mailing-list] that the translation is done so Open Data Census Managers know
+ * Notify the Open Data Census Managers on the discussion forum[discussion-forum] that the translation is done
  * The Census Managers will then incorporate your translations back in the the main questions spreadsheet
 
 #### Translating Datasets
@@ -138,14 +137,14 @@ This is about translating the dataset information (title, descriptions etc). To 
 
  * Add a column Title@{LANG} and Description@{LANG} to the Datasets sheet – if you are running off the [default, standard set of city datasets][template-city] then make a copy of this sheet to do this
  * Translate the original title and description into your language and enter into the new columns you created
- * Email the [open data census mailing list][mailing-list] that the translation is done (that way translations can go back into master dataset sheet if needed)
+ * Notify the Open Data Census Managers on the discussion forum[discussion-forum] that the translation is done
 
 #### Translating General Site Content
 
  * Visit the [Open Data Census translation project on Transifex][transifex]
     * Get an account if you need one
  * Submit translations
- * When you are done email the [open data census mailing list][mailing-list] so that Open Data Census Managers can integrate the translation
+ * Notify the Open Data Census Managers on the discussion forum[discussion-forum] that the translation is done
 
 ### Customizing the List of Datasets
 
@@ -295,6 +294,6 @@ Supply a google analytics key to use on the site
 
 [template-config]: https://docs.google.com/spreadsheets/d/1CxiF_TcIv-BuQV3VGKd__LnoqZ4x4QUApm2RBVfQQJQ/edit#gid=0
 [template-questions]: https://docs.google.com/spreadsheets/d/1nwmk8uJEK-4K6-5SdBgoLUlUos-BhfYRgjS74YkhDGc/edit#gid=3
-[mailing-list]: https://discuss.okfn.org/c/open-data-index
+[discussion-forum]: https://discuss.okfn.org/c/open-data-index
 [template-city]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdEEwSFF6OTJTMnhYa3h2ZS1temlDS3c&usp=drive_web#gid=0
 [transifex]: https://www.transifex.com/projects/p/open-data-census/
