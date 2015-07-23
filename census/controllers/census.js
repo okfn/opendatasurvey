@@ -360,9 +360,6 @@ var reviewPost = function (req, res) {
         delete answers['details'];
         result.answers = _normalizedAnswers(answers);
 
-        console.log(result.id, result.year, result.site, result.place, result.dataset);
-        console.log(ex.id, ex.year, ex.site, ex.place, ex.dataset);
-
         if (acceptSubmission) {
           result.isCurrent = true;
           result.reviewResult = true;
