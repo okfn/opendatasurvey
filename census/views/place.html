@@ -49,7 +49,7 @@
             {% for dataset in datasets %}
 
             {% set currentEntry = entries|find({'dataset': dataset.id, 'isCurrent': true}) %}
-            {% set pendingEntries = entries|where({'dataset': dataset.id, 'isCurrent': false}) %}
+            {% set pendingEntries = entries|where({'dataset': dataset.id, 'isCurrent': false, 'reviewed': false}) %}
 
             <tr>
               <td>

@@ -301,7 +301,7 @@ var dataset = function (req, res) {
     }
 
     currentEntries = _.where(D.entries, {'isCurrent': true});
-    pendingEntries = _.where(D.entries, {'isCurrent': false, 'reviewed': false, 'reviewResult': true});
+    pendingEntries = _.where(D.entries, {'isCurrent': false, 'reviewed': false});
 
     res.render('dataset.html', {
 
