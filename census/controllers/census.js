@@ -59,6 +59,7 @@ var _getCurrentState = function(entries, req) {
 
   var match = _.merge(req.query, req.body),
       candidates,
+      candidate,
       latest,
       pending;
 
@@ -68,8 +69,11 @@ var _getCurrentState = function(entries, req) {
     candidates = _.filter(entries, function(e) {return e.place === match.place && e.dataset === match.dataset;});
     if (candidates) {
       latest = _.first(candidates);
-      match = _.find(candidates, function(c) {return c.isCurrent;}) || latest;
-      if (match.id !== latest.id) {
+      candidate = _.find(candidates, function(c) {return c.isCurrent;}) || latest;
+      if (candidate) {
+        match = candidate;
+      }
+      if (match && latest && match.id && (match.id !== latest.id)) {
         pending = true;
       }
     }
