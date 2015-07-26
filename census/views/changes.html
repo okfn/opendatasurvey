@@ -10,13 +10,27 @@
     {{ gettext("A log of the most recent submission and entry activity.") }}
 </p>
 <ul class="change-list">
-    {% for item in entries %}
+  {% for item in entries %}
+
+  {% if item.isCurrent %}
+    {% set itemClass = 'success'%}
+    {% set itemHeading = gettext('Entry') %}
+    {% set itemText = 'accepted' %}
+  {% else %}
+    {% set itemHeading = gettext('Submission') %}
+    {% if not item.reviewed %}
+      {% set itemClass = 'warning' %}
+      {% set itemText = gettext('new') %}
+    {% else %}
+      {% set itemClass = 'important' %}
+      {% set itemText = gettext('rejected') %}
+    {% endif %}
+  {% endif %}
+
     <li>
         <h5>
-            <strong>{% if item.isCurrent %}{{ gettext('Entry') }}{% else %}{{ gettext('Submission') }}{% endif %}</strong>
-            <span class="label label-{% if item.reviewResult %}success{% else %}info{% endif %}">
-            {% if item.reviewResult %}accepted{% else %}{{ gettext("new") }}{% endif %}
-            </span>
+            <strong>{{ itemHeading }}</strong>
+            <span class="label label-{{ itemClass }}">{{ itemText }}</span>
         </h5>
         <a href="{{ item.url }}">
            <strong>{{ item.dataset.name }} – {{ item.place.name }}</strong>
