@@ -46,7 +46,7 @@ module.exports = function (sequelize, DataTypes) {
     order: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      default: 100,
+      defaultValue: 100,
       comment: "The order for this question relative to others. Used for submission form."
     },
     icon: {
