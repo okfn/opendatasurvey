@@ -385,7 +385,10 @@ var reviewPost = function (req, res) {
 
           if (ex) {
 
-            ex.isCurrent = false;
+            if (acceptSubmission) {
+              ex.isCurrent = false;
+            }
+
             ex.save().then(function() {
 
               if (acceptSubmission) {
