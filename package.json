@@ -50,7 +50,8 @@
     "validator": "^3.41.2"
   },
   "devDependencies": {
-    "chai": "^1.9.2",
+    "chai": "^2.1.4",
+    "chai-as-promised": "^5.1.0",
     "chalk": "^1.1.0",
     "colors": "^1.1.0",
     "execSync": "^1.0.2",
@@ -61,6 +62,7 @@
     "jsxgettext": "^0.5.1",
     "mocha": "^2.2.5",
     "optimist": "~0.6.1",
+    "sequelize-fixtures": "^0.4.7",
     "sinon": "^1.14.1",
     "supertest": "^1.0.1"
   },
@@ -73,6 +75,6 @@
     "migrate_entries": "node migrations/entries.js",
     "migrate_users": "node migrations/users.js",
     "start": "node census/app.js",
-    "test": "mocha tests --patient"
+    "test": "NODE_ENV=test mocha tests/index.js --patient"
   }
 }
