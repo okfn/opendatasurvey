@@ -71,8 +71,8 @@
         {% endif %}
       </li>
       <li>
-        {% if entry and entry.answers.details and (entry.answers.details | trim | length) > 0 %}
-          {% set content = entry.answers.details | urlize | replace('\n', '<br>') | replace ('\"', '\'') | wordwrap(100, '\n', true) %}
+        {% if entry and entry.details and (entry.details | trim | length) > 0 %}
+          {% set content = entry.details | urlize | replace('\n', '<br>') | replace ('\"', '\'') | wordwrap(100, '\n', true) %}
           <a href="javascript:;" class="count-0" title="{{gettext("Details")}}" data-toggle="popover" data-content="{{ content }}" data-html="true" data-placement="left">
             <i class="icon-info-sign"></i>
           </a>
