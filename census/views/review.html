@@ -52,8 +52,21 @@
     {{ dataset.description|marked }}
   </p>
 
+  {% if current.isCurrent %}
+    {% set statusClass = "success" %}
+    {% set statusText = "accepted" %}
+  {% else %}
+    {% if current.reviewed and not currentreviewResult %}
+      {% set statusClass = "important" %}
+      {% set statusText = "rejected" %}
+    {% else %}
+      {% set statusClass = "warning" %}
+      {% set statusText = "pending" %}
+    {% endif %}
+  {% endif %}
+
   <ul>
-    <li><strong>{{ gettext("Status") }}:</strong> <span class="label label-{% if current.isCurrent %}success{% else %}warning{% endif %}">{% if current.isCurrent %}accepted{% else %}pending{% endif %}</span></li>
+    <li><strong>{{ gettext("Status") }}:</strong> <span class="label label-{{ statusClass }}">{{ statusText }}</span></li>
     <li><strong>{{ gettext("Submission date") }}:</strong> {{ current.createdAt|dateformat }}</li>
     <li><strong>{{ gettext("Submitter") }}:</strong> {% if current.Submitter %}{% if current.Submitter.isAnonymous() %}{{ current.Submitter.firstName|title }}{% else %}{{ current.Submitter.fullName() }}{% endif %}{% endif %}</li>
     {% if current.Reviewer %}

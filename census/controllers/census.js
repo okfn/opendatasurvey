@@ -360,17 +360,18 @@ var reviewPost = function (req, res) {
         var ex = _.find(_.sortByOrder(exes, 'year', 'desc'));
 
         result.reviewerId = req.user.id;
+        result.reviewed = true;
         result.reviewComments = req.body.reviewcomments;
         result.details = req.body.details;
 
         answers = req.body;
-        delete answers['place'];
-        delete answers['dataset'];
-        delete answers['year'];
-        delete answers['anonymous'];
-        delete answers['reviewcomments'];
-        delete answers['submit'];
-        delete answers['details'];
+        delete answers.place;
+        delete answers.dataset;
+        delete answers.year;
+        delete answers.anonymous;
+        delete answers.reviewcomments;
+        delete answers.submit;
+        delete answers.details;
         result.answers = _normalizedAnswers(answers);
 
         if (acceptSubmission) {
