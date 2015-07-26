@@ -6,19 +6,22 @@ var Sequelize = require('sequelize');
 var basename = path.basename(module.filename);
 var mixinsFile = path.basename('./mixins.js');
 var utilsFile = path.basename('./utils.js');
-var config = require('../config').get('database');
+var config = require('../config');
+var dbConfig = config.get('database');
 var utils = require('./utils');
 var sequelize;
-var testSequelize = new Sequelize(config.testDatabase, config.username, config.password, config);
-var db = {test: {}};
+var db = {};
+
+console.log('LOG HERE');
+console.log(config.get('env'));
 
 
 if (process.env.DATABASE_URL) {
   // Use DATABASE_URL if it exists, for Heroku.
-  sequelize = new Sequelize(process.env.DATABASE_URL, config);
+  sequelize = new Sequelize(process.env.DATABASE_URL, dbConfig);
 } else {
   // Fallback to normal config, for local development.
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
+  sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig);
 }
 
 fs
@@ -30,23 +33,19 @@ fs
   })
   .forEach(function (file) {
     console.log(file);
-    var model = sequelize['import'](path.join(__dirname, file));
-    var testModel = testSequelize['import'](path.join(__dirname, file));
+    var model = sequelize.import(path.join(__dirname, file));
     db[model.name] = model;
-    db.test[testModel.name] = testModel;
   });
 
 Object.keys(db).forEach(function (modelName) {
   if ('associate' in db[modelName]) {
     db[modelName].associate(db);
-    db.test[modelName].associate(db.test);
   }
 });
 
 db.utils = utils;
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
-db.test.sequelize = testSequelize;
-db.test.Sequelize = Sequelize;
 
-module.exports = typeof IN_TESTING != 'undefined' && IN_TESTING ? db.test : db;
+
+module.exports = db;
