@@ -103,7 +103,7 @@ var coreMiddlewares = [
   cors(),
   compression(),
   favicon(faviconPath),
-  subdomain(subdomainOptions),
+  subdomain(subdomainOptions)
 ];
 
 app.all('*', routes.utils.setLocals);
