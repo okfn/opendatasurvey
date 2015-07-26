@@ -8,6 +8,7 @@ module.exports = function (sequelize, DataTypes) {
   var Entry = sequelize.define('Entry', {
     id: {
       type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
       allowNull: false,
       comment: "Unique identifier for this entry."
@@ -78,7 +79,7 @@ module.exports = function (sequelize, DataTypes) {
     isCurrent: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      default: false,
+      defaultValue: false,
       comment: "A flag to indicate if this is the current entry for this year/place/dataset."
     }
   },
