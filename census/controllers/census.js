@@ -189,6 +189,7 @@ var _submitPostHandler = function(req, res, currentState, questions, places, dat
       objToSave.site = req.params.site.id;
       objToSave.place = req.body.place;
       objToSave.dataset = req.body.dataset;
+      objToSave.submissionNotes = req.body.details;
       objToSave.details = req.body.details;
       objToSave.year = req.app.get('year');
       objToSave.isCurrent = false;
@@ -208,11 +209,11 @@ var _submitPostHandler = function(req, res, currentState, questions, places, dat
     }
 
     answers = req.body;
-    delete answers['place'];
-    delete answers['dataset'];
-    delete answers['year'];
-    delete answers['details'];
-    delete answers['anonymous'];
+    delete answers.place;
+    delete answers.dataset;
+    delete answers.year;
+    delete answers.details;
+    delete answers.anonymous;
     objToSave.answers = _normalizedAnswers(answers);
 
     if (saveStrategy === 'create') {
