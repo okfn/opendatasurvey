@@ -118,8 +118,8 @@ app.use(middlewares.internalServerError);
 
 routes.utils.setupAuth();
 
-app.get('models').sequelize.sync().then(function () {
-  app.listen(app.get('port'), function () {
+app.get('models').umzug.up().then(function() {
+  app.listen(app.get('port'), function() {
     console.log("Listening on " + app.get('port'));
   });
 });
