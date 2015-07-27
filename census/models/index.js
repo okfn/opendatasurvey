@@ -15,12 +15,20 @@ var sequelize;
 var umzug;
 var db = {};
 
+
 if (process.env.DATABASE_URL) {
+
   // Use DATABASE_URL if it exists, for Heroku.
   sequelize = new Sequelize(process.env.DATABASE_URL, dbConfig);
+
 } else {
-  // Fallback to normal config, for local development.
+
+  // Fallback to normal config, for local development and test environments.
+  if (config.get('env').toLowerCase() === 'test') {
+    dbConfig.database = dbConfig.database + '_test';
+  }
   sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig);
+
 }
 
 umzug = new Umzug({
