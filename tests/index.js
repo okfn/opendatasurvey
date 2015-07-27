@@ -1,38 +1,44 @@
 var _ = require('lodash');
-var fixtures = require('sequelize-fixtures');
+var Promise = require('bluebird');
 var path = require('path');
 var models = require('../census/models');
-var testDir = path.dirname(module.filename);
-var repoDir = path.dirname(testDir);
-var fixturesDir = path.join(repoDir, 'fixtures');
-var fixtureFiles = [
-  path.join(fixturesDir, 'registry.js'),
-  path.join(fixturesDir, 'site.js'),
-  path.join(fixturesDir, 'user.js'),
-  path.join(fixturesDir, 'place.js'),
-  path.join(fixturesDir, 'dataset.js'),
-  path.join(fixturesDir, 'question.js')
-//  path.join(fixturesDir, 'entry.js')
-];
+var data = require('../fixtures/registry')
+      .concat(require('../fixtures/site'))
+      .concat(require('../fixtures/user'))
+      .concat(require('../fixtures/place'))
+      .concat(require('../fixtures/dataset'))
+      .concat(require('../fixtures/question'));
 
 
 describe('Open Data Census Tests', function() {
 
   before(function(done) {
 
-    // reset DB here
+    models.umzug.up().then(function() {
 
-    fixtures.loadFiles(fixtureFiles, models).then(function(){
-      console.log('fixtures loaded');
-      done();
+      return Promise.each(data, function(obj) {
+        return models[obj.model].create(obj.data)
+          .then(function() {})
+          .catch(console.log.bind(console));
+      })
+        .then(function() {
+          done();
+        })
+        .catch(console.log.bind(console));
+
     });
 
   });
 
   after(function(done) {
 
-    // destroy DB here
-    done();
+    models.sequelize.getQueryInterface().dropAllTables()
+      .then(function() {
+        console.log('dropped all tables');
+        done();
+      })
+      .catch(console.log.bind(console));
+
   });
 
   it('counts all registry entries', function(done) {
