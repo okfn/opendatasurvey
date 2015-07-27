@@ -47,7 +47,13 @@ nconf.defaults({
     database: process.env.DB_NAME || 'opendatacensus',
     host: process.env.DB_HOST || 'localhost',
     port: process.env.DB_PORT || 5432,
-    dialect: process.env.DB_DIALECT || 'postgres'
+    dialect: process.env.DB_DIALECT || 'postgres',
+    logging: false,
+    define: {
+      charset: "utf-8",
+      collate: "utf8_general_ci",
+      timestamps: true
+    }
   },
   appconfig: {
     port: process.env.PORT || 5000,
