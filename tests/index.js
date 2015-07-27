@@ -120,4 +120,17 @@ describe('Open Data Census Tests', function() {
 
   });
 
+  it('counts all entries', function(done) {
+
+    var query = models.Entry.findAll();
+
+    query
+      .then(function(results) {
+        console.log(results.length);
+        done();
+      })
+      .catch(console.log.bind(console));
+
+  });
+
 });
