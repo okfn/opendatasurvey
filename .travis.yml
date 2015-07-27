@@ -1,9 +1,14 @@
 language: node_js
+
 node_js:
-  - '0.10'
+  - '0.12'
+
+addons:
+  postgresql: "9.4"
+
+before_script:
+  - psql -c 'create database opendatacensus_test;' -U postgres
+
 env:
-  global:
-    # GOOGLE_USER
-    - secure: "EYs7L6vW8RQNmZs08ctEz55VTi0lS2HTlvsgprXq/B5iaFsNZgSlzA407xvNjNh51PUJZ+CLAI5QfBKU5TTAwHS4EZW1ObyOlHmVl2PfRmpsC97HYOkfgPD94axnAwRoHnNbXYqf2Dq3mnvYYdyDYs3Eo43bRN/tyPSsMmAUF4U="
-    # GOOGLE_PASSWORD
-    - secure: "By8qN+uDdvbGlIDjAwSd/GOgaqmilUc4MKuyvpyBQh3VLM9NZw/JNmTnWdvUNLhApPCVZA57ov46fKVepaUmj3KipKouOndXhJV2Lc63zHeB7jKlUKKLt2vR+q+DPYe3+Wt5Q6I5buyM/lhmk/wxHqL2LN42sSWLZQBxpywDvGc="
+  - NODE_ENV="test"
+  - DB_USER="postgres"
