@@ -7,7 +7,8 @@ var data = require('../fixtures/registry')
       .concat(require('../fixtures/user'))
       .concat(require('../fixtures/place'))
       .concat(require('../fixtures/dataset'))
-      .concat(require('../fixtures/question'));
+      .concat(require('../fixtures/question'))
+      .concat(require('../fixtures/entry'));
 
 
 describe('Open Data Census Tests', function() {
