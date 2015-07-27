@@ -17,6 +17,7 @@ nconf.file({
 
  // this is the object that you want to override in your own local config
 nconf.defaults({
+  env: process.env.NODE_ENV || 'development',
   registryUrl: process.env.REGISTRY_URL || '',
   title_short: 'Census',
   base_domain: process.env.BASE_DOMAIN || 'dev.census.org:5000',
@@ -62,18 +63,6 @@ nconf.defaults({
   facebook: {
     app_id: process.env.FACEBOOK_APP_ID || 'unknown',
     app_secret: process.env.FACEBOOK_APP_SECRET || 'unknown'
-  },
-  test: {
-    testing: process.env.TEST !== undefined || false,
-    user: {
-      userid: 'tester',
-      provider_id: 'xxx',
-      provider: 'facebook',
-      username: 'tester',
-      name: 'Tester',
-      email: 'test@okfn.org',
-      gravatar: 'https://www.gravatar.com/avatar/'
-    }
   }
 });
 
