@@ -60,10 +60,10 @@ describe('Basics', function() {
   it('contribute page ok', function(done) {
     request(app)
       .get('/contribute')
-      .set('Host', 'national.dev.census.org')
+      .set('Host', 'site2.dev.census.org')
       .expect(200)
       .then(function(res) {
-        models.Site.findById('national').then(function(R) {
+        models.Site.findById('site2').then(function(R) {
           checkContent(res, marked(R.settings.contribute_page));
           done();
         });
