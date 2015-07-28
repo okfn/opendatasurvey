@@ -5,7 +5,7 @@ var objects = [
       id: 'dataset11',
       site: 'site1',
       name: 'Dataset 11',
-      description: 'Description of Dataset 11',
+      description: 'Description of *Dataset* 11',
       order: 0
     }
   },

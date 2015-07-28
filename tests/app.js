@@ -335,25 +335,29 @@ describe('Census Pages', function() {
   it('GET Submission with pre-populated no entry', function(done) {
     var prefill = {
       // country with nothing in our test db ...
-        place: 'ug'
-      , dataset: 'emissions'
-      , exists: 'Yes'
-      , digital: 'Unsure'
-      , online: 'Yes'
+        place: 'place11'
+      , dataset: 'dataset11'
+      , exists: 'true'
+      , digital: 'null'
+      , online: 'true'
       , url: 'http://xyz.com'
       , licenseurl: 'http://abc.com'
       , qualityinfo: 5
       , details: 'Lots of random stuff\n\nincluding line breaks'
     };
+
+
+    config.set('test:user', {userid: usersFixtures[0].data.id});
+
     request(app)
       .get('/census/submit/')
-      .set('Host', 'national.dev.census.org')
+      .set('Host', 'site1.dev.census.org')
       .query(prefill)
       .expect(200)
       .then(function(res) {
         // all test regex tests are rather hacky ...
         checkContent(res, 'value="%s" selected='.replace('%s', prefill.place), 'place not set');
-        checkContent(res, 'value="emissions" selected="true"', 'dataset not set');
+        checkContent(res, 'value="' + prefill.dataset + '" selected="true"', 'dataset not set');
         testRadio(res.text, 'exists', prefill.exists);
         testRadio(res.text, 'digital', prefill.digital);
         testRadio(res.text, 'online', prefill.online);
@@ -368,21 +372,25 @@ describe('Census Pages', function() {
   it('GET Submission pre-populated with entry', function(done) {
     var prefill = {
       // country in our test db for default year
-        place: 'gb'
-      , dataset: 'maps'
-      , exists: 'Yes'
+        place: 'place11'
+      , dataset: 'dataset11'
+      , exists: 'true'
     };
     var url = 'http://www.ordnancesurvey.co.uk/opendata/';
+
+
+    config.set('test:user', {userid: usersFixtures[0].data.id});
+
     request(app)
       .get('/census/submit/')
-      .set('Host', 'national.dev.census.org')
+      .set('Host', 'site1.dev.census.org')
       .query(prefill)
       .expect(200)
       .then(function(res) {
         // all test regex tests are rather hacky ...
         checkContent(res, 'value="%s" selected="true"'.replace('%s', prefill.place), 'place not set');
-        checkContent(res, '<em>national-level</em>', 'Dataset description not parsed as markdown');
-        testRadio(res.text, 'exists', 'Yes');
+        checkContent(res, 'Description of <em>Dataset</em> 11', 'Dataset description not parsed as markdown');
+        testRadio(res.text, 'exists', prefill.exists);
         // REMOVED AS THESE FIELDS DEPEND ON UI INTERACTIONS
         // checkContent(res, 'name="url" value="' + url + '"', 'url not set');
         done();
