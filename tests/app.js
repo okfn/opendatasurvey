@@ -90,12 +90,12 @@ describe('Basics', function() {
 
   it('place page works', function(done) {
     request(app)
-      .get('/place/gb')
-      .set('Host', 'national.dev.census.org')
+      .get('/place/place21')
+      .set('Host', 'site2.dev.census.org')
       .expect(200)
       .then(function(res) {
-        checkContent(res, 'United Kingdom /', 'Place name not present');
-        checkContent(res, 'Transport Timetables', 'Dataset list missing');
+        checkContent(res, 'Place 21 /', 'Place name not present');
+        checkContent(res, 'Dataset 21', 'Dataset list missing');
         done();
       })
       ;
