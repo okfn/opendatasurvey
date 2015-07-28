@@ -10,14 +10,13 @@ var censusRoutes = function(coreMiddlewares) {
 
   var router = express.Router();
   var coreMixins = [mixins.requireDomain, mixins.requireAuth];
-  var reviewMixins = coreMixins.concat(mixins.requireReviewer);
 
   router.use(coreMiddlewares);
 
   router.get(utils.scoped('/submit'), coreMixins, census.submit);
   router.post(utils.scoped('/submit'), coreMixins, census.submit);
-  router.get(utils.scoped('/submission/:id'), coreMixins, census.pendingEntry);
-  router.post(utils.scoped('/submission/:id'), reviewMixins, census.reviewPost);
+  router.get(utils.scoped('/submission/:id'), [mixins.requireDomain], census.pendingEntry);
+  router.post(utils.scoped('/submission/:id'), coreMixins, census.reviewPost);
 
   return router;
 

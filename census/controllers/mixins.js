@@ -103,18 +103,6 @@ var requireAuth = function (req, res, next) {
 };
 
 
-var requireReviewer = function (req, res, next) {
-
-  if (_.intersection(req.params.site.settings.reviewers, req.user.emails).length >= 1) {
-    next();
-    return;
-  }
-
-  res.status(401).send('Sorry, you are not an authorized reviewer');
-  return;
-
-};
-
 var requireAdmin = function (req, res, next) {
 
   if (req.user && (_.intersection(req.params.siteAdmin, req.user.emails)).length >= 1 ||
@@ -217,7 +205,6 @@ var requireSiteDomain = function(req, res, next) {
 module.exports = {
   requireDomain: requireDomain,
   requireAuth: requireAuth,
-  requireReviewer: requireReviewer,
   requireAdmin: requireAdmin,
   requireAvailableYear: requireAvailableYear,
   requireAuthDomain: requireAuthDomain,
