@@ -102,11 +102,11 @@ describe('Basics', function() {
   });
   it('dataset page works', function(done) {
     request(app)
-      .get('/dataset/timetables')
-      .set('Host', 'national.dev.census.org')
+      .get('/dataset/dataset21')
+      .set('Host', 'site2.dev.census.org')
       .expect(200)
       .then(function(res) {
-        checkContent(res, '/ Transport Timetables', 'Dataset name not present');
+        checkContent(res, 'Description of Dataset 21', 'Dataset name not present');
         done();
       })
       ;
