@@ -294,8 +294,29 @@ var pendingEntry = function (req, res) {
 
       }).then(function(D) {
 
+        var reviewers = [],
+            canReview = false;
+
+        if (req.user) {
+
+          if (req.params.site.settings.reviewers) {
+            reviewers = reviewers.concat(req.params.site.settings.reviewers);
+          }
+
+          if (D.place.reviewers) {
+            reviewers = reviewers.concat(D.place.reviewers);
+          }
+
+          if (D.dataset.reviewers) {
+            reviewers = reviewers.concat(D.dataset.reviewers);
+          }
+
+          canReview = (_.intersection(reviewers, req.user.emails).length >= 1);
+
+        }
+
         res.render('review.html', {
-          canReview: (_.intersection(req.params.site.settings.reviewers, req.user.emails).length >= 1),
+          canReview: canReview,
           reviewClosed: result.reviewResult || (result.year !== req.app.get('year')),
           reviewInstructions: config.get('review_page'),
           questions: _getFormQuestions(req, D.questions),

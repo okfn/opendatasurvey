@@ -29,7 +29,7 @@
         </p>
       </div>
       <div class="span2" style="text-align: right;">
-        <a class="btn btn-primary" href="/login?next=/census/submission/{{ current.id }}">{{gettext("Login")}}</a>
+        <a class="btn btn-primary" href="{{ loginUrl }}?next=census/submission/{{ current.id }}">{{gettext("Login")}}</a>
       </div>
     </div>
     {% endif %}
