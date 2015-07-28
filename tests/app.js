@@ -1,4 +1,5 @@
-var request = require('supertest-as-promised')
+var _ = require('lodash')
+  ,request = require('supertest-as-promised')
   , passport = require('passport')
   , chai = require('chai')
   , entryFixtures = require('../fixtures/entry')
@@ -307,10 +308,15 @@ describe('Census Pages', function() {
   it('GET recent changes page', function(done) {
     request(app)
       .get('/changes')
-      .set('Host', 'national.dev.census.org')
+      .set('Host', 'site2.dev.census.org')
       .expect(200)
       .then(function(res) {
-        checkContent(res, '782178d4-6e6b-4c7c-979c-21ddadd1be28', 'Page should include a link to a submission.');
+        checkContent(
+          res,
+          _.find(entryFixtures, function(E) { return E.isCurrent === false && site === 'site2' }),
+          'Page should include a link to a submission.'
+        );
+
         // ARGGGH
         // checkContent(res, '/entry/af/timetables', 'Page should include a link to a recent entry.');
         done();

@@ -52,7 +52,7 @@ var objects = [
       reviewResult: false,
       reviewComments: '',
       details: '',
-      isCurrent: _.sample([false, true]),
+      isCurrent: false,
       submitter_id: _.sample(users).data.id,
       reviewer_id: _.sample(users).data.id
     }
@@ -192,7 +192,7 @@ var objects = [
       reviewResult: false,
       reviewComments: '',
       details: '',
-      isCurrent: _.sample([false, true]),
+      isCurrent: true,
       submitter_id: _.sample(users).data.id,
       reviewer_id: _.sample(users).data.id
     }
@@ -212,7 +212,7 @@ var objects = [
       reviewResult: false,
       reviewComments: '',
       details: '',
-      isCurrent: _.sample([false, true]),
+      isCurrent: false,
       submitter_id: _.sample(users).data.id,
       reviewer_id: _.sample(users).data.id
     }
