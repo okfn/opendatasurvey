@@ -28,8 +28,8 @@ var objects = [
       reviewed: true,
       reviewResult: false,
       reviewComments: '',
-      details: '',
-      isCurrent: _.sample([false, true]),
+      details: 'This is site1 entry',
+      isCurrent: true, // Need to be sure that at least one current Entry exists for proper testing
       submitter_id: _.sample(users).data.id,
       reviewer_id: _.sample(users).data.id
     }

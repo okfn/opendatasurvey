@@ -125,11 +125,11 @@ describe('Basics', function() {
   it('API json works', function(done) {
     request(app)
       .get('/api/entries.json')
-      .set('Host', 'national.dev.census.org')
+      .set('Host', 'site1.dev.census.org')
       .expect(200)
       .then(function(res) {
         // check a random snippet of json
-        checkContent(res, '"url":"http://www.efv.admin.ch/f/dokumentation/finanzberichterstattung/staatsrechnungen.php",');
+        checkContent(res, '"details":"This is site1 entry",');
         done();
       })
       ;
