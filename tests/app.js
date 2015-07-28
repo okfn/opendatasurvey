@@ -6,12 +6,17 @@ var request = require('supertest-as-promised')
   , marked = require('marked')
   , models = require('../census/models')
   , config = require('../census/config')
+  , utils = require('./utils')
   ;
 
 config.set('test:testing', true);
 // config.set('appconfig:port', 5001 + Math.floor(Math.random() * 1000));
 
 describe('Basics', function() {
+
+  before(utils.setupFixtures);
+  after(utils.dropFixtures);
+
   it('front page works', function(done) {
     request(app)
       .get('/')

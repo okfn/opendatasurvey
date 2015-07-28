@@ -2,45 +2,12 @@ var _ = require('lodash');
 var Promise = require('bluebird');
 var path = require('path');
 var models = require('../census/models');
-var data = require('../fixtures/registry')
-      .concat(require('../fixtures/site'))
-      .concat(require('../fixtures/user'))
-      .concat(require('../fixtures/place'))
-      .concat(require('../fixtures/dataset'))
-      .concat(require('../fixtures/question'))
-      .concat(require('../fixtures/entry'));
-
+var utils = require('./utils');
 
 describe('Open Data Census Tests', function() {
 
-  before(function(done) {
-
-    models.umzug.up().then(function() {
-
-      return Promise.each(data, function(obj) {
-        return models[obj.model].create(obj.data)
-          .then(function() {})
-          .catch(console.log.bind(console));
-      })
-        .then(function() {
-          done();
-        })
-        .catch(console.log.bind(console));
-
-    });
-
-  });
-
-  after(function(done) {
-
-    models.sequelize.getQueryInterface().dropAllTables()
-      .then(function() {
-        console.log('dropped all tables');
-        done();
-      })
-      .catch(console.log.bind(console));
-
-  });
+  before(utils.setupFixtures);
+  after(utils.dropFixtures);
 
   it('counts all registry entries', function(done) {
 
