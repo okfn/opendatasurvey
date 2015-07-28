@@ -73,7 +73,7 @@ describe('Basics', function() {
   it('custom content works', function(done) {
     request(app)
       .get('/')
-      .set('Host', 'national.dev.census.org')
+      .set('Host', 'site2.dev.census.org')
       .expect(200)
       .then(function(res) {
         checkContent(res, config.get('custom_css'));
