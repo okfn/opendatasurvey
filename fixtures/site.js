@@ -16,7 +16,8 @@ var objects = [
       id: 'site2',
       settings: {
         contribute_page: '# This one is contrubute 555',
-        reviewers: ['email2@example.com', 'email4@example.com']
+        reviewers: ['email2@example.com', 'email4@example.com'],
+        submit_page: '~~Submit~~ *page* unique **content**'
       }
     }
   }

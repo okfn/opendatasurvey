@@ -1,6 +1,7 @@
 var request = require('supertest-as-promised')
   , passport = require('passport')
   , chai = require('chai')
+  , usersFixtures = require('../fixtures/user')
   , app = require('../census/app.js').app
   , assert = chai.assert
   , marked = require('marked')
@@ -261,6 +262,10 @@ function testRedirect(src, dest) {
 // });
 
 describe('Census Pages', function() {
+
+  beforeEach(utils.setupFixtures);
+  afterEach(utils.dropFixtures);
+
   var fixSubmission = {
     submissionid: 'test-created-1',
     place: 'af',
@@ -270,14 +275,16 @@ describe('Census Pages', function() {
   };
 
   it('GET Submit', function(done) {
+    config.set('test:user', {userid: usersFixtures[0].data.id});
+
     request(app)
       .get('/census/submit')
-      .set('Host', 'national.dev.census.org')
+      .set('Host', 'site2.dev.census.org')
       .expect(200)
       .then(function(res) {
-        models.Site.findById('national').then(function(R) {
+        models.Site.findById('site2').then(function(R) {
           checkContent(res, 'Submit');
-          checkContent(res, R.settings.submit_page);
+          checkContent(res, marked(R.settings.submit_page));
           done();
         });
       });
