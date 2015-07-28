@@ -4,7 +4,8 @@ var datasets = require('./dataset');
 var places = require('./place');
 var users = require('./user');
 
-var answers = function() { return {
+
+function answers() { return {
   exists: _.sample([false, true]),
   machinereadable: _.sample([false, true]),
   openlicense: _.sample([false, true]),
@@ -14,6 +15,8 @@ var answers = function() { return {
   license: 'http://example.com'
 }; }
 
+function bySite(fixtures, siteId) { return _.filter(fixtures, function(D) { return D.data.site === siteId }); }
+
 var objects = [
   {
     model: 'Entry',
@@ -21,8 +24,8 @@ var objects = [
       id: uuid.v4(),
       site: 'site1',
       year: 2015,
-      place: _.sample(places).data.id,
-      dataset: _.sample(datasets).data.id,
+      place: _.sample(bySite(places, 'site1')).data.id,
+      dataset: _.sample(bySite(datasets, 'site1')).data.id,
       answers: answers(),
       submissionNotes: '',
       reviewed: true,
@@ -41,8 +44,8 @@ var objects = [
       id: uuid.v4(),
       site: 'site1',
       year: 2015,
-      place: _.sample(places).data.id,
-      dataset: _.sample(datasets).data.id,
+      place: _.sample(bySite(places, 'site1')).data.id,
+      dataset: _.sample(bySite(datasets, 'site1')).data.id,
       answers: answers(),
       submissionNotes: '',
       reviewed: true,
@@ -61,8 +64,8 @@ var objects = [
       id: uuid.v4(),
       site: 'site1',
       year: 2015,
-      place: _.sample(places).data.id,
-      dataset: _.sample(datasets).data.id,
+      place: _.sample(bySite(places, 'site1')).data.id,
+      dataset: _.sample(bySite(datasets, 'site1')).data.id,
       answers: answers(),
       submissionNotes: '',
       reviewed: true,
@@ -81,8 +84,8 @@ var objects = [
       id: uuid.v4(),
       site: 'site1',
       year: 2015,
-      place: _.sample(places).data.id,
-      dataset: _.sample(datasets).data.id,
+      place: _.sample(bySite(places, 'site1')).data.id,
+      dataset: _.sample(bySite(datasets, 'site1')).data.id,
       answers: answers(),
       submissionNotes: '',
       reviewed: true,
@@ -101,8 +104,8 @@ var objects = [
       id: uuid.v4(),
       site: 'site1',
       year: 2015,
-      place: _.sample(places).data.id,
-      dataset: _.sample(datasets).data.id,
+      place: _.sample(bySite(places, 'site1')).data.id,
+      dataset: _.sample(bySite(datasets, 'site1')).data.id,
       answers: answers(),
       submissionNotes: '',
       reviewed: true,
@@ -121,8 +124,8 @@ var objects = [
       id: uuid.v4(),
       site: 'site2',
       year: 2015,
-      place: _.sample(places).data.id,
-      dataset: _.sample(datasets).data.id,
+      place: _.sample(bySite(places, 'site2')).data.id,
+      dataset: _.sample(bySite(datasets, 'site2')).data.id,
       answers: answers(),
       submissionNotes: '',
       reviewed: true,
@@ -141,8 +144,8 @@ var objects = [
       id: uuid.v4(),
       site: 'site2',
       year: 2015,
-      place: _.sample(places).data.id,
-      dataset: _.sample(datasets).data.id,
+      place: _.sample(bySite(places, 'site2')).data.id,
+      dataset: _.sample(bySite(datasets, 'site2')).data.id,
       answers: answers(),
       submissionNotes: '',
       reviewed: true,
@@ -161,8 +164,8 @@ var objects = [
       id: uuid.v4(),
       site: 'site2',
       year: 2015,
-      place: _.sample(places).data.id,
-      dataset: _.sample(datasets).data.id,
+      place: _.sample(bySite(places, 'site2')).data.id,
+      dataset: _.sample(bySite(datasets, 'site2')).data.id,
       answers: answers(),
       submissionNotes: '',
       reviewed: true,
@@ -181,8 +184,8 @@ var objects = [
       id: uuid.v4(),
       site: 'site2',
       year: 2015,
-      place: _.sample(places).data.id,
-      dataset: _.sample(datasets).data.id,
+      place: _.sample(bySite(places, 'site2')).data.id,
+      dataset: _.sample(bySite(datasets, 'site2')).data.id,
       answers: answers(),
       submissionNotes: '',
       reviewed: true,
@@ -201,8 +204,8 @@ var objects = [
       id: uuid.v4(),
       site: 'site2',
       year: 2015,
-      place: _.sample(places).data.id,
-      dataset: _.sample(datasets).data.id,
+      place: _.sample(bySite(places, 'site2')).data.id,
+      dataset: _.sample(bySite(datasets, 'site2')).data.id,
       answers: answers(),
       submissionNotes: '',
       reviewed: true,

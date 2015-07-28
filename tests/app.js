@@ -1,6 +1,7 @@
 var request = require('supertest-as-promised')
   , passport = require('passport')
   , chai = require('chai')
+  , entryFixtures = require('../fixtures/entry')
   , usersFixtures = require('../fixtures/user')
   , app = require('../census/app.js').app
   , assert = chai.assert
@@ -291,9 +292,14 @@ describe('Census Pages', function() {
   });
 
   it('GET Entry', function(done) {
+    var entry = entryFixtures[0].data;
+
+
+    config.set('test:user', {userid: usersFixtures[0].data.id});
+
     request(app)
-      .get('/entry/gb/timetables/2014')
-      .set('Host', 'national.dev.census.org')
+      .get(['', 'entry', entry.place, entry.dataset, entry.year].join('/'))
+      .set('Host', 'site1.dev.census.org')
       .expect(200, done)
       ;
   });
