@@ -2,8 +2,9 @@ var _ = require('lodash')
   ,request = require('supertest-as-promised')
   , passport = require('passport')
   , chai = require('chai')
+  , datasetFixtures = require('../fixtures/dataset')
   , entryFixtures = require('../fixtures/entry')
-  , usersFixtures = require('../fixtures/user')
+  , userFixtures = require('../fixtures/user')
   , app = require('../census/app.js').app
   , assert = chai.assert
   , marked = require('marked')
@@ -277,7 +278,7 @@ describe('Census Pages', function() {
   };
 
   it('GET Submit', function(done) {
-    config.set('test:user', {userid: usersFixtures[0].data.id});
+    config.set('test:user', {userid: userFixtures[0].data.id});
 
     request(app)
       .get('/census/submit')
@@ -296,7 +297,7 @@ describe('Census Pages', function() {
     var entry = entryFixtures[0].data;
 
 
-    config.set('test:user', {userid: usersFixtures[0].data.id});
+    config.set('test:user', {userid: userFixtures[0].data.id});
 
     request(app)
       .get(['', 'entry', entry.place, entry.dataset, entry.year].join('/'))
@@ -347,7 +348,7 @@ describe('Census Pages', function() {
     };
 
 
-    config.set('test:user', {userid: usersFixtures[0].data.id});
+    config.set('test:user', {userid: userFixtures[0].data.id});
 
     request(app)
       .get('/census/submit/')
@@ -379,7 +380,7 @@ describe('Census Pages', function() {
     var url = 'http://www.ordnancesurvey.co.uk/opendata/';
 
 
-    config.set('test:user', {userid: usersFixtures[0].data.id});
+    config.set('test:user', {userid: userFixtures[0].data.id});
 
     request(app)
       .get('/census/submit/')
@@ -436,14 +437,17 @@ describe('Census Pages', function() {
   // });
 
   it('GET review', function(done) {
-    var url = '/census/submission/fbaea303-a90d-44ee-a9e0-87482d068081';
+    var entry = _.find(entryFixtures, function(E) { return E.data.isCurrent === false && E.data.site === 'site2' }).data;
+    var dataset = _.find(datasetFixtures, function(D) { return D.data.id === entry.dataset }).data;
+
+
     request(app)
-      .get(url)
-      .set('Host', 'national.dev.census.org')
+      .get('/census/submission/' + entry.id)
+      .set('Host', 'site2.dev.census.org')
       .expect(200)
       .then(function(res) {
         checkContent(res, config.get('review_page'));
-        checkContent(res, 'Timetables of major government operated', 'correct dataset shows up');
+        checkContent(res, dataset.description, 'correct dataset shows up');
         done();
       });
   });

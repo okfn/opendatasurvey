@@ -17,7 +17,8 @@ var objects = [
       settings: {
         contribute_page: '# This one is contrubute 555',
         reviewers: ['email2@example.com', 'email4@example.com'],
-        submit_page: '~~Submit~~ *page* unique **content**'
+        submit_page: '~~Submit~~ *page* unique **content**',
+        review_page: '*This* is **review** test'
       }
     }
   }
