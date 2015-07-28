@@ -158,7 +158,7 @@ function testRedirect(src, dest) {
   it('redirect from ' + src + ' to ' + dest, function(done) {
     request(app)
       .get(src)
-      .set('Host', 'national.dev.census.org')
+      .set('Host', 'site1.dev.census.org')
       .expect(302)
       .then(function(res) {
         assert.equal(res.header['location'].replace('/subdomain/:domain', ''), dest);
