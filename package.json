@@ -74,6 +74,6 @@
     "migrate_entries": "node migrations/entries.js",
     "migrate_users": "node migrations/users.js",
     "start": "node census/app.js",
-    "test": "NODE_ENV=test mocha tests/index.js --patient"
+    "test": "NODE_ENV=test mocha tests/ --patient"
   }
 }
