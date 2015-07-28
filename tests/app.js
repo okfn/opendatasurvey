@@ -47,10 +47,10 @@ describe('Basics', function() {
   it('faq page ok', function(done) {
     request(app)
       .get('/faq')
-      .set('Host', 'national.dev.census.org')
+      .set('Host', 'site1.dev.census.org')
       .expect(200)
       .then(function(res) {
-        models.Site.findById('national').then(function(R) {
+        models.Site.findById('site1').then(function(R) {
           checkContent(res, marked(R.settings.faq_page));
           done();
         });

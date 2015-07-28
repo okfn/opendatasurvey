@@ -5,6 +5,7 @@ var objects = [
       id: 'site1',
       settings: {
         about_page: 'About page very unique string 123',
+        faq_page: 'Faq page another unique string with **mark down** 777',
         reviewers: ['email1@example.com', 'email3@example.com']
       }
     }
