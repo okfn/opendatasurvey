@@ -61,7 +61,7 @@ var requireDomain = function(req, res, next) {
             if (result) {
 
               if (result.settings.reviewers) {
-                result.settings.reviewers = _.each(result.settings.reviewers.split(','), function(e, i, l) {
+                result.settings.reviewers = _.each(result.settings.reviewers, function(e, i, l) {
                   l[i] = e.trim(); return;
                 });
               }

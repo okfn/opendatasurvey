@@ -14,19 +14,20 @@ config.set('test:testing', true);
 
 describe('Basics', function() {
 
-  before(utils.setupFixtures);
-  after(utils.dropFixtures);
+  // Apply fixtures before each test to prevent uniqueness conflicts with app DB sync
+  beforeEach(utils.setupFixtures);
+  afterEach(utils.dropFixtures);
 
   it('front page works', function(done) {
     request(app)
       .get('/')
-      .set('Host', 'national.dev.census.org')
+      .set('Host', 'site1.dev.census.org')
       .expect(200)
       .then(function(res) {
         checkContent(res, config.get('overview_page'));
         // check overview table works
-        checkContent(res, 'United Kingdom');
-        checkContent(res, 'Zambia');
+        checkContent(res, 'Place 11');
+        checkContent(res, 'Place 12');
         done();
       })
       ;
