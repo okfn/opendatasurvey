@@ -6,8 +6,6 @@ var request = require('supertest-as-promised')
   , marked = require('marked')
   , models = require('../census/models')
   , config = require('../census/config')
-  // importing base sets the test db
-  , base = require('./base.js')
   ;
 
 config.set('test:testing', true);
