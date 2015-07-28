@@ -35,10 +35,10 @@ describe('Basics', function() {
   it('about page ok', function(done) {
     request(app)
       .get('/about')
-      .set('Host', 'national.dev.census.org')
+      .set('Host', 'site1.dev.census.org')
       .expect(200)
       .then(function(res) {
-        models.Site.findById('national').then(function(R) {
+        models.Site.findById('site1').then(function(R) {
           checkContent(res, marked(R.settings.about_page));
           done();
         });
