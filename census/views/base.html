@@ -43,6 +43,9 @@
         {% if site.settings.contribute_page %}
         <li><a href="/contribute/">{{gettext("Contribute")}}</a></li>
         {% endif %}
+        {% if discussionForum %}
+          <li><a href="{{ discussionForum }}">{{ gettext("Discussion") }}</a></li>
+        {% endif %}
       </ul>
       <div class="nav-logo">
         {{ site.settings.navbar_logo }}

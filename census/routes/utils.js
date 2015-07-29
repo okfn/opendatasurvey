@@ -208,6 +208,7 @@ var setLocals = function(req, res, next) {
   res.locals.url_query = req.query;
   res.locals.error_messages = req.flash('error');
   res.locals.info_messages = req.flash('info');
+  res.locals.discussionForum = config.get('discussion_forum');
 
   res.locals.urlFor = function(name) {
     if (name === 'overview') {
