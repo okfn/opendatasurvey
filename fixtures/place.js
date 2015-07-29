@@ -34,6 +34,15 @@ var objects = [
       name: 'Place 22',
       slug: 'place22slug'
     }
+  },
+  {
+    model: 'Place',
+    data: {
+      id: 'placeOfNoEntry',
+      site: 'site2',
+      name: 'Place 22 of no entry',
+      slug: 'place22ofNoEntryslug'
+    }
   }
 ];
 

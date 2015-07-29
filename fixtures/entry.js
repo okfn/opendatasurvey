@@ -6,9 +6,11 @@ var users = require('./user');
 
 
 function answers() { return {
+  digital: _.sample([false, true]),
   exists: _.sample([false, true]),
   machinereadable: _.sample([false, true]),
   openlicense: _.sample([false, true]),
+  online: _.sample([false, true]),
   public: _.sample([false, true]),
   publisher: 'Acme',
   format: ['CSV', 'PSF'],
@@ -216,7 +218,29 @@ var objects = [
       submitter_id: _.sample(users).data.id,
       reviewer_id: _.sample(users).data.id
     }
+  },
+  
+  // A set of entries for pair of place-dataset which all have isCurrent === false
+  {
+    model: 'Entry',
+    data: {
+      id: uuid.v4(),
+      site: 'site2',
+      year: 2015,
+      place: 'placeOfNoEntry',
+      dataset: 'datasetOfNoEntry',
+      answers: answers(),
+      submissionNotes: '',
+      reviewed: true,
+      reviewResult: false,
+      reviewComments: '',
+      details: '',
+      isCurrent: false,
+      submitter_id: _.sample(users).data.id,
+      reviewer_id: _.sample(users).data.id
+    }
   }
+
 ];
 
 

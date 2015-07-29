@@ -334,68 +334,97 @@ describe('Census Pages', function() {
   }
 
   it('GET Submission with pre-populated no entry', function(done) {
-    var prefill = {
-      // country with nothing in our test db ...
-        place: 'place11'
-      , dataset: 'dataset11'
-      , exists: 'true'
-      , digital: 'null'
-      , online: 'true'
-      , url: 'http://xyz.com'
-      , licenseurl: 'http://abc.com'
-      , qualityinfo: 5
-      , details: 'Lots of random stuff\n\nincluding line breaks'
-    };
+    var entry = _.find(entryFixtures, function(E) {
+      return E.data.dataset === 'datasetOfNoEntry' && E.data.place === 'placeOfNoEntry';
+    }).data;
+
+    models.Entry.findAll({where: {
+      site: entry.site,
+      place: entry.place,
+      dataset: entry.dataset
+    }, order: '"updatedAt" DESC'}).then(function(R) {
+      var candidate = _.first(R);
+
+      var prefill = {
+        // country with nothing in our test db ...
+          place: candidate.place
+        , dataset: candidate.dataset
+        , exists: candidate.answers.exists
+        , digital: candidate.answers.digital
+        , online: candidate.answers.online
+        , url: 'http://xyz.com'
+        , licenseurl: 'http://example.com'
+        , qualityinfo: 5
+        , details: candidate.details
+      };
 
 
-    config.set('test:user', {userid: userFixtures[0].data.id});
+      config.set('test:user', {userid: userFixtures[0].data.id});
 
-    request(app)
-      .get('/census/submit/')
-      .set('Host', 'site1.dev.census.org')
-      .query(prefill)
-      .expect(200)
-      .then(function(res) {
-        // all test regex tests are rather hacky ...
-        checkContent(res, 'value="%s" selected='.replace('%s', prefill.place), 'place not set');
-        checkContent(res, 'value="' + prefill.dataset + '" selected="true"', 'dataset not set');
-        testRadio(res.text, 'exists', prefill.exists);
-        testRadio(res.text, 'digital', prefill.digital);
-        testRadio(res.text, 'online', prefill.online);
-        // REMOVED AS THESE FIELDS DEPEND ON UI INTERACTIONS
-        // checkContent(res, 'name="url" value="' + prefill.url + '"', 'url not set');
-        // checkContent(res, 'name="licenseurl" value="' + prefill.licenseurl + '"', 'license url not set');
-        checkContent(res, prefill.details + '</textarea>', 'details not set');
-        done();
-      });
+      request(app)
+        .get('/census/submit/')
+        .set('Host', 'site2.dev.census.org')
+        .query(prefill)
+        .expect(200)
+        .then(function(res) {
+          // all test regex tests are rather hacky ...
+          checkContent(res, 'value="%s" selected='.replace('%s', prefill.place), 'place not set');
+          checkContent(res, 'value="' + prefill.dataset + '" selected="true"', 'dataset not set');
+          testRadio(res.text, 'exists', prefill.exists);
+          testRadio(res.text, 'digital', prefill.digital);
+          testRadio(res.text, 'online', prefill.online);
+          // REMOVED AS THESE FIELDS DEPEND ON UI INTERACTIONS
+          // checkContent(res, 'name="url" value="' + prefill.url + '"', 'url not set');
+          // checkContent(res, 'name="licenseurl" value="' + prefill.licenseurl + '"', 'license url not set');
+          checkContent(res, prefill.details + '</textarea>', 'details not set');
+          done();
+        });
+    });
   });
 
   it('GET Submission pre-populated with entry', function(done) {
-    var prefill = {
-      // country in our test db for default year
-        place: 'place11'
-      , dataset: 'dataset11'
-      , exists: 'true'
-    };
-    var url = 'http://www.ordnancesurvey.co.uk/opendata/';
+    var entry = entryFixtures[0].data;
+
+    models.Entry.findAll({where: {
+      site: entry.site,
+      place: entry.place,
+      dataset: entry.dataset
+    }, order: '"updatedAt" DESC'}).then(function(R) {
+      var candidate = _.findWhere(R, {isCurrent: true});
+    
+      var prefill = {
+        // country in our test db for default year
+          place: candidate.place
+        , dataset: candidate.dataset
+        , exists: candidate.answers.exists
+      };
+
+      var url = 'http://www.ordnancesurvey.co.uk/opendata/';
 
 
-    config.set('test:user', {userid: userFixtures[0].data.id});
+      config.set('test:user', {userid: userFixtures[0].data.id});
 
-    request(app)
-      .get('/census/submit/')
-      .set('Host', 'site1.dev.census.org')
-      .query(prefill)
-      .expect(200)
-      .then(function(res) {
-        // all test regex tests are rather hacky ...
-        checkContent(res, 'value="%s" selected="true"'.replace('%s', prefill.place), 'place not set');
-        checkContent(res, 'Description of <em>Dataset</em> 11', 'Dataset description not parsed as markdown');
-        testRadio(res.text, 'exists', prefill.exists);
-        // REMOVED AS THESE FIELDS DEPEND ON UI INTERACTIONS
-        // checkContent(res, 'name="url" value="' + url + '"', 'url not set');
-        done();
-      });
+      request(app)
+        .get('/census/submit/')
+        .set('Host', 'site1.dev.census.org')
+        .query(prefill)
+        .expect(200)
+        .then(function(res) {
+          // all test regex tests are rather hacky ...
+          checkContent(res, 'value="%s" selected="true"'.replace('%s', prefill.place), 'place not set');
+
+          checkContent(
+            res,
+            marked(_.find(datasetFixtures, function(D) { return D.data.id === candidate.dataset; }).data.description),
+            'Dataset description not parsed as markdown'
+          );
+
+          testRadio(res.text, 'exists', prefill.exists);
+          // REMOVED AS THESE FIELDS DEPEND ON UI INTERACTIONS
+          // checkContent(res, 'name="url" value="' + url + '"', 'url not set');
+          done();
+        });
+    });
   });
 
   // it('POST Submission', function(done) {

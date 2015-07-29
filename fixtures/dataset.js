@@ -38,7 +38,18 @@ var objects = [
       description: 'Description of Dataset 22',
       order: 0
     }
+  },
+  {
+    model: 'Dataset',
+    data: {
+      id: 'datasetOfNoEntry',
+      site: 'site2',
+      name: 'Dataset 22 of no entry',
+      description: 'Description of Dataset 22 of no entry',
+      order: 0
+    }
   }
+
 ];
 
 
