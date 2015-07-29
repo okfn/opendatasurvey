@@ -40,7 +40,7 @@
         <li><a href="/about/">{{gettext("About")}}</a></li>
         <li><a href="/changes/">{{gettext("Changes")}}</a></li>
         {% if discussionForum %}
-          <li><a href="{{ discussionForum }}">Discussion</a></li>
+          <li><a href="{{ discussionForum }}">{{ gettext("Discussion") }}</a></li>
         {% endif %}
         <li><a href="/faq/">{{gettext("FAQ")}}</a></li>
         {% if site.settings.contribute_page %}
