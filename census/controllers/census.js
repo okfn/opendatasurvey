@@ -3,7 +3,7 @@
 var _ = require('lodash');
 var config = require('../config');
 var uuid = require('node-uuid');
-var routeUtils = require('../routes/utils');
+var utils = require('./utils');
 var modelUtils = require('../models').utils;
 var anonymousUserId = '0e7c393e-71dd-4368-93a9-fcfff59f9fff';
 
@@ -124,7 +124,7 @@ var _submitPostHandler = function(req, res, currentState, questions, places, dat
     approveFirstSubmission = req.params.site.settings.approve_first_submission;
   }
 
-  errors = routeUtils.validateSubmitForm(req);
+  errors = utils.validateData(req);
 
   if (pending) {
     if (!Array.isArray(errors)) {
