@@ -345,8 +345,8 @@ html.readonly {
 	color: #2b2a2a;
 	text-shadow: none;
 	font-family: 'BebasNeueRegular',Arial,Helvetica, sans-serif;
-	font-size: 24px;
-	letter-spacing: 2px;
+	font-size: 22px;
+	letter-spacing: 1.5px;
 }
 
 .navbar .nav > li {

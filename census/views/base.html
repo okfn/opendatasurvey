@@ -34,9 +34,8 @@
 <div class="navbar navbar-static-top">
   <div class="navbar-inner">
     <div class="container">
-      <a class="brand" href="/">{{ site.settings.title }}</a>
+      <a class="brand" href="/" title="{{ gettext('Home')}}">{{ site.settings.title }}</a>
       <ul class="nav">
-        <li><a href="/">{{gettext("Home")}}</a></li>
         <li><a href="/about/">{{gettext("About")}}</a></li>
         <li><a href="/changes/">{{gettext("Changes")}}</a></li>
         <li><a href="/faq/">{{gettext("FAQ")}}</a></li>
@@ -44,7 +43,7 @@
         <li><a href="/contribute/">{{gettext("Contribute")}}</a></li>
         {% endif %}
         {% if discussionForum %}
-          <li><a href="{{ discussionForum }}">{{ gettext("Discussion") }}</a></li>
+          <li><a target="_blank" href="{{ discussionForum }}">{{ gettext("Support") }}</a></li>
         {% endif %}
       </ul>
       <div class="nav-logo">

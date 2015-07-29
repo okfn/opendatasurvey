@@ -67,7 +67,8 @@ Get a local server setup with the following steps:
   },
   "auth_subdomain": "id",
   "system_subdomain": "system",
-  "sentry_dsn": ""
+  "sentry_dsn": "",
+  "discussion_forum": "https://discuss.okfn.org/c/open-data-index"
 }
 ```
 
