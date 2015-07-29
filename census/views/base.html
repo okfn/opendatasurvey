@@ -39,12 +39,12 @@
         <li><a href="/">{{gettext("Home")}}</a></li>
         <li><a href="/about/">{{gettext("About")}}</a></li>
         <li><a href="/changes/">{{gettext("Changes")}}</a></li>
-        {% if discussionForum %}
-          <li><a href="{{ discussionForum }}">{{ gettext("Discussion") }}</a></li>
-        {% endif %}
         <li><a href="/faq/">{{gettext("FAQ")}}</a></li>
         {% if site.settings.contribute_page %}
         <li><a href="/contribute/">{{gettext("Contribute")}}</a></li>
+        {% endif %}
+        {% if discussionForum %}
+          <li><a href="{{ discussionForum }}">{{ gettext("Discussion") }}</a></li>
         {% endif %}
       </ul>
       <div class="nav-logo">
