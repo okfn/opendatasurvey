@@ -59,6 +59,8 @@ nconf.defaults({
       timestamps: true
     }
   },
+  disqus_api_key: process.env.DISQUS_API_KEY || '',
+  disqus_api_secret: process.env.DISQUS_API_SECRET || '',
   appconfig: {
     port: process.env.PORT || 5000,
     auth_on: process.env.AUTH_ON !== undefined || false,
