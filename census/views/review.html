@@ -35,11 +35,7 @@
   </div>
 </div>
 
-<div id="sticky-rails" style="position: absolute; width: 1124px; height: 1024px; text-align: right;">
-  <a id="to-comments" href="#comments" style="position: absolute;" class="btn btn-primary">{{ gettext("Comments") }}</a>
-</div>
-
-<div id="submission-data" class="page-header">
+<div class="page-header">
   <h1>
     <a href="/year/{{ current.year }}">{{ current.year }}</a> /
     <a href="/place/{{ place.id }}">{{ place.name }}</a> /
@@ -82,10 +78,14 @@
 <div class="row">
   <div id="questions" class="span12">
     {% if reviewInstructions %}
-    <div class="alert alert-warning">
+    <div id="alert" class="alert alert-warning">
       {{reviewInstructions}}
     </div>
     {% endif %}
+
+    <div id="sticky-rails" style="position: absolute; width: 1124px; height: 1024px; text-align: right;">
+      <a id="to-comments" href="#comments" style="position: absolute;" class="btn btn-primary">{{ gettext("Comment") }}</a>
+    </div>
 
     {% if canReview and not reviewClosed %}
     <form action="" method="post" class="submission-review">
@@ -129,7 +129,7 @@
 <script>
   $(function() {
     var $rails = $('#sticky-rails');
-    var $submission = $('#submission-data');
+    var $questions = $('#questions');
     var $toComments = $('#to-comments');
 
     // Left margin of submission section
@@ -138,7 +138,7 @@
 
 
     // Proper horizontal positioning
-    $rails.width($submission.width() + $toComments.outerWidth() + toCommentsMargin);
+    $rails.width($questions.width() + $toComments.outerWidth() + toCommentsMargin);
 
     $toComments
       .css('left', toCommentsLeft)
@@ -148,9 +148,9 @@
       .on('sticky_kit:stick sticky_kit:unbottom', function() {
         // Sticky rails has the height of submission data and sumbmission questions
         // plus margins, update height during scrolling
-        $rails.height($submission.outerHeight(true) + $('#questions').outerHeight(true))
+        $rails.height($questions.outerHeight(true) - $('#alert').outerHeight(true));
 
-        $toComments.css('left', $submission.width() + ($(window).width() - $submission.width())/2 + toCommentsMargin);
+        $toComments.css('left', $questions.width() + ($(window).width() - $questions.width())/2 + toCommentsMargin);
       })
 
       .on('sticky_kit:bottom', function() { $toComments.css('left', toCommentsLeft); });
