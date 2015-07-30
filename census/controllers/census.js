@@ -317,6 +317,7 @@ var pendingEntry = function (req, res) {
 
         res.render('review.html', {
           canReview: canReview,
+          disqus_shortname: config.get('disqus_shortname'),
           reviewClosed: result.reviewResult || (result.year !== req.app.get('year')),
           reviewInstructions: config.get('review_page'),
           questions: _getFormQuestions(req, D.questions),

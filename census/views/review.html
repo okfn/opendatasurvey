@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block content %}
-
 <div class="row">
   <div class="span12">
     {% if currentUser %}
@@ -36,7 +35,11 @@
   </div>
 </div>
 
-<div class="page-header">
+<div id="sticky-rails" style="position: absolute; width: 1124px; height: 1024px; text-align: right;">
+  <a id="to-comments" href="#comments" style="padding: 8px;">Comment on this submission</a>
+</div>
+
+<div id="submission-data" class="page-header">
   <h1>
     <a href="/year/{{ current.year }}">{{ current.year }}</a> /
     <a href="/place/{{ place.id }}">{{ place.name }}</a> /
@@ -77,7 +80,7 @@
 </div>
 
 <div class="row">
-  <div class="span12">
+  <div id="questions" class="span12">
     {% if reviewInstructions %}
     <div class="alert alert-warning">
       {{reviewInstructions}}
@@ -99,8 +102,53 @@
     {% endif %}
 
   </div>
+
+  <div id="comments" class="span12">
+    <hr />
+    <h2>{{ gettext("Comments") }}</h2>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+      var disqus_shortname = '{{disqus_shortname}}'; // required: replace example with your forum shortname
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  </div>
 </div>
 
 <script src="{{page.root}}/src/common.js"></script>
+<script src="{{page.root}}/vendor/jquery.sticky-kit.min.js"></script>
 <script src="/src/submit.js"></script>
+
+<script>
+  $(function() {
+    var $submission = $('#submission-data');
+    var $toComments = $('#to-comments');
+
+    // Left margin of submission section
+    var toCommentsMargin = 16;
+
+
+    $('#sticky-rails')
+      // Sticky rails has the height of submission data and sumbmission questions plus margins
+      .height($('#submission-data').outerHeight(true) + $('#questions').outerHeight(true))
+
+      // Proper horizontal positioning
+      .width($submission.width() + $toComments.outerWidth() + toCommentsMargin);
+
+    $toComments
+      .stick_in_parent()
+
+      // Keep proper postion when .position css property changes to fixed
+      .on('sticky_kit:stick', function() {
+        $toComments.css('left', $submission.width() + ($(window).width() - $submission.width())/2 + toCommentsMargin);
+      });
+  });
+</script>
 {% endblock %}
