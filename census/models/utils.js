@@ -38,8 +38,22 @@ var translateSet = function(req, results) {
 };
 
 
+var cascadeEntries = function(entries) {
+  var cascaded = [];
+  var grouped = _.groupBy(entries, function(e) { return e.place + '/' + e.dataset; });
+
+  _.each(grouped, function(value, key) {
+    if (value) {
+      cascaded.push(value[0]);
+    }
+  });
+  return cascaded;
+};
+
+
 module.exports = {
   loadModels: loadModels,
   siteQuery: siteQuery,
-  translateSet: translateSet
+  translateSet: translateSet,
+  cascadeEntries: cascadeEntries
 };

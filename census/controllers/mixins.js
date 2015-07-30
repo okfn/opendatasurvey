@@ -121,23 +121,27 @@ var requireAdmin = function (req, res, next) {
 };
 
 var requireAvailableYear = function (req, res, next) {
-
-  if (typeof(req.params.year) === 'undefined') {
+  /**
+   * Set year as a request param. If one is passed explicitly, try to use it.
+   * If one is not passed, set to current year, and set cascade to true.
+   */
+  if (typeof req.params.year === 'undefined') {
     req.params.year = req.app.get('year');
+    res.locals.year = req.params.year;
+    req.params.cascade = true;
+    res.locals.cascade = req.params.cascade;
   } else {
-
     req.params.year = parseInt(req.params.year, 10);
-
+    res.locals.year = req.params.year;
+    req.params.cascade = false;
+    res.locals.cascade = req.params.cascade;
     if (_.indexOf(req.app.get('years'), req.params.year) === -1) {
       res.status(404).send({status: 'not found', message: 'not found here'});
       return;
     }
-
   }
-
   next();
   return;
-
 };
 
 
