@@ -128,6 +128,7 @@
 
 <script>
   $(function() {
+    var $rails = $('#sticky-rails');
     var $submission = $('#submission-data');
     var $toComments = $('#to-comments');
 
@@ -135,18 +136,18 @@
     var toCommentsMargin = 16;
 
 
-    $('#sticky-rails')
-      // Sticky rails has the height of submission data and sumbmission questions plus margins
-      .height($('#submission-data').outerHeight(true) + $('#questions').outerHeight(true))
-
-      // Proper horizontal positioning
-      .width($submission.width() + $toComments.outerWidth() + toCommentsMargin);
+    // Proper horizontal positioning
+    $rails.width($submission.width() + $toComments.outerWidth() + toCommentsMargin);
 
     $toComments
       .stick_in_parent()
 
-      // Keep proper postion when .position css property changes to fixed
+      // Keep proper postion when .position css property of Comments link changes to fixed
       .on('sticky_kit:stick', function() {
+        // Sticky rails has the height of submission data and sumbmission questions
+        // plus margins, update height during scrolling
+        $rails.height($submission.outerHeight(true) + $('#questions').outerHeight(true))
+
         $toComments.css('left', $submission.width() + ($(window).width() - $submission.width())/2 + toCommentsMargin);
       });
   });
