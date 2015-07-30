@@ -18,6 +18,7 @@
     "cookie-session": "^1.1.0",
     "cors": "^2.6.1",
     "csv": "^0.4.2",
+    "disqus-node": "^0.13.0",
     "express": "^4.12.4",
     "express-session": "^1.11.2",
     "express-validator": "^2.10.0",
