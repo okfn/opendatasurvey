@@ -29,10 +29,14 @@ nconf.defaults({
   approve_first_submission: 'FALSE',
   reviewers: '',
   locales: ['en'],
-  smtp_host: process.env.SMTP_HOST || 'smtp.mandrillapp.com',
-  smtp_port: process.env.SMTP_PORT || 587,
-  smtp_username: process.env.SMTP_USERNAME || 'noreply@census.okfn.org',
-  smtp_password: process.env.SMTP_PASSWORD || '',
+
+  mandrill: {
+    smtp_host: process.env.SMTP_HOST || 'smtp.mandrillapp.com',
+    smtp_port: process.env.SMTP_PORT || 587,
+    smtp_username: process.env.SMTP_USERNAME || 'noreply@census.okfn.org',
+    smtp_password: process.env.SMTP_PASSWORD || ''
+  },
+
   disqus_shortname: 'opendatacensus',
   about_page: '<h1>To set content for this page update your configuration file</h1>',
   contribute_page: '<h1>To set content for this page update your configuration file</h1>',
@@ -59,8 +63,12 @@ nconf.defaults({
       timestamps: true
     }
   },
-  disqus_api_key: process.env.DISQUS_API_KEY || '',
-  disqus_api_secret: process.env.DISQUS_API_SECRET || '',
+  
+  disqus: {
+    api_key: process.env.DISQUS_API_KEY || '',
+    api_secret: process.env.DISQUS_API_SECRET || ''
+  },
+
   appconfig: {
     port: process.env.PORT || 5000,
     auth_on: process.env.AUTH_ON !== undefined || false,
