@@ -36,7 +36,7 @@
 </div>
 
 <div id="sticky-rails" style="position: absolute; width: 1124px; height: 1024px; text-align: right;">
-  <a id="to-comments" href="#comments" class="btn btn-primary">{{ gettext("Comments") }}</a>
+  <a id="to-comments" href="#comments" style="position: absolute;" class="btn btn-primary">{{ gettext("Comments") }}</a>
 </div>
 
 <div id="submission-data" class="page-header">
@@ -134,22 +134,26 @@
 
     // Left margin of submission section
     var toCommentsMargin = 16;
+    var toCommentsLeft = 956;
 
 
     // Proper horizontal positioning
     $rails.width($submission.width() + $toComments.outerWidth() + toCommentsMargin);
 
     $toComments
+      .css('left', toCommentsLeft)
       .stick_in_parent()
 
       // Keep proper postion when .position css property of Comments link changes to fixed
-      .on('sticky_kit:stick', function() {
+      .on('sticky_kit:stick sticky_kit:unbottom', function() {
         // Sticky rails has the height of submission data and sumbmission questions
         // plus margins, update height during scrolling
         $rails.height($submission.outerHeight(true) + $('#questions').outerHeight(true))
 
         $toComments.css('left', $submission.width() + ($(window).width() - $submission.width())/2 + toCommentsMargin);
-      });
+      })
+
+      .on('sticky_kit:bottom', function() { $toComments.css('left', toCommentsLeft); });
   });
 </script>
 {% endblock %}
