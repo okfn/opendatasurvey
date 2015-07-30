@@ -76,30 +76,32 @@
 </div>
 
 <div class="row">
-  <div id="questions" class="span12">
+  <div class="span12">
     {% if reviewInstructions %}
     <div id="alert" class="alert alert-warning">
       {{reviewInstructions}}
     </div>
     {% endif %}
 
-    <div id="sticky-rails" style="position: absolute; width: 1124px; height: 1024px; text-align: right;">
-      <a id="to-comments" href="#comments" style="position: absolute;" class="btn btn-primary">{{ gettext("Comment") }}</a>
+    <div id="sticky-rails">
+      <div id="to-comments" style="text-align: right;">
+        <a href="#comments" class="btn btn-primary" style="position: absolute; margin-left: 16px;">{{ gettext("Comment") }}</a>
+      </div>
+
+      {% if canReview and not reviewClosed %}
+      <form action="" method="post" class="submission-review">
+      {% endif %}
+
+      {% include '_snippets/form.html' %}
+
+      {% if canReview and not reviewClosed %}
+      {% include '_snippets/reviewer_actions.html' %}
+      {% endif %}
+
+      {% if canReview and not reviewClosed %}
+      </form>
+      {% endif %}
     </div>
-
-    {% if canReview and not reviewClosed %}
-    <form action="" method="post" class="submission-review">
-    {% endif %}
-
-    {% include '_snippets/form.html' %}
-
-    {% if canReview and not reviewClosed %}
-    {% include '_snippets/reviewer_actions.html' %}
-    {% endif %}
-
-    {% if canReview and not reviewClosed %}
-    </form>
-    {% endif %}
 
   </div>
 
@@ -125,35 +127,5 @@
 <script src="{{page.root}}/src/common.js"></script>
 <script src="{{page.root}}/vendor/jquery.sticky-kit.min.js"></script>
 <script src="/src/submit.js"></script>
-
-<script>
-  $(function() {
-    var $rails = $('#sticky-rails');
-    var $questions = $('#questions');
-    var $toComments = $('#to-comments');
-
-    // Left margin of submission section
-    var toCommentsMargin = 16;
-    var toCommentsLeft = 956;
-
-
-    // Proper horizontal positioning
-    $rails.width($questions.width() + $toComments.outerWidth() + toCommentsMargin);
-
-    $toComments
-      .css('left', toCommentsLeft)
-      .stick_in_parent()
-
-      // Keep proper postion when .position css property of Comments link changes to fixed
-      .on('sticky_kit:stick sticky_kit:unbottom', function() {
-        // Sticky rails has the height of submission data and sumbmission questions
-        // plus margins, update height during scrolling
-        $rails.height($questions.outerHeight(true) - $('#alert').outerHeight(true));
-
-        $toComments.css('left', $questions.width() + ($(window).width() - $questions.width())/2 + toCommentsMargin);
-      })
-
-      .on('sticky_kit:bottom', function() { $toComments.css('left', toCommentsLeft); });
-  });
-</script>
+<script>$(function() { $('#to-comments').stick_in_parent(); });</script>
 {% endblock %}
