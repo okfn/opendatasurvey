@@ -19,8 +19,8 @@ Discussion and updates:
 
 * Please join the discussion forum for the Open Data Index: https://discuss.okfn.org/c/open-data-index
 
-[docs-census-structure]: /doc/#overview-of-how-a-census-is-structured
-[docs-census-config]: /doc/#configuring-your-census
+[docs-census-structure]: /site-admins/#overview-of-how-a-census-is-structured
+[docs-census-config]: /site-admins/#configuring-your-census
 [get-started]: /#get-started
 
 ## Active Local Census instances
