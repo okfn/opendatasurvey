@@ -7,6 +7,9 @@ var disqus = new (require('disqus-node'))({
   https: true
 });
 
+var NotificationLog = require('../models').NotificationLog;
+
+
 // Get all submissions from local DB
 
 // Get related Disqus threads
