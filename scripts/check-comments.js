@@ -14,7 +14,7 @@ var NotificationLog = require('../models').NotificationLog;
 
 // Get related Disqus threads
 
-// Find thos which have new comments, rely on NotificationLog. This routine
+// Find those which have new comments, rely on NotificationLog. This routine
 // shouldn't be moved to the process which do actual notification through email as that
 // process should be generic to be utilized by other notificators.
 
