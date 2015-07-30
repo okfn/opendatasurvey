@@ -5,6 +5,8 @@ var _ = require('lodash');
 
 var requireDomain = function(req, res, next) {
 
+  res.locals.domain = req.params.domain;
+
   if (!req.params.domain) {
 
     res.status(404).render('404.html', {title: 'Not found', message: 'Not found'});
@@ -175,28 +177,15 @@ var requireSystemDomain = function(req, res, next) {
 };
 
 
-var requireSystemDomain = function(req, res, next) {
-
-  if (req.params.domain !== req.app.get('systemDomain')) {
-    res.status(404).render('404.html', {
-      title: 'Not found',
-      message: 'SYSTEM ROUTE ONLY'
-    });
-    return;
-  }
-
-  next();
-  return;
-};
-
-
 var requireSiteDomain = function(req, res, next) {
 
   if (req.params.domain === req.app.get('authDomain') ||
       req.params.domain === req.app.get('systemDomain')) {
 
-    res.send('This route does not exist on this domain.');
-    return;
+  req.app.get('models').Registry.findAll()
+    .then(function(result) {
+      return res.render('wayfinder.html', {registry: result});
+    });
 
   }
 

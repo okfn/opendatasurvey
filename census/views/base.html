@@ -34,6 +34,8 @@
 <div class="navbar navbar-static-top">
   <div class="navbar-inner">
     <div class="container">
+      {% if domain == authDomain or domain == systemDomain %}
+      {% else %}
       <a class="brand" href="/" title="{{ gettext('Home')}}">{{ site.settings.title }}</a>
       <ul class="nav">
         <li><a href="/about/">{{gettext("About")}}</a></li>
@@ -49,6 +51,7 @@
       <div class="nav-logo">
         {{ site.settings.navbar_logo }}
       </div>
+      {% endif %}
     </div>
   </div>
 </div>
