@@ -10,7 +10,7 @@
 <h1>
   {% if overview %}<a href="{{urlFor('overview')}}" data-toggle="tooltip" class="count-0"
     title="Return to results overview">{{gettext("Places")}}</a>
-  / {% endif %}{{ place.name }} / {{ year }}
+  / {% endif %}{{ place.name }} {% if not cascade %}/ {{ year }}{% endif %}
 
   <span class="pull-right">
     {% include '_snippets/share_page_buttons.html' %}
@@ -53,7 +53,7 @@
 
             <tr>
               <td>
-                {% if currentEntry %}<a href="/entry/{{place.id}}/{{dataset.id}}/{{ year }}">{% endif %}
+                {% if currentEntry %}<a href="/entry/{{place.id}}/{{dataset.id}}{{ urlContext }}">{% endif %}
                   {{ dataset.name }}
                 {% if currentEntry %}</a>{% endif %}
                 &nbsp;

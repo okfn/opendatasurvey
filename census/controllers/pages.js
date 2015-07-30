@@ -118,8 +118,8 @@ var resultJson = function (req, res) {
 
 
 var overview = function (req, res) {
-
-  var entryQueryParams = _.merge(modelUtils.siteQuery(req, true), {where: {isCurrent: true}});
+  var byYear; if (!req.params.cascade) { byYear = true; }
+  var entryQueryParams = _.merge(modelUtils.siteQuery(req, byYear), {where: {isCurrent: true}, order: '"createdAt" DESC'});
   var questionQueryParams = _.merge(modelUtils.siteQuery(req), {where: {type: ''}, order: 'score DESC'});
   var datasetQueryParams = modelUtils.siteQuery(req);
 
@@ -136,10 +136,20 @@ var overview = function (req, res) {
         currentEntryCount,
         currentEntryOpenCount,
         openDataPercentCount,
-        openDataPercent;
+        openDataPercent,
+        urlContext;
+
+    if (req.params.cascade) {
+      urlContext = '';
+    } else {
+      urlContext = '/YEAR'.replace('YEAR', req.params.year);
+    }
+
+    if (req.params.cascade) {
+      D.entries = modelUtils.cascadeEntries(D.entries);
+    }
 
     if (Array.isArray(D.entries)) {
-
       currentEntryCount = D.entries.length;
       currentEntryOpenCount = _.filter(D.entries, function(e) {return e.isOpen() === true;}).length;
       openDataPercent = parseInt((currentEntryOpenCount / currentEntryCount) * 100, 10);
@@ -147,7 +157,6 @@ var overview = function (req, res) {
       _.each(D.entries, function(e) {
         e.computedYCount = e.yCount(D.questions);
       });
-
     } else {
 
       currentEntryCount = 0;
@@ -184,8 +193,7 @@ var overview = function (req, res) {
       datasets: _.sortByOrder(modelUtils.translateSet(req, D.datasets), 'order', 'asc'),
       questions: modelUtils.translateSet(req, D.questions),
       entries: D.entries,
-      year: req.params.year
-
+      urlContext: urlContext
     });
   }).catch(console.log.bind(console));
 };
@@ -193,8 +201,9 @@ var overview = function (req, res) {
 
 var place = function (req, res) {
 
+  var byYear; if (!req.params.cascade) { byYear = true; }
   var placeQueryParams = _.merge(modelUtils.siteQuery(req), {where: {id: req.params.place}});
-  var entryQueryParams = _.merge(modelUtils.siteQuery(req, true),
+  var entryQueryParams = _.merge(modelUtils.siteQuery(req, byYear),
                                  {where: {place: req.params.place},
                                   order: '"updatedAt" DESC',
                                   include: [{model: req.app.get('models').User, as: 'Submitter'},
@@ -211,7 +220,18 @@ var place = function (req, res) {
   }).then(function(D) {
 
     var reviewers = [],
-        submitters = [];
+        submitters = [],
+        urlContext;
+
+    if (req.params.cascade) {
+      urlContext = '';
+    } else {
+      urlContext = '/YEAR'.replace('YEAR', req.params.year);
+    }
+
+    if (req.params.cascade) {
+      D.entries = modelUtils.cascadeEntries(D.entries);
+    }
 
     if (!D.place) {
 
@@ -243,7 +263,8 @@ var place = function (req, res) {
       year: req.params.year,
       submissionsAllowed: (req.params.year === req.app.get('year')),
       reviewers: _.uniq(reviewers, 'id'),
-      submitters: _.uniq(submitters, 'id')
+      submitters: _.uniq(submitters, 'id'),
+      urlContext: urlContext
     });
 
   }).catch(console.log.bind(console));
@@ -252,11 +273,13 @@ var place = function (req, res) {
 
 var dataset = function (req, res) {
 
+  var byYear; if (!req.params.cascade) { byYear = true; }
   var datasetQueryParams = _.merge(modelUtils.siteQuery(req), {where: {id: req.params.dataset}});
-  var entryQueryParams = _.merge(modelUtils.siteQuery(req, true),
+  var entryQueryParams = _.merge(modelUtils.siteQuery(req, byYear),
                                  {where: {dataset: req.params.dataset},
                                   include: [{model: req.app.get('models').User, as: 'Submitter'},
-                                            {model: req.app.get('models').User, as: 'Reviewer'}]});
+                                            {model: req.app.get('models').User, as: 'Reviewer'}],
+                                  order: '"createdAt" DESC'});
   var questionQueryParams = _.merge(modelUtils.siteQuery(req), {where: {type: ''}, order: 'score DESC'});
 
   modelUtils.loadModels({
@@ -271,7 +294,18 @@ var dataset = function (req, res) {
     var reviewers = [],
         submitters = [],
         currentEntries,
-        pendingEntries;
+        pendingEntries,
+        urlContext;
+
+    if (req.params.cascade) {
+      urlContext = '';
+    } else {
+      urlContext = '/YEAR'.replace('YEAR', req.params.year);
+    }
+
+    if (req.params.cascade) {
+      D.entries = modelUtils.cascadeEntries(D.entries);
+    }
 
     if (!D.dataset) {
 
@@ -311,7 +345,8 @@ var dataset = function (req, res) {
       questions: modelUtils.translateSet(req, D.questions),
       places: _.sortByOrder(modelUtils.translateSet(req, D.places), 'computedScore', 'desc'),
       year: req.params.year,
-      submissionsAllowed: (req.params.year === req.app.get('year'))
+      submissionsAllowed: (req.params.year === req.app.get('year')),
+      urlContext: urlContext
 
     });
 
@@ -321,11 +356,12 @@ var dataset = function (req, res) {
 
 
 var entry = function (req, res) {
-
-  var entryQueryParams = _.merge(modelUtils.siteQuery(req, true),
+  var byYear; if (!req.params.cascade) { byYear = true; }
+  var entryQueryParams = _.merge(modelUtils.siteQuery(req, byYear),
                                  {where: {dataset: req.params.dataset, place: req.params.place, isCurrent: true},
                                   include: [{model: req.app.get('models').User, as: 'Submitter'},
-                                            {model: req.app.get('models').User, as: 'Reviewer'}]});
+                                            {model: req.app.get('models').User, as: 'Reviewer'}],
+                                  order: '"createdAt" DESC'});
   var datasetQueryParams = _.merge(modelUtils.siteQuery(req), {where: {id: req.params.dataset}});
   var placeQueryParams = _.merge(modelUtils.siteQuery(req), {where: {id: req.params.place}});
   var questionQueryParams = _.merge(modelUtils.siteQuery(req), {order: 'score DESC'});
@@ -338,6 +374,14 @@ var entry = function (req, res) {
     questions: req.app.get('models').Question.findAll(questionQueryParams)
 
   }).then(function(D) {
+
+    var urlContext;
+
+    if (req.params.cascade) {
+      urlContext = '';
+    } else {
+      urlContext = '/YEAR'.replace('YEAR', req.params.year);
+    }
 
     if (!D.entry) {
 
@@ -353,7 +397,8 @@ var entry = function (req, res) {
       place: D.place.translated(req.locale),
       dataset: D.dataset.translated(req.locale),
       questions: modelUtils.translateSet(req, D.questions),
-      year: req.params.year
+      year: req.params.year,
+      urlContext: urlContext
 
     });
 
