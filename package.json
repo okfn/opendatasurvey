@@ -70,9 +70,9 @@
     "npm": "2.11.x"
   },
   "scripts": {
-    "migrate_submissions": "node migrations/submissions.js",
-    "migrate_entries": "node migrations/entries.js",
-    "migrate_users": "node migrations/users.js",
+    "migrate_submissions": "node scripts/submissions.js",
+    "migrate_entries": "node scripts/entries.js",
+    "migrate_users": "node scripts/users.js",
     "start": "node census/app.js",
     "test": "NODE_ENV=test mocha tests/ --patient"
   }
