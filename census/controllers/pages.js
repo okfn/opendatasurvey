@@ -141,12 +141,9 @@ var overview = function (req, res) {
 
     if (req.params.cascade) {
       urlContext = '';
+      D.entries = modelUtils.cascadeEntries(D.entries);
     } else {
       urlContext = '/YEAR'.replace('YEAR', req.params.year);
-    }
-
-    if (req.params.cascade) {
-      D.entries = modelUtils.cascadeEntries(D.entries);
     }
 
     if (Array.isArray(D.entries)) {
@@ -225,12 +222,10 @@ var place = function (req, res) {
 
     if (req.params.cascade) {
       urlContext = '';
+      // not needed as happens in template with new query
+      // D.entries = modelUtils.cascadeEntries(D.entries);
     } else {
       urlContext = '/YEAR'.replace('YEAR', req.params.year);
-    }
-
-    if (req.params.cascade) {
-      D.entries = modelUtils.cascadeEntries(D.entries);
     }
 
     if (!D.place) {
@@ -299,12 +294,10 @@ var dataset = function (req, res) {
 
     if (req.params.cascade) {
       urlContext = '';
+      // not needed as happens in template with new query
+      // D.entries = modelUtils.cascadeEntries(D.entries);
     } else {
       urlContext = '/YEAR'.replace('YEAR', req.params.year);
-    }
-
-    if (req.params.cascade) {
-      D.entries = modelUtils.cascadeEntries(D.entries);
     }
 
     if (!D.dataset) {

@@ -44,7 +44,7 @@ var cascadeEntries = function(entries) {
 
   _.each(grouped, function(value, key) {
     if (value) {
-      cascaded.push(value[0]);
+      cascaded.push(_.sortByOrder(value, ['year', 'updatedAt'], 'desc')[0]);
     }
   });
   return cascaded;
