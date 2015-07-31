@@ -40,8 +40,15 @@ models.NotificationLog.findOne({where: {type: 'comments'}}).then(function(N) {
         }))
 
           // Call email notificator passed with recipient, subject, rendered template string
-          notify('comments', E.Submitter.emails[0], 'Subject', 'imported template string', {template: 'context'});
+          notify('comments', E.Submitter.emails[0], {
+            subject: 'Subject',
+            template: 'imported template string',
+            templateContext: {template: 'context'}
+          });
       });
     });
+
+    // Update NotificationLog after all Entries are walked through and all Disqus 
+    // requests are done
   });
 });

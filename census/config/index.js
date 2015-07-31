@@ -29,6 +29,7 @@ nconf.defaults({
   approve_first_submission: 'FALSE',
   reviewers: '',
   locales: ['en'],
+  email_from: process.env.EMAIL_FROM || '',
 
   mandrill: {
     smtp_host: process.env.SMTP_HOST || 'smtp.mandrillapp.com',
