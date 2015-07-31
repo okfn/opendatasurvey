@@ -10,6 +10,7 @@ var disqus = new (require('disqus-node'))({
 
 var models = require('../census/models');
 var moment = require('moment');
+var Promise = require('bluebird');
 var notify = require('./notify-email');
 
 
@@ -19,7 +20,7 @@ models.NotificationLog.findOne({where: {type: 'comments'}}).then(function(N) {
     include: [{model: models.User, as: 'Submitter'}],
     where: {isCurrent: false}
   }).then(function(D) {
-    D.forEach(function(E) {
+    Promise.each(D, function(E) {
       if(!E.Submitter)
         return false;
 
@@ -46,9 +47,9 @@ models.NotificationLog.findOne({where: {type: 'comments'}}).then(function(N) {
             templateContext: {template: 'context'}
           });
       });
+    }).then(function() {
+      // Update NotificationLog after all Entries are walked through and all Disqus 
+      // requests are done      
     });
-
-    // Update NotificationLog after all Entries are walked through and all Disqus 
-    // requests are done
   });
 });
