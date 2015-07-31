@@ -25,7 +25,7 @@ module.exports = {
         comment: 'Unique name for notification'
       },
       
-      last_at: {
+      lastAt: {
         type: Sequelize.DATE,
         allowNull: true,
         comment: 'Datetime notification last sent'

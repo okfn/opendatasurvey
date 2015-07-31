@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var config = require('../census/config');
 
 var disqus = new (require('disqus-node'))({
@@ -7,17 +8,40 @@ var disqus = new (require('disqus-node'))({
   https: true
 });
 
-var NotificationLog = require('../models').NotificationLog;
+var models = require('../census/models');
+var moment = require('moment');
+var notify = require('./notify-email');
 
 
-// Get all submissions from local DB
+models.NotificationLog.findOne({where: {type: 'comments'}}).then(function(N) {
+  // Get all submissions from local DB
+  models.Entry.findAll({
+    include: [{model: models.User, as: 'Submitter'}],
+    where: {isCurrent: false}
+  }).then(function(D) {
+    D.forEach(function(E) {
+      if(!E.Submitter)
+        return false;
 
-// Get related Disqus threads
+      console.log(['Processing', E.id, 'submitted by', E.Submitter.firstName, E.lastName].join(' '));
 
-// Find those which have new comments, rely on NotificationLog. This routine
-// shouldn't be moved to the process which do actual notification through email as that
-// process should be generic to be utilized by other notificators.
+      // Get related Disqus threads
+      disqus.posts.list({
+        forum: config.get('disqus_shortname'),
 
-// Call email notificator passed with recipient, subject, rendered template string
+        // https://disqus.com/api/docs/threads/listPosts/
+        thread: 'link:<Submission URLneed to be generated here>'
+      }).then(function (R) {
+        // Find those which have new comments, rely on NotificationLog. This routine
+        // shouldn't be moved to the process which do actual notification through email as that
+        // process should be generic to be utilized by other notificators.
+        if(_.any(R.response, function(P) {
+          return !N || moment(P.created_at,  moment.ISO_8601).isAfter(N.lastAt);
+        }))
 
-// Upadte NotificationLog
+          // Call email notificator passed with recipient, subject, rendered template string
+          notify('comments', E.Submitter.emails[0], 'Subject', 'imported template string', {template: 'context'});
+      });
+    });
+  });
+});

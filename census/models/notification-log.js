@@ -18,14 +18,15 @@ module.exports = function (sequelize, DataTypes) {
       comment: 'Unique name for notification'
     },
     
-    last_at: {
+    lastAt: {
       type: DataTypes.DATE,
       allowNull: true,
       comment: 'Datetime notification last sent'
     }
   },
   {
-    tableName: 'notification_log'
+    tableName: 'notification_log',
+    timestamps: false
   });
 
   return NotificationLog;
