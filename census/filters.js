@@ -76,7 +76,7 @@ var rotate = function(str) {
 var dateformat = function(str, lang, fmt) {
   fmt = fmt || 'h:mma on Do MMM YYYY';
   lang = lang || 'en';
-  return moment(str).lang(lang).format(fmt);
+  return moment(str).locale(lang).format(fmt);
 };
 
 
