@@ -128,22 +128,21 @@ var validateQuestion = function(req, question, parentValue, validated) {
 
 };
 
-var validateData = function(req) {
+var validateData = function(req, mappedErrors) {
   /**
    * Ensures validation data is submitted by checking the POST data on
    * req.body according to the declared validation logic.
    * Used for new data submissions, and revision proposals.
    */
   var errors,
-      validated,
-      unvalidated;
+      mappedErrors = mappedErrors || false;
 
   req.checkBody("place", "You must select a Place").notEmpty();
   req.checkBody("dataset", "You must select a Dataset").notEmpty();
 
   validateQuestion(req, "exists");
 
-  errors = req.validationErrors();
+  errors = req.validationErrors(mappedErrors);
 
   return errors;
 };
