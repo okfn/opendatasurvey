@@ -85,6 +85,10 @@ var validateQuestion = function(req, question, parentValue, validated) {
       parentValue = parentValue || "true",
       validated = validated || [];
 
+  if (value === undefined) {
+    req.checkBody(question, "You must specify " + question).equals("any");
+  }
+
   // ensure false values for expectFalse questions
   if (value === "false" && validator.expectFalse) {
     validator.expectFalse.forEach(function(child) {
