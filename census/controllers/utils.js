@@ -29,7 +29,8 @@ var validators = {
     require: ["url"]
   },
   openlicense: {
-    validate: makeChoiceValidator("openlicense")
+    validate: makeChoiceValidator("openlicense"),
+    require: ["licenseurl"]
   },
   machinereadable: {
     validate: makeChoiceValidator("machinereadable"),
@@ -44,13 +45,19 @@ var validators = {
   format: {
     type: "string",
     validate: function(req) {
-      req.checkBody("machinereadable", "You must specify the format of data").notEmpty();
+      req.checkBody("machinereadable", "You must specify the data format").notEmpty();
     }
   },
   url: {
     type: "string",
     validate: function(req) {
       req.checkBody("url", "You must specify a valid URL").isURL();
+    }
+  },
+  licenseurl: {
+    type: "string",
+    validate: function(req) {
+      req.checkBody("licenseurl", "You must specify a valid URL").isURL();
     }
   }
 };
