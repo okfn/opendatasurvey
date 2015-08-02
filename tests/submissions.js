@@ -83,10 +83,10 @@ describe('#validationData()', function () {
     });
     it('should return exists, digital, url (invalid values)', function(done) {
       postRoute(_.assign(sumbission, {
-        exists: 'yes', digital: 'no', url: 'example'
+        digital: 'foo', online: 'bar', url: 'example'
       }), done, function(errors) {
-        expect(errors).to.have.property('exists');
         expect(errors).to.have.property('digital');
+        expect(errors).to.have.property('online');
         expect(errors).to.have.property('url');
         expect(_.size(errors)).to.be.equal(3);
       });
