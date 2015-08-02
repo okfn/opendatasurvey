@@ -8,8 +8,8 @@
 <div class="page-header">
 
   <h1>
-    <a href="/place/{{place.id}}/{{ year }}" data-toggle="tooltip" class="count-0" title="Go to place overview">{{place.name}}</a> / <a href="/dataset/{{dataset.id}}/{{ year }}" data-toggle="tooltip" class="count-0" title="{{gettext("Return to dataset overview")}}">{{dataset.name}}
-    </a> / <a href="/year{{ urlContext }}">{{ entry.year }}</a>
+    <a href="/place/{{place.id}}{{ urlContext }}" data-toggle="tooltip" class="count-0" title="Go to place overview">{{place.name}}</a> / <a href="/dataset/{{dataset.id}}{{ urlContext }}" data-toggle="tooltip" class="count-0" title="{{gettext("Return to dataset overview")}}">{{dataset.name}}
+    </a> / <a href="{% if urlContext %}/year{{ urlContext }}{% else %}/{% endif %}">{{ entry.year }}</a>
 
     <span class="pull-right">
       {% include '_snippets/share_page_buttons.html' %}

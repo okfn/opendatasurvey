@@ -47,15 +47,13 @@
           </thead>
           <tbody>
             {% for dataset in datasets %}
-
-            {% set currentEntry = entries|find({'dataset': dataset.id, 'isCurrent': true}) %}
-            {% set pendingEntries = entries|where({'dataset': dataset.id, 'isCurrent': false, 'reviewed': false}) %}
-
+            {% set entry = entries|find({'dataset': dataset.id}) %}
+            {% set submissions = pending|where({'dataset': entry.dataset, 'place': entry.place, 'year': entry.year}) %}
             <tr>
               <td>
-                {% if currentEntry %}<a href="/entry/{{place.id}}/{{dataset.id}}{{ urlContext }}">{% endif %}
+                {% if entry %}<a href="/entry/{{place.id}}/{{dataset.id}}{{ urlContext }}">{% endif %}
                   {{ dataset.name }}
-                {% if currentEntry %}</a>{% endif %}
+                {% if entry %}</a>{% endif %}
                 &nbsp;
                 <a href="javascript:;"
                   data-toggle="popover"
@@ -63,12 +61,12 @@
                   data-content="{{ dataset.description }}"
                   title="{{ dataset.title }}"><i class="icon-info-sign"></i></a>
               </td>
-              {{entrysummary(dataset, place, currentEntry, questions)}}
+              {{entrysummary(dataset, place, entry, questions)}}
 
               <td>
                 {% if submissionsAllowed %}
 
-                {% if currentEntry %}
+                {% if entry %}
                 <a id="submit-{{ dataset.id }}" href="/census/submit/?dataset={{ dataset.id }}&place={{ place.id }}" class="btn btn-mini btn-primary">
                   <!-- <i class="icon-plus"></i> -->{{gettext("Propose Revisions")}}
                 </a>
@@ -84,24 +82,24 @@
               </td>
 
             </tr>
-            {% for pendingEntry in pendingEntries %}
+            {% for submission in submissions %}
             <tr class="queued">
               <td>
                 <strong>{{gettext("&#8627; Awaiting review")}}</strong><br />
 
-                <span title="{{ gettext('Submitted by')}} {{ pendingEntry.Submitter.firstName}}" class="queued-context">
+                <span title="{{ gettext('Submitted by')}} {{ submission.Submitter.firstName}}" class="queued-context">
                   <i class="icon icon-user"></i>&nbsp;
-                  {{ pendingEntry.Submitter.firstName }}
+                  {{ submission.Submitter.firstName }}
                 </span>
                 <br />
-                <span title="{{ gettext('Submitted on')}} {{ pendingEntry.createdAt|dateformat }}" class="queued-context">
+                <span title="{{ gettext('Submitted on')}} {{ submission.createdAt|dateformat }}" class="queued-context">
                   <i class="icon icon-time"></i>&nbsp;
-                  {{ pendingEntry.createdAt|simpledelta }}
+                  {{ submission.createdAt|simpledelta }}
                 </span>
               </td>
-              {{entrysummary(dataset, place, pendingEntry, questions)}}
+              {{entrysummary(dataset, place, submission, questions)}}
               <td>
-                 <a href="/census/submission/{{pendingEntry.id}}" class="btn btn-mini btn-danger">
+                 <a href="/census/submission/{{submission.id}}" class="btn btn-mini btn-danger">
                   {{gettext("View Submission")}}
                  </a>
                  <script>
