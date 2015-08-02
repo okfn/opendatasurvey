@@ -135,6 +135,8 @@ utils.loadData({
           candidate.answers = m.entry.answers;
           candidate.details = m.entry.details;
           candidate.isCurrent = true;
+          candidate.reviewed = true;
+          candidate.reviewResult = true;
           m.toSave = candidate;
           m.saveStrategy = 'update';
 

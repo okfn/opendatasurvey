@@ -106,44 +106,32 @@ var processStats = function(data, options) {
 };
 
 
-var cascadeEntries = function(entries) {
+var cascadeEntries = function(entries, currentYear) {
   var cascaded = [];
   var grouped = _.groupBy(entries, function(e) { return e.place + '/' + e.dataset; });
   _.each(grouped, function(value) {
-    if (value) { cascaded.push(_.sortByOrder(value, ['year', 'updatedAt'], 'desc')[0]); }
+    var match, matches = [], candidates;
+    if (value) {
+      candidates = _.sortByOrder(value, ['year', 'updatedAt'], 'desc');
+      match = _.find(candidates, {'isCurrent': true});
+      if (match) { matches.push(match); }
+      matches = matches.concat(_.filter(candidates, {'isCurrent': false, 'year': currentYear}) || []);
+      cascaded = cascaded.concat(matches);
+    }
   });
   return cascaded;
 };
 
 
 var setEntryUrl = function(entry) {
-      if (entry.isCurrent) {
-        entry.url = '/entry/PLACE/DATASET'
-          .replace('PLACE', entry.place)
-          .replace('DATASET', entry.dataset);
-      } else {
-        entry.url = '/census/submission/ID'.replace('ID', entry.id);
-      }
+  if (entry.isCurrent) {
+    return '/entry/PLACE/DATASET'
+      .replace('PLACE', entry.place)
+      .replace('DATASET', entry.dataset);
+  } else {
+    return '/census/submission/ID'.replace('ID', entry.id);
+  }
 };
-
-
-// var deref = function (type, entry, data) {
-//   if (type === 'place') {
-//     if (data.place) {
-//       return data.place;
-//     } else {
-//       console.log('?????');
-//       return _.find(data.places, function(p) { return p.id === entry.place; });
-//     }
-//   } else if (type === 'dataset') {
-//     if (data.dataset) {
-//       return data.dataset;
-//     } else {
-//       return _.find(data.datasets, function(d) { return d.id === entry.dataset; });
-//     }
-//   }
-//   return null;
-// };
 
 
 var processEntries = function(data, options) {
@@ -158,12 +146,12 @@ var processEntries = function(data, options) {
     if (Array.isArray(data.entries)) {
       data.reviewers = [];
       data.submitters = [];
+      if (options.cascade) { data.entries = cascadeEntries(data.entries, options.year); }
       _.each(data.entries, function(e) {
         e.computedYCount = e.yCount(data.questions);
         e.url = setEntryUrl(e);
-        // e.place = deref('place', e, data);
-        // e.dataset = deref('dataset', e, data);
         data.pending = _.where(data.entries, {'isCurrent': false, 'reviewed': false});
+        data.rejected = _.where(data.entries, {'isCurrent': false, 'reviewed': true, 'reviewResult': false});
         data.reviewers.push(e.Reviewer);
         data.submitters.push(e.Submitter);
       });
@@ -172,8 +160,6 @@ var processEntries = function(data, options) {
       data.reviewers = _.uniq(data.reviewers, 'id');
       data.submitters = _.uniq(data.submitters, 'id');
       // TODO: sort by e.yCount desc ??? was in dataset.html ...
-      if (options.cascade) { data.entries = cascadeEntries(data.entries); } // TODO: this is slower here, instead of at top of this stanza. but, logic has to change.
-
     }
   }
 

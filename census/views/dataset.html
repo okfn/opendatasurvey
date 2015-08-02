@@ -50,9 +50,9 @@
     </tr>
   </thead>
   <tbody>
-    {% for entry in entries %}
-    {% set place = places|find({'id': entry.place}) %}
-    {% set submissions = pending|where({'place': entry.place, 'dataset': entry.dataset, 'year': entry.year}) %}
+    {% for place in places %}
+    {% set entry = entries|find({'place': place.id, 'dataset': dataset.id}) %}
+    {% set submissions = pending|where({'place': place.id, 'dataset': dataset.id}) %}
     <tr>
       <td>
         <a href="/place/{{place.id}}{{ urlContext }}">{{place.name}}</a>

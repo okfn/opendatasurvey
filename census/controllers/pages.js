@@ -30,41 +30,15 @@ var faq = function (req, res) {
 
 var changes = function (req, res) {
 
-  var entryQueryParams = _.merge(modelUtils.siteQuery(req, true),
-                                 {include: [{model: req.app.get('models').User, as: 'Submitter'},
-                                            {model: req.app.get('models').User, as: 'Reviewer'}]});
+  var dataOptions = _.merge(modelUtils.getDataOptions(req), {cascade: false});
 
-  modelUtils.loadModels({
-
-    places: req.app.get('models').Place.findAll(modelUtils.siteQuery(req)),
-    datasets: req.app.get('models').Dataset.findAll(modelUtils.siteQuery(req)),
-    entries: req.app.get('models').Entry.findAll(entryQueryParams)
-
-  }).then(function(D) {
-
-    D.entries = _.each(D.entries, function(result, index, list) {
-
-      result.place = _.find(D.places, function(place) {return place.id === result.place;});
-      result.dataset = _.find(D.datasets, function(dataset) {return dataset.id === result.dataset;});
-
-      if (result.reviewResult) {
-        result.url = '/entry/PLACE/DATASET'
-          .replace('PLACE', result.place.id)
-          .replace('DATASET', result.dataset.id);
-      } else {
-        result.url = '/census/submission/ID'.replace('ID', result.id);
-      }
-    });
-
-    res.render('changes.html', {
-
-      entries: _.sortByOrder(D.entries, 'updatedAt', 'desc'),
-      loggedin: req.session.loggedin,
-      year: req.app.get('year')
-
-    });
-
-  }).catch(console.log.bind(console));
+  modelUtils.getData(dataOptions)
+    .then(function(data) {
+      data.loggedin = req.session.loggedin;
+      data.year = req.app.get('year');
+      data.items = _.sortByOrder(data.entries.concat(data.pending).concat(data.rejected), 'updatedAt', 'desc');
+      res.render('changes.html', data);
+    }).catch(console.log.bind(console));
 };
 
 
