@@ -69,9 +69,11 @@ var validateQuestion = function(req, question, parentValue, validated) {
    * If the answer is positive ("true") validate the field with all
    * possible values.
    *
-   * If it's negative ("false" or "null"):
+   * If it's "false":
    *
    *  * check that all the "expectFalse" question values are "false".
+   *
+   * Then if the answer is negative ("false" or "null"):
    *
    *  * check all the required fields have the same values as its
    *    parent ("false" or "null") unless the field's type is string,
