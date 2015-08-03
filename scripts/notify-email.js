@@ -17,7 +17,7 @@ module.exports = function(type, recepient, options) {
   }).send({
     text: '<Strip tags from html template here>', 
     from: config.get('email_from'), 
-    to: recipient,
+    to: recepient,
     subject: options.subject,
     attachment: [{data: '<Rendered template>', alternative:true}]
   });
