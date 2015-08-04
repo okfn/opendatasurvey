@@ -763,9 +763,13 @@ table.response-summary td {
 	padding: 0;
 }
 
-.response-summary tbody td {
+table.response-summary tbody td {
   vertical-align: middle;
   text-align: center;
+}
+
+table.response-summary tbody td.showpopover {
+  vertical-align: bottom;
 }
 
 table.response-summary td.placescore span {
