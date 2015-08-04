@@ -38,7 +38,7 @@
           <select name="place" required autocomplete="off">
             <option value="">{{gettext("Please select")}}</option>
             {% for place in places %}
-            <option value="{{place.id}}" {% if (current and place.id == current.place) %}selected="true"{% endif %}>{{place.name}}</option>
+            <option value="{{place.id}}" {% if (formData and place.id == formData.place) or (current and place.id == current.place) %}selected="true"{% endif %}>{{place.name}}</option>
             {% endfor %}
           </select>
         </label>
@@ -48,7 +48,7 @@
           <select name="dataset" id="dataset-select" required>
             <option value="">{{gettext("Please select")}}</option>
             {% for dataset in datasets %}
-            <option value="{{dataset.id}}" {% if (current and dataset.id == current.dataset) %}selected="true"{% endif %}>{{dataset.name}}</option>
+            <option value="{{dataset.id}}" {% if (formData and dataset.id == formData.dataset) or (current and dataset.id == current.dataset) %}selected="true"{% endif %}>{{dataset.name}}</option>
             {% endfor %}
           </select>
 
