@@ -97,7 +97,10 @@
                 showpopover
                 "
          data-dataset="{{entry.dataset}}"
-         data-datasetTitle="{{dataset.title}}"
+         data-datasetTitle="{{dataset.name}}"
+         data-answers="{{ entry.answers|stringify|escape }}"
+         data-details="{{ entry.details|escape }}"
+         data-url="{{ entry.url|escape }}"
          valign="middle"
          >
         {% if entry %}

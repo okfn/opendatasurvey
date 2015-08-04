@@ -23,7 +23,7 @@ $(document).ready(function($) {
     }
   });
 
-  var summaryTable = function(table, data) {
+  var summaryTable = function(table) {
     // do gradient on score
     $(table).find('.placescore').each(function(idx, td) {
       var $td = $(td);
@@ -34,22 +34,22 @@ $(document).ready(function($) {
     $('.showpopover').each(function(idx, td) {
       var $td = $(td);
       var $tr = $td.parent();
-      if (typeof data.byplace[$tr.data('place')] !== 'undefined') {
-        var record = data.byplace[$tr.data('place')].datasets[$td.data('dataset')];
-        var datasetTitle = $td.data('datasettitle');
-        $td.popover({
+      var datasetTitle = $td.data('datasettitle');
+      var answers = $td.data('answers');
+      var details = $td.data('details');
+      var url = $td.data('url');
+      $td.popover({
           html: true,
           placement: 'bottom',
           container: 'body',
           title: function(e){
-            title = '<strong>' + datasetTitle + '</strong> in <strong>' + $tr.data('placename') + '</strong>';
+            var title = '<strong>' + datasetTitle + '</strong> in <strong>' + $tr.data('placename') + '</strong>';
             return title;
           },
           content: function(){
-            return OpenDataCensus.popoverBody(record);
+            return OpenDataCensus.popoverBody(answers, details, url);
           }
         });
-      }
     });
 
     $(table).find('thead tr th:first-child, tfoot tr th:first-child')
@@ -84,15 +84,11 @@ $(document).ready(function($) {
     }
   };
 
-  var summary;
+  var summary,
+      $table = $('.response-summary');
 
-  $.getJSON('/overview.json', function(data) {
-    var $table = $('.response-summary');
-    summaryTable($table, data);
-    // now sort
-    sortTable($table, 'score');
-  });
-
+  summaryTable($table);
+  sortTable($table, 'score');
 });
 
 function sortTable(table, sortBy) {
