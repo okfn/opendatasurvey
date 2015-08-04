@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var utils = require('./utils');
 
 
 var requireDomain = function(req, res, next) {
@@ -31,18 +32,8 @@ var requireDomain = function(req, res, next) {
           res.status(404).send({status: 'error', message: 'There is no matching census in the registry.'});
           return;
         } else {
-
           req.session.activeSite = req.params.domain;
-
-          req.params.siteAdmin = _.each(result.settings.adminemail.split(','), function(e, i, l) {
-            var pattern = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm,
-                admin = e.trim(),
-                match = admin.match(pattern);
-
-            l[i] = match[0];
-            return;
-          });
-
+          req.params.siteAdmin = result.settings.adminemail;
           req.params.flags = {'characteristics': false, 'comments': false};
           if (result.settings.flags) {
             _.each(result.settings.flags.split(','), function(e, i, l) {
