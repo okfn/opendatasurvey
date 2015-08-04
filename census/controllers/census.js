@@ -236,18 +236,18 @@ var reviewPost = function (req, res) {
       answers;
 
   req.app.get('models').Entry.findById(req.params.id).then(function(result){
-
     if (!result) {
       res.send(400, 'There is no matching entry.');
       return;
     }
 
-    req.app.get('models').Entry.findAll(
-      _.merge(modelUtils.siteQuery(req, true),
-              {where: {place: result.place, dataset:
-                       result.dataset, isCurrent: true}}))
-      .then(function(exes) {
-        var ex = _.find(_.sortByOrder(exes, 'year', 'desc'));
+    var dataOptions = _.merge(modelUtils.getDataOptions(req),
+                              {place: result.place, dataset: result.dataset,
+                               cascade: true, with: {Dataset: false, Place: false, Question: false}});
+    modelUtils.getData(dataOptions)
+      .then(function(data) {
+
+        var ex = _.find(data.entries);
 
         result.reviewerId = req.user.id;
         result.reviewed = true;
@@ -305,6 +305,7 @@ var reviewPost = function (req, res) {
             res.redirect('/');
             return;
           }
+
         }).catch(console.log.bind(console));
       }).catch(console.log.bind(console));
   }).catch(console.log.bind(console));
