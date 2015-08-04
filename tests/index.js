@@ -4,6 +4,7 @@ var path = require('path');
 var models = require('../census/models');
 var utils = require('./utils');
 
+
 describe('Open Data Census Tests', function() {
 
   before(utils.setupFixtures);
