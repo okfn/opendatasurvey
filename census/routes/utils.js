@@ -166,6 +166,7 @@ var setLocals = function(req, res, next) {
   res.locals.sysAdmin = req.app.get('sysAdmin');
   res.locals.locales = config.get('locales');
   res.locals.currentLocale = req.locale;
+  res.locals.currentYear = req.app.get('year');
   res.locals.current_url = 'SCHEME://DOMAIN_PATH'.replace('SCHEME', req.protocol).replace('DOMAIN_', req.get('host')).replace('PATH', req.path);
   res.locals.current_domain = 'SCHEME://DOMAIN_'.replace('SCHEME', req.protocol).replace('DOMAIN_', req.get('host'));
   res.locals.url_query = req.query;

@@ -1365,3 +1365,9 @@ a.readmore-js-toggle:hover {
 	font-size: 0.75em;
 	cursor: help;
 }
+
+.state-info .badge {
+    font-size: 0.675em;
+}
+
+table.table th.place-name {vertical-align: middle !important;}
