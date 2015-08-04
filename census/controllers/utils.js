@@ -1,8 +1,10 @@
 'use strict';
 
 var _ = require('lodash');
-
+var modelUtils = require('../models/utils');
 var FIELD_SPLITTER = /[\s,]+/;
+var ANONYMOUS_USER_ID = process.env.ANONYMOUS_USER_ID || '0e7c393e-71dd-4368-93a9-fcfff59f9fff';
+
 
 var makeChoiceValidator = function(param) {
   return function(req) {
@@ -183,10 +185,93 @@ var questionMapper = function(data) {
 };
 
 
+var normalizedAnswers = function(answers) {
+  var normed = {};
+  _.each(answers, function(v, k) {
+    if (v === 'true') {
+      normed[k] = true;
+    } else if (v === 'false') {
+      normed[k] = false;
+    } else if (v === 'null') {
+      normed[k] = null;
+    } else {
+      normed[k] = v;
+    }
+  });
+  return normed;
+};
+
+
+var getFormQuestions = function(req, questions) {
+  questions = modelUtils.translateSet(req, questions);
+  _.each(questions, function(q) {
+    if (q.dependants) {
+      _.each(q.dependants, function(d, i, l) {
+        var match = _.find(questions, function(o) { return o.id === d; });
+        l[i] = match;
+        questions = _.reject(questions, function(o) { return o.id === match.id; });
+      });
+    }
+
+  });
+  return _.sortByOrder(questions, "order", "asc");
+};
+
+
+var getCurrentState = function(data, req) {
+  var match = _.merge(req.query, req.body),
+      pending,
+      matches;
+
+  if (!match.place || !match.dataset) {
+    match = {};
+  } else {
+    matches = _.filter(data.entries, {"isCurrent": true, "place": match.place, "dataset": match.dataset});
+    pending = _.any(data.pending, {"isCurrent": false, "year": req.params.year,
+                                   "place": match.place, "dataset": match.dataset});
+    if (matches.length) { match = _.first(matches); }
+  }
+  return { match: match, pending: pending };
+};
+
+
+var getReviewers = function(req, data) {
+  var reviewers = [];
+  if (!req.user) {
+    return reviewers;
+  } else {
+    if (req.params.site.settings.reviewers) {
+      reviewers = reviewers.concat(req.params.site.settings.reviewers);
+    }
+    if (data.place.reviewers) {
+      reviewers = reviewers.concat(data.place.reviewers);
+    }
+    if (data.dataset.reviewers) {
+      reviewers = reviewers.concat(data.dataset.reviewers);
+    }
+    return reviewers;
+  }
+};
+
+
+var canReview = function(reviewers, user) {
+  if (user) {
+    return (_.intersection(reviewers, user.emails).length >= 1);
+  }
+  return false;
+};
+
+
 module.exports = {
   validateData: validateData,
   placeMapper: placeMapper,
   datasetMapper: datasetMapper,
   questionMapper: questionMapper,
-  FIELD_SPLITTER: FIELD_SPLITTER
+  normalizedAnswers: normalizedAnswers,
+  getFormQuestions: getFormQuestions,
+  getCurrentState: getCurrentState,
+  getReviewers: getReviewers,
+  canReview: canReview,
+  FIELD_SPLITTER: FIELD_SPLITTER,
+  ANONYMOUS_USER_ID: ANONYMOUS_USER_ID
 };
