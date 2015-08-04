@@ -1,3 +1,9 @@
+'use strict';
+
+var _ = require('lodash');
+
+var FIELD_SPLITTER = /[\s,]+/;
+
 var makeChoiceValidator = function(param) {
   return function(req) {
     req.checkBody(param, "You must make a valid choice").isChoice();
@@ -137,18 +143,50 @@ var validateData = function(req, mappedErrors) {
    * Used for new data submissions, and revision proposals.
    */
   var errors,
-      mappedErrors = mappedErrors || false;
+      mapped = mappedErrors || false;
 
   req.checkBody("place", "You must select a Place").notEmpty();
   req.checkBody("dataset", "You must select a Dataset").notEmpty();
 
   validateQuestion(req, "exists");
 
-  errors = req.validationErrors(mappedErrors);
+  errors = req.validationErrors(mapped);
 
   return errors;
 };
 
+
+var placeMapper = function(data) {
+  var reviewers = [];
+  if (data.reviewers) {
+    reviewers = _.each(data.reviewers.split(FIELD_SPLITTER), function(r) { r.trim(); });
+  }
+  return _.merge(data, {id: data.id.toLowerCase(), reviewers: reviewers});
+};
+
+
+var datasetMapper = function(data) {
+  var reviewers = [];
+  if (data.reviewers) {
+    reviewers = _.each(data.reviewers.split(FIELD_SPLITTER), function(r) { r.trim(); });
+  }
+  return _.merge(data, {id: data.id.toLowerCase(), name: data.title,
+                        order: data.order || 100, reviewers: reviewers});
+};
+
+
+var questionMapper = function(data) {
+  var dependants = null;
+  if(data.dependants){ dependants = data.dependants.split(FIELD_SPLITTER); }
+  return _.merge(data, {id: data.id.toLowerCase(), dependants: dependants,
+                        score: data.score || 0, order: data.order || 100});
+};
+
+
 module.exports = {
-  validateData: validateData
+  validateData: validateData,
+  placeMapper: placeMapper,
+  datasetMapper: datasetMapper,
+  questionMapper: questionMapper,
+  FIELD_SPLITTER: FIELD_SPLITTER
 };
