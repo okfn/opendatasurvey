@@ -109,6 +109,7 @@ a i[class*='icon-'] {
 
 .tooltip-inner {
 	max-width: 350px;
+	white-space: normal;
 }
 
 a.icon-hover {
