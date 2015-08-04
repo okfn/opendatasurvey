@@ -5,7 +5,6 @@ var data = require('../fixtures/registry')
       .concat(require('../fixtures/dataset'))
       .concat(require('../fixtures/question'))
       .concat(require('../fixtures/entry'));
-
 var models = require('../census/models');
 var Promise = require('bluebird');
 
