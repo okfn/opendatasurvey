@@ -91,6 +91,10 @@ var split = function(str) {
     return str.split(',');
 };
 
+var stringify = function(obj) {
+  return JSON.stringify(obj);
+};
+
 
 // parse the output as markdown
 var simpledelta = function(str) {
@@ -120,5 +124,6 @@ module.exports = {
   dateformat: dateformat,
   marked: marked,
   split: split,
-  simpledelta: simpledelta
+  simpledelta: simpledelta,
+  stringify: stringify
 };
