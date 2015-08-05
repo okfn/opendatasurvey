@@ -29,7 +29,7 @@ nconf.defaults({
   approve_first_submission: 'FALSE',
   reviewers: '',
   locales: ['en'],
-  email_from: process.env.EMAIL_FROM || '',
+  email_from: process.env.EMAIL_FROM || 'noreply@census.okfn.org',
 
   mandrill: {
     smtp_host: process.env.SMTP_HOST || 'smtp.mandrillapp.com',
