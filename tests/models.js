@@ -1,8 +1,23 @@
 'use strict';
 
+var _ = require('lodash');
 var models = require('../census/models');
 var modelUtils = require('../census/models').utils;
+var chai = require('chai');
+var assert = chai.assert;
+var expect = chai.expect;
 var utils = require('./utils');
+var defaultOptions = {
+  models: models,
+  domain: 'site1',
+  dataset: null,
+  place: null,
+  year: null,
+  cascade: true,
+  ynQuestions: true,
+  locale: null,
+  with: {Entry: true, Dataset: true, Place: true, Question: true}
+};
 
 
 describe('Data access layer', function() {
@@ -10,16 +25,177 @@ describe('Data access layer', function() {
   beforeEach(utils.setupFixtures);
   afterEach(utils.dropFixtures);
 
-  it('basically works', function(done) {
+  it('works with defaults', function(done) {
     var dataOptions = {
       models: models,
-      year: 2015,
-      domain: 'site1'
+      domain: 'site1',
+      dataset: null,
+      place: null,
+      year: null,
+      cascade: true,
+      ynQuestions: true,
+      locale: null,
+      with: {Entry: true, Dataset: true, Place: true, Question: true}
     };
     modelUtils.getData(dataOptions)
       .then(function(data) {
-        console.log('yep');
-        console.log(data);
+        expect(data).to.have.property('entries');
+        expect(data).to.have.property('pending');
+        expect(data).to.have.property('rejected');
+        expect(data).to.have.property('datasets');
+        expect(data).to.have.property('places');
+        expect(data).to.have.property('questions');
+        done();
+      })
+      .catch(console.log.bind(console));
+  });
+
+  it('does not return results of an Entry query', function(done) {
+    var dataOptions = {
+      models: models,
+      domain: 'site1',
+      dataset: null,
+      place: null,
+      year: null,
+      cascade: true,
+      ynQuestions: true,
+      locale: null,
+      with: {Entry: false, Dataset: true, Place: true, Question: true}
+    };
+    modelUtils.getData(dataOptions)
+      .then(function(data) {
+        expect(data).to.not.have.property('entries');
+        expect(data).to.not.have.property('pending');
+        expect(data).to.not.have.property('rejected');
+        expect(data).to.have.property('datasets');
+        expect(data).to.have.property('places');
+        expect(data).to.have.property('questions');
+        done();
+      })
+      .catch(console.log.bind(console));
+  });
+
+  it('only returns yn questions by default', function(done) {
+    var dataOptions = {
+      models: models,
+      domain: 'site1',
+      dataset: null,
+      place: null,
+      year: null,
+      cascade: true,
+      ynQuestions: true,
+      locale: null,
+      with: {Entry: true, Dataset: true, Place: true, Question: true}
+    };
+    modelUtils.getData(dataOptions)
+      .then(function(data) {
+        expect(data.questions).to.have.length(9);
+        done();
+      })
+      .catch(console.log.bind(console));
+  });
+
+  it('can return all questions', function(done) {
+    var dataOptions = {
+      models: models,
+      domain: 'site1',
+      dataset: null,
+      place: null,
+      year: null,
+      cascade: true,
+      ynQuestions: false,
+      locale: null,
+      with: {Entry: true, Dataset: true, Place: true, Question: true}
+    };
+    modelUtils.getData(dataOptions)
+      .then(function(data) {
+        expect(data.questions).to.have.length(18);
+        done();
+      })
+      .catch(console.log.bind(console));
+  });
+
+  it('returns a place and not places when we have a place argument', function(done) {
+    var dataOptions = {
+      models: models,
+      domain: 'site1',
+      dataset: null,
+      place: 'place11',
+      year: null,
+      cascade: true,
+      ynQuestions: true,
+      locale: null,
+      with: {Entry: true, Dataset: true, Place: true, Question: true}
+    };
+    modelUtils.getData(dataOptions)
+      .then(function(data) {
+        expect(data).to.not.have.property('places');
+        expect(data).to.have.property('place');
+        done();
+      })
+      .catch(console.log.bind(console));
+  });
+
+  it('returns a dataset and not datasets when we have a dataset argument', function(done) {
+    var dataOptions = {
+      models: models,
+      domain: 'site1',
+      dataset: 'dataset11',
+      place: null,
+      year: null,
+      cascade: true,
+      ynQuestions: true,
+      locale: null,
+      with: {Entry: true, Dataset: true, Place: true, Question: true}
+    };
+    modelUtils.getData(dataOptions)
+      .then(function(data) {
+        expect(data).to.not.have.property('datasets');
+        expect(data).to.have.property('dataset');
+        done();
+      })
+      .catch(console.log.bind(console));
+  });
+
+  it('returns cascaded entries when cascade is true', function(done) {
+    var dataOptions = {
+      models: models,
+      domain: 'site1',
+      dataset: null,
+      place: null,
+      year: 2015,
+      cascade: true,
+      ynQuestions: true,
+      locale: null,
+      with: {Entry: true, Dataset: true, Place: true, Question: true}
+    };
+    modelUtils.getData(dataOptions)
+      .then(function(data) {
+        expect(data.entries).to.have.length(3);
+        expect(data.pending).to.have.length(3);
+        expect(data.rejected).to.have.length(1);
+        done();
+      })
+      .catch(console.log.bind(console));
+  });
+
+  it('returns entries by year when cascade is false', function(done) {
+    var dataOptions = {
+      models: models,
+      domain: 'site1',
+      dataset: null,
+      place: null,
+      year: 2015,
+      cascade: false,
+      ynQuestions: true,
+      locale: null,
+      with: {Entry: true, Dataset: true, Place: true, Question: true}
+    };
+    modelUtils.getData(dataOptions)
+      .then(function(data) {
+        expect(data.entries).to.have.length(2);
+        expect(data.pending).to.have.length(3);
+        expect(data.rejected).to.have.length(1);
         done();
       })
       .catch(console.log.bind(console));
