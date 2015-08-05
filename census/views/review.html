@@ -40,8 +40,6 @@
     <a href="/year/{{ current.year }}">{{ current.year }}</a> /
     <a href="/place/{{ place.id }}">{{ place.name }}</a> /
     <a href="/dataset/{{ dataset.id }}">{{ dataset.name }}</a>
-    [<a href="/census/submission/{{ current.id }}">{{ current.id|truncate(8) }}</a>]
-
     <span class="pull-right">
       {% include '_snippets/share_page_buttons.html' %}
     </span>

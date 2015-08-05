@@ -95,6 +95,9 @@ var submitPostHandler = function(req, res, data) {
 
       if (approveFirstSubmission) {
         objToSave.isCurrent = true;
+        objToSave.reviewed = true;
+        objToSave.reviewResult = true;
+        objToSave.reviewerId = submitterId;
       } else {
         objToSave.isCurrent = false;
       }
@@ -246,9 +249,7 @@ var reviewPost = function (req, res) {
                                cascade: true, with: {Dataset: false, Place: false, Question: false}});
     modelUtils.getData(dataOptions)
       .then(function(data) {
-
-        var ex = _.find(data.entries);
-
+        var ex = _.first(data.entries);
         result.reviewerId = req.user.id;
         result.reviewed = true;
         result.reviewComments = req.body.reviewcomments;

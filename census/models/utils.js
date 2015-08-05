@@ -65,13 +65,7 @@ var queryData = function(options) {
     if (options.with.Dataset) { querysets.datasets = options.models.Dataset.findAll(datasetParams); }
   }
 
-  if (options.place && options.dataset) {
-    entryParams = _.merge(entryParams, {where: {isCurrent: true}});
-    if (options.with.Entry) { querysets.entry = options.models.Entry.findOne(entryParams); }
-  } else {
-    if (options.with.Entry) { querysets.entries = options.models.Entry.findAll(entryParams); }
-  }
-
+  if (options.with.Entry) { querysets.entries = options.models.Entry.findAll(entryParams); }
   if (options.with.Question) { querysets.questions = options.models.Question.findAll(questionParams); }
 
   return loadModels(querysets, options);

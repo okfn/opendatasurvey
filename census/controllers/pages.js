@@ -155,6 +155,7 @@ var entry = function (req, res) {
 
   modelUtils.getData(dataOptions)
     .then(function(data) {
+      data.entry = _.first(data.entries);
       if (!data.entry) {
         return res.status(404)
           .send('There is no matching entry in our database. ' +
