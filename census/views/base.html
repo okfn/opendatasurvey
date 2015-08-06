@@ -61,10 +61,8 @@
   <div class="page">
 
     {% if site.settings.banner_text %}
-    <div class="row">
-      <div id="banner" class="span12">
-        {{ site.settings.banner_text|marked }}
-      </div>
+    <div id="banner">
+      {{ site.settings.banner_text|marked }}
     </div>
     {% endif %}
 
