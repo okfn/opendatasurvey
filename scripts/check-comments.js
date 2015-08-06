@@ -18,18 +18,21 @@ var getSubmissionID = function(url) {
   return match ? match[1] : null;
 };
 
-var getSubmissionIDs = function(posts) {
-  return _.pull(_.unique(_.map(posts , function(post) {
+var getSubmissions = function(posts) {
+  // return a mapping between submission ids and lists of posts
+  var submissions = _.groupBy(posts , function(post) {
     var url = post.thread.link,
         id = getSubmissionID(url);
     if (id === null) {
       console.log("Link " + url + " doesn't match submission URL.");
     }
     return id;
-  })), null);                   // remove nulls from the results
+  });
+  delete submissions[null];    // remove submissions with invalid urls
+  return submissions;
 };
 
-var postList = function(sinceDate) {
+var fetchPosts = function(sinceDate) {
   // Get related Disqus threads
   // api: https://disqus.com/api/docs/threads/listPosts/
   return disqus.posts.list({
@@ -50,10 +53,10 @@ models.NotificationLog.findOne({where: {type: 'comments'}}).then(function(notifi
 
   var newLastAt = new Date();
 
-  postList(notification.lastAt).then(function(posts) {
+  fetchPosts(notification.lastAt).then(function(posts) {
 
-    var submissionIDs = getSubmissionIDs(posts);
-    console.log(submissionIDs);
+    var submissions = getSubmissions(posts),
+        submissionIDs = _.keys(submissions);
 
     if (submissionIDs.length === 0) {
       console.log("No new comments.");
@@ -66,7 +69,13 @@ models.NotificationLog.findOne({where: {type: 'comments'}}).then(function(notifi
 
         _.each(entries, function(entry) {
           var message = email.prepareMessage(
-            'email.html', {}, entry.Submitter.emails[0], "[Open Data Cenus] Comment Notification");
+            'newcomment.md',
+            {
+              submitter: entry.Submitter,
+              comment: submissions[entry.id][0]
+            },
+            entry.Submitter.emails[0],
+            config.get('email_new_comment_subject'));
           email.send(message);
         });
 
@@ -75,7 +84,6 @@ models.NotificationLog.findOne({where: {type: 'comments'}}).then(function(notifi
 
     notification.updateAttributes({lastAt: newLastAt}).then(function() {
       console.log("NotificationLog updated.");
-      return;
     });
 
   });

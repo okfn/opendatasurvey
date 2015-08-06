@@ -1,18 +1,27 @@
 var config = require('../census/config');
 var email = require('emailjs');
+var nunjucks = require('nunjucks');
+var marked = require('marked');
+
+nunjucks.configure(__dirname + '/templates');
 
 
-// WARN Do not export anything when queues are introduced between notifications
-// checker and notifications sender, as last one will become standalone process — queue
-// message consumer
+var renderTemplate = function(template, context) {
+  var text = nunjucks.render(template, context);
+  return {
+    text: text,
+    html: marked(text)
+  };
+};
 
 var prepareMessage = function(template, context, recepient, subject) {
+  var rendered = renderTemplate(template, context);
   return {
-    text: '<Rendered template>',
+    text: rendered.text,
     from: config.get('email_from'),
     to: recepient,
     subject: subject,
-    attachment: [{data: '<Rendered template>', alternative:true}]
+    attachment: [{data: rendered.html, alternative:true}]
   };
 };
 
@@ -28,7 +37,11 @@ var send = function(message) {
     ssl: true
   });
 
-  server.send(message, function(err, message) { console.log(err || message); });
+  server.send(message, function(err, message) {
+    if (err) {
+      console.log(err);
+    }
+  });
 };
 
 
