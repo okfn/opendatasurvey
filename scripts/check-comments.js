@@ -84,6 +84,7 @@ models.NotificationLog.findOne({where: {type: 'comments'}}).then(function(notifi
 
     notification.updateAttributes({lastAt: newLastAt}).then(function() {
       console.log("NotificationLog updated.");
+      models.sequelize.close();  // this makes the script exit instantly
     });
 
   });
