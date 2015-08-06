@@ -3,7 +3,7 @@ var email = require('emailjs');
 var nunjucks = require('nunjucks');
 var marked = require('marked');
 
-nunjucks.configure(__dirname + '/templates');
+nunjucks.configure(__dirname + '/templates', {watch: false});
 
 
 var renderTemplate = function(template, context) {
