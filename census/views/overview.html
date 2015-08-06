@@ -38,16 +38,19 @@
 
 <div class="row">
   {% include '_snippets/year_navigation.html' %}
+    <div class="span6" id="sorting">
+    </div>
 </div>
 
 <table class="response-summary table">
   <thead>
     <tr>
-      <th colspan="2">&nbsp;</th>
+      <th class="number">&nbsp;</th>
+      <th class="place-name">&nbsp;</th>
       {% for dataset in datasets %}
       <th><div><a href="/dataset/{{dataset.id}}{{ urlContext }}">{{ dataset.name }}</a></div></th>
       {% endfor %}
-      <th><div><strong>{{gettext("Total Score")}}</strong></div>
+      <th class="place-score"><div><strong>{{gettext("Total Score")}}</strong></div></th>
     </tr>
   </thead>
   <tbody>

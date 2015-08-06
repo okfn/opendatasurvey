@@ -52,7 +52,7 @@ $(document).ready(function($) {
         });
     });
 
-    $(table).find('thead tr th:first-child, tfoot tr th:first-child')
+    $('#sorting')
       .addClass('sorting')
       .html(function (idx) {
         return 'Sort' +
@@ -74,14 +74,6 @@ $(document).ready(function($) {
     $('a[data-toggle="tooltip"]').tooltip();
     $('a[data-toggle="popover"]').popover();
 
-    // Fix widths of table cells so that when thead becomes "position: fixed;"
-    // it still displays correctly
-    var widths = $(table).find('thead tr:nth-child(1) > *').map(function () {
-      return $(this).width();
-    });
-    for (var i = 0, max = widths.length; i < max; i++) {
-      $(table).find('thead tr > *:nth-child(' + (i+1) + ')').width(widths[i]);
-    }
   };
 
   var summary,

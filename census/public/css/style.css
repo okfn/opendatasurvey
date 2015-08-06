@@ -711,49 +711,123 @@ body.overview.extrawidth .container {
   margin: auto;
 }
 
-table.response-summary thead,
-table.response-summary tfoot {
-	position: sticky;
-	background: white;
+
+.sticky-wrap {
+    overflow-x: auto;
+    overflow-y: hidden;
+    position: relative;
+    margin-bottom: 1.5em;
+    width: 100%;
+    font-size: 15px;
+}
+.sticky-wrap .sticky-thead,
+.sticky-wrap .sticky-col,
+.sticky-wrap .sticky-intersect {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all .125s ease-in-out;
+    z-index: 50;
+    width: auto; /* Prevent table from stretching to full size */
+}
+.sticky-wrap .sticky-thead {
+    box-shadow: 0 0.25em 0.1em -0.1em rgba(0,0,0,.125);
+    z-index: 100;
+    width: 100%; /* Force stretch */
+}
+.sticky-wrap .sticky-intersect {
+    opacity: 1;
+    z-index: 150;
+}
+.sticky-wrap .sticky-intersect th {
+    background-color: #fff;
+    color: #eee;
+}
+.sticky-wrap td,
+.sticky-wrap th {
+    box-sizing: border-box;
 }
 
-table.response-summary thead.stuck,
-table.response-summary tfoot.stuck {
-	top: 0;
-	border-bottom: 2px solid #2B2A2B;
-}
-
-table.response-summary thead tr th.sorting,
-table.response-summary tfoot tr th.sorting {
-	height: auto;
-	padding: 8px;
-	padding-bottom: auto;
-	text-align: left;
-}
 
 /* Country table */
+
+.span6.sorting {
+    text-align: right;
+}
+
+.span6.sorting label {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+table.response-summary,
+.sticky-wrap table {
+    table-layout: fixed;
+}
+
 table.response-summary thead tr th,
-table.response-summary tfoot tr th {
-	height: 114px;
+table.response-summary tfoot tr th,
+.sticky-wrap table thead tr th,
+.sticky-wrap table tfoot tr th {
 	padding: 8px;
-	padding-bottom: 0px;
 	text-align: center;
 	vertical-align: bottom;
+    background-color: #fff;
+    width: 50px !important;
+    height: 150px;
+}
+.sticky-wrap table thead tr th {
+    border-bottom: 1px solid #dddddd;
 }
 
 table.response-summary thead tr th div,
-table.response-summary tfoot tr th div {
+table.response-summary tfoot tr th div,
+.sticky-wrap table thead tr th div,
+.sticky-wrap table tfoot tr th div {
 	text-align: left;
-	-webkit-transform: rotate(-45deg);
-	-o-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-	transform: rotate(-45deg);
 	vertical-align: middle;
-	padding: 8px 0;
-	height: 55px;
-	width: 50px;
+	padding: 8px 0 30px 0;
 }
+
+table.response-summary thead tr th div a,
+table.response-summary tfoot tr th div a,
+.sticky-wrap table thead tr th div a,
+.sticky-wrap table tfoot tr th div a {
+    display: block;
+    -webkit-transform: rotate(-90deg);
+	-o-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+	transform: rotate(-90deg);
+}
+
+table.response-summary thead tr th.number,
+.sticky-wrap table thead tr th.number {
+    width: 35px !important;
+}
+
+table.response-summary thead tr th.place-name,
+.sticky-wrap table thead tr th.place-name {
+    width: 120px !important;
+}
+
+table.response-summary thead tr th.place-score,
+.sticky-wrap table thead tr th.place-score {
+    width: 50px;
+}
+
+.sticky-wrap table.sticky-col th.place-name {
+	text-align: left;
+    background-color: #fff;
+    border-top: 1px solid #dddddd;
+}
+
+.sticky-col,
+.sticky-intersect {
+    display: none; /* hiding due to issues in some browsers */
+}
+
 
 table.response-summary tbody tr td.active {
 	background-color: #EEE;
@@ -768,6 +842,7 @@ table.response-summary td {
   text-align: center;
 }
 
+table.response-summary th.placescore span,
 table.response-summary td.placescore span {
   text-align: left;
 	display: block;
@@ -813,7 +888,6 @@ table.cell-summary {
 
 table.table th.place-name {
 	text-align: left;
-	min-width: 120px;
 	border-left: none;
 }
 
