@@ -837,6 +837,19 @@ table.response-summary td {
 	padding: 0;
 }
 
+table.response-summary td .status {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+table.response-summary td .status ul.availability.icons.mini li {
+	width: 11%;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+    float: left;
+    margin: 0;
+}
+
 .response-summary tbody td {
   vertical-align: middle;
   text-align: center;
