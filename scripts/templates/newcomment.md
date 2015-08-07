@@ -1,6 +1,7 @@
 Hello {{submitter.firstName}}!
 
-There is a new comment on your submission: <{{comment.thread.link}}>
+Your submission to the {{ site.settings.title }} has been commented
+on. Go to <{{comment.thread.link}}> to read the comments.
 
 Thanks,  
 

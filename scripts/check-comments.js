@@ -45,16 +45,25 @@ var fetchPosts = function(sinceDate) {
   });
 };
 
-var sendNewCommentNotification = function(entry, comment) {
-  var message = email.prepareMessage(
-    'newcomment.md',
-    {
-      submitter: entry.Submitter,
-      comment: comment
-    },
-    entry.Submitter.emails[0],
-    config.get('email_new_comment_subject'));
-  email.send(message);
+var maybeSendNewCommentNotification = function(entry, comment) {
+
+  if (entry.Submitter.providers !== {"okfn": "anonymous"}) {
+
+    models.Site.findOne({where: {id: entry.site}}).then(function(site) {
+
+        var message = email.prepareMessage(
+          'newcomment.md',
+          {
+            submitter: entry.Submitter,
+            comment: comment,
+            site: site
+          },
+          entry.Submitter.emails[0],
+          config.get('email_new_comment_subject'));
+        email.send(message);
+      });
+
+    }
 };
 
 
@@ -82,7 +91,7 @@ var checkComments = function() {
         include: [{model: models.User, as: "Submitter"}]}).then(function(entries) {
 
           _.each(entries, function(entry) {
-            sendNewCommentNotification(entry, submissions[entry.id][0]);
+            maybeSendNewCommentNotification(entry, submissions[entry.id][0]);
           });
 
         }).then(function() {
