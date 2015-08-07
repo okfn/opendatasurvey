@@ -90,17 +90,18 @@ var checkComments = function() {
         where: {id: {$in: submissionIDs}},
         include: [{model: models.User, as: "Submitter"}]}).then(function(entries) {
 
-          _.each(entries, function(entry) {
+          Promise.each(entries, function(entry) {
+
             maybeSendNewCommentNotification(entry, submissions[entry.id][0]);
+
+          }).then(function() {
+
+            notification.updateAttributes({lastAt: newLastAt}).then(function() {
+              console.log("NotificationLog updated.");
+              models.sequelize.close();  // this makes the script exit instantly
+            });
+
           });
-
-        }).then(function() {
-
-          notification.updateAttributes({lastAt: newLastAt}).then(function() {
-            console.log("NotificationLog updated.");
-            models.sequelize.close();  // this makes the script exit instantly
-          });
-
         });
     });
   });
