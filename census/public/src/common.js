@@ -7,7 +7,7 @@ OpenDataCensus.colorScale = {
   })
 };
 
-OpenDataCensus.popoverBody = function(answers, details, url) {
+OpenDataCensus.popoverBody = function(answers, details, url, actionurl) {
 
   var makeNot = function(reply){
     var not;
@@ -76,5 +76,6 @@ OpenDataCensus.popoverBody = function(answers, details, url) {
     out.push('<a href="' + url + '">View details &raquo;</a>');
     out.push('</p>');
   }
+  out.push('<a href="' + actionurl + '">TEST</a>');
   return out.join('');
 };
