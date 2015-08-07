@@ -29,7 +29,6 @@ var send = function(message) {
 
   console.log("Sending email to " + message.to);
 
-  // Send rendered template as html
   var server = email.server.connect({
     user: config.get('mandrill:smtp_username'),
     password: config.get('mandrill:smtp_password'),

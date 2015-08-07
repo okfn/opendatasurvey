@@ -45,47 +45,60 @@ var fetchPosts = function(sinceDate) {
   });
 };
 
-models.NotificationLog.findOne({where: {type: 'comments'}}).then(function(notification) {
-  if (!notification) {
-    console.log("No comment entry.");
-    return;
-  }
+var sendNewCommentNotification = function(entry, comment) {
+  var message = email.prepareMessage(
+    'newcomment.md',
+    {
+      submitter: entry.Submitter,
+      comment: comment
+    },
+    entry.Submitter.emails[0],
+    config.get('email_new_comment_subject'));
+  email.send(message);
+};
 
-  var newLastAt = new Date();
 
-  fetchPosts(notification.lastAt).then(function(posts) {
+var checkComments = function() {
 
-    var submissions = getSubmissions(posts),
-        submissionIDs = _.keys(submissions);
-
-    if (submissionIDs.length === 0) {
-      console.log("No new comments.");
+  models.NotificationLog.findOne({where: {type: 'comments'}}).then(function(notification) {
+    if (!notification) {
+      console.log("No comment entry.");
       return;
     }
 
-    models.Entry.findAll({
-      where: {id: {$in: submissionIDs}},
-      include: [{model: models.User, as: "Submitter"}]}).then(function(entries) {
+    var newLastAt = new Date();
 
-        _.each(entries, function(entry) {
-          var message = email.prepareMessage(
-            'newcomment.md',
-            {
-              submitter: entry.Submitter,
-              comment: submissions[entry.id][0]
-            },
-            entry.Submitter.emails[0],
-            config.get('email_new_comment_subject'));
-          email.send(message);
+    fetchPosts(notification.lastAt).then(function(posts) {
+
+      var submissions = getSubmissions(posts),
+          submissionIDs = _.keys(submissions);
+
+      if (submissionIDs.length === 0) {
+        console.log("No new comments.");
+      }
+
+      models.Entry.findAll({
+        where: {id: {$in: submissionIDs}},
+        include: [{model: models.User, as: "Submitter"}]}).then(function(entries) {
+
+          _.each(entries, function(entry) {
+            sendNewCommentNotification(entry, submissions[entry.id][0]);
+          });
+
+        }).then(function() {
+
+          notification.updateAttributes({lastAt: newLastAt}).then(function() {
+            console.log("NotificationLog updated.");
+            models.sequelize.close();  // this makes the script exit instantly
+          });
+
         });
-
-      });
-  }).then(function() {
-
-    notification.updateAttributes({lastAt: newLastAt}).then(function() {
-      console.log("NotificationLog updated.");
-      models.sequelize.close();  // this makes the script exit instantly
     });
-
   });
-});
+
+};
+
+
+if (require.main === module) {
+    checkComments();
+}
