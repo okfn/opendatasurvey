@@ -18,7 +18,7 @@ var getSubmissionID = function(url) {
   return match ? match[1] : null;
 };
 
-var getSubmissions = function(posts) {
+var groupPosts = function(posts) {
   // return a mapping between submission ids and lists of posts
   var submissions = _.groupBy(posts , function(post) {
     var url = post.thread.link,
@@ -79,8 +79,8 @@ var checkComments = function() {
 
     fetchPosts(notification.lastAt).then(function(posts) {
 
-      var submissions = getSubmissions(posts),
-          submissionIDs = _.keys(submissions);
+      var groupedPosts = groupPosts(posts),
+          submissionIDs = _.keys(groupedPosts);
 
       if (submissionIDs.length === 0) {
         console.log("No new comments.");
@@ -92,7 +92,7 @@ var checkComments = function() {
 
           Promise.each(entries, function(entry) {
 
-            maybeSendNewCommentNotification(entry, submissions[entry.id][0]);
+            maybeSendNewCommentNotification(entry, groupedPosts[entry.id][0]);
 
           }).then(function() {
 
