@@ -111,4 +111,12 @@ var checkComments = function() {
 
 if (require.main === module) {
     checkComments();
+} else {
+
+  // for tests
+  module.exports = {
+    getSubmissionID: getSubmissionID,
+    groupPosts: groupPosts
+  };
+
 }
