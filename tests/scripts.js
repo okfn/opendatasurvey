@@ -1,6 +1,7 @@
-var _ = require('lodash');
-var expect = require("chai").expect;
-var checkComments = require('../scripts/check-comments.js');
+var _ = require('lodash'),
+    expect = require("chai").expect,
+    checkComments = require('../scripts/check-comments'),
+    email = require('../scripts/email');
 
 
 describe("check-comments", function()
@@ -60,6 +61,29 @@ describe("check-comments", function()
       expect(grouped).not.to.have.property(null);
       expect(_.size(grouped)).to.equal(2);
     });
+  });
+
+});
+
+describe("email", function() {
+
+  describe('#prepareMessage', function() {
+
+    it('creates and returns a message object', function() {
+      var message = email.prepareMessage('test.md', {var1: 'val1', var2: 'val2'}, 'test@example.com', 'Hi');
+      expect(message).to.have.property('text');
+      expect(message.text).to.contain('val1');
+      expect(message.text).to.contain('val2');
+
+      expect(message).to.have.property('subject');
+      expect(message.subject).to.equal('Hi');
+
+      expect(message).to.have.property('attachment').with.length.above(0);
+      expect(message.attachment[0]).to.have.property('data');
+      expect(message.attachment[0].data).to.contain('<p>');
+      expect(message.attachment[0].data).to.contain('val1');
+    });
+
   });
 
 });
