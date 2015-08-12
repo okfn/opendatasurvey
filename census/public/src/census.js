@@ -38,6 +38,10 @@ $(document).ready(function($) {
       var answers = $td.data('answers');
       var details = $td.data('details');
       var url = $td.data('url');
+      var actionurl = $td.data('actionurl');
+      var actiontext = $td.data('actiontext');
+      var submissions = $td.data('submissions');
+      var submissionslength = $td.data('submissionslength');
       $td.popover({
           html: true,
           placement: 'bottom',
@@ -47,7 +51,7 @@ $(document).ready(function($) {
             return title;
           },
           content: function(){
-            return OpenDataCensus.popoverBody(answers, details, url);
+            return OpenDataCensus.popoverBody(answers, details, url, actionurl, actiontext, submissions, submissionslength);
           }
         });
     });

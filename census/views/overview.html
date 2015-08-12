@@ -130,18 +130,18 @@
          data-details="{{ entry.details|escape }}"
          data-url="{{ entry.url|escape }}"
          {% if submissionsAllowed %}
-         data-submission="allowed"
+         data-submissions="allowed"
          {% endif %}
          data-actionurl="{{ actionUrl }}"
+         data-actiontext="{{ actionText }}"
+         {% if submissions|length %}
+         data-submissionslength="{{ submissions|length }}"
+         {% endif %}
          valign="middle"
          >
         <div class="status">
             {% if entry %}
-            <div class="state-info">
-              <div class="badge {{ badgeClass }}" title="{{ entry.updatedAt|dateformat }} ({{ gettext("Submitted by") }} {{ entry.Submitter.fullName() }} {{ gettext("and reviewed by") }} {{ entry.Submitter.fullName() }})">
-                {{entry.year}}
-              </div>
-            </div>
+            
             <ul class="availability icons mini">
               {% for qu in questions %}
               {% set state = entry.answers[qu.id] %}
@@ -163,31 +163,41 @@
               </li>
               {% endfor %}
             </ul>
-            <div>
+            
+            <div class="state-info {{ badgeClass }}" title="{{ entry.updatedAt|dateformat }} ({{ gettext("Submitted by") }} {{ entry.Submitter.fullName() }} {{ gettext("and reviewed by") }} {{ entry.Submitter.fullName() }})">
+                {{entry.year}}
+            </div>
+            
+            
             {% if submissionsAllowed %}
-                
+              {% if submissions|length %}
+                <span class="pending badge badge-warning" title="{{ gettext("Pending submissions") }}">
+                  {{ submissions|length }}
+                </span>
+                <div class="hover-icon">
+                  <i class="icon-eye-open"></i>
+                </div>
+                {% else %}
+                <div class="hover-icon">
+                  <i class="icon-plus"></i>
+                </div>
+                {% endif %}
+     
+              {% else %}
+              <i class="muted">None</i>
+              {% endif %}
+            
+            {% else %}
+            {% if submissionsAllowed %}  
 
-              <a href="{{ actionUrl }}" class="btn btn-mini">
-                {% if submissions|length %}
+            <a href="{{ actionUrl }}" class="btn btn-mini">
+              {% if submissions|length %}
                 <span title="{{ gettext("Pending submissions") }}">
                   ({{ submissions|length }})
                 </span>
                 {% else %}
                 <i class="icon-plus"></i>
                 {% endif %}
-                {{ actionText }}
-              </a>
-              {% else %}
-              <i class="muted">None</i>
-              {% endif %}
-            </div>
-            {% else %}
-            {% if submissionsAllowed %}
-
-                
-
-            <a href="{{ actionUrl }}" class="btn btn-mini">
-              <i class="icon-plus"></i>
               {{ actionText }}
             </a>
             {% else %}

@@ -838,11 +838,61 @@ table.response-summary td {
 }
 
 table.response-summary td .status {
-    padding-left: 5px;
-    padding-right: 5px;
+    margin: 5px;
+    position: relative;
+    height: 32px;
 }
+
+table.response-summary td .status ul.icons li {
+    height: 32px;
+}
+
+table.response-summary td .status .state-info {
+    clear: left;
+    height: 16px;
+    position: relative;
+    top: -16px;
+    color: #fff;
+    text-align: left;
+    font-size: 11px;
+    line-height: 16px;
+    padding: 0 5px;
+    background-color: rgba(0,0,0, 0.1);
+}
+table.response-summary td .status .state-info.badge-important {
+    background-color: #333;
+}
+table.response-summary td .status .state-info.badge-warning {
+    background-color: #666;
+}
+table.response-summary td .status .state-info.badge-success {
+    visibility: hidden;
+}
+
+table.response-summary td .status .pending {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    padding: 0 4px;
+    z-index: 2;
+}
+table.response-summary td .status .hover-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0, 0.5);
+    line-height: 32px;
+    color: #fff;
+    opacity: 0;
+}
+table.response-summary td:hover .status .hover-icon {
+    opacity: 1;
+}
+
 table.response-summary td .status ul.availability.icons.mini li {
-	width: 11%;
+	width: 11.1%; /* based on 9 questions */
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
 	border-radius: 0;
@@ -850,11 +900,25 @@ table.response-summary td .status ul.availability.icons.mini li {
     margin: 0;
 }
 
+table.response-summary td .status a {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    line-height: 32px;
+    overflow: hidden;
+}
+
 .response-summary tbody td {
   vertical-align: middle;
   text-align: center;
 }
 
+table.response-summary th.placescore,
+table.response-summary td.placescore  {
+    position: relative;
+}
 table.response-summary th.placescore span,
 table.response-summary td.placescore span {
   text-align: left;
@@ -863,7 +927,11 @@ table.response-summary td.placescore span {
 	color: #333;
 	background-color: #FFF;
 	background-color: rgba(255,255,255,0.5);
-	margin-right: 6px;
+    position: absolute;
+    top: 0;
+    right: 6px;
+    bottom: 0;
+    left: 0;
 }
 
 table.response-summary td  ul.availability.icons.mini {
@@ -918,6 +986,20 @@ table.table th.place-name {
 	min-height: 580px;
 	padding-bottom: 10px;
 }
+
+.popover-content .btn {
+    display: block;
+}
+
+.popover-content .btn-group {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+.popover-content .btn-group .btn {
+    display: table-cell;
+}
+
 
 /* Review */
 table.availability-form td {

@@ -7,7 +7,7 @@ OpenDataCensus.colorScale = {
   })
 };
 
-OpenDataCensus.popoverBody = function(answers, details, url, actionurl) {
+OpenDataCensus.popoverBody = function(answers, details, url, actionurl, actiontext, submissions, submissionslength) {
 
   var makeNot = function(reply){
     var not;
@@ -71,11 +71,22 @@ OpenDataCensus.popoverBody = function(answers, details, url, actionurl) {
     out.push('<p>' + truncate(details, 300));
     out.push(' <a href="' + url + '">Read more &raquo;</a>');
     out.push('</p>');
-  } else {
-    out.push('<p>');
-    out.push('<a href="' + url + '">View details &raquo;</a>');
-    out.push('</p>');
   }
-  out.push('<a href="' + actionurl + '">TEST</a>');
+  if (submissions) {
+    out.push('<div class="btn-group">');
+    if (answers) {
+      out.push('<a class="btn btn-primary" href="' + url + '">View</a>');
+    }
+    if (submissionslength) {
+      out.push('<a class="btn btn-warning" href="' + actionurl + '">' + actiontext + ' (' + submissionslength + ')</a>');
+    } else {
+      out.push('<a class="btn btn-success" href="' + actionurl + '">' + actiontext +'</a>');
+    }
+    out.push('</div>');
+  } else {
+    if (answers) {
+      out.push('<a class="btn btn-primary" href="' + url + '">View</a>');
+    }
+  }
   return out.join('');
 };
