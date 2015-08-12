@@ -99,7 +99,7 @@
         {% if entry %}
             {% if submissions|length %}
                       {% set actionUrl = '/census/submission/ID'|replace('ID', submissions[0].id) %}
-                      {% set actionText = gettext("Review") %}
+                      {% set actionText = gettext("Comment") %}
                   {% else %}
                     {% set actionUrl = '/census/submit/?place=PL&dataset=DS'|replace('PL', place.id)|replace('DS', dataset.id) %}
                     {% if entry %}
@@ -112,7 +112,7 @@
         {% else %}
             {% if submissions|length %}
                 {% set actionUrl = '/census/submission/ID'|replace('ID', submissions[0].id) %}
-                {% set actionText = gettext("Review") %}
+                {% set actionText = gettext("Comment") %}
             {% else %}
                 {% set actionUrl = '/census/submit/?place=PL&dataset=DS'|replace('PL', place.id)|replace('DS', dataset.id) %}
                 {% set actionText = gettext("Add") %}
