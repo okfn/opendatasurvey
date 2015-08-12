@@ -47,7 +47,7 @@ var fetchPosts = function(sinceDate) {
 
 var maybeSendNewCommentNotification = function(entry, comment) {
 
-  if (entry.Submitter.providers !== {"okfn": "anonymous"}) {
+  if (!_.eq(entry.Submitter.providers, {"okfn": "anonymous"})) {
 
     models.Site.findOne({where: {id: entry.site}}).then(function(site) {
 
