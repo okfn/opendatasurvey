@@ -173,6 +173,10 @@ ul.availability.icons li .text,
 	display: none;
 }
 
+ul.availability.icons li a {
+    color: inherit;
+}
+
 ul.availability.icons.mini li {
 	width: 5px;
 	-webkit-border-radius: 1px;
