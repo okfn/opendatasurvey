@@ -838,7 +838,7 @@ table.response-summary td {
 }
 
 table.response-summary td .status {
-    margin: 5px;
+    margin: 5px 8px 5px 0;
     position: relative;
     height: 32px;
 }
@@ -918,20 +918,28 @@ table.response-summary td .status a {
 table.response-summary th.placescore,
 table.response-summary td.placescore  {
     position: relative;
+    border: none;
 }
 table.response-summary th.placescore span,
 table.response-summary td.placescore span {
   text-align: left;
 	display: block;
-	padding: 8px;
+	padding: 10px;
 	color: #333;
 	background-color: #FFF;
 	background-color: rgba(255,255,255,0.5);
     position: absolute;
-    top: 0;
+    top: 1px;
     right: 6px;
     bottom: 0;
     left: 0;
+}
+@-moz-document url-prefix() { 
+  table.response-summary th.placescore span,
+  table.response-summary td.placescore span {
+    top: 0;
+    bottom: 1px;
+  }
 }
 
 table.response-summary td  ul.availability.icons.mini {
