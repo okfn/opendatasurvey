@@ -882,7 +882,7 @@ table.response-summary td .status .entry-year {
     background-color: rgba(0,0,0, 0.05);
     color: #333;
     text-shadow: none;
-    font-weight: normal;
+    font-weight: 500;
 }
 
 .entry-year.label-important,
