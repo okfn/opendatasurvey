@@ -138,7 +138,7 @@ OpenDataCensus.popoverBody = function(answers, details, url, actionurl, actionte
     }
     out.push('" title="It\'s ' + not + 'digital" data-toggle="tooltip"><i class="icon-save"></i><span class="text">It\'s ' + not + 'digital</span></li>');     
     
-  if (answers.exists === true){
+  
     out.push('<li class="');
     if (not === 'not ') {
         out.push('no');
@@ -165,9 +165,7 @@ OpenDataCensus.popoverBody = function(answers, details, url, actionurl, actionte
     out.push('" title="It\'s ' + not + 'publicly available" data-toggle="tooltip"><i class="icon-eye-open"></i><span class="text">It\'s ' + not + 'publicly available</span></li>');
 
   out.push('</ul>');
-  } else {
-    out.push('<p>Data does not exist</p>');
-  }
+  
   if (details) {
     out.push('<p>' + truncate(details, 300));
     out.push(' <a href="' + url + '">Read more &raquo;</a>');
