@@ -138,7 +138,7 @@ OpenDataCensus.popoverBody = function(answers, details, url, actionurl, actionte
     }
     out.push('" title="It\'s ' + not + 'digital" data-toggle="tooltip"><i class="icon-save"></i><span class="text">It\'s ' + not + 'digital</span></li>');     
     
-  
+    not = makeNot(answers.exists );
     out.push('<li class="');
     if (not === 'not ') {
         out.push('no');
