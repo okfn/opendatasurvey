@@ -168,7 +168,9 @@ OpenDataCensus.popoverBody = function(answers, details, url, actionurl, actionte
   
   if (details) {
     out.push('<p>' + truncate(details, 300));
-    out.push(' <a href="' + url + '">Read more &raquo;</a>');
+    if (details.length > 300) { 
+        out.push(' <a href="' + url + '">Read more &raquo;</a>');
+    }
     out.push('</p>');
   }
   if (year) {
