@@ -43,6 +43,7 @@ $(document).ready(function($) {
       var submissions = $td.data('submissions');
       var submissionslength = $td.data('submissionslength');
       var year = $td.data('year');
+      var yearclass = $td.data('yearclass');
       $td.popover({
           html: true,
           placement: 'bottom',
@@ -52,7 +53,7 @@ $(document).ready(function($) {
             return title;
           },
           content: function(){
-            return OpenDataCensus.popoverBody(answers, details, url, actionurl, actiontext, submissions, submissionslength, year);
+            return OpenDataCensus.popoverBody(answers, details, url, actionurl, actiontext, submissions, submissionslength, year, yearclass);
           },
           template: '<div class="popover overview-popup"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
         });

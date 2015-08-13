@@ -7,7 +7,7 @@ OpenDataCensus.colorScale = {
   })
 };
 
-OpenDataCensus.popoverBody = function(answers, details, url, actionurl, actiontext, submissions, submissionslength, year) {
+OpenDataCensus.popoverBody = function(answers, details, url, actionurl, actiontext, submissions, submissionslength, year, yearclass) {
 
   var makeNot = function(reply){
     var not;
@@ -174,7 +174,7 @@ OpenDataCensus.popoverBody = function(answers, details, url, actionurl, actionte
     out.push('</p>');
   }
   if (year) {
-    out.push('<p>Last updated <span class="label">' + year + '</span></p>');
+    out.push('<p>Last updated <span class="entry-year label ' + yearclass + '">' + year + '</span></p>');
   }
   if (submissions) {
     out.push('<div class="btn-group">');
