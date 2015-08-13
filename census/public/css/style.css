@@ -1559,11 +1559,11 @@ a.readmore-js-toggle:hover {
 }
 
 #banner {
-	border: 3px solid #f3f3f3;
-	background-color: #b9feb6;
 	margin-top: 24px;
-	margin-bottom: 24px;
-	padding: 8px;
+}
+#banner a {
+    color: inherit;
+    font-weight: bold;
 }
 
 .queued-context {
