@@ -87,11 +87,11 @@
       {% set entry = entries|find({'dataset': dataset.id , 'place': place.id }) %}
       {% set submissions = pending|where({'dataset': dataset.id , 'place': place.id }) %}
       {% if entry.year == currentYear %}
-        {% set badgeClass = 'badge-success' %}
+        {% set badgeClass = 'label-success' %}
       {% elif entry.year == (currentYear - 1) %}
-        {% set badgeClass = 'badge-warning' %}
+        {% set badgeClass = 'label-warning' %}
       {% else %}
-        {% set badgeClass = 'badge-important'%}
+        {% set badgeClass = 'label-important'%}
       {% endif %}
         
         
@@ -165,7 +165,7 @@
               {% endfor %}
             </ul>
             
-            <div class="state-info {{ badgeClass }}" title="{{ entry.updatedAt|dateformat }} ({{ gettext("Submitted by") }} {{ entry.Submitter.fullName() }} {{ gettext("and reviewed by") }} {{ entry.Submitter.fullName() }})">
+            <div class="entry-year {{ badgeClass }}" title="{{ entry.updatedAt|dateformat }} ({{ gettext("Submitted by") }} {{ entry.Submitter.fullName() }} {{ gettext("and reviewed by") }} {{ entry.Submitter.fullName() }})">
                 {{entry.year}}
             </div>
             

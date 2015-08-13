@@ -865,7 +865,7 @@ table.response-summary td .status ul.icons li {
     height: 32px;
 }
 
-table.response-summary td .status .state-info {
+table.response-summary td .status .entry-year {
     clear: left;
     height: 16px;
     position: relative;
@@ -877,13 +877,25 @@ table.response-summary td .status .state-info {
     padding: 0 5px;
     background-color: rgba(0,0,0, 0.1);
 }
-table.response-summary td .status .state-info.badge-important {
+
+.entry-year.label-success {
+    background-color: rgba(0,0,0, 0.05);
+    color: #333;
+    text-shadow: none;
+    font-weight: normal;
+}
+
+.entry-year.label-important,
+table.response-summary td .status .entry-year.label-important {
     background-color: #333;
 }
-table.response-summary td .status .state-info.badge-warning {
+
+.entry-year.label-warning,
+table.response-summary td .status .entry-year.label-warning {
     background-color: #666;
 }
-table.response-summary td .status .state-info.badge-success {
+
+table.response-summary td .status .entry-year.label-success {
     visibility: hidden;
 }
 

@@ -44,14 +44,14 @@
       {% if entry %}
 
       {% if entry.year == currentYear %}
-        {% set badgeClass = 'badge-success' %}
+        {% set badgeClass = 'label-success' %}
       {% elif entry.year == (currentYear - 1) %}
-        {% set badgeClass = 'badge-warning' %}
+        {% set badgeClass = 'label-warning' %}
       {% else %}
-        {% set badgeClass = 'badge-important'%}
+        {% set badgeClass = 'label-important'%}
       {% endif %}
 
-      <div class="badge {{ badgeClass}}" title="{{ entry.updatedAt|dateformat }} ({{ gettext("Submitted by") }} {{ entry.Submitter.fullName() }} {{ gettext("and reviewed by") }} {{ entry.Submitter.fullName() }})">{{entry.year}}</div>
+      <div class="entry-year label {{ badgeClass}}" title="{{ entry.updatedAt|dateformat }} ({{ gettext("Submitted by") }} {{ entry.Submitter.fullName() }} {{ gettext("and reviewed by") }} {{ entry.Submitter.fullName() }})">{{entry.year}}</div>
     {% endif %}
     </td>
     {% if entry and entry.answers.url %}
