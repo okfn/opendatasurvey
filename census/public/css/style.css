@@ -143,10 +143,13 @@ ul.availability.icons li,
 ul.availability.icons li,
 .data-icon {
 	background-color: #CCC;
-	margin: -1px;
+	margin-right: 1px;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
 	border-radius: 2px;
+}
+ul.availability.icons li:last-of-type {
+    margin-right: 0;
 }
 
 .data-icon {
@@ -186,6 +189,17 @@ ul.availability.icons.mini li {
 
 ul.availability.icons.mini li i {
 	display: none;
+}
+
+ul.availability.icons.large li {
+    margin-right: 5px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 15px;
+}
+ul.availability.icons.large li:last-of-type {
+    margin-right: 0;
 }
 
 .data-availability {
@@ -1010,6 +1024,18 @@ table.table th.place-name {
 }
 .popover-content .btn-group .btn {
     display: table-cell;
+}
+
+.popover.overview-popup {
+    max-width: 338px;
+}
+
+.popover.overview-popup .availability.icons {
+    margin: 5px 0 15px 0;
+}
+
+.popover.overview-popup .btn-group {
+    margin-top: 15px;
 }
 
 
