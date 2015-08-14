@@ -822,7 +822,7 @@ table.response-summary tfoot tr th div a,
 
 table.response-summary thead tr th.number,
 .sticky-wrap table thead tr th.number {
-    width: 35px !important;
+    width: 25px !important;
 }
 
 table.response-summary thead tr th.place-name,
@@ -832,7 +832,7 @@ table.response-summary thead tr th.place-name,
 
 table.response-summary thead tr th.place-score,
 .sticky-wrap table thead tr th.place-score {
-    width: 50px;
+    width: 60px !important;
 }
 
 .sticky-wrap table.sticky-col th.place-name {

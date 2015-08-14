@@ -86,7 +86,7 @@ var overview = function (req, res) {
       data.urlContext = '';
       if (!req.params.cascade) { data.urlContext += '/YEAR'.replace('YEAR', req.params.year); }
       data.submissionsAllowed = (req.params.year === req.app.get('year'));
-      data.extraWidth = data.datasets.length > 12;
+      data.extraWidth = data.datasets.length > 15;
       data.customText = req.params.site.settings.overview_page;
       data.missingPlaceText = req.params.site.settings.missing_place_html;
       return res.render('overview.html', data);
