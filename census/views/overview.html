@@ -87,11 +87,11 @@
       {% set entry = entries|find({'dataset': dataset.id , 'place': place.id }) %}
       {% set submissions = pending|where({'dataset': dataset.id , 'place': place.id }) %}
       {% if entry.year == currentYear %}
-        {% set badgeClass = 'badge-success' %}
+        {% set badgeClass = 'label-success' %}
       {% elif entry.year == (currentYear - 1) %}
-        {% set badgeClass = 'badge-warning' %}
+        {% set badgeClass = 'label-warning' %}
       {% else %}
-        {% set badgeClass = 'badge-important'%}
+        {% set badgeClass = 'label-important'%}
       {% endif %}
         
         
@@ -99,7 +99,7 @@
         {% if entry %}
             {% if submissions|length %}
                       {% set actionUrl = '/census/submission/ID'|replace('ID', submissions[0].id) %}
-                      {% set actionText = gettext("Review") %}
+                      {% set actionText = gettext("Comment") %}
                   {% else %}
                     {% set actionUrl = '/census/submit/?place=PL&dataset=DS'|replace('PL', place.id)|replace('DS', dataset.id) %}
                     {% if entry %}
@@ -112,7 +112,7 @@
         {% else %}
             {% if submissions|length %}
                 {% set actionUrl = '/census/submission/ID'|replace('ID', submissions[0].id) %}
-                {% set actionText = gettext("Review") %}
+                {% set actionText = gettext("Comment") %}
             {% else %}
                 {% set actionUrl = '/census/submit/?place=PL&dataset=DS'|replace('PL', place.id)|replace('DS', dataset.id) %}
                 {% set actionText = gettext("Add") %}
@@ -137,6 +137,8 @@
          {% if submissions|length %}
          data-submissionslength="{{ submissions|length }}"
          {% endif %}
+         data-year="{{entry.year}}"
+         data-yearclass="{{ badgeClass }}"
          valign="middle"
          >
         <div class="status">
@@ -164,7 +166,7 @@
               {% endfor %}
             </ul>
             
-            <div class="state-info {{ badgeClass }}" title="{{ entry.updatedAt|dateformat }} ({{ gettext("Submitted by") }} {{ entry.Submitter.fullName() }} {{ gettext("and reviewed by") }} {{ entry.Submitter.fullName() }})">
+            <div class="entry-year {{ badgeClass }}" title="{{ entry.updatedAt|dateformat }} ({{ gettext("Submitted by") }} {{ entry.Submitter.fullName() }} {{ gettext("and reviewed by") }} {{ entry.Submitter.fullName() }})">
                 {{entry.year}}
             </div>
             
