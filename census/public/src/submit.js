@@ -55,10 +55,16 @@ jQuery(document).ready(function($) {
         embedCSS: false,
         moreLink: '<a href="#">Show more</a>',
         lessLink: '<a href="#">Hide</a>'
-      };
+      },
+      // whether to hide inapplicable questions or disable
+      hideQuestions = $existsInput.filter(':checked').val() === 'null';
 
   function getInput(question) {
     return $('.yntable input[name=' + question + ']');
+  }
+
+  function getInputRadioValue(question) {
+    return getInput(question).filter("input[type=radio]:checked").val();
   }
 
   function getRow(question) {
@@ -78,16 +84,15 @@ jQuery(document).ready(function($) {
       field.optional || [], expectFalse && field.expectFalse || []);
   }
 
-  function iterateOverChildren(question, callback, expectFalse) {
-    $.each(getChildren(question, expectFalse), function(i, child) {
-      callback(child);
-      iterateOverChildren(child, callback, expectFalse);
+  function iterateOverChildren(question, callback) {
+    $.each(getChildren(question, getInputRadioValue(question) === 'false'), function(i, child) {
+      callback(child, question);
+      iterateOverChildren(child, callback);
     });
   }
 
-  function resetRecursively(question, value, resetrequired, expectFalse) {
-    iterateOverChildren(question, function(child, required) {
-      var $input = getInput(child);
+  function resetInput(question, value, resetrequired) {
+      var $input = getInput(question);
       if ($input.is('[type=radio]')) {
         $input.filter('[value=' + value + ']').prop('checked', true);
       } else {
@@ -97,7 +102,12 @@ jQuery(document).ready(function($) {
           $input.prev('h4').removeClass('required');
         }
       }
-    }, expectFalse);
+  }
+
+  function resetRecursively(question, value, resetrequired) {
+    iterateOverChildren(question, function(child) {
+      resetInput(child, value, resetrequired);
+    });
   }
 
   function makeInputsRequired(question, value) {
@@ -122,25 +132,60 @@ jQuery(document).ready(function($) {
     return null;
   }
 
-  function resolvePositiveAnswer(question) {
-    resetRecursively(question, "null");
-    makeInputsRequired(question, true);
-    $.each(getChildren(question), function(i, child) {
-      getRow(child).slideDown();
+  function disableQuestion(question) {
+    var row = getRow(question);
+    if (fields[question].type === "dependant") {
+      row.slideUp();
+    } else {
+      row.find('input[type=radio]').prop('disabled', true);
+      row.slideDown(); // we should always display disabled Y/N/U questions
+    }
+  }
+
+  function enableQuestion(question) {
+    var row = getRow(question);
+    row.find('input[type=radio]').prop('disabled', false);
+    row.slideDown();
+  }
+
+  function hideOrDisableQuestion(question) {
+    if (hideQuestions) {
+      getRow(question).slideUp();
+    } else {
+      disableQuestion(question);
+    }
+  }
+
+  function resolveQuestion(question) {
+
+    iterateOverChildren(question, function(child, parent) {
+
+      var val = getInput(child).filter(':checked').val(),
+          parentVal = getInput(parent).filter(':checked').val();
+
+      if (parentVal === "true") {
+        enableQuestion(child, parentVal);
+      } else {
+        hideOrDisableQuestion(child);
+      }
     });
-    ensureZebraStripping();
+
   }
 
-  function resolveNegativeAnswer(question, val) {
-    var expectFalse = val === "false";
-    resetRecursively(question, val, true, expectFalse);
-    iterateOverChildren(question, function(child) {
-      getRow(child).removeClass('shown').slideUp();
-    }, expectFalse);
-    ensureZebraStripping();
+  function resolvePositiveAnswer(question, donotreset) {
+    if (!donotreset)
+      resetRecursively(question, "null");
+    makeInputsRequired(question, true);
+    resolveQuestion(question);
   }
 
-  function maybeUnhideSomeQuestions(question) {
+  function resolveNegativeAnswer(question, val, donotreset) {
+    if (!donotreset)
+      resetRecursively(question, val, true);
+    resolveQuestion(question);
+  }
+
+  function maybeShowHiddenQuestions(question) {
     // unhide previously hidden questions
     $.each(fields[question].expectFalse, function(i, child) {
       var parent = getParent(child),
@@ -152,19 +197,19 @@ jQuery(document).ready(function($) {
     });
   }
 
-  function answerChanged($input) {
+  function answerChanged($input, donotreset) {
     var name = $input.attr('name'),
-        val = $('.yntable input[name=' + name + ']:checked').val(),
-        expectFalse = val === "false";
+        val = getInputRadioValue(name);
 
     if (val === "true") {
-      resolvePositiveAnswer(name);
+      resolvePositiveAnswer(name, donotreset);
     } else if (val === "false" || val === "null") {
-      resolveNegativeAnswer(name, val);
+      resolveNegativeAnswer(name, val, donotreset);
     }
     if (val !== "false" && fields[name].expectFalse) {
-      maybeUnhideSomeQuestions(name);
+      maybeShowHiddenQuestions(name);
     }
+    ensureZebraStriping();
   }
 
   $radioInputs.on('click', function() {
@@ -180,18 +225,10 @@ jQuery(document).ready(function($) {
     inputDiff($(this));
   });
 
-  function ensureZebraStripping() {
+  function ensureZebraStriping() {
     $(".submission-row:visible").removeClass('odd').each(function(i) {
       if (i % 2) {
         $(this).addClass('odd');
-      }
-    });
-  }
-
-  function initializeDependants($els) {
-    $els.each(function(index) {
-      if ($(this).hasClass('true') && $(this).is(':checked')) {
-        manageDependants($(this));
       }
     });
   }
@@ -238,17 +275,6 @@ jQuery(document).ready(function($) {
     } else {
       $el.attr('title', '').css('backgroundColor', '');
     }
-  }
-
-  function showHideAvailabilityTable() {
-    var val = $('input[name="exists"]:checked').val();
-    if(val === "false" || val === "null") {
-      $yninputs.find('input[value="'+ val +'"]')
-        .prop('checked', true);
-      $yninputs.addClass('hide').slideUp();
-    } else if (val === "true") {
-      $yninputs.hide().removeClass('hide').slideDown();
-    } // else do nothing
   }
 
   var $select = $('#dataset-select');
@@ -300,8 +326,15 @@ jQuery(document).ready(function($) {
     mdEditor.run();
   })();
 
-  showHideAvailabilityTable();
-  ensureZebraStripping();
+  $('form.submission-create, form.submission-review').on("submit", function (event){
+    var $form = $(this);
+
+    // disabled inputs are not submitted by default, so enable them
+    $form.find('input[type=radio]:disabled').prop('disabled', false);
+  });
+
+  answerChanged($existsInput, !hideQuestions);
+  ensureZebraStriping();
   showCurrentDatasetInfo();
   enableMarkdownPreview();
   initializeAnswerDiff($choiceSwitches);
