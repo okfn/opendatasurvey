@@ -57,7 +57,9 @@ jQuery(document).ready(function($) {
         lessLink: '<a href="#">Hide</a>'
       },
       // whether to hide inapplicable questions or disable
-      hideQuestions = $existsInput.filter(':checked').val() === 'null';
+      hideQuestions = $existsInput.filter(':checked').val() === 'null',
+      $form = $('form.submission-create, form.submission-review'),
+      canEdit = $form.length > 0;
 
   function getInput(question) {
     return $('.yntable input[name=' + question + ']');
@@ -144,7 +146,9 @@ jQuery(document).ready(function($) {
 
   function enableQuestion(question) {
     var row = getRow(question);
-    row.find('input[type=radio]').prop('disabled', false);
+    if (canEdit) {
+      row.find('input[type=radio]').prop('disabled', false);
+    }
     row.slideDown();
   }
 
@@ -326,7 +330,7 @@ jQuery(document).ready(function($) {
     mdEditor.run();
   })();
 
-  $('form.submission-create, form.submission-review').on("submit", function (event){
+  $form.on("submit", function (event){
     var $form = $(this);
 
     // disabled inputs are not submitted by default, so enable them
