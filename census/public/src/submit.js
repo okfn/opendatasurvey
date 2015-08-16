@@ -96,7 +96,9 @@ jQuery(document).ready(function($) {
   function resetInput(question, value, resetrequired) {
       var $input = getInput(question);
       if ($input.is('[type=radio]')) {
-        $input.filter('[value=' + value + ']').prop('checked', true);
+        $input = $input.filter('[value=' + value + ']');
+        $input.prop('checked', true);
+        answerDiff($input);
       } else {
         $input.val('');
         if (resetrequired) {
@@ -253,7 +255,7 @@ jQuery(document).ready(function($) {
 
   function answerDiff($el) {
     var $currentEntry = $el.parent().siblings('.submission-current').first(),
-        currentValue = $currentEntry.text().trim(),
+        currentValue = $currentEntry.attr('data-value'),
         diff_msg = 'The new value differs from the one currently on record.',
         diff_bg = '#EFED8A';
 
