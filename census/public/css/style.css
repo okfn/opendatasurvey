@@ -730,45 +730,62 @@ body.overview.extrawidth .container {
 }
 
 
-.sticky-wrap {
-    overflow-x: auto;
-    overflow-y: hidden;
-    position: relative;
-    margin-bottom: 1.5em;
-    width: 100%;
-    font-size: 15px;
-}
-.sticky-wrap .sticky-thead,
-.sticky-wrap .sticky-col,
-.sticky-wrap .sticky-intersect {
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    transition: all .125s ease-in-out;
-    z-index: 50;
-    width: auto; /* Prevent table from stretching to full size */
-}
-.sticky-wrap .sticky-thead {
-    box-shadow: 0 0.25em 0.1em -0.1em rgba(0,0,0,.125);
-    z-index: 100;
-    width: 100%; /* Force stretch */
-}
-.sticky-wrap .sticky-intersect {
-    opacity: 1;
-    z-index: 150;
-}
-.sticky-wrap .sticky-intersect th {
-    background-color: #fff;
-    color: #eee;
-}
-.sticky-wrap td,
-.sticky-wrap th {
-    box-sizing: border-box;
-}
-
-
 /* Country table */
+
+.sexyTableContainer {
+  overflow: hidden;
+  width: 100%;
+  max-height: 90%;
+  position: relative;
+  margin: 0 auto;
+}
+
+.sexyDragContainer {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.sexyHeader {
+  z-index: 2;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+  transition: none !important;
+}
+
+.sexyHeader table {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0 !important;
+}
+
+.sexyColumn {
+  z-index: 3;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+    display: none;
+}
+
+.sexyCorner {
+  z-index: 4;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  transition: none !important;
+}
+
+.sexyHeader table .place-name {
+    display: none;
+}
+
+.sexyHeader table .number + .place-name {
+    display: table-cell;
+}
+
 
 .span6.sorting {
     text-align: right;
@@ -780,38 +797,33 @@ body.overview.extrawidth .container {
 }
 
 table.response-summary,
-.sticky-wrap table {
+.sexyHeader table {
     table-layout: fixed;
 }
 
 table.response-summary thead tr th,
-table.response-summary tfoot tr th,
-.sticky-wrap table thead tr th,
-.sticky-wrap table tfoot tr th {
+.sexyHeader table tr th {
 	padding: 8px;
 	text-align: center;
 	vertical-align: bottom;
     background-color: #fff;
     width: 50px !important;
     height: 150px;
+    box-sizing: border-box;
 }
-.sticky-wrap table thead tr th {
+.sexyHeader table tr th {
     border-bottom: 1px solid #dddddd;
 }
 
 table.response-summary thead tr th div,
-table.response-summary tfoot tr th div,
-.sticky-wrap table thead tr th div,
-.sticky-wrap table tfoot tr th div {
+.sexyHeader table tr th div {
 	text-align: left;
 	vertical-align: middle;
 	padding: 8px 0 30px 0;
 }
 
 table.response-summary thead tr th div a,
-table.response-summary tfoot tr th div a,
-.sticky-wrap table thead tr th div a,
-.sticky-wrap table tfoot tr th div a {
+.sexyHeader table tr th div a {
     display: block;
     -webkit-transform: rotate(-90deg);
 	-o-transform: rotate(-90deg);
@@ -821,29 +833,18 @@ table.response-summary tfoot tr th div a,
 }
 
 table.response-summary thead tr th.number,
-.sticky-wrap table thead tr th.number {
+.sexyHeader table tr th.number {
     width: 25px !important;
 }
 
 table.response-summary thead tr th.place-name,
-.sticky-wrap table thead tr th.place-name {
+.sexyHeader table tr th.place-name {
     width: 120px !important;
 }
 
 table.response-summary thead tr th.place-score,
-.sticky-wrap table thead tr th.place-score {
-    width: 60px !important;
-}
-
-.sticky-wrap table.sticky-col th.place-name {
-	text-align: left;
-    background-color: #fff;
-    border-top: 1px solid #dddddd;
-}
-
-.sticky-col,
-.sticky-intersect {
-    display: none; /* hiding due to issues in some browsers */
+.sexyHeader table tr th.place-score {
+    width: 65px !important;
 }
 
 

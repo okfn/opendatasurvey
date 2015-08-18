@@ -42,7 +42,7 @@
     </div>
 </div>
 
-<table class="response-summary table">
+<table class="response-summary table sexyTable">
   <thead>
     <tr>
       <th class="number">&nbsp;</th>
@@ -213,22 +213,14 @@
     </tr>
     {% endfor %}
   </tbody>
-  <tfoot>
-    <tr>
-      <th colspan="2">&nbsp;</th>
-      {% for dataset in datasets %}
-      <th><div><a href="/dataset/{{dataset.id}}">{{ dataset.name }}</a></div></th>
-      {% endfor %}
-      <th><div><strong>{{gettext("Total Score")}}</strong></div>
-    </tr>
-  </tfoot>
 </table>
 
 <div class="row-fluid">
   {% include '_snippets/key.html' %}
 </div>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
-<script src="{{page.root}}/src/jquery.stickyheader.js"></script>
-<script src="{{page.root}}/src/common.js?v3"></script>
-<script src="{{page.root}}/src/census.js?v1"></script>
+<script src="{{page.root}}/vendor/jquery.kinetic.min.js"></script>
+<script src="{{page.root}}/vendor/sexytables-1.0.min.js"></script>
+<script src="{{page.root}}/src/common.js?v4"></script>
+<script src="{{page.root}}/src/census.js?v2"></script>
 {% endblock %}
