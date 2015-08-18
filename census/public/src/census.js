@@ -82,6 +82,8 @@ $(document).ready(function($) {
     $('a[data-toggle="popover"]').popover();
 
   };
+    
+  sexyTables();
 
   var summary,
       $table = $('.response-summary');
