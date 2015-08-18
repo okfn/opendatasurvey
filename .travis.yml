@@ -10,5 +10,4 @@ before_script:
   - psql -c 'create database opendatacensus_test;' -U postgres
 
 env:
-  - NODE_ENV="test"
-  - DB_USER="postgres"
+  - NODE_ENV="test" DB_USER="postgres"
