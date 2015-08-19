@@ -53,7 +53,7 @@ var validators = {
   format: {
     type: "string",
     validate: function(req) {
-      req.checkBody("machinereadable", "You must specify the data format").notEmpty();
+      req.checkBody("format", "You must specify the data format").notEmpty();
     }
   },
   url: {
