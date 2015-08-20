@@ -4,6 +4,7 @@ var _ = require('lodash');
 var modelUtils = require('../models/utils');
 var FIELD_SPLITTER = /[\s,]+/;
 var ANONYMOUS_USER_ID = process.env.ANONYMOUS_USER_ID || '0e7c393e-71dd-4368-93a9-fcfff59f9fff';
+var marked = require('marked');
 
 
 var makeChoiceValidator = function(param) {
@@ -177,9 +178,13 @@ var datasetMapper = function(data) {
   if (data.reviewers) {
     reviewers = splitFields(data.reviewers);
   }
-  var result = _.defaults({id: data.id.toLowerCase(), name: data.title,
-                           order: data.order || 100, reviewers: reviewers}, data);
-  return result;
+  return _.defaults({
+    id: data.id.toLowerCase(),
+    description: marked(data.description),
+    name: data.title,
+    order: data.order || 100,
+    reviewers: reviewers
+  }, data);
 };
 
 
@@ -188,8 +193,13 @@ var questionMapper = function(data) {
   if(data.dependants) {
     dependants = splitFields(data.dependants);
   }
-  return _.defaults({id: data.id.toLowerCase(), dependants: dependants,
-                     score: data.score || 0, order: data.order || 100}, data);
+  return _.defaults({
+    id: data.id.toLowerCase(),
+    description: marked(data.description),
+    dependants: dependants,
+    score: data.score || 0,
+    order: data.order || 100
+  }, data);
 };
 
 

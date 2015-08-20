@@ -5,6 +5,7 @@ var Promise = require('bluebird');
 var config = require('../config');
 var utils = require('./utils');
 var controllerUtils = require('../controllers/utils');
+var marked = require('marked');
 
 
 var loadConfig = function (siteId, models) {
@@ -26,6 +27,9 @@ var loadConfig = function (siteId, models) {
             settings[k] = null;
           } else if (v && k === 'reviewers') {
             settings[k] = _.each(v.split(controllerUtils.FIELD_SPLITTER), function(r) { r.trim(); });
+          } else if (v && ['navbar_logo', 'overview_page', 'submit_page', 'about_page',
+                           'faq_page', 'contribute_page', 'banner_text'].indexOf(k) !== -1) {
+            settings[k] = marked(v);
           } else {
             settings[k] = v;
           }
