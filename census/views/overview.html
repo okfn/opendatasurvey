@@ -93,28 +93,28 @@
       {% else %}
         {% set badgeClass = 'label-important'%}
       {% endif %}
-        
-        
-        
+
+
+
         {% if entry %}
             {% if submissions|length %}
-                      {% set actionUrl = '/census/submission/ID'|replace('ID', submissions[0].id) %}
+                      {% set actionUrl = '/submission/ID'|replace('ID', submissions[0].id) %}
                       {% set actionText = gettext("Comment") %}
                   {% else %}
-                    {% set actionUrl = '/census/submit/?place=PL&dataset=DS'|replace('PL', place.id)|replace('DS', dataset.id) %}
+                    {% set actionUrl = '/submit/?place=PL&dataset=DS'|replace('PL', place.id)|replace('DS', dataset.id) %}
                     {% if entry %}
                         {% set actionText = gettext("Update") %}
                     {% else %}
                         {% set actionText = gettext("Add") %}
                     {% endif %}
                 {% endif %}
-        
+
         {% else %}
             {% if submissions|length %}
-                {% set actionUrl = '/census/submission/ID'|replace('ID', submissions[0].id) %}
+                {% set actionUrl = '/submission/ID'|replace('ID', submissions[0].id) %}
                 {% set actionText = gettext("Comment") %}
             {% else %}
-                {% set actionUrl = '/census/submit/?place=PL&dataset=DS'|replace('PL', place.id)|replace('DS', dataset.id) %}
+                {% set actionUrl = '/submit/?place=PL&dataset=DS'|replace('PL', place.id)|replace('DS', dataset.id) %}
                 {% set actionText = gettext("Add") %}
             {% endif %}
         {% endif %}
@@ -143,7 +143,7 @@
          >
         <div class="status">
             {% if entry %}
-            
+
             <ul class="availability icons mini">
               {% for qu in questions %}
               {% set state = entry.answers[qu.id] %}
@@ -165,12 +165,12 @@
               </li>
               {% endfor %}
             </ul>
-            
+
             <div class="entry-year {{ badgeClass }}" title="{{ entry.updatedAt|dateformat }} ({{ gettext("Submitted by") }} {{ entry.Submitter.fullName() }} {{ gettext("and reviewed by") }} {{ entry.Submitter.fullName() }})">
                 {{entry.year}}
             </div>
-            
-            
+
+
             {% if submissionsAllowed %}
               {% if submissions|length %}
                 <span class="pending badge badge-warning" title="{{ gettext("Pending submissions") }}">
@@ -184,13 +184,13 @@
                   <i class="icon-plus"></i>
                 </div>
                 {% endif %}
-     
+
               {% else %}
               <i class="muted">None</i>
               {% endif %}
-            
+
             {% else %}
-            {% if submissionsAllowed %}  
+            {% if submissionsAllowed %}
 
             <a href="{{ actionUrl }}" class="btn btn-mini">
               {% if submissions|length %}

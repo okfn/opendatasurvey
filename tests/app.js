@@ -188,7 +188,7 @@
 //     config.set('test:user', {userid: userFixtures[0].data.id});
 
 //     request(app)
-//       .get('/census/submit')
+//       .get('/submit')
 //       .set('Host', 'site2.dev.census.org')
 //       .expect(200)
 //       .then(function(res) {
@@ -269,7 +269,7 @@
 //       config.set('test:user', {userid: userFixtures[0].data.id});
 
 //       request(app)
-//         .get('/census/submit/')
+//         .get('/submit/')
 //         .set('Host', 'site2.dev.census.org')
 //         .query(prefill)
 //         .expect(200)
@@ -312,7 +312,7 @@
 //       config.set('test:user', {userid: userFixtures[0].data.id});
 
 //       request(app)
-//         .get('/census/submit/')
+//         .get('/submit/')
 //         .set('Host', 'site1.dev.census.org')
 //         .query(prefill)
 //         .expect(200)
@@ -339,7 +339,7 @@
 //     var dataset = _.find(datasetFixtures, function(D) { return D.data.id === entry.dataset }).data;
 
 //     request(app)
-//       .get('/census/submission/' + entry.id)
+//       .get('/submission/' + entry.id)
 //       .set('Host', 'site2.dev.census.org')
 //       .expect(200)
 //       .then(function(res) {

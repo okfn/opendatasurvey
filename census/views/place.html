@@ -67,11 +67,11 @@
                 {% if submissionsAllowed %}
 
                 {% if entry %}
-                <a id="submit-{{ dataset.id }}" href="/census/submit/?dataset={{ dataset.id }}&place={{ place.id }}" class="btn btn-mini btn-primary">
+                <a id="submit-{{ dataset.id }}" href="/submit/?dataset={{ dataset.id }}&place={{ place.id }}" class="btn btn-mini btn-primary">
                   <!-- <i class="icon-plus"></i> -->{{gettext("Propose Revisions")}}
                 </a>
               {% else %}
-                <a id="submit-{{ dataset.id }}" href="/census/submit/?dataset={{ dataset.id }}&place={{ place.id }}" class="btn btn-mini btn-primary">
+                <a id="submit-{{ dataset.id }}" href="/submit/?dataset={{ dataset.id }}&place={{ place.id }}" class="btn btn-mini btn-primary">
                   <!-- <i class="icon-plus"></i> -->{{gettext("Submit information")}}
                 </a>
                 {% endif %}
@@ -99,7 +99,7 @@
               </td>
               {{entrysummary(dataset, place, submission, questions)}}
               <td>
-                 <a href="/census/submission/{{submission.id}}" class="btn btn-mini btn-danger">
+                 <a href="/submission/{{submission.id}}" class="btn btn-mini btn-danger">
                   {{gettext("View Submission")}}
                  </a>
                  <script>

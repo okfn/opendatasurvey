@@ -123,7 +123,7 @@ var setEntryUrl = function(entry) {
       .replace('PLACE', entry.place)
       .replace('DATASET', entry.dataset);
   } else {
-    return '/census/submission/ID'.replace('ID', entry.id);
+    return '/submission/ID'.replace('ID', entry.id);
   }
 };
 

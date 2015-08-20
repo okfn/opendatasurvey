@@ -6,6 +6,7 @@ var mixins = require('../controllers/mixins');
 var utils = require('./utils');
 var authRoutes = require('./auth');
 var systemRoutes = require('./system');
+var censusRoutes = require('./census');
 var redirectRoutes = require('./redirects');
 
 
@@ -20,6 +21,7 @@ var pageRoutes = function(coreMiddlewares) {
 
   authRoutes(router);
   systemRoutes(router);
+  censusRoutes(router);
 
   router.get(utils.scoped('/about'), coreMixins, pages.about);
   router.get(utils.scoped('/faq'), coreMixins, pages.faq);

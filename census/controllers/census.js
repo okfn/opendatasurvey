@@ -164,13 +164,13 @@ var submitPostHandler = function(req, res, data) {
           if (!result.isCurrent) {
 
             msg = msgTmpl.replace('REVIEWED', ' It will now be reviewed by the editors.');
-            submissionPath = '/census/submission/' + result.id;
+            submissionPath = '/submission/' + result.id;
             redirectPath = submissionPath;
 
           } else {
 
             msg = msgTmpl.replace('REVIEWED', '');
-            submissionPath = '/census/submission/' + result.id;
+            submissionPath = '/submission/' + result.id;
             redirectPath = '/place/' + result.place;
 
           }

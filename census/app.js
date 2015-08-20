@@ -108,11 +108,9 @@ var coreMiddlewares = [
 
 app.all('*', routes.utils.setLocals);
 app.use('/admin', routes.admin(coreMiddlewares));
-app.use('/census', routes.census(coreMiddlewares));
 app.use('/api', routes.api(coreMiddlewares));
-// pages also has auth and redirect routes
+// pages also has census, auth and redirect routes
 app.use('', routes.pages(coreMiddlewares));
-
 app.use(middlewares.notFound);
 app.use(middlewares.internalServerError);
 

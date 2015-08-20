@@ -62,7 +62,7 @@
 
         {% if submissionsAllowed %}
 
-        <a id="submit-{{ entry.place }}" href="/census/submit/?dataset={{ dataset.id }}&place={{ place.id }}" class="btn btn-mini btn-primary">
+        <a id="submit-{{ entry.place }}" href="/submit/?dataset={{ dataset.id }}&place={{ place.id }}" class="btn btn-mini btn-primary">
           <!-- <i class="icon-plus"></i> -->
 
           {% if entry %}
@@ -99,7 +99,7 @@
       </td>
       {{entrysummary(dataset, place, submission, questions)}}
       <td>
-        <a href="/census/submission/{{submission.id}}" class="btn btn-mini btn-danger">
+        <a href="/submission/{{submission.id}}" class="btn btn-mini btn-danger">
           {{gettext("View Submission")}}
         </a>
         <script>
