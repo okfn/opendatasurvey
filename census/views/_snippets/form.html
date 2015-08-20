@@ -56,17 +56,17 @@
           <input type="radio" name="{{qu.id}}" value="{{ val.string }}" {% if formData %}{% if formData[qu.id] == val.string %}checked="true"{% endif %}{% else %}{% if (current and current.answers[qu.id] == val.type) %}checked="true" {% endif %}{% endif %}class="{{ val.string }}"{% if canReview != true or reviewClosed %} disabled="disabled"{% endif %} required>
         </div>
         {% endfor %}
-        <div class="submission-current">
+        <div class="submission-current" data-value="{{ current.answers[qu.id] }}">
+          {% set currentDisplay = gettext('No entry') %}
           {% for val in [
             {"type": true, "string": "true", "display": "Yes"},
-            {"type": false, "string": "false", "display": "No"},
-            {"type": null, "string": "null", "display": "Unsure"}
+            {"type": false, "string": "false", "display": "No"}
           ] %}
           {% if current.answers[qu.id] == val.type %}
-          {% set currentDisplay = val.display %}
+            {% set currentDisplay = val.display %}
           {% endif %}
           {% endfor %}
-          {{ currentDisplay or gettext('No entry') }}
+          {{ currentDisplay }}
         </div>
         <div class="submission-info">
           <span class="help-block readmore">{{qu.description}}</span>

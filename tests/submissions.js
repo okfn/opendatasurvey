@@ -117,15 +117,21 @@ describe('#validationData()', function () {
         expect(_.size(errors)).to.be.equal(1);
       });
     });
-    it('should return error for url (online=true)', function(done) {
+    it('should return error for empty url (online=true)', function(done) {
       postRoute(_.assign(sumbission, {url: ''}), done, function(errors) {
         expect(errors).to.have.property('url');
         expect(_.size(errors)).to.be.equal(1);
       });
     });
-    it('should return error for licenseurl (openlicense=true)', function(done) {
+    it('should return error for empty licenseurl (openlicense=true)', function(done) {
       postRoute(_.assign(sumbission, {licenseurl: ''}), done, function(errors) {
         expect(errors).to.have.property('licenseurl');
+        expect(_.size(errors)).to.be.equal(1);
+      });
+    });
+    it('should return error for empty format (machinereadable=true)', function(done) {
+      postRoute(_.assign(sumbission, {format: ''}), done, function(errors) {
+        expect(errors).to.have.property('format');
         expect(_.size(errors)).to.be.equal(1);
       });
     });

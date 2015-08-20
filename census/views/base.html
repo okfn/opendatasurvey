@@ -20,9 +20,9 @@
     <script src="/vendor/Markdown.Converter.js"></script>
     <script src="/vendor/Markdown.Sanitizer.js"></script>
     <script src="/vendor/Markdown.Editor.js"></script>
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/style.css?v4" rel="stylesheet">
 
     <style type="text/css">
       {{ site.settings.custom_css }}
@@ -61,10 +61,8 @@
   <div class="page">
 
     {% if site.settings.banner_text %}
-    <div class="row">
-      <div id="banner" class="span12">
-        {{ site.settings.banner_text|marked }}
-      </div>
+    <div id="banner" class="alert">
+      {{ site.settings.banner_text }}
     </div>
     {% endif %}
 

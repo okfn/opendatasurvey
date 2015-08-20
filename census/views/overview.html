@@ -38,16 +38,19 @@
 
 <div class="row">
   {% include '_snippets/year_navigation.html' %}
+    <div class="span6" id="sorting">
+    </div>
 </div>
 
-<table class="response-summary table">
+<table class="response-summary table sexyTable">
   <thead>
     <tr>
-      <th colspan="2">&nbsp;</th>
+      <th class="number">&nbsp;</th>
+      <th class="place-name">&nbsp;</th>
       {% for dataset in datasets %}
       <th><div><a href="/dataset/{{dataset.id}}{{ urlContext }}">{{ dataset.name }}</a></div></th>
       {% endfor %}
-      <th><div><strong>{{gettext("Total Score")}}</strong></div>
+      <th class="place-score"><div><strong>{{gettext("Total Score")}}</strong></div></th>
     </tr>
   </thead>
   <tbody>
@@ -84,12 +87,37 @@
       {% set entry = entries|find({'dataset': dataset.id , 'place': place.id }) %}
       {% set submissions = pending|where({'dataset': dataset.id , 'place': place.id }) %}
       {% if entry.year == currentYear %}
-        {% set badgeClass = 'badge-success' %}
+        {% set badgeClass = 'label-success' %}
       {% elif entry.year == (currentYear - 1) %}
-        {% set badgeClass = 'badge-warning' %}
+        {% set badgeClass = 'label-warning' %}
       {% else %}
-        {% set badgeClass = 'badge-important'%}
+        {% set badgeClass = 'label-important'%}
       {% endif %}
+        
+        
+        
+        {% if entry %}
+            {% if submissions|length %}
+                      {% set actionUrl = '/census/submission/ID'|replace('ID', submissions[0].id) %}
+                      {% set actionText = gettext("Comment") %}
+                  {% else %}
+                    {% set actionUrl = '/census/submit/?place=PL&dataset=DS'|replace('PL', place.id)|replace('DS', dataset.id) %}
+                    {% if entry %}
+                        {% set actionText = gettext("Update") %}
+                    {% else %}
+                        {% set actionText = gettext("Add") %}
+                    {% endif %}
+                {% endif %}
+        
+        {% else %}
+            {% if submissions|length %}
+                {% set actionUrl = '/census/submission/ID'|replace('ID', submissions[0].id) %}
+                {% set actionText = gettext("Comment") %}
+            {% else %}
+                {% set actionUrl = '/census/submit/?place=PL&dataset=DS'|replace('PL', place.id)|replace('DS', dataset.id) %}
+                {% set actionText = gettext("Add") %}
+            {% endif %}
+        {% endif %}
 
       <td
          class="
@@ -101,81 +129,83 @@
          data-answers="{{ entry.answers|stringify|escape }}"
          data-details="{{ entry.details|escape }}"
          data-url="{{ entry.url|escape }}"
+         {% if submissionsAllowed %}
+         data-submissions="allowed"
+         {% endif %}
+         data-actionurl="{{ actionUrl }}"
+         data-actiontext="{{ actionText }}"
+         {% if submissions|length %}
+         data-submissionslength="{{ submissions|length }}"
+         {% endif %}
+         data-year="{{entry.year}}"
+         data-yearclass="{{ badgeClass }}"
          valign="middle"
          >
-        {% if entry %}
-        <div class="state-info">
-          <div class="badge {{ badgeClass }}" title="{{ entry.updatedAt|dateformat }} ({{ gettext("Submitted by") }} {{ entry.Submitter.fullName() }} {{ gettext("and reviewed by") }} {{ entry.Submitter.fullName() }})">
-            {{entry.year}}
-          </div>
-        </div>
-        <ul class="availability icons mini">
-          {% for qu in questions %}
-          {% set state = entry.answers[qu.id] %}
+        <div class="status">
+            {% if entry %}
+            
+            <ul class="availability icons mini">
+              {% for qu in questions %}
+              {% set state = entry.answers[qu.id] %}
 
-          {% if state == true %}
-            {% set stateClass = 'yes' %}
-            {% set stateDisplay = 'Y' %}
-          {% elif state == false %}
-            {% set stateClass = 'no' %}
-            {% set stateDisplay = 'N' %}
-          {% elif state == null %}
-            {% set stateClass = 'maybe' %}
-            {% set stateDisplay = '?' %}
-          {% endif %}
+              {% if state == true %}
+                {% set stateClass = 'yes' %}
+                {% set stateDisplay = 'Y' %}
+              {% elif state == false %}
+                {% set stateClass = 'no' %}
+                {% set stateDisplay = 'N' %}
+              {% elif state == null %}
+                {% set stateClass = 'maybe' %}
+                {% set stateDisplay = '?' %}
+              {% endif %}
 
-          <li class="{{ stateClass }}" data-toggle="tooltip" title="{{ qu.question }}">
-            <i class="icon-{{ qu.icon }}"></i>
-            <span class="text">{{ stateDisplay }}</span>
-          </li>
-          {% endfor %}
-        </ul>
-        <div>
-          {% if submissionsAllowed %}
-          {% if submissions|length %}
-          {% set actionUrl = '/census/submission/ID'|replace('ID', submissions[0].id) %}
-          {% set actionText = gettext("Review") %}
-          {% else %}
-          {% set actionUrl = '/census/submit/?place=PL&dataset=DS'|replace('PL', place.id)|replace('DS', dataset.id) %}
-          {% if entry %}
-          {% set actionText = gettext("Update") %}
-          {% else %}
-          {% set actionText = gettext("Add") %}
-          {% endif %}
-          {% endif %}
-
-          <a href="{{ actionUrl }}" class="btn btn-mini">
-            {% if submissions|length %}
-            <span title="{{ gettext("Pending submissions") }}">
-              ({{ submissions|length }})
-            </span>
+              <li class="{{ stateClass }}" data-toggle="tooltip" title="{{ qu.question }}">
+                <i class="icon-{{ qu.icon }}"></i>
+                <span class="text">{{ stateDisplay }}</span>
+              </li>
+              {% endfor %}
+            </ul>
+            
+            <div class="entry-year {{ badgeClass }}" title="{{ entry.updatedAt|dateformat }} ({{ gettext("Submitted by") }} {{ entry.Submitter.fullName() }} {{ gettext("and reviewed by") }} {{ entry.Submitter.fullName() }})">
+                {{entry.year}}
+            </div>
+            
+            
+            {% if submissionsAllowed %}
+              {% if submissions|length %}
+                <span class="pending badge badge-warning" title="{{ gettext("Pending submissions") }}">
+                  {{ submissions|length }}
+                </span>
+                <div class="hover-icon">
+                  <i class="icon-eye-open"></i>
+                </div>
+                {% else %}
+                <div class="hover-icon">
+                  <i class="icon-plus"></i>
+                </div>
+                {% endif %}
+     
+              {% else %}
+              <i class="muted">None</i>
+              {% endif %}
+            
             {% else %}
-            <i class="icon-plus"></i>
+            {% if submissionsAllowed %}  
+
+            <a href="{{ actionUrl }}" class="btn btn-mini">
+              {% if submissions|length %}
+                <span title="{{ gettext("Pending submissions") }}">
+                  ({{ submissions|length }})
+                </span>
+                {% else %}
+                <i class="icon-plus"></i>
+                {% endif %}
+              {{ actionText }}
+            </a>
+            {% else %}
+            <i class="muted">None</i>
             {% endif %}
-            {{ actionText }}
-          </a>
-          {% else %}
-          <i class="muted">None</i>
-          {% endif %}
         </div>
-        {% else %}
-        {% if submissionsAllowed %}
-
-        {% if submissions|length %}
-        {% set actionUrl = '/census/submission/ID'|replace('ID', submissions[0].id) %}
-        {% set actionText = gettext("Review") %}
-        {% else %}
-        {% set actionUrl = '/census/submit/?place=PL&dataset=DS'|replace('PL', place.id)|replace('DS', dataset.id) %}
-        {% set actionText = gettext("Add") %}
-        {% endif %}
-
-        <a href="{{ actionUrl }}" class="btn btn-mini">
-          <i class="icon-plus"></i>
-          {{ actionText }}
-        </a>
-        {% else %}
-        <i class="muted">None</i>
-        {% endif %}
         {% endif %}
       </td>
       {% endfor %}
@@ -183,21 +213,14 @@
     </tr>
     {% endfor %}
   </tbody>
-  <tfoot>
-    <tr>
-      <th colspan="2">&nbsp;</th>
-      {% for dataset in datasets %}
-      <th><div><a href="/dataset/{{dataset.id}}">{{ dataset.name }}</a></div></th>
-      {% endfor %}
-      <th><div><strong>{{gettext("Total Score")}}</strong></div>
-    </tr>
-  </tfoot>
 </table>
 
 <div class="row-fluid">
   {% include '_snippets/key.html' %}
 </div>
-<script src="{{page.root}}/vendor/sticky.min.js"></script>
-<script src="{{page.root}}/src/common.js"></script>
-<script src="{{page.root}}/src/census.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
+<script src="{{page.root}}/vendor/jquery.kinetic.min.js"></script>
+<script src="{{page.root}}/vendor/sexytables-1.0.min.js"></script>
+<script src="{{page.root}}/src/common.js?v4"></script>
+<script src="{{page.root}}/src/census.js?v2"></script>
 {% endblock %}
