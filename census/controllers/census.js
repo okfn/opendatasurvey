@@ -249,6 +249,12 @@ var reviewPost = function (req, res) {
                                cascade: true, with: {Dataset: false, Place: false, Question: false}});
     modelUtils.getData(dataOptions)
       .then(function(data) {
+
+        if (!utils.canReview(data.reviewers, req.user)) {
+          res.status(403).send('You are not allowed to review this entry');
+          return;
+        };
+
         var ex = _.first(data.entries);
         result.reviewerId = req.user.id;
         result.reviewed = true;
