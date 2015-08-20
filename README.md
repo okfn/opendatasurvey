@@ -32,6 +32,8 @@ Get a local server setup with the following steps:
 
 1. Install Postgres 9.4 on your machine.
 2. Setup to appropriate credentials on Google and Facebook so they are OAuth providers for your app.
+    * For Google: [follow these steps](https://developers.google.com/identity/protocols/OpenIDConnect) and then enable the Google+ API.
+    * For Facebook: TODO
 2. Ensure you are running the supported version of Node.js, which is [declared in the `package.json`](https://github.com/okfn/opendatacensus/blob/feature/database/package.json#L58).
 3. Create a database with `createdb opendatacensus`.
 4. Add this line to your hosts file: `127.0.0.1 demo.dev.census.org global.dev.census.org id.dev.census.org system.dev.census.org`.
@@ -73,6 +75,7 @@ Get a local server setup with the following steps:
 }
 ```
 
+
 Now we should be ready to run the server:
 
 1. Run the app with `npm start`
@@ -80,6 +83,11 @@ Now we should be ready to run the server:
 3. Load the data for a specific site, e.g.: `http://demo.dev.census.org:5000/admin`
 4. Visit the site: `http://demo.dev.census.org:5000/`
 
+### Configuration Sheets
+
+Most of the site configuration is taken from config sheets in Google Sheets. You can use [this registry sheet](https://docs.google.com/spreadsheets/d/18jINMw7ifwUoqizc4xaQE8XtF4apPfsmMN43EM-9Pmc/edit#gid=0) and its linked sheets as examples and clone them as necessary.
+
+**NOTE**: Ensure your registry and all other config sheets have been published as CSV in Google Sheets (click File, Publish to the Web).
 
 ### Deployment
 
