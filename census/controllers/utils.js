@@ -157,29 +157,37 @@ var validateData = function(req, mappedErrors) {
   return errors;
 };
 
+var splitFields = function(data) {
+  return _.each(data.trim().split(FIELD_SPLITTER), function(str) { str.trim(); });
+};
 
 var placeMapper = function(data) {
   var reviewers = [];
   if (data.reviewers) {
-    reviewers = _.each(data.reviewers.split(FIELD_SPLITTER), function(r) { r.trim(); });
+    reviewers = splitFields(data.reviewers);
   }
-  return _.merge(data, {id: data.id.toLowerCase(), reviewers: reviewers});
+  var result = _.defaults({id: data.id.toLowerCase(), reviewers: reviewers}, data);
+
+  return result;
 };
 
 
 var datasetMapper = function(data) {
   var reviewers = [];
   if (data.reviewers) {
-    reviewers = _.each(data.reviewers.split(FIELD_SPLITTER), function(r) { r.trim(); });
+    reviewers = splitFields(data.reviewers);
   }
-  return _.merge(data, {id: data.id.toLowerCase(), name: data.title,
-                        order: data.order || 100, reviewers: reviewers});
+  var result = _.defaults({id: data.id.toLowerCase(), name: data.title,
+                           order: data.order || 100, reviewers: reviewers}, data);
+  return result;
 };
 
 
 var questionMapper = function(data) {
   var dependants = null;
-  if(data.dependants){ dependants = data.dependants.split(FIELD_SPLITTER); }
+  if(data.dependants) {
+    dependants = splitFields(data.dependants);
+  }
   return _.defaults({id: data.id.toLowerCase(), dependants: dependants,
                      score: data.score || 0, order: data.order || 100}, data);
 };
