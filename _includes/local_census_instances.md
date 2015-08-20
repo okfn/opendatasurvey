@@ -1,3 +1,8 @@
+### Regions
+
+ * [Australian Regional Census](http://australia.census.okfn.org/)
+ * [Caribbean Regional Census](http://caribbean.census.okfn.org/)
+
 ### Cities
 
  * [Argentina City Census](http://ar-city.census.okfn.org/)
@@ -39,8 +44,3 @@
  * [Uruguay City Census](http://uy-city.census.okfn.org/)
  * [Hungary City Census](http://hu-city.census.okfn.org/)
  * [Czech Republic City Census](http://cz-city.census.okfn.org/)
-
-### Regions
-
- * [Australian Regional Census](http://australia.census.okfn.org/)
- * [Caribbean Regional Census](http://caribbean.census.okfn.org/)
