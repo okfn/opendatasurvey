@@ -253,7 +253,7 @@ var reviewPost = function (req, res) {
         if (!utils.canReview(data.reviewers, req.user)) {
           res.status(403).send('You are not allowed to review this entry');
           return;
-        };
+        }
 
         var ex = _.first(data.entries);
         result.reviewerId = req.user.id;
