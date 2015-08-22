@@ -246,10 +246,11 @@ var reviewPost = function (req, res) {
 
     var dataOptions = _.merge(modelUtils.getDataOptions(req),
                               {place: result.place, dataset: result.dataset,
-                               cascade: true, with: {Dataset: false, Place: false, Question: false}});
+                               cascade: true, with: {Question: false}});
     modelUtils.getData(dataOptions)
       .then(function(data) {
 
+        data.reviewers = utils.getReviewers(req, data);
         if (!utils.canReview(data.reviewers, req.user)) {
           res.status(403).send('You are not allowed to review this entry');
           return;
