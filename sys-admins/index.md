@@ -40,11 +40,11 @@ In order to serve a site, an entry is needed in the **Registry**.
 
 [The OKFN Registry is here](https://docs.google.com/spreadsheets/d/18jINMw7ifwUoqizc4xaQE8XtF4apPfsmMN43EM-9Pmc/edit#gid=0).
 
-The registry no longer needs senstive information like passwords.
+The registry does not contain senstive information like passwords.
 
-To start your own Census installation, copy the OK Registry and adjust as required.
+To start your own Census installation, copy the [Registry template](https://docs.google.com/spreadsheets/d/1gbjbkFjjES7mS6aFbZRFJ6BcjXDKaIr9I4AxFGCwLkk/edit#gid=0) and adjust as required.
 
-Notice that each entry in the Registry has a link to the config file for the site.
+Notice that each entry in the Registry has a link to the config file for the site. The [Local Config template](https://docs.google.com/spreadsheets/d/1ziJAlV4F02467oAmH1CDUdWBYdRp7LlVZgDVUuJU-l8/edit#gid=0) is linked to from the local app in the Registry template, for example.
 
 This then provides the entry point into site-specific configuration.
 
@@ -61,10 +61,12 @@ It's useful to check the "Automatically republish when changes are made" box. Ho
 
 * Add a new entry to the Registry
 * Reload the Registry on your Census at `http://{system_subdomain}.{base_domain}/control`
-* Ask the Site administrator (who **must** have an email in the `adminemail` field of the Registry entry) to finish all the site-specific configuration and then the site admin must:
+  * Your email will have to be added as the `sysAdmin` email - see the setup instructions in the README.
+* Ask the Site administrator (who **must** have an email in the `adminemail` field of the Registry entry for her site) to finish all the site-specific configuration and then the site admin must:
   * Visit `http://{site}.{base_domain}/admin`
   * Load Config
   * Load Places
   * Load Datasets
   * Load Questions
 * The Site will now be live at: `http://{site}.{base_domain}/`
+
