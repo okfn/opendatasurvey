@@ -29,10 +29,13 @@ When a `Submission` has been reviewed and deemed accurate it becomes an `Entry` 
 
 #### New submissions
 
- * Contributors visit the `/census/submit/` page to make a new `Submission`
+ * Contributors visit the `/submit/` page to make a new `Submission`
  * This `Submission` is now queued awaiting review by a reviewer (see next item for details of what that will mean)
-    * Note: we have recently introduced a change to this workflow so that __the first submission for a given place + dataset is automatically "approved" (without review).__ In this case the Submission won't need to be reviewed and will automatically become the "Entry" for that place + dataset.
-    * This behaviour can be disabled by setting `approve_first_submission` config variable to TRUE.
+    * The `approve_first_submission` config variable can be set to TRUE in order to approve the first submission for a place/dataset/year automatically, without review.
+    * Reviewers can be set in three places: 
+      * In the config sheet, where the reviewers can review all data for the instance
+      * In the datasets sheet, where the reviewers can review all data for a particular dataset
+      * In the places sheet, where the reviewers can review all data for a particular place
 
 #### Reviewing a submission
 
@@ -164,11 +167,6 @@ These are the config variables you can set in the the "General Config" sheet of 
 
 Those marked with a (*) must be set.
 
-Some definitions:
-
- * 'application google user' is the Google user(name) (e.g. opendatacensustest@gmail.com) which will be used by the Census app to access the data(base) spreadsheets. It is __not__ configurable as part of the general application config but is provided to you by the "Census Deployer".
- * 'user id' – some configuration items require you to specify users 'user id' (e.g. the reviewers field). The user id of a logged in user on a Census application is of the form: google:{id} where {id} is the Google id of that user (same as their G+ id). Here are some [instruction on how to find a Google id][find-g-id].
-
 ### title
 
 Site title – used on the website etc
@@ -205,7 +203,7 @@ submitted for datasets in that place.
 
 ### questions
 
-__We strongly recommend against customizing the questions. The app may well break if you change the questions.__
+__Questions are not customizable. The app will behave unexpectedly with different questions.__
 
 `questions` must be a URL to a Google Spreadsheet (make sure url is to the *actual* sheet you want) or online CSV file containing a list of questions about.
 
@@ -217,7 +215,7 @@ The spreadsheet MUST follow structure as in the [default questions spreadsheet][
 
 Determines whether the first submission requires review by a reviewer.
 
-Default is FALSE i.e. the first submission is auto-approved.
+Default is FALSE i.e. all submission must be reviewed.
 
 ### overview_page
 
@@ -292,8 +290,8 @@ Custom footer content
 
 Supply a google analytics key to use on the site
 
-[template-config]: https://docs.google.com/spreadsheets/d/1CxiF_TcIv-BuQV3VGKd__LnoqZ4x4QUApm2RBVfQQJQ/edit#gid=0
+[template-config]: https://docs.google.com/spreadsheets/d/1ziJAlV4F02467oAmH1CDUdWBYdRp7LlVZgDVUuJU-l8/edit#gid=2
 [template-questions]: https://docs.google.com/spreadsheets/d/1nwmk8uJEK-4K6-5SdBgoLUlUos-BhfYRgjS74YkhDGc/edit#gid=3
 [discussion-forum]: https://discuss.okfn.org/c/open-data-index
-[template-city]: https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0AqR8dXc6Ji4JdEEwSFF6OTJTMnhYa3h2ZS1temlDS3c&usp=drive_web#gid=0
+[template-city]: https://docs.google.com/spreadsheets/d/18mw_Ig9zvwb514VQsTGfrg0WMrcUngxBIRzWSxpguho/edit#gid=0
 [transifex]: https://www.transifex.com/projects/p/open-data-census/
