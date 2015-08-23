@@ -29,7 +29,7 @@ nconf.defaults({
   approve_first_submission: 'FALSE',
   reviewers: '',
   locales: ['en'],
-  disqus_shortname: 'opendatacensus',
+  disqus_shortname: process.env.DISQUS_SHORTNAME || 'opendatacensus',
   discussion_forum: process.env.DISCUSSION_FORUM || '', // forum URL
   about_page: '<h1>To set content for this page update your configuration file</h1>',
   contribute_page: '<h1>To set content for this page update your configuration file</h1>',
