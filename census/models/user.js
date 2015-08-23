@@ -36,11 +36,6 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: true
     },
-    anonymous: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    },
     authenticationHash: {
       type: DataTypes.STRING
     },
