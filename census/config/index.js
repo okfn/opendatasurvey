@@ -29,6 +29,16 @@ nconf.defaults({
   approve_first_submission: 'FALSE',
   reviewers: '',
   locales: ['en'],
+  email_from: process.env.EMAIL_FROM || 'noreply@census.okfn.org',
+  email_new_comment_subject: process.env.EMAIL_NEW_COMMENT_SUBJECT || "[Open Data Cenus] Comment Notification",
+
+  mandrill: {
+    smtp_host: process.env.SMTP_HOST || 'smtp.mandrillapp.com',
+    smtp_port: process.env.SMTP_PORT || 587,
+    smtp_username: process.env.SMTP_USERNAME || 'noreply@census.okfn.org',
+    smtp_password: process.env.SMTP_PASSWORD || ''
+  },
+
   disqus_shortname: process.env.DISQUS_SHORTNAME || 'opendatacensus',
   discussion_forum: process.env.DISCUSSION_FORUM || '', // forum URL
   about_page: '<h1>To set content for this page update your configuration file</h1>',
@@ -56,6 +66,12 @@ nconf.defaults({
       timestamps: true
     }
   },
+  
+  disqus: {
+    api_key: process.env.DISQUS_API_KEY || '',
+    api_secret: process.env.DISQUS_API_SECRET || ''
+  },
+
   appconfig: {
     port: process.env.PORT || 5000,
     auth_on: process.env.AUTH_ON !== undefined || false,
