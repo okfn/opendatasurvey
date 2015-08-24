@@ -35,8 +35,8 @@ var objects = [
       reviewComments: '',
       details: 'This is site1 entry',
       isCurrent: true, // Need to be sure that at least one current Entry exists for proper testing
-      submitter_id: _.sample(users).data.id,
-      reviewer_id: _.sample(users).data.id
+      submitterId: _.sample(users).data.id,
+      reviewerId: _.sample(users).data.id
     }
   },
 
@@ -55,8 +55,8 @@ var objects = [
       reviewComments: '',
       details: 'This is site1 entry',
       isCurrent: true, // Need to be sure that at least one current Entry exists for proper testing
-      submitter_id: _.sample(users).data.id,
-      reviewer_id: _.sample(users).data.id
+      submitterId: _.sample(users).data.id,
+      reviewerId: _.sample(users).data.id
     }
   },
 
@@ -75,8 +75,8 @@ var objects = [
       reviewComments: '',
       details: '',
       isCurrent: false,
-      submitter_id: _.sample(users).data.id,
-      reviewer_id: _.sample(users).data.id
+      submitterId: _.sample(users).data.id,
+      reviewerId: _.sample(users).data.id
     }
   },
 
@@ -95,8 +95,8 @@ var objects = [
       reviewComments: '',
       details: '',
       isCurrent: true,
-      submitter_id: _.sample(users).data.id,
-      reviewer_id: _.sample(users).data.id
+      submitterId: _.sample(users).data.id,
+      reviewerId: _.sample(users).data.id
     }
   },
   {
@@ -114,8 +114,8 @@ var objects = [
       reviewComments: '',
       details: '',
       isCurrent: false,
-      submitter_id: _.sample(users).data.id,
-      reviewer_id: _.sample(users).data.id
+      submitterId: _.sample(users).data.id,
+      reviewerId: _.sample(users).data.id
     }
   },
 
@@ -134,8 +134,8 @@ var objects = [
       reviewComments: '',
       details: '',
       isCurrent: false,
-      submitter_id: _.sample(users).data.id,
-      reviewer_id: _.sample(users).data.id
+      submitterId: _.sample(users).data.id,
+      reviewerId: _.sample(users).data.id
     }
   },
 
@@ -154,8 +154,8 @@ var objects = [
       reviewComments: '',
       details: '',
       isCurrent: false,
-      submitter_id: _.sample(users).data.id,
-      reviewer_id: _.sample(users).data.id
+      submitterId: _.sample(users).data.id,
+      reviewerId: _.sample(users).data.id
     }
   },
 
@@ -174,8 +174,8 @@ var objects = [
       reviewComments: '',
       details: '',
       isCurrent: _.sample([false, true]),
-      submitter_id: _.sample(users).data.id,
-      reviewer_id: _.sample(users).data.id
+      submitterId: _.sample(users).data.id,
+      reviewerId: _.sample(users).data.id
     }
   },
 
@@ -194,8 +194,8 @@ var objects = [
       reviewComments: '',
       details: '',
       isCurrent: _.sample([false, true]),
-      submitter_id: _.sample(users).data.id,
-      reviewer_id: _.sample(users).data.id
+      submitterId: _.sample(users).data.id,
+      reviewerId: _.sample(users).data.id
     }
   },
 
@@ -214,8 +214,8 @@ var objects = [
       reviewComments: '',
       details: '',
       isCurrent: _.sample([false, true]),
-      submitter_id: _.sample(users).data.id,
-      reviewer_id: _.sample(users).data.id
+      submitterId: _.sample(users).data.id,
+      reviewerId: _.sample(users).data.id
     }
   },
 
@@ -234,8 +234,8 @@ var objects = [
       reviewComments: '',
       details: '',
       isCurrent: true,
-      submitter_id: _.sample(users).data.id,
-      reviewer_id: _.sample(users).data.id
+      submitterId: _.sample(users).data.id,
+      reviewerId: _.sample(users).data.id
     }
   },
 
@@ -254,8 +254,8 @@ var objects = [
       reviewComments: '',
       details: '',
       isCurrent: false,
-      submitter_id: _.sample(users).data.id,
-      reviewer_id: _.sample(users).data.id
+      submitterId: _.sample(users).data.id,
+      reviewerId: _.sample(users).data.id
     }
   },
 
@@ -275,8 +275,8 @@ var objects = [
       reviewComments: '',
       details: '',
       isCurrent: false,
-      submitter_id: _.sample(users).data.id,
-      reviewer_id: _.sample(users).data.id
+      submitterId: _.sample(users).data.id,
+      reviewerId: _.sample(users).data.id
     }
   }
 
