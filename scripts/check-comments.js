@@ -11,7 +11,7 @@ var disqus = new (require('disqus-node'))({
   https: true
 });
 
-var URL_REGEXP = RegExp("https?://[^/]+/census/submission/([0-9a-fA-F-]+)");
+var URL_REGEXP = RegExp("https?://[^/]+/submission/([0-9a-fA-F-]+)");
 
 var getSubmissionID = function(url) {
   var match = url.match(URL_REGEXP);

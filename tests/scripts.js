@@ -11,19 +11,19 @@ describe("check-comments", function()
     it('parses URLs and returns submission ids', function() {
 
       expect(checkComments.getSubmissionID(
-        'https://global.census.org/census/submission/1318931a-02cb-4208-9429-d943f9048b65'))
+        'https://global.census.org/submission/1318931a-02cb-4208-9429-d943f9048b65'))
         .to.equal('1318931a-02cb-4208-9429-d943f9048b65');
 
       expect(checkComments.getSubmissionID(
-        'http://demo.dev.census.org:5000/census/submission/3E47E9B8-FD85-41E9-B56C-DFAE12CBC95C'))
+        'http://global.next-census.okfn.org:80/submission/3E47E9B8-FD85-41E9-B56C-DFAE12CBC95C'))
         .to.equal('3E47E9B8-FD85-41E9-B56C-DFAE12CBC95C');
 
       expect(checkComments.getSubmissionID(
-        'https://global.census.org/census/submission/'))
+        'https://global.census.org/submission/'))
         .to.equal(null);
 
       expect(checkComments.getSubmissionID(
-        'https://global.census.org/submission/f53b5406-1bf0-41ca-a6a2-b3f4e4ec7d79'))
+        'https://global.census.org/f53b5406-1bf0-41ca-a6a2-b3f4e4ec7d79'))
         .to.equal(null);
 
     });
@@ -34,17 +34,17 @@ describe("check-comments", function()
       var posts = [
         {
           'thread': {
-            link: 'http://global.census.org/census/submission/3E47E9B8-FD85-41E9-B56C-DFAE12CBC95C'
+            link: 'http://global.census.org/submission/3E47E9B8-FD85-41E9-B56C-DFAE12CBC95C'
           }
         },
         {
           'thread': {
-            link: 'http://global.census.org/census/submission/a4344cdf-c389-49c0-b263-8a668f20ef48'
+            link: 'http://global.census.org/submission/a4344cdf-c389-49c0-b263-8a668f20ef48'
           }
         },
         {
           'thread': {
-            link: 'http://global.census.org/census/submission/a4344cdf-c389-49c0-b263-8a668f20ef48'
+            link: 'http://global.census.org/submission/a4344cdf-c389-49c0-b263-8a668f20ef48'
           }
         },
         {
