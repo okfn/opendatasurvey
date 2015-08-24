@@ -49,29 +49,34 @@ var maybeSendNewCommentNotification = function(entry, comment) {
 
   if (!_.eq(entry.Submitter.providers, {"okfn": "anonymous"})) {
 
-    models.Site.findOne({where: {id: entry.site}}).then(function(site) {
+    return models.Site.findOne({where: {id: entry.site}}).then(function(site) {
 
-        var message = email.prepareMessage(
-          'newcomment.md',
-          {
-            submitter: entry.Submitter,
-            comment: comment,
-            site: site
-          },
-          entry.Submitter.emails[0],
-          config.get('email_new_comment_subject'));
-        email.send(message);
-      });
+      var message = email.prepareMessage(
+        'newcomment.md',
+        {
+          submitter: entry.Submitter,
+          comment: comment,
+          site: site
+        },
+        entry.Submitter.emails[0],
+        config.get('email_new_comment_subject'));
 
-    }
+      email.send(message);
+      return true;
+    });
+
+  } else {
+    return Promise.resolve(false);
+  }
 };
 
 
 var checkComments = function() {
 
-  models.NotificationLog.findOne({where: {type: 'comments'}}).then(function(notification) {
+  models.NotificationLog.findOne({where: {type: 'comments'},
+                                  order: [['lastAt', 'DESC']]}).then(function(notification) {
     if (!notification) {
-      console.log("No comment entry.");
+      console.log("No notification comment entry.");
       return;
     }
 
@@ -80,11 +85,10 @@ var checkComments = function() {
     fetchPosts(notification.lastAt).then(function(posts) {
 
       var groupedPosts = groupPosts(posts),
-          submissionIDs = _.keys(groupedPosts);
+          submissionIDs = _.keys(groupedPosts),
+          sentStatuses = [];
 
-      if (submissionIDs.length === 0) {
-        console.log("No new comments.");
-      }
+      console.log((submissionIDs.length || "No") + " submissions with new comments");
 
       models.Entry.findAll({
         where: {id: {$in: submissionIDs}},
@@ -92,16 +96,25 @@ var checkComments = function() {
 
           Promise.each(entries, function(entry) {
 
-            maybeSendNewCommentNotification(entry, groupedPosts[entry.id][0]);
+            sentStatuses.push(
+              maybeSendNewCommentNotification(entry, groupedPosts[entry.id][0]));
 
           }).then(function() {
+            Promise.all(sentStatuses).then(function(sent) {
 
-            models.NotificationLog.create({type: "comments", lastAt: newLastAt})
-              .then(function(newNotification) {
-                console.log("Added a new notification log comment entry: " + newLastAt.toISOString());
-                models.sequelize.close();  // this makes the script exit instantly
-              });
+              if (_.any(sent)) {
 
+                models.NotificationLog.create({type: "comments", lastAt: newLastAt})
+                  .then(function(newNotification) {
+                    console.log("Added a new notification log comment entry: " + newLastAt.toISOString());
+                    models.sequelize.close();  // this makes the script exit instantly
+                  });
+
+              } else {
+                models.sequelize.close();
+              }
+
+            });
           });
 
         });
