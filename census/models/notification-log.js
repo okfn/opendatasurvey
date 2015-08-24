@@ -13,11 +13,10 @@ module.exports = function (sequelize, DataTypes) {
 
     type: {
       type: DataTypes.STRING,
-      unique: true,
       allowNull: false,
-      comment: 'Unique name for notification'
+      comment: 'Notification type name'
     },
-    
+
     lastAt: {
       type: DataTypes.DATE,
       allowNull: true,

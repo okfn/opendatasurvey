@@ -21,9 +21,8 @@ module.exports = {
 
       type: {
         type: Sequelize.STRING,
-        unique: true,
         allowNull: false,
-        comment: 'Unique name for notification'
+        comment: 'Notification type name'
       },
 
       lastAt: {
