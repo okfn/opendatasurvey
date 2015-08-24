@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+
 {% block title %}
 {{gettext("Recent Changes")}}
 {% endblock %}
@@ -10,8 +11,9 @@
     {{ gettext("A log of the most recent submission and entry activity.") }}
 </p>
 <ul class="change-list">
-  {% for item in entries %}
-
+  {% for item in items %}
+  {% set place = places|find({'id': item.place}) %}
+  {% set dataset = datasets|find({'id': item.dataset}) %}
   {% if item.isCurrent %}
     {% set itemClass = 'success'%}
     {% set itemHeading = gettext('Entry') %}
@@ -33,7 +35,7 @@
             <span class="label label-{{ itemClass }}">{{ itemText }}</span>
         </h5>
         <a href="{{ item.url }}">
-           <strong>{{ item.dataset.name }} – {{ item.place.name }}</strong>
+           <strong>{{ dataset.name }} – {{ place.name }}</strong>
         </a>
         <br />
         <span class="changelist-date">

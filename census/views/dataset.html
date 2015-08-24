@@ -9,7 +9,7 @@
 
 <h1>
   <a href="{{urlFor('overview')}}" data-toggle="tooltip" class="count-0"
-    title="Return to results overview">{{gettext("Datasets")}}</a> / {{ dataset.name }} / {{ year }}
+    title="Return to results overview">{{gettext("Datasets")}}</a> / {{ dataset.name }} {% if not cascade %}/ {{ year }}{% endif %}
 
     <span class="pull-right">
       {% include '_snippets/share_page_buttons.html' %}
@@ -26,7 +26,7 @@
 
 {% if dataset.description %}
   <h3>{{gettext("Dataset Description")}}</h3>
-  {{dataset.description|marked}}
+  {{dataset.description}}
 {% endif %}
 
 <table class="table table-striped">
@@ -50,24 +50,22 @@
     </tr>
   </thead>
   <tbody>
-    {% for currentEntry in currentEntries %}
-
-    {% set place = places|find({'id': currentEntry.place}) %}
-    {% set pending = pendingEntries|where({'place': currentEntry.place}) %}
-
+    {% for place in places %}
+    {% set entry = entries|find({'place': place.id, 'dataset': dataset.id}) %}
+    {% set submissions = pending|where({'place': place.id, 'dataset': dataset.id}) %}
     <tr>
       <td>
-        <a href="/place/{{place.id}}/{{ year }}">{{place.name}}</a>
+        <a href="/place/{{place.id}}{{ urlContext }}">{{place.name}}</a>
       </td>
-      {{ entrysummary(dataset, place, currentEntry, questions) }}
+      {{ entrysummary(dataset, place, entry, questions) }}
       <td>
 
         {% if submissionsAllowed %}
 
-        <a id="submit-{{ currentEntry.place }}" href="/census/submit/?dataset={{ dataset.id }}&place={{ place.id }}" class="btn btn-mini btn-primary">
+        <a id="submit-{{ entry.place }}" href="/submit/?dataset={{ dataset.id }}&place={{ place.id }}" class="btn btn-mini btn-primary">
           <!-- <i class="icon-plus"></i> -->
 
-          {% if currentEntry %}
+          {% if entry %}
             {{gettext("Propose Revisions")}}
           {% else %}
             {{gettext("Submit information")}}
@@ -84,32 +82,32 @@
       </td>
     </tr>
 
-    {% for pendingEntry in pending %}
+    {% for submission in submissions %}
     <tr class="queued">
       <td>
         <strong>{{gettext("&#8627; Awaiting review")}}</strong><br />
 
-        <span title="{{ gettext('Submitted by')}} {{ pendingEntry.Submitter.firstName}}" class="queued-context">
+        <span title="{{ gettext('Submitted by')}} {{ submission.Submitter.firstName}}" class="queued-context">
           <i class="icon icon-user"></i>&nbsp;
-          {{ pendingEntry.Submitter.firstName }}
+          {{ submission.Submitter.firstName }}
         </span>
         <br />
-        <span title="{{ gettext('Submitted on')}} {{ pendingEntry.createdAt|dateformat }}" class="queued-context">
+        <span title="{{ gettext('Submitted on')}} {{ submission.createdAt|dateformat }}" class="queued-context">
           <i class="icon icon-time"></i>&nbsp;
-          {{ pendingEntry.createdAt|simpledelta }}
+          {{ submission.createdAt|simpledelta }}
         </span>
       </td>
-      {{entrysummary(dataset, place, pendingEntry, questions)}}
+      {{entrysummary(dataset, place, submission, questions)}}
       <td>
-        <a href="/census/submission/{{pendingEntry.id}}" class="btn btn-mini btn-danger">
+        <a href="/submission/{{submission.id}}" class="btn btn-mini btn-danger">
           {{gettext("View Submission")}}
         </a>
         <script>
-          $("#submit-{{ currentEntry.place }}").addClass("disabled");
-          $("#submit-{{ currentEntry.place }}").attr("onclick", "return false");
-          $("#submit-{{ currentEntry.place }}").attr("href", "#");
-          $("#submit-{{ currentEntry.place }}").attr("data-toggle", "tooltip");
-          $("#submit-{{ currentEntry.place }}").attr("title", '{{gettext("Sorry, only one submission can be waiting for review at a time - please come back in a few days to submit new information")}}');
+          $("#submit-{{ entry.place }}").addClass("disabled");
+          $("#submit-{{ entry.place }}").attr("onclick", "return false");
+          $("#submit-{{ entry.place }}").attr("href", "#");
+          $("#submit-{{ entry.place }}").attr("data-toggle", "tooltip");
+          $("#submit-{{ entry.place }}").attr("title", '{{gettext("Sorry, only one submission can be waiting for review at a time - please come back in a few days to submit new information")}}');
         </script>
       </td>
     </tr>
@@ -126,6 +124,6 @@
         </div>
       </div>
 
-    <script src="{{page.root}}/src/common.js"></script>
-    <script src="{{page.root}}/src/census.js"></script>
+    <script src="{{page.root}}/src/common.js?v3"></script>
+    <script src="{{page.root}}/src/census.js?v1"></script>
 {% endblock %}

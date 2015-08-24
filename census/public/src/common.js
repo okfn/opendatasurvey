@@ -7,31 +7,19 @@ OpenDataCensus.colorScale = {
   })
 };
 
-OpenDataCensus.popoverBody = function(response) {
-  // bulk: "Yes"
-  // city: "London, Greater London, England, United Kingdom, European Union"
-  // dataset: "budget"
-  // date-available: "2010"
-  // details: "Whatever"
-  // digital: "Yes"
-  // exists: "Yes"
-  // machine-readable: "Yes"
-  // open-license: "Yes"
-  // public: "Yes"
-  // submitter: "Rufus"
-  // submitter-url: "http://rgrp.okfnlabs.org/"
-  // up-to-date: "Unsure"
-  // url: ""
+OpenDataCensus.popoverBody = function(answers, details, url, actionurl, actiontext, submissions, submissionslength, year, yearclass) {
+
   var makeNot = function(reply){
     var not;
-    if (reply === 'Y'){
+
+    if (reply === true){
       not = '';
-    } else if (reply === 'N'){
+    } else if (reply === false){
       not = 'not ';
     } else {
       not = 'unclear if it\'s ';
     }
-    return '<b>' + not + '</b>';
+    return not;
   };
 
   var truncate = function(s, l) {
@@ -47,46 +35,155 @@ OpenDataCensus.popoverBody = function(response) {
   };
 
   var out = [], not = '';
-  out.push('<ul>');
+  out.push('<ul class="availability icons large">');
 
-  // This should match the order of fields in the model!
-  if (response.exists === 'Y'){
-    out.push('<li>Data exists</li>');
-    not = makeNot(response['digital']);
-    out.push('<li>It\'s ' + not + 'digital</li>');
-    not = makeNot(response['public']);
-    out.push('<li>It\'s ' + not + 'publicly available</li>');
-    not = makeNot(response['free']);
-    out.push('<li>It\'s ' + not + 'free of charge</li>');
-    not = makeNot(response['online']);
-    out.push('<li>It\'s ' + not + 'online');
-    if (response['online'] !== 'N' && response.url) {
-      out.push(' (<a href="' + response.url + '" target="_blank">');
-      out.push(truncate(response.url, 30));
-      out.push('</a>)');
+  // These match the order of the bars in the table
+    
+   not = makeNot(answers.openlicense);
+    out.push('<li class="');
+    if (not === 'not ') {
+        out.push('no');
+    }
+    else if (not === 'unclear if it\'s ') {
+        out.push('maybe');
+    }
+    else {
+        out.push('yes');
+    }
+    out.push('" title="It\'s ' + not + 'openly licensed" data-toggle="tooltip"><i class="icon-unlock-alt"></i><span class="text">It\'s ' + not + 'openly licensed</span></li>');
+    
+    not = makeNot(answers.machinereadable);
+    out.push('<li class="');
+    if (not === 'not ') {
+        out.push('no');
+    }
+    else if (not === 'unclear if it\'s ') {
+        out.push('maybe');
+    }
+    else {
+        out.push('yes');
+    }
+    out.push('" title="It\'s ' + not + 'machine readable" data-toggle="tooltip"><i class="icon-keyboard"></i><span class="text">It\'s ' + not + 'machine readable</span></li>');
+    
+    not = makeNot(answers.free);
+    out.push('<li class="');
+    if (not === 'not ') {
+        out.push('no');
+    }
+    else if (not === 'unclear if it\'s ') {
+        out.push('maybe');
+    }
+    else {
+        out.push('yes');
+    }
+    out.push('" title="It\'s ' + not + 'free of charge" data-toggle="tooltip"><i class="icon-dollar"></i><span class="text">It\'s ' + not + 'free of charge</span></li>');
+    
+    not = makeNot(answers.bulk);
+    out.push('<li class="');
+    if (not === 'not ') {
+        out.push('no');
+    }
+    else if (not === 'unclear if it\'s ') {
+        out.push('maybe');
+    }
+    else {
+        out.push('yes');
+    }
+    out.push('" title="It\'s ' + not + ' available in bulk" data-toggle="tooltip"><i class="icon-copy"></i><span class="text">It\'s ' + not + ' available in bulk</span></li>');
+      
+    not = makeNot(answers.uptodate);
+    out.push('<li class="');
+    if (not === 'not ') {
+        out.push('no');
+    }
+    else if (not === 'unclear if it\'s ') {
+        out.push('maybe');
+    }
+    else {
+        out.push('yes');
+    }
+    out.push('" title="It\'s ' + not + 'up-to-date" data-toggle="tooltip"><i class="icon-time"></i><span class="text">It\'s ' + not + 'up-to-date</span></li>');
+    
+    not = makeNot(answers.online);
+    out.push('<li class="');
+    if (not === 'not ') {
+        out.push('no');
+    }
+    else if (not === 'unclear if it\'s ') {
+        out.push('maybe');
+    }
+    else {
+        out.push('yes');
+    }
+    out.push('" title="It\'s ' + not + 'online" data-toggle="tooltip">');
+    if (answers.online !== false && answers.url) {
+      out.push('<a href="' + answers.url + '" target="_blank">');
+    }
+    out.push('<i class="icon-download"></i><span class="text">It\'s ' + not + 'online</span></li>'); 
+    if (answers.online !== false && answers.url) {
+      out.push('</a>');
     }
     out.push('</li>');
-    not = makeNot(response['machinereadable']);
-    out.push('<li>It\'s ' + not + 'machine readable</li>');
-    not = makeNot(response['bulk']);
-    out.push('<li>It\'s ' + not + ' available in bulk</li>');
-    not = makeNot(response['openlicense']);
-    out.push('<li>It\'s ' + not + 'openly licensed</li>');
-    not = makeNot(response['uptodate']);
-    out.push('<li>It\'s ' + not + 'up-to-date</li>');
+    
+    not = makeNot(answers.digital);
+    out.push('<li class="');
+    if (not === 'not ') {
+        out.push('no');
+    }
+    else if (not === 'unclear if it\'s ') {
+        out.push('maybe');
+    }
+    else {
+        out.push('yes');
+    }
+    out.push('" title="It\'s ' + not + 'digital" data-toggle="tooltip"><i class="icon-save"></i><span class="text">It\'s ' + not + 'digital</span></li>');     
+    
+    not = makeNot(answers.exists );
+    out.push('<li class="');
+    if (not === 'not ') {
+        out.push('no');
+    }
+    else if (not === 'unclear if it\'s ') {
+        out.push('maybe');
+    }
+    else {
+        out.push('yes');
+    }
+    out.push('" title="Data exists" data-toggle="tooltip"><i class="icon-file-alt"></i><span class="text">Data exists</span></li>');
+      
+    not = makeNot(answers.public);
+    out.push('<li class="');
+    if (not === 'not ') {
+        out.push('no');
+    }
+    else if (not === 'unclear if it\'s ') {
+        out.push('maybe');
+    }
+    else {
+        out.push('yes');
+    }
+    out.push('" title="It\'s ' + not + 'publicly available" data-toggle="tooltip"><i class="icon-eye-open"></i><span class="text">It\'s ' + not + 'publicly available</span></li>');
 
-  } else {
-    out.push('<li>Data does not exist</li>');
-  }
   out.push('</ul>');
-  if (response.details) {
-    out.push('<p>' + truncate(response.details, 300));
-    out.push(' <a href="' + response.details_url + '">Read more &raquo;</a>');
-    out.push('</p>');
+  
+  if (year) {
+    out.push('<p>Last updated <span class="entry-year label ' + yearclass + '">' + year + '</span></p>');
+  }
+  if (submissions) {
+    out.push('<div class="btn-group">');
+    if (answers) {
+      out.push('<a class="btn btn-primary" href="' + url + '">View</a>');
+    }
+    if (submissionslength) {
+      out.push('<a class="btn btn-warning" href="' + actionurl + '">' + actiontext + ' (' + submissionslength + ')</a>');
+    } else {
+      out.push('<a class="btn btn-success" href="' + actionurl + '">' + actiontext +'</a>');
+    }
+    out.push('</div>');
   } else {
-    out.push('<p>');
-    out.push('<a href="' + response.details_url + '">View details &raquo;</a>');
-    out.push('</p>');
+    if (answers) {
+      out.push('<a class="btn btn-primary" href="' + url + '">View</a>');
+    }
   }
   return out.join('');
 };

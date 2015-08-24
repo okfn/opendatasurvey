@@ -25,13 +25,13 @@ var objects = [
     data: {
       id: uuid.v4(),
       site: 'site1',
-      year: 2015,
-      place: _.sample(bySite(places, 'site1')).data.id,
-      dataset: _.sample(bySite(datasets, 'site1')).data.id,
+      year: 2014,
+      place: 'place12',
+      dataset: 'dataset11',
       answers: answers(),
       submissionNotes: '',
       reviewed: true,
-      reviewResult: false,
+      reviewResult: true,
       reviewComments: '',
       details: 'This is site1 entry',
       isCurrent: true, // Need to be sure that at least one current Entry exists for proper testing
@@ -46,8 +46,28 @@ var objects = [
       id: uuid.v4(),
       site: 'site1',
       year: 2015,
-      place: _.sample(bySite(places, 'site1')).data.id,
-      dataset: _.sample(bySite(datasets, 'site1')).data.id,
+      place: 'place11',
+      dataset: 'dataset11',
+      answers: answers(),
+      submissionNotes: '',
+      reviewed: true,
+      reviewResult: true,
+      reviewComments: '',
+      details: 'This is site1 entry',
+      isCurrent: true, // Need to be sure that at least one current Entry exists for proper testing
+      submitter_id: _.sample(users).data.id,
+      reviewer_id: _.sample(users).data.id
+    }
+  },
+
+  {
+    model: 'Entry',
+    data: {
+      id: uuid.v4(),
+      site: 'site1',
+      year: 2015,
+      place: 'place12',
+      dataset: 'dataset11',
       answers: answers(),
       submissionNotes: '',
       reviewed: true,
@@ -59,67 +79,86 @@ var objects = [
       reviewer_id: _.sample(users).data.id
     }
   },
-  
+
   {
     model: 'Entry',
     data: {
       id: uuid.v4(),
       site: 'site1',
       year: 2015,
-      place: _.sample(bySite(places, 'site1')).data.id,
-      dataset: _.sample(bySite(datasets, 'site1')).data.id,
+      place: 'place11',
+      dataset: 'dataset12',
       answers: answers(),
       submissionNotes: '',
       reviewed: true,
-      reviewResult: false,
+      reviewResult: true,
       reviewComments: '',
       details: '',
-      isCurrent: _.sample([false, true]),
+      isCurrent: true,
       submitter_id: _.sample(users).data.id,
       reviewer_id: _.sample(users).data.id
     }
   },
-  
   {
     model: 'Entry',
     data: {
       id: uuid.v4(),
       site: 'site1',
       year: 2015,
-      place: _.sample(bySite(places, 'site1')).data.id,
-      dataset: _.sample(bySite(datasets, 'site1')).data.id,
+      place: 'place11',
+      dataset: 'dataset12',
       answers: answers(),
       submissionNotes: '',
-      reviewed: true,
+      reviewed: false,
       reviewResult: false,
       reviewComments: '',
       details: '',
-      isCurrent: _.sample([false, true]),
+      isCurrent: false,
       submitter_id: _.sample(users).data.id,
       reviewer_id: _.sample(users).data.id
     }
   },
-  
+
   {
     model: 'Entry',
     data: {
       id: uuid.v4(),
       site: 'site1',
       year: 2015,
-      place: _.sample(bySite(places, 'site1')).data.id,
-      dataset: _.sample(bySite(datasets, 'site1')).data.id,
+      place: 'place12',
+      dataset: 'dataset12',
       answers: answers(),
       submissionNotes: '',
-      reviewed: true,
+      reviewed: false,
       reviewResult: false,
       reviewComments: '',
       details: '',
-      isCurrent: _.sample([false, true]),
+      isCurrent: false,
       submitter_id: _.sample(users).data.id,
       reviewer_id: _.sample(users).data.id
     }
   },
-  
+
+  {
+    model: 'Entry',
+    data: {
+      id: uuid.v4(),
+      site: 'site1',
+      year: 2015,
+      place: 'place11',
+      dataset: 'dataset11',
+      answers: answers(),
+      submissionNotes: '',
+      reviewed: false,
+      reviewResult: false,
+      reviewComments: '',
+      details: '',
+      isCurrent: false,
+      submitter_id: _.sample(users).data.id,
+      reviewer_id: _.sample(users).data.id
+    }
+  },
+
   {
     model: 'Entry',
     data: {
@@ -139,7 +178,7 @@ var objects = [
       reviewer_id: _.sample(users).data.id
     }
   },
-  
+
   {
     model: 'Entry',
     data: {
@@ -159,7 +198,7 @@ var objects = [
       reviewer_id: _.sample(users).data.id
     }
   },
-  
+
   {
     model: 'Entry',
     data: {
@@ -179,7 +218,7 @@ var objects = [
       reviewer_id: _.sample(users).data.id
     }
   },
-  
+
   {
     model: 'Entry',
     data: {
@@ -199,7 +238,7 @@ var objects = [
       reviewer_id: _.sample(users).data.id
     }
   },
-  
+
   {
     model: 'Entry',
     data: {
@@ -219,7 +258,7 @@ var objects = [
       reviewer_id: _.sample(users).data.id
     }
   },
-  
+
   // A set of entries for pair of place-dataset which all have isCurrent === false
   {
     model: 'Entry',

@@ -36,11 +36,6 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: true
     },
-    anonymous: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    },
     authenticationHash: {
       type: DataTypes.STRING
     },
@@ -57,6 +52,9 @@ module.exports = function (sequelize, DataTypes) {
         this.authenticationSalt = salt;
       },
       fullName: function() {
+        if (this.firstName === this.lastName) {
+          return 'F'.replace('F', this.firstName || '');
+        }
         return 'F L'.replace('F', this.firstName || '').replace('L', this.lastName || '');
       },
       isAnonymous: function() {

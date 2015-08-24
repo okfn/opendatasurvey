@@ -41,8 +41,17 @@
     </ul>
   </td>
     <td>
-    {% if entry %}
-      <div class="badge" title="{{ entry.year }}">{{entry.year}}</div>
+      {% if entry %}
+
+      {% if entry.year == currentYear %}
+        {% set badgeClass = 'label-success' %}
+      {% elif entry.year == (currentYear - 1) %}
+        {% set badgeClass = 'label-warning' %}
+      {% else %}
+        {% set badgeClass = 'label-important'%}
+      {% endif %}
+
+      <div class="entry-year label {{ badgeClass}}" title="{{ entry.updatedAt|dateformat }} ({{ gettext("Submitted by") }} {{ entry.Submitter.fullName() }} {{ gettext("and reviewed by") }} {{ entry.Submitter.fullName() }})">{{entry.year}}</div>
     {% endif %}
     </td>
     {% if entry and entry.answers.url %}

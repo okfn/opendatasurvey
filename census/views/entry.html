@@ -8,8 +8,8 @@
 <div class="page-header">
 
   <h1>
-    <a href="/place/{{place.id}}/{{ year }}" data-toggle="tooltip" class="count-0" title="Go to place overview">{{place.name}}</a> / <a href="/dataset/{{dataset.id}}/{{ year }}" data-toggle="tooltip" class="count-0" title="{{gettext("Return to dataset overview")}}">{{dataset.name}}
-    </a> / <a href="/year/{{ year }}">{{ year }}</a>
+    <a href="/place/{{place.id}}{{ urlContext }}" data-toggle="tooltip" class="count-0" title="Go to place overview">{{place.name}}</a> / <a href="/dataset/{{dataset.id}}{{ urlContext }}" data-toggle="tooltip" class="count-0" title="{{gettext("Return to dataset overview")}}">{{dataset.name}}
+    </a> / <a href="{% if urlContext %}/year{{ urlContext }}{% else %}/{% endif %}">{{ entry.year }}</a>
 
     <span class="pull-right">
       {% include '_snippets/share_page_buttons.html' %}
@@ -19,7 +19,7 @@
 
 </div>
 
-<p>{{dataset.description|marked}}</p>
+<p>{{dataset.description}}</p>
 
 <h3>{{gettext("Data Location")}}</h3>
 <a href="{{entry.answers.url}}">{{entry.answers.url}}</a>
@@ -63,7 +63,7 @@
       </span>
 
       <a href="javascript:;" data-toggle="popover"
-         data-content="{{ qu.description|marked| replace ('\"', '\'') }}"
+         data-content="{{ qu.description|replace ('\"', '\'') }}"
          data-placement="top" data-html="true">
          <i class="icon-info-sign"></i>
       </a>
@@ -80,11 +80,11 @@
 <table class="table table-striped yntable">
   <tr><td>{{gettext("Date the data became available")}}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.answers.dateavailable %}{{ entry.answers.dateavailable }}{% else %}{{gettext("Unknown")}}{% endif %}</td></tr>
   <tr><td>{{gettext("Format of data")}}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.answers.format %}{{ entry.answers.format }}{% else %}{{gettext("Unknown")}}{% endif %}</td></tr>
-  <tr><td>{{gettext("Reviewer")}}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.Reviewer %}{% if entry.Reviewer.isAnonymous() %}{{ entry.Reviewer.firstName|title }}{% else %}{{entry.Reviewer.fullName()}}{% endif %}{% endif %}</td></tr>
-  <tr><td>{{gettext("Submitters")}}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.Submitter %}{% if entry.Submitter.isAnonymous() %}{{ entry.Submitter.firstName|title }}{% else %}{{entry.Submitter.fullName()}}{% endif %}{% endif %}</td></tr>
+  <tr><td>{{gettext("Reviewer")}}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.Reviewer %}{{entry.Reviewer.fullName()}}{% endif %}</td></tr>
+  <tr><td>{{gettext("Submitters")}}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.Submitter %}{{entry.Submitter.fullName()}}{% endif %}</td></tr>
   <tr><td>{{gettext("Last modified")}}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.createdAt %}{{ entry.createdAt }}{% else %}{{gettext("Unknown")}}{% endif %}</td></tr>
 </table>
 
-<script src="{{page.root}}/src/common.js"></script>
+<script src="{{page.root}}/src/common.js?v3"></script>
 
 {% endblock %}

@@ -1,9 +1,12 @@
 'use strict';
 
 var _ = require('lodash');
+var utils = require('./utils');
 
 
 var requireDomain = function(req, res, next) {
+
+  res.locals.domain = req.params.domain;
 
   if (!req.params.domain) {
 
@@ -29,18 +32,8 @@ var requireDomain = function(req, res, next) {
           res.status(404).send({status: 'error', message: 'There is no matching census in the registry.'});
           return;
         } else {
-
           req.session.activeSite = req.params.domain;
-
-          req.params.siteAdmin = _.each(result.settings.adminemail.split(','), function(e, i, l) {
-            var pattern = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm,
-                admin = e.trim(),
-                match = admin.match(pattern);
-
-            l[i] = match[0];
-            return;
-          });
-
+          req.params.siteAdmin = result.settings.adminemail;
           req.params.flags = {'characteristics': false, 'comments': false};
           if (result.settings.flags) {
             _.each(result.settings.flags.split(','), function(e, i, l) {
@@ -121,23 +114,27 @@ var requireAdmin = function (req, res, next) {
 };
 
 var requireAvailableYear = function (req, res, next) {
-
-  if (typeof(req.params.year) === 'undefined') {
+  /**
+   * Set year as a request param. If one is passed explicitly, try to use it.
+   * If one is not passed, set to current year, and set cascade to true.
+   */
+  if (typeof req.params.year === 'undefined') {
     req.params.year = req.app.get('year');
+    res.locals.year = req.params.year;
+    req.params.cascade = true;
+    res.locals.cascade = req.params.cascade;
   } else {
-
     req.params.year = parseInt(req.params.year, 10);
-
+    res.locals.year = req.params.year;
+    req.params.cascade = false;
+    res.locals.cascade = req.params.cascade;
     if (_.indexOf(req.app.get('years'), req.params.year) === -1) {
       res.status(404).send({status: 'not found', message: 'not found here'});
       return;
     }
-
   }
-
   next();
   return;
-
 };
 
 
@@ -171,28 +168,15 @@ var requireSystemDomain = function(req, res, next) {
 };
 
 
-var requireSystemDomain = function(req, res, next) {
-
-  if (req.params.domain !== req.app.get('systemDomain')) {
-    res.status(404).render('404.html', {
-      title: 'Not found',
-      message: 'SYSTEM ROUTE ONLY'
-    });
-    return;
-  }
-
-  next();
-  return;
-};
-
-
 var requireSiteDomain = function(req, res, next) {
 
   if (req.params.domain === req.app.get('authDomain') ||
       req.params.domain === req.app.get('systemDomain')) {
 
-    res.send('This route does not exist on this domain.');
-    return;
+  req.app.get('models').Registry.findAll()
+    .then(function(result) {
+      return res.render('wayfinder.html', {registry: result});
+    });
 
   }
 

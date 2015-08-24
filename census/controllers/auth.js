@@ -5,7 +5,7 @@ var login = function (req, res) {
 
   req.session.nextUrl = req.app.get('urlTmpl')
       .replace('SCHEME', req.app.get('config').get('connection_scheme'))
-      .replace('SUB', req.session.activeSite)
+      .replace('SUB', req.session.activeSite || res.locals.systemDomain)
       .replace('DOMAIN', req.app.get('config').get('base_domain'))
       .replace('PATH', req.query.next || '');
 

@@ -3,128 +3,47 @@
 var _ = require('lodash');
 var config = require('../config');
 var uuid = require('node-uuid');
-var routeUtils = require('../routes/utils');
+var utils = require('./utils');
 var modelUtils = require('../models').utils;
-var anonymousUserId = '0e7c393e-71dd-4368-93a9-fcfff59f9fff';
 
 
-var _normalizedAnswers = function(answers) {
+var submitGetHandler = function(req, res, data) {
 
-  var normed = {};
-
-  _.each(answers, function(v, k) {
-
-    if (v === 'true') {
-      normed[k] = true;
-    } else if (v === 'false') {
-      normed[k] = false;
-    } else if (v === 'null') {
-      normed[k] = null;
-    } else {
-      normed[k] = v;
-    }
-  });
-
-  return normed;
-};
-
-
-var _getFormQuestions = function(req, questions) {
-
-  // resolve question dependants, and filter dependants out of top-level list
-  questions = modelUtils.translateSet(req, questions);
-  _.each(questions, function(q) {
-    if (q.dependants) {
-      _.each(q.dependants, function(d, i, l) {
-        l[i] = _.find(questions, function(_q) {
-          if (_q.id === d) {
-            questions = _.reject(questions, function(__q) {return __q.id === _q.id;});
-            return true;
-          }
-          return false;
-        });
-      });
-    }
-  });
-
-  // need to sort by order for the form
-  questions = _.sortBy(questions, function(q) {return q.order;});
-
-  return questions;
-
-};
-
-
-var _getCurrentState = function(entries, req) {
-
-  var match = _.merge(req.query, req.body),
-      candidates,
-      candidate,
-      latest,
-      pending;
-
-  if (!match.place || !match.dataset) {
-    match = {};
-  } else {
-    candidates = _.filter(entries, function(e) {return e.place === match.place && e.dataset === match.dataset;});
-    if (candidates) {
-      latest = _.first(candidates);
-      candidate = _.find(candidates, function(c) {return c.isCurrent;}) || latest;
-      if (candidate) {
-        match = candidate;
-      }
-      if (match && latest && match.id && (match.id !== latest.id)) {
-        pending = true;
-      }
-    }
-  }
-
-  return {
-    match: match,
-    pending: pending
-  };
-
-};
-
-
-var _submitGetHandler = function(req, res, currentState, questions, places, datasets) {
-
-  var addDetails = _.find(questions, function(q) {return q.id === 'details';}),
-      current = currentState.match;
+  var addDetails = _.find(data.questions, function(q) { return q.id === 'details'; }),
+      current = data.currentState.match;
 
   res.render('create.html', {
     canReview: true, // flag always on for submission
     submitInstructions: req.params.site.settings.submit_page,
-    places: modelUtils.translateSet(req, places),
+    places: modelUtils.translateSet(req, data.places),
     current: current,
-    datasets: modelUtils.translateSet(req, datasets),
-    questions: questions,
+    datasets: modelUtils.translateSet(req, data.datasets),
+    questions: data.questions,
     addDetails: addDetails,
     year: req.app.get('year')
   });
   return;
-
 };
 
 
-var _submitPostHandler = function(req, res, currentState, questions, places, datasets, anonymousUser) {
+var submitPostHandler = function(req, res, data) {
 
   var errors,
       objToSave = {},
       answers,
       saveStrategy,
       anonymous = true,
-      submitterId = anonymousUserId,
+      submitterId = utils.ANONYMOUS_USER_ID,
       query,
       approveFirstSubmission,
-      current = currentState.match,
-      pending = currentState.pending;
+      current = data.currentState.match,
+      pending = data.currentState.pending;
 
   if (req.params.site.settings.approve_first_submission) {
     approveFirstSubmission = req.params.site.settings.approve_first_submission;
   }
 
-  errors = routeUtils.validateSubmitForm(req);
+  errors = utils.validateData(req);
 
   if (pending) {
     if (!Array.isArray(errors)) {
@@ -139,15 +58,15 @@ var _submitPostHandler = function(req, res, currentState, questions, places, dat
 
   if (errors) {
 
-    var addDetails = _.find(questions, function(q) {return q.id === 'details';});
+    var addDetails = _.find(data.questions, function(q) { return q.id === 'details'; });
 
     res.statusCode = 400;
     res.render('create.html', {
       canReview: true, // flag always on for submission
       submitInstructions: req.params.site.settings.submit_page,
-      places: modelUtils.translateSet(req, places),
-      datasets: modelUtils.translateSet(req, datasets),
-      questions: questions,
+      places: modelUtils.translateSet(req, data.places),
+      datasets: modelUtils.translateSet(req, data.datasets),
+      questions: data.questions,
       addDetails: addDetails,
       year: req.app.get('year'),
       current: current,
@@ -176,6 +95,9 @@ var _submitPostHandler = function(req, res, currentState, questions, places, dat
 
       if (approveFirstSubmission) {
         objToSave.isCurrent = true;
+        objToSave.reviewed = true;
+        objToSave.reviewResult = true;
+        objToSave.reviewerId = submitterId;
       } else {
         objToSave.isCurrent = false;
       }
@@ -214,7 +136,7 @@ var _submitPostHandler = function(req, res, currentState, questions, places, dat
     delete answers.year;
     delete answers.details;
     delete answers.anonymous;
-    objToSave.answers = _normalizedAnswers(answers);
+    objToSave.answers = utils.normalizedAnswers(answers);
 
     if (saveStrategy === 'create') {
       query = req.app.get('models').Entry.create(objToSave);
@@ -226,9 +148,9 @@ var _submitPostHandler = function(req, res, currentState, questions, places, dat
       .then(function(result) {
 
         var msg,
-            msg_tmpl,
-            redirect_path,
-            submission_path;
+            msgTmpl,
+            redirectPath,
+            submissionPath;
 
         if (!result) {
 
@@ -237,19 +159,19 @@ var _submitPostHandler = function(req, res, currentState, questions, places, dat
 
         } else {
 
-          msg_tmpl = 'Thanks for your submission.REVIEWED You can check back here any time to see the current status.';
+          msgTmpl = 'Thanks for your submission.REVIEWED You can check back here any time to see the current status.';
 
           if (!result.isCurrent) {
 
-            msg = msg_tmpl.replace('REVIEWED', ' It will now be reviewed by the editors.');
-            submission_path = '/census/submission/' + result.id;
-            redirect_path = submission_path;
+            msg = msgTmpl.replace('REVIEWED', ' It will now be reviewed by the editors.');
+            submissionPath = '/submission/' + result.id;
+            redirectPath = submissionPath;
 
           } else {
 
-            msg = msg_tmpl.replace('REVIEWED', '');
-            submission_path = '/census/submission/' + result.id;
-            redirect_path = '/place/' + result.place;
+            msg = msgTmpl.replace('REVIEWED', '');
+            submissionPath = '/submission/' + result.id;
+            redirectPath = '/place/' + result.place;
 
           }
 
@@ -257,130 +179,84 @@ var _submitPostHandler = function(req, res, currentState, questions, places, dat
 
         }
 
-        res.redirect(redirect_path + '?post_submission=' + submission_path);
+        res.redirect(redirectPath + '?post_submission=' + submissionPath);
         return;
 
       }).catch(console.log.bind(console));
-
   }
-
 };
 
 
 var pendingEntry = function (req, res) {
 
-  var placeQueryParams,
-      datasetQueryParams,
+  var dataOptions,
       entryQueryParams = {where: {id: req.params.id},
                           include: [{model: req.app.get('models').User, as: 'Submitter'},
                                     {model: req.app.get('models').User, as: 'Reviewer'}]};
 
   req.app.get('models').Entry.findOne(entryQueryParams)
     .then(function(result) {
-
       if (!result) {
         res.status(404).send('There is no submission with id ' + req.params.id);
         return;
       }
-
-      placeQueryParams = _.merge(modelUtils.siteQuery(req), {where: {id: result.place}});
-      datasetQueryParams = _.merge(modelUtils.siteQuery(req), {where: {id: result.dataset}});
-
-      modelUtils.loadModels({
-
-        dataset: req.app.get('models').Dataset.findOne(datasetQueryParams),
-        place: req.app.get('models').Place.findOne(placeQueryParams),
-        questions: req.app.get('models').Question.findAll(modelUtils.siteQuery(req))
-
-      }).then(function(D) {
-
-        var reviewers = [],
-            canReview = false;
-
-        if (req.user) {
-
-          if (req.params.site.settings.reviewers) {
-            reviewers = reviewers.concat(req.params.site.settings.reviewers);
-          }
-
-          if (D.place.reviewers) {
-            reviewers = reviewers.concat(D.place.reviewers);
-          }
-
-          if (D.dataset.reviewers) {
-            reviewers = reviewers.concat(D.dataset.reviewers);
-          }
-
-          canReview = (_.intersection(reviewers, req.user.emails).length >= 1);
-
-        }
-
-        res.render('review.html', {
-          canReview: canReview,
-          reviewClosed: result.reviewResult || (result.year !== req.app.get('year')),
-          reviewInstructions: config.get('review_page'),
-          questions: _getFormQuestions(req, D.questions),
-          current: result,
-          dataset: D.dataset.translated(req.locale),
-          place: D.place.translated(req.locale)
-        });
-      }).catch(console.log.bind(console));
-
+      dataOptions = _.merge(modelUtils.getDataOptions(req),
+                            {place: result.place, dataset: result.dataset,
+                             ynQuestions: false, with: {Entry: false}});
+      modelUtils.getData(dataOptions)
+        .then(function(data) {
+          data.current = result;
+          data.reviewers = utils.getReviewers(req, data);
+          data.canReview = utils.canReview(data.reviewers, req.user);
+          data.disqus_shortname = config.get('disqus_shortname');
+          data.reviewClosed = result.reviewResult || (result.year !== req.app.get('year'));
+          data.reviewInstructions = config.get('review_page');
+          data.questions = utils.getFormQuestions(req, data.questions);
+          res.render('review.html', data);
+        }).catch(console.log.bind(console));
     });
 };
 
 
 var submit = function (req, res) {
-
-  var currentState,
-      questions,
-      entryQueryParams = _.merge(modelUtils.siteQuery(req), {order: '"updatedAt" DESC'});
-
-  if (req.query.place && req.query.dataset) {
-    entryQueryParams = _.merge(entryQueryParams, {where: {place: req.query.place, dataset: req.query.dataset}});
-  }
-
-  modelUtils.loadModels({
-
-    datasets: req.app.get('models').Dataset.findAll(modelUtils.siteQuery(req)),
-    places: req.app.get('models').Place.findAll(modelUtils.siteQuery(req)),
-    questions: req.app.get('models').Question.findAll(modelUtils.siteQuery(req)),
-    entries: req.app.get('models').Entry.findAll(entryQueryParams)
-
-  }).then(function(D) {
-
-    questions = _getFormQuestions(req, D.questions);
-    currentState = _getCurrentState(D.entries, req);
-
-    if (req.method === 'POST') {
-      _submitPostHandler(req, res, currentState, questions, D.places, D.datasets);
-    } else {
-      _submitGetHandler(req, res, currentState, questions, D.places, D.datasets);
-    }
-
-  }).catch(console.log.bind(console));
+  var dataOptions = _.merge(modelUtils.getDataOptions(req), {ynQuestions: false});
+  modelUtils.getData(dataOptions)
+    .then(function(data) {
+      data.questions = utils.getFormQuestions(req, data.questions);
+      data.currentState = utils.getCurrentState(data, req);
+      if (req.method === 'POST') {
+        submitPostHandler(req, res, data);
+      } else {
+        submitGetHandler(req, res, data);
+      }
+    }).catch(console.log.bind(console));
 };
 
 
 var reviewPost = function (req, res) {
 
-  var  acceptSubmission = req.body['submit'] === 'Publish',
+  var  acceptSubmission = req.body.submit === 'Publish',
       answers;
 
   req.app.get('models').Entry.findById(req.params.id).then(function(result){
-
     if (!result) {
       res.send(400, 'There is no matching entry.');
       return;
     }
 
-    req.app.get('models').Entry.findAll(
-      _.merge(modelUtils.siteQuery(req, true),
-              {where: {place: result.place, dataset:
-                       result.dataset, isCurrent: true}}))
-      .then(function(exes) {
-        var ex = _.find(_.sortByOrder(exes, 'year', 'desc'));
+    var dataOptions = _.merge(modelUtils.getDataOptions(req),
+                              {place: result.place, dataset: result.dataset,
+                               cascade: true, with: {Question: false}});
+    modelUtils.getData(dataOptions)
+      .then(function(data) {
 
+        data.reviewers = utils.getReviewers(req, data);
+        if (!utils.canReview(data.reviewers, req.user)) {
+          res.status(403).send('You are not allowed to review this entry');
+          return;
+        }
+
+        var ex = _.first(data.entries);
         result.reviewerId = req.user.id;
         result.reviewed = true;
         result.reviewComments = req.body.reviewcomments;
@@ -394,7 +270,7 @@ var reviewPost = function (req, res) {
         delete answers.reviewcomments;
         delete answers.submit;
         delete answers.details;
-        result.answers = _normalizedAnswers(answers);
+        result.answers = utils.normalizedAnswers(answers);
 
         if (acceptSubmission) {
           result.isCurrent = true;
@@ -412,12 +288,12 @@ var reviewPost = function (req, res) {
             }
 
             ex.save().then(function() {
-
+              var msg;
               if (acceptSubmission) {
-                var msg = "Submission processed and entered into the census.";
+                msg = "Submission processed and entered into the census.";
                 req.flash('info', msg);
               } else {
-                var msg = "Submission marked as rejected.";
+                msg = "Submission marked as rejected.";
                 req.flash('info', msg);
               }
               res.redirect('/');
@@ -426,25 +302,21 @@ var reviewPost = function (req, res) {
             }).catch(console.log.bind(console));
 
           } else {
-
+            var msg;
             if (acceptSubmission) {
-              var msg = "Submission processed and entered into the census.";
+              msg = "Submission processed and entered into the census.";
               req.flash('info', msg);
             } else {
-              var msg = "Submission marked as rejected.";
+              msg = "Submission marked as rejected.";
               req.flash('info', msg);
             }
             res.redirect('/');
             return;
-
           }
 
         }).catch(console.log.bind(console));
-
       }).catch(console.log.bind(console));
-
   }).catch(console.log.bind(console));
-
 };
 
 

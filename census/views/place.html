@@ -10,7 +10,7 @@
 <h1>
   {% if overview %}<a href="{{urlFor('overview')}}" data-toggle="tooltip" class="count-0"
     title="Return to results overview">{{gettext("Places")}}</a>
-  / {% endif %}{{ place.name }} / {{ year }}
+  / {% endif %}{{ place.name }} {% if not cascade %}/ {{ year }}{% endif %}
 
   <span class="pull-right">
     {% include '_snippets/share_page_buttons.html' %}
@@ -39,7 +39,7 @@
               <th>{{gettext("Dataset")}}</th>
               <th>{{gettext("Score")}}</th>
               <th>{{gettext("Breakdown")}}</th>
-              <th>{{ gettext('Year') }}</th>
+              <th>{{ gettext("Last Updated") }}</th>
               <th>{{gettext("Location (URL)")}}</th>
               <th>{{gettext("Information")}}</th>
               <th></th>
@@ -47,15 +47,13 @@
           </thead>
           <tbody>
             {% for dataset in datasets %}
-
-            {% set currentEntry = entries|find({'dataset': dataset.id, 'isCurrent': true}) %}
-            {% set pendingEntries = entries|where({'dataset': dataset.id, 'isCurrent': false, 'reviewed': false}) %}
-
+            {% set entry = entries|find({'dataset': dataset.id}) %}
+            {% set submissions = pending|where({'dataset': dataset.id, 'place': place.id, 'year': year}) %}
             <tr>
               <td>
-                {% if currentEntry %}<a href="/entry/{{place.id}}/{{dataset.id}}/{{ year }}">{% endif %}
+                {% if entry %}<a href="/entry/{{place.id}}/{{dataset.id}}{{ urlContext }}">{% endif %}
                   {{ dataset.name }}
-                {% if currentEntry %}</a>{% endif %}
+                {% if entry %}</a>{% endif %}
                 &nbsp;
                 <a href="javascript:;"
                   data-toggle="popover"
@@ -63,17 +61,17 @@
                   data-content="{{ dataset.description }}"
                   title="{{ dataset.title }}"><i class="icon-info-sign"></i></a>
               </td>
-              {{entrysummary(dataset, place, currentEntry, questions)}}
+              {{entrysummary(dataset, place, entry, questions)}}
 
               <td>
                 {% if submissionsAllowed %}
 
-                {% if currentEntry %}
-                <a id="submit-{{ dataset.id }}" href="/census/submit/?dataset={{ dataset.id }}&place={{ place.id }}" class="btn btn-mini btn-primary">
+                {% if entry %}
+                <a id="submit-{{ dataset.id }}" href="/submit/?dataset={{ dataset.id }}&place={{ place.id }}" class="btn btn-mini btn-primary">
                   <!-- <i class="icon-plus"></i> -->{{gettext("Propose Revisions")}}
                 </a>
               {% else %}
-                <a id="submit-{{ dataset.id }}" href="/census/submit/?dataset={{ dataset.id }}&place={{ place.id }}" class="btn btn-mini btn-primary">
+                <a id="submit-{{ dataset.id }}" href="/submit/?dataset={{ dataset.id }}&place={{ place.id }}" class="btn btn-mini btn-primary">
                   <!-- <i class="icon-plus"></i> -->{{gettext("Submit information")}}
                 </a>
                 {% endif %}
@@ -84,24 +82,24 @@
               </td>
 
             </tr>
-            {% for pendingEntry in pendingEntries %}
+            {% for submission in submissions %}
             <tr class="queued">
               <td>
                 <strong>{{gettext("&#8627; Awaiting review")}}</strong><br />
 
-                <span title="{{ gettext('Submitted by')}} {{ pendingEntry.Submitter.firstName}}" class="queued-context">
+                <span title="{{ gettext('Submitted by')}} {{ submission.Submitter.firstName}}" class="queued-context">
                   <i class="icon icon-user"></i>&nbsp;
-                  {{ pendingEntry.Submitter.firstName }}
+                  {{ submission.Submitter.firstName }}
                 </span>
                 <br />
-                <span title="{{ gettext('Submitted on')}} {{ pendingEntry.createdAt|dateformat }}" class="queued-context">
+                <span title="{{ gettext('Submitted on')}} {{ submission.createdAt|dateformat }}" class="queued-context">
                   <i class="icon icon-time"></i>&nbsp;
-                  {{ pendingEntry.createdAt|simpledelta }}
+                  {{ submission.createdAt|simpledelta }}
                 </span>
               </td>
-              {{entrysummary(dataset, place, pendingEntry, questions)}}
+              {{entrysummary(dataset, place, submission, questions)}}
               <td>
-                 <a href="/census/submission/{{pendingEntry.id}}" class="btn btn-mini btn-danger">
+                 <a href="/submission/{{submission.id}}" class="btn btn-mini btn-danger">
                   {{gettext("View Submission")}}
                  </a>
                  <script>
@@ -124,17 +122,17 @@
         <h3>{{gettext("Contributors")}}</h3>
         <h4>{{ format("Reviewers for %(name)s:", { name: place.name }) }}</h4>
         <p>
-          {% if reviewers %}{% for reviewer in reviewers %}{% if loop.index>1 %}, {% endif %}{% if reviewer %}{% if reviewer.isAnonymous() %}{{ reviewer.firstName|title }}{% else %}{{reviewer.fullName()}}{% endif %}{% endif %}{% endfor %}{% endif %}
+          {% if reviewers %}{% for reviewer in reviewers %}{% if loop.index>1 %}, {% endif %}{% if reviewer %}{{reviewer.fullName()}}{% endif %}{% endfor %}{% endif %}
         </p>
         <h4>{{gettext("With submissions from:")}} </h4>
         <p>
-          {% if submitters %}{% for submitter in submitters %}{% if loop.index>1 %}, {% endif %}{% if submitter %}{% if submitter.isAnonymous() %}{{ submitter.firstName|title }}{% else %}{{submitter.fullName()}}{% endif %}{% endif %}{% endfor %}{% endif %}
+          {% if submitters %}{% for submitter in submitters %}{% if loop.index>1 %}, {% endif %}{% if submitter %}{{submitter.fullName()}}{% endif %}{% endfor %}{% endif %}
         </p>
       </div>
     </div>
   </div>
 </div>
 
-<script src="{{page.root}}/src/common.js"></script>
-<script src="{{page.root}}/src/census.js"></script>
+<script src="{{page.root}}/src/common.js?v3"></script>
+<script src="{{page.root}}/src/census.js?v1"></script>
 {% endblock %}

@@ -76,7 +76,7 @@ var rotate = function(str) {
 var dateformat = function(str, lang, fmt) {
   fmt = fmt || 'h:mma on Do MMM YYYY';
   lang = lang || 'en';
-  return moment(str).lang(lang).format(fmt);
+  return moment(str).locale(lang).format(fmt);
 };
 
 
@@ -89,6 +89,10 @@ var marked = function(str) {
 // split strings into arrays
 var split = function(str) {
     return str.split(',');
+};
+
+var stringify = function(obj) {
+  return JSON.stringify(obj);
 };
 
 
@@ -120,5 +124,6 @@ module.exports = {
   dateformat: dateformat,
   marked: marked,
   split: split,
-  simpledelta: simpledelta
+  simpledelta: simpledelta,
+  stringify: stringify
 };

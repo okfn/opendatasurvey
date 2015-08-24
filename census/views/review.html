@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block content %}
-
 <div class="row">
   <div class="span12">
     {% if currentUser %}
@@ -41,15 +40,13 @@
     <a href="/year/{{ current.year }}">{{ current.year }}</a> /
     <a href="/place/{{ place.id }}">{{ place.name }}</a> /
     <a href="/dataset/{{ dataset.id }}">{{ dataset.name }}</a>
-    [<a href="/census/submission/{{ current.id }}">{{ current.id|truncate(8) }}</a>]
-
     <span class="pull-right">
       {% include '_snippets/share_page_buttons.html' %}
     </span>
   </h1>
 
   <p>
-    {{ dataset.description|marked }}
+    {{ dataset.description }}
   </p>
 
   {% if current.isCurrent %}
@@ -79,28 +76,54 @@
 <div class="row">
   <div class="span12">
     {% if reviewInstructions %}
-    <div class="alert alert-warning">
+    <div id="alert" class="alert alert-warning">
       {{reviewInstructions}}
     </div>
     {% endif %}
 
-    {% if canReview and not reviewClosed %}
-    <form action="" method="post" class="submission-review">
-    {% endif %}
+    <div id="sticky-rails">
+      <div id="to-comments" style="text-align: right;">
+        <a href="#comments" class="btn btn-primary" style="position: absolute; margin-left: 16px;">{{ gettext("Comment") }}</a>
+      </div>
 
-    {% include '_snippets/form.html' %}
+      {% if canReview and not reviewClosed %}
+      <form action="" method="post" class="submission-review">
+      {% endif %}
 
-    {% if canReview and not reviewClosed %}
-    {% include '_snippets/reviewer_actions.html' %}
-    {% endif %}
+      {% include '_snippets/form.html' %}
 
-    {% if canReview and not reviewClosed %}
-    </form>
-    {% endif %}
+      {% if canReview and not reviewClosed %}
+      {% include '_snippets/reviewer_actions.html' %}
+      {% endif %}
 
+      {% if canReview and not reviewClosed %}
+      </form>
+      {% endif %}
+    </div>
+
+  </div>
+
+  <div id="comments" class="span12">
+    <hr />
+    <h2>{{ gettext("Comments") }}</h2>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+      var disqus_shortname = '{{disqus_shortname}}'; // required: replace example with your forum shortname
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
   </div>
 </div>
 
-<script src="{{page.root}}/src/common.js"></script>
-<script src="/src/submit.js"></script>
+<script src="{{page.root}}/src/common.js?v3"></script>
+<script src="{{page.root}}/vendor/jquery.sticky-kit.min.js"></script>
+<script src="/src/submit.js?v3"></script>
+<script>$(function() { $('#to-comments').stick_in_parent(); });</script>
 {% endblock %}

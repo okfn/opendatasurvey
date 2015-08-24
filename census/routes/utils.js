@@ -64,43 +64,6 @@ var resolveProfile = function (profile, provider, done) {
 };
 
 
-var validateSubmitForm = function (req) {
-  /**
-   * Ensures validation data is submitted by checking the POST data on
-   * req.body according to the declared validation logic.
-   * Used for new data submissions, and revision proposals.
-   */
-
-  var errors,
-    exists;
-
-  // first check exists for a yes answer.
-  if (req.body.hasOwnProperty('exists') && req.body.exists === 'true') {
-    exists = true;
-  }
-
-  req.checkBody('place', 'You must select a Place').notEmpty();
-  req.checkBody('dataset', 'You must select a Dataset').notEmpty();
-  req.checkBody('exists', 'You must make a valid choice').isChoice();
-
-  if (exists) {
-
-    req.checkBody('digital', 'You must make a valid choice').isChoice();
-    req.checkBody('public', 'You must make a valid choice').isChoice();
-    req.checkBody('free', 'You must make a valid choice').isChoice();
-    req.checkBody('online', 'You must make a valid choice').isChoice();
-    req.checkBody('machinereadable', 'You must make a valid choice').isChoice();
-    req.checkBody('bulk', 'You must make a valid choice').isChoice();
-    req.checkBody('openlicense', 'You must make a valid choice').isChoice();
-    req.checkBody('uptodate', 'You must make a valid choice').isChoice();
-
-  }
-
-  errors = req.validationErrors();
-
-  return errors;
-};
-
 var setupAuth = function () {
   passport.use(new GoogleStrategy({
     clientID: config.get('google:app_id'),
@@ -203,11 +166,13 @@ var setLocals = function(req, res, next) {
   res.locals.sysAdmin = req.app.get('sysAdmin');
   res.locals.locales = config.get('locales');
   res.locals.currentLocale = req.locale;
+  res.locals.currentYear = req.app.get('year');
   res.locals.current_url = 'SCHEME://DOMAIN_PATH'.replace('SCHEME', req.protocol).replace('DOMAIN_', req.get('host')).replace('PATH', req.path);
   res.locals.current_domain = 'SCHEME://DOMAIN_'.replace('SCHEME', req.protocol).replace('DOMAIN_', req.get('host'));
   res.locals.url_query = req.query;
   res.locals.error_messages = req.flash('error');
   res.locals.info_messages = req.flash('info');
+  res.locals.discussionForum = config.get('discussion_forum');
 
   res.locals.urlFor = function(name) {
     if (name === 'overview') {
@@ -223,7 +188,6 @@ var setLocals = function(req, res, next) {
 
 module.exports = {
   makeRedirect: makeRedirect,
-  validateSubmitForm: validateSubmitForm,
   setupAuth: setupAuth,
   scoped: scopedPath,
   setLocals: setLocals

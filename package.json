@@ -22,7 +22,7 @@
     "emailjs": "^0.3.16",
     "express": "^4.12.4",
     "express-session": "^1.11.2",
-    "express-validator": "^2.10.0",
+    "express-validator": "^2.13.0",
     "i18n-abide": "0.0.23",
     "linkifyjs": "^2.0.0-beta.4",
     "lodash": "^3.10.0",
@@ -72,9 +72,9 @@
     "npm": "2.11.x"
   },
   "scripts": {
-    "migrate_submissions": "node migrations/submissions.js",
-    "migrate_entries": "node migrations/entries.js",
-    "migrate_users": "node migrations/users.js",
+    "migrate_submissions": "node scripts/submissions.js",
+    "migrate_entries": "node scripts/entries.js",
+    "migrate_users": "node scripts/users.js",
     "start": "node census/app.js",
     "test": "NODE_ENV=test mocha tests/ --patient"
   }

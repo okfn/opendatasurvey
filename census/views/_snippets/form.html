@@ -19,7 +19,7 @@
 {% macro question(qu) -%}
 <div class="span6">
   <h4 class="submission-label">{{qu.question}}</h4>
-  <input type="{{qu.type}}" title="{{qu.placeholder}}" name="{{qu.id}}" value="{% if current %}{{current.answers[qu.id]}}{% endif %}" {% if canReview != true or reviewClosed %}disabled="disabled"{% endif %} placeholder="{{qu.placeholder}}" {% if qu.id=='format' %} list="formats" {% endif %} />
+  <input type="{{qu.type}}" title="{{qu.placeholder}}" name="{{qu.id}}" value="{% if formData %}{{ formData[qu.id] }}{% else %}{% endif %}{% if current %}{{current.answers[qu.id]}}{% endif %}" {% if canReview != true or reviewClosed %}disabled="disabled"{% endif %} placeholder="{{qu.placeholder}}" {% if qu.id=='format' %} list="formats" {% endif %} />
 </div>
 <div class="span6">
   {{ currentEntry(qu) }}
@@ -47,13 +47,26 @@
     <div class="row-fluid submission-row{% if loop.index0 != 0 %} hide js-dependent{% endif %}">
       <div class="span12">
         <div class="submission-question submission-label">{{ qu.question }}?</div>
-        {% for val in [true, false, null] %}
+        {% for val in [
+          {"type": true, "string": "true", "display": "Yes"},
+          {"type": false, "string": "false", "display": "No"},
+          {"type": null, "string": "null", "display": "Unsure"}
+        ] %}
         <div class="submission-option">
-          <input type="radio" name="{{qu.id}}" value="{% if val == null %}null{% else %}{{val}}{% endif %}" {% if current and current.answers[qu.id] == val %}checked="true" {% endif %}class="{{ val }}"{% if canReview != true or reviewClosed %} disabled="disabled"{% endif %} required>
+          <input type="radio" name="{{qu.id}}" value="{{ val.string }}" {% if formData %}{% if formData[qu.id] == val.string %}checked="true"{% endif %}{% else %}{% if (current and current.answers[qu.id] == val.type) %}checked="true" {% endif %}{% endif %}class="{{ val.string }}"{% if canReview != true or reviewClosed %} disabled="disabled"{% endif %} required>
         </div>
         {% endfor %}
-        <div class="submission-current">
-          {{ current.answers[qu.id] or gettext('No entry') }}
+        <div class="submission-current" data-value="{{ current.answers[qu.id] }}">
+          {% set currentDisplay = gettext('No entry') %}
+          {% for val in [
+            {"type": true, "string": "true", "display": "Yes"},
+            {"type": false, "string": "false", "display": "No"}
+          ] %}
+          {% if current.answers[qu.id] == val.type %}
+            {% set currentDisplay = val.display %}
+          {% endif %}
+          {% endfor %}
+          {{ currentDisplay }}
         </div>
         <div class="submission-info">
           <span class="help-block readmore">{{qu.description}}</span>
@@ -84,7 +97,7 @@
     <div class="span6">
       <div class="wmd-panel">
         <div id="wmd-button-bar"></div>
-        <textarea class="wmd-input" id="wmd-input" name="details" {% if canReview != true or reviewClosed %}disabled="disabled"{% endif %} style="min-height: 150px;">{{current.details}}</textarea>
+        <textarea class="wmd-input" id="wmd-input" name="details" {% if canReview != true or reviewClosed %}disabled="disabled"{% endif %} style="min-height: 150px;">{{formData.details or current.details}}</textarea>
       </div>
     </div>
     <div class="span6">

@@ -9,13 +9,13 @@
   <div class="summary featured">
     <dl>
       <dt>{{gettext("Number of places")}}</dt>
-      <dd id="nc">{{ placeCount }}</dd>
+      <dd id="nc">{{ stats.placeCount }}</dd>
       <dt>{{gettext("Number of datasets")}}</dt>
-      <dd id="nds">{{ currentEntryCount }}</dd>
+      <dd id="nds">{{ stats.currentEntryCount }}</dd>
       <dt>{{gettext("Number of open datasets")}}</dt>
-      <dd id="nok">{{ currentEntryOpenCount }}</dd>
+      <dd id="nok">{{ stats.currentEntryOpenCount }}</dd>
       <dt>{{gettext("Percentage")}} <a href="http://okfn.org/opendata/">{{gettext("open")}}</a></dt>
-      <dd id="nokpercent">{{ openDataPercent }}%</dd>
+      <dd id="nokpercent">{{ stats.openDataPercent }}%</dd>
     </dl>
   </div>
 </div>
@@ -30,12 +30,6 @@
   <div class="pull-left">{% include '_snippets/key.html' %}</div>
 
   <div class="pull-right">
-    {% if submissionsAllowed %}
-    <a href="/census/submit/" class="btn btn-primary">
-      <i class="icon-plus"></i> {{ gettext("Add information") }}
-    </a>
-    {% endif %}
-
     {% if missingPlaceText %}
     {% include '_snippets/missing_place_button.html' %}
     {% endif %}
@@ -44,16 +38,19 @@
 
 <div class="row">
   {% include '_snippets/year_navigation.html' %}
+    <div class="span6" id="sorting">
+    </div>
 </div>
 
-<table class="response-summary table">
+<table class="response-summary table sexyTable">
   <thead>
     <tr>
-      <th colspan="2">&nbsp;</th>
+      <th class="number">&nbsp;</th>
+      <th class="place-name">&nbsp;</th>
       {% for dataset in datasets %}
-      <th><div><a href="/dataset/{{dataset.id}}/{{ year }}">{{ dataset.name }}</a></div></th>
+      <th><div><a href="/dataset/{{dataset.id}}{{ urlContext }}">{{ dataset.name }}</a></div></th>
       {% endfor %}
-      <th><div><strong>{{gettext("Total Score")}}</strong></div>
+      <th class="place-score"><div><strong>{{gettext("Total Score")}}</strong></div></th>
     </tr>
   </thead>
   <tbody>
@@ -80,7 +77,7 @@
       <td>{{ loop.index }}</td>
       <th class="place-name">
         {% if place %}
-        <a href="/place/{{ place.id }}/{{ year }}">{{place.name}}</a>
+        <a href="/place/{{ place.id }}{{ urlContext }}">{{place.name}}</a>
         {% else %}
         <a href="submit/" data-toggle="tooltip" class="unknown no-data count-0" title="{{gettext("Click here to add to the census!")}}">{{gettext("Add new")}}</a>
         {% endif %}
@@ -88,45 +85,127 @@
       {% for dataset in datasets %}
 
       {% set entry = entries|find({'dataset': dataset.id , 'place': place.id }) %}
+      {% set submissions = pending|where({'dataset': dataset.id , 'place': place.id }) %}
+      {% if entry.year == currentYear %}
+        {% set badgeClass = 'label-success' %}
+      {% elif entry.year == (currentYear - 1) %}
+        {% set badgeClass = 'label-warning' %}
+      {% else %}
+        {% set badgeClass = 'label-important'%}
+      {% endif %}
+
+
+
+        {% if entry %}
+            {% if submissions|length %}
+                      {% set actionUrl = '/submission/ID'|replace('ID', submissions[0].id) %}
+                      {% set actionText = gettext("Comment") %}
+                  {% else %}
+                    {% set actionUrl = '/submit/?place=PL&dataset=DS'|replace('PL', place.id)|replace('DS', dataset.id) %}
+                    {% if entry %}
+                        {% set actionText = gettext("Update") %}
+                    {% else %}
+                        {% set actionText = gettext("Add") %}
+                    {% endif %}
+                {% endif %}
+
+        {% else %}
+            {% if submissions|length %}
+                {% set actionUrl = '/submission/ID'|replace('ID', submissions[0].id) %}
+                {% set actionText = gettext("Comment") %}
+            {% else %}
+                {% set actionUrl = '/submit/?place=PL&dataset=DS'|replace('PL', place.id)|replace('DS', dataset.id) %}
+                {% set actionText = gettext("Add") %}
+            {% endif %}
+        {% endif %}
+
       <td
          class="
                 ycount-{{entry.computedYCount}}
                 showpopover
                 "
          data-dataset="{{entry.dataset}}"
-         data-datasetTitle="{{dataset.title}}"
+         data-datasetTitle="{{dataset.name}}"
+         data-answers="{{ entry.answers|stringify|escape }}"
+         data-details="{{ entry.details|escape }}"
+         data-url="{{ entry.url|escape }}"
+         {% if submissionsAllowed %}
+         data-submissions="allowed"
+         {% endif %}
+         data-actionurl="{{ actionUrl }}"
+         data-actiontext="{{ actionText }}"
+         {% if submissions|length %}
+         data-submissionslength="{{ submissions|length }}"
+         {% endif %}
+         data-year="{{entry.year}}"
+         data-yearclass="{{ badgeClass }}"
+         valign="middle"
          >
-        {% if entry %}
-        <ul class="availability icons mini">
-          {% for qu in questions %}
-          {% set state = entry.answers[qu.id] %}
+        <div class="status">
+            {% if entry %}
 
-          {% if state == true %}
-            {% set stateClass = 'yes' %}
-            {% set stateDisplay = 'Y' %}
-          {% elif state == false %}
-            {% set stateClass = 'no' %}
-            {% set stateDisplay = 'N' %}
-          {% elif state == null %}
-            {% set stateClass = 'maybe' %}
-            {% set stateDisplay = '?' %}
-          {% endif %}
+            <ul class="availability icons mini">
+              {% for qu in questions %}
+              {% set state = entry.answers[qu.id] %}
 
-          <li class="{{ stateClass }}" data-toggle="tooltip" title="{{ qu.question }}">
-            <i class="icon-{{ qu.icon }}"></i>
-            <span class="text">{{ stateDisplay }}</span>
-          </li>
-          {% endfor %}
-        </ul>
-        {% else %}
-        {% if submissionsAllowed %}
-        <a href="/place/{{ place.id }}" class="btn btn-mini">
-          <i class="icon-plus"></i>
-          Add
-        </a>
-        {% else %}
-        <i class="muted">None</i>
-        {% endif %}
+              {% if state == true %}
+                {% set stateClass = 'yes' %}
+                {% set stateDisplay = 'Y' %}
+              {% elif state == false %}
+                {% set stateClass = 'no' %}
+                {% set stateDisplay = 'N' %}
+              {% elif state == null %}
+                {% set stateClass = 'maybe' %}
+                {% set stateDisplay = '?' %}
+              {% endif %}
+
+              <li class="{{ stateClass }}" data-toggle="tooltip" title="{{ qu.question }}">
+                <i class="icon-{{ qu.icon }}"></i>
+                <span class="text">{{ stateDisplay }}</span>
+              </li>
+              {% endfor %}
+            </ul>
+
+            <div class="entry-year {{ badgeClass }}" title="{{ entry.updatedAt|dateformat }} ({{ gettext("Submitted by") }} {{ entry.Submitter.fullName() }} {{ gettext("and reviewed by") }} {{ entry.Submitter.fullName() }})">
+                {{entry.year}}
+            </div>
+
+
+            {% if submissionsAllowed %}
+              {% if submissions|length %}
+                <span class="pending badge badge-warning" title="{{ gettext("Pending submissions") }}">
+                  {{ submissions|length }}
+                </span>
+                <div class="hover-icon">
+                  <i class="icon-eye-open"></i>
+                </div>
+                {% else %}
+                <div class="hover-icon">
+                  <i class="icon-plus"></i>
+                </div>
+                {% endif %}
+
+              {% else %}
+              <i class="muted">None</i>
+              {% endif %}
+
+            {% else %}
+            {% if submissionsAllowed %}
+
+            <a href="{{ actionUrl }}" class="btn btn-mini">
+              {% if submissions|length %}
+                <span title="{{ gettext("Pending submissions") }}">
+                  ({{ submissions|length }})
+                </span>
+                {% else %}
+                <i class="icon-plus"></i>
+                {% endif %}
+              {{ actionText }}
+            </a>
+            {% else %}
+            <i class="muted">None</i>
+            {% endif %}
+        </div>
         {% endif %}
       </td>
       {% endfor %}
@@ -134,21 +213,14 @@
     </tr>
     {% endfor %}
   </tbody>
-  <tfoot>
-    <tr>
-      <th colspan="2">&nbsp;</th>
-      {% for dataset in datasets %}
-      <th><div><a href="/dataset/{{dataset.id}}">{{ dataset.name }}</a></div></th>
-      {% endfor %}
-      <th><div><strong>{{gettext("Total Score")}}</strong></div>
-    </tr>
-  </tfoot>
 </table>
 
 <div class="row-fluid">
   {% include '_snippets/key.html' %}
 </div>
-<script src="{{page.root}}/vendor/sticky.min.js"></script>
-<script src="{{page.root}}/src/common.js"></script>
-<script src="{{page.root}}/src/census.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
+<script src="{{page.root}}/vendor/jquery.kinetic.min.js"></script>
+<script src="{{page.root}}/vendor/sexytables-1.0.min.js"></script>
+<script src="{{page.root}}/src/common.js?v4"></script>
+<script src="{{page.root}}/src/census.js?v2"></script>
 {% endblock %}

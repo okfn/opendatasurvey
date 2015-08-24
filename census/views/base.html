@@ -20,9 +20,9 @@
     <script src="/vendor/Markdown.Converter.js"></script>
     <script src="/vendor/Markdown.Sanitizer.js"></script>
     <script src="/vendor/Markdown.Editor.js"></script>
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/style.css?v4" rel="stylesheet">
 
     <style type="text/css">
       {{ site.settings.custom_css }}
@@ -34,19 +34,24 @@
 <div class="navbar navbar-static-top">
   <div class="navbar-inner">
     <div class="container">
-      <a class="brand" href="/">{{ site.settings.title }}</a>
+      {% if domain == authDomain or domain == systemDomain %}
+      {% else %}
+      <a class="brand" href="/" title="{{ gettext('Home')}}">{{ site.settings.title }}</a>
       <ul class="nav">
-        <li><a href="/">{{gettext("Home")}}</a></li>
         <li><a href="/about/">{{gettext("About")}}</a></li>
         <li><a href="/changes/">{{gettext("Changes")}}</a></li>
         <li><a href="/faq/">{{gettext("FAQ")}}</a></li>
         {% if site.settings.contribute_page %}
         <li><a href="/contribute/">{{gettext("Contribute")}}</a></li>
         {% endif %}
+        {% if discussionForum %}
+          <li><a target="_blank" href="{{ discussionForum }}">{{ gettext("Support") }}</a></li>
+        {% endif %}
       </ul>
       <div class="nav-logo">
         {{ site.settings.navbar_logo }}
       </div>
+      {% endif %}
     </div>
   </div>
 </div>
@@ -56,10 +61,8 @@
   <div class="page">
 
     {% if site.settings.banner_text %}
-    <div class="row">
-      <div id="banner" class="span12">
-        {{ site.settings.banner_text|marked }}
-      </div>
+    <div id="banner" class="alert">
+      {{ site.settings.banner_text }}
     </div>
     {% endif %}
 

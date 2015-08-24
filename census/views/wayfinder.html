@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ gettext('Ok, we are lost') }}
+{% endblock %}
+
+{% block content %}
+<h1>{{ gettext('Ok, we are lost') }}</h1>
+<p>
+  {{ gettext('This route does not exist for this domain. Navigate back to another domain with one of the following links.') }}
+</p>
+<ul>
+  {% for entry in registry %}
+  <li><a href="//{{ entry.id }}.{{ baseDomain }}" title="{{ entry.settings.title }}">{{ entry.settings.title }}</a></li>
+  {% endfor %}
+</ul>
+{% endblock %}

@@ -4,6 +4,8 @@ var _ = require('lodash');
 var Promise = require('bluebird');
 var config = require('../config');
 var utils = require('./utils');
+var controllerUtils = require('../controllers/utils');
+var marked = require('marked');
 
 
 var loadConfig = function (siteId, models) {
@@ -17,18 +19,20 @@ var loadConfig = function (siteId, models) {
         var settings = {}, raw;
         raw = _.object(_.zip(_.pluck(C, 'key'), _.pluck(C, 'value')));
         _.each(raw, function(v, k) {
-
-
           if (v && v.toLowerCase() === 'true') {
             settings[k] = true;
           } else if (v && v.toLowerCase() === 'false') {
             settings[k] = false;
           } else if (v && v.toLowerCase() === 'null') {
             settings[k] = null;
+          } else if (v && k === 'reviewers') {
+            settings[k] = _.each(v.split(controllerUtils.FIELD_SPLITTER), function(r) { r.trim(); });
+          } else if (v && ['navbar_logo', 'overview_page', 'submit_page', 'about_page',
+                           'faq_page', 'contribute_page', 'banner_text'].indexOf(k) !== -1) {
+            settings[k] = marked(v);
           } else {
             settings[k] = v;
           }
-
         });
         // Insert single record — config for required site
         models.Site.upsert({
@@ -40,7 +44,6 @@ var loadConfig = function (siteId, models) {
       });
     });
   });
-
 };
 
 
@@ -62,6 +65,9 @@ var loadRegistry = function (models) {
         return Promise.all(_.map(registry, function(R) { return new Promise(function(RS, RJ) {
 
           // Normalize data before upsert
+          if (R.adminemail) {
+            R.adminemail = _.each(R.adminemail.split(controllerUtils.FIELD_SPLITTER), function(r) { r.trim(); });
+          }
           models.Registry.upsert(_.extend(R, {
             id: R.censusid,
             settings: _.omit(R, 'censusid')
