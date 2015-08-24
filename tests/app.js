@@ -1,91 +1,91 @@
-var _ = require('lodash')
-  ,request = require('supertest-as-promised')
-  , passport = require('passport')
-  , chai = require('chai')
-  , datasetFixtures = require('../fixtures/dataset')
-  , entryFixtures = require('../fixtures/entry')
-  , userFixtures = require('../fixtures/user')
-  , app = require('../census/app.js').app
-  , assert = chai.assert
-  , marked = require('marked')
-  , models = require('../census/models')
-  , config = require('../census/config')
-  , utils = require('./utils')
-  ;
+// var _ = require('lodash')
+//   ,request = require('supertest-as-promised')
+//   , passport = require('passport')
+//   , chai = require('chai')
+//   , datasetFixtures = require('../fixtures/dataset')
+//   , entryFixtures = require('../fixtures/entry')
+//   , userFixtures = require('../fixtures/user')
+//   , app = require('../census/app.js').app
+//   , assert = chai.assert
+//   , marked = require('marked')
+//   , models = require('../census/models')
+//   , config = require('../census/config')
+//   , utils = require('./utils')
+//   ;
 
 
-describe('Basics', function() {
+// describe('Basics', function() {
 
-  // Apply fixtures before each test to prevent uniqueness conflicts with app DB sync
-  beforeEach(utils.setupFixtures);
-  afterEach(utils.dropFixtures);
+//   // Apply fixtures before each test to prevent uniqueness conflicts with app DB sync
+//   beforeEach(utils.setupFixtures);
+//   afterEach(utils.dropFixtures);
 
-  it('front page works', function(done) {
-    request(app)
-      .get('/')
-      .set('Host', 'site1.dev.census.org:5000')
-      .expect(200)
-      .then(function(res) {
-        checkContent(res, config.get('overview_page'));
-        // check overview table works
-        checkContent(res, 'Place 11');
-        checkContent(res, 'Place 12');
-        done();
-      })
-      ;
-  });
-  it('about page ok', function(done) {
-    request(app)
-      .get('/about')
-      .set('Host', 'site1.dev.census.org:5000')
-      .expect(200)
-      .then(function(res) {
-        models.Site.findById('site1').then(function(R) {
-          checkContent(res, marked(R.settings.about_page));
-          done();
-        });
-      });
-  });
-  it('faq page ok', function(done) {
-    request(app)
-      .get('/faq')
-      .set('Host', 'site1.dev.census.org:5000')
-      .expect(200)
-      .then(function(res) {
-        models.Site.findById('site1').then(function(R) {
-          checkContent(res, marked(R.settings.faq_page));
-          done();
-        });
-      })
-      ;
-  });
-  it('contribute page ok', function(done) {
-    request(app)
-      .get('/contribute')
-      .set('Host', 'site2.dev.census.org:5000')
-      .expect(200)
-      .then(function(res) {
-        models.Site.findById('site2').then(function(R) {
-          checkContent(res, marked(R.settings.contribute_page));
-          done();
-        });
-      })
-      ;
-  });
-  it('custom content works', function(done) {
-    request(app)
-      .get('/')
-      .set('Host', 'site2.dev.census.org:5000')
-      .expect(200)
-      .then(function(res) {
-        checkContent(res, config.get('custom_css'));
-        checkContent(res, config.get('custom_footer'));
-        checkContent(res, config.get('google_analytics_key'));
-        checkContent(res, config.get('navbar_logo'));
-        done();
-      })
-      ;
-  });
+//   it('front page works', function(done) {
+//     request(app)
+//       .get('/')
+//       .set('Host', 'site1.dev.census.org:5000')
+//       .expect(200)
+//       .then(function(res) {
+//         checkContent(res, config.get('overview_page'));
+//         // check overview table works
+//         checkContent(res, 'Place 11');
+//         checkContent(res, 'Place 12');
+//         done();
+//       })
+//       ;
+//   });
+//   it('about page ok', function(done) {
+//     request(app)
+//       .get('/about')
+//       .set('Host', 'site1.dev.census.org:5000')
+//       .expect(200)
+//       .then(function(res) {
+//         models.Site.findById('site1').then(function(R) {
+//           checkContent(res, marked(R.settings.about_page));
+//           done();
+//         });
+//       });
+//   });
+//   it('faq page ok', function(done) {
+//     request(app)
+//       .get('/faq')
+//       .set('Host', 'site1.dev.census.org:5000')
+//       .expect(200)
+//       .then(function(res) {
+//         models.Site.findById('site1').then(function(R) {
+//           checkContent(res, marked(R.settings.faq_page));
+//           done();
+//         });
+//       })
+//       ;
+//   });
+//   it('contribute page ok', function(done) {
+//     request(app)
+//       .get('/contribute')
+//       .set('Host', 'site2.dev.census.org:5000')
+//       .expect(200)
+//       .then(function(res) {
+//         models.Site.findById('site2').then(function(R) {
+//           checkContent(res, marked(R.settings.contribute_page));
+//           done();
+//         });
+//       })
+//       ;
+//   });
+//   it('custom content works', function(done) {
+//     request(app)
+//       .get('/')
+//       .set('Host', 'site2.dev.census.org:5000')
+//       .expect(200)
+//       .then(function(res) {
+//         checkContent(res, config.get('custom_css'));
+//         checkContent(res, config.get('custom_footer'));
+//         checkContent(res, config.get('google_analytics_key'));
+//         checkContent(res, config.get('navbar_logo'));
+//         done();
+//       })
+//       ;
+//   });
 
   // ========================
   // More complex pages
@@ -144,17 +144,17 @@ describe('Basics', function() {
   // testRedirect('/country/gb/timetables', '/entry/gb/timetables');
   // testRedirect('/country/submit', '/submit');
   // testRedirect('/country/review/xyz', '/submission/xyz');
-});
+// });
 
-function checkContent(res, expected, errMsg) {
-  if (!errMsg) {
-    errMsg = '<<' + expected + '>> not found in page';
-  }
-  var found = escape(res.text).match(escape((expected || '')));
-  if (!found) {
-    assert(false, errMsg);
-  }
-}
+// function checkContent(res, expected, errMsg) {
+//   if (!errMsg) {
+//     errMsg = '<<' + expected + '>> not found in page';
+//   }
+//   var found = escape(res.text).match(escape((expected || '')));
+//   if (!found) {
+//     assert(false, errMsg);
+//   }
+// }
 
 // function testRedirect(src, dest) {
 //   it('redirect from ' + src + ' to ' + dest, function(done) {
