@@ -96,12 +96,14 @@ var checkComments = function() {
 
           }).then(function() {
 
-            notification.updateAttributes({lastAt: newLastAt}).then(function() {
-              console.log("NotificationLog updated.");
-              models.sequelize.close();  // this makes the script exit instantly
-            });
+            models.NotificationLog.create({type: "comments", lastAt: newLastAt})
+              .then(function(newNotification) {
+                console.log("Added a new notification log comment entry: " + newLastAt.toISOString());
+                models.sequelize.close();  // this makes the script exit instantly
+              });
 
           });
+
         });
     });
   });
