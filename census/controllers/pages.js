@@ -50,6 +50,14 @@ var contribute = function (req, res) {
 };
 
 
+var tutorial = function (req, res) {
+  res.render('base.html', {
+    content: marked(req.params.site.settings.tutorial_page),
+    title: 'Tutorial'
+  });
+};
+
+
 var about = function (req, res) {
   res.render('base.html', {
     content: marked(req.params.site.settings.about_page),
@@ -177,6 +185,7 @@ module.exports = {
   faq: faq,
   about: about,
   contribute: contribute,
+  tutorial: tutorial,
   changes: changes,
   resultJson: resultJson,
   place: place,

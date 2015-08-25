@@ -44,6 +44,9 @@
         {% if site.settings.contribute_page %}
         <li><a href="/contribute/">{{gettext("Contribute")}}</a></li>
         {% endif %}
+        {% if site.settings.tutorial_page %}
+        <li><a href="/tutorial/">{{gettext("Tutorial")}}</a></li>
+        {% endif %}
         {% if discussionForum %}
           <li><a target="_blank" href="{{ discussionForum }}">{{ gettext("Support") }}</a></li>
         {% endif %}

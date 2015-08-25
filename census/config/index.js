@@ -43,6 +43,7 @@ nconf.defaults({
   discussion_forum: process.env.DISCUSSION_FORUM || '', // forum URL
   about_page: '<h1>To set content for this page update your configuration file</h1>',
   contribute_page: '<h1>To set content for this page update your configuration file</h1>',
+  tutorial_page: '<h1>To set content for this page update your configuration file</h1>',
   faq_page: '<h1>To set content for this page update your configuration file</h1>',
   missing_place_html: '',
   submit_page: getContent('census/content/submit.md'),
@@ -66,7 +67,7 @@ nconf.defaults({
       timestamps: true
     }
   },
-  
+
   disqus: {
     api_key: process.env.DISQUS_API_KEY || '',
     api_secret: process.env.DISQUS_API_SECRET || ''
