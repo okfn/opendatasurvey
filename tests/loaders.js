@@ -1,48 +1,73 @@
-// var _ = require('underscore');
-// var assert = require('chai').assert;
-// var config = require('../census/config');
-// var loaders = require('../census/loaders');
-// var models = require('../census/models');
-// var siteID = 'demo';
-// var utils = require('../census/loaders/utils');
-// var REGISTRY_URL = 'https://docs.google.com/spreadsheets/d/1FK5dzeNeJl81oB76nWzhS1dAdnXDoZbbe_vTH4NlThM/edit#gid=0';
-// var testUtils = require('./utils');
+var _ = require('underscore');
+var assert = require('chai').assert;
+var config = require('../census/config');
+var loaders = require('../census/loaders');
+var models = require('../census/models');
+var siteID = 'site1';
+var utils = require('../census/loaders/utils');
+var REGISTRY_URL = 'https://docs.google.com/spreadsheets/d/1FK5dzeNeJl81oB76nWzhS1dAdnXDoZbbe_vTH4NlThM/edit#gid=0';
+var testUtils = require('./utils');
 
 
-// describe('Data loaded from spread sheet into DB', function(){
+describe('Data loaded from spread sheet into DB', function(){
 
-//   before(testUtils.setupFixtures);
-//   after(testUtils.dropFixtures);
+  before(testUtils.setupFixtures);
+  after(testUtils.dropFixtures);
 
-//   it('Registry', function(done) {
-//     this.timeout(10000);
+  var configValues = {
+    registryUrl: config.get('registryUrl')
+  };
 
-//     models.Registry.destroy({truncate: true}).then(function() {
-//       var registryIDs;
+  before(function() {
+    config.set('registryUrl', REGISTRY_URL);
+  });
 
-//       utils.spreadsheetParse(REGISTRY_URL || false).spread(function (E, R) {
-//         registryIDs = _.pluck(R, 'censusid');
-//         loaders.loadRegistry('site1').spread(function(E, D) {
-//           models.Registry.findAll().then(function(D) { assert.deepEqual(registryIDs, _.pluck(D, 'id')); done(); });
-//         });
-//       });
-//     });
-//   });
+  after(function() {
+    for(var setting in configValues) {
+      config.set(setting, configValues[setting]);
+    }
+  });
 
-  // it('Config', function(done) {
-  //   this.timeout(10000);
+  it('#loadRegistry', function(done) {
+    this.timeout(10000);
 
-  //   models.Registry.findById('site1').then(function(R) {
-  //     utils.spreadsheetParse(R.settings.configurl).spread(function (E, C) {
-  //       loaders.loadConfig(siteID).then(function() {
-  //         models.Site.findById(siteID).then(function(S) {
-  //           assert.deepEqual(S.settings, _.object(_.zip(_.pluck(C, 'key'), _.pluck(C, 'value'))));
-  //           done();
-  //         });
-  //       });
-  //     });
-  //   });
-  // });
+    models.Registry.destroy({truncate: true}).then(function() {
+      var registryIDs;
+
+      utils.spreadsheetParse(REGISTRY_URL || false).spread(function (E, R) {
+        registryIDs = _.pluck(R, 'censusid');
+        loaders.loadRegistry(models).spread(function(E, D) {
+          models.Registry.findAll().then(function(D) {
+            assert.deepEqual(registryIDs.sort(), _.pluck(D, 'id').sort());
+            done();
+          });
+        });
+      });
+    });
+  });
+
+  it('#loadConfig', function(done) {
+    this.timeout(10000);
+
+    models.Registry.findById(siteID).then(function(R) {
+      utils.spreadsheetParse(R.settings.configurl).spread(function (E, C) {
+        loaders.loadConfig(siteID, models).then(function() {
+          models.Site.findById(siteID).then(function(S) {
+
+            var settings = _.object(_.zip(_.pluck(C, 'key'), _.pluck(C, 'value')));
+            var exact = ['title', 'title_short', 'places', 'datasets', 'questions'];
+
+            assert.deepEqual(_.pick(S.settings, exact), _.pick(settings, exact));
+            assert.equal(S.settings['approve_first_submission'], true);
+            assert.include(S.settings['faq_page'], 'FAQ');
+            assert.include(S.settings['faq_page'], '<p>', "faq page should look like html");
+
+            done();
+          });
+        });
+      });
+    });
+  });
 
   // it('Datasets', function(done) {
   //   this.timeout(10000);
@@ -93,4 +118,4 @@
   //     });
   //   });
   // });
-// });
+});
