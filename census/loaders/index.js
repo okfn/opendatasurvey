@@ -83,29 +83,31 @@ var loadData = function (options, models) {
 
   return new Promise(function(RS, RJ) {
     models.Site.findById(options.site).then(function(S) {
-      utils.spreadsheetParse(S.settings[options.setting]).spread(function (E, D) {
-        if (E)
-          RJ(E);
+      options.Model.destroy({where: {site: options.site}}).then(function(destroyed) {
+        utils.spreadsheetParse(S.settings[options.setting]).spread(function (E, D) {
+          if (E)
+            RJ(E);
 
-        Promise.all(_.map(D, function(DS) { return new Promise(function(RSD, RJD) {
+          Promise.all(_.map(D, function(DS) { return new Promise(function(RSD, RJD) {
 
-          // Allow custom data maping
-          options.Model.upsert(
-            _.chain(_.isFunction(options.mapper) ? options.mapper(DS) : DS)
+            // Allow custom data maping
+            options.Model.create(
+              _.chain(_.isFunction(options.mapper) ? options.mapper(DS) : DS)
 
-            // All records belongs to certain domain
-              .extend({site: options.site})
+              // All records belongs to certain domain
+                .extend({site: options.site})
 
-              .pairs()
+                .pairs()
 
-            // User may mix up lower cased and upper cased field names
-              .map(function(P) { return [P[0].toLowerCase(), P[1]]; })
+              // User may mix up lower cased and upper cased field names
+                .map(function(P) { return [P[0].toLowerCase(), P[1]]; })
 
-              .object()
-              .value()
-          ).then(RSD).catch(RJD);
+                .object()
+                .value()
+            ).then(RSD).catch(RJD);
 
-        }); })).then(RS).catch(RJ);
+          }); })).then(RS).catch(RJ);
+        });
       });
     });
   });
