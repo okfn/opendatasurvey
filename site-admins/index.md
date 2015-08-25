@@ -258,6 +258,12 @@ Content for contribute page.
 
 You can use markdown or HTML format.
 
+### tutorial_page
+
+Content for the tutorial page.
+
+You can use markdown or HTML format.
+
 ### missing_place_html
 
 Set to `true` to add an “Add new location” button to the overview, linking to `/faq#missing-place`.
