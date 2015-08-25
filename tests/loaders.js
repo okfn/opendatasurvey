@@ -1,4 +1,4 @@
-var _ = require('underscore');
+var _ = require('lodash');
 var assert = require('chai').assert;
 var config = require('../census/config');
 var loaders = require('../census/loaders');
@@ -69,53 +69,82 @@ describe('Data loaded from spread sheet into DB', function(){
     });
   });
 
-  // it('Datasets', function(done) {
-  //   this.timeout(10000);
+  var matchEntries = function(dbEntries, entries, matchFields) {
+    _.each(dbEntries, function(dbEntry) {
+      var entry = _.find(entries, 'id', dbEntry.id),
+          dbValues =_.mapValues(_.pick(dbEntry, matchFields), function(value) {
+            return _.isNumber(value) ? value.toString(): value; }),
+          values = _.pick(entry, matchFields);
+      assert.deepEqual(dbValues, values);
+    });
+  };
 
-  //   models.Site.findById('site1').then(function(S) {
-  //     utils.spreadsheetParse(S.settings.datasets).spread(function (E, D) {
-  //       loaders.loadTranslatedData({
-  //         mapper : function(D) { return _.extend(D, {name: D.title}); },
-  //         Model  : models.Dataset,
-  //         setting: 'datasets',
-  //         site   : 'site1'
-  //       }).then(function() {
-  //         models.Dataset.count().then(function(C) { assert.equal(C, D.length); done(); });
-  //       });
-  //     });
-  //   });
-  // });
+  it('Datasets', function(done) {
+    this.timeout(10000);
 
-  // it('Places', function(done) {
-  //   this.timeout(10000);
+    models.Site.findById(siteID).then(function(S) {
+      utils.spreadsheetParse(S.settings.datasets).spread(function (E, D) {
+        loaders.loadTranslatedData({
+          mapper : function(D) { return _.extend(D, {name: D.title}); },
+          Model  : models.Dataset,
+          setting: 'datasets',
+          site   : siteID
+        }, models).then(function() {
+          models.Dataset.findAll({where: {site: siteID}}).then(function(datasets) {
 
-  //   models.Site.findById('site1').then(function(S) {
-  //     utils.spreadsheetParse(S.settings.places).spread(function (E, D) {
-  //       loaders.loadTranslatedData({
-  //         Model: models.Place,
-  //         setting: 'places',
-  //         site: 'site1'
-  //       }).then(function() {
-  //         models.Place.count().then(function(C) { assert.equal(C, D.length); done(); });
-  //       });
-  //     });
-  //   });
-  // });
+            assert.equal(D.length, datasets.length);
+            matchEntries(datasets, D, ['id', 'order', 'description']);
 
-  // it('Questions', function(done) {
-  //   this.timeout(10000);
+            done();
+          });
+        });
+      });
+    });
+  });
 
-  //   models.Site.findById('site1').then(function(S) {
-  //     utils.spreadsheetParse(S.settings.questions).spread(function (E, D) {
-  //       loaders.loadTranslatedData({
-  //         mapper : function(D) { return _.extend(D, {dependants: D.dependants.split(','), score: D.score || 0}) },
-  //         Model  : models.Question,
-  //         setting: 'questions',
-  //         site   : 'site1'
-  //       }).then(function() {
-  //         models.Question.count().then(function(C) { assert.equal(C, D.length); done(); });
-  //       });
-  //     });
-  //   });
-  // });
+  it('Places', function(done) {
+    this.timeout(10000);
+
+    models.Site.findById(siteID).then(function(S) {
+      utils.spreadsheetParse(S.settings.places).spread(function (E, P) {
+        loaders.loadTranslatedData({
+          Model: models.Place,
+          setting: 'places',
+          site: siteID
+        }, models).then(function() {
+          models.Place.findAll({where: {site: siteID}}).then(function(places) {
+
+            assert.equal(P.length, places.length);
+            matchEntries(places, P, ['id', 'name', 'slug']);
+
+            done();
+          });
+        });
+      });
+    });
+  });
+
+  it('Questions', function(done) {
+    this.timeout(10000);
+
+    models.Site.findById(siteID).then(function(S) {
+      utils.spreadsheetParse(S.settings.questions).spread(function (E, Q) {
+        loaders.loadTranslatedData({
+          mapper : function(Q) { return _.extend(Q, {dependants: Q.dependants.split(','), score: Q.score || 0}); },
+          Model  : models.Question,
+          setting: 'questions',
+          site   : siteID
+        }, models).then(function() {
+          // console.log(Q);
+          models.Question.findAll({where: {site: siteID}}).then(function(questions) {
+
+            assert.equal(questions.length, Q.length);
+            matchEntries(questions, Q, ['id', 'order', 'question', 'icon']);
+
+            done();
+          });
+        });
+      });
+    });
+  });
 });
