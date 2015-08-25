@@ -29,6 +29,13 @@ Go to your Facebook account and add a new app. As with the Google instructions a
 
 Get the credentials required for your `FACEBOOK_APP_ID` and `FACEBOOK_APP_SECRET` settings.
 
+## Comment Notifications
+
+Submissions have Disqus comment threads. You can provide a custom Disqus forum name via `DISQUS_SHORTNAME`. There is also a feature to notify submitters when someone comments on their submission. To enable this feature:
+
+1. Create a Disqus API application and add `DISQUS_API_KEY` and `DISQUS_API_SECRET` to your census config.
+2. Run the [check-comments.js script](https://github.com/okfn/opendatacensus/blob/master/scripts/check-comments.js) with some type of scheduler, at a suitable period for your needs. On Heroku, you can use the Heroku scheduler to run this script. We also include an [example cron job](https://github.com/okfn/opendatacensus/blob/master/scripts/cron.example) that you can modify.
+
 ## Deploying a New Census
 
 If you are **not** a developer but want a Census booted please make a
