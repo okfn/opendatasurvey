@@ -5,11 +5,7 @@ title: Global Open Data Index
 
 The [Global Open Data Index][national-census] page.
 
-### Proposing new datasets to cover
-
-We welcome suggestions for new datasets to cover in the [Global Open Data Index][national-census].
-
-Please add your suggestions to this [Google Spreadsheet][suggestions] and email the [mailing list][contact-us] with your suggestion so that people can discuss it.
+Contact us on our [forum](https://discuss.okfn.org/c/open-data-index). 
 
 
 [national-census]: http://index.okfn.org
