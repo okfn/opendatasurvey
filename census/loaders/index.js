@@ -82,36 +82,35 @@ var loadRegistry = function (models) {
 var loadData = function (options, models) {
 
   return models.sequelize.transaction(function(t) {
-    return new Promise(function(RS, RJ) {
+    return models.Site.findById(options.site, {transaction: t}).then(function(S) {
 
-      models.Site.findById(options.site, {transaction: t}).then(function(S) {
+      return options.Model.destroy({where: {site: options.site}, transaction: t}).then(function(destroyed) {
 
-        options.Model.destroy({where: {site: options.site}, transaction: t}).then(function(destroyed) {
+        return utils.spreadsheetParse(S.settings[options.setting]).spread(function (E, D) {
+          if(E)
+            throw E;
 
-          utils.spreadsheetParse(S.settings[options.setting]).spread(function (E, D) {
+          return Promise.all(_.map(D, function(DS) {
+            return new Promise(function(RSD, RJD) {
 
-            Promise.all(_.map(D, function(DS) {
-              return new Promise(function(RSD, RJD) {
-
-                // Allow custom data maping
-                return options.Model.create(
-                  _.chain(_.isFunction(options.mapper) ? options.mapper(DS) : DS)
+              // Allow custom data maping
+              return options.Model.create(
+                _.chain(_.isFunction(options.mapper) ? options.mapper(DS) : DS)
 
                   // All records belongs to certain domain
-                    .extend({site: options.site})
+                  .extend({site: options.site})
 
-                    .pairs()
+                  .pairs()
 
                   // User may mix up lower cased and upper cased field names
-                    .map(function(P) { return [P[0].toLowerCase(), P[1]]; })
+                  .map(function(P) { return [P[0].toLowerCase(), P[1]]; })
 
-                    .object()
-                    .value(),
-                  {transaction: t}).then(RSD).catch(RJD);
+                  .object()
+                  .value(),
+                {transaction: t}).then(RSD).catch(RJD);
+            });
+          }));
 
-              });
-            })).then(RS).catch(RJ);
-          });
         });
       });
     });
