@@ -147,4 +147,29 @@ describe('Data loaded from spread sheet into DB', function(){
       });
     });
   });
+
+  it('Dataset load failure', function(done) {
+    this.timeout(10000);
+
+    return models.Site.findById(siteID).then(function(S) {
+      utils.spreadsheetParse(S.settings.datasets).spread(function (E, D) {
+        loaders.loadTranslatedData({
+          // modify datasets to have duplicate ids
+          mapper : function(D) { return _.extend(D, {name: D.title, id: 'dataset'}); },
+          Model  : models.Dataset,
+          setting: 'datasets',
+          site   : siteID
+        }, models)
+        .catch(models.sequelize.UniqueConstraintError, function() {
+
+          models.Dataset.findAll({where: {site: siteID}}).then(function(datasets) {
+            assert.equal(D.length, datasets.length);
+            matchEntries(datasets, D, ['id', 'order', 'description']);
+            done();
+          });
+        });
+      });
+    });
+  });
+
 });
