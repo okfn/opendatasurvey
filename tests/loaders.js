@@ -148,7 +148,31 @@ describe('Data loaded from spread sheet into DB', function(){
     });
   });
 
-  it('Dataset load failure', function(done) {
+  it('Places not in the spreadsheet should be cleared out', function(done) {
+    this.timeout(10000);
+
+    models.Site.findById(siteID).then(function(S) {
+      models.Place.create({'id': 'place', site: 'site', name: 'name'}).then(function() {
+        utils.spreadsheetParse(S.settings.places).spread(function (E, P) {
+          loaders.loadTranslatedData({
+            Model: models.Place,
+            setting: 'places',
+            site: siteID
+          }, models).then(function() {
+            models.Place.findAll({where: {site: siteID}}).then(function(places) {
+
+              assert.equal(P.length, places.length);
+              matchEntries(places, P, ['id', 'name', 'slug']);
+
+              done();
+            });
+          });
+        });
+      });
+    });
+  });
+
+  it('Dataset load failure should rollback the transaction.', function(done) {
     this.timeout(10000);
 
     return models.Site.findById(siteID).then(function(S) {
