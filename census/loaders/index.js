@@ -81,32 +81,40 @@ var loadRegistry = function (models) {
 
 var loadData = function (options, models) {
 
-  return new Promise(function(RS, RJ) {
-    models.Site.findById(options.site).then(function(S) {
-      options.Model.destroy({where: {site: options.site}}).then(function(destroyed) {
-        utils.spreadsheetParse(S.settings[options.setting]).spread(function (E, D) {
-          if (E)
-            RJ(E);
+  return models.sequelize.transaction(function(t) {
+    return new Promise(function(RS, RJ) {
 
-          Promise.all(_.map(D, function(DS) { return new Promise(function(RSD, RJD) {
+      return models.Site.findById(options.site, {transaction: t}).then(function(S) {
 
-            // Allow custom data maping
-            options.Model.create(
-              _.chain(_.isFunction(options.mapper) ? options.mapper(DS) : DS)
+        return options.Model.destroy({where: {site: options.site}, transaction: t}).then(function(destroyed) {
 
-              // All records belongs to certain domain
-                .extend({site: options.site})
+          return new Promise(function(RSS, RJS) {
 
-                .pairs()
+            return utils.spreadsheetParse(S.settings[options.setting]).spread(function (E, D) {
 
-              // User may mix up lower cased and upper cased field names
-                .map(function(P) { return [P[0].toLowerCase(), P[1]]; })
+              return Promise.all(_.map(D, function(DS) {
+                return new Promise(function(RSD, RJD) {
 
-                .object()
-                .value()
-            ).then(RSD).catch(RJD);
+                  // Allow custom data maping
+                  return options.Model.create(
+                    _.chain(_.isFunction(options.mapper) ? options.mapper(DS) : DS)
 
-          }); })).then(RS).catch(RJ);
+                    // All records belongs to certain domain
+                      .extend({site: options.site})
+
+                      .pairs()
+
+                    // User may mix up lower cased and upper cased field names
+                      .map(function(P) { return [P[0].toLowerCase(), P[1]]; })
+
+                      .object()
+                      .value(),
+                    {transaction: t}).then(RSD).catch(RJD);
+
+                });
+              })).then(RS).catch(RJ);
+            }).then(RSS).catch(RJS);
+          });
         });
       });
     });
