@@ -87,7 +87,8 @@ var setupAuth = function () {
       .replace('SCHEME', config.get('connection_scheme'))
       .replace('SUB', config.get('auth_subdomain'))
       .replace('DOMAIN', config.get('base_domain'))
-      .replace('PATH', 'facebook/callback')
+      .replace('PATH', 'facebook/callback'),
+    profileFields: ['id', 'name', 'email', 'photos']
   }, function (accessToken, refreshToken, profile, done) {
 
     resolveProfile(profile, 'facebook', done);
