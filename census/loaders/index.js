@@ -81,31 +81,37 @@ var loadRegistry = function (models) {
 
 var loadData = function (options, models) {
 
-  return new Promise(function(RS, RJ) {
-    models.Site.findById(options.site).then(function(S) {
-      utils.spreadsheetParse(S.settings[options.setting]).spread(function (E, D) {
-        if (E)
-          RJ(E);
+  return models.sequelize.transaction(function(t) {
+    return models.Site.findById(options.site, {transaction: t}).then(function(S) {
 
-        Promise.all(_.map(D, function(DS) { return new Promise(function(RSD, RJD) {
+      return options.Model.destroy({where: {site: options.site}, transaction: t}).then(function(destroyed) {
 
-          // Allow custom data maping
-          options.Model.upsert(
-            _.chain(_.isFunction(options.mapper) ? options.mapper(DS) : DS)
+        return utils.spreadsheetParse(S.settings[options.setting]).spread(function (E, D) {
+          if(E)
+            throw E;
 
-            // All records belongs to certain domain
-              .extend({site: options.site})
+          return Promise.all(_.map(D, function(DS) {
+            return new Promise(function(RSD, RJD) {
 
-              .pairs()
+              // Allow custom data maping
+              return options.Model.create(
+                _.chain(_.isFunction(options.mapper) ? options.mapper(DS) : DS)
 
-            // User may mix up lower cased and upper cased field names
-              .map(function(P) { return [P[0].toLowerCase(), P[1]]; })
+                  // All records belongs to certain domain
+                  .extend({site: options.site})
 
-              .object()
-              .value()
-          ).then(RSD).catch(RJD);
+                  .pairs()
 
-        }); })).then(RS).catch(RJ);
+                  // User may mix up lower cased and upper cased field names
+                  .map(function(P) { return [P[0].toLowerCase(), P[1]]; })
+
+                  .object()
+                  .value(),
+                {transaction: t}).then(RSD).catch(RJD);
+            });
+          }));
+
+        });
       });
     });
   });
