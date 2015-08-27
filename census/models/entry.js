@@ -72,6 +72,12 @@ module.exports = function (sequelize, DataTypes) {
     }
   },
   {
+    tableName: 'entry',
+    indexes: [
+      {
+        fields: ['site']
+      }
+    ],
     instanceMethods: {
       isOpen: function() {
 
@@ -118,8 +124,7 @@ module.exports = function (sequelize, DataTypes) {
         });
 
       }
-    },
-    tableName: 'entry'
+    }
   });
 
   return Entry;

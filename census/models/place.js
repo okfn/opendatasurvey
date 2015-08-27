@@ -51,6 +51,11 @@ module.exports = function (sequelize, DataTypes) {
   },
   {
     tableName: 'place',
+    indexes: [
+      {
+        fields: ['site']
+      }
+    ],
     instanceMethods: {
       translated: mixins.translated,
       score: function(entries, questions) {
