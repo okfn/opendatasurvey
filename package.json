@@ -47,6 +47,7 @@
     "serve-favicon": "^2.2.1",
     "subdomain": "^1.2.0",
     "supertest-as-promised": "^2.0.2",
+    "throng": "^1.0.0",
     "umzug": "^1.6.0",
     "underscore": "^1.8.3",
     "validator": "^3.41.2"
@@ -76,7 +77,7 @@
     "migrate_submissions": "node scripts/submissions.js",
     "migrate_entries": "node scripts/entries.js",
     "migrate_users": "node scripts/users.js",
-    "start": "node census/app.js",
+    "start": "node server.js",
     "debug": "node-debug server.js",
     "test": "NODE_ENV=test mocha tests/ --patient"
   }
