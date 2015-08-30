@@ -33,7 +33,7 @@ var currentYear = new Date().getFullYear();
 var startYear = 2013;
 var availableYears = _.range(startYear, currentYear + 1);
 var rawSysAdmin = process.env.SYS_ADMIN || config.get('sysAdmin') || '';
-var sysAdmin = _.each(rawSysAdmin.split(','), function(e, i, l) {l[i] = e.trim(); return;});
+var sysAdmin = _.each(rawSysAdmin.split(','), function(e, i, l) { l[i] = e.trim(); return; });
 var subdomainOptions = {
   base: config.get('base_domain')
 };
