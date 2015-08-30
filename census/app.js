@@ -4,7 +4,7 @@ var _ = require('lodash');
 var path = require('path');
 var express = require('express');
 var subdomain = require('subdomain');
-var session = require('express-session');
+var session = require('cookie-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
@@ -80,13 +80,11 @@ app.use([
   bodyParser.json(),
   methodOverride(),
   session({
+    name: 'session',
     secret: sessionSecret,
-    resave: true,
-    saveUninitialized: true,
-    cookie: {
-      domain: '.BASE'.replace('BASE', config.get('base_domain').split(':')[0]),
-      maxAge: 1000*60*60*24*30*12    //one year(ish)
-    }}),
+    domain: '.BASE'.replace('BASE', config.get('base_domain').split(':')[0]),
+    maxAge: 1000 * 60 * 60 * 24 * 30 * 12 // one year(ish)
+  }),
   passport.initialize(),
   passport.session(),
   flash(),
