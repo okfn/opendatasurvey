@@ -117,7 +117,12 @@ var validateQuestion = function(req, question, parentValue, validated) {
     if (parentValue === "null" || parentValue === "false") {
       // validate falsy values
       if (validator.type === "string") {
-        req.checkBody(question, "You must not specify this field").equals("");
+        if (!question.id === 'format') {
+          // checking for format should be VERY temporary, we want this generic.
+          // just added to quickly solve https://github.com/okfn/opendatacensus/issues/677
+          // while waiting for this https://github.com/okfn/opendatacensus/issues/623
+          req.checkBody(question, "You must not specify this field").equals("");
+        }
       } else {
         req.checkBody(question, "You can specify only '" + parentValue + "'")
            .equals(parentValue);
