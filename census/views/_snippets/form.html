@@ -19,7 +19,7 @@
 {% macro question(qu) -%}
 <div class="span6">
   <h4 class="submission-label">{{qu.question}}</h4>
-  <input type="{{qu.type}}" title="{{qu.placeholder}}" name="{{qu.id}}" value="{% if formData %}{{ formData[qu.id] }}{% else %}{% endif %}{% if current %}{{current.answers[qu.id]}}{% endif %}" {% if canReview != true or reviewClosed %}disabled="disabled"{% endif %} placeholder="{{qu.placeholder}}" {% if qu.id=='format' %} list="formats" {% endif %} />
+  <input type="{{qu.type}}" title="{{qu.placeholder}}" name="{{qu.id}}" value="{% if formData %}{{ formData[qu.id] }}{% elif current %}{{current.answers[qu.id]}}{% endif %}" {% if canReview != true or reviewClosed %}disabled="disabled"{% endif %} placeholder="{{qu.placeholder}}" {% if qu.id=='format' %} list="formats" {% endif %} />
 </div>
 <div class="span6">
   {{ currentEntry(qu) }}
