@@ -1216,7 +1216,7 @@ td.dependant {width:924px !important;}/*Setting the width of column 3.*/
 .submission-info, .submission-dependant {
     float: left;
     min-height: 72px;
-    padding-top: 2em;
+    padding-bottom: 2em;
 }
 
 .head .submission-question, .head .submission-option, .head .submission-current,
@@ -1414,7 +1414,6 @@ table.faq-table tr td:first-child {
 
 a.readmore-js-toggle {
     text-decoration: none;
-
 }
 
 a.readmore-js-toggle:hover {
@@ -1422,9 +1421,7 @@ a.readmore-js-toggle:hover {
 }
 
 .readmore-js-toggle {
-    position: absolute;
-    top: 0;
-    right: 0;
+    float: right;
     background-color: grey;
     color: white;
     height: 1.5em;
