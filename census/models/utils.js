@@ -161,7 +161,7 @@ var processPlaces = function(data, options) {
       _.each(data.places, function(p) {
         p.computedScore = p.score(data.entries, data.questions);
       });
-      data.places = _.sortByOrder(translateSet(options.locale, data.places), 'computedScore', 'desc');
+      data.places = rankPlaces(_.sortByOrder(translateSet(options.locale, data.places), 'computedScore', 'desc'));
     }
   }
   return data;
@@ -208,6 +208,27 @@ var processData = function (result) {
  */
 var getData = function(options) {
   return queryData(options).then(processData);
+};
+
+/**
+ * Do leaderboard ranking on places by computedScore. Places MUST be ordered
+ * by descending score. Tied places have equal rank.
+ */
+var rankPlaces = function(places) {
+  var lastScore = null,
+      lastRank = 0;
+
+  _.each(places, function(p, i) {
+    if (lastScore === p.computedScore) {
+      p.rank = lastRank;
+    } else {
+      p.rank = i+1;
+    }
+    lastRank = p.rank;
+    lastScore = p.computedScore;
+  });
+
+  return places;
 };
 
 

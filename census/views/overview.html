@@ -74,7 +74,7 @@
        data-score="{{place.computedScore}}"
        data-place="{{place.id}}"
        data-placename="{{place.name}}">
-      <td>{{ loop.index }}</td>
+      <td>{{ place.rank }}</td>
       <th class="place-name">
         {% if place %}
         <a href="/place/{{ place.id }}{{ urlContext }}">{{place.name}}</a>
