@@ -45,6 +45,7 @@ information.
 
 ###Before the event
 A little preparation will go a long way to ensuring your event is a success.
+
 - If you can, organize more experienced participants into a facilitators team. 
 Think about what you need from facilitators or coaches in advance. Again, they don’t need to be experts, just willing to be a servant leader and commit to seeing tasks through in a small group.
 - Walk through an example from the contribution tutorial and think about any learning materials you need in your local context. 
@@ -52,6 +53,7 @@ Think about what you need from facilitators or coaches in advance. Again, they d
 
 ###Promote your event
 Get the word out to attract a good audience.
+
 - You may want to promote through the central OK Twitter, Facebook and Google+ accounts – please contact Mor, our community coordinator at mor.rubinstein@okfn.org
 Promote the event through your social networks.
 - The hashtag is #GODI15 this year. Consider if you need another local hashtag for the event. Communicate both clearly in your promotions.
@@ -61,6 +63,7 @@ Promote the event through your social networks.
 
 ###At the event
 Make sure everyone feels welcome to participate.
+
 - Everyone should get a name sticker.
 - If the number of attendees is lower than twenty people (otherwise it would too long), it’s nice to go around the room getting people to introduce themselves and what they are interested in.
 - Set up a Post-It wall or public Google Doc/ Etherpad where anyone can input ideas, feedback and points onto during the event - this engages less vocal participants in an unintimidating fashion and allows them to share their views too!
