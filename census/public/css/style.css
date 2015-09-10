@@ -993,7 +993,7 @@ table.response-summary td.unknown {
 	background-color: gray;
 }
 
-table.response-summary td {
+table.response-summary td.showpopover {
 	cursor: pointer;
 }
 
