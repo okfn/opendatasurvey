@@ -2,14 +2,14 @@ jQuery(document).ready(function($) {
 
   var fields = {
     exists: {
-      require: ["digital", "public", "uptodate"]
+      require: ["digital", "public", "uptodate"],
+      optional: ["publisher", "officialtitle"]
     },
     digital: {
       require: ["online", "machinereadable", "bulk"]
     },
     public: {
       require: ["free"],
-      optional: ["publisher", "officialtitle"],
       expectFalse: ["online", "bulk"]
     },
     free: {
