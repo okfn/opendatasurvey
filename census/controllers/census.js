@@ -281,7 +281,7 @@ var reviewPost = function (req, res) {
 
         result.save().then(function() {
 
-          if (ex) {
+          if (ex && ex.year === result.year) {
 
             if (acceptSubmission) {
               ex.isCurrent = false;
