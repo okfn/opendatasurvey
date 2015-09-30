@@ -19,7 +19,7 @@ var dashboard = function (req, res) {
   modelUtils.getData(dataOptions)
     .then(function(data) {
       res.render('admin.html', data);
-  }).catch(console.log.bind(console));
+  }).catch(console.trace.bind(console));
 };
 
 

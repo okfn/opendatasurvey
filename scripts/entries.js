@@ -160,12 +160,12 @@ utils.loadData({
   Promise.each(matches, function(m) {
 
     if (m.saveStrategy === 'create') {
-      return models.Entry.create(m.toSave).then(function(r){console.log('created');}).catch(console.log.bind(console));
+      return models.Entry.create(m.toSave).then(function(r){console.log('created');}).catch(console.trace.bind(console));
     } else {
       // update
-      return m.toSave.save().then(function(r) {console.log('updated');}).catch(console.log.bind(console));
+      return m.toSave.save().then(function(r) {console.log('updated');}).catch(console.trace.bind(console));
     }
 
   });
 
-}).catch(console.log.bind(console));
+}).catch(console.trace.bind(console));
