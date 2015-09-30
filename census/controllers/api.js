@@ -30,6 +30,52 @@ var outputItemsAsCsv = function (response, items, mapper, columns) {
   stringify.pipe(response);
 };
 
+var questions = function (req, res) {
+  var format = req.params.format;
+  var entries = req.app.get('models').Question.findAll({
+    where: {
+      site: req.params.domain
+    }
+  });
+
+  entries.then(function(results) {
+    var columns = {
+      id: 'ID',
+      site: 'Census ID',
+      question: 'Question',
+      description: 'Description',
+      type: 'Type',
+      placeholder: 'Placeholder',
+      score: 'Score',
+      order: 'Order'
+    };
+
+    switch(format) {
+      case 'json': {
+        var mapper = function(item) {
+          var result = {};
+          for (var name in columns) {
+            if (columns.hasOwnProperty(name)) {
+              result[name] = item[name];
+            }
+          }
+          return result;
+        };
+        outputItemsAsJson(res, results, mapper);
+        break;
+      }
+      case 'csv': {
+        outputItemsAsCsv(res, results, null, columns);
+        break;
+      }
+      default: {
+        res.send(404);
+        break;
+      }
+    }
+  }).catch(console.trace.bind(console));
+};
+
 var datasets = function (req, res) {
   var format = req.params.format;
   var entries = req.app.get('models').Dataset.findAll({
@@ -201,5 +247,6 @@ var entries = function (req, res) {
 module.exports = {
   entries: entries,
   datasets: datasets,
-  places: places
+  places: places,
+  questions: questions
 };
