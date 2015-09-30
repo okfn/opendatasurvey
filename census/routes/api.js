@@ -14,6 +14,7 @@ var apiRoutes = function(coreMiddlewares) {
   router.use(coreMiddlewares);
 
   router.get(utils.scoped('/entries.:format'), coreMixins, api.api);
+  router.get(utils.scoped('/entries/:year.:format'), coreMixins, api.api);
 
   return router;
 
