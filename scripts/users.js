@@ -43,7 +43,7 @@ csv.parse(fileData, {columns: true}, function(E, D) {
             console.log('success on user migration');
             console.log(R.emails);
 
-          }).catch(console.log.bind(console));
+          }).catch(console.trace.bind(console));
       });
 
     });

@@ -16,7 +16,7 @@ var loadData = function(promises) {
 
   }))
     .then(function(V) {return _.object(V);})
-    .catch(console.log.bind(console));
+    .catch(console.trace.bind(console));
 };
 
 
