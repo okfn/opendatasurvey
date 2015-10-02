@@ -16,7 +16,7 @@ jQuery(document).ready(function($) {
   });
 
   $choiceSwitches.on('click', function() {
-      manageDependants($(this));
+      manageDependants($(this), false);
       answerDiff($(this));
       $('.readmore').readmore(readmoreConfig);
   });
@@ -27,8 +27,8 @@ jQuery(document).ready(function($) {
 
   function initializeDependants($els) {
       $els.each(function(index) {
-          if ($(this).hasClass('true') && $(this).is(':checked')) {
-              manageDependants($(this));
+          if ($(this).is(':checked')) {
+              manageDependants($(this), true);
           }
       });
   }
@@ -47,17 +47,28 @@ jQuery(document).ready(function($) {
       });
   }
 
-  function manageDependants($el) {
+  function manageDependants($el, isInit) {
       var $dependants = $el.parent().siblings('.submission-dependant'),
           $dependant_inputs = $dependants.find(':input');
 
       if ($el.hasClass('true') && $el.is(':checked')) {
           $dependants.show();
       } else {
-          $dependants.hide();
-          $dependant_inputs.each(function(index) {
-              $(this).removeAttr('value');
-          });
+          var hideInputs = true;
+          if (isInit) {
+              $dependants.each(function(index) {
+                  if ($(this).find(':input').val()) {
+                      hideInputs = false;
+                      $(this).show();
+                  };
+              });
+          }
+          if (hideInputs) {
+              $dependants.hide();
+              $dependant_inputs.each(function(index) {
+                  $(this).removeAttr('value');
+              });
+          }
       }
   }
 
@@ -194,5 +205,4 @@ jQuery(document).ready(function($) {
   initializeAnswerDiff($choiceSwitches);
   initializeInputDiff($dataInputs);
   $('.readmore').readmore(readmoreConfig);
-
 });
