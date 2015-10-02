@@ -92,10 +92,8 @@ jQuery(document).ready(function($) {
         $input.filter('[value=' + value + ']').prop('checked', true);
       } else {
         $input.val('');
-        if (resetrequired) {
+        if (resetrequired)
           $input.prop('required', false);
-          $input.prev('h4').removeClass('required');
-        }
       }
     }, expectFalse);
   }
@@ -105,10 +103,6 @@ jQuery(document).ready(function($) {
       var $input = getInput(child);
       if (!$input.is('[type=radio]')) {
         $input.prop('required', value);
-        if (value)
-          $input.prev('h4').addClass('required');
-        else
-          $input.prev('h4').removeClass('required');
       }
     });
   }
