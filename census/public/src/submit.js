@@ -1,190 +1,94 @@
 jQuery(document).ready(function($) {
 
-  var fields = {
-    exists: {
-      require: ["digital", "public", "uptodate"],
-      optional: ["publisher", "officialtitle"]
-    },
-    digital: {
-      require: ["online", "machinereadable", "bulk"],
-      expectFalse: ["online", "machinereadable", "bulk"]
-    },
-    public: {
-      require: ["free"],
-      optional: ["publisher", "officialtitle"],
-      expectFalse: ["free", "online", "openlicense", "bulk"]
-    },
-    free: {
-      require: ["openlicense"],
-      expectFalse: ["openlicense"]
-    },
-    online: {
-      require: ["url"]
-    },
-    openlicense: {
-      require: ["licenseurl"]
-    },
-    machinereadable: {
-      require: ["format"]
-    },
-    bulk: {
-    },
-    uptodate: {
-    },
-    publisher: {
-      type: "dependant"
-    },
-    officialtitle: {
-      type: "dependant"
-    },
-    format: {
-      type: "dependant"
-    },
-    url: {
-      type: "dependant"
-    },
-    licenseurl: {
-      type: "dependant"
-    }
-  };
-
   var $yninputs = $('.yntable .js-dependent'),
-      $existsInput = $('input[name="exists"]'),
       $choiceSwitches = $('.true, .false, .null'),
-      $radioInputs = $('.yntable input[type="radio"]'),
-      $dataInputs = $('input[type=text], input[type=url]'),
+      $dataInputs = $('input[type=text], input[type=url]');
+      $existsInput = $('input[name="exists"]'),
       readmoreConfig = {
-        maxHeight: 58,
-        embedCSS: false,
-        moreLink: '<a href="#">Show more</a>',
-        lessLink: '<a href="#">Hide</a>'
+          maxHeight: 58,
+          embedCSS: false,
+          moreLink: '<a href="#">Show more</a>',
+          lessLink: '<a href="#">Hide</a>'
       };
 
-  function getInput(question) {
-    return $('.yntable input[name=' + question + ']');
-  }
-
-  function getRow(question) {
-    var row = fields[question].type === "dependant" ?
-          ".submission-dependant" : ".submission-row";
-    return getInput(question).closest(row);
-  }
-
-  function getChildren(question){
-    var field = fields[question];
-    return (field.require || []).concat(field.optional || []);
-  }
-
-  function iterateOverChildren(question, callback) {
-    $.each(getChildren(question), function(i, child) {
-      callback(child);
-      iterateOverChildren(child, callback);
-    });
-  }
-
-  function resetRecursively(question, value, resetrequired) {
-    iterateOverChildren(question, function(child, required) {
-      var $input = getInput(child);
-      if ($input.is('[type=radio]')) {
-        $input.filter('[value=' + value + ']').prop('checked', true);
-      } else {
-        $input.val('');
-        if (resetrequired)
-          $input.prop('required', false);
-      }
-    });
-  }
-
-  function makeInputsRequired(question, value) {
-    $.each(fields[question].require || [], function(i, child) {
-      var $input = getInput(child);
-      if (!$input.is('[type=radio]')) {
-        $input.prop('required', value);
-      }
-    });
-  }
-
-  function answerChanged($input) {
-    var name = $input.attr('name'),
-        val = $('.yntable input[name=' + name + ']:checked').val();
-
-    if (val === "true") {
-      resetRecursively(name, "null");
-      makeInputsRequired(name, true);
-      $.each(getChildren(name), function(i, question) {
-        getRow(question).slideDown();
-      });
-    } else if (val === "false" || val === "null") {
-      resetRecursively(name, val, true);
-      iterateOverChildren(name, function(question) {
-        getRow(question).slideUp();
-      });
-    }
-  }
-
-  $radioInputs.on('click', function() {
-    answerChanged($(this));
+  $existsInput.change(function() {
+    showHideAvailabilityTable();
   });
 
   $choiceSwitches.on('click', function() {
+      manageDependants($(this));
       answerDiff($(this));
       $('.readmore').readmore(readmoreConfig);
   });
 
   $dataInputs.on('keyup', function () {
-    inputDiff($(this));
+     inputDiff($(this));
   });
 
   function initializeDependants($els) {
-    $els.each(function(index) {
-      if ($(this).hasClass('true') && $(this).is(':checked')) {
-        manageDependants($(this));
-      }
-    });
+      $els.each(function(index) {
+          if ($(this).hasClass('true') && $(this).is(':checked')) {
+              manageDependants($(this));
+          }
+      });
   }
 
   function initializeAnswerDiff($els) {
-    $els.each(function(index) {
-      if ($(this).is(':checked')) {
-        answerDiff($(this));
-      }
-    });
+       $els.each(function(index) {
+          if ($(this).is(':checked')) {
+              answerDiff($(this));
+          }
+      });
   }
 
   function initializeInputDiff($els) {
-    $els.each(function(index) {
-      inputDiff($(this));
-    });
+      $els.each(function(index) {
+          inputDiff($(this));
+      });
+  }
+
+  function manageDependants($el) {
+      var $dependants = $el.parent().siblings('.submission-dependant'),
+          $dependant_inputs = $dependants.find(':input');
+
+      if ($el.hasClass('true') && $el.is(':checked')) {
+          $dependants.show();
+      } else {
+          $dependants.hide();
+          $dependant_inputs.each(function(index) {
+              $(this).removeAttr('value');
+          });
+      }
   }
 
   function answerDiff($el) {
-    var $currentEntry = $el.parent().siblings('.submission-current').first(),
-        currentValue = $currentEntry.text().trim(),
-        diff_msg = 'The new value differs from the one currently on record.',
-        diff_bg = '#EFED8A';
+      var $currentEntry = $el.parent().siblings('.submission-current').first(),
+          currentValue = $currentEntry.text().trim(),
+          diff_msg = 'The new value differs from the one currently on record.',
+          diff_bg = '#EFED8A';
 
-    if ($.inArray(currentValue, ['true', 'false', 'null']) !== -1  &&
-        !$el.hasClass(currentValue) && $el.is(':checked')) {
-      $el.attr('title', diff_msg).parent().attr('title', diff_msg).css({'cursor': 'pointer', 'backgroundColor': diff_bg});
-      $el.parent().siblings().removeAttr('title').css('backgroundColor', '').find('input[type=radio]').removeAttr('title').css({'cursor': 'auto', 'backgroundColor': ''});
+      if ($.inArray(currentValue, ['true', 'false', 'null']) !== -1  &&
+          !$el.hasClass(currentValue) && $el.is(':checked')) {
+          $el.attr('title', diff_msg).parent().attr('title', diff_msg).css({'cursor': 'pointer', 'backgroundColor': diff_bg});
+          $el.parent().siblings().removeAttr('title').css('backgroundColor', '').find('input[type=radio]').removeAttr('title').css({'cursor': 'auto', 'backgroundColor': ''});
 
-    } else {
-      $el.parent().siblings().removeAttr('title').css('backgroundColor', '').find('input[type=radio]').removeAttr('title').css({'cursor': 'auto', 'backgroundColor': ''});
-    }
+      } else {
+          $el.parent().siblings().removeAttr('title').css('backgroundColor', '').find('input[type=radio]').removeAttr('title').css({'cursor': 'auto', 'backgroundColor': ''});
+      }
   }
 
   function inputDiff($el) {
-    var $currentEntry = $el.closest('.submission-dependant').find('.current-entry-value').first(),
-        currentValue = $currentEntry.text().trim(),
-        thisValue = $el.val().trim(),
-        diff_msg = 'The new value differs from the one currently on record.',
-        diff_bg = '#EFED8A';
+      var $currentEntry = $el.closest('.submission-dependant').find('.current-entry-value').first(),
+          currentValue = $currentEntry.text().trim(),
+          thisValue = $el.val().trim(),
+          diff_msg = 'The new value differs from the one currently on record.',
+          diff_bg = '#EFED8A';
 
-    if (thisValue && currentValue !== $el.val().trim()) {
-      $el.attr('title', diff_msg).css('backgroundColor', diff_bg);
-    } else {
-      $el.attr('title', '').css('backgroundColor', '');
-    }
+      if (thisValue && currentValue !== $el.val().trim()) {
+          $el.attr('title', diff_msg).css('backgroundColor', diff_bg);
+      } else {
+          $el.attr('title', '').css('backgroundColor', '');
+      }
   }
 
   function showHideAvailabilityTable() {
@@ -197,6 +101,40 @@ jQuery(document).ready(function($) {
       $yninputs.hide().removeClass('hide').slideDown();
     } // else do nothing
   }
+
+  function publicAndOnline() {
+    var public = $('input[name=public]:checked').val() === 'true'
+      , online = $('input[name=online]:checked').val() === 'true'
+      , $url = $('input[name=url]')
+      , $header = $url.prev('h4')
+      ;
+
+    if (public && online) {
+      $url.attr('required', 'required');
+      $header.addClass('required');
+    } else {
+      $url.removeAttr('required');
+      $header.removeClass('required');
+    }
+  }
+
+  function openLicense() {
+    var open = $('input[name=openlicense]:checked').val() === 'true'
+      , $url = $('input[name=licenseurl]')
+      , $header = $url.prev('h4')
+      ;
+
+    if (open) {
+      $url.attr('required', 'required');
+      $header.addClass('required');
+    } else {
+      $url.removeAttr('required');
+      $header.removeClass('required');
+    }
+  }
+
+  $('input[name=public], input[name=online]').change(publicAndOnline);
+  $('input[name=openlicense]').change(openLicense);
 
   var $select = $('#dataset-select');
   $select.change(function(e) {
@@ -216,21 +154,21 @@ jQuery(document).ready(function($) {
     // the comment field before submitting
     $('#toggle-markdown-preview').click(function() {
 
-      var user_input = $('#details').val(),
-          $preview_pane = $('#markdown-preview'),
-          $edit_pane = $('#details'),
-          show_preview_msg = 'Show Markdown Preview',
-          hide_preview_msg = 'Hide Markdown Preview';
+        var user_input = $('#details').val(),
+            $preview_pane = $('#markdown-preview'),
+            $edit_pane = $('#details'),
+            show_preview_msg = 'Show Markdown Preview',
+            hide_preview_msg = 'Hide Markdown Preview';
 
-      $preview_pane.toggle().html(marked(user_input));
+        $preview_pane.toggle().html(marked(user_input));
 
-      if ($preview_pane.is(':visible')) {
-        $(this).html(hide_preview_msg);
-        $edit_pane.attr('disabled', 'disabled');
-      } else {
-        $(this).html(show_preview_msg);
-        $edit_pane.removeAttr('disabled', 'disabled');
-      }
+        if ($preview_pane.is(':visible')) {
+            $(this).html(hide_preview_msg);
+            $edit_pane.attr('disabled', 'disabled')
+        } else {
+            $(this).html(show_preview_msg);
+            $edit_pane.removeAttr('disabled', 'disabled')
+        }
 
     });
 
@@ -238,18 +176,21 @@ jQuery(document).ready(function($) {
 
   // POSTDOWN
   (function () {
-    var help = function () { return window.open("http://stackoverflow.com/editing-help", "_blank"); },
-        options = {
+      var help = function () { return window.open("http://stackoverflow.com/editing-help", "_blank"); },
+      options = {
           helpButton: { handler: help }
-        };
-    var mdConverter = Markdown.getSanitizingConverter();
-    var mdEditor = new Markdown.Editor(mdConverter, null, options);
-    mdEditor.run();
+      };
+      var mdConverter = Markdown.getSanitizingConverter();
+      var mdEditor = new Markdown.Editor(mdConverter, null, options);
+      mdEditor.run();
   })();
 
+  publicAndOnline();
+  openLicense();
   showHideAvailabilityTable();
   showCurrentDatasetInfo();
   enableMarkdownPreview();
+  initializeDependants($choiceSwitches);
   initializeAnswerDiff($choiceSwitches);
   initializeInputDiff($dataInputs);
   $('.readmore').readmore(readmoreConfig);
