@@ -6,14 +6,17 @@ jQuery(document).ready(function($) {
       optional: ["publisher", "officialtitle"]
     },
     digital: {
-      require: ["online", "machinereadable", "bulk"]
+      require: ["online", "machinereadable", "bulk"],
+      expectFalse: ["online", "machinereadable", "bulk"]
     },
     public: {
       require: ["free"],
-      expectFalse: ["online", "bulk"]
+      optional: ["publisher", "officialtitle"],
+      expectFalse: ["free", "online", "openlicense", "bulk"]
     },
     free: {
-      require: ["openlicense"]
+      require: ["openlicense"],
+      expectFalse: ["openlicense"]
     },
     online: {
       require: ["url"]
@@ -67,25 +70,19 @@ jQuery(document).ready(function($) {
     return getInput(question).closest(row);
   }
 
-  function getChildren(question, expectFalse){
-    /**
-     * Get all "children" questions from required & optional lists.
-     * If expectFalse is truthy also include questions from expectFalse list.
-     */
-    var expectFalse = expectFalse || false,
-        field = fields[question];
-    return (field.require || []).concat(
-      field.optional || [], expectFalse && field.expectFalse || []);
+  function getChildren(question){
+    var field = fields[question];
+    return (field.require || []).concat(field.optional || []);
   }
 
-  function iterateOverChildren(question, callback, expectFalse) {
-    $.each(getChildren(question, expectFalse), function(i, child) {
+  function iterateOverChildren(question, callback) {
+    $.each(getChildren(question), function(i, child) {
       callback(child);
-      iterateOverChildren(child, callback, expectFalse);
+      iterateOverChildren(child, callback);
     });
   }
 
-  function resetRecursively(question, value, resetrequired, expectFalse) {
+  function resetRecursively(question, value, resetrequired) {
     iterateOverChildren(question, function(child, required) {
       var $input = getInput(child);
       if ($input.is('[type=radio]')) {
@@ -95,7 +92,7 @@ jQuery(document).ready(function($) {
         if (resetrequired)
           $input.prop('required', false);
       }
-    }, expectFalse);
+    });
   }
 
   function makeInputsRequired(question, value) {
@@ -107,55 +104,21 @@ jQuery(document).ready(function($) {
     });
   }
 
-  function getParent(question) {
-    for (var name in fields) {
-      if ((fields[name].require || []).indexOf(question) !== -1) {
-        return name;
-      }
-    }
-    return null;
-  }
-
-  function resolvePositiveAnswer(question) {
-    resetRecursively(question, "null");
-    makeInputsRequired(question, true);
-    $.each(getChildren(question), function(i, child) {
-      getRow(child).slideDown();
-    });
-  }
-
-  function resolveNegativeAnswer(question, val) {
-    var expectFalse = val === "false";
-    resetRecursively(question, val, true, expectFalse);
-    iterateOverChildren(question, function(child) {
-      getRow(child).slideUp();
-    }, expectFalse);
-  }
-
-  function maybeUnhideSomeQuestions(question) {
-    // unhide previously hidden questions
-    $.each(fields[question].expectFalse, function(i, child) {
-      var parent = getParent(child),
-          $parentInput = getInput(parent),
-          parentVal = $parentInput.filter(':checked').val();
-      if (parentVal == "true") {
-        resolvePositiveAnswer(parent);
-      }
-    });
-  }
-
   function answerChanged($input) {
     var name = $input.attr('name'),
-        val = $('.yntable input[name=' + name + ']:checked').val(),
-        expectFalse = val === "false";
+        val = $('.yntable input[name=' + name + ']:checked').val();
 
     if (val === "true") {
-      resolvePositiveAnswer(name);
+      resetRecursively(name, "null");
+      makeInputsRequired(name, true);
+      $.each(getChildren(name), function(i, question) {
+        getRow(question).slideDown();
+      });
     } else if (val === "false" || val === "null") {
-      resolveNegativeAnswer(name, val);
-    }
-    if (val !== "false" && fields[name].expectFalse) {
-      maybeUnhideSomeQuestions(name);
+      resetRecursively(name, val, true);
+      iterateOverChildren(name, function(question) {
+        getRow(question).slideUp();
+      });
     }
   }
 
