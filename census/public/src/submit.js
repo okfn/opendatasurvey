@@ -128,16 +128,14 @@ jQuery(document).ready(function($) {
     $.each(getChildren(question), function(i, child) {
       getRow(child).slideDown();
     });
-    ensureZebraStripping();
   }
 
   function resolveNegativeAnswer(question, val) {
     var expectFalse = val === "false";
     resetRecursively(question, val, true, expectFalse);
     iterateOverChildren(question, function(child) {
-      getRow(child).removeClass('shown').slideUp();
+      getRow(child).slideUp();
     }, expectFalse);
-    ensureZebraStripping();
   }
 
   function maybeUnhideSomeQuestions(question) {
@@ -179,14 +177,6 @@ jQuery(document).ready(function($) {
   $dataInputs.on('keyup', function () {
     inputDiff($(this));
   });
-
-  function ensureZebraStripping() {
-    $(".submission-row:visible").removeClass('odd').each(function(i) {
-      if (i % 2) {
-        $(this).addClass('odd');
-      }
-    });
-  }
 
   function initializeDependants($els) {
     $els.each(function(index) {
@@ -301,7 +291,6 @@ jQuery(document).ready(function($) {
   })();
 
   showHideAvailabilityTable();
-  ensureZebraStripping();
   showCurrentDatasetInfo();
   enableMarkdownPreview();
   initializeAnswerDiff($choiceSwitches);
