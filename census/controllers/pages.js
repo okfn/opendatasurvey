@@ -66,25 +66,6 @@ var about = function (req, res) {
 };
 
 
-var resultJson = function (req, res) {
-  var where = {
-    site: req.params.domain,
-    isCurrent: true
-  };
-  if (req.params.year) {
-    where.year = req.params.year;
-  }
-  var entries = req.app.get('models').Entry.findAll({
-    where: where
-  });
-
-  entries.then(function(results){
-    res.json(results);
-  }).catch(console.trace.bind(console));
-
-};
-
-
 var overview = function (req, res) {
 
   /**
@@ -189,7 +170,6 @@ module.exports = {
   contribute: contribute,
   tutorial: tutorial,
   changes: changes,
-  resultJson: resultJson,
   place: place,
   dataset: dataset,
   entry: entry
