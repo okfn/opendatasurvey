@@ -221,6 +221,9 @@ ul.availability.icons.large li:last-of-type {
 
 .data-icon-wrapper {
 	position: relative;
+}
+
+.data-icon-text {
 	padding-left: 28px;
 }
 
@@ -1285,6 +1288,9 @@ td.dependant {width:924px !important;}/*Setting the width of column 3.*/
 }
 
 .submission-dependant .current-entry-value {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
     height: 2em;
     line-height: 2em;
 }
