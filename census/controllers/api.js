@@ -1,14 +1,16 @@
 'use strict';
 
 var csv = require('csv');
-var lodash = require('lodash');
+var _ = require('lodash');
 var moment = require('moment');
+var utils = require('./utils');
+var modelUtils = require('../models').utils;
 
 var outputItemsAsJson = function(response, items, mapper) {
-  if (lodash.isFunction(mapper)) {
-    items = lodash.map(items, mapper);
+  if (_.isFunction(mapper)) {
+    items = _.map(items, mapper);
   }
-  response.json(items);
+  response.json({count: items.length, results: items});
 };
 
 var outputItemsAsCsv = function (response, items, mapper, columns) {
@@ -18,12 +20,12 @@ var outputItemsAsCsv = function (response, items, mapper, columns) {
     quoted: true,
     rowDelimiter: 'unix'
   };
-  if (lodash.isObject(columns)) {
+  if (_.isArray(columns)) {
     options.header = true;
     options.columns = columns;
   }
-  if (lodash.isFunction(mapper)) {
-    items = lodash.map(items, mapper);
+  if (_.isFunction(mapper)) {
+    items = _.map(items, mapper);
   }
   var stringify = csv.stringify(items, options);
   response.header('Content-Type', 'text/csv');
@@ -32,33 +34,28 @@ var outputItemsAsCsv = function (response, items, mapper, columns) {
 
 var questions = function (req, res) {
   var format = req.params.format;
-  var entries = req.app.get('models').Question.findAll({
-    where: {
-      site: req.params.domain
-    }
-  });
+  var query = req.app.get('models').Question
+        .findAll(modelUtils.siteQuery(req.params.domain));
 
-  entries.then(function(results) {
-    var columns = {
-      id: 'ID',
-      site: 'Census ID',
-      question: 'Question',
-      description: 'Description',
-      type: 'Type',
-      placeholder: 'Placeholder',
-      score: 'Score',
-      order: 'Order'
-    };
+  query.then(function(results) {
+    var columns = [
+      'id',
+      'site',
+      'question',
+      'description',
+      'type',
+      'placeholder',
+      'score',
+      'order'
+    ];
 
     switch(format) {
       case 'json': {
         var mapper = function(item) {
           var result = {};
-          for (var name in columns) {
-            if (columns.hasOwnProperty(name)) {
-              result[name] = item[name];
-            }
-          }
+          _.each(columns, function(name) {
+            result[name] = item[name];
+          });
           return result;
         };
         outputItemsAsJson(res, results, mapper);
@@ -78,31 +75,26 @@ var questions = function (req, res) {
 
 var datasets = function (req, res) {
   var format = req.params.format;
-  var entries = req.app.get('models').Dataset.findAll({
-    where: {
-      site: req.params.domain
-    }
-  });
+  var query = req.app.get('models').Dataset
+        .findAll(modelUtils.siteQuery(req.params.domain));
 
-  entries.then(function(results) {
-    var columns = {
-      id: 'ID',
-      site: 'Census ID',
-      name: 'Name',
-      description: 'Description',
-      category: 'Category',
-      order: 'Order'
-    };
+  query.then(function(results) {
+    var columns = [
+      'id',
+      'site',
+      'name',
+      'description',
+      'category',
+      'order'
+    ];
 
     switch(format) {
       case 'json': {
         var mapper = function(item) {
           var result = {};
-          for (var name in columns) {
-            if (columns.hasOwnProperty(name)) {
-              result[name] = item[name];
-            }
-          }
+          _.each(columns, function(name) {
+            result[name] = item[name];
+          });
           return result;
         };
         outputItemsAsJson(res, results, mapper);
@@ -122,31 +114,26 @@ var datasets = function (req, res) {
 
 var places = function (req, res) {
   var format = req.params.format;
-  var entries = req.app.get('models').Place.findAll({
-    where: {
-      site: req.params.domain
-    }
-  });
+  var query = req.app.get('models').Place
+        .findAll(modelUtils.siteQuery(req.params.domain));
 
-  entries.then(function(results) {
-    var columns = {
-      id: 'ID',
-      site: 'Census ID',
-      name: 'Name',
-      slug: 'Slug',
-      region: 'Region',
-      continent: 'Continent'
-    };
+  query.then(function(results) {
+    var columns = [
+      'id',
+      'site',
+      'name',
+      'slug',
+      'region',
+      'continent'
+    ];
 
     switch(format) {
       case 'json': {
         var mapper = function(item) {
           var result = {};
-          for (var name in columns) {
-            if (columns.hasOwnProperty(name)) {
-              result[name] = item[name];
-            }
-          }
+          _.each(columns, function(name) {
+            result[name] = item[name];
+          });
           return result;
         };
         outputItemsAsJson(res, results, mapper);
@@ -165,74 +152,85 @@ var places = function (req, res) {
 };
 
 var entries = function (req, res) {
-  var format = req.params.format;
-  var where = {
-    site: req.params.domain,
-    isCurrent: true
-  };
-  if (req.params.year) {
-    where.year = req.params.year;
-  }
-  var entries = req.app.get('models').Entry.findAll({
-    where: where
-  });
+  var format = req.params.format,
+      strategy = req.params.strategy,
+      dataOptions = _.merge(
+        modelUtils.getDataOptions(req),
+        {
+          cascade: false,
+          with: {Dataset: false, Place: false, Question: false}
+        }
+      );
 
-  entries.then(function(results) {
+  if (strategy === 'cascade') {
+    dataOptions = _.merge(dataOptions, {cascade: true});
+  }
+
+  modelUtils.getData(dataOptions)
+    .then(function(data) {
+      var results = data.entries,
+          mapper = function(item) {
+            var answers = utils.ynuAnswers(item.answers || {});
+            return {
+              id: item.id,
+              site: item.site,
+              timestamp: moment(item.createdAt).format('YYYY-MM-DDTHH:mm:ss'),
+              year: item.year,
+              place: item.place,
+              dataset: item.dataset,
+              exists: answers.exists,
+              digital: answers.digital,
+              public: answers.public,
+              online: answers.online,
+              free: answers.free,
+              machinereadable: answers.machinereadable,
+              bulk: answers.bulk,
+              openlicense: answers.openlicense,
+              uptodate: answers.uptodate,
+              url: answers.url,
+              format: answers.format,
+              licenseurl: answers.licenseurl,
+              dateavailable: answers.dateavailable,
+              officialtitle: answers.officialtitle,
+              publisher: answers.publisher,
+              details: item.details,
+              submitter: item.Submitter ? item.Submitter.fullName() : '',
+              reviewer: item.Reviewer ? item.Reviewer.fullName() : ''
+            };
+          };
+
     switch(format) {
       case 'json': {
-        outputItemsAsJson(res, results);
+        outputItemsAsJson(res, results, mapper);
         break;
       }
       case 'csv': {
-        var columns = {
-          censusid: 'Census ID',
-          timestamp: 'Timestamp',
-          year: 'Year',
-          place: 'Place',
-          dataset: 'Dataset',
-          exists: 'Exists',
-          digital: 'Digital',
-          public: 'Public',
-          online: 'Online',
-          free: 'Free',
-          machinereadable: 'Machine-readable',
-          bulk: 'Bulk',
-          openlicense: 'Open licence',
-          uptodate: 'Up-to-date',
-          url: 'URL',
-          format: 'Format',
-          licenseurl: 'Licence URL',
-          dateavailable: 'Date available',
-          officialtitle: 'Official title',
-          publisher: 'Publisher',
-          details: 'Details'
-        };
-        var mapper = function(item) {
-          var answers = item.answers || {};
-          return {
-            censusid: item.site,
-            timestamp: moment(item.createdAt).format('YYYY-MM-DDTHH:mm:ss'),
-            year: item.year,
-            place: item.place,
-            dataset: item.dataset,
-            exists: answers.exists ? 'Yes' : 'No',
-            digital: answers.digital ? 'Yes' : 'No',
-            public: answers.public ? 'Yes' : 'No',
-            online: answers.online ? 'Yes' : 'No',
-            free: answers.free ? 'Yes' : 'No',
-            machinereadable: answers.machinereadable ? 'Yes' : 'No',
-            bulk: answers.bulk ? 'Yes' : 'No',
-            openlicense: answers.openlicense ? 'Yes' : 'No',
-            uptodate: answers.uptodate ? 'Yes' : 'No',
-            url: answers.url,
-            format: answers.format,
-            licenseurl: answers.licenseurl,
-            dateavailable: answers.dateavailable,
-            officialtitle: answers.officialtitle,
-            publisher: answers.publisher,
-            details: item.details
-          };
-        };
+        var columns = [
+          'id',
+          'site',
+          'timestamp',
+          'year',
+          'place',
+          'dataset',
+          'exists',
+          'digital',
+          'public',
+          'online',
+          'free',
+          'machinereadable',
+          'bulk',
+          'openlicence',
+          'uptodate',
+          'url',
+          'format',
+          'licenseurl',
+          'dateavailable',
+          'officialtitle',
+          'publisher',
+          'details',
+          'submitter',
+          'reviewer'
+        ];
         outputItemsAsCsv(res, results, mapper, columns);
         break;
       }
