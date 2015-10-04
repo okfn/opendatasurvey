@@ -28,6 +28,7 @@ var pageRoutes = function(coreMiddlewares) {
   router.get(utils.scoped('/contribute'), coreMixins, pages.contribute);
   router.get(utils.scoped('/tutorial'), coreMixins, pages.tutorial);
   router.get(utils.scoped('/overview.json'), coreMixins, pages.resultJson);
+  router.get(utils.scoped('/overview/:year.json'), coreMixins, pages.resultJson);
   router.get(utils.scoped('/changes/:year?'), byYearMixins, pages.changes);
   router.get(utils.scoped('/place/:place/:year?'), byYearMixins, pages.place);
   router.get(utils.scoped('/dataset/:dataset/:year?'), byYearMixins, pages.dataset);

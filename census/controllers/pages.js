@@ -67,13 +67,15 @@ var about = function (req, res) {
 
 
 var resultJson = function (req, res) {
-
+  var where = {
+    site: req.params.domain,
+    isCurrent: true
+  };
+  if (req.params.year) {
+    where.year = req.params.year;
+  }
   var entries = req.app.get('models').Entry.findAll({
-    where: {
-      site: req.params.domain,
-      year: req.params.year,
-      isCurrent: true
-    }
+    where: where
   });
 
   entries.then(function(results){
