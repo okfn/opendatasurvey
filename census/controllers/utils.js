@@ -71,7 +71,7 @@ var validators = {
   }
 };
 
-var validateQuestion = function(req, question, parentValue, validated) {
+var validateQuestion = function(req, question, parent_question, validated) {
   /**
    * Validate the question.
    *
@@ -93,7 +93,8 @@ var validateQuestion = function(req, question, parentValue, validated) {
 
   var validator = validators[question],
       value = req.body[question],
-      parentValue = parentValue || "true",
+      parent_question = parent_question || null,
+      parentValue = req.body[parent_question] || "true",
       validated = validated || [];
 
   if (value === undefined) {
@@ -103,7 +104,7 @@ var validateQuestion = function(req, question, parentValue, validated) {
   // ensure false values for expectFalse questions
   if (value === "false" && validator.expectFalse) {
     validator.expectFalse.forEach(function(child) {
-      if (validated.indexOf(question) == -1) {
+      if (validated.indexOf(child) == -1) {
         req.checkBody(child, "You can specify only 'false'").equals("false");
         validated.push(child);
       }
@@ -112,32 +113,31 @@ var validateQuestion = function(req, question, parentValue, validated) {
 
   if (validated.indexOf(question) == -1) {
     // not yet validated
-
     // validate depending on the question value
     if (parentValue === "null" || parentValue === "false") {
       // validate falsy values
       if (validator.type === "string") {
         req.checkBody(question, "You must not specify this field").equals("");
       } else {
-        req.checkBody(question, "You can specify only '" + parentValue + "'")
-           .equals(parentValue);
+        if (!((parentValue === "null") && (validators[parent_question].expectFalse))) {
+          req.checkBody(question, "You can specify only '" + parentValue + "'").equals(parentValue);
+        }
       }
     } else {
       // parentValue has a truthy value, validate as normal
       validator.validate(req);
     }
-
     validated.push(question);
   }
 
   // validate recursively
   if (validator.require) {
     validator.require.forEach(function(child) {
-      validateQuestion(req, child, value, validated);
+      validateQuestion(req, child, question, validated);
     });
   }
-
 };
+
 
 var validateData = function(req, mappedErrors) {
   /**
