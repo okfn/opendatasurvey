@@ -152,6 +152,7 @@ var places = function (req, res) {
 };
 
 var entries = function (req, res) {
+
   var format = req.params.format,
       strategy = req.params.strategy,
       dataOptions = _.merge(
@@ -164,6 +165,9 @@ var entries = function (req, res) {
 
   if (strategy === 'cascade') {
     dataOptions = _.merge(dataOptions, {cascade: true});
+  } else
+  if (strategy === 'all') {
+    dataOptions = _.merge(dataOptions, {keepAll: true});
   }
 
   modelUtils.getData(dataOptions)
