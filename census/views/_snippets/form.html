@@ -1,20 +1,23 @@
+{% macro currentEntryValue(qu) %}
+{% if current %}
+{% if current.answers[qu.id] %}
+{{current.answers[qu.id]}}
+{% else %}
+{{ gettext("No entry") }}
+{% endif %}
+{% else %}
+{{ gettext("No entry") }}
+{% endif %}
+{%- endmacro  %}
+
 {% macro currentEntry(qu) %}
 <div class="current-entry">
   <label>{{gettext("Current Entry")}}</label>
-  <div class="current-entry-value">
-    {% if current %}
-    {% if current.answers[qu.id] %}
-    {{current.answers[qu.id]}}
-    {% else %}
-    {{ gettext("No entry") }}
-    {% endif %}
-    {% else %}
-    {{ gettext("No entry") }}
-    {% endif %}
+  <div class="current-entry-value" title="{{ currentEntryValue(qu) }}">
+    {{ currentEntryValue(qu) }}
   </div>
 </div>
 {%- endmacro  %}
-
 
 {% macro question(qu) -%}
 <div class="span6">
@@ -56,17 +59,17 @@
           <input type="radio" name="{{qu.id}}" value="{{ val.string }}" {% if formData %}{% if formData[qu.id] == val.string %}checked="true"{% endif %}{% else %}{% if (current and current.answers[qu.id] == val.type) %}checked="true" {% endif %}{% endif %}class="{{ val.string }}"{% if canReview != true or reviewClosed %} disabled="disabled"{% endif %} required>
         </div>
         {% endfor %}
-        <div class="submission-current" data-value="{{ current.answers[qu.id] }}">
-          {% set currentDisplay = gettext('No entry') %}
+        <div class="submission-current">
           {% for val in [
             {"type": true, "string": "true", "display": "Yes"},
-            {"type": false, "string": "false", "display": "No"}
+            {"type": false, "string": "false", "display": "No"},
+            {"type": null, "string": "null", "display": "Unsure"}
           ] %}
           {% if current.answers[qu.id] == val.type %}
-            {% set currentDisplay = val.display %}
+          {% set currentDisplay = val.display %}
           {% endif %}
           {% endfor %}
-          {{ currentDisplay }}
+          {{ currentDisplay or gettext('No entry') }}
         </div>
         <div class="submission-info">
           <span class="help-block readmore">{{qu.description}}</span>

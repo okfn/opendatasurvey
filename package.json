@@ -42,7 +42,7 @@
     "q": "^1.4.1",
     "raven": "^0.8.1",
     "request": "^2.56.0",
-    "scrypt": "^4.0.7",
+    "scrypt": "^5.1.1",
     "sequelize": "^3.1.1",
     "serve-favicon": "^2.2.1",
     "subdomain": "^1.2.0",
@@ -70,8 +70,8 @@
     "supertest": "^1.0.1"
   },
   "engines": {
-    "node": "0.12.x",
-    "npm": "2.11.x"
+    "node": "4.1.x",
+    "npm": "2.14.x"
   },
   "scripts": {
     "migrate_submissions": "node scripts/submissions.js",
