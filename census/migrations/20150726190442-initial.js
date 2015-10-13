@@ -18,7 +18,7 @@ module.exports = {
         .then(function() {
           console.log('ran statement');
         })
-        .catch(console.log.bind(console));
+        .catch(console.trace.bind(console));
     });
 
   },
@@ -26,7 +26,7 @@ module.exports = {
 
     return queryInterface.dropAllTables()
       .then(function() {})
-      .catch(console.log.bind(console));
+      .catch(console.trace.bind(console));
 
   }
 };

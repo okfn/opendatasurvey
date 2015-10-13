@@ -102,13 +102,11 @@ describe('#validationData()', function () {
         expect(_.size(errors)).to.be.equal(3);
       });
     });
-    it('should return errors for free, online, openlicense and bulk (public=false)', function(done) {
+    it('should return errors for free, openlicense (public=false)', function(done) {
       postRoute(_.assign(sumbission, {public: 'false'}), done, function(errors) {
         expect(errors).to.have.property('free');
-        expect(errors).to.have.property('online');
         expect(errors).to.have.property('openlicense');
-        expect(errors).to.have.property('bulk');
-        expect(_.size(errors)).to.be.equal(4);
+        expect(_.size(errors)).to.be.equal(2);
       });
     });
     it('should return error for openlicense (free=false)', function(done) {
@@ -137,6 +135,140 @@ describe('#validationData()', function () {
     });
   });
 
+  describe('expectFalse cases', function () {
+    it("should return no error (public=true => openlicense=true)", function(done) {
+      postRoute(_.assign(sumbission, {public: "true", openlicense: "true"}), done, function(errors) {
+        expect(_.size(errors)).to.be.equal(0);
+      });
+    });
+
+    it("should return no error (public=true => openlicense=false; licenseurl = '')", function(done) {
+      postRoute(_.assign(sumbission, {public: "true", openlicense: "false", licenseurl: ''}), done, function(errors) {
+        expect(_.size(errors)).to.be.equal(0);
+      });
+    });
+
+    it("should return no error (public=true => openlicense=null; licenseurl: '')", function(done) {
+      postRoute(_.assign(sumbission, {public: "true", openlicense: "null", licenseurl: ''}), done, function(errors) {
+        expect(_.size(errors)).to.be.equal(0);
+      });
+    });
+
+    it("should return no error (public=null => openlicense=null; licenseurl: '')", function(done) {
+      postRoute(_.assign(sumbission, {public: "null", openlicense: "null", licenseurl: ''}), done, function(errors) {
+        expect(_.size(errors)).to.be.equal(0);
+      });
+    });
+
+    it("should return no error (public=null => openlicense=false; licenseurl: '')", function(done) {
+      postRoute(_.assign(sumbission, {public: "null", openlicense: "false", licenseurl: ''}), done, function(errors) {
+        expect(_.size(errors)).to.be.equal(0);
+      });
+    });
+
+    it("should return no error (public=null => openlicense=true)", function(done) {
+      postRoute(_.assign(sumbission, {public: "null", openlicense: "true"}), done, function(errors) {
+        expect(_.size(errors)).to.be.equal(0);
+      });
+    });
+
+    it("should return no error " +
+        "(public=false => openlicense=false; online=false; free=false; openlicense=false; bulk=false)", function(done) {
+      postRoute(_.assign(sumbission, {
+        public: "false",
+        free: "false",
+        openlicense: "false",
+        online: "false",
+        url: "",
+        openlicense: "false",
+        licenseurl: "",
+        bulk: "false"}
+      ), done, function(errors) {
+        expect(_.size(errors)).to.be.equal(0);
+      });
+    });
+
+    it("should return error for free " +
+        "(public=false => openlicense=false; online=false; free=true; openlicense=false; bulk=false)", function(done) {
+      postRoute(_.assign(sumbission, {
+            public: "false",
+            free: "true",
+            openlicense: "false",
+            online: "false",
+            url: "",
+            openlicense: "false",
+            licenseurl: "",
+            bulk: "false"}
+      ), done, function(errors) {
+        expect(errors).to.have.property('free');
+        expect(_.size(errors)).to.be.equal(1);
+      });
+    });
+
+    it("should return error for free " +
+        "(public=false => openlicense=false; online=false; free=null; openlicense=false; bulk=false)", function(done) {
+      postRoute(_.assign(sumbission, {
+            public: "false",
+            free: "null",
+            openlicense: "false",
+            online: "false",
+            url: "",
+            openlicense: "false",
+            licenseurl: "",
+            bulk: "false"}
+      ), done, function(errors) {
+        expect(errors).to.have.property('free');
+        expect(_.size(errors)).to.be.equal(1);
+      });
+    });
+
+    it("should return error for openlicense, licenseurl " +
+        "(public=false => openlicense=true; online=false; free=true; bulk=false)", function(done) {
+      postRoute(_.assign(sumbission, {
+            public: "false",
+            free: "false",
+            openlicense: "true",
+            online: "false",
+            url: "",
+            licenseurl: "",
+            bulk: "false"}
+      ), done, function(errors) {
+        expect(errors).to.have.property('openlicense');
+        expect(errors).to.have.property('licenseurl');
+        expect(_.size(errors)).to.be.equal(2);
+      });
+    });
+
+
+    it("should return no error " +
+        "(exists=null => digital=null; public=null; uptodate=null)", function(done) {
+      postRoute(_.assign(sumbission, {
+            exists: "null",
+            digital: "null",
+            public: "null",
+            uptodate: "null"
+          }
+      ), done, function(errors) {
+        expect(_.size(errors)).to.be.equal(0);
+      });
+    });
+
+    it("should return error for digital " +
+        "(exists=null => digital=true; public=null; uptodate=null)", function(done) {
+      postRoute(_.assign(sumbission, {
+            exists: "null",
+            digital: "true",
+            public: "null",
+            uptodate: "null"
+          }
+      ), done, function(errors) {
+        expect(errors).to.have.property('digital');
+        expect(_.size(errors)).to.be.equal(1);
+      });
+    });
+
+  });
+
   describe('Edge cases', function () {
     it('should return error for exists and format (the fields are not submitted)', function(done) {
       postRoute(_.omit(sumbission, ['exists', 'format']), done, function(errors) {
@@ -145,12 +277,14 @@ describe('#validationData()', function () {
         expect(_.size(errors)).to.be.equal(2);
       });
     });
+
     it("should return error for openlicense (free=null => openlicense=null)", function(done) {
-      postRoute(_.assign(sumbission, {free: "null", openlicense: "true"}), done, function(errors) {
-        expect(errors).to.have.property('openlicense');
+      postRoute(_.assign(sumbission, {free: "null", openlicense: "null"}), done, function(errors) {
+        expect(errors).to.have.property('licenseurl');
         expect(_.size(errors)).to.be.equal(1);
       });
     });
+
     it("should return error for url, format, licenseurl " +
        "(online = machinereadable = openlicense = false)", function(done) {
       postRoute(_.assign(sumbission, {

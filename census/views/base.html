@@ -122,9 +122,10 @@
           <a href="https://github.com/okfn/opendatacensus/">{{gettext("Source code")}}</a>
         </p>
         <p>
-          <a href="/api/entries.csv">{{gettext("Download Data (CSV)")}}</a>
-          |
-          <a href="/api/entries.json">{{gettext("Download Data (JSON)")}}</a>
+          <strong>{{ gettext("Download") }}</strong> <a href="/api/entries.cascade.csv">{{gettext("Current (CSV)")}}</a> |
+          <a href="/api/entries.csv">{{gettext("All (CSV)")}}</a> |
+          <a href="/api/entries.cascade.json">{{gettext("Current (JSON)")}}</a> |
+          <a href="/api/entries.json">{{gettext("All (JSON)")}}</a>
         </p>
         <p>
         {{gettext("Part of the <a href=\"http://census.okfn.org/\">Open Data Census project</a> run by Open Knowledge.")}}

@@ -47,7 +47,7 @@ describe('Data access layer', function() {
         expect(data).to.have.property('questions');
         done();
       })
-      .catch(console.log.bind(console));
+      .catch(console.trace.bind(console));
   });
 
   it('does not return results of an Entry query', function(done) {
@@ -72,7 +72,7 @@ describe('Data access layer', function() {
         expect(data).to.have.property('questions');
         done();
       })
-      .catch(console.log.bind(console));
+      .catch(console.trace.bind(console));
   });
 
   it('only returns yn questions by default', function(done) {
@@ -92,7 +92,7 @@ describe('Data access layer', function() {
         expect(data.questions).to.have.length(9);
         done();
       })
-      .catch(console.log.bind(console));
+      .catch(console.trace.bind(console));
   });
 
   it('can return all questions', function(done) {
@@ -112,7 +112,7 @@ describe('Data access layer', function() {
         expect(data.questions).to.have.length(18);
         done();
       })
-      .catch(console.log.bind(console));
+      .catch(console.trace.bind(console));
   });
 
   it('returns a place and not places when we have a place argument', function(done) {
@@ -133,7 +133,7 @@ describe('Data access layer', function() {
         expect(data).to.have.property('place');
         done();
       })
-      .catch(console.log.bind(console));
+      .catch(console.trace.bind(console));
   });
 
   it('returns a dataset and not datasets when we have a dataset argument', function(done) {
@@ -154,7 +154,7 @@ describe('Data access layer', function() {
         expect(data).to.have.property('dataset');
         done();
       })
-      .catch(console.log.bind(console));
+      .catch(console.trace.bind(console));
   });
 
   it('returns cascaded entries when cascade is true', function(done) {
@@ -176,7 +176,7 @@ describe('Data access layer', function() {
         expect(data.rejected).to.have.length(1);
         done();
       })
-      .catch(console.log.bind(console));
+      .catch(console.trace.bind(console));
   });
 
   it('returns entries by year when cascade is false', function(done) {
@@ -198,7 +198,7 @@ describe('Data access layer', function() {
         expect(data.rejected).to.have.length(1);
         done();
       })
-      .catch(console.log.bind(console));
+      .catch(console.trace.bind(console));
   });
 
 });

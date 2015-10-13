@@ -25,7 +25,7 @@
 <a href="{{entry.answers.url}}">{{entry.answers.url}}</a>
 
 <h3>{{gettext("Comments")}}</h3>
-<p>{{entry.details|urlize|marked}}</p>
+<p>{{entry.details|marked}}</p>
 
 <h3>{{gettext("Data Availability")}}</h3>
 <ul class="data-availability clearfix unstyled">
@@ -59,10 +59,10 @@
           <i class="icon-{{ qu.icon }}"></i>
           <span class="text">{{ stateDisplay }}</span>
         </span>
-        {{ qu.question }}
+        <span class="data-icon-text">{{ qu.question }}</span>
       </span>
 
-      <a href="javascript:;" data-toggle="popover"
+      <a href="javascript:;" data-toggle="popover" data-trigger="focus"
          data-content="{{ qu.description|replace ('\"', '\'') }}"
          data-placement="top" data-html="true">
          <i class="icon-info-sign"></i>
