@@ -169,7 +169,7 @@ var places = function (req, res) {
   }).catch(console.trace.bind(console));
 };
 
-var entries = function (req, res) {
+var entries = function (req, res, next) {
 
   var format = req.params.format,
       strategy = req.params.strategy,
@@ -186,6 +186,9 @@ var entries = function (req, res) {
   } else
   if (strategy === 'all') {
     dataOptions = _.merge(dataOptions, {keepAll: true});
+  } else
+  if (!!strategy && (strategy != '')) {
+    return next();
   }
 
   modelUtils.getData(dataOptions)

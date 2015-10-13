@@ -21,6 +21,7 @@ function start() {
   var routes = require('./routes');
   var nunjucks = require('nunjucks');
   var raven = require('raven');
+  var Promise = require('bluebird');
   var env;
   var templateFilters = require('./filters');
   var app = express();
@@ -95,7 +96,7 @@ function start() {
       default_lang: _.first(config.get('locales')),
       translation_directory: 'locales'
     }),
-    express.static(staticRoot, {maxage: cacheAge}),
+    express.static(staticRoot, {maxage: cacheAge})
   ]);
 
   var coreMiddlewares = [
@@ -116,10 +117,13 @@ function start() {
 
   routes.utils.setupAuth();
 
-  app.get('models').umzug.up().then(function() {
-    app.listen(app.get('port'), function() {
-      console.log("Listening on " + app.get('port'));
-    });
+  return new Promise(function(resolve, reject) {
+    app.get('models').umzug.up().then(function () {
+      app.listen(app.get('port'), function () {
+        console.log("Listening on " + app.get('port'));
+        resolve(app);
+      });
+    }).catch(reject);
   });
 
 }
