@@ -18,13 +18,13 @@ module.exports.setupFixtures = function(done) {
         return Promise.each(data, function(obj) {
           return models[obj.model].create(obj.data)
             .then(function() {})
-            .catch(console.log.bind(console));
+            .catch(console.trace.bind(console));
         })
           .then(function() {
             console.log('fixtures loaded');
             done();
           })
-          .catch(console.log.bind(console));
+          .catch(console.trace.bind(console));
 
       });
 
@@ -37,5 +37,5 @@ module.exports.dropFixtures = function(done) {
       console.log('dropped all tables');
       done();
     })
-    .catch(console.log.bind(console));
+    .catch(console.trace.bind(console));
 }

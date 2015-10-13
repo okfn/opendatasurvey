@@ -19,7 +19,7 @@ describe('Open Data Census Tests', function() {
         console.log(results.length);
         done();
       })
-      .catch(console.log.bind(console));
+      .catch(console.trace.bind(console));
 
   });
 
@@ -32,7 +32,7 @@ describe('Open Data Census Tests', function() {
         console.log(results.length);
         done();
       })
-      .catch(console.log.bind(console));
+      .catch(console.trace.bind(console));
 
   });
 
@@ -45,7 +45,7 @@ describe('Open Data Census Tests', function() {
         console.log(results.length);
         done();
       })
-      .catch(console.log.bind(console));
+      .catch(console.trace.bind(console));
 
   });
 
@@ -58,7 +58,7 @@ describe('Open Data Census Tests', function() {
         console.log(results.length);
         done();
       })
-      .catch(console.log.bind(console));
+      .catch(console.trace.bind(console));
 
   });
 
@@ -71,7 +71,7 @@ describe('Open Data Census Tests', function() {
         console.log(results.length);
         done();
       })
-      .catch(console.log.bind(console));
+      .catch(console.trace.bind(console));
 
   });
 
@@ -84,7 +84,7 @@ describe('Open Data Census Tests', function() {
         console.log(results.length);
         done();
       })
-      .catch(console.log.bind(console));
+      .catch(console.trace.bind(console));
 
   });
 
@@ -97,7 +97,7 @@ describe('Open Data Census Tests', function() {
         console.log(results.length);
         done();
       })
-      .catch(console.log.bind(console));
+      .catch(console.trace.bind(console));
 
   });
 

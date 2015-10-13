@@ -32,11 +32,11 @@ var loadAllConfigs = function (req, res) {
           .then(function() {
             console.log('loaded');
           })
-          .catch(console.log.bind(console));
+          .catch(console.trace.bind(console));
       }).then(function() {
         res.send({'status': 'ok', message: 'ok'});
       });
-    }).catch(console.log.bind(console));
+    }).catch(console.trace.bind(console));
 };
 
 
@@ -51,7 +51,7 @@ var loadAllPlaces = function (req, res) {
           site: result.id
         };
         return loaders.loadTranslatedData(options, req.app.get('models'))
-          .then(function() { console.log('loaded'); }).catch(console.log.bind(console));
+          .then(function() { console.log('loaded'); }).catch(console.trace.bind(console));
       })
         .then(function() { res.send({status: 'ok', message: 'ok'}); })
         .catch(function(E) { res.send({status: 'error', message: E}); });
@@ -89,7 +89,7 @@ var loadAllQuestions = function (req, res) {
           site: result.id
         };
         return loaders.loadTranslatedData(options, req.app.get('models'))
-          .then(function() { console.log('loaded'); }).catch(console.log.bind(console));
+          .then(function() { console.log('loaded'); }).catch(console.trace.bind(console));
       })
         .then(function() { res.send({status: 'ok', message: 'ok'}); })
         .catch(function(E) { res.send({status: 'error', message: E}); });

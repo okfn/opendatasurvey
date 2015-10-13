@@ -10,7 +10,7 @@ var redirectRoutes = function(router) {
   var coreMixins = [mixins.requireDomain];
 
   router.get(utils.scoped('/country'), coreMixins, utils.makeRedirect('/'));
-  router.get(utils.scoped('/country/results.json'), coreMixins, utils.makeRedirect('/overview.json'));
+  router.get(utils.scoped('/country/results.json'), coreMixins, utils.makeRedirect('/api/entries.json'));
   router.get(utils.scoped('/country/overview/:place'), coreMixins, function (req, res) {
     res.redirect('/place/' + req.params.place);
   });

@@ -182,7 +182,7 @@ var submitPostHandler = function(req, res, data) {
         res.redirect(redirectPath + '?post_submission=' + submissionPath);
         return;
 
-      }).catch(console.log.bind(console));
+      }).catch(console.trace.bind(console));
   }
 };
 
@@ -213,7 +213,7 @@ var pendingEntry = function (req, res) {
           data.reviewInstructions = config.get('review_page');
           data.questions = utils.getFormQuestions(req, data.questions);
           res.render('review.html', data);
-        }).catch(console.log.bind(console));
+        }).catch(console.trace.bind(console));
     });
 };
 
@@ -229,7 +229,7 @@ var submit = function (req, res) {
       } else {
         submitGetHandler(req, res, data);
       }
-    }).catch(console.log.bind(console));
+    }).catch(console.trace.bind(console));
 };
 
 
@@ -299,7 +299,7 @@ var reviewPost = function (req, res) {
               res.redirect('/');
               return;
 
-            }).catch(console.log.bind(console));
+            }).catch(console.trace.bind(console));
 
           } else {
             var msg;
@@ -314,9 +314,9 @@ var reviewPost = function (req, res) {
             return;
           }
 
-        }).catch(console.log.bind(console));
-      }).catch(console.log.bind(console));
-  }).catch(console.log.bind(console));
+        }).catch(console.trace.bind(console));
+      }).catch(console.trace.bind(console));
+  }).catch(console.trace.bind(console));
 };
 
 

@@ -24,7 +24,7 @@ var faq = function (req, res) {
         .replace('{{datasets}}', dContent)
         .replace('{{missing_place}}', mContent);
       return res.render('base.html', data);
-    }).catch(console.log.bind(console));
+    }).catch(console.trace.bind(console));
 };
 
 
@@ -38,7 +38,7 @@ var changes = function (req, res) {
       data.year = req.app.get('year');
       data.items = _.sortByOrder(data.entries.concat(data.pending).concat(data.rejected), 'updatedAt', 'desc');
       res.render('changes.html', data);
-    }).catch(console.log.bind(console));
+    }).catch(console.trace.bind(console));
 };
 
 
@@ -66,23 +66,6 @@ var about = function (req, res) {
 };
 
 
-var resultJson = function (req, res) {
-
-  var entries = req.app.get('models').Entry.findAll({
-    where: {
-      site: req.params.domain,
-      year: req.params.year,
-      isCurrent: true
-    }
-  });
-
-  entries.then(function(results){
-    res.json(results);
-  }).catch(console.log.bind(console));
-
-};
-
-
 var overview = function (req, res) {
 
   /**
@@ -98,7 +81,7 @@ var overview = function (req, res) {
       data.customText = req.params.site.settings.overview_page;
       data.missingPlaceText = req.params.site.settings.missing_place_html;
       return res.render('overview.html', data);
-    }).catch(console.log.bind(console));
+    }).catch(console.trace.bind(console));
 };
 
 
@@ -124,7 +107,7 @@ var place = function (req, res) {
       data.submissionsAllowed = (req.params.year === req.app.get('year'));
       data.extraWidth = data.datasets.length > 12;
       return res.render('place.html', data);
-    }).catch(console.log.bind(console));
+    }).catch(console.trace.bind(console));
 };
 
 
@@ -149,7 +132,7 @@ var dataset = function (req, res) {
       data.year = req.params.year;
       data.submissionsAllowed = (req.params.year === req.app.get('year'));
       return res.render('dataset.html', data);
-    }).catch(console.log.bind(console));
+    }).catch(console.trace.bind(console));
 };
 
 
@@ -176,7 +159,7 @@ var entry = function (req, res) {
       data.year = req.params.year;
       data.submissionsAllowed = (req.params.year === req.app.get('year'));
       return res.render('entry.html', data);
-    }).catch(console.log.bind(console));
+    }).catch(console.trace.bind(console));
 };
 
 
@@ -187,7 +170,6 @@ module.exports = {
   contribute: contribute,
   tutorial: tutorial,
   changes: changes,
-  resultJson: resultJson,
   place: place,
   dataset: dataset,
   entry: entry

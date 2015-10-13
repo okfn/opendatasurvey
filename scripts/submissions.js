@@ -140,6 +140,6 @@ utils.loadData({
 
       console.log('Saved ' + results.length + ' submission entries.');
 
-    }).catch(console.log.bind(console));
+    }).catch(console.trace.bind(console));
 
-}).catch(console.log.bind(console));
+}).catch(console.trace.bind(console));
