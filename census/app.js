@@ -20,6 +20,7 @@ function start() {
   var i18n = require('i18n-abide');
   var routes = require('./routes');
   var nunjucks = require('nunjucks');
+  var nunjucksGlobals = require('nunjucks/src/globals');
   var raven = require('raven');
   var env;
   var templateFilters = require('./filters');
@@ -36,6 +37,9 @@ function start() {
   var availableYears = _.range(startYear, currentYear + 1);
   var rawSysAdmin = process.env.SYS_ADMIN || config.get('sysAdmin') || '';
   var sysAdmin = _.each(rawSysAdmin.split(','), function(e, i, l) { l[i] = e.trim(); return; });
+
+  nunjucksGlobals.currentTime = Date.now();
+
   var subdomainOptions = {
     base: config.get('base_domain')
   };
