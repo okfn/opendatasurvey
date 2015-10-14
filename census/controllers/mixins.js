@@ -120,6 +120,7 @@ var requireAvailableYear = function (req, res, next) {
    */
   if (typeof req.params.year === 'undefined') {
     req.params.year = req.app.get('year');
+    req.params.isYearImplicitlySet = true;
     res.locals.year = req.params.year;
     req.params.cascade = true;
     res.locals.cascade = req.params.cascade;
