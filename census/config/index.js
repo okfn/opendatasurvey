@@ -28,7 +28,7 @@ nconf.defaults({
   sentry_dsn: process.env.SENTRY_DSN || '',
   approve_first_submission: 'FALSE',
   reviewers: '',
-  locales: ['en'],
+  locales: ['en', 'hr'],
   email_from: process.env.EMAIL_FROM || 'noreply@census.okfn.org',
   email_new_comment_subject: process.env.EMAIL_NEW_COMMENT_SUBJECT || "[Open Data Cenus] Comment Notification",
 

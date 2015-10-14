@@ -94,7 +94,7 @@ function start() {
     i18n.abide({
       supported_languages: config.get('locales'),
       default_lang: _.first(config.get('locales')),
-      translation_directory: 'locales'
+      translation_directory: 'census/locale/'
     }),
     express.static(staticRoot, {maxage: cacheAge})
   ]);
@@ -108,6 +108,7 @@ function start() {
   ];
 
   app.all('*', routes.utils.setLocals);
+  app.use('/setlocale', routes.i18n(coreMiddlewares));
   app.use('/admin', routes.admin(coreMiddlewares));
   app.use('/api', routes.api(coreMiddlewares));
   // pages also has census, auth and redirect routes

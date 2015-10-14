@@ -13,6 +13,7 @@ var i18nRoutes = function(coreMiddlewares) {
 
   router.get(utils.scoped('/:locale'), coreMixins, function (req, res) {
     res.cookie('lang', req.params.locale);
+    req.setLocale(req.params.locale);
     res.redirect(req.headers.referer || '/');
   });
 
