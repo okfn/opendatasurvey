@@ -177,9 +177,14 @@ var entries = function (req, res, next) {
         modelUtils.getDataOptions(req),
         {
           cascade: false,
+          ynQuestions: false,
           with: {Dataset: false, Place: false, Question: false}
         }
       );
+
+  if (!!req.params.isYearImplicitlySet) {
+    dataOptions = _.merge(dataOptions, {year: false});
+  }
 
   if (strategy === 'cascade') {
     dataOptions = _.merge(dataOptions, {cascade: true});
