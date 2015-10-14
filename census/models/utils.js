@@ -141,7 +141,11 @@ var processEntries = function(data, options) {
 
     data.pending = _.where(data.entries, {'isCurrent': false, 'reviewed': false});
     data.rejected = _.where(data.entries, {'isCurrent': false, 'reviewed': true, 'reviewResult': false});
-    _.remove(data.entries, function(e) { return e.isCurrent === false; });
+    if (!options.keepAll) {
+      _.remove(data.entries, function (e) {
+        return e.isCurrent === false;
+      });
+    }
 
     _.each(data.entries, function(e) {
       data.reviewers.push(e.Reviewer);
