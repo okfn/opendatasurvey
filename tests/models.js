@@ -57,8 +57,8 @@ describe('Data access layer', function() {
       dataset: null,
       place: null,
       year: null,
-      cascade: true,
-      ynQuestions: true,
+      cascade: false,
+      ynQuestions: false,
       locale: null,
       keepAll: true,
       with: {Entry: true, Dataset: false, Place: false, Question: false}
@@ -85,8 +85,8 @@ describe('Data access layer', function() {
       dataset: null,
       place: null,
       year: null,
-      cascade: true,
-      ynQuestions: true,
+      cascade: false,
+      ynQuestions: false,
       locale: null,
       with: {Entry: true, Dataset: false, Place: false, Question: false}
     };
