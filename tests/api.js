@@ -15,6 +15,7 @@ before(function(done) {
     // Run the server
     start().then(function(application) {
       app = application;
+      Browser.localhost('site1.dev.census.org:' + app.get('port'), app.get('port'));
       browser = new Browser({
         maxWait: 5000,
         site: 'http://site1.dev.census.org:' + app.get('port') + '/'
