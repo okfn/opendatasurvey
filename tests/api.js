@@ -4,22 +4,28 @@ var _ = require('lodash');
 var Browser = require('zombie');
 var start = require('../census/app').start;
 var assert = require('chai').assert;
+var utils = require('./utils');
 
 var app = null;
 var browser = null;
 
 before(function(done) {
   this.timeout(20000);
-  // Run the server
-  start().then(function(application) {
-    app = application;
-    browser = new Browser({
-      maxWait: 5000,
-      site: 'http://global.dev.census.org:' + app.get('port') + '/'
+  utils.setupFixtures(function() {
+    // Run the server
+    start().then(function(application) {
+      app = application;
+      Browser.localhost('site1.dev.census.org:' + app.get('port'), app.get('port'));
+      browser = new Browser({
+        maxWait: 5000,
+        site: 'http://site1.dev.census.org:' + app.get('port') + '/'
+      });
+      done();
     });
-    done();
   });
 });
+
+after(utils.dropFixtures);
 
 function checkJsonResponse(browser) {
   assert.ok(browser.success);
