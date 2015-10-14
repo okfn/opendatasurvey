@@ -114,8 +114,13 @@ To update the existing .po files, run:
 
     gulp update-po
 
-To add a new language, copy the `locale/en` directory to `locale/[language-code]`.
+To add a new language, create directory `locale/[language-code]/LC_MESSAGES` and put there translation files (*.po).
+Also, you can copy the `locale/en` directory to `locale/[language-code]` and change existing files.
 
+To update translations cache, run
+
+    gulp compile-po
+    
 ### i18n For Config
 
 Any column can be internationalised by adding another column with `@locale` after it. For example, the `description` column can be translated to German by adding a column of `description@de`. Only languages which have template translations created for them are valid. The `locales` setting in the config document can be used to restrict the number of locales available. The first locale in the list is the default locale.
