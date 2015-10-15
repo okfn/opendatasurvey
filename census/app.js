@@ -123,10 +123,13 @@ function start() {
   routes.utils.setupAuth();
 
   return new Promise(function(resolve, reject) {
-    app.get('models').umzug.up().then(function () {
-      app.listen(app.get('port'), function () {
+    app.get('models').umzug.up().then(function() {
+      var server = app.listen(app.get('port'), function() {
         console.log("Listening on " + app.get('port'));
-        resolve(app);
+        resolve({
+          app: app,
+          server: server
+        });
       });
     }).catch(reject);
   });

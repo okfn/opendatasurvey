@@ -10,6 +10,9 @@ var setupLocalization = function(req, res, site) {
   var requestedLocales = config.get('locales');
   if (_.isString(site.settings.locales)) {
     requestedLocales = site.settings.locales.split(' ');
+  } else
+  if (_.isArray(site.settings.locales)) {
+    requestedLocales = site.settings.locales;
   }
 
   // Sanitize locales list: remove invalid and unavailable locales
@@ -19,6 +22,9 @@ var setupLocalization = function(req, res, site) {
       if (item.length == 0) return false;
       return availableLocales.indexOf(item) >= 0;
     }).value();
+  if (locales.length == 0) {
+    locales = config.get('locales');
+  }
 
   // Check user settings and update environment for current request
   if (req.cookies.lang && (locales.indexOf(req.cookies.lang) >= 0)) {
