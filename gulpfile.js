@@ -21,3 +21,9 @@ gulp.task('pot', function(){
 gulp.task('update-po', function(){
   return exec('./node_modules/.bin/merge-po locale');
 });
+
+// Task to prepare all /census/locale/*/LC_MESSAGES/*.po files to
+// use with i18n-abide
+gulp.task('compile-po', function() {
+  return exec('./node_modules/.bin/compile-json ./census/locale ./census/locale');
+});

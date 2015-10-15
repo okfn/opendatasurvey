@@ -21,6 +21,7 @@ var defaultOptions = {
 
 
 describe('Data access layer', function() {
+  this.timeout(20000);
 
   beforeEach(utils.setupFixtures);
   afterEach(utils.dropFixtures);
