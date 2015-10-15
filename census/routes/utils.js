@@ -130,7 +130,6 @@ var setupAuth = function () {
 };
 
 var setLocals = function(req, res, next) {
-
   var config = req.app.get('config');
 
   if (config.get('test:testing') === true && !req.user && config.get('test:user')) {

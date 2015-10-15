@@ -11,6 +11,17 @@ function getContent(filepath) {
   return marked(fs.readFileSync(filepath, 'utf8'));
 }
 
+function getAvailableLocales() {
+  // Read all subdirectories in /census/locale except of `templates` directory
+  var path = __dirname + '/../locale';
+  return fs.readdirSync(path).filter(function(name) {
+    if (name == 'templates') {
+      return false;
+    }
+    return fs.statSync(path + '/' + name).isDirectory();
+  });
+}
+
 nconf.file({
   file: path.join(path.dirname(path.dirname(__dirname)), '/settings.json')
 });
@@ -28,7 +39,8 @@ nconf.defaults({
   sentry_dsn: process.env.SENTRY_DSN || '',
   approve_first_submission: 'FALSE',
   reviewers: '',
-  locales: ['en', 'hr'],
+  locales: ['en'],
+  availableLocales: getAvailableLocales(),
   email_from: process.env.EMAIL_FROM || 'noreply@census.okfn.org',
   email_new_comment_subject: process.env.EMAIL_NEW_COMMENT_SUBJECT || "[Open Data Cenus] Comment Notification",
 

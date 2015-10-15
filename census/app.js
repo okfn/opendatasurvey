@@ -92,7 +92,7 @@ function start() {
     passport.session(),
     flash(),
     i18n.abide({
-      supported_languages: config.get('locales'),
+      supported_languages: config.get('availableLocales'),
       default_lang: _.first(config.get('locales')),
       translation_directory: 'census/locale/'
     }),

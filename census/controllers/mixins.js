@@ -3,9 +3,34 @@
 var _ = require('lodash');
 var utils = require('./utils');
 
+var setupLocalization = function(req, res, site) {
+  var config = req.app.get('config');
+
+  // Try to use site-specific settings + fallback to defaults
+  var requestedLocales = config.get('locales');
+  if (_.isString(site.settings.locales)) {
+    requestedLocales = site.settings.locales.split(' ');
+  }
+
+  // Sanitize locales list: remove invalid and unavailable locales
+  var availableLocales = config.get('availableLocales');
+  var locales = _.chain(requestedLocales)
+    .map(_.trim).filter(function(item) {
+      if (item.length == 0) return false;
+      return availableLocales.indexOf(item) >= 0;
+    }).value();
+
+  // Check user settings and update environment for current request
+  if (req.cookies.lang && (locales.indexOf(req.cookies.lang) >= 0)) {
+    req.setLocale(req.cookies.lang);
+  } else {
+    req.setLocale(_.first(locales));
+  }
+  res.locals.locales = locales;
+  res.locals.currentLocale = req.locale;
+};
 
 var requireDomain = function(req, res, next) {
-
   res.locals.domain = req.params.domain;
 
   if (!req.params.domain) {
@@ -62,6 +87,7 @@ var requireDomain = function(req, res, next) {
 
             req.params.site = result;
             res.locals.site = result;
+            setupLocalization(req, res, result);
             next();
             return;
           });
