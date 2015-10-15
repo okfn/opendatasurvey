@@ -135,8 +135,12 @@ var setLocals = function(req, res, next) {
   if (config.get('test:testing') === true && !req.user && config.get('test:user')) {
     req.user = config.get('test:user');
   }
-  if (req.cookies.lang) {
-    req.setLocale(req.cookies.lang);
+
+  var locales = config.get('locales');
+  if (req.session.lang && (locales.indexOf(req.session.lang) >= 0)) {
+    req.setLocale(req.session.lang);
+  } else {
+    req.setLocale(_.first(locales));
   }
 
   res.locals.currentUser = req.user ? req.user : null;

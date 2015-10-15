@@ -38,15 +38,22 @@ describe('Localization', function() {
     var port = testUtils.app.get('port');
     browser.site = 'http://site2.dev.census.org:' + port + '/';
     browser.visit('/', function() {
-      var item = browser.query('.lang-picker a');
-      var prevLanguage = browser.getCookie('lang');
+      var item = browser.query('.lang-picker span');
+      assert(!!item, 'There should be current language indicator');
+      var prevLanguage = item.textContent;
+
+      item = browser.query('.lang-picker a');
+      assert(!!item, 'There should be language switcher');
       var requestedLanguage = item.textContent;
+
       browser.visit(item.getAttribute('href'), function() {
-        var newLanguage = browser.getCookie('lang');
-        if (!!prevLanguage) {
-          assert(('' + prevLanguage).toLowerCase() != ('' + newLanguage).toLowerCase());
-        }
-        assert(('' + requestedLanguage).toLowerCase() == ('' + newLanguage).toLowerCase());
+        var item = browser.query('.lang-picker span');
+        assert(!!item, 'There should be current language indicator');
+        var newLanguage = item.textContent;
+        assert(prevLanguage != newLanguage,
+          'New language should be different from previous');
+        assert(requestedLanguage == newLanguage,
+          'New language should be the one that we requested');
         done();
       });
     });

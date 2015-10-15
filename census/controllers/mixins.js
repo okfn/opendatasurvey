@@ -8,11 +8,11 @@ var setupLocalization = function(req, res, site) {
 
   // Try to use site-specific settings + fallback to defaults
   var requestedLocales = config.get('locales');
-  if (_.isString(site.settings.locales)) {
-    requestedLocales = site.settings.locales.split(' ');
-  } else
   if (_.isArray(site.settings.locales)) {
     requestedLocales = site.settings.locales;
+  } else
+  if (_.isString(site.settings.locales)) {
+    requestedLocales = site.settings.locales.split(utils.FIELD_SPLITTER);
   }
 
   // Sanitize locales list: remove invalid and unavailable locales
@@ -27,8 +27,8 @@ var setupLocalization = function(req, res, site) {
   }
 
   // Check user settings and update environment for current request
-  if (req.cookies.lang && (locales.indexOf(req.cookies.lang) >= 0)) {
-    req.setLocale(req.cookies.lang);
+  if (req.session.lang && (locales.indexOf(req.session.lang) >= 0)) {
+    req.setLocale(req.session.lang);
   } else {
     req.setLocale(_.first(locales));
   }

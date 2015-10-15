@@ -19,7 +19,7 @@ var objects = [
         reviewers: ['email2@example.com', 'email4@example.com'],
         submit_page: '~~Submit~~ *page* unique **content**',
         review_page: '*This* is **review** test',
-        locales: 'es en uk'
+        locales: ['es', 'en', 'uk']
       }
     }
   }
