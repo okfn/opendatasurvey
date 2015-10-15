@@ -62,6 +62,7 @@
     "gulp-concat-po": "^0.1.0",
     "gulp-replace": "^0.4.0",
     "gulp-xgettext": "^0.2.1",
+    "jscs": "^2.3.1",
     "jsxgettext": "^0.5.1",
     "mocha": "^2.2.5",
     "node-inspector": "^0.12.2",
@@ -80,6 +81,7 @@
     "migrate_users": "node scripts/users.js",
     "start": "node server.js",
     "debug": "node-debug server.js",
-    "test": "NODE_ENV=test mocha tests/ --patient --harmony"
+    "test": "NODE_ENV=test mocha tests/ --patient --harmony",
+    "jscs": "jscs --max-errors 100 census/ scripts/ tests/"
   }
 }
