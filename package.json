@@ -67,7 +67,8 @@
     "node-inspector": "^0.12.2",
     "optimist": "~0.6.1",
     "sinon": "^1.14.1",
-    "supertest": "^1.0.1"
+    "supertest": "^1.0.1",
+    "zombie": "^4.1.0"
   },
   "engines": {
     "node": "4.1.x",
@@ -79,6 +80,6 @@
     "migrate_users": "node scripts/users.js",
     "start": "node server.js",
     "debug": "node-debug server.js",
-    "test": "NODE_ENV=test mocha tests/ --patient"
+    "test": "NODE_ENV=test mocha tests/ --patient --harmony"
   }
 }

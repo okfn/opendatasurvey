@@ -20,7 +20,9 @@ function start() {
   var i18n = require('i18n-abide');
   var routes = require('./routes');
   var nunjucks = require('nunjucks');
+  var nunjucksGlobals = require('nunjucks/src/globals');
   var raven = require('raven');
+  var Promise = require('bluebird');
   var env;
   var templateFilters = require('./filters');
   var app = express();
@@ -36,6 +38,9 @@ function start() {
   var availableYears = _.range(startYear, currentYear + 1);
   var rawSysAdmin = process.env.SYS_ADMIN || config.get('sysAdmin') || '';
   var sysAdmin = _.each(rawSysAdmin.split(','), function(e, i, l) { l[i] = e.trim(); return; });
+
+  nunjucksGlobals.currentTime = Date.now();
+
   var subdomainOptions = {
     base: config.get('base_domain')
   };
@@ -95,7 +100,7 @@ function start() {
       default_lang: _.first(config.get('locales')),
       translation_directory: 'locales'
     }),
-    express.static(staticRoot, {maxage: cacheAge}),
+    express.static(staticRoot, {maxage: cacheAge})
   ]);
 
   var coreMiddlewares = [
@@ -116,10 +121,13 @@ function start() {
 
   routes.utils.setupAuth();
 
-  app.get('models').umzug.up().then(function() {
-    app.listen(app.get('port'), function() {
-      console.log("Listening on " + app.get('port'));
-    });
+  return new Promise(function(resolve, reject) {
+    app.get('models').umzug.up().then(function () {
+      app.listen(app.get('port'), function () {
+        console.log("Listening on " + app.get('port'));
+        resolve(app);
+      });
+    }).catch(reject);
   });
 
 }

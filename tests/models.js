@@ -50,6 +50,61 @@ describe('Data access layer', function() {
       .catch(console.trace.bind(console));
   });
 
+  it('keepAll=true should return all entries', function(done) {
+    var dataOptions = {
+      models: models,
+      domain: 'site1',
+      dataset: null,
+      place: null,
+      year: null,
+      cascade: false,
+      ynQuestions: false,
+      locale: null,
+      keepAll: true,
+      with: {Entry: true, Dataset: false, Place: false, Question: false}
+    };
+    modelUtils.getData(dataOptions)
+      .then(function(data) {
+        expect(data).to.have.property('entries');
+        var hasCurrent = false;
+        var hasNonCurrent = false;
+        _.forEach(data.entries, function(entry) {
+          entry.isCurrent ? hasCurrent = true : hasNonCurrent = true;
+        });
+        expect(hasCurrent).to.be.true;
+        expect(hasNonCurrent).to.be.true;
+        done();
+      })
+      .catch(console.trace.bind(console));
+  });
+
+  it('keepAll=false should return only current entries', function(done) {
+    var dataOptions = {
+      models: models,
+      domain: 'site1',
+      dataset: null,
+      place: null,
+      year: null,
+      cascade: false,
+      ynQuestions: false,
+      locale: null,
+      with: {Entry: true, Dataset: false, Place: false, Question: false}
+    };
+    modelUtils.getData(dataOptions)
+      .then(function(data) {
+        expect(data).to.have.property('entries');
+        var hasCurrent = false;
+        var hasNonCurrent = false;
+        _.forEach(data.entries, function(entry) {
+          entry.isCurrent ? hasCurrent = true : hasNonCurrent = true;
+        });
+        expect(hasCurrent).to.be.true;
+        expect(hasNonCurrent).to.be.false;
+        done();
+      })
+      .catch(console.trace.bind(console));
+  });
+
   it('does not return results of an Entry query', function(done) {
     var dataOptions = {
       models: models,
