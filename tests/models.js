@@ -21,6 +21,7 @@ var defaultOptions = {
 
 
 describe('Data access layer', function() {
+  this.timeout(20000);
 
   beforeEach(utils.setupFixtures);
   afterEach(utils.dropFixtures);
@@ -45,6 +46,61 @@ describe('Data access layer', function() {
         expect(data).to.have.property('datasets');
         expect(data).to.have.property('places');
         expect(data).to.have.property('questions');
+        done();
+      })
+      .catch(console.trace.bind(console));
+  });
+
+  it('keepAll=true should return all entries', function(done) {
+    var dataOptions = {
+      models: models,
+      domain: 'site1',
+      dataset: null,
+      place: null,
+      year: null,
+      cascade: false,
+      ynQuestions: false,
+      locale: null,
+      keepAll: true,
+      with: {Entry: true, Dataset: false, Place: false, Question: false}
+    };
+    modelUtils.getData(dataOptions)
+      .then(function(data) {
+        expect(data).to.have.property('entries');
+        var hasCurrent = false;
+        var hasNonCurrent = false;
+        _.forEach(data.entries, function(entry) {
+          entry.isCurrent ? hasCurrent = true : hasNonCurrent = true;
+        });
+        expect(hasCurrent).to.be.true;
+        expect(hasNonCurrent).to.be.true;
+        done();
+      })
+      .catch(console.trace.bind(console));
+  });
+
+  it('keepAll=false should return only current entries', function(done) {
+    var dataOptions = {
+      models: models,
+      domain: 'site1',
+      dataset: null,
+      place: null,
+      year: null,
+      cascade: false,
+      ynQuestions: false,
+      locale: null,
+      with: {Entry: true, Dataset: false, Place: false, Question: false}
+    };
+    modelUtils.getData(dataOptions)
+      .then(function(data) {
+        expect(data).to.have.property('entries');
+        var hasCurrent = false;
+        var hasNonCurrent = false;
+        _.forEach(data.entries, function(entry) {
+          entry.isCurrent ? hasCurrent = true : hasNonCurrent = true;
+        });
+        expect(hasCurrent).to.be.true;
+        expect(hasNonCurrent).to.be.false;
         done();
       })
       .catch(console.trace.bind(console));

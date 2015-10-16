@@ -33,11 +33,17 @@ var outputItemsAsCsv = function (response, items, mapper, columns) {
 };
 
 var questions = function (req, res) {
-  var format = req.params.format;
-  var query = req.app.get('models').Question
-        .findAll(modelUtils.siteQuery(req.params.domain));
+  var format = req.params.format,
+    dataOptions = _.merge(
+      modelUtils.getDataOptions(req),
+      {
+        cascade: false,
+        with: {Place: false, Entry: false, Dataset: false}
+      }
+    );
 
-  query.then(function(results) {
+  modelUtils.getData(dataOptions).then(function(data) {
+    var results = data.questions;
     var columns = [
       'id',
       'site',
@@ -74,11 +80,17 @@ var questions = function (req, res) {
 };
 
 var datasets = function (req, res) {
-  var format = req.params.format;
-  var query = req.app.get('models').Dataset
-        .findAll(modelUtils.siteQuery(req.params.domain));
+  var format = req.params.format,
+    dataOptions = _.merge(
+      modelUtils.getDataOptions(req),
+      {
+        cascade: false,
+        with: {Place: false, Entry: false, Question: false}
+      }
+    );
 
-  query.then(function(results) {
+  modelUtils.getData(dataOptions).then(function(data) {
+    var results = data.datasets;
     var columns = [
       'id',
       'site',
@@ -113,11 +125,17 @@ var datasets = function (req, res) {
 };
 
 var places = function (req, res) {
-  var format = req.params.format;
-  var query = req.app.get('models').Place
-        .findAll(modelUtils.siteQuery(req.params.domain));
+  var format = req.params.format,
+    dataOptions = _.merge(
+      modelUtils.getDataOptions(req),
+      {
+        cascade: false,
+        with: {Dataset: false, Entry: false, Question: false}
+      }
+    );
 
-  query.then(function(results) {
+  modelUtils.getData(dataOptions).then(function(data) {
+    var results = data.places;
     var columns = [
       'id',
       'site',
@@ -151,19 +169,31 @@ var places = function (req, res) {
   }).catch(console.trace.bind(console));
 };
 
-var entries = function (req, res) {
+var entries = function (req, res, next) {
+
   var format = req.params.format,
       strategy = req.params.strategy,
       dataOptions = _.merge(
         modelUtils.getDataOptions(req),
         {
           cascade: false,
+          ynQuestions: false,
           with: {Dataset: false, Place: false, Question: false}
         }
       );
 
+  if (!!req.params.isYearImplicitlySet) {
+    dataOptions = _.merge(dataOptions, {year: false});
+  }
+
   if (strategy === 'cascade') {
     dataOptions = _.merge(dataOptions, {cascade: true});
+  } else
+  if (strategy === 'all') {
+    dataOptions = _.merge(dataOptions, {keepAll: true});
+  } else
+  if (!!strategy && (strategy != '')) {
+    return next();
   }
 
   modelUtils.getData(dataOptions)

@@ -1,0 +1,696 @@
+#
+# Translators:
+# Miroslav Schlossberg, 2014
+# Tatjana Dosanovic <tatjana.dosanovic@gmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Open Data Census\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-01-14 14:03+0000\n"
+"PO-Revision-Date: 2014-11-22 13:20+0000\n"
+"Last-Translator: Tatjana Dosanovic <tatjana.dosanovic@gmail.com>\n"
+"Language-Team: Croatian (Croatia) (http://www.transifex.com/okfn/open-data-"
+"census/language/hr_HR/)\n"
+"Language: hr_HR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#: templates/base.html:39
+msgid "Home"
+msgstr "Početna"
+
+#: templates/base.html:40
+msgid "About"
+msgstr "Informacije"
+
+#: templates/base.html:41
+msgid "Changes"
+msgstr ""
+
+#: templates/base.html:43
+msgid "FAQ"
+msgstr "Često postavljena pitanja"
+
+#: templates/base.html:46
+#, fuzzy
+msgid "Contribute"
+msgstr "Suradnici"
+
+#: templates/base.html:95
+msgid "Change language:"
+msgstr "Promijeni jezik"
+
+#: templates/base.html:106
+msgid "Open Online Software Service"
+msgstr "Open Online Software Service"
+
+#: templates/base.html:109 templates/base.html:112
+msgid "Open Definition"
+msgstr "Open Definition"
+
+#: templates/base.html:116
+msgid "Data License (Public Domain)"
+msgstr "Podatkovna dozvola (javna domena)"
+
+#: templates/base.html:118
+msgid "Source code"
+msgstr "Izvorni kod"
+
+#: templates/base.html:121
+msgid "Download Data (CSV)"
+msgstr ""
+
+#: templates/base.html:123
+msgid "Download Data (JSON)"
+msgstr ""
+
+#: templates/base.html:126
+#, fuzzy
+msgid ""
+"Part of the <a href=\"http://census.okfn.org/\">Open Data Census project</a> "
+"run by Open Knowledge."
+msgstr ""
+"Ova stranica je dio <a href=\"http://meta.census.okfn.org/\">Open Data "
+"Census projekta</a> kojeg provodi Open Knowledge Foundation."
+
+#: templates/base.html:129
+#, fuzzy
+msgid "An Open Knowledge Project"
+msgstr "Open Knowledge Foundation projekt"
+
+#: templates/base.html:138
+msgid "Logged in as %(name)s."
+msgstr ""
+
+#: templates/base.html:139
+msgid "Log out"
+msgstr ""
+
+#: templates/base.html:141 templates/login.html:4 templates/login.html:9
+#: templates/submission/review.html:20
+msgid "Login"
+msgstr "Prijava"
+
+#: templates/base.html:144
+msgid "More about Open Data"
+msgstr "Više o otvorenim podacima"
+
+#: templates/base.html:144
+msgid "What is Open Data"
+msgstr "Što su otvoreni podaci"
+
+#: templates/base.html:145
+msgid "Run Your Own<br />Local Open Data Census"
+msgstr "Pokreni svoj vlastiti<br />lokalni cenzus otvorenih podataka"
+
+#: templates/changes.html:4
+#, fuzzy
+msgid "Recent Changes"
+msgstr "Postotak"
+
+#: templates/changes.html:8
+#, fuzzy
+msgid "Changelog"
+msgstr "Promijeni jezik"
+
+#: templates/changes.html:10
+msgid "A log of the most recent submission and entry activity."
+msgstr ""
+
+#: templates/changes.html:16
+msgid "Entry"
+msgstr ""
+
+#: templates/changes.html:16 templates/submission/review.html:29
+#, fuzzy
+msgid "Submission"
+msgstr "Pregledajte podnesak"
+
+#: templates/changes.html:18
+#, fuzzy
+msgid "new"
+msgstr "Dodajte novi"
+
+#: templates/changes.html:26
+msgid "On"
+msgstr ""
+
+#: templates/changes.html:26
+msgid "submitted by"
+msgstr ""
+
+#: templates/changes.html:26
+msgid "and reviewed by"
+msgstr ""
+
+#: templates/login.html:20
+msgid "Please login to contribute to the"
+msgstr ""
+
+#: templates/login.html:25
+msgid "Login with Google &raquo;"
+msgstr "Prijavite se s Google &raquo;"
+
+#: templates/login.html:27
+msgid ""
+"Login with your existing Google account in a few seconds. We will not share "
+"your email with any third party. For more information see the"
+msgstr ""
+
+#: templates/login.html:27
+msgid "terms of use"
+msgstr ""
+
+#: templates/login.html:31
+msgid "&ndash; or &ndash;"
+msgstr "&ndash; ili &ndash;"
+
+#: templates/login.html:36
+msgid "Name (optional)"
+msgstr "Ime (nije obavezno)"
+
+#: templates/login.html:37
+msgid ""
+"If you provide a name we can credit you for your contribution (if not "
+"provided you'll be listed as Anonymous)."
+msgstr ""
+"Ako ste napisali svoje ime možemo vas imenovati za vaš doprinos, u suprotnom "
+"bit ćete navedeni kao Anonimno."
+
+#: templates/login.html:38
+msgid "Joe Bloggs"
+msgstr "Ivan Horvat"
+
+#: templates/login.html:40
+msgid "Continue &raquo;"
+msgstr "Nastavi &raquo;"
+
+#: templates/login.html:43
+msgid "Continue without logging in."
+msgstr "Nastavite bez prijavljivanja."
+
+#: templates/overview.html:3
+msgid "Overview"
+msgstr "Pregled"
+
+#: templates/overview.html:11
+msgid "Number of places"
+msgstr "Broj mjesta"
+
+#: templates/overview.html:13
+msgid "Number of datasets"
+msgstr "Broj grupa podataka"
+
+#: templates/overview.html:15
+msgid "Number of open datasets"
+msgstr "Broj otvorenih grupa podataka"
+
+#: templates/overview.html:17
+msgid "Percentage"
+msgstr "Postotak"
+
+#: templates/overview.html:17
+msgid "open"
+msgstr "otvorenih"
+
+#: templates/overview.html:34
+#, fuzzy
+msgid "Add information"
+msgstr "Ostalo"
+
+#: templates/overview.html:50 templates/overview.html:121
+msgid "Total Score"
+msgstr "Ukupni bodovi"
+
+#: templates/overview.html:58
+msgid ""
+"The Census Admin needs to add some places to the Places configuration sheet"
+msgstr ""
+"Administrator cenzusa treba dodati neka mjesta u Places configuration tablicu"
+
+#: templates/overview.html:80
+msgid "Click here to add to the census!"
+msgstr "Kliknite ovdje da dodate u cenzus!"
+
+#: templates/overview.html:80
+msgid "Add new"
+msgstr "Dodajte novi"
+
+#: templates/_snippets/datasets.html:4 templates/country/place.html:39
+#: templates/submission/create.html:47
+msgid "Dataset"
+msgstr "Grupa podataka"
+
+#: templates/_snippets/datasets.html:5
+#: templates/_snippets/entry-summary-row.html:55
+#: templates/_snippets/questions.html:5 templates/country/entry.html:57
+msgid "Details"
+msgstr "Pojedinosti"
+
+#: templates/_snippets/entry-summary-row.html:36
+msgid "Date available:"
+msgstr "Dostupan datum:"
+
+#: templates/_snippets/entry-summary-row.html:38
+msgid "No date available given"
+msgstr "Nije objavljen niti jedan dostupan datum"
+
+#: templates/_snippets/entry-summary-row.html:47
+msgid "No data format given"
+msgstr "Format podataka nije dostupan"
+
+#: templates/_snippets/entry-summary-row.html:59
+msgid "No details"
+msgstr "Nema pojedinosti"
+
+#: templates/_snippets/key.html:2
+msgid "Key:"
+msgstr "Legenda:"
+
+#: templates/_snippets/key.html:4 templates/submission/form-core.html:38
+msgid "Yes"
+msgstr "Da"
+
+#: templates/_snippets/key.html:5 templates/submission/form-core.html:39
+msgid "No"
+msgstr "Ne"
+
+#: templates/_snippets/key.html:6 templates/submission/form-core.html:40
+msgid "Unsure"
+msgstr "Nepoznato"
+
+#: templates/_snippets/key.html:7
+msgid "No data"
+msgstr "Nema podataka"
+
+#: templates/_snippets/missing_place_button.html:3
+msgid "Add new location"
+msgstr "Dodaj novo mjesto"
+
+#: templates/_snippets/questions.html:4
+msgid "Question"
+msgstr "Pitanje"
+
+#: templates/_snippets/questions.html:6
+msgid "Weighting"
+msgstr "Ocjena"
+
+#: templates/_snippets/reviewer_actions.html:3
+#, fuzzy
+msgid "Review"
+msgstr "Pregledajte sada"
+
+#: templates/_snippets/reviewer_actions.html:7
+msgid "Actions"
+msgstr ""
+
+#: templates/_snippets/reviewer_actions.html:8
+msgid ""
+"Please add a short comment as to why you are accepting or rejecting this "
+"submission. **Note that your message will be publicly visible**."
+msgstr ""
+
+#: templates/_snippets/reviewer_actions.html:10
+msgid "Publish"
+msgstr "Objavi"
+
+#: templates/_snippets/reviewer_actions.html:11
+msgid "Reject"
+msgstr ""
+
+#: templates/_snippets/reviewer_actions.html:15
+msgid "Important"
+msgstr ""
+
+#: templates/_snippets/reviewer_actions.html:17
+msgid ""
+"As the reviewer, your name **(%(name)s)** will be logged and displayed with "
+"the entry"
+msgstr ""
+
+#: templates/_snippets/reviewer_actions.html:18
+msgid ""
+"If this submission makes no changes to the current entry then please "
+"'Reject' it rather than 'Accept'"
+msgstr ""
+
+#: templates/_snippets/reviewer_actions.html:19
+msgid ""
+"Note that you edit the submission before accepting it. In particular, please "
+"correct any spelling mistakes"
+msgstr ""
+
+#: templates/_snippets/reviewer_actions.html:20
+msgid ""
+"Publish will overwrite the whole current entry with the data in this form"
+msgstr ""
+
+#: templates/_snippets/share_page_buttons.html:1
+#: templates/_snippets/share_submission_buttons.html:5
+msgid "Share on Twitter"
+msgstr ""
+
+#: templates/_snippets/share_page_buttons.html:4
+#: templates/_snippets/share_submission_buttons.html:10
+msgid "Share on Facebook"
+msgstr ""
+
+#: templates/_snippets/share_page_buttons.html:7
+#: templates/_snippets/share_submission_buttons.html:14
+msgid "Share on Google+"
+msgstr ""
+
+#: templates/_snippets/share_submission_buttons.html:6
+msgid "Twitter"
+msgstr ""
+
+#: templates/_snippets/share_submission_buttons.html:11
+msgid "Facebook"
+msgstr ""
+
+#: templates/_snippets/share_submission_buttons.html:15
+msgid "Google+"
+msgstr ""
+
+#: templates/country/dataset.html:5 templates/country/dataset.html:12
+#, fuzzy
+msgid "Datasets"
+msgstr "Grupa podataka"
+
+#: templates/country/dataset.html:25
+msgid ""
+"On this page you can see the state of open data for %(dataset)s in all the "
+"places for which we have information."
+msgstr ""
+
+#: templates/country/dataset.html:28
+#, fuzzy
+msgid "Dataset Description"
+msgstr "Lokacija podataka"
+
+#: templates/country/dataset.html:43 templates/submission/create.html:37
+#, fuzzy
+msgid "Place"
+msgstr "Mjesta"
+
+#: templates/country/dataset.html:44 templates/country/place.html:40
+msgid "Score"
+msgstr "Ocjena"
+
+#: templates/country/dataset.html:45 templates/country/place.html:41
+msgid "Breakdown"
+msgstr "Pokazatelji"
+
+#: templates/country/dataset.html:46 templates/country/place.html:43
+msgid "Location (URL)"
+msgstr "Poveznica"
+
+#: templates/country/dataset.html:47 templates/country/place.html:44
+#: templates/submission/form-core.html:42
+msgid "Information"
+msgstr "Ostalo"
+
+#: templates/country/dataset.html:64 templates/country/place.html:70
+msgid "Propose Revisions"
+msgstr "Predložite izmjene"
+
+#: templates/country/dataset.html:66 templates/country/place.html:74
+msgid "Submit information"
+msgstr "Podnesite informacije"
+
+#: templates/country/entry.html:4
+msgid "Entry for %(place)s / %(title)s"
+msgstr ""
+
+#: templates/country/entry.html:11
+msgid "Return to dataset overview"
+msgstr "Povratak na pregled skupa podataka"
+
+#: templates/country/entry.html:24
+msgid "Data Location"
+msgstr "Lokacija podataka"
+
+#: templates/country/entry.html:27 templates/submission/review.html:79
+msgid "Comments"
+msgstr "Komentari"
+
+#: templates/country/entry.html:30
+msgid "Data Availability"
+msgstr "Dostupnost podataka"
+
+#: templates/country/entry.html:59
+msgid "Date the data became available"
+msgstr "Datum kada su podaci postali dostupni"
+
+#: templates/country/entry.html:59 templates/country/entry.html:60
+#: templates/country/entry.html:62
+msgid "Unknown"
+msgstr "Nepoznato"
+
+#: templates/country/entry.html:60
+msgid "Format of data"
+msgstr "Format podataka"
+
+#: templates/country/entry.html:61 templates/country/place.html:119
+msgid "Contributors"
+msgstr "Suradnici"
+
+#: templates/country/entry.html:61
+msgid "(Editors)"
+msgstr "(Urednici)"
+
+#: templates/country/entry.html:61
+msgid "(Submitters)"
+msgstr "(Podnosioci)"
+
+#: templates/country/entry.html:62
+msgid "Last modified"
+msgstr ""
+
+#: templates/country/place.html:5 templates/country/place.html:12
+msgid "Places"
+msgstr "Mjesta"
+
+#: templates/country/place.html:25
+msgid ""
+"This is the overview page where you can see the state of open data across "
+"each key dataset."
+msgstr ""
+
+#: templates/country/place.html:84
+msgid "&#8627; Awaiting review"
+msgstr "&#8627; Čeka pregled"
+
+#: templates/country/place.html:86
+#, fuzzy
+msgid "Submitted by"
+msgstr "(Podnosioci)"
+
+#: templates/country/place.html:91
+#, fuzzy
+msgid "Submitted on"
+msgstr "(Podnosioci)"
+
+#: templates/country/place.html:99
+#, fuzzy
+msgid "View Submission"
+msgstr "Pregledajte podnesak"
+
+#: templates/country/place.html:106
+msgid ""
+"Sorry, only one submission can be waiting for review at a time - please come "
+"back in a few days to submit new information"
+msgstr ""
+
+#: templates/country/place.html:120
+msgid "Editors for %(name)s:"
+msgstr ""
+
+#: templates/country/place.html:124
+msgid "With submissions from:"
+msgstr "S podnescima od:"
+
+#: templates/submission/create.html:4 templates/submission/create.html:78
+msgid "Submit"
+msgstr "Pošaljite"
+
+#: templates/submission/create.html:9
+msgid "Make a Submission &ndash; %(sitename)s"
+msgstr ""
+
+#: templates/submission/create.html:15
+msgid "The form has missing or incorrect data"
+msgstr ""
+
+#: templates/submission/create.html:34
+msgid "Place and Dataset"
+msgstr "Mjesto i grupa podataka"
+
+#: templates/submission/create.html:39 templates/submission/create.html:49
+msgid "Please select"
+msgstr "Molimo odaberite"
+
+#: templates/submission/create.html:65
+msgid "%(sitename)s Year"
+msgstr ""
+
+#: templates/submission/create.html:74
+msgid "Your Name &ndash; %(name)s"
+msgstr ""
+
+#: templates/submission/create.html:75
+msgid "This will be public."
+msgstr "Ovo će biti pokazano javno."
+
+#: templates/submission/create.html:79
+msgid ""
+"By submitting material to the index you agreeing to <a href=\"http://okfn."
+"org/terms-of-use/\">terms of use</a> and also to license your contribution "
+"(to the extent there are any rights in it!) under the <a href=\"http://"
+"opendatacommons.org/licenses/pddl/1.0/\">Open Data Commons Public Domain "
+"Dedication and License</a>."
+msgstr ""
+"Slanjem materijala u cenzus slažete se s <a href=\"http://okfn.org/terms-of-"
+"use/\">pravilima korištenja</a> i s primjenom dozvole na vaš doprinos pod <a "
+"href=\"http://opendatacommons.org/licenses/pddl/1.0/\">Open Data Commons "
+"Public Domain Dedication and License</a> dozvole."
+
+#: templates/submission/form-core.html:3
+msgid "Current Entry"
+msgstr "Trenutni podnesak"
+
+#: templates/submission/form-core.html:9
+#: templates/submission/form-core.html:12
+#: templates/submission/form-core.html:57
+msgid "No entry"
+msgstr ""
+
+#: templates/submission/form-core.html:41
+#, fuzzy
+msgid "Current"
+msgstr "Trenutni podnesak"
+
+#: templates/submission/form-core.html:90
+#, fuzzy
+msgid "Preview"
+msgstr "Pregled"
+
+#: templates/submission/review.html:4
+msgid "Review Submission"
+msgstr "Pregledajte podnesak"
+
+#: templates/submission/review.html:16
+msgid "If you are a reviewer, please login to review"
+msgstr ""
+
+#: templates/submission/review.html:44
+msgid "Status"
+msgstr ""
+
+#: templates/submission/review.html:45
+#, fuzzy
+msgid "Submission date"
+msgstr "Pregledajte podnesak"
+
+#: templates/submission/review.html:46
+#, fuzzy
+msgid "Submitter"
+msgstr "(Podnosioci)"
+
+#: templates/submission/review.html:48
+#, fuzzy
+msgid "Reviewer"
+msgstr "Pregledajte sada"
+
+#: templates/submission/review.html:49
+#, fuzzy
+msgid "Review comments"
+msgstr "Pregledajte sada"
+
+#~ msgid "locale"
+#~ msgstr "locale"
+
+#~ msgid "Open Knowledge Foundation logo"
+#~ msgstr "Open Knowledge Foundation logo"
+
+#~ msgid ""
+#~ "This is the overview page where you can see the state of open data across "
+#~ "each key dataset (displayed down the left hand side). To find out more "
+#~ "about each dataset, click on the info icon.\n"
+#~ "Each icon in the data availability column represents important factors "
+#~ "indicating data accessibility or availability - mouse over the icons to "
+#~ "see what they are and the colours correspond to yes / no / unsure / no "
+#~ "data."
+#~ msgstr ""
+#~ "Ovo je stranica za pregled na kojoj možete vidjeti stanje otvorenih "
+#~ "podataka po svakom skupu podataka. Kako biste saznali više o svakom skupu "
+#~ "podataka, kliknite info ikonu.\n"
+#~ "Svaka ikona u stupcu dostupnosti podataka predstavlja važne pokazatelje "
+#~ "koji ukazuju na pristupačnost ili dostupnost podataka. Prijeđite mišem "
+#~ "preko ikone kako biste vidjeli što ona predstavlja. Boje znače da / ne / "
+#~ "nepoznato / nema podataka."
+
+#~ msgid ""
+#~ "Is something missing or is the data incorrect? Then please hit either "
+#~ "'submit information' or 'propose revisions' on the right and contribute "
+#~ "more information. We need a correct direct link to the official source of "
+#~ "the data - so make sure to include this! Click the link icon under "
+#~ "Location to see the current entry."
+#~ msgstr ""
+#~ "Nedostaje li nešto ili je podatak netočan? Molimo vas da u tom slučaju "
+#~ "kliknete na 'podnesite informacije' ili 'predložite izmjene' na desnoj "
+#~ "strani i pomognete s dodatnim informacijama. Potrebna nam je točna "
+#~ "izravna poveznica sa službenim izvorom podataka - pazite da to unesete! "
+#~ "Kliknite link ispod Poveznica kako biste pogledali trenutno unesenu "
+#~ "poveznicu na službene podatke."
+
+#~ msgid ""
+#~ "Greyed out queued entries are submissions that are waiting approval by "
+#~ "our editor team - but you can see the entry now and judge whether "
+#~ "anything is missing."
+#~ msgstr ""
+#~ "Podnesci koji su zasjenjeni čekaju odobrenje našeg tima urednika, ali,  "
+#~ "podnesak možete vidjeti sada i pogledati nedostaje li nešto."
+
+#~ msgid "Login with Google"
+#~ msgstr "Prijavite se putem Googlea"
+
+#~ msgid "Login with your existing google account in a few seconds."
+#~ msgstr "Prijavite se s vašim Google korisničkim računom."
+
+#~ msgid "Skip Login"
+#~ msgstr "Preskočite prijavu"
+
+#~ msgid "Data Availability Questions"
+#~ msgstr "Pitanja o dostupnosti podataka"
+
+#~ msgid "Publisher Information"
+#~ msgstr "Informacije o nositelju"
+
+#~ msgid "Data Quality"
+#~ msgstr "Kvaliteta podataka"
+
+#~ msgid "This will be logged and displayed"
+#~ msgstr "Ovo će biti zabilježeno i prikazano"
+
+#~ msgid ""
+#~ "If this submission makes no changes to the current entry then please "
+#~ "'Reject' it rather than 'Accept'.\n"
+#~ "        <br />\n"
+#~ "        Note that you edit the submission before accepting it. In "
+#~ "particular, please correct any spelling mistakes.\n"
+#~ "        <br />\n"
+#~ "        <strong>Publish will overwrite the whole current entry with the "
+#~ "data in this form.</strong>"
+#~ msgstr ""
+#~ "Ako ovaj podnesak ne mijenja trenutni, tada ga 'Odbijte' umjesto "
+#~ "'Odobrite'.\n"
+#~ "        <br />\n"
+#~ "        Pazite da uredite podnesak prije nego ga odobrite, odnosno, "
+#~ "ispravite sve greške u pisanju.\n"
+#~ "        <br />\n"
+#~ "        <strong>Objavljivanje će prepisati cijeli trenutni podnesak s "
+#~ "podacima u ovom obrascu.</strong>"
