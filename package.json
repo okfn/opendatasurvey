@@ -82,6 +82,6 @@
     "start": "node server.js",
     "debug": "node-debug server.js",
     "test": "NODE_ENV=test mocha tests/ --patient --harmony",
-    "jscs": "jscs --max-errors 100 census/ scripts/ tests/"
+    "jscs": "jscs census/*.js census/**/*.js fixtures scripts tests"
   }
 }

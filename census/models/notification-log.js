@@ -1,8 +1,6 @@
 'use strict';
 
-
-module.exports = function (sequelize, DataTypes) {
-
+module.exports = function(sequelize, DataTypes) {
   var NotificationLog = sequelize.define('NotificationLog', {
     id: {
       type: DataTypes.UUID,
@@ -10,13 +8,11 @@ module.exports = function (sequelize, DataTypes) {
       primaryKey: true,
       allowNull: false
     },
-
     type: {
       type: DataTypes.STRING,
       allowNull: false,
       comment: 'Notification type name'
     },
-
     lastAt: {
       type: DataTypes.DATE,
       allowNull: true,
@@ -29,5 +25,4 @@ module.exports = function (sequelize, DataTypes) {
   });
 
   return NotificationLog;
-
 };

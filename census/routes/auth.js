@@ -25,16 +25,19 @@ var authConfig = {
 };
 
 var authRoutes = function(router) {
-
   var coreMixins = [mixins.requireAuthDomain, mixins.requireDomain];
 
   router.get(utils.scoped('/login'), coreMixins, auth.login);
   router.get(utils.scoped('/loggedin'), coreMixins, auth.loggedin);
   router.get(utils.scoped('/logout'), coreMixins, auth.logout);
-  router.get(utils.scoped('/facebook'), coreMixins, passport.authenticate('facebook', authConfig.facebook));
-  router.get(utils.scoped('/facebook/callback'), coreMixins, passport.authenticate('facebook', authConfig.facebook));
-  router.get(utils.scoped('/google'), coreMixins, passport.authenticate('google', authConfig.google));
-  router.get(utils.scoped('/google/callback'), coreMixins, passport.authenticate('google', authConfig.google));
+  router.get(utils.scoped('/facebook'), coreMixins,
+    passport.authenticate('facebook', authConfig.facebook));
+  router.get(utils.scoped('/facebook/callback'), coreMixins,
+    passport.authenticate('facebook', authConfig.facebook));
+  router.get(utils.scoped('/google'), coreMixins,
+    passport.authenticate('google', authConfig.google));
+  router.get(utils.scoped('/google/callback'), coreMixins,
+    passport.authenticate('google', authConfig.google));
 
   router.post(
     utils.scoped('/local'),
@@ -48,8 +51,6 @@ var authRoutes = function(router) {
   );
 
   return router;
-
 };
-
 
 module.exports = authRoutes;

@@ -34,7 +34,8 @@ describe('API', function() {
   // Each API test should check next steps:
   // 1. server should return 200 OK status;
   // 2. there should be the only resource - actually response stream;
-  // 3. response should have required format (content type - either text/json or text/csv);
+  // 3. response should have required format (content type - either
+  //   text/json or text/csv);
   // 4. response should contain requested data.
 
   describe('Entries', function() {
@@ -79,10 +80,11 @@ describe('API', function() {
 
         it('Current cascaded, year: ' + year, function(done) {
           var browser = testUtils.browser;
-          browser.visit('/api/entries/' + year + '.cascade.' + format, function() {
-            checkResponse(browser);
-            done();
-          });
+          browser.visit('/api/entries/' + year + '.cascade.' + format,
+            function() {
+              checkResponse(browser);
+              done();
+            });
         });
 
         it('Should fail on invalid strategy', function(done) {
