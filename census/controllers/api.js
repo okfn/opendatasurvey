@@ -13,7 +13,7 @@ var outputItemsAsJson = function(response, items, mapper) {
   response.json({count: items.length, results: items});
 };
 
-var outputItemsAsCsv = function (response, items, mapper, columns) {
+var outputItemsAsCsv = function(response, items, mapper, columns) {
   var options = {
     delimiter: ',',
     quote: '"',
@@ -32,15 +32,15 @@ var outputItemsAsCsv = function (response, items, mapper, columns) {
   stringify.pipe(response);
 };
 
-var questions = function (req, res) {
-  var format = req.params.format,
-    dataOptions = _.merge(
-      modelUtils.getDataOptions(req),
-      {
-        cascade: false,
-        with: {Place: false, Entry: false, Dataset: false}
-      }
-    );
+var questions = function(req, res) {
+  var format = req.params.format;
+  var dataOptions = _.merge(
+    modelUtils.getDataOptions(req),
+    {
+      cascade: false,
+      with: {Place: false, Entry: false, Dataset: false}
+    }
+  );
 
   modelUtils.getData(dataOptions).then(function(data) {
     var results = data.questions;
@@ -55,7 +55,7 @@ var questions = function (req, res) {
       'order'
     ];
 
-    switch(format) {
+    switch (format) {
       case 'json': {
         var mapper = function(item) {
           var result = {};
@@ -79,15 +79,15 @@ var questions = function (req, res) {
   }).catch(console.trace.bind(console));
 };
 
-var datasets = function (req, res) {
-  var format = req.params.format,
-    dataOptions = _.merge(
-      modelUtils.getDataOptions(req),
-      {
-        cascade: false,
-        with: {Place: false, Entry: false, Question: false}
-      }
-    );
+var datasets = function(req, res) {
+  var format = req.params.format;
+  var dataOptions = _.merge(
+    modelUtils.getDataOptions(req),
+    {
+      cascade: false,
+      with: {Place: false, Entry: false, Question: false}
+    }
+  );
 
   modelUtils.getData(dataOptions).then(function(data) {
     var results = data.datasets;
@@ -100,7 +100,7 @@ var datasets = function (req, res) {
       'order'
     ];
 
-    switch(format) {
+    switch (format) {
       case 'json': {
         var mapper = function(item) {
           var result = {};
@@ -124,15 +124,15 @@ var datasets = function (req, res) {
   }).catch(console.trace.bind(console));
 };
 
-var places = function (req, res) {
-  var format = req.params.format,
-    dataOptions = _.merge(
-      modelUtils.getDataOptions(req),
-      {
-        cascade: false,
-        with: {Dataset: false, Entry: false, Question: false}
-      }
-    );
+var places = function(req, res) {
+  var format = req.params.format;
+  var dataOptions = _.merge(
+    modelUtils.getDataOptions(req),
+    {
+      cascade: false,
+      with: {Dataset: false, Entry: false, Question: false}
+    }
+  );
 
   modelUtils.getData(dataOptions).then(function(data) {
     var results = data.places;
@@ -145,7 +145,7 @@ var places = function (req, res) {
       'continent'
     ];
 
-    switch(format) {
+    switch (format) {
       case 'json': {
         var mapper = function(item) {
           var result = {};
@@ -169,18 +169,18 @@ var places = function (req, res) {
   }).catch(console.trace.bind(console));
 };
 
-var entries = function (req, res, next) {
+var entries = function(req, res, next) {
 
-  var format = req.params.format,
-      strategy = req.params.strategy,
-      dataOptions = _.merge(
-        modelUtils.getDataOptions(req),
-        {
-          cascade: false,
-          ynQuestions: false,
-          with: {Dataset: false, Place: false, Question: false}
-        }
-      );
+  var format = req.params.format;
+  var strategy = req.params.strategy;
+  var dataOptions = _.merge(
+    modelUtils.getDataOptions(req),
+    {
+      cascade: false,
+      ynQuestions: false,
+      with: {Dataset: false, Place: false, Question: false}
+    }
+  );
 
   if (!!req.params.isYearImplicitlySet) {
     dataOptions = _.merge(dataOptions, {year: false});
@@ -198,78 +198,78 @@ var entries = function (req, res, next) {
 
   modelUtils.getData(dataOptions)
     .then(function(data) {
-      var results = data.entries,
-          mapper = function(item) {
-            var answers = utils.ynuAnswers(item.answers || {});
-            return {
-              id: item.id,
-              site: item.site,
-              timestamp: moment(item.createdAt).format('YYYY-MM-DDTHH:mm:ss'),
-              year: item.year,
-              place: item.place,
-              dataset: item.dataset,
-              exists: answers.exists,
-              digital: answers.digital,
-              public: answers.public,
-              online: answers.online,
-              free: answers.free,
-              machinereadable: answers.machinereadable,
-              bulk: answers.bulk,
-              openlicense: answers.openlicense,
-              uptodate: answers.uptodate,
-              url: answers.url,
-              format: answers.format,
-              licenseurl: answers.licenseurl,
-              dateavailable: answers.dateavailable,
-              officialtitle: answers.officialtitle,
-              publisher: answers.publisher,
-              details: item.details,
-              submitter: item.Submitter ? item.Submitter.fullName() : '',
-              reviewer: item.Reviewer ? item.Reviewer.fullName() : ''
-            };
-          };
+      var results = data.entries;
+      var mapper = function(item) {
+        var answers = utils.ynuAnswers(item.answers || {});
+        return {
+          id: item.id,
+          site: item.site,
+          timestamp: moment(item.createdAt).format('YYYY-MM-DDTHH:mm:ss'),
+          year: item.year,
+          place: item.place,
+          dataset: item.dataset,
+          exists: answers.exists,
+          digital: answers.digital,
+          public: answers.public,
+          online: answers.online,
+          free: answers.free,
+          machinereadable: answers.machinereadable,
+          bulk: answers.bulk,
+          openlicense: answers.openlicense,
+          uptodate: answers.uptodate,
+          url: answers.url,
+          format: answers.format,
+          licenseurl: answers.licenseurl,
+          dateavailable: answers.dateavailable,
+          officialtitle: answers.officialtitle,
+          publisher: answers.publisher,
+          details: item.details,
+          submitter: item.Submitter ? item.Submitter.fullName() : '',
+          reviewer: item.Reviewer ? item.Reviewer.fullName() : ''
+        };
+      };
 
-    switch(format) {
-      case 'json': {
-        outputItemsAsJson(res, results, mapper);
-        break;
+      switch (format) {
+        case 'json': {
+          outputItemsAsJson(res, results, mapper);
+          break;
+        }
+        case 'csv': {
+          var columns = [
+            'id',
+            'site',
+            'timestamp',
+            'year',
+            'place',
+            'dataset',
+            'exists',
+            'digital',
+            'public',
+            'online',
+            'free',
+            'machinereadable',
+            'bulk',
+            'openlicence',
+            'uptodate',
+            'url',
+            'format',
+            'licenseurl',
+            'dateavailable',
+            'officialtitle',
+            'publisher',
+            'details',
+            'submitter',
+            'reviewer'
+          ];
+          outputItemsAsCsv(res, results, mapper, columns);
+          break;
+        }
+        default: {
+          res.send(404);
+          break;
+        }
       }
-      case 'csv': {
-        var columns = [
-          'id',
-          'site',
-          'timestamp',
-          'year',
-          'place',
-          'dataset',
-          'exists',
-          'digital',
-          'public',
-          'online',
-          'free',
-          'machinereadable',
-          'bulk',
-          'openlicence',
-          'uptodate',
-          'url',
-          'format',
-          'licenseurl',
-          'dateavailable',
-          'officialtitle',
-          'publisher',
-          'details',
-          'submitter',
-          'reviewer'
-        ];
-        outputItemsAsCsv(res, results, mapper, columns);
-        break;
-      }
-      default: {
-        res.send(404);
-        break;
-      }
-    }
-  }).catch(console.trace.bind(console));
+    }).catch(console.trace.bind(console));
 };
 
 module.exports = {

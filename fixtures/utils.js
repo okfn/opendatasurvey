@@ -6,7 +6,6 @@ var userIds = [
   uuid.v4()
 ];
 
-
 module.exports = {
   userIds: userIds
 };

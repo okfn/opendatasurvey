@@ -31,10 +31,11 @@ exports.startApplication = function(done) {
         var app = result.app;
         exports.app = result.app;
         exports.server = result.server;
-        Browser.localhost('*.dev.census.org:' + app.get('port'), app.get('port'));
+        var port = app.get('port');
+        Browser.localhost('*.dev.census.org:' + port, port);
         exports.browser = new Browser({
           maxWait: 5000,
-          site: 'http://site1.dev.census.org:' + app.get('port') + '/'
+          site: 'http://site1.dev.census.org:' + port + '/'
         });
         done();
       });

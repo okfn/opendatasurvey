@@ -11,7 +11,7 @@ var objects = [
       'type': '',
       'score': 5,
       'icon': 'file-alt'
-     }
+    }
   },
   {
     'model': 'Question',
@@ -247,7 +247,8 @@ var objects = [
       'site': 'site1',
       'id': 'details',
       'order': 17,
-      'question': 'Further Details and Comments (optional but strongly encouraged)',
+      'question': 'Further Details and Comments (optional but strongly ' +
+        'encouraged)',
       'description': 'the description',
       'placeholder': 'the placeholder',
       'type': 'textarea',
@@ -267,7 +268,7 @@ var objects = [
       'type': '',
       'score': 5,
       'icon': 'file-alt'
-     }
+    }
   },
   {
     'model': 'Question',
@@ -503,7 +504,8 @@ var objects = [
       'site': 'site2',
       'id': 'details',
       'order': 17,
-      'question': 'Further Details and Comments (optional but strongly encouraged)',
+      'question': 'Further Details and Comments (optional but strongly ' +
+        'encouraged)',
       'description': 'the description',
       'placeholder': 'the placeholder',
       'type': 'textarea',
@@ -511,8 +513,6 @@ var objects = [
       'icon': ''
     }
   }
-
 ];
-
 
 module.exports = objects;

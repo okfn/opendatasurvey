@@ -83,6 +83,12 @@ Now we should be ready to run the server:
 3. Load the data for a specific site, e.g.: `http://demo.dev.census.org:5000/admin`
 4. Visit the site: `http://demo.dev.census.org:5000/`
 
+Other things you can do:
+
+* Run the test suite with npm test
+* Check your code style with npm run jscs (according to the Google style guide)
+
+
 ### Configuration Sheets
 
 Most of the site configuration is taken from config sheets in Google Sheets. You can use [this registry sheet](https://docs.google.com/spreadsheets/d/18jINMw7ifwUoqizc4xaQE8XtF4apPfsmMN43EM-9Pmc/edit#gid=0) and its linked sheets as examples and clone them as necessary.

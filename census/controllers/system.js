@@ -4,27 +4,31 @@ var loaders = require('../loaders');
 var Promise = require('bluebird');
 var utils = require('./utils');
 
-
-var admin = function (req, res) {
+var admin = function(req, res) {
   req.app.get('models').Registry.findAll()
     .then(function(result) {
       res.render('system.html', {registry: result});
     });
 };
 
-
-var loadRegistry = function (req, res) {
+var loadRegistry = function(req, res) {
   return loaders.loadRegistry(req.app.get('models'))
     .spread(function(error, data) {
-      if (error)
-        res.send({'status': 'error', message: error});
-      else
-        res.send({'status': 'ok', message: 'ok'});
+      if (error) {
+        res.send({
+          status: 'error',
+          message: error
+        });
+      } else {
+        res.send({
+          status: 'ok',
+          message: 'ok'
+        });
+      }
     });
 };
 
-
-var loadAllConfigs = function (req, res) {
+var loadAllConfigs = function(req, res) {
   req.app.get('models').Registry.findAll()
     .then(function(results) {
       Promise.each(results, function(result) {
@@ -34,13 +38,15 @@ var loadAllConfigs = function (req, res) {
           })
           .catch(console.trace.bind(console));
       }).then(function() {
-        res.send({'status': 'ok', message: 'ok'});
+        res.send({
+          status: 'ok',
+          message: 'ok'
+        });
       });
     }).catch(console.trace.bind(console));
 };
 
-
-var loadAllPlaces = function (req, res) {
+var loadAllPlaces = function(req, res) {
   req.app.get('models').Site.findAll()
     .then(function(results) {
       Promise.each(results, function(result) {
@@ -51,15 +57,27 @@ var loadAllPlaces = function (req, res) {
           site: result.id
         };
         return loaders.loadTranslatedData(options, req.app.get('models'))
-          .then(function() { console.log('loaded'); }).catch(console.trace.bind(console));
+          .then(function() {
+            console.log('loaded');
+          })
+          .catch(console.trace.bind(console));
       })
-        .then(function() { res.send({status: 'ok', message: 'ok'}); })
-        .catch(function(E) { res.send({status: 'error', message: E}); });
+        .then(function() {
+          res.send({
+            status: 'ok',
+            message: 'ok'
+          });
+        })
+        .catch(function(E) {
+          res.send({
+            status: 'error',
+            message: E
+          });
+        });
     });
 };
 
-
-var loadAllDatasets = function (req, res) {
+var loadAllDatasets = function(req, res) {
   req.app.get('models').Site.findAll()
     .then(function(results) {
       Promise.each(results, function(result) {
@@ -70,15 +88,27 @@ var loadAllDatasets = function (req, res) {
           site: result.id
         };
         return loaders.loadTranslatedData(options, req.app.get('models'))
-          .then(function() { console.log('loaded'); });
+          .then(function() {
+            console.log('loaded');
+          })
+          .catch(console.trace.bind(console));
       })
-        .then(function() { res.send({status: 'ok', message: 'ok'}); })
-        .catch(function(E) { res.send({status: 'error', message: E}); });
+        .then(function() {
+          res.send({
+            status: 'ok',
+            message: 'ok'
+          });
+        })
+        .catch(function(E) {
+          res.send({
+            status: 'error',
+            message: E
+          });
+        });
     });
 };
 
-
-var loadAllQuestions = function (req, res) {
+var loadAllQuestions = function(req, res) {
   req.app.get('models').Site.findAll()
     .then(function(results) {
       Promise.each(results, function(result) {
@@ -89,13 +119,25 @@ var loadAllQuestions = function (req, res) {
           site: result.id
         };
         return loaders.loadTranslatedData(options, req.app.get('models'))
-          .then(function() { console.log('loaded'); }).catch(console.trace.bind(console));
+          .then(function() {
+            console.log('loaded');
+          })
+          .catch(console.trace.bind(console));
       })
-        .then(function() { res.send({status: 'ok', message: 'ok'}); })
-        .catch(function(E) { res.send({status: 'error', message: E}); });
+        .then(function() {
+          res.send({
+            status: 'ok',
+            message: 'ok'
+          });
+        })
+        .catch(function(E) {
+          res.send({
+            status: 'error',
+            message: E
+          });
+        });
     });
 };
-
 
 module.exports = {
   admin: admin,

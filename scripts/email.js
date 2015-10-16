@@ -20,13 +20,12 @@ var prepareMessage = function(template, context, recepient, subject) {
     from: config.get('email_from'),
     to: recepient,
     subject: subject,
-    attachment: [{data: rendered.html, alternative:true}]
+    attachment: [{data: rendered.html, alternative: true}]
   };
 };
 
 var send = function(message) {
-
-  console.log("Sending email to " + message.to);
+  console.log('Sending email to ' + message.to);
 
   var server = email.server.connect({
     user: config.get('mandrill:smtp_username'),
@@ -41,7 +40,6 @@ var send = function(message) {
     }
   });
 };
-
 
 module.exports = {
   prepareMessage: prepareMessage,
