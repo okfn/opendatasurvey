@@ -25,8 +25,8 @@ var loadConfig = function (siteId, models) {
             settings[k] = false;
           } else if (v && v.toLowerCase() === 'null') {
             settings[k] = null;
-          } else if (v && k === 'reviewers') {
-            settings[k] = _.each(v.split(controllerUtils.FIELD_SPLITTER), function(r) { r.trim(); });
+          } else if (v && ['reviewers', 'locales'].indexOf(k) !== -1) {
+            settings[k] = _.map(v.split(controllerUtils.FIELD_SPLITTER), _.trim);
           } else if (v && ['navbar_logo', 'overview_page', 'submit_page', 'about_page',
                            'faq_page', 'contribute_page', 'banner_text'].indexOf(k) !== -1) {
             settings[k] = marked(v);

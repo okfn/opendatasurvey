@@ -1,31 +1,8 @@
 'use strict';
 
 var _ = require('lodash');
-var Browser = require('zombie');
-var start = require('../census/app').start;
 var assert = require('chai').assert;
-var utils = require('./utils');
-
-var app = null;
-var browser = null;
-
-before(function(done) {
-  this.timeout(20000);
-  utils.setupFixtures(function() {
-    // Run the server
-    start().then(function(application) {
-      app = application;
-      Browser.localhost('site1.dev.census.org:' + app.get('port'), app.get('port'));
-      browser = new Browser({
-        maxWait: 5000,
-        site: 'http://site1.dev.census.org:' + app.get('port') + '/'
-      });
-      done();
-    });
-  });
-});
-
-after(utils.dropFixtures);
+var testUtils = require('./utils');
 
 function checkJsonResponse(browser) {
   assert.ok(browser.success);
@@ -51,6 +28,9 @@ var responseFormats = {
 };
 
 describe('API', function() {
+  before(testUtils.startApplication);
+  after(testUtils.shutdownApplication);
+
   // Each API test should check next steps:
   // 1. server should return 200 OK status;
   // 2. there should be the only resource - actually response stream;
@@ -66,6 +46,7 @@ describe('API', function() {
         this.timeout(20000);
 
         it('All', function(done) {
+          var browser = testUtils.browser;
           browser.visit('/api/entries.all.' + format, function() {
             checkResponse(browser);
             done();
@@ -73,6 +54,7 @@ describe('API', function() {
         });
 
         it('All current', function(done) {
+          var browser = testUtils.browser;
           browser.visit('/api/entries.' + format, function() {
             checkResponse(browser);
             done();
@@ -80,6 +62,7 @@ describe('API', function() {
         });
 
         it('Current cascaded', function(done) {
+          var browser = testUtils.browser;
           browser.visit('/api/entries.cascade.' + format, function() {
             checkResponse(browser);
             done();
@@ -87,6 +70,7 @@ describe('API', function() {
         });
 
         it('All current, year: ' + year, function(done) {
+          var browser = testUtils.browser;
           browser.visit('/api/entries/' + year + '.' + format, function() {
             checkResponse(browser);
             done();
@@ -94,6 +78,7 @@ describe('API', function() {
         });
 
         it('Current cascaded, year: ' + year, function(done) {
+          var browser = testUtils.browser;
           browser.visit('/api/entries/' + year + '.cascade.' + format, function() {
             checkResponse(browser);
             done();
@@ -101,6 +86,7 @@ describe('API', function() {
         });
 
         it('Should fail on invalid strategy', function(done) {
+          var browser = testUtils.browser;
           browser.visit('/api/entries.invalid.' + format, function() {
             assert.equal(browser.status, 404);
             done();
@@ -117,6 +103,7 @@ describe('API', function() {
 
       describe('Format: ' + format, function() {
         it('All', function(done) {
+          var browser = testUtils.browser;
           browser.visit('/api/places.' + format, function() {
             checkResponse(browser);
             done();
@@ -133,6 +120,7 @@ describe('API', function() {
 
       describe('Format: ' + format, function() {
         it('All', function(done) {
+          var browser = testUtils.browser;
           browser.visit('/api/datasets.' + format, function() {
             checkResponse(browser);
             done();
@@ -149,6 +137,7 @@ describe('API', function() {
 
       describe('Format: ' + format, function() {
         it('All', function(done) {
+          var browser = testUtils.browser;
           browser.visit('/api/questions.' + format, function() {
             checkResponse(browser);
             done();

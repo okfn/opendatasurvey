@@ -10,6 +10,7 @@ var testUtils = require('./utils');
 
 
 describe('Data loaded from spread sheet into DB', function(){
+  this.timeout(20000);
 
   before(testUtils.setupFixtures);
   after(testUtils.dropFixtures);

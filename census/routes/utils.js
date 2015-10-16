@@ -130,15 +130,19 @@ var setupAuth = function () {
 };
 
 var setLocals = function(req, res, next) {
-
   var config = req.app.get('config');
 
   if (config.get('test:testing') === true && !req.user && config.get('test:user')) {
     req.user = config.get('test:user');
   }
-  if (req.cookies.lang) {
-    req.locale = req.cookies.lang;
+
+  var locales = config.get('locales');
+  if (req.session.lang && (locales.indexOf(req.session.lang) >= 0)) {
+    req.setLocale(req.session.lang);
+  } else {
+    req.setLocale(_.first(locales));
   }
+
   res.locals.currentUser = req.user ? req.user : null;
 
   res.locals.baseDomain =  config.get('base_domain');

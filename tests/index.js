@@ -6,6 +6,7 @@ var utils = require('./utils');
 
 
 describe('Open Data Census Tests', function() {
+  this.timeout(20000);
 
   before(utils.setupFixtures);
   after(utils.dropFixtures);

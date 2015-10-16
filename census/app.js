@@ -96,9 +96,9 @@ function start() {
     passport.session(),
     flash(),
     i18n.abide({
-      supported_languages: config.get('locales'),
+      supported_languages: config.get('availableLocales'),
       default_lang: _.first(config.get('locales')),
-      translation_directory: 'locales'
+      translation_directory: 'census/locale/'
     }),
     express.static(staticRoot, {maxage: cacheAge})
   ]);
@@ -112,6 +112,7 @@ function start() {
   ];
 
   app.all('*', routes.utils.setLocals);
+  app.use('/setlocale', routes.i18n(coreMiddlewares));
   app.use('/admin', routes.admin(coreMiddlewares));
   app.use('/api', routes.api(coreMiddlewares));
   // pages also has census, auth and redirect routes
@@ -122,10 +123,13 @@ function start() {
   routes.utils.setupAuth();
 
   return new Promise(function(resolve, reject) {
-    app.get('models').umzug.up().then(function () {
-      app.listen(app.get('port'), function () {
+    app.get('models').umzug.up().then(function() {
+      var server = app.listen(app.get('port'), function() {
         console.log("Listening on " + app.get('port'));
-        resolve(app);
+        resolve({
+          app: app,
+          server: server
+        });
       });
     }).catch(reject);
   });

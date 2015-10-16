@@ -3,9 +3,40 @@
 var _ = require('lodash');
 var utils = require('./utils');
 
+var setupLocalization = function(req, res, site) {
+  var config = req.app.get('config');
+
+  // Try to use site-specific settings + fallback to defaults
+  var requestedLocales = config.get('locales');
+  if (_.isArray(site.settings.locales)) {
+    requestedLocales = site.settings.locales;
+  } else
+  if (_.isString(site.settings.locales)) {
+    requestedLocales = site.settings.locales.split(utils.FIELD_SPLITTER);
+  }
+
+  // Sanitize locales list: remove invalid and unavailable locales
+  var availableLocales = config.get('availableLocales');
+  var locales = _.chain(requestedLocales)
+    .map(_.trim).filter(function(item) {
+      if (item.length == 0) return false;
+      return availableLocales.indexOf(item) >= 0;
+    }).value();
+  if (locales.length == 0) {
+    locales = config.get('locales');
+  }
+
+  // Check user settings and update environment for current request
+  if (req.session.lang && (locales.indexOf(req.session.lang) >= 0)) {
+    req.setLocale(req.session.lang);
+  } else {
+    req.setLocale(_.first(locales));
+  }
+  res.locals.locales = locales;
+  res.locals.currentLocale = req.locale;
+};
 
 var requireDomain = function(req, res, next) {
-
   res.locals.domain = req.params.domain;
 
   if (!req.params.domain) {
@@ -62,6 +93,7 @@ var requireDomain = function(req, res, next) {
 
             req.params.site = result;
             res.locals.site = result;
+            setupLocalization(req, res, result);
             next();
             return;
           });
