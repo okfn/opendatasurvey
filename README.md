@@ -126,14 +126,17 @@ Also, you can copy the `locale/en` directory to `locale/[language-code]` and cha
 To update translations cache, run
 
     gulp compile-po
-    
+
 ### i18n For Config
 
 Any column can be internationalised by adding another column with `@locale` after it. For example, the `description` column can be translated to German by adding a column of `description@de`. Only languages which have template translations created for them are valid. The `locales` setting in the config document can be used to restrict the number of locales available. The first locale in the list is the default locale.
 
 ### Running Tests
 
-`npm test`
+```
+createdb opendatacensus_test
+npm test
+```
 
 ------
 

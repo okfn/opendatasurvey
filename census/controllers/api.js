@@ -223,7 +223,12 @@ var entries = function(req, res, next) {
           dateavailable: answers.dateavailable,
           officialtitle: answers.officialtitle,
           publisher: answers.publisher,
+          reviewed: item.reviewed ? 'Yes' : 'No',
+          reviewResult: item.reviewResult ? 'Yes' : 'No',
+          reviewComments: item.reviewComments,
           details: item.details,
+          isCurrent: item.isCurrent ? 'Yes' : 'No',
+          isOpen: item.isOpen() ? 'Yes' : 'No',
           submitter: item.Submitter ? item.Submitter.fullName() : '',
           reviewer: item.Reviewer ? item.Reviewer.fullName() : ''
         };
