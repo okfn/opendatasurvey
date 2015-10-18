@@ -98,6 +98,32 @@ describe('API', function() {
     });
   });
 
+  describe('Entries (data)', function() {
+
+    it('All current', function(done) {
+      var browser = testUtils.browser;
+      browser.visit('/api/entries.json', function() {
+
+        // Get first item
+        browser.assert.success();
+        var data = JSON.parse(browser.text());
+        var item = data['results'][0];
+        console.log(item);
+
+        // Check data is right
+        assert.equal(item.reviewComments, '');
+        assert.include(['Yes', 'No'], item.reviewed);
+        assert.include(['Yes', 'No'], item.reviewResult);
+        assert.include(['Yes', 'No'], item.isCurrent);
+        assert.include(['Yes', 'No'], item.isOpen);
+
+        done();
+
+      });
+    });
+
+  });
+
   describe('Places', function() {
     var year = 2015;
     _.forEach(_.keys(responseFormats), function(format) {
