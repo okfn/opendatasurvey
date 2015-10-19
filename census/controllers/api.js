@@ -212,7 +212,7 @@ var entries = function(req, res, next) {
     {
       cascade: false,
       ynQuestions: false,
-      with: {Dataset: false, Place: false, Question: false}
+      with: {Dataset: false, Place: false, Question: true}
     }
   );
 
@@ -264,7 +264,8 @@ var entries = function(req, res, next) {
           isCurrent: item.isCurrent ? 'Yes' : 'No',
           isOpen: item.isOpen() ? 'Yes' : 'No',
           submitter: item.Submitter ? item.Submitter.fullName() : '',
-          reviewer: item.Reviewer ? item.Reviewer.fullName() : ''
+          reviewer: item.Reviewer ? item.Reviewer.fullName() : '',
+          score: item.computedYCount,
         };
       };
 
