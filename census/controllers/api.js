@@ -297,9 +297,15 @@ var entries = function(req, res, next) {
             'dateavailable',
             'officialtitle',
             'publisher',
+            'reviewed',
+            'reviewResult',
+            'reviewComments',
             'details',
+            'isCurrent',
+            'isOpen',
             'submitter',
-            'reviewer'
+            'reviewer',
+            'score',
           ];
           outputItemsAsCsv(res, results, mapper, columns);
           break;
