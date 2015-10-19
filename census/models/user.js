@@ -1,15 +1,15 @@
 'use strict';
+
 var bcrypt = require('bcrypt');
 
-module.exports = function (sequelize, DataTypes) {
-
+module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define('User', {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
       allowNull: false,
-      comment: "Unique identifier for this user."
+      comment: 'Unique identifier for this user.'
     },
     emails: {
       type: DataTypes.ARRAY(DataTypes.STRING),
@@ -55,17 +55,16 @@ module.exports = function (sequelize, DataTypes) {
         if (this.firstName === this.lastName) {
           return 'F'.replace('F', this.firstName || '');
         }
-        return 'F L'.replace('F', this.firstName || '').replace('L', this.lastName || '');
+        return 'F L'.replace('F', this.firstName || '')
+          .replace('L', this.lastName || '');
       },
       isAnonymous: function() {
         return this.firstName === 'anonymous' && this.lastName === 'anonymous';
       }
 
     },
-
     tableName: 'user'
   });
 
   return User;
-
 };
