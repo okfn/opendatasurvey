@@ -10,12 +10,22 @@ var utils = require('../census/loaders/utils');
 var REGISTRY_URL = 'https://docs.google.com/spreadsheets/d/1FK5dzeNeJl81oB76n' +
   'WzhS1dAdnXDoZbbe_vTH4NlThM/edit#gid=0';
 var testUtils = require('./utils');
+var userFixtures = require('../fixtures/user');
 
 describe('Data loaded from spread sheet into DB', function() {
   this.timeout(20000);
 
-  before(testUtils.setupFixtures);
-  after(testUtils.dropFixtures);
+  before(testUtils.startApplication);
+  after(testUtils.shutdownApplication);
+
+  beforeEach(function() {
+    var config = testUtils.app.get('config');
+    config.set('test:testing', true);
+    config.set('test:user', {
+      userid: userFixtures[0].data.id,
+      emails: userFixtures[0].data.emails
+    });
+  });
 
   var configValues = {
     registryUrl: config.get('registryUrl')
@@ -31,53 +41,27 @@ describe('Data loaded from spread sheet into DB', function() {
     }
   });
 
-  it('#loadRegistry', function(done) {
-    this.timeout(10000);
-
-    models.Registry.destroy({truncate: true}).then(function() {
-      var registryIDs;
-
-      utils.spreadsheetParse(REGISTRY_URL || false).spread(function(E, R) {
-        registryIDs = _.pluck(R, 'censusid');
-        loaders.loadRegistry(models).spread(function(E, D) {
-          models.Registry.findAll().then(function(D) {
-            assert.deepEqual(registryIDs.sort(), _.pluck(D, 'id').sort());
-            done();
+  it('loadConfig', function(done) {
+    var browser = testUtils.browser;
+    var app = testUtils.app;
+    app.get('models').Site.findById(siteID).then(function(site) {
+      if (site) {
+        browser.visit('/admin/load/config', function() {
+          assert.ok(browser.success);
+          var html = browser.resources[0].response.body;
+          var data = JSON.parse(html);
+          assert.equal(data.status, 'ok');
+          assert.equal(data.message, 'ok');
+          app.get('models').Site.findById(siteID).then(function(data){
+            assert.isNotNull(data);
+            assert.notEqual(data.places, '');
+            assert.notEqual(data.places, '');
+            assert.notEqual(data.datasets, '');
+            assert.notEqual(data.questions, '');
           });
+          done();
         });
-      });
-    });
-  });
-
-  it('#loadConfig', function(done) {
-    this.timeout(10000);
-
-    models.Registry.findById(siteID).then(function(R) {
-      utils.spreadsheetParse(R.settings.configurl).spread(function(E, C) {
-        loaders.loadConfig(siteID, models).then(function() {
-          models.Site.findById(siteID).then(function(S) {
-            var settings = _.object(_.zip(
-              _.pluck(C, 'key'), _.pluck(C, 'value')));
-            var exact = ['title', 'title_short', 'places',
-              'datasets', 'questions'];
-
-            assert.deepEqual(_.pick(S.settings, exact),
-              _.pick(settings, exact));
-
-            var settingName = 'approve_first_submission';
-            assert.equal(S.settings[settingName], true);
-
-            settingName = 'faq_page';
-            assert.include(S.settings[settingName], 'FAQ');
-
-            settingName = 'faq_page';
-            assert.include(S.settings[settingName], '<p>',
-              'faq page should look like html');
-
-            done();
-          });
-        });
-      });
+      }
     });
   });
 
@@ -94,131 +78,62 @@ describe('Data loaded from spread sheet into DB', function() {
   };
 
   it('Datasets', function(done) {
-    this.timeout(10000);
-
-    models.Site.findById(siteID).then(function(S) {
-      utils.spreadsheetParse(S.settings.datasets).spread(function(E, D) {
-        loaders.loadTranslatedData({
-          mapper: function(D) { return _.extend(D, {name: D.title}); },
-          Model: models.Dataset,
-          setting: 'datasets',
-          site: siteID
-        }, models).then(function() {
-          models.Dataset.findAll({
-            where: {site: siteID}
-          }).then(function(datasets) {
-            assert.equal(D.length, datasets.length);
-            matchEntries(datasets, D, ['id', 'order', 'description']);
-            done();
+    var browser = testUtils.browser;
+    var app = testUtils.app;
+    app.get('models').Site.findById(siteID).then(function(site) {
+      if (site) {
+        browser.visit('/admin/load/places', function() {
+          assert.ok(browser.success);
+          var html = browser.resources[0].response.body;
+          var data = JSON.parse(html);
+          assert.equal(data.status, 'ok');
+          assert.equal(data.message, 'ok');
+          app.get('models').Dataset.findAll({where: {site: siteID}}).then(function(data){
+            assert.equal(data.length, 2);
           });
+          done();
         });
-      });
+      }
     });
   });
 
   it('Places', function(done) {
-    this.timeout(10000);
-
-    models.Site.findById(siteID).then(function(S) {
-      utils.spreadsheetParse(S.settings.places).spread(function(E, P) {
-        loaders.loadTranslatedData({
-          Model: models.Place,
-          setting: 'places',
-          site: siteID
-        }, models).then(function() {
-          models.Place.findAll({where: {site: siteID}}).then(function(places) {
-            assert.equal(P.length, places.length);
-            matchEntries(places, P, ['id', 'name', 'slug']);
-            done();
+    var browser = testUtils.browser;
+    var app = testUtils.app;
+    app.get('models').Site.findById(siteID).then(function(site) {
+      if (site) {
+        browser.visit('/admin/load/places', function() {
+          assert.ok(browser.success);
+          var html = browser.resources[0].response.body;
+          var data = JSON.parse(html);
+          assert.equal(data.status, 'ok');
+          assert.equal(data.message, 'ok');
+          app.get('models').Place.findAll({where: {site: siteID}}).then(function(data){
+            assert.equal(data.length, 3);
           });
+          done();
         });
-      });
+      }
     });
   });
 
   it('Questions', function(done) {
-    this.timeout(10000);
-
-    models.Site.findById(siteID).then(function(S) {
-      utils.spreadsheetParse(S.settings.questions).spread(function(E, Q) {
-        loaders.loadTranslatedData({
-          mapper: function(Q) {
-            return _.extend(Q, {
-              dependants: Q.dependants.split(','),
-              score: Q.score || 0
-            });
-          },
-          Model: models.Question,
-          setting: 'questions',
-          site: siteID
-        }, models).then(function() {
-          models.Question.findAll({
-            where: {site: siteID}
-          }).then(function(questions) {
-            assert.equal(questions.length, Q.length);
-            matchEntries(questions, Q, ['id', 'order', 'question', 'icon']);
-            done();
+    var browser = testUtils.browser;
+    var app = testUtils.app;
+    app.get('models').Site.findById(siteID).then(function(site) {
+      if (site) {
+        browser.visit('/admin/load/questions', function() {
+          assert.ok(browser.success);
+          var html = browser.resources[0].response.body;
+          var data = JSON.parse(html);
+          assert.equal(data.status, 'ok');
+          assert.equal(data.message, 'ok');
+          app.get('models').Question.findAll({where: {site: siteID}}).then(function(data){
+            assert.equal(data.length, 18);
           });
+          done();
         });
-      });
-    });
-  });
-
-  it('Places not in the spreadsheet should be cleared out', function(done) {
-    this.timeout(10000);
-
-    models.Site.findById(siteID).then(function(S) {
-      models.Place.create({
-        id: 'place',
-        site: 'site',
-        name: 'name'
-      }).then(function() {
-        utils.spreadsheetParse(S.settings.places).spread(function(E, P) {
-          loaders.loadTranslatedData({
-            Model: models.Place,
-            setting: 'places',
-            site: siteID
-          }, models).then(function() {
-            models.Place.findAll({
-              where: {site: siteID}
-            }).then(function(places) {
-              assert.equal(P.length, places.length);
-              matchEntries(places, P, ['id', 'name', 'slug']);
-              done();
-            });
-          });
-        });
-      });
-    });
-  });
-
-  it('Dataset load failure should rollback the transaction.', function(done) {
-    this.timeout(10000);
-
-    return models.Site.findById(siteID).then(function(S) {
-      utils.spreadsheetParse(S.settings.datasets).spread(function(E, D) {
-        loaders.loadTranslatedData({
-          // modify datasets to have duplicate ids
-          mapper: function(D) {
-            return _.extend(D, {
-              name: D.title,
-              id: 'dataset'
-            });
-          },
-          Model: models.Dataset,
-          setting: 'datasets',
-          site: siteID
-        }, models)
-        .catch(models.sequelize.UniqueConstraintError, function() {
-          models.Dataset.findAll({
-            where: {site: siteID}
-          }).then(function(datasets) {
-            assert.equal(D.length, datasets.length);
-            matchEntries(datasets, D, ['id', 'order', 'description']);
-            done();
-          });
-        });
-      });
+      }
     });
   });
 
