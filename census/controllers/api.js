@@ -79,17 +79,28 @@ var questions = function(req, res) {
   }).catch(console.trace.bind(console));
 };
 
-var datasets = function(req, res) {
+var datasets = function(req, res, next) {
+
+  var report = req.params.report;
   var format = req.params.format;
+
+  var isScore = false;
+  if (report === 'score') {
+    var isScore = true;
+  } else if (report) {
+    return next();
+  }
+
   var dataOptions = _.merge(
     modelUtils.getDataOptions(req),
     {
       cascade: false,
-      with: {Place: false, Entry: false, Question: false}
+      with: {Place: false, Entry: isScore, Question: isScore}
     }
   );
 
   modelUtils.getData(dataOptions).then(function(data) {
+
     var results = data.datasets;
     var columns = [
       'id',
@@ -107,6 +118,10 @@ var datasets = function(req, res) {
           _.each(columns, function(name) {
             result[name] = item[name];
           });
+          if (isScore) {
+            result.rank = item.rank;
+            result.score = item.computedScore;
+          }
           return result;
         };
         outputItemsAsJson(res, results, mapper);
@@ -121,20 +136,33 @@ var datasets = function(req, res) {
         break;
       }
     }
+
   }).catch(console.trace.bind(console));
+
 };
 
-var places = function(req, res) {
+var places = function(req, res, next) {
+
+  var report = req.params.report;
   var format = req.params.format;
+
+  var isScore = false;
+  if (report === 'score') {
+    var isScore = true;
+  } else if (report) {
+    return next();
+  }
+
   var dataOptions = _.merge(
     modelUtils.getDataOptions(req),
     {
-      cascade: false,
-      with: {Dataset: false, Entry: false, Question: false}
+      cascade: true,
+      with: {Dataset: false, Entry: isScore, Question: isScore}
     }
   );
 
   modelUtils.getData(dataOptions).then(function(data) {
+
     var results = data.places;
     var columns = [
       'id',
@@ -142,7 +170,7 @@ var places = function(req, res) {
       'name',
       'slug',
       'region',
-      'continent'
+      'continent',
     ];
 
     switch (format) {
@@ -152,6 +180,10 @@ var places = function(req, res) {
           _.each(columns, function(name) {
             result[name] = item[name];
           });
+          if (isScore) {
+            result.rank = item.rank;
+            result.score = item.computedScore;
+          }
           return result;
         };
         outputItemsAsJson(res, results, mapper);
@@ -166,7 +198,9 @@ var places = function(req, res) {
         break;
       }
     }
+
   }).catch(console.trace.bind(console));
+
 };
 
 var entries = function(req, res, next) {

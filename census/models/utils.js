@@ -225,6 +225,8 @@ var processPlaces = function(data, options) {
       });
       data.places = rankPlaces(_.sortByOrder(
         translateSet(options.locale, data.places), 'computedScore', 'desc'));
+    } else {
+      data.places = translateSet(options.locale, data.places);
     }
   }
   return data;
@@ -237,9 +239,16 @@ var processDatasets = function(data, options) {
   if (data.dataset) {
     data.dataset = data.dataset.translated(options.locale);
   } else {
-    data.datasets = translateSet(options.locale, data.datasets);
+    if (Array.isArray(data.entries)) {
+      _.each(data.datasets, function(d) {
+        d.computedScore = d.score(data.entries, data.questions);
+      });
+      data.datasets = rankDatasets(_.sortByOrder(
+        translateSet(options.locale, data.datasets), 'computedScore', 'desc'));
+    } else {
+      data.datasets = translateSet(options.locale, data.datasets);
+    }
   }
-
   return data;
 };
 
@@ -299,6 +308,27 @@ var rankPlaces = function(places) {
   });
 
   return places;
+};
+
+/**
+ * Do leaderboard ranking on datasets by computedScore. Places MUST be ordered
+ * by descending score. Tied places have equal rank.
+ */
+var rankDatasets = function(datasets) {
+  var lastScore = null;
+  var lastRank = 0;
+
+  _.each(datasets, function(d, i) {
+    if (lastScore === d.computedScore) {
+      d.rank = lastRank;
+    } else {
+      d.rank = i + 1;
+    }
+    lastRank = d.rank;
+    lastScore = d.computedScore;
+  });
+
+  return datasets;
 };
 
 var getDataOptions = function(req) {
