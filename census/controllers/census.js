@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var marked = require('marked');
 var config = require('../config');
 var uuid = require('node-uuid');
 var utils = require('./utils');
@@ -13,9 +14,10 @@ var submitGetHandler = function(req, res, data) {
   var current = data.currentState.match;
 
   var settingName = 'submit_page';
+  var submitInstructions = req.params.site.settings[settingName];
   res.render('create.html', {
     canReview: true, // flag always on for submission
-    submitInstructions: req.params.site.settings[settingName],
+    submitInstructions: submitInstructions ? marked(submitInstructions) : '',
     places: modelUtils.translateSet(req, data.places),
     current: current,
     datasets: modelUtils.translateSet(req, data.datasets),

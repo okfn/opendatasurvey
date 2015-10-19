@@ -14,6 +14,7 @@ describe('Localization', function() {
     var port = testUtils.app.get('port');
     browser.site = 'http://site1.dev.census.org:' + port + '/';
     browser.visit('/', function() {
+      assert.ok(browser.success);
       var items = browser.queryAll('.lang-picker span, .lang-picker a');
       assert.equal(items.length, 0);
       done();
@@ -26,6 +27,7 @@ describe('Localization', function() {
     var port = testUtils.app.get('port');
     browser.site = 'http://site2.dev.census.org:' + port + '/';
     browser.visit('/', function() {
+      assert.ok(browser.success);
       var items = browser.queryAll('.lang-picker span, .lang-picker a');
       assert.equal(items.length, 2);
       done();
@@ -38,6 +40,7 @@ describe('Localization', function() {
     var port = testUtils.app.get('port');
     browser.site = 'http://site2.dev.census.org:' + port + '/';
     browser.visit('/', function() {
+      assert.ok(browser.success);
       var item = browser.query('.lang-picker span');
       assert(!!item, 'There should be current language indicator');
       var prevLanguage = item.textContent;
@@ -47,6 +50,7 @@ describe('Localization', function() {
       var requestedLanguage = item.textContent;
 
       browser.visit(item.getAttribute('href'), function() {
+        assert.ok(browser.success);
         var item = browser.query('.lang-picker span');
         assert(!!item, 'There should be current language indicator');
         var newLanguage = item.textContent;
