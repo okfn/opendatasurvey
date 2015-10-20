@@ -144,7 +144,7 @@ var datasets = function(req, res, next) {
         break;
       }
       default: {
-        res.send(404);
+        res.sendStatus(404);
         break;
       }
     }
@@ -218,7 +218,7 @@ var places = function(req, res, next) {
         break;
       }
       default: {
-        res.send(404);
+        res.sendStatus(404);
         break;
       }
     }
@@ -229,8 +229,11 @@ var places = function(req, res, next) {
 
 var entries = function(req, res, next) {
 
+  // Get request params
   var format = req.params.format;
   var strategy = req.params.strategy;
+
+  // Initial data options
   var dataOptions = _.merge(
     modelUtils.getDataOptions(req),
     {
@@ -240,22 +243,23 @@ var entries = function(req, res, next) {
     }
   );
 
+  // If year is implicitly set
   if (!!req.params.isYearImplicitlySet) {
     dataOptions = _.merge(dataOptions, {year: false});
   }
 
+  // Strategy can be only `cascade` or `all`
   if (strategy === 'cascade') {
     dataOptions = _.merge(dataOptions, {cascade: true});
-  } else
-  if (strategy === 'all') {
+  } else if (strategy === 'all') {
     dataOptions = _.merge(dataOptions, {keepAll: true});
-  } else
-  if (!!strategy && (strategy != '')) {
-    return next();
+  } else if (strategy) {
+    return res.sendStatus(404);
   }
 
-  modelUtils.getData(dataOptions)
-    .then(function(data) {
+  // Make request for data, return it
+  modelUtils.getData(dataOptions).then(function(data) {
+
       var results = data.entries;
       var mapper = function(item) {
         var answers = utils.ynuAnswers(item.answers || {});
@@ -335,11 +339,12 @@ var entries = function(req, res, next) {
           break;
         }
         default: {
-          res.send(404);
+          res.sendStatus(404);
           break;
         }
       }
     }).catch(console.trace.bind(console));
+
 };
 
 module.exports = {
