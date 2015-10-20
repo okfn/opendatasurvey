@@ -33,7 +33,11 @@ var outputItemsAsCsv = function(response, items, mapper, columns) {
 };
 
 var questions = function(req, res) {
+
+  // Get request params
   var format = req.params.format;
+
+  // Initial data options
   var dataOptions = _.merge(
     modelUtils.getDataOptions(req),
     {
@@ -42,8 +46,9 @@ var questions = function(req, res) {
     }
   );
 
+  // Make request for data, return it
   modelUtils.getData(dataOptions).then(function(data) {
-    var results = data.questions;
+
     var columns = [
       'id',
       'site',
@@ -52,23 +57,24 @@ var questions = function(req, res) {
       'type',
       'placeholder',
       'score',
-      'order'
+      'order',
     ];
+    var results = data.questions;
+    var mapper = function(item) {
+      var result = {};
+      _.each(columns, function(name) {
+        result[name] = item[name];
+      });
+      return result;
+    };
 
     switch (format) {
       case 'json': {
-        var mapper = function(item) {
-          var result = {};
-          _.each(columns, function(name) {
-            result[name] = item[name];
-          });
-          return result;
-        };
         outputItemsAsJson(res, results, mapper);
         break;
       }
       case 'csv': {
-        outputItemsAsCsv(res, results, null, columns);
+        outputItemsAsCsv(res, results, mapper, columns);
         break;
       }
       default: {
@@ -76,7 +82,9 @@ var questions = function(req, res) {
         break;
       }
     }
+
   }).catch(console.trace.bind(console));
+
 };
 
 var datasets = function(req, res, next) {
@@ -113,34 +121,37 @@ var datasets = function(req, res, next) {
   // Make request for data, return it
   modelUtils.getData(dataOptions).then(function(data) {
 
-    var results = data.datasets;
     var columns = [
       'id',
       'site',
       'name',
       'description',
       'category',
-      'order'
+      'order',
     ];
+    if (isScore) {
+      columns = columns.concat([
+        'rank',
+        'score',
+      ]);
+    }
+    var results = data.datasets;
+    var mapper = function(item) {
+      var result = {};
+      item.score = item.computedScore;
+      _.each(columns, function(name) {
+        result[name] = item[name];
+      });
+      return result;
+    };
 
     switch (format) {
       case 'json': {
-        var mapper = function(item) {
-          var result = {};
-          _.each(columns, function(name) {
-            result[name] = item[name];
-          });
-          if (isScore) {
-            result.rank = item.rank;
-            result.score = item.computedScore;
-          }
-          return result;
-        };
         outputItemsAsJson(res, results, mapper);
         break;
       }
       case 'csv': {
-        outputItemsAsCsv(res, results, null, columns);
+        outputItemsAsCsv(res, results, mapper, columns);
         break;
       }
       default: {
@@ -187,7 +198,6 @@ var places = function(req, res, next) {
   // Make request for data, return it
   modelUtils.getData(dataOptions).then(function(data) {
 
-    var results = data.places;
     var columns = [
       'id',
       'site',
@@ -196,25 +206,29 @@ var places = function(req, res, next) {
       'region',
       'continent',
     ];
+    if (isScore) {
+      columns = columns.concat([
+        'rank',
+        'score',
+      ]);
+    }
+    var results = data.places;
+    var mapper = function(item) {
+       var result = {};
+       item.score = item.computedScore;
+       _.each(columns, function(name) {
+         result[name] = item[name];
+       });
+       return result;
+    };
 
     switch (format) {
       case 'json': {
-        var mapper = function(item) {
-          var result = {};
-          _.each(columns, function(name) {
-            result[name] = item[name];
-          });
-          if (isScore) {
-            result.rank = item.rank;
-            result.score = item.computedScore;
-          }
-          return result;
-        };
         outputItemsAsJson(res, results, mapper);
         break;
       }
       case 'csv': {
-        outputItemsAsCsv(res, results, null, columns);
+        outputItemsAsCsv(res, results, mapper, columns);
         break;
       }
       default: {
