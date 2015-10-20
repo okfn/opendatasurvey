@@ -33,7 +33,11 @@ var outputItemsAsCsv = function(response, items, mapper, columns) {
 };
 
 var questions = function(req, res) {
+
+  // Get request params
   var format = req.params.format;
+
+  // Initial data options
   var dataOptions = _.merge(
     modelUtils.getDataOptions(req),
     {
@@ -42,8 +46,9 @@ var questions = function(req, res) {
     }
   );
 
+  // Make request for data, return it
   modelUtils.getData(dataOptions).then(function(data) {
-    var results = data.questions;
+
     var columns = [
       'id',
       'site',
@@ -52,23 +57,24 @@ var questions = function(req, res) {
       'type',
       'placeholder',
       'score',
-      'order'
+      'order',
     ];
+    var results = data.questions;
+    var mapper = function(item) {
+      var result = {};
+      _.each(columns, function(name) {
+        result[name] = item[name];
+      });
+      return result;
+    };
 
     switch (format) {
       case 'json': {
-        var mapper = function(item) {
-          var result = {};
-          _.each(columns, function(name) {
-            result[name] = item[name];
-          });
-          return result;
-        };
         outputItemsAsJson(res, results, mapper);
         break;
       }
       case 'csv': {
-        outputItemsAsCsv(res, results, null, columns);
+        outputItemsAsCsv(res, results, mapper, columns);
         break;
       }
       default: {
@@ -76,128 +82,198 @@ var questions = function(req, res) {
         break;
       }
     }
+
   }).catch(console.trace.bind(console));
+
 };
 
-var datasets = function(req, res) {
+var datasets = function(req, res, next) {
+
+  // Get request params
+  var report = req.params.report;
+  var strategy = req.params.strategy;
   var format = req.params.format;
+
+  // Report can be only `score`
+  var isScore = false;
+  if (report === 'score') {
+    var isScore = true;
+  } else if (report) {
+    return res.sendStatus(404);
+  }
+
+  // Initial data options
   var dataOptions = _.merge(
     modelUtils.getDataOptions(req),
     {
       cascade: false,
-      with: {Place: false, Entry: false, Question: false}
+      with: {Place: false, Entry: isScore, Question: isScore}
     }
   );
 
+  // Strategy can be only `cascade`
+  if (strategy === 'cascade') {
+    dataOptions = _.merge(dataOptions, {cascade: true});
+  } else if (strategy) {
+    return res.sendStatus(404);
+  }
+
+  // Make request for data, return it
   modelUtils.getData(dataOptions).then(function(data) {
-    var results = data.datasets;
+
     var columns = [
       'id',
       'site',
       'name',
       'description',
       'category',
-      'order'
+      'order',
     ];
+    if (isScore) {
+      columns = columns.concat([
+        'rank',
+        'score',
+      ]);
+    }
+    var results = data.datasets;
+    var mapper = function(item) {
+      var result = {};
+      item.score = item.computedScore;
+      _.each(columns, function(name) {
+        result[name] = item[name];
+      });
+      return result;
+    };
 
     switch (format) {
       case 'json': {
-        var mapper = function(item) {
-          var result = {};
-          _.each(columns, function(name) {
-            result[name] = item[name];
-          });
-          return result;
-        };
         outputItemsAsJson(res, results, mapper);
         break;
       }
       case 'csv': {
-        outputItemsAsCsv(res, results, null, columns);
+        outputItemsAsCsv(res, results, mapper, columns);
         break;
       }
       default: {
-        res.send(404);
+        res.sendStatus(404);
         break;
       }
     }
+
   }).catch(console.trace.bind(console));
+
 };
 
-var places = function(req, res) {
+var places = function(req, res, next) {
+
+  // Get request params
+  var report = req.params.report;
+  var strategy = req.params.strategy;
   var format = req.params.format;
+
+  // Report can be only `score`
+  var isScore = false;
+  if (report === 'score') {
+    var isScore = true;
+  } else if (report) {
+    return res.sendStatus(404);
+  }
+
+  // Initial data options
   var dataOptions = _.merge(
     modelUtils.getDataOptions(req),
     {
       cascade: false,
-      with: {Dataset: false, Entry: false, Question: false}
+      with: {Dataset: false, Entry: isScore, Question: isScore}
     }
   );
 
+  // Strategy can be only `cascade`
+  if (strategy === 'cascade') {
+    dataOptions = _.merge(dataOptions, {cascade: true});
+  } else if (strategy) {
+    return res.sendStatus(404);
+  }
+
+  // Make request for data, return it
   modelUtils.getData(dataOptions).then(function(data) {
-    var results = data.places;
+
     var columns = [
       'id',
       'site',
       'name',
       'slug',
       'region',
-      'continent'
+      'continent',
     ];
+    if (isScore) {
+      columns = columns.concat([
+        'rank',
+        'score',
+      ]);
+    }
+    var results = data.places;
+    var mapper = function(item) {
+       var result = {};
+       item.score = item.computedScore;
+       _.each(columns, function(name) {
+         result[name] = item[name];
+       });
+       return result;
+    };
 
     switch (format) {
       case 'json': {
-        var mapper = function(item) {
-          var result = {};
-          _.each(columns, function(name) {
-            result[name] = item[name];
-          });
-          return result;
-        };
         outputItemsAsJson(res, results, mapper);
         break;
       }
       case 'csv': {
-        outputItemsAsCsv(res, results, null, columns);
+        outputItemsAsCsv(res, results, mapper, columns);
         break;
       }
       default: {
-        res.send(404);
+        res.sendStatus(404);
         break;
       }
     }
+
   }).catch(console.trace.bind(console));
+
 };
 
 var entries = function(req, res, next) {
 
+  // Get request params
   var format = req.params.format;
   var strategy = req.params.strategy;
+
+  // Initial data options
   var dataOptions = _.merge(
     modelUtils.getDataOptions(req),
     {
       cascade: false,
       ynQuestions: false,
-      with: {Dataset: false, Place: false, Question: false}
+      with: {Dataset: false, Place: false, Question: true}
     }
   );
 
+  // If year is implicitly set
   if (!!req.params.isYearImplicitlySet) {
     dataOptions = _.merge(dataOptions, {year: false});
   }
 
+  // Strategy can be only `cascade` or `all`
   if (strategy === 'cascade') {
     dataOptions = _.merge(dataOptions, {cascade: true});
-  } else
-  if (strategy === 'all') {
+  } else if (strategy === 'all') {
     dataOptions = _.merge(dataOptions, {keepAll: true});
-  } else
-  if (!!strategy && (strategy != '')) {
-    return next();
+  } else if (strategy) {
+    return res.sendStatus(404);
   }
 
-  modelUtils.getData(dataOptions)
-    .then(function(data) {
+  // Make request for data, return it
+  modelUtils.getData(dataOptions).then(function(data) {
+
       var results = data.entries;
       var mapper = function(item) {
         var answers = utils.ynuAnswers(item.answers || {});
@@ -230,7 +306,8 @@ var entries = function(req, res, next) {
           isCurrent: item.isCurrent ? 'Yes' : 'No',
           isOpen: item.isOpen() ? 'Yes' : 'No',
           submitter: item.Submitter ? item.Submitter.fullName() : '',
-          reviewer: item.Reviewer ? item.Reviewer.fullName() : ''
+          reviewer: item.Reviewer ? item.Reviewer.fullName() : '',
+          score: item.computedYCount,
         };
       };
 
@@ -262,19 +339,26 @@ var entries = function(req, res, next) {
             'dateavailable',
             'officialtitle',
             'publisher',
+            'reviewed',
+            'reviewResult',
+            'reviewComments',
             'details',
+            'isCurrent',
+            'isOpen',
             'submitter',
-            'reviewer'
+            'reviewer',
+            'score',
           ];
           outputItemsAsCsv(res, results, mapper, columns);
           break;
         }
         default: {
-          res.send(404);
+          res.sendStatus(404);
           break;
         }
       }
     }).catch(console.trace.bind(console));
+
 };
 
 module.exports = {

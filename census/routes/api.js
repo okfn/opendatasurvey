@@ -13,11 +13,15 @@ var apiRoutes = function(coreMiddlewares) {
 
   router.get(utils.scoped('/entries.:strategy.:format'), coreMixins,
     api.entries);
-  router.get(utils.scoped('/entries.:format'), coreMixins, api.entries);
   router.get(utils.scoped('/entries/:year.:strategy.:format'), coreMixins,
     api.entries);
   router.get(utils.scoped('/entries/:year.:format'), coreMixins, api.entries);
+  router.get(utils.scoped('/entries.:format'), coreMixins, api.entries);
+  router.get(utils.scoped('/datasets/:report/:year.:strategy.:format'), coreMixins, api.datasets);
+  router.get(utils.scoped('/datasets/:report/:year.:format'), coreMixins, api.datasets);
   router.get(utils.scoped('/datasets.:format'), coreMixins, api.datasets);
+  router.get(utils.scoped('/places/:report/:year.:strategy.:format'), coreMixins, api.places);
+  router.get(utils.scoped('/places/:report/:year.:format'), coreMixins, api.places);
   router.get(utils.scoped('/places.:format'), coreMixins, api.places);
   router.get(utils.scoped('/questions.:format'), coreMixins, api.questions);
 
