@@ -19,7 +19,6 @@ var defaultOptions = {
   with: {Entry: true, Dataset: true, Place: true, Question: true}
 };
 
-
 describe('Data access layer', function() {
   this.timeout(20000);
 
@@ -171,47 +170,49 @@ describe('Data access layer', function() {
       .catch(console.trace.bind(console));
   });
 
-  it('returns a place and not places when we have a place argument', function(done) {
-    var dataOptions = {
-      models: models,
-      domain: 'site1',
-      dataset: null,
-      place: 'place11',
-      year: null,
-      cascade: true,
-      ynQuestions: true,
-      locale: null,
-      with: {Entry: true, Dataset: true, Place: true, Question: true}
-    };
-    modelUtils.getData(dataOptions)
-      .then(function(data) {
-        expect(data).to.not.have.property('places');
-        expect(data).to.have.property('place');
-        done();
-      })
-      .catch(console.trace.bind(console));
-  });
+  it('returns a place and not places when we have a place argument',
+    function(done) {
+      var dataOptions = {
+        models: models,
+        domain: 'site1',
+        dataset: null,
+        place: 'place11',
+        year: null,
+        cascade: true,
+        ynQuestions: true,
+        locale: null,
+        with: {Entry: true, Dataset: true, Place: true, Question: true}
+      };
+      modelUtils.getData(dataOptions)
+        .then(function(data) {
+          expect(data).to.not.have.property('places');
+          expect(data).to.have.property('place');
+          done();
+        })
+        .catch(console.trace.bind(console));
+    });
 
-  it('returns a dataset and not datasets when we have a dataset argument', function(done) {
-    var dataOptions = {
-      models: models,
-      domain: 'site1',
-      dataset: 'dataset11',
-      place: null,
-      year: null,
-      cascade: true,
-      ynQuestions: true,
-      locale: null,
-      with: {Entry: true, Dataset: true, Place: true, Question: true}
-    };
-    modelUtils.getData(dataOptions)
-      .then(function(data) {
-        expect(data).to.not.have.property('datasets');
-        expect(data).to.have.property('dataset');
-        done();
-      })
-      .catch(console.trace.bind(console));
-  });
+  it('returns a dataset and not datasets when we have a dataset argument',
+    function(done) {
+      var dataOptions = {
+        models: models,
+        domain: 'site1',
+        dataset: 'dataset11',
+        place: null,
+        year: null,
+        cascade: true,
+        ynQuestions: true,
+        locale: null,
+        with: {Entry: true, Dataset: true, Place: true, Question: true}
+      };
+      modelUtils.getData(dataOptions)
+        .then(function(data) {
+          expect(data).to.not.have.property('datasets');
+          expect(data).to.have.property('dataset');
+          done();
+        })
+        .catch(console.trace.bind(console));
+    });
 
   it('returns cascaded entries when cascade is true', function(done) {
     var dataOptions = {

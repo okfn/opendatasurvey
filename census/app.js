@@ -37,7 +37,9 @@ function start() {
   var startYear = 2013;
   var availableYears = _.range(startYear, currentYear + 1);
   var rawSysAdmin = process.env.SYS_ADMIN || config.get('sysAdmin') || '';
-  var sysAdmin = _.each(rawSysAdmin.split(','), function(e, i, l) { l[i] = e.trim(); return; });
+  var sysAdmin = _.each(rawSysAdmin.split(','), function(e, i, l) {
+    l[i] = e.trim(); return;
+  });
 
   nunjucksGlobals.currentTime = Date.now();
 
@@ -46,7 +48,7 @@ function start() {
   };
   var validatorOptions = {
     customValidators: {
-      isChoice: function (value) {
+      isChoice: function(value) {
         var choices = ['true', 'false', 'null'];
         if (choices.indexOf(value) > -1) {
           return true;
@@ -96,9 +98,9 @@ function start() {
     passport.session(),
     flash(),
     i18n.abide({
-      supported_languages: config.get('availableLocales'),
-      default_lang: _.first(config.get('locales')),
-      translation_directory: 'census/locale/'
+      'supported_languages': config.get('availableLocales'),
+      'default_lang': _.first(config.get('locales')),
+      'translation_directory': 'census/locale/'
     }),
     express.static(staticRoot, {maxage: cacheAge})
   ]);
@@ -125,7 +127,7 @@ function start() {
   return new Promise(function(resolve, reject) {
     app.get('models').umzug.up().then(function() {
       var server = app.listen(app.get('port'), function() {
-        console.log("Listening on " + app.get('port'));
+        console.log('Listening on ' + app.get('port'));
         resolve({
           app: app,
           server: server
@@ -133,9 +135,7 @@ function start() {
       });
     }).catch(reject);
   });
-
 }
-
 
 module.exports = {
   start: start

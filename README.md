@@ -83,6 +83,12 @@ Now we should be ready to run the server:
 3. Load the data for a specific site, e.g.: `http://demo.dev.census.org:5000/admin`
 4. Visit the site: `http://demo.dev.census.org:5000/`
 
+Other things you can do:
+
+* Run the test suite with npm test
+* Check your code style with npm run jscs (according to the Google style guide)
+
+
 ### Configuration Sheets
 
 Most of the site configuration is taken from config sheets in Google Sheets. You can use [this registry sheet](https://docs.google.com/spreadsheets/d/18jINMw7ifwUoqizc4xaQE8XtF4apPfsmMN43EM-9Pmc/edit#gid=0) and its linked sheets as examples and clone them as necessary.
@@ -120,14 +126,17 @@ Also, you can copy the `locale/en` directory to `locale/[language-code]` and cha
 To update translations cache, run
 
     gulp compile-po
-    
+
 ### i18n For Config
 
 Any column can be internationalised by adding another column with `@locale` after it. For example, the `description` column can be translated to German by adding a column of `description@de`. Only languages which have template translations created for them are valid. The `locales` setting in the config document can be used to restrict the number of locales available. The first locale in the list is the default locale.
 
 ### Running Tests
 
-`npm test`
+```
+createdb opendatacensus_test
+npm test
+```
 
 ------
 
