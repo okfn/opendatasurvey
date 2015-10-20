@@ -132,6 +132,11 @@ var processStats = function(data, options) {
 };
 
 var cascadeEntries = function(entries, currentYear) {
+  if (currentYear) {
+    entries = _.filter(entries, function(entry) {
+      return entry.year <= currentYear;
+    });
+  }
   var cascaded = [];
   var grouped = _.groupBy(entries, function(e) {
     return e.place + '/' + e.dataset;
@@ -146,7 +151,7 @@ var cascadeEntries = function(entries, currentYear) {
       if (match) { matches.push(match); }
       matches = matches.concat(_.filter(candidates, {
         isCurrent: false,
-        'year': currentYear
+        year: currentYear
       }) || []);
       cascaded = cascaded.concat(matches);
     }
