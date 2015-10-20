@@ -81,16 +81,20 @@ var questions = function(req, res) {
 
 var datasets = function(req, res, next) {
 
+  // Get request params
   var report = req.params.report;
+  var strategy = req.params.strategy;
   var format = req.params.format;
 
+  // Report can be only `score`
   var isScore = false;
   if (report === 'score') {
     var isScore = true;
   } else if (report) {
-    return next();
+    return res.sendStatus(404);
   }
 
+  // Initial data options
   var dataOptions = _.merge(
     modelUtils.getDataOptions(req),
     {
@@ -99,6 +103,14 @@ var datasets = function(req, res, next) {
     }
   );
 
+  // Strategy can be only `cascade`
+  if (strategy === 'cascade') {
+    dataOptions = _.merge(dataOptions, {cascade: true});
+  } else if (strategy) {
+    return res.sendStatus(404);
+  }
+
+  // Make request for data, return it
   modelUtils.getData(dataOptions).then(function(data) {
 
     var results = data.datasets;
@@ -143,24 +155,36 @@ var datasets = function(req, res, next) {
 
 var places = function(req, res, next) {
 
+  // Get request params
   var report = req.params.report;
+  var strategy = req.params.strategy;
   var format = req.params.format;
 
+  // Report can be only `score`
   var isScore = false;
   if (report === 'score') {
     var isScore = true;
   } else if (report) {
-    return next();
+    return res.sendStatus(404);
   }
 
+  // Initial data options
   var dataOptions = _.merge(
     modelUtils.getDataOptions(req),
     {
-      cascade: true,
+      cascade: false,
       with: {Dataset: false, Entry: isScore, Question: isScore}
     }
   );
 
+  // Strategy can be only `cascade`
+  if (strategy === 'cascade') {
+    dataOptions = _.merge(dataOptions, {cascade: true});
+  } else if (strategy) {
+    return res.sendStatus(404);
+  }
+
+  // Make request for data, return it
   modelUtils.getData(dataOptions).then(function(data) {
 
     var results = data.places;
