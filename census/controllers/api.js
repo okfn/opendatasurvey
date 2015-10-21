@@ -58,6 +58,8 @@ var questions = function(req, res) {
       'placeholder',
       'score',
       'order',
+      'icon',
+      'dependants',
     ];
     var results = data.questions;
     var mapper = function(item) {
