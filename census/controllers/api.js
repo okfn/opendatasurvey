@@ -127,6 +127,7 @@ var datasets = function(req, res, next) {
       'name',
       'description',
       'category',
+      'icon',
       'order',
     ];
     if (isScore) {
