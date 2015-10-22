@@ -58,6 +58,8 @@ var questions = function(req, res) {
       'placeholder',
       'score',
       'order',
+      'icon',
+      'dependants',
     ];
     var results = data.questions;
     var mapper = function(item) {
@@ -127,6 +129,7 @@ var datasets = function(req, res, next) {
       'name',
       'description',
       'category',
+      'icon',
       'order',
     ];
     if (isScore) {
