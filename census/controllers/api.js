@@ -208,7 +208,6 @@ var places = function(req, res, next) {
       'slug',
       'region',
       'continent',
-      'reviewers',
     ];
     if (isScore) {
       columns = columns.concat([
