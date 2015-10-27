@@ -48,7 +48,7 @@
       <th class="number">&nbsp;</th>
       <th class="place-name">&nbsp;</th>
       {% for dataset in datasets %}
-      <th><div><a href="/dataset/{{dataset.id}}{{ urlContext }}">{{ dataset.name }}</a></div></th>
+      <th class="{{ dataset.id }}"><div><a href="/dataset/{{dataset.id}}{{ urlContext }}">{{ dataset.name }}</a></div></th>
       {% endfor %}
       <th class="place-score"><div><strong>{{gettext("Total Score")}}</strong></div></th>
     </tr>
@@ -120,10 +120,7 @@
         {% endif %}
 
       <td
-         class="
-                ycount-{{entry.computedYCount}}
-                {% if entry %}showpopover{% endif %}
-                "
+         class="{{ dataset.id }} ycount-{{entry.computedYCount}}{% if entry %} showpopover{% endif %}"
          data-dataset="{{entry.dataset}}"
          data-datasetTitle="{{dataset.name}}"
          data-answers="{{ entry.answers|stringify|escape }}"
