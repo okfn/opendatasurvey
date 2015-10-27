@@ -26,7 +26,10 @@
 
 <h3>{{gettext("Comments")}}</h3>
 <p>{{entry.details|marked}}</p>
-
+{% if entry.reviewComments %}
+<h5><strong>{{gettext("Reviewer comments")}}</strong></h5>
+<p>{{entry.reviewComments|marked}}</p>
+{% endif %}
 <h3>{{gettext("Data Availability")}}</h3>
 <ul class="data-availability clearfix unstyled">
 
