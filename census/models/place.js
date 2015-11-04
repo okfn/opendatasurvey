@@ -64,7 +64,16 @@ module.exports = function(sequelize, DataTypes) {
           return e.yCount(questions);
         }));
       }
-    }
+    },
+    classMethods: {
+      maxScore: function(entries, questionMaxScore) {
+        var count = _.size(_.uniq(_.map(entries, function(entry) {
+          return entry.place;
+        })));
+        var score = count * questionMaxScore;
+        return score;
+      },
+    },
   });
 
   return Place;

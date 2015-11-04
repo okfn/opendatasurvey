@@ -134,12 +134,14 @@ var datasets = function(req, res, next) {
       columns = columns.concat([
         'rank',
         'score',
+        'relativeScore',
       ]);
     }
     var results = data.datasets;
     var mapper = function(item) {
       var result = {};
       item.score = item.computedScore;
+      item.relativeScore = item.computedRelativeScore;
       _.each(columns, function(name) {
         result[name] = item[name];
       });
@@ -209,12 +211,14 @@ var places = function(req, res, next) {
       columns = columns.concat([
         'rank',
         'score',
+        'relativeScore',
       ]);
     }
     var results = data.places;
     var mapper = function(item) {
        var result = {};
        item.score = item.computedScore;
+       item.relativeScore = item.computedRelativeScore;
        _.each(columns, function(name) {
          result[name] = item[name];
        });
