@@ -181,6 +181,18 @@ var processEntries = function(data, options) {
       data.entries = cascadeEntries(data.entries, options.year);
     }
 
+    // Apply exclude filter
+    data.entries = _.reject(data.entries, function(entry) {
+      var result = false;
+      if (options.exclude_datasets) {
+        result = result || _.contains(options.exclude_datasets, entry.dataset);
+      }
+      if (options.exclude_places) {
+        result = result || _.contains(options.exclude_places, entry.place);
+      }
+      return result;
+    });
+
     _.each(data.entries, function(e) {
       e.computedYCount = e.yCount(data.questions);
       e.url = setEntryUrl(e);
@@ -219,6 +231,12 @@ var processPlaces = function(data, options) {
   if (data.place) {
     data.place = data.place.translated(options.locale);
   } else {
+    // Apply exclude filter
+    if (options.exclude_places) {
+      data.places = _.reject(data.places, function(place) {
+        return _.contains(options.exclude_places, place.id);
+      });
+    }
     if (Array.isArray(data.entries)) {
       _.each(data.places, function(p) {
         p.computedScore = p.score(data.entries, data.questions);
@@ -239,6 +257,12 @@ var processDatasets = function(data, options) {
   if (data.dataset) {
     data.dataset = data.dataset.translated(options.locale);
   } else {
+    // Apply exclude filter
+    if (options.exclude_datasets) {
+      data.datasets = _.reject(data.datasets, function(dataset) {
+        return _.contains(options.exclude_datasets, dataset.id);
+      });
+    }
     if (Array.isArray(data.entries)) {
       _.each(data.datasets, function(d) {
         d.computedScore = d.score(data.entries, data.questions);
