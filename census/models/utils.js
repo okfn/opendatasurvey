@@ -122,6 +122,12 @@ var processStats = function(data, options) {
     data.stats.openDataPercentCount = 0;
   }
 
+  if (Array.isArray(data.datasets)) {
+    data.stats.datasetCount = data.datasets.length;
+  } else {
+    data.stats.datasetCount = 0;
+  }
+
   if (Array.isArray(data.places)) {
     data.stats.placeCount = data.places.length;
   } else {
