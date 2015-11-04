@@ -95,6 +95,7 @@ var datasets = function(req, res, next) {
   var report = req.params.report;
   var strategy = req.params.strategy;
   var format = req.params.format;
+  var exclude = req.query.exclude;
 
   // Report can be only `score`
   var isScore = false;
@@ -105,9 +106,7 @@ var datasets = function(req, res, next) {
   }
 
   // Initial data options
-  var dataOptions = _.merge(
-    modelUtils.getDataOptions(req),
-    {
+  var dataOptions = _.merge(modelUtils.getDataOptions(req), {
       cascade: false,
       with: {Place: false, Entry: isScore, Question: isScore}
     }
@@ -119,6 +118,13 @@ var datasets = function(req, res, next) {
   } else if (strategy) {
     return res.sendStatus(404);
   }
+
+  // Add exclude filter
+  try {
+    dataOptions = _.merge(dataOptions, {
+      exclude_datasets: exclude.split(','),
+    });
+  } catch (err) {}
 
   // Make request for data, return it
   modelUtils.getData(dataOptions).then(function(data) {
