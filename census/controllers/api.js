@@ -95,7 +95,6 @@ var datasets = function(req, res, next) {
   var report = req.params.report;
   var strategy = req.params.strategy;
   var format = req.params.format;
-  var exclude = req.query.exclude;
 
   // Report can be only `score`
   var isScore = false;
@@ -118,13 +117,6 @@ var datasets = function(req, res, next) {
   } else if (strategy) {
     return res.sendStatus(404);
   }
-
-  // Add exclude filter
-  try {
-    dataOptions = _.merge(dataOptions, {
-      exclude_datasets: exclude.split(','),
-    });
-  } catch (err) {}
 
   // Make request for data, return it
   modelUtils.getData(dataOptions).then(function(data) {
@@ -179,7 +171,6 @@ var places = function(req, res, next) {
   var report = req.params.report;
   var strategy = req.params.strategy;
   var format = req.params.format;
-  var exclude = req.query.exclude;
 
   // Report can be only `score`
   var isScore = false;
@@ -202,13 +193,6 @@ var places = function(req, res, next) {
   } else if (strategy) {
     return res.sendStatus(404);
   }
-
-  // Add exclude filter
-  try {
-    dataOptions = _.merge(dataOptions, {
-      exclude_places: exclude.split(','),
-    });
-  } catch (err) {}
 
   // Make request for data, return it
   modelUtils.getData(dataOptions).then(function(data) {
@@ -261,8 +245,6 @@ var entries = function(req, res, next) {
   // Get request params
   var format = req.params.format;
   var strategy = req.params.strategy;
-  var exclude_datasets = req.query.exclude_datasets;
-  var exclude_places = req.query.exclude_places;
 
   // Initial data options
   var dataOptions = _.merge(modelUtils.getDataOptions(req), {
@@ -285,20 +267,6 @@ var entries = function(req, res, next) {
   } else if (strategy) {
     return res.sendStatus(404);
   }
-
-  // Add exclude_datasets filter
-  try {
-    dataOptions = _.merge(dataOptions, {
-      exclude_datasets: exclude_datasets.split(','),
-    });
-  } catch (err) {}
-
-  // Add exclude_places filter
-  try {
-    dataOptions = _.merge(dataOptions, {
-      exclude_places: exclude_places.split(','),
-    });
-  } catch (err) {}
 
   // Make request for data, return it
   modelUtils.getData(dataOptions).then(function(data) {

@@ -355,8 +355,13 @@ var rankDatasets = function(datasets) {
   return datasets;
 };
 
+/**
+ * Extract data options from the request.
+ */
 var getDataOptions = function(req) {
-  return {
+
+  // Base options
+  var options = {
     models: req.app.get('models'),
     domain: req.params.domain,
     dataset: req.params.dataset,
@@ -367,6 +372,23 @@ var getDataOptions = function(req) {
     locale: req.params.locale,
     with: {Entry: true, Dataset: true, Place: true, Question: true}
   };
+
+  // Add exclude_datasets
+  try {
+    options = _.merge(options, {
+      exclude_datasets: req.query.exclude_datasets.split(','),
+    });
+  } catch (err) {}
+
+  // Add exclude_places
+  try {
+    options = _.merge(options, {
+      exclude_places: req.query.exclude_places.split(','),
+    });
+  } catch (err) {}
+
+  return options;
+
 };
 
 module.exports = {
