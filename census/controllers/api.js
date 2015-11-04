@@ -261,11 +261,11 @@ var entries = function(req, res, next) {
   // Get request params
   var format = req.params.format;
   var strategy = req.params.strategy;
+  var exclude_datasets = req.query.exclude_datasets;
+  var exclude_places = req.query.exclude_places;
 
   // Initial data options
-  var dataOptions = _.merge(
-    modelUtils.getDataOptions(req),
-    {
+  var dataOptions = _.merge(modelUtils.getDataOptions(req), {
       cascade: false,
       ynQuestions: false,
       with: {Dataset: false, Place: false, Question: true}
@@ -285,6 +285,20 @@ var entries = function(req, res, next) {
   } else if (strategy) {
     return res.sendStatus(404);
   }
+
+  // Add exclude_datasets filter
+  try {
+    dataOptions = _.merge(dataOptions, {
+      exclude_datasets: exclude_datasets.split(','),
+    });
+  } catch (err) {}
+
+  // Add exclude_places filter
+  try {
+    dataOptions = _.merge(dataOptions, {
+      exclude_places: exclude_places.split(','),
+    });
+  } catch (err) {}
 
   // Make request for data, return it
   modelUtils.getData(dataOptions).then(function(data) {
