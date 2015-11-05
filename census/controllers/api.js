@@ -105,9 +105,7 @@ var datasets = function(req, res, next) {
   }
 
   // Initial data options
-  var dataOptions = _.merge(
-    modelUtils.getDataOptions(req),
-    {
+  var dataOptions = _.merge(modelUtils.getDataOptions(req), {
       cascade: false,
       with: {Place: false, Entry: isScore, Question: isScore}
     }
@@ -136,12 +134,14 @@ var datasets = function(req, res, next) {
       columns = columns.concat([
         'rank',
         'score',
+        'relativeScore',
       ]);
     }
     var results = data.datasets;
     var mapper = function(item) {
       var result = {};
       item.score = item.computedScore;
+      item.relativeScore = item.computedRelativeScore;
       _.each(columns, function(name) {
         result[name] = item[name];
       });
@@ -183,9 +183,7 @@ var places = function(req, res, next) {
   }
 
   // Initial data options
-  var dataOptions = _.merge(
-    modelUtils.getDataOptions(req),
-    {
+  var dataOptions = _.merge(modelUtils.getDataOptions(req), {
       cascade: false,
       with: {Dataset: false, Entry: isScore, Question: isScore}
     }
@@ -213,12 +211,14 @@ var places = function(req, res, next) {
       columns = columns.concat([
         'rank',
         'score',
+        'relativeScore',
       ]);
     }
     var results = data.places;
     var mapper = function(item) {
        var result = {};
        item.score = item.computedScore;
+       item.relativeScore = item.computedRelativeScore;
        _.each(columns, function(name) {
          result[name] = item[name];
        });
@@ -251,9 +251,7 @@ var entries = function(req, res, next) {
   var strategy = req.params.strategy;
 
   // Initial data options
-  var dataOptions = _.merge(
-    modelUtils.getDataOptions(req),
-    {
+  var dataOptions = _.merge(modelUtils.getDataOptions(req), {
       cascade: false,
       ynQuestions: false,
       with: {Dataset: false, Place: false, Question: true}

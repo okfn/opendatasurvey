@@ -122,6 +122,12 @@ var processStats = function(data, options) {
     data.stats.openDataPercentCount = 0;
   }
 
+  if (Array.isArray(data.datasets)) {
+    data.stats.datasetCount = data.datasets.length;
+  } else {
+    data.stats.datasetCount = 0;
+  }
+
   if (Array.isArray(data.places)) {
     data.stats.placeCount = data.places.length;
   } else {
@@ -181,6 +187,18 @@ var processEntries = function(data, options) {
       data.entries = cascadeEntries(data.entries, options.year);
     }
 
+    // Apply exclude filter
+    data.entries = _.reject(data.entries, function(entry) {
+      var result = false;
+      if (options.exclude_datasets) {
+        result = result || _.contains(options.exclude_datasets, entry.dataset);
+      }
+      if (options.exclude_places) {
+        result = result || _.contains(options.exclude_places, entry.place);
+      }
+      return result;
+    });
+
     _.each(data.entries, function(e) {
       e.computedYCount = e.yCount(data.questions);
       e.url = setEntryUrl(e);
@@ -216,40 +234,89 @@ var processEntries = function(data, options) {
  * Process the raw places query.
  */
 var processPlaces = function(data, options) {
+
+  // Single place
   if (data.place) {
+
+    // Translate
     data.place = data.place.translated(options.locale);
+
+  // Many places
   } else {
+
+    // Apply exclude filter
+    if (options.exclude_places) {
+      data.places = _.reject(data.places, function(place) {
+        return _.contains(options.exclude_places, place.id);
+      });
+    }
+
+    // Add scores, translate
     if (Array.isArray(data.entries)) {
+      var questionMaxScore = options.models.Question.maxScore(data.questions);
+      var datasetMaxScore = options.models.Dataset.maxScore(data.entries, questionMaxScore);
       _.each(data.places, function(p) {
         p.computedScore = p.score(data.entries, data.questions);
+        p.computedRelativeScore = 0;
+        if (datasetMaxScore) {
+          p.computedRelativeScore = Math.round(100 * p.computedScore / datasetMaxScore);
+        }
       });
       data.places = rankPlaces(_.sortByOrder(
-        translateSet(options.locale, data.places), 'computedScore', 'desc'));
+        translateSet(options.locale, data.places), 'computedScore', 'desc'
+      ));
     } else {
       data.places = translateSet(options.locale, data.places);
     }
+
   }
+
   return data;
+
 };
 
 /**
  * Process the raw datasets query.
  */
 var processDatasets = function(data, options) {
+
+  // Single dataset
   if (data.dataset) {
+
     data.dataset = data.dataset.translated(options.locale);
+
+  // Many datasets
   } else {
+
+    // Apply exclude filter
+    if (options.exclude_datasets) {
+      data.datasets = _.reject(data.datasets, function(dataset) {
+        return _.contains(options.exclude_datasets, dataset.id);
+      });
+    }
+
+    // Add scores, translate
     if (Array.isArray(data.entries)) {
+      var questionMaxScore = options.models.Question.maxScore(data.questions);
+      var placeMaxScore = options.models.Place.maxScore(data.entries, questionMaxScore);
       _.each(data.datasets, function(d) {
         d.computedScore = d.score(data.entries, data.questions);
+        d.computedRelativeScore = 0;
+        if (placeMaxScore) {
+          d.computedRelativeScore = Math.round(100 * d.computedScore / placeMaxScore);
+        }
       });
       data.datasets = rankDatasets(_.sortByOrder(
-        translateSet(options.locale, data.datasets), 'computedScore', 'desc'));
+        translateSet(options.locale, data.datasets), 'computedScore', 'desc'
+      ));
     } else {
       data.datasets = translateSet(options.locale, data.datasets);
     }
+
   }
+
   return data;
+
 };
 
 /**
@@ -331,8 +398,13 @@ var rankDatasets = function(datasets) {
   return datasets;
 };
 
+/**
+ * Extract data options from the request.
+ */
 var getDataOptions = function(req) {
-  return {
+
+  // Base options
+  var options = {
     models: req.app.get('models'),
     domain: req.params.domain,
     dataset: req.params.dataset,
@@ -343,6 +415,23 @@ var getDataOptions = function(req) {
     locale: req.params.locale,
     with: {Entry: true, Dataset: true, Place: true, Question: true}
   };
+
+  // Add exclude_datasets
+  try {
+    options = _.merge(options, {
+      exclude_datasets: req.query.exclude_datasets.split(','),
+    });
+  } catch (err) {}
+
+  // Add exclude_places
+  try {
+    options = _.merge(options, {
+      exclude_places: req.query.exclude_places.split(','),
+    });
+  } catch (err) {}
+
+  return options;
+
 };
 
 module.exports = {
