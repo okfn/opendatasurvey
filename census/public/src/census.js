@@ -82,8 +82,10 @@ $(document).ready(function($) {
     $('a[data-toggle="popover"]').popover();
 
   };
-    
-  sexyTables();
+
+  if ( !$.browser.msie ) {
+    sexyTables();
+  }
 
   var summary,
       $table = $('.response-summary');
