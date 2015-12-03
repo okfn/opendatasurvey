@@ -6,7 +6,7 @@ _site/
 utils/env
 *.swp
 node_modules/*
-settings.json*
+settings.json
 sandbox/*
 .env*
 .deploy.js
