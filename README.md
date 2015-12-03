@@ -34,7 +34,7 @@ Get a local server setup with the following steps:
 2. Setup to appropriate credentials on Google and Facebook so they are OAuth providers for your app.
     * For Google: [follow these steps](https://developers.google.com/identity/protocols/OpenIDConnect) and then enable the Google+ API.
     * For Facebook: [follow these steps](https://developers.facebook.com/docs/facebook-login/)
-2. Ensure you are running the supported version of Node.js, which is [declared in the `package.json`](https://github.com/okfn/opendatacensus/blob/feature/database/package.json#L58).
+2. Ensure you are running the supported version of Node.js, which is [declared in the `package.json`](https://github.com/okfn/opendatacensus/blob/develop/package.json#L75).
 3. Create a database with `createdb opendatacensus`.
 4. Add this line to your hosts file: `127.0.0.1 demo.dev.census.org global.dev.census.org id.dev.census.org system.dev.census.org`.
 5. Create a local directory called `opendatacensus` and move into it with `cd opendatacensus`.
