@@ -40,48 +40,15 @@ Get a local server setup with the following steps:
 5. Create a local directory called `opendatacensus` and move into it with `cd opendatacensus`.
 6. Clone the code with `git clone https://github.com/okfn/opendatacensus .`.
 7. Install the dependencies with `npm install`.
-8. Create a `settings.json` file with these contents, changing any values as required:
-
-```
-{
-  "sysAdmin": "{YOUR_EMAIL}",
-  "registryUrl": "https://docs.google.com/spreadsheets/d/18jINMw7ifwUoqizc4xaQE8XtF4apPfsmMN43EM-9Pmc/edit#gid=0",
-  "database": {
-    "username": "{DB_USERNAME}",
-    "password": "{DB_PASSWORD}",
-    "database": "opendatacensus",
-    "host": "localhost",
-    "port": 5432,
-    "dialect": "postgres",
-    "logging": false,
-    "define": {
-      "charset": "utf-8",
-      "collate": "utf8_general_ci",
-      "timestamps": true
-    }
-  },
-  "google": {
-    "app_id": "{GOOGLE_APP_ID}",
-    "app_secret": "{GOOGLE_APP_SECRET}"
-  },
-  "facebook": {
-    "app_id": "{FACEBOOK_APP_ID}",
-    "app_secret": "{FACEBOOK_APP_SECRET}"
-  },
-  "auth_subdomain": "id",
-  "system_subdomain": "system",
-  "sentry_dsn": "",
-  "discussion_forum": "https://discuss.okfn.org/c/open-data-index"
-}
-```
-
+8. Create a copy of `settings.json.example` file and name it `settings.json` changing any values as required.
 
 Now we should be ready to run the server:
 
-1. Run the app with `npm start`
-2. Load registry and config data at `http://system.dev.census.org:5000/control` (You'll need to be logged in and the system administrator to access this)
-3. Load the data for a specific site, e.g.: `http://demo.dev.census.org:5000/admin`
-4. Visit the site: `http://demo.dev.census.org:5000/`
+1. Run the app with `npm start` (the server will be run on the 5000 port)
+2. Log in at `http://id.okfn.diraol.eng.br:5000/login` with your admin account (the same that was setup on the **settings.json** file)
+3. Load registry and config data at `http://system.dev.census.org:5000/control`
+4. Load the data for a specific site, e.g.: `http://demo.dev.census.org:5000/admin`
+5. Visit the site: `http://demo.dev.census.org:5000/`
 
 Other things you can do:
 
