@@ -45,7 +45,7 @@ Get a local server setup with the following steps:
 Now we should be ready to run the server:
 
 1. Run the app with `npm start` (the server will be run on the 5000 port)
-2. Log in at `http://id.okfn.diraol.eng.br:5000/login` with your admin account (the same that was setup on the **settings.json** file)
+2. Log in at `http://id.dev.census.org:5000/login` with your admin account (the same that was setup on the **settings.json** file)
 3. Load registry and config data at `http://system.dev.census.org:5000/control`
 4. Load the data for a specific site, e.g.: `http://demo.dev.census.org:5000/admin`
 5. Visit the site: `http://demo.dev.census.org:5000/`
