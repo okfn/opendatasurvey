@@ -1,0 +1,12 @@
+web:
+    build: .
+    env_file: .docker.env
+    ports:
+        - "5000:5000"
+    links:
+        - db
+    volumes:
+        - .:/usr/src/app
+
+db:
+    image: postgres:9.4

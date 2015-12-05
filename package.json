@@ -47,7 +47,7 @@
     "serve-favicon": "^2.2.1",
     "subdomain": "^1.2.0",
     "supertest-as-promised": "^2.0.2",
-    "throng": "^1.0.0",
+    "throng": "^1.0.1",
     "umzug": "^1.6.0",
     "underscore": "^1.8.3",
     "validator": "^3.41.2"
@@ -72,7 +72,7 @@
     "zombie": "^4.1.0"
   },
   "engines": {
-    "node": "4.1.x",
+    "node": "4.2.x",
     "npm": "2.14.x"
   },
   "scripts": {
