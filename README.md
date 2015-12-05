@@ -28,6 +28,15 @@ Open Data Census is a Node.js app, running Express v4 and Postgres 9.4 for the d
 
 Get a local server setup with the following steps:
 
+#### Using Docker
+
+1. Install [Docker Compose](https://docs.docker.com/compose/install/) for your OS.
+2. Clone this repository.
+3. Add your Facebook and Google API tokens in the provided [.docker.env](./.docker.env) file. Additionally, you may create a `settings.json` file as detailed in the [Manual Setup section](#manual-setup).
+4. From the root directory of the cloned repository, run `docker-compose up`.
+
+#### Manual Setup
+
 **NOTE**: If you need to prefix your commands in your local environment with `sudo`, then do that.
 
 1. Install Postgres 9.4 on your machine.
