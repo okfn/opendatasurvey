@@ -1,0 +1,30 @@
+{
+  "sysAdmin": "{YOUR_EMAIL}",
+  "registryUrl": "https://docs.google.com/spreadsheets/d/18jINMw7ifwUoqizc4xaQE8XtF4apPfsmMN43EM-9Pmc/edit#gid=0",
+  "database": {
+    "username": "{DB_USERNAME}",
+    "password": "{DB_PASSWORD}",
+    "database": "opendatacensus",
+    "host": "localhost",
+    "port": 5432,
+    "dialect": "postgres",
+    "logging": false,
+    "define": {
+      "charset": "utf-8",
+      "collate": "utf8_general_ci",
+      "timestamps": true
+    }
+  },
+  "google": {
+    "app_id": "{GOOGLE_APP_ID}",
+    "app_secret": "{GOOGLE_APP_SECRET}"
+  },
+  "facebook": {
+    "app_id": "{FACEBOOK_APP_ID}",
+    "app_secret": "{FACEBOOK_APP_SECRET}"
+  },
+  "auth_subdomain": "id",
+  "system_subdomain": "system",
+  "sentry_dsn": "",
+  "discussion_forum": "https://discuss.okfn.org/c/open-data-index"
+}
