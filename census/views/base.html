@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html{% if readonly %} class="readonly" {% endif %} lang="en">
+<html class="site-{{ site.id }}" lang="en">
   <head>
     <meta charset="utf-8">
     <title>
@@ -22,7 +22,7 @@
     <script src="/vendor/Markdown.Editor.js"></script>
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-    <link href="/css/style.css?v4" rel="stylesheet">
+    <link href="/css/style.css?{{currentTime}}" rel="stylesheet">
 
     <style type="text/css">
       {{ site.settings.custom_css }}
@@ -122,9 +122,10 @@
           <a href="https://github.com/okfn/opendatacensus/">{{gettext("Source code")}}</a>
         </p>
         <p>
-          <a href="/api/entries.csv">{{gettext("Download Data (CSV)")}}</a>
-          |
-          <a href="/api/entries.json">{{gettext("Download Data (JSON)")}}</a>
+          <strong>{{ gettext("Download") }}</strong> <a href="/api/entries.cascade.csv">{{gettext("Current (CSV)")}}</a> |
+          <a href="/api/entries.csv">{{gettext("All (CSV)")}}</a> |
+          <a href="/api/entries.cascade.json">{{gettext("Current (JSON)")}}</a> |
+          <a href="/api/entries.json">{{gettext("All (JSON)")}}</a>
         </p>
         <p>
         {{gettext("Part of the <a href=\"http://census.okfn.org/\">Open Data Census project</a> run by Open Knowledge.")}}

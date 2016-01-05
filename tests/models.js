@@ -19,8 +19,8 @@ var defaultOptions = {
   with: {Entry: true, Dataset: true, Place: true, Question: true}
 };
 
-
 describe('Data access layer', function() {
+  this.timeout(20000);
 
   beforeEach(utils.setupFixtures);
   afterEach(utils.dropFixtures);
@@ -47,7 +47,62 @@ describe('Data access layer', function() {
         expect(data).to.have.property('questions');
         done();
       })
-      .catch(console.log.bind(console));
+      .catch(console.trace.bind(console));
+  });
+
+  it('keepAll=true should return all entries', function(done) {
+    var dataOptions = {
+      models: models,
+      domain: 'site1',
+      dataset: null,
+      place: null,
+      year: null,
+      cascade: false,
+      ynQuestions: false,
+      locale: null,
+      keepAll: true,
+      with: {Entry: true, Dataset: false, Place: false, Question: false}
+    };
+    modelUtils.getData(dataOptions)
+      .then(function(data) {
+        expect(data).to.have.property('entries');
+        var hasCurrent = false;
+        var hasNonCurrent = false;
+        _.forEach(data.entries, function(entry) {
+          entry.isCurrent ? hasCurrent = true : hasNonCurrent = true;
+        });
+        expect(hasCurrent).to.be.true;
+        expect(hasNonCurrent).to.be.true;
+        done();
+      })
+      .catch(console.trace.bind(console));
+  });
+
+  it('keepAll=false should return only current entries', function(done) {
+    var dataOptions = {
+      models: models,
+      domain: 'site1',
+      dataset: null,
+      place: null,
+      year: null,
+      cascade: false,
+      ynQuestions: false,
+      locale: null,
+      with: {Entry: true, Dataset: false, Place: false, Question: false}
+    };
+    modelUtils.getData(dataOptions)
+      .then(function(data) {
+        expect(data).to.have.property('entries');
+        var hasCurrent = false;
+        var hasNonCurrent = false;
+        _.forEach(data.entries, function(entry) {
+          entry.isCurrent ? hasCurrent = true : hasNonCurrent = true;
+        });
+        expect(hasCurrent).to.be.true;
+        expect(hasNonCurrent).to.be.false;
+        done();
+      })
+      .catch(console.trace.bind(console));
   });
 
   it('does not return results of an Entry query', function(done) {
@@ -72,7 +127,7 @@ describe('Data access layer', function() {
         expect(data).to.have.property('questions');
         done();
       })
-      .catch(console.log.bind(console));
+      .catch(console.trace.bind(console));
   });
 
   it('only returns yn questions by default', function(done) {
@@ -92,7 +147,7 @@ describe('Data access layer', function() {
         expect(data.questions).to.have.length(9);
         done();
       })
-      .catch(console.log.bind(console));
+      .catch(console.trace.bind(console));
   });
 
   it('can return all questions', function(done) {
@@ -112,50 +167,52 @@ describe('Data access layer', function() {
         expect(data.questions).to.have.length(18);
         done();
       })
-      .catch(console.log.bind(console));
+      .catch(console.trace.bind(console));
   });
 
-  it('returns a place and not places when we have a place argument', function(done) {
-    var dataOptions = {
-      models: models,
-      domain: 'site1',
-      dataset: null,
-      place: 'place11',
-      year: null,
-      cascade: true,
-      ynQuestions: true,
-      locale: null,
-      with: {Entry: true, Dataset: true, Place: true, Question: true}
-    };
-    modelUtils.getData(dataOptions)
-      .then(function(data) {
-        expect(data).to.not.have.property('places');
-        expect(data).to.have.property('place');
-        done();
-      })
-      .catch(console.log.bind(console));
-  });
+  it('returns a place and not places when we have a place argument',
+    function(done) {
+      var dataOptions = {
+        models: models,
+        domain: 'site1',
+        dataset: null,
+        place: 'place11',
+        year: null,
+        cascade: true,
+        ynQuestions: true,
+        locale: null,
+        with: {Entry: true, Dataset: true, Place: true, Question: true}
+      };
+      modelUtils.getData(dataOptions)
+        .then(function(data) {
+          expect(data).to.not.have.property('places');
+          expect(data).to.have.property('place');
+          done();
+        })
+        .catch(console.trace.bind(console));
+    });
 
-  it('returns a dataset and not datasets when we have a dataset argument', function(done) {
-    var dataOptions = {
-      models: models,
-      domain: 'site1',
-      dataset: 'dataset11',
-      place: null,
-      year: null,
-      cascade: true,
-      ynQuestions: true,
-      locale: null,
-      with: {Entry: true, Dataset: true, Place: true, Question: true}
-    };
-    modelUtils.getData(dataOptions)
-      .then(function(data) {
-        expect(data).to.not.have.property('datasets');
-        expect(data).to.have.property('dataset');
-        done();
-      })
-      .catch(console.log.bind(console));
-  });
+  it('returns a dataset and not datasets when we have a dataset argument',
+    function(done) {
+      var dataOptions = {
+        models: models,
+        domain: 'site1',
+        dataset: 'dataset11',
+        place: null,
+        year: null,
+        cascade: true,
+        ynQuestions: true,
+        locale: null,
+        with: {Entry: true, Dataset: true, Place: true, Question: true}
+      };
+      modelUtils.getData(dataOptions)
+        .then(function(data) {
+          expect(data).to.not.have.property('datasets');
+          expect(data).to.have.property('dataset');
+          done();
+        })
+        .catch(console.trace.bind(console));
+    });
 
   it('returns cascaded entries when cascade is true', function(done) {
     var dataOptions = {
@@ -176,7 +233,7 @@ describe('Data access layer', function() {
         expect(data.rejected).to.have.length(1);
         done();
       })
-      .catch(console.log.bind(console));
+      .catch(console.trace.bind(console));
   });
 
   it('returns entries by year when cascade is false', function(done) {
@@ -198,7 +255,7 @@ describe('Data access layer', function() {
         expect(data.rejected).to.have.length(1);
         done();
       })
-      .catch(console.log.bind(console));
+      .catch(console.trace.bind(console));
   });
 
 });

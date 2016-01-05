@@ -25,8 +25,11 @@
 <a href="{{entry.answers.url}}">{{entry.answers.url}}</a>
 
 <h3>{{gettext("Comments")}}</h3>
-<p>{{entry.details|urlize|marked}}</p>
-
+<p>{{entry.details|marked}}</p>
+{% if entry.reviewComments %}
+<h5><strong>{{gettext("Reviewer comments")}}</strong></h5>
+<p>{{entry.reviewComments|marked}}</p>
+{% endif %}
 <h3>{{gettext("Data Availability")}}</h3>
 <ul class="data-availability clearfix unstyled">
 
@@ -59,10 +62,10 @@
           <i class="icon-{{ qu.icon }}"></i>
           <span class="text">{{ stateDisplay }}</span>
         </span>
-        {{ qu.question }}
+        <span class="data-icon-text">{{ qu.question }}</span>
       </span>
 
-      <a href="javascript:;" data-toggle="popover"
+      <a href="javascript:;" data-toggle="popover" data-trigger="focus"
          data-content="{{ qu.description|replace ('\"', '\'') }}"
          data-placement="top" data-html="true">
          <i class="icon-info-sign"></i>
@@ -85,6 +88,6 @@
   <tr><td>{{gettext("Last modified")}}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.createdAt %}{{ entry.createdAt }}{% else %}{{gettext("Unknown")}}{% endif %}</td></tr>
 </table>
 
-<script src="{{page.root}}/src/common.js?v3"></script>
+<script src="{{page.root}}/src/common.js?{{currentTime}}"></script>
 
 {% endblock %}

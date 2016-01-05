@@ -34,7 +34,7 @@ Get a local server setup with the following steps:
 2. Setup to appropriate credentials on Google and Facebook so they are OAuth providers for your app.
     * For Google: [follow these steps](https://developers.google.com/identity/protocols/OpenIDConnect) and then enable the Google+ API.
     * For Facebook: [follow these steps](https://developers.facebook.com/docs/facebook-login/)
-2. Ensure you are running the supported version of Node.js, which is [declared in the `package.json`](https://github.com/okfn/opendatacensus/blob/feature/database/package.json#L58).
+2. Ensure you are running the supported version of Node.js, which is [declared in the `package.json`](https://github.com/okfn/opendatacensus/blob/develop/package.json#L75).
 3. Create a database with `createdb opendatacensus`.
 4. Add this line to your hosts file: `127.0.0.1 demo.dev.census.org global.dev.census.org id.dev.census.org system.dev.census.org`.
 5. Create a local directory called `opendatacensus` and move into it with `cd opendatacensus`.
@@ -83,6 +83,12 @@ Now we should be ready to run the server:
 3. Load the data for a specific site, e.g.: `http://demo.dev.census.org:5000/admin`
 4. Visit the site: `http://demo.dev.census.org:5000/`
 
+Other things you can do:
+
+* Run the test suite with npm test
+* Check your code style with npm run jscs (according to the Google style guide)
+
+
 ### Configuration Sheets
 
 Most of the site configuration is taken from config sheets in Google Sheets. You can use [this registry sheet](https://docs.google.com/spreadsheets/d/18jINMw7ifwUoqizc4xaQE8XtF4apPfsmMN43EM-9Pmc/edit#gid=0) and its linked sheets as examples and clone them as necessary.
@@ -114,7 +120,12 @@ To update the existing .po files, run:
 
     gulp update-po
 
-To add a new language, copy the `locale/en` directory to `locale/[language-code]`.
+To add a new language, create directory `locale/[language-code]/LC_MESSAGES` and put there translation files (*.po).
+Also, you can copy the `locale/en` directory to `locale/[language-code]` and change existing files.
+
+To update translations cache, run
+
+    gulp compile-po
 
 ### i18n For Config
 
@@ -122,7 +133,10 @@ Any column can be internationalised by adding another column with `@locale` afte
 
 ### Running Tests
 
-`npm test`
+```
+createdb opendatacensus_test
+npm test
+```
 
 ------
 

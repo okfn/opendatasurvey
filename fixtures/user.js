@@ -1,6 +1,5 @@
 var utils = require('./utils');
 
-
 var objects = [
   {
     model: 'User',
@@ -43,6 +42,5 @@ var objects = [
     }
   }
 ];
-
 
 module.exports = objects;

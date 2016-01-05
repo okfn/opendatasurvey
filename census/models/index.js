@@ -1,3 +1,5 @@
+'use strict';
+
 var _ = require('lodash');
 var Promise = require('bluebird');
 var fs = require('fs');
@@ -7,7 +9,8 @@ var Umzug = require('umzug');
 var basename = path.basename(module.filename);
 var mixinsFile = path.basename('./mixins.js');
 var utilsFile = path.basename('./utils.js');
-var migrationsDir = path.join(path.dirname(path.dirname(module.filename)), 'migrations');
+var migrationsDir = path.join(path.dirname(path.dirname(module.filename)),
+  'migrations');
 var config = require('../config');
 var dbConfig = config.get('database');
 var utils = require('./utils');
@@ -15,20 +18,19 @@ var sequelize;
 var umzug;
 var db = {};
 
-
 if (process.env.DATABASE_URL) {
-
   // Use DATABASE_URL if it exists, for Heroku.
   sequelize = new Sequelize(process.env.DATABASE_URL, dbConfig);
-
 } else {
-
   // Fallback to normal config, for local development and test environments.
   if (config.get('env').toLowerCase() === 'test') {
     dbConfig.database = dbConfig.database + '_test';
   }
-  sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig);
-
+  sequelize = new Sequelize(
+    dbConfig.database,
+    dbConfig.username,
+    dbConfig.password,
+    dbConfig);
 }
 
 umzug = new Umzug({
@@ -45,17 +47,17 @@ umzug = new Umzug({
 
 fs
   .readdirSync(__dirname)
-  .filter(function (file) {
+  .filter(function(file) {
     return (file.indexOf('.') !== 0) && (file.slice(-1) !== '~') &&
       (file !== basename) && (file !== mixinsFile) &&
       (file !== utilsFile);
   })
-  .forEach(function (file) {
+  .forEach(function(file) {
     var model = sequelize.import(path.join(__dirname, file));
     db[model.name] = model;
   });
 
-Object.keys(db).forEach(function (modelName) {
+Object.keys(db).forEach(function(modelName) {
   if ('associate' in db[modelName]) {
     db[modelName].associate(db);
   }

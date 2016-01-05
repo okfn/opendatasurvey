@@ -4,7 +4,6 @@ var datasets = require('./dataset');
 var places = require('./place');
 var users = require('./user');
 
-
 function answers() { return {
   digital: _.sample([false, true]),
   exists: _.sample([false, true]),
@@ -17,7 +16,11 @@ function answers() { return {
   license: 'http://example.com'
 }; }
 
-function bySite(fixtures, siteId) { return _.filter(fixtures, function(D) { return D.data.site === siteId }); }
+function bySite(fixtures, siteId) {
+  return _.filter(fixtures, function(D) {
+    return D.data.site === siteId;
+  });
+}
 
 var objects = [
   {
@@ -39,7 +42,6 @@ var objects = [
       reviewerId: _.sample(users).data.id
     }
   },
-
   {
     model: 'Entry',
     data: {
@@ -59,7 +61,6 @@ var objects = [
       reviewerId: _.sample(users).data.id
     }
   },
-
   {
     model: 'Entry',
     data: {
@@ -79,7 +80,6 @@ var objects = [
       reviewerId: _.sample(users).data.id
     }
   },
-
   {
     model: 'Entry',
     data: {
@@ -118,7 +118,6 @@ var objects = [
       reviewerId: _.sample(users).data.id
     }
   },
-
   {
     model: 'Entry',
     data: {
@@ -138,7 +137,6 @@ var objects = [
       reviewerId: _.sample(users).data.id
     }
   },
-
   {
     model: 'Entry',
     data: {
@@ -158,7 +156,6 @@ var objects = [
       reviewerId: _.sample(users).data.id
     }
   },
-
   {
     model: 'Entry',
     data: {
@@ -178,7 +175,6 @@ var objects = [
       reviewerId: _.sample(users).data.id
     }
   },
-
   {
     model: 'Entry',
     data: {
@@ -198,7 +194,6 @@ var objects = [
       reviewerId: _.sample(users).data.id
     }
   },
-
   {
     model: 'Entry',
     data: {
@@ -218,7 +213,6 @@ var objects = [
       reviewerId: _.sample(users).data.id
     }
   },
-
   {
     model: 'Entry',
     data: {
@@ -238,7 +232,6 @@ var objects = [
       reviewerId: _.sample(users).data.id
     }
   },
-
   {
     model: 'Entry',
     data: {
@@ -258,7 +251,6 @@ var objects = [
       reviewerId: _.sample(users).data.id
     }
   },
-
   // A set of entries for pair of place-dataset which all have isCurrent === false
   {
     model: 'Entry',
@@ -279,8 +271,6 @@ var objects = [
       reviewerId: _.sample(users).data.id
     }
   }
-
 ];
-
 
 module.exports = objects;

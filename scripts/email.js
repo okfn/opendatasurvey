@@ -3,8 +3,7 @@ var email = require('emailjs');
 var nunjucks = require('nunjucks');
 var marked = require('marked');
 
-nunjucks.configure(__dirname + '/templates', {watch: false});
-
+nunjucks.configure(__dirname + '/../census/views', {watch: false});
 
 var renderTemplate = function(template, context) {
   var text = nunjucks.render(template, context);
@@ -15,19 +14,18 @@ var renderTemplate = function(template, context) {
 };
 
 var prepareMessage = function(template, context, recepient, subject) {
-  var rendered = renderTemplate(template, context);
+  var rendered = renderTemplate('_email/' + template, context);
   return {
     text: rendered.text,
     from: config.get('email_from'),
     to: recepient,
     subject: subject,
-    attachment: [{data: rendered.html, alternative:true}]
+    attachment: [{data: rendered.html, alternative: true}]
   };
 };
 
 var send = function(message) {
-
-  console.log("Sending email to " + message.to);
+  console.log('Sending email to ' + message.to);
 
   var server = email.server.connect({
     user: config.get('mandrill:smtp_username'),
@@ -42,7 +40,6 @@ var send = function(message) {
     }
   });
 };
-
 
 module.exports = {
   prepareMessage: prepareMessage,

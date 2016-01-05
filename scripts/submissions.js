@@ -10,15 +10,13 @@ var submissionsData = fs.readFileSync(process.argv[2], {encoding: 'utf-8'});
 var parser = Promise.promisify(csv.parse);
 var utils = require('./utils');
 
-
 var cleanSubmission = function(obj, users) {
-
-  var normalized_timestamp,
-      subId,
-      subName,
-      revId,
-      revName,
-      revLookup;
+  var normalizedTimestamp;
+  var subId;
+  var subName;
+  var revId;
+  var revName;
+  var revLookup;
 
   // correct identifiers
   if (_.indexOf(_.keys(utils.idMapper), obj.censusid) >= 0) {
@@ -32,22 +30,23 @@ var cleanSubmission = function(obj, users) {
   }
 
   // normalize timestamps
-  normalized_timestamp = moment(obj.timestamp.trim());
-  if (normalized_timestamp.format() === "Invalid date") {
-    normalized_timestamp = moment(obj.timestamp.trim(), 'DD/MM/YYYY HH:mm:ss');
+  normalizedTimestamp = moment(obj.timestamp.trim());
+  if (normalizedTimestamp.format() === 'Invalid date') {
+    normalizedTimestamp = moment(obj.timestamp.trim(), 'DD/MM/YYYY HH:mm:ss');
   }
-  obj.timestamp = normalized_timestamp.format();
+  obj.timestamp = normalizedTimestamp.format();
 
-  // assign year correctly to fix old issues with mistmatched submission timestamp + year
-  if (normalized_timestamp.year() <= 2013) {
+  // assign year correctly to fix old issues with mistmatched
+  // submission timestamp + year
+  if (normalizedTimestamp.year() <= 2013) {
     obj.year = 2013;
   } else {
-    obj.year = normalized_timestamp.year();
+    obj.year = normalizedTimestamp.year();
   }
 
-  // manipulate the submitter and reviewer data so we can reference the User table
-  // submitter can be anonymous, and we created an anonymous user for this
-  // backwards compat of anonymous
+  // manipulate the submitter and reviewer data so we can reference the User
+  // table submitter can be anonymous, and we created an anonymous user for
+  // this backwards compat of anonymous
   // reviewer can be empty, as some submissions can immediately become entries.
   // in this case, we set the reviewer to the same user as the submitter.
   subId = obj.submitterid.split(':');
@@ -84,8 +83,9 @@ var cleanSubmission = function(obj, users) {
 
   // normalize the answers to questions
   obj.answers = _.chain(utils.questions).map(function(Q) {
-
-    if (obj[Q] && (_.indexOf(_.keys(utils.qCorrecter), obj[Q].trim().toLowerCase())) >= 0) {
+    var condition = obj[Q] &&
+      ((_.indexOf(_.keys(utils.qCorrecter), obj[Q].trim().toLowerCase())) >= 0);
+    if (condition) {
       obj[Q] = utils.qCorrecter[obj[Q].trim().toLowerCase()];
     }
     return [Q, obj[Q]];
@@ -98,18 +98,13 @@ var cleanSubmission = function(obj, users) {
   return obj;
 };
 
-
 utils.loadData({
-
   users: models.User.findAll(),
   submissions: parser(submissionsData, {columns: true})
-
 }).then(function(D) {
-
   var dataset = [];
 
   _.each(D.submissions, function(obj) {
-
     var data = {};
 
     obj = cleanSubmission(obj, D.users);
@@ -132,14 +127,11 @@ utils.loadData({
     data.reviewerId = obj.reviewer.id;
 
     dataset.push(data);
-
   });
 
   return models.Entry.bulkCreate(dataset, {returning: true})
     .then(function(results) {
-
       console.log('Saved ' + results.length + ' submission entries.');
+    }).catch(console.trace.bind(console));
 
-    }).catch(console.log.bind(console));
-
-}).catch(console.log.bind(console));
+}).catch(console.trace.bind(console));

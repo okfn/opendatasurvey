@@ -3,75 +3,75 @@
 var _ = require('lodash');
 var modelUtils = require('../models/utils');
 var FIELD_SPLITTER = /[\s,]+/;
-var ANONYMOUS_USER_ID = process.env.ANONYMOUS_USER_ID || '0e7c393e-71dd-4368-93a9-fcfff59f9fff';
+var ANONYMOUS_USER_ID = process.env.ANONYMOUS_USER_ID ||
+  '0e7c393e-71dd-4368-93a9-fcfff59f9fff';
 var marked = require('marked');
-
 
 var makeChoiceValidator = function(param) {
   return function(req) {
-    req.checkBody(param, "You must make a valid choice").isChoice();
+    req.checkBody(param, 'You must make a valid choice').isChoice();
   };
 };
 
 var validators = {
   exists: {
-    validate: makeChoiceValidator("exists"),
-    require: ["digital", "public", "uptodate"]
+    validate: makeChoiceValidator('exists'),
+    require: ['digital', 'public', 'uptodate']
   },
   digital: {
-    validate: makeChoiceValidator("digital"),
-    require: ["online", "machinereadable", "bulk"],
-    expectFalse: ["online", "machinereadable", "bulk"]
+    validate: makeChoiceValidator('digital'),
+    require: ['online', 'machinereadable', 'bulk'],
+    expectFalse: ['online', 'machinereadable', 'bulk']
   },
   public: {
-    validate: makeChoiceValidator("public"),
-    require: ["free"],
-    expectFalse: ["free", "online", "openlicense", "bulk"]
+    validate: makeChoiceValidator('public'),
+    require: ['free'],
+    expectFalse: ['free', 'online', 'openlicense', 'bulk']
   },
   free: {
-    validate: makeChoiceValidator("free"),
-    require: ["openlicense"],
-    expectFalse: ["openlicense"]
+    validate: makeChoiceValidator('free'),
+    require: ['openlicense'],
+    expectFalse: ['openlicense']
   },
   online: {
-    validate: makeChoiceValidator("online"),
-    require: ["url"]
+    validate: makeChoiceValidator('online'),
+    require: ['url']
   },
   openlicense: {
-    validate: makeChoiceValidator("openlicense"),
-    require: ["licenseurl"]
+    validate: makeChoiceValidator('openlicense'),
+    require: ['licenseurl']
   },
   machinereadable: {
-    validate: makeChoiceValidator("machinereadable"),
-    require: ["format"]
+    validate: makeChoiceValidator('machinereadable'),
+    require: ['format']
   },
   bulk: {
-    validate: makeChoiceValidator("bulk")
+    validate: makeChoiceValidator('bulk')
   },
   uptodate: {
-    validate: makeChoiceValidator("uptodate")
+    validate: makeChoiceValidator('uptodate')
   },
   format: {
-    type: "string",
+    type: 'string',
     validate: function(req) {
-      req.checkBody("format", "You must specify the data format").notEmpty();
+      req.checkBody('format', 'You must specify the data format').notEmpty();
     }
   },
   url: {
-    type: "string",
+    type: 'string',
     validate: function(req) {
-      req.checkBody("url", "You must specify a valid URL").isURL();
+      req.checkBody('url', 'You must specify a valid URL').isURL();
     }
   },
   licenseurl: {
-    type: "string",
+    type: 'string',
     validate: function(req) {
-      req.checkBody("licenseurl", "You must specify a valid URL").isURL();
+      req.checkBody('licenseurl', 'You must specify a valid URL').isURL();
     }
   }
 };
 
-var validateQuestion = function(req, question, parentValue, validated) {
+var validateQuestion = function(req, question, parentQuestion, validated) {
   /**
    * Validate the question.
    *
@@ -91,20 +91,21 @@ var validateQuestion = function(req, question, parentValue, validated) {
    * Iterate over the required questions recursively.
    */
 
-  var validator = validators[question],
-      value = req.body[question],
-      parentValue = parentValue || "true",
-      validated = validated || [];
+  parentQuestion = parentQuestion || null;
+  validated = validated || [];
+  var validator = validators[question];
+  var value = req.body[question];
+  var parentValue = req.body[parentQuestion] || 'true';
 
   if (value === undefined) {
-    req.checkBody(question, "You must specify " + question).equals("any");
+    req.checkBody(question, 'You must specify ' + question).equals('any');
   }
 
   // ensure false values for expectFalse questions
-  if (value === "false" && validator.expectFalse) {
+  if (value === 'false' && validator.expectFalse) {
     validator.expectFalse.forEach(function(child) {
-      if (validated.indexOf(question) == -1) {
-        req.checkBody(child, "You can specify only 'false'").equals("false");
+      if (validated.indexOf(child) == -1) {
+        req.checkBody(child, 'You can specify only \'false\'').equals('false');
         validated.push(child);
       }
     });
@@ -112,36 +113,32 @@ var validateQuestion = function(req, question, parentValue, validated) {
 
   if (validated.indexOf(question) == -1) {
     // not yet validated
-
     // validate depending on the question value
-    if (parentValue === "null" || parentValue === "false") {
+    if (parentValue === 'null' || parentValue === 'false') {
       // validate falsy values
-      if (validator.type === "string") {
-        if (!question.id === 'format') {
-          // checking for format should be VERY temporary, we want this generic.
-          // just added to quickly solve https://github.com/okfn/opendatacensus/issues/677
-          // while waiting for this https://github.com/okfn/opendatacensus/issues/623
-          req.checkBody(question, "You must not specify this field").equals("");
-        }
+      if (validator.type === 'string') {
+        req.checkBody(question, 'You must not specify this field').equals('');
       } else {
-        req.checkBody(question, "You can specify only '" + parentValue + "'")
-           .equals(parentValue);
+        if (!(
+          (parentValue === 'null') && (validators[parentQuestion].expectFalse))
+        ) {
+          req.checkBody(question, 'You can specify only \'' +
+            parentValue + '\'').equals(parentValue);
+        }
       }
     } else {
       // parentValue has a truthy value, validate as normal
       validator.validate(req);
     }
-
     validated.push(question);
   }
 
   // validate recursively
   if (validator.require) {
     validator.require.forEach(function(child) {
-      validateQuestion(req, child, value, validated);
+      validateQuestion(req, child, question, validated);
     });
   }
-
 };
 
 var validateData = function(req, mappedErrors) {
@@ -150,13 +147,13 @@ var validateData = function(req, mappedErrors) {
    * req.body according to the declared validation logic.
    * Used for new data submissions, and revision proposals.
    */
-  var errors,
-      mapped = mappedErrors || false;
+  var errors;
+  var mapped = mappedErrors || false;
 
-  req.checkBody("place", "You must select a Place").notEmpty();
-  req.checkBody("dataset", "You must select a Dataset").notEmpty();
+  req.checkBody('place', 'You must select a Place').notEmpty();
+  req.checkBody('dataset', 'You must select a Dataset').notEmpty();
 
-  validateQuestion(req, "exists");
+  validateQuestion(req, 'exists');
 
   errors = req.validationErrors(mapped);
 
@@ -164,7 +161,9 @@ var validateData = function(req, mappedErrors) {
 };
 
 var splitFields = function(data) {
-  return _.each(data.trim().split(FIELD_SPLITTER), function(str) { str.trim(); });
+  return _.each(data.trim().split(FIELD_SPLITTER), function(str) {
+    str.trim();
+  });
 };
 
 var placeMapper = function(data) {
@@ -172,11 +171,11 @@ var placeMapper = function(data) {
   if (data.reviewers) {
     reviewers = splitFields(data.reviewers);
   }
-  var result = _.defaults({id: data.id.toLowerCase(), reviewers: reviewers}, data);
-
-  return result;
+  return _.defaults({
+    id: data.id.toLowerCase(),
+    reviewers: reviewers
+  }, data);
 };
-
 
 var datasetMapper = function(data) {
   var reviewers = [];
@@ -192,10 +191,9 @@ var datasetMapper = function(data) {
   }, data);
 };
 
-
 var questionMapper = function(data) {
   var dependants = null;
-  if(data.dependants) {
+  if (data.dependants) {
     dependants = splitFields(data.dependants);
   }
   return _.defaults({
@@ -206,7 +204,6 @@ var questionMapper = function(data) {
     order: data.order || 100
   }, data);
 };
-
 
 var normalizedAnswers = function(answers) {
   var normed = {};
@@ -224,39 +221,69 @@ var normalizedAnswers = function(answers) {
   return normed;
 };
 
+var ynuAnswers = function(answers) {
+  var ynu = {};
+  _.each(answers, function(v, k) {
+    if (v === null) {
+      ynu[k] = 'Unsure';
+    } else if (v === false) {
+      ynu[k] = 'No';
+    } else if (v === true) {
+      ynu[k] = 'Yes';
+    } else {
+      ynu[k] = v;
+    }
+  });
+  return ynu;
+};
 
 var getFormQuestions = function(req, questions) {
   questions = modelUtils.translateSet(req, questions);
   _.each(questions, function(q) {
     if (q.dependants) {
       _.each(q.dependants, function(d, i, l) {
-        var match = _.find(questions, function(o) { return o.id === d; });
+        var match = _.find(questions, function(o) {
+          return o.id === d;
+        });
         l[i] = match;
-        questions = _.reject(questions, function(o) { return o.id === match.id; });
+        questions = _.reject(questions, function(o) {
+          return o.id === match.id;
+        });
       });
     }
 
   });
-  return _.sortByOrder(questions, "order", "asc");
+  return _.sortByOrder(questions, 'order', 'asc');
 };
 
-
 var getCurrentState = function(data, req) {
-  var match = _.merge(req.query, req.body),
-      pending,
-      matches;
+  var match = _.merge(req.query, req.body);
+  var pending;
+  var matches;
 
   if (!match.place || !match.dataset) {
     match = {};
   } else {
-    matches = _.filter(data.entries, {"isCurrent": true, "place": match.place, "dataset": match.dataset});
-    pending = _.any(data.pending, {"isCurrent": false, "year": req.params.year,
-                                   "place": match.place, "dataset": match.dataset});
-    if (matches.length) { match = _.first(matches); }
+    matches = _.filter(data.entries, {
+      isCurrent: true,
+      place: match.place,
+      dataset: match.dataset
+    });
+    pending = _.any(data.pending, {
+      isCurrent: false,
+      year: req.params.year,
+      place: match.place,
+      dataset: match.dataset
+    });
+    if (matches.length) {
+      match = _.first(matches);
+    }
   }
-  return { match: match, pending: pending };
+  return {
+    match: match,
+    pending: pending
+  };
 };
-
 
 var getReviewers = function(req, data) {
   var reviewers = [];
@@ -276,7 +303,6 @@ var getReviewers = function(req, data) {
   }
 };
 
-
 var canReview = function(reviewers, user) {
   if (user) {
     return (_.intersection(reviewers, user.emails).length >= 1);
@@ -284,13 +310,13 @@ var canReview = function(reviewers, user) {
   return false;
 };
 
-
 module.exports = {
   validateData: validateData,
   placeMapper: placeMapper,
   datasetMapper: datasetMapper,
   questionMapper: questionMapper,
   normalizedAnswers: normalizedAnswers,
+  ynuAnswers: ynuAnswers,
   getFormQuestions: getFormQuestions,
   getCurrentState: getCurrentState,
   getReviewers: getReviewers,
