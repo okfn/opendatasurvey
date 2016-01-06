@@ -33,55 +33,24 @@ Get a local server setup with the following steps:
 1. Install Postgres 9.4 on your machine.
 2. Setup to appropriate credentials on Google and Facebook so they are OAuth providers for your app.
     * For Google: [follow these steps](https://developers.google.com/identity/protocols/OpenIDConnect) and then enable the Google+ API.
+      * The callBack url for Google+ API is: `http://id.dev.census.org:5000/google/callback`
     * For Facebook: [follow these steps](https://developers.facebook.com/docs/facebook-login/)
-2. Ensure you are running the supported version of Node.js, which is [declared in the `package.json`](https://github.com/okfn/opendatacensus/blob/develop/package.json#L75).
-3. Create a database with `createdb opendatacensus`.
-4. Add this line to your hosts file: `127.0.0.1 demo.dev.census.org global.dev.census.org id.dev.census.org system.dev.census.org`.
-5. Create a local directory called `opendatacensus` and move into it with `cd opendatacensus`.
-6. Clone the code with `git clone https://github.com/okfn/opendatacensus .`.
-7. Install the dependencies with `npm install`.
-8. Create a `settings.json` file with these contents, changing any values as required:
-
-```
-{
-  "sysAdmin": "{YOUR_EMAIL}",
-  "registryUrl": "https://docs.google.com/spreadsheets/d/18jINMw7ifwUoqizc4xaQE8XtF4apPfsmMN43EM-9Pmc/edit#gid=0",
-  "database": {
-    "username": "{DB_USERNAME}",
-    "password": "{DB_PASSWORD}",
-    "database": "opendatacensus",
-    "host": "localhost",
-    "port": 5432,
-    "dialect": "postgres",
-    "logging": false,
-    "define": {
-      "charset": "utf-8",
-      "collate": "utf8_general_ci",
-      "timestamps": true
-    }
-  },
-  "google": {
-    "app_id": "{GOOGLE_APP_ID}",
-    "app_secret": "{GOOGLE_APP_SECRET}"
-  },
-  "facebook": {
-    "app_id": "{FACEBOOK_APP_ID}",
-    "app_secret": "{FACEBOOK_APP_SECRET}"
-  },
-  "auth_subdomain": "id",
-  "system_subdomain": "system",
-  "sentry_dsn": "",
-  "discussion_forum": "https://discuss.okfn.org/c/open-data-index"
-}
-```
-
+      * The callBack url for Facebook is: `http://id.dev.census.org:5000/facebook/callback`
+3. Ensure you are running the supported version of Node.js, which is [declared in the `package.json`](https://github.com/okfn/opendatacensus/blob/feature/database/package.json#L58).
+4. Create a database with `createdb opendatacensus`.
+5. Add this line to your hosts file: `127.0.0.1 demo.dev.census.org global.dev.census.org id.dev.census.org system.dev.census.org`.
+6. Create a local directory called `opendatacensus` and move into it with `cd opendatacensus`.
+7. Clone the code with `git clone https://github.com/okfn/opendatacensus .`.
+8. Install the dependencies with `npm install`.
+9. Create a copy of `settings.json.example` file and name it `settings.json` changing any values as required.
 
 Now we should be ready to run the server:
 
-1. Run the app with `npm start`
-2. Load registry and config data at `http://system.dev.census.org:5000/control` (You'll need to be logged in and the system administrator to access this)
-3. Load the data for a specific site, e.g.: `http://demo.dev.census.org:5000/admin`
-4. Visit the site: `http://demo.dev.census.org:5000/`
+1. Run the app with `npm start` (the server will be run on the 5000 port)
+2. Log in at `http://id.dev.census.org:5000/login` with your admin account (the same that was setup on the **settings.json** file)
+3. Load registry and config data at `http://system.dev.census.org:5000/control`
+4. Load the data for a specific site, e.g.: `http://demo.dev.census.org:5000/admin`
+5. Visit the site: `http://demo.dev.census.org:5000/`
 
 Other things you can do:
 
