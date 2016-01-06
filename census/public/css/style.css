@@ -467,6 +467,12 @@ footer a:hover {
 	border-bottom: solid 1px #333333;
 }
 
+@media (max-width: 1200px) {
+	div.nav-logo {
+		display: none;
+	}
+}
+
 div.nav-logo {
   float: right;
   height: 30px;

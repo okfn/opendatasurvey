@@ -229,7 +229,7 @@ describe('Data access layer', function() {
     modelUtils.getData(dataOptions)
       .then(function(data) {
         expect(data.entries).to.have.length(3);
-        expect(data.pending).to.have.length(3);
+        expect(data.pending).to.have.length(2);
         expect(data.rejected).to.have.length(1);
         done();
       })
@@ -251,7 +251,7 @@ describe('Data access layer', function() {
     modelUtils.getData(dataOptions)
       .then(function(data) {
         expect(data.entries).to.have.length(2);
-        expect(data.pending).to.have.length(3);
+        expect(data.pending).to.have.length(2);
         expect(data.rejected).to.have.length(1);
         done();
       })
