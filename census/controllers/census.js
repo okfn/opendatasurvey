@@ -230,7 +230,7 @@ var submit = function(req, res) {
 };
 
 var reviewPost = function(req, res) {
-  var acceptSubmission = req.body.submit === 'Publish';
+  var acceptSubmission = !_.isUndefined(req.body.publish);
   var answers;
 
   req.app.get('models').Entry.findById(req.params.id).then(function(result) {

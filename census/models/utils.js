@@ -263,7 +263,7 @@ var processPlaces = function(data, options) {
         }
       });
       data.places = rankPlaces(_.sortByOrder(
-        translateSet(options.locale, data.places), 'computedScore', 'desc'
+        translateSet(options.locale, data.places), ['computedScore', 'name'], ['desc', 'asc']
       ));
     } else {
       data.places = translateSet(options.locale, data.places);
@@ -402,7 +402,6 @@ var rankDatasets = function(datasets) {
  * Extract data options from the request.
  */
 var getDataOptions = function(req) {
-
   // Base options
   var options = {
     models: req.app.get('models'),

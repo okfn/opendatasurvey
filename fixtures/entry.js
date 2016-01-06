@@ -104,7 +104,7 @@ var objects = [
     data: {
       id: uuid.v4(),
       site: 'site1',
-      year: 2015,
+      year: 2016,
       place: 'place11',
       dataset: 'dataset12',
       answers: answers(),
@@ -161,7 +161,7 @@ var objects = [
     data: {
       id: uuid.v4(),
       site: 'site2',
-      year: 2015,
+      year: 2016,
       place: _.sample(bySite(places, 'site2')).data.id,
       dataset: _.sample(bySite(datasets, 'site2')).data.id,
       answers: answers(),
@@ -180,7 +180,7 @@ var objects = [
     data: {
       id: uuid.v4(),
       site: 'site2',
-      year: 2015,
+      year: 2016,
       place: _.sample(bySite(places, 'site2')).data.id,
       dataset: _.sample(bySite(datasets, 'site2')).data.id,
       answers: answers(),
@@ -199,7 +199,7 @@ var objects = [
     data: {
       id: uuid.v4(),
       site: 'site2',
-      year: 2015,
+      year: 2016,
       place: _.sample(bySite(places, 'site2')).data.id,
       dataset: _.sample(bySite(datasets, 'site2')).data.id,
       answers: answers(),
@@ -218,7 +218,7 @@ var objects = [
     data: {
       id: uuid.v4(),
       site: 'site2',
-      year: 2015,
+      year: 2016,
       place: _.sample(bySite(places, 'site2')).data.id,
       dataset: _.sample(bySite(datasets, 'site2')).data.id,
       answers: answers(),
@@ -237,7 +237,7 @@ var objects = [
     data: {
       id: uuid.v4(),
       site: 'site2',
-      year: 2015,
+      year: 2016,
       place: _.sample(bySite(places, 'site2')).data.id,
       dataset: _.sample(bySite(datasets, 'site2')).data.id,
       answers: answers(),
