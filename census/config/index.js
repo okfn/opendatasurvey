@@ -47,7 +47,7 @@ nconf.defaults({
   mandrill: {
     'smtp_host': process.env.SMTP_HOST || 'smtp.mandrillapp.com',
     'smtp_port': process.env.SMTP_PORT || 587,
-    'smtp_username': process.env.SMTP_USERNAME || 'noreply@census.okfn.org',
+    'smtp_username': process.env.SMTP_USERNAME || '',
     'smtp_password': process.env.SMTP_PASSWORD || ''
   },
 
