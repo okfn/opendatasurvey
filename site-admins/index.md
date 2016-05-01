@@ -131,7 +131,7 @@ This is about translating the question descriptors used in the submission forms 
  * Make a copy of the [standard questions spreadsheet][template-questions]
  * Add a column Question@{LANG} and Description@{LANG} where {LANG} if your 2 digit iso code
  * Enter translations of the english values of Question and Description in your new columns
- * Notify the Open Data Census Managers on the discussion forum[discussion-forum] that the translation is done
+ * Notify the Open Data Census Managers on the [discussion forum][discussion-forum] that the translation is done
  * The Census Managers will then incorporate your translations back in the the main questions spreadsheet
 
 #### Translating Datasets
@@ -140,14 +140,14 @@ This is about translating the dataset information (title, descriptions etc). To 
 
  * Add a column Title@{LANG} and Description@{LANG} to the Datasets sheet – if you are running off the [default, standard set of city datasets][template-city] then make a copy of this sheet to do this
  * Translate the original title and description into your language and enter into the new columns you created
- * Notify the Open Data Census Managers on the discussion forum[discussion-forum] that the translation is done
+ * Notify the Open Data Census Managers on the [discussion forum[discussion-forum] that the translation is done
 
 #### Translating General Site Content
 
  * Visit the [Open Data Census translation project on Transifex][transifex]
     * Get an account if you need one
  * Submit translations
- * Notify the Open Data Census Managers on the discussion forum[discussion-forum] that the translation is done
+ * Notify the Open Data Census Managers on the [discussion forum[discussion-forum] that the translation is done
 
 ### Customizing the List of Datasets
 
