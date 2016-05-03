@@ -79,7 +79,7 @@ We know there is huge variability in how much local data is available not just a
 
 #### What's the Relation with the National Open Data Census?
 
-The [National Open data Census][national-open-data-census] surveys the availability of key datasets at the national, country, level. It has been run annually since 2012 by the Open Knowledge Foundation. It is used to produce the [Open Data Index][open-data-index], the global reference for the state of open data released by national governments.
+The [National Open data Census][national-open-data-census] surveys the availability of key datasets at the national, country, level. It has been run annually since 2012 by Open Knowledge International. It is used to produce the [Open Data Index][open-data-index], the global reference for the state of open data released by national governments.
 
 The Index (and Census) answer questions like: which key datasets are being released? Is the available data legally and technically usable so that citizens, civil society and businesses can realise the full benefits of the information?
 
@@ -89,11 +89,11 @@ Yes you can! We are also supporting topical censuses – [contact us][contact-us
 
 #### Who's running this?
 
-This site and the Open Data Census platform is run by the [Open Knowledge Foundation][okf]. Each individual census is run by its specific team and community who are responsible for its content and validity.
+This site and the Open Data Census platform is run by [Open Knowledge International][okf]. Each individual census is run by its specific team and community who are responsible for its content and validity.
 
 #### This is great! Can I make a donation?
 
-The Open Knowledge Foundation is a non-profit and we appreciate any and all donations. Support the running of censuses by donating now via Paypal!
+The Open Knowledge International is a non-profit and we appreciate any and all donations. Support the running of censuses by donating now via Paypal!
 
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 <input type="hidden" name="cmd" value="_s-xclick" />
