@@ -3,7 +3,7 @@ layout: default
 title: Event guide for Index events
 ---
 
-Getting together at a public event can be a fun way to contribute to the[2015 Global Open Data Index](http://global.census.okfn.org/). It can also be a great way to engage and organize people locally around open data. Here are some guidelines and tips for hosting an event in support of the 2015 Index and getting the most out of it. 
+Getting together at a public event can be a fun way to contribute to the [2015 Global Open Data Index](http://global.census.okfn.org/). It can also be a great way to engage and organize people locally around open data. Here are some guidelines and tips for hosting an event in support of the 2015 Index and getting the most out of it. 
 
 **Hosting an event around the Global Open Data Index is an excellent opportunity to spread the word about open data in your community and country**, not to mention a chance to make a contribution to this year's Index. Ideally, your event would focus broadly on open data themes, possibly even identifying the status of all 15 key datasets and completing the survey. Set a reasonable goal for yourself based on the audience you think you can attract. You may choose to not even make a submission at your event, but just discuss the state of open data in your country, that’s fine too. It may make sense to host an event focused around one or more of the datasets. For instance, if you can organize people around government spending issues, host a party focused on the budget, spending, and procurement tender datasets. If you can organize people around environmental issues, focus on the pollutant emissions and water
 quality datasets. Choose whichever path you wish, but it’s good to establish a focused agenda, a clear set of goals and outcomes for any event you plan. 
@@ -54,7 +54,7 @@ Think about what you need from facilitators or coaches in advance. Again, they d
 ###Promote your event
 Get the word out to attract a good audience.
 
-- You may want to promote through the central OK Twitter, Facebook and Google+ accounts – please contact Mor, our community coordinator at mor.rubinstein@okfn.org
+- You may want to promote through the OKI Twitter, Facebook and Google+ accounts – please contact Mor, our community coordinator at mor.rubinstein@okfn.org
 Promote the event through your social networks.
 - The hashtag is #GODI15 this year. Consider if you need another local hashtag for the event. Communicate both clearly in your promotions.
 - Invite everybody to share the information about it when you reach out to them.
