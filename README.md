@@ -36,7 +36,7 @@ Get a local server setup with the following steps:
       * The callBack url for Google+ API is: `http://id.dev.census.org:5000/google/callback`
     * For Facebook: [follow these steps](https://developers.facebook.com/docs/facebook-login/)
       * The callBack url for Facebook is: `http://id.dev.census.org:5000/facebook/callback`
-3. Ensure you are running the supported version of Node.js, which is [declared in the `package.json`](https://github.com/okfn/opendatacensus/blob/feature/database/package.json#L58).
+3. Ensure you are running the supported version of Node.js, which is [declared in the `package.json`](package.json#L75).
 4. Create a database with `createdb opendatacensus`.
 5. Add this line to your hosts file: `127.0.0.1 demo.dev.census.org global.dev.census.org id.dev.census.org system.dev.census.org`.
 6. Create a local directory called `opendatacensus` and move into it with `cd opendatacensus`.
