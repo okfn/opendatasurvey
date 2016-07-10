@@ -1,0 +1,31 @@
+---
+extends: airbnb/base
+env:
+  node: true
+  es6: true
+  mocha: true
+parserOptions:
+  sourceType: script
+rules:
+  strict:
+    - error
+    - safe
+  quotes:
+    - error
+    - single
+    - avoid-escape
+  semi:
+    - error
+    - never
+  no-underscore-dangle:
+    - off
+  func-names:
+    - off
+  guard-for-in:
+    - off
+  prefer-const:
+    - off
+  prefer-arrow-callback:
+    - off
+  no-console:
+    - off
