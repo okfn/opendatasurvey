@@ -20,7 +20,9 @@ describe('Admin page', function () {
   }
 
   after(function () {
-    Object.assign(censusConfig, configValues)
+    for (var setting in configValues) {
+      censusConfig.set(setting, configValues[setting])
+    }
   })
 
   before(function () {
