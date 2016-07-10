@@ -63,7 +63,7 @@ exports.setupFixtures = function(done) {
             .catch(console.trace.bind(console));
         })
           .then(function() {
-            console.log('fixtures loaded');
+            // console.log('fixtures loaded');
             done();
           })
           .catch(console.trace.bind(console));
@@ -76,7 +76,7 @@ exports.setupFixtures = function(done) {
 exports.dropFixtures = function(done) {
   models.sequelize.getQueryInterface().dropAllTables()
     .then(function() {
-      console.log('dropped all tables');
+      // console.log('dropped all tables');
       done();
     })
     .catch(console.trace.bind(console));
