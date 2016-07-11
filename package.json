@@ -85,8 +85,7 @@
     "migrate_users": "node scripts/users.js",
     "start": "node server.js",
     "debug": "node-debug server.js",
-    "test": "NODE_ENV=test mocha tests/ --patient --harmony",
-    "test-travis": "./node_modules/istanbul/lib/cli.js cover -x '**/census/migrations/**' -x '**/scripts/**' ./node_modules/mocha/bin/_mocha -- -R spec tests/",
+    "test": "NODE_ENV=test ./node_modules/istanbul/lib/cli.js cover -x '**/census/migrations/**' -x '**/scripts/**' ./node_modules/mocha/bin/_mocha -- -R spec tests/ --harmony",
     "jscs": "jscs census/*.js census/**/*.js fixtures scripts tests"
   }
 }
