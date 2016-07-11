@@ -58,6 +58,7 @@
     "chalk": "^1.1.0",
     "colors": "^1.1.0",
     "eslint": "^3.0.1",
+    "eslint-config-google": "^0.6.0",
     "execSync": "^1.0.2",
     "gulp": "^3.8.9",
     "gulp-concat-po": "^0.1.0",

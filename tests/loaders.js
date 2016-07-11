@@ -8,7 +8,6 @@ const REGISTRY_URL = 'https://docs.google.com/spreadsheets/d/1FK5dzeNeJl81oB76n'
 const testUtils = require('./utils')
 const userFixtures = require('../fixtures/user')
 
-
 describe('Admin page', function () {
   this.timeout(20000)
 
@@ -16,7 +15,7 @@ describe('Admin page', function () {
   after(testUtils.shutdownApplication)
 
   const configValues = {
-    registryUrl: censusConfig.get('registryUrl'),
+    registryUrl: censusConfig.get('registryUrl')
   }
 
   after(function () {
@@ -30,7 +29,7 @@ describe('Admin page', function () {
     config.set('test:testing', true)
     config.set('test:user', {
       userid: userFixtures[0].data.id,
-      emails: userFixtures[0].data.emails,
+      emails: userFixtures[0].data.emails
     })
     config.set('registryUrl', REGISTRY_URL)
     this.browser = testUtils.browser
@@ -78,7 +77,7 @@ describe('Admin page', function () {
       let jsonData = JSON.parse(html)
       assert.equal(jsonData.status, 'ok')
       assert.equal(jsonData.message, 'ok')
-      return this.app.get('models').Place.findAll({ where: { site: siteID } })
+      return this.app.get('models').Place.findAll({where: {site: siteID}})
         .then(function (data) {
           assert.equal(data.length, 3)
         })
@@ -96,7 +95,7 @@ describe('Admin page', function () {
       let jsonData = JSON.parse(html)
       assert.equal(jsonData.status, 'ok')
       assert.equal(jsonData.message, 'ok')
-      return this.app.get('models').Dataset.findAll({ where: { site: siteID } })
+      return this.app.get('models').Dataset.findAll({where: {site: siteID}})
         .then(function (data) {
           assert.equal(data.length, 15)
         })
@@ -114,7 +113,7 @@ describe('Admin page', function () {
       let jsonData = JSON.parse(html)
       assert.equal(jsonData.status, 'ok')
       assert.equal(jsonData.message, 'ok')
-      return this.app.get('models').Question.findAll({ where: { site: siteID } })
+      return this.app.get('models').Question.findAll({where: {site: siteID}})
         .then(function (data) {
           assert.equal(data.length, 18)
         })

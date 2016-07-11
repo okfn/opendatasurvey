@@ -1,5 +1,5 @@
 ---
-extends: airbnb/base
+extends: google
 env:
   node: true
   es6: true
@@ -17,15 +17,7 @@ rules:
   semi:
     - error
     - never
-  no-underscore-dangle:
-    - off
-  func-names:
+  space-before-function-paren:
     - off
   guard-for-in:
-    - off
-  prefer-const:
-    - off
-  prefer-arrow-callback:
-    - off
-  no-console:
     - off
