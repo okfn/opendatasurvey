@@ -17,6 +17,6 @@ addons:
 before_script:
   - psql -c 'create database opendatacensus_test;' -U postgres
 
-script: "npm run-script test-travis"
+script: "npm run test-travis"
 
 after_script: "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
