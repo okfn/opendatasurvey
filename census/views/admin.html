@@ -23,10 +23,10 @@
   <div class="span6">
     <h2>{{ gettext('Data actions') }}</h2>
     <ul>
-      <li><a href="/admin/load/config">{{ gettext('Reload Config') }}</a></li>
-      <li><a href="/admin/load/places">{{ gettext('Reload Places') }}</a></li>
-      <li><a href="/admin/load/datasets">{{ gettext('Reload Datasets') }}</a></li>
-      <li><a href="/admin/load/questions">{{ gettext('Reload Questions') }}</a></li>
+      <li><form action="/admin/load/config" method="post"><button class="btn btn-primary" type="submit">{{ gettext('Reload Config') }}</button></form></li>
+      <li><form action="/admin/load/places" method="post"><button class="btn btn-primary" type="submit">{{ gettext('Reload Places') }}</button></form></li>
+      <li><form action="/admin/load/datasets" method="post"><button class="btn btn-primary" type="submit">{{ gettext('Reload Datasets') }}</button></form></li>
+      <li><form action="/admin/load/questions" method="post"><button class="btn btn-primary" type="submit">{{ gettext('Reload Questions') }}</button></form></li>
     </ul>
   </div>
 </div>

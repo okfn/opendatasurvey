@@ -15,7 +15,7 @@ module.exports = {
     return Promise.each(sqlStatements, function(statement) {
       return models.sequelize.query(statement)
         .then(function() {
-          console.log('ran statement');
+          // console.log('ran statement');
         })
         .catch(console.trace.bind(console));
     });

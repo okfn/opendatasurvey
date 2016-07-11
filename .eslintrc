@@ -1,0 +1,23 @@
+---
+extends: google
+env:
+  node: true
+  es6: true
+  mocha: true
+parserOptions:
+  sourceType: script
+rules:
+  strict:
+    - error
+    - safe
+  quotes:
+    - error
+    - single
+    - avoid-escape
+  semi:
+    - error
+    - never
+  space-before-function-paren:
+    - off
+  guard-for-in:
+    - off
