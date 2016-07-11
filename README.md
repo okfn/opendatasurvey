@@ -1,7 +1,7 @@
 # Open Data Census
 
 [![Travis Build Status](https://travis-ci.org/okfn/opendatacensus.svg?branch=master)](https://travis-ci.org/okfn/opendatacensus)
-[![Coveralls](http://img.shields.io/coveralls/okfn/opendatacensus.svg?branch=master)](https://coveralls.io/r/okfn/opendatacensus?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/okfn/opendatacensus/badge.svg?branch=master)](https://coveralls.io/github/okfn/opendatacensus?branch=master)
 
 Open Data Census is a web application that supports a submission and review workflow to collect information on the state of open data.
 
