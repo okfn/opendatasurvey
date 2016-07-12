@@ -34,7 +34,7 @@ var loadAllConfigs = function(req, res) {
       Promise.each(results, function(result) {
         return loaders.loadConfig(result.id, req.app.get('models'))
           .then(function() {
-            console.log('loaded');
+            console.log('config loaded for ' + result.id);
           })
           .catch(console.trace.bind(console));
       }).then(function() {
@@ -58,7 +58,7 @@ var loadAllPlaces = function(req, res) {
         };
         return loaders.loadTranslatedData(options, req.app.get('models'))
           .then(function() {
-            console.log('loaded');
+            console.log('places loaded for ' + result.id);
           })
           .catch(console.trace.bind(console));
       })
@@ -89,7 +89,7 @@ var loadAllDatasets = function(req, res) {
         };
         return loaders.loadTranslatedData(options, req.app.get('models'))
           .then(function() {
-            console.log('loaded');
+            console.log('datasets loaded for ' + result.id);
           })
           .catch(console.trace.bind(console));
       })
@@ -120,7 +120,7 @@ var loadAllQuestions = function(req, res) {
         };
         return loaders.loadTranslatedData(options, req.app.get('models'))
           .then(function() {
-            console.log('loaded');
+            console.log('questions loaded for ' + result.id);
           })
           .catch(console.trace.bind(console));
       })
