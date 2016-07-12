@@ -7,11 +7,11 @@
 {% block content %}
 <h1>{{ gettext('System Admin Dashboard') }}</h1>
 <ul>
-  <li><a href="/load/registry">Load Registry</a></li>
-  <li><a href="/load/configs">Load Configs</a></li>
-  <li><a href="/load/places">Load Places</a></li>
-  <li><a href="/load/datasets">Load Datasets</a></li>
-  <li><a href="/load/questions">Load Questions</a></li>
+  <li><form action="/load/registry" method="post"><button class="btn btn-primary" type="submit">Load Registry</button></form></li>
+  <li><form action="/load/configs" method="post"><button class="btn btn-primary" type="submit">Load Configs</button></form></li>
+  <li><form action="/load/places" method="post"><button class="btn btn-primary" type="submit">Load Places</button></form></li>
+  <li><form action="/load/datasets" method="post"><button class="btn btn-primary" type="submit">Load Datasets</button></form></li>
+  <li><form action="/load/questions" method="post"><button class="btn btn-primary" type="submit">Load Questions</button></form></li>
 </ul>
 
 <h2>{{ gettext('Registry data') }}</h2>
