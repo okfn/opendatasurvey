@@ -29,7 +29,7 @@ var loadConfig = function(siteId, models) {
               controllerUtils.FIELD_SPLITTER), _.trim);
           } else if (v && ['navbar_logo', 'overview_page', 'submit_page',
             'about_page', 'faq_page', 'contribute_page',
-            'banner_text'].indexOf(k) !== -1) {
+            'banner_text', 'tutorial_page'].indexOf(k) !== -1) {
             settings[k] = marked(v);
           } else {
             settings[k] = v;
