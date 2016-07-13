@@ -7,6 +7,7 @@ const REGISTRY_URL = 'https://docs.google.com/spreadsheets/d/1FK5dzeNeJl81oB76n'
   'WzhS1dAdnXDoZbbe_vTH4NlThM/edit#gid=0'
 const testUtils = require('./utils')
 const userFixtures = require('../fixtures/user')
+const Promise = require('bluebird')
 
 describe('Admin page', function () {
   this.timeout(20000)
@@ -176,16 +177,19 @@ describe('System Control page', function () {
       let jsonData = JSON.parse(html)
       assert.equal(jsonData.status, 'ok')
       assert.equal(jsonData.message, 'ok')
-      this.app.get('models').Site.count().then(function (data) {
-        assert.equal(data, 2)
-      })
-      return this.app.get('models').Site.findById(siteID).then(function (data) {
-        assert.isNotNull(data)
-        assert.notEqual(data.places, '')
-        assert.notEqual(data.places, '')
-        assert.notEqual(data.datasets, '')
-        assert.notEqual(data.questions, '')
-      })
+
+      return Promise.join(
+        this.app.get('models').Site.count(),
+        this.app.get('models').Site.findById(siteID),
+        function(count, siteData) {
+          assert.equal(count, 2)
+          assert.isNotNull(siteData)
+          assert.notEqual(siteData.places, '')
+          assert.notEqual(siteData.places, '')
+          assert.notEqual(siteData.datasets, '')
+          assert.notEqual(siteData.questions, '')
+        }
+      )
     })
   })
 
