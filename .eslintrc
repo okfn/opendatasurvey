@@ -16,7 +16,7 @@ rules:
     - avoid-escape
   semi:
     - error
-    - never
+    - always
   space-before-function-paren:
     - off
   guard-for-in:
