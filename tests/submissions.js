@@ -1,3 +1,5 @@
+'use strict';
+
 var _ = require('lodash');
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -13,7 +15,6 @@ function validation(req, res) {
 }
 
 var validationApp = function(validation) {
-
   var port = 8901;
   var app = express();
 
@@ -96,16 +97,16 @@ describe('#validationData()', function() {
 
   describe('Survey flow', function() {
     it('should return errors for online, machinereadable and ' +
-      'bulk (digital=false)', function(done) {
-        postRoute(_.assign(sumbission, {
-          digital: 'false'
-        }), done, function(errors) {
-          expect(errors).to.have.property('online');
-          expect(errors).to.have.property('machinereadable');
-          expect(errors).to.have.property('bulk');
-          expect(_.size(errors)).to.be.equal(3);
-        });
+        'bulk (digital=false)', function(done) {
+      postRoute(_.assign(sumbission, {
+        digital: 'false'
+      }), done, function(errors) {
+        expect(errors).to.have.property('online');
+        expect(errors).to.have.property('machinereadable');
+        expect(errors).to.have.property('bulk');
+        expect(_.size(errors)).to.be.equal(3);
       });
+    });
     it('should return errors for free, openlicense (public=false)',
       function(done) {
         postRoute(_.assign(sumbission, {
@@ -161,47 +162,47 @@ describe('#validationData()', function() {
 
     it('should return no error (public=true => openlicense=false; ' +
       'licenseurl = "")', function(done) {
-        postRoute(_.assign(sumbission, {
-          public: 'true',
-          openlicense: 'false',
-          licenseurl: ''
-        }), done, function(errors) {
-          expect(_.size(errors)).to.be.equal(0);
-        });
+      postRoute(_.assign(sumbission, {
+        public: 'true',
+        openlicense: 'false',
+        licenseurl: ''
+      }), done, function(errors) {
+        expect(_.size(errors)).to.be.equal(0);
       });
+    });
 
     it('should return no error (public=true => openlicense=null; ' +
       'licenseurl: "")', function(done) {
-        postRoute(_.assign(sumbission, {
-          public: 'true',
-          openlicense: 'null',
-          licenseurl: ''
-        }), done, function(errors) {
-          expect(_.size(errors)).to.be.equal(0);
-        });
+      postRoute(_.assign(sumbission, {
+        public: 'true',
+        openlicense: 'null',
+        licenseurl: ''
+      }), done, function(errors) {
+        expect(_.size(errors)).to.be.equal(0);
       });
+    });
 
     it('should return no error (public=null => openlicense=null; ' +
       'licenseurl: "")', function(done) {
-        postRoute(_.assign(sumbission, {
-          public: 'null',
-          openlicense: 'null',
-          licenseurl: ''
-        }), done, function(errors) {
-          expect(_.size(errors)).to.be.equal(0);
-        });
+      postRoute(_.assign(sumbission, {
+        public: 'null',
+        openlicense: 'null',
+        licenseurl: ''
+      }), done, function(errors) {
+        expect(_.size(errors)).to.be.equal(0);
       });
+    });
 
     it('should return no error (public=null => openlicense=false; ' +
       'licenseurl: "")', function(done) {
-        postRoute(_.assign(sumbission, {
-          public: 'null',
-          openlicense: 'false',
-          licenseurl: ''
-        }), done, function(errors) {
-          expect(_.size(errors)).to.be.equal(0);
-        });
+      postRoute(_.assign(sumbission, {
+        public: 'null',
+        openlicense: 'false',
+        licenseurl: ''
+      }), done, function(errors) {
+        expect(_.size(errors)).to.be.equal(0);
       });
+    });
 
     it('should return no error (public=null => openlicense=true)',
       function(done) {
@@ -222,7 +223,6 @@ describe('#validationData()', function() {
           openlicense: 'false',
           online: 'false',
           url: '',
-          openlicense: 'false',
           licenseurl: '',
           bulk: 'false'}
         ), done, function(errors) {
@@ -239,7 +239,6 @@ describe('#validationData()', function() {
           openlicense: 'false',
           online: 'false',
           url: '',
-          openlicense: 'false',
           licenseurl: '',
           bulk: 'false'}
         ), done, function(errors) {
@@ -257,7 +256,6 @@ describe('#validationData()', function() {
           openlicense: 'false',
           online: 'false',
           url: '',
-          openlicense: 'false',
           licenseurl: '',
           bulk: 'false'}
         ), done, function(errors) {
@@ -308,19 +306,18 @@ describe('#validationData()', function() {
         expect(_.size(errors)).to.be.equal(1);
       });
     });
-
   });
 
   describe('Edge cases', function() {
     it('should return error for exists and format (the fields are ' +
-      'not submitted)', function(done) {
-        postRoute(_.omit(sumbission, ['exists', 'format']), done,
-          function(errors) {
-            expect(errors).to.have.property('exists');
-            expect(errors).to.have.property('format');
-            expect(_.size(errors)).to.be.equal(2);
-          });
-      });
+    'not submitted)', function(done) {
+      postRoute(_.omit(sumbission, ['exists', 'format']), done,
+        function(errors) {
+          expect(errors).to.have.property('exists');
+          expect(errors).to.have.property('format');
+          expect(_.size(errors)).to.be.equal(2);
+        });
+    });
 
     it('should return error for openlicense (free=null => openlicense=null)',
       function(done) {
@@ -336,7 +333,7 @@ describe('#validationData()', function() {
     it('should return error for url, format, licenseurl ' +
        '(online = machinereadable = openlicense = false)', function(done) {
       postRoute(_.assign(sumbission, {
-        online: 'false', 'machinereadable': 'false', openlicense: 'false'
+        online: 'false', machinereadable: 'false', openlicense: 'false'
       }), done, function(errors) {
         expect(errors).to.have.property('url');
         expect(errors).to.have.property('format');
@@ -345,5 +342,4 @@ describe('#validationData()', function() {
       });
     });
   });
-
 });
