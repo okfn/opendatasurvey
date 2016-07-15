@@ -104,27 +104,25 @@ var validateQuestion = function(req, question, parentQuestion, validated) {
   // ensure false values for expectFalse questions
   if (value === 'false' && validator.expectFalse) {
     validator.expectFalse.forEach(function(child) {
-      if (validated.indexOf(child) == -1) {
+      if (validated.indexOf(child) === -1) {
         req.checkBody(child, 'You can specify only \'false\'').equals('false');
         validated.push(child);
       }
     });
   }
 
-  if (validated.indexOf(question) == -1) {
+  if (validated.indexOf(question) === -1) {
     // not yet validated
     // validate depending on the question value
     if (parentValue === 'null' || parentValue === 'false') {
       // validate falsy values
       if (validator.type === 'string') {
         req.checkBody(question, 'You must not specify this field').equals('');
-      } else {
-        if (!(
-          (parentValue === 'null') && (validators[parentQuestion].expectFalse))
-        ) {
-          req.checkBody(question, 'You can specify only \'' +
-            parentValue + '\'').equals(parentValue);
-        }
+      } else if (!(
+        (parentValue === 'null') && (validators[parentQuestion].expectFalse))
+      ) {
+        req.checkBody(question, 'You can specify only \'' +
+          parentValue + '\'').equals(parentValue);
       }
     } else {
       // parentValue has a truthy value, validate as normal
@@ -251,7 +249,6 @@ var getFormQuestions = function(req, questions) {
         });
       });
     }
-
   });
   return _.sortByOrder(questions, 'order', 'asc');
 };
