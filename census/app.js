@@ -127,7 +127,7 @@ function start() {
   return new Promise(function(resolve, reject) {
     app.get('models').umzug.up().then(function() {
       var server = app.listen(app.get('port'), function() {
-        // console.log('Listening on ' + app.get('port'));
+        console.log('Listening on ' + app.get('port'));
         resolve({
           app: app,
           server: server

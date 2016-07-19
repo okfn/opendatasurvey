@@ -1,3 +1,5 @@
+'use strict';
+
 var _ = require('lodash');
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -6,14 +8,16 @@ var chai = require('chai');
 var expect = chai.expect;
 var request = require('supertest');
 var validateData = require('../census/controllers/utils').validateData;
+var models = require('../census/models');
+const testUtils = require('./utils');
 
-function validation(req, res) {
-  var errors = validateData(req, true) || {};
-  return res.send(errors);
-}
+var validation = function(req, res) {
+  validateData(req, true).then(function(errors) {
+    return res.send(errors || {});
+  });
+};
 
 var validationApp = function(validation) {
-
   var port = 8901;
   var app = express();
 
@@ -45,12 +49,19 @@ function postRoute(data, done, test) {
 }
 
 describe('#validationData()', function() {
-  var sumbission;
+  var submission;
+
+  before(testUtils.setupFixtures);
+  after(testUtils.dropFixtures);
+
+  before(function() {
+    app.set('models', models);
+  });
 
   beforeEach(function() {
-    sumbission = {
-      place: 'ar',
-      dataset: 'map',
+    submission = {
+      place: 'place11',
+      dataset: 'dataset11',
       exists: 'true',
       digital: 'true',
       online: 'true',
@@ -68,12 +79,12 @@ describe('#validationData()', function() {
 
   describe('General', function() {
     it('should not return errors', function(done) {
-      postRoute(sumbission, done, function(errors) {
+      postRoute(submission, done, function(errors) {
         expect(errors).to.be.eql({});
       });
     });
     it('should return place and dataset errors (empty values)', function(done) {
-      postRoute(_.assign(sumbission, {
+      postRoute(_.assign(submission, {
         place: '',
         dataset: ''
       }), done, function(errors) {
@@ -82,8 +93,21 @@ describe('#validationData()', function() {
         expect(_.size(errors)).to.be.equal(2);
       });
     });
+    it('should return place and dataset errors (incorrect values)',
+      function(done) {
+        // place: 'zz' doesn't exist
+        // dataset: 'not-here' doesn't exist
+        postRoute(_.assign(submission, {
+          place: 'zz',
+          dataset: 'not-here'
+        }), done, function(errors) {
+          expect(errors).to.have.property('place');
+          expect(errors).to.have.property('dataset');
+          expect(_.size(errors)).to.be.equal(2);
+        });
+      });
     it('should return exists, digital, url (invalid values)', function(done) {
-      postRoute(_.assign(sumbission, {
+      postRoute(_.assign(submission, {
         digital: 'foo', online: 'bar', url: 'example'
       }), done, function(errors) {
         expect(errors).to.have.property('digital');
@@ -96,19 +120,19 @@ describe('#validationData()', function() {
 
   describe('Survey flow', function() {
     it('should return errors for online, machinereadable and ' +
-      'bulk (digital=false)', function(done) {
-        postRoute(_.assign(sumbission, {
-          digital: 'false'
-        }), done, function(errors) {
-          expect(errors).to.have.property('online');
-          expect(errors).to.have.property('machinereadable');
-          expect(errors).to.have.property('bulk');
-          expect(_.size(errors)).to.be.equal(3);
-        });
+        'bulk (digital=false)', function(done) {
+      postRoute(_.assign(submission, {
+        digital: 'false'
+      }), done, function(errors) {
+        expect(errors).to.have.property('online');
+        expect(errors).to.have.property('machinereadable');
+        expect(errors).to.have.property('bulk');
+        expect(_.size(errors)).to.be.equal(3);
       });
+    });
     it('should return errors for free, openlicense (public=false)',
       function(done) {
-        postRoute(_.assign(sumbission, {
+        postRoute(_.assign(submission, {
           public: 'false'
         }), done, function(errors) {
           expect(errors).to.have.property('free');
@@ -117,20 +141,20 @@ describe('#validationData()', function() {
         });
       });
     it('should return error for openlicense (free=false)', function(done) {
-      postRoute(_.assign(sumbission, {free: 'false'}), done, function(errors) {
+      postRoute(_.assign(submission, {free: 'false'}), done, function(errors) {
         expect(errors).to.have.property('openlicense');
         expect(_.size(errors)).to.be.equal(1);
       });
     });
     it('should return error for empty url (online=true)', function(done) {
-      postRoute(_.assign(sumbission, {url: ''}), done, function(errors) {
+      postRoute(_.assign(submission, {url: ''}), done, function(errors) {
         expect(errors).to.have.property('url');
         expect(_.size(errors)).to.be.equal(1);
       });
     });
     it('should return error for empty licenseurl (openlicense=true)',
       function(done) {
-        postRoute(_.assign(sumbission, {
+        postRoute(_.assign(submission, {
           licenseurl: ''
         }), done, function(errors) {
           expect(errors).to.have.property('licenseurl');
@@ -139,7 +163,7 @@ describe('#validationData()', function() {
       });
     it('should return error for empty format (machinereadable=true)',
       function(done) {
-        postRoute(_.assign(sumbission, {
+        postRoute(_.assign(submission, {
           format: ''
         }), done, function(errors) {
           expect(errors).to.have.property('format');
@@ -151,7 +175,7 @@ describe('#validationData()', function() {
   describe('expectFalse cases', function() {
     it('should return no error (public=true => openlicense=true)',
       function(done) {
-        postRoute(_.assign(sumbission, {
+        postRoute(_.assign(submission, {
           public: 'true',
           openlicense: 'true'
         }), done, function(errors) {
@@ -161,51 +185,51 @@ describe('#validationData()', function() {
 
     it('should return no error (public=true => openlicense=false; ' +
       'licenseurl = "")', function(done) {
-        postRoute(_.assign(sumbission, {
-          public: 'true',
-          openlicense: 'false',
-          licenseurl: ''
-        }), done, function(errors) {
-          expect(_.size(errors)).to.be.equal(0);
-        });
+      postRoute(_.assign(submission, {
+        public: 'true',
+        openlicense: 'false',
+        licenseurl: ''
+      }), done, function(errors) {
+        expect(_.size(errors)).to.be.equal(0);
       });
+    });
 
     it('should return no error (public=true => openlicense=null; ' +
       'licenseurl: "")', function(done) {
-        postRoute(_.assign(sumbission, {
-          public: 'true',
-          openlicense: 'null',
-          licenseurl: ''
-        }), done, function(errors) {
-          expect(_.size(errors)).to.be.equal(0);
-        });
+      postRoute(_.assign(submission, {
+        public: 'true',
+        openlicense: 'null',
+        licenseurl: ''
+      }), done, function(errors) {
+        expect(_.size(errors)).to.be.equal(0);
       });
+    });
 
     it('should return no error (public=null => openlicense=null; ' +
       'licenseurl: "")', function(done) {
-        postRoute(_.assign(sumbission, {
-          public: 'null',
-          openlicense: 'null',
-          licenseurl: ''
-        }), done, function(errors) {
-          expect(_.size(errors)).to.be.equal(0);
-        });
+      postRoute(_.assign(submission, {
+        public: 'null',
+        openlicense: 'null',
+        licenseurl: ''
+      }), done, function(errors) {
+        expect(_.size(errors)).to.be.equal(0);
       });
+    });
 
     it('should return no error (public=null => openlicense=false; ' +
       'licenseurl: "")', function(done) {
-        postRoute(_.assign(sumbission, {
-          public: 'null',
-          openlicense: 'false',
-          licenseurl: ''
-        }), done, function(errors) {
-          expect(_.size(errors)).to.be.equal(0);
-        });
+      postRoute(_.assign(submission, {
+        public: 'null',
+        openlicense: 'false',
+        licenseurl: ''
+      }), done, function(errors) {
+        expect(_.size(errors)).to.be.equal(0);
       });
+    });
 
     it('should return no error (public=null => openlicense=true)',
       function(done) {
-        postRoute(_.assign(sumbission, {
+        postRoute(_.assign(submission, {
           public: 'null',
           openlicense: 'true'
         }), done, function(errors) {
@@ -216,13 +240,12 @@ describe('#validationData()', function() {
     it('should return no error (public=false => openlicense=false; ' +
       'online=false; free=false; openlicense=false; bulk=false)',
       function(done) {
-        postRoute(_.assign(sumbission, {
+        postRoute(_.assign(submission, {
           public: 'false',
           free: 'false',
           openlicense: 'false',
           online: 'false',
           url: '',
-          openlicense: 'false',
           licenseurl: '',
           bulk: 'false'}
         ), done, function(errors) {
@@ -233,13 +256,12 @@ describe('#validationData()', function() {
     it('should return error for free (public=false => openlicense=false; ' +
       'online=false; free=true; openlicense=false; bulk=false)',
       function(done) {
-        postRoute(_.assign(sumbission, {
+        postRoute(_.assign(submission, {
           public: 'false',
           free: 'true',
           openlicense: 'false',
           online: 'false',
           url: '',
-          openlicense: 'false',
           licenseurl: '',
           bulk: 'false'}
         ), done, function(errors) {
@@ -251,13 +273,12 @@ describe('#validationData()', function() {
     it('should return error for free (public=false => openlicense=false; ' +
       'online=false; free=null; openlicense=false; bulk=false)',
       function(done) {
-        postRoute(_.assign(sumbission, {
+        postRoute(_.assign(submission, {
           public: 'false',
           free: 'null',
           openlicense: 'false',
           online: 'false',
           url: '',
-          openlicense: 'false',
           licenseurl: '',
           bulk: 'false'}
         ), done, function(errors) {
@@ -269,7 +290,7 @@ describe('#validationData()', function() {
     it('should return error for openlicense, licenseurl (public=false => ' +
       'openlicense=true; online=false; free=true; bulk=false)',
       function(done) {
-        postRoute(_.assign(sumbission, {
+        postRoute(_.assign(submission, {
           public: 'false',
           free: 'false',
           openlicense: 'true',
@@ -286,7 +307,7 @@ describe('#validationData()', function() {
 
     it('should return no error (exists=null => digital=null; ' +
       'public=null; uptodate=null)', function(done) {
-      postRoute(_.assign(sumbission, {
+      postRoute(_.assign(submission, {
         exists: 'null',
         digital: 'null',
         public: 'null',
@@ -298,7 +319,7 @@ describe('#validationData()', function() {
 
     it('should return error for digital (exists=null => digital=true; ' +
       'public=null; uptodate=null)', function(done) {
-      postRoute(_.assign(sumbission, {
+      postRoute(_.assign(submission, {
         exists: 'null',
         digital: 'true',
         public: 'null',
@@ -308,23 +329,22 @@ describe('#validationData()', function() {
         expect(_.size(errors)).to.be.equal(1);
       });
     });
-
   });
 
   describe('Edge cases', function() {
     it('should return error for exists and format (the fields are ' +
-      'not submitted)', function(done) {
-        postRoute(_.omit(sumbission, ['exists', 'format']), done,
-          function(errors) {
-            expect(errors).to.have.property('exists');
-            expect(errors).to.have.property('format');
-            expect(_.size(errors)).to.be.equal(2);
-          });
-      });
+    'not submitted)', function(done) {
+      postRoute(_.omit(submission, ['exists', 'format']), done,
+        function(errors) {
+          expect(errors).to.have.property('exists');
+          expect(errors).to.have.property('format');
+          expect(_.size(errors)).to.be.equal(2);
+        });
+    });
 
     it('should return error for openlicense (free=null => openlicense=null)',
       function(done) {
-        postRoute(_.assign(sumbission, {
+        postRoute(_.assign(submission, {
           free: 'null',
           openlicense: 'null'
         }), done, function(errors) {
@@ -335,8 +355,8 @@ describe('#validationData()', function() {
 
     it('should return error for url, format, licenseurl ' +
        '(online = machinereadable = openlicense = false)', function(done) {
-      postRoute(_.assign(sumbission, {
-        online: 'false', 'machinereadable': 'false', openlicense: 'false'
+      postRoute(_.assign(submission, {
+        online: 'false', machinereadable: 'false', openlicense: 'false'
       }), done, function(errors) {
         expect(errors).to.have.property('url');
         expect(errors).to.have.property('format');
@@ -345,5 +365,4 @@ describe('#validationData()', function() {
       });
     });
   });
-
 });

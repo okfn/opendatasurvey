@@ -6,6 +6,7 @@ var FIELD_SPLITTER = /[\s,]+/;
 var ANONYMOUS_USER_ID = process.env.ANONYMOUS_USER_ID ||
   '0e7c393e-71dd-4368-93a9-fcfff59f9fff';
 var marked = require('marked');
+const Promise = require('bluebird');
 
 var makeChoiceValidator = function(param) {
   return function(req) {
@@ -104,27 +105,25 @@ var validateQuestion = function(req, question, parentQuestion, validated) {
   // ensure false values for expectFalse questions
   if (value === 'false' && validator.expectFalse) {
     validator.expectFalse.forEach(function(child) {
-      if (validated.indexOf(child) == -1) {
+      if (validated.indexOf(child) === -1) {
         req.checkBody(child, 'You can specify only \'false\'').equals('false');
         validated.push(child);
       }
     });
   }
 
-  if (validated.indexOf(question) == -1) {
+  if (validated.indexOf(question) === -1) {
     // not yet validated
     // validate depending on the question value
     if (parentValue === 'null' || parentValue === 'false') {
       // validate falsy values
       if (validator.type === 'string') {
         req.checkBody(question, 'You must not specify this field').equals('');
-      } else {
-        if (!(
-          (parentValue === 'null') && (validators[parentQuestion].expectFalse))
-        ) {
-          req.checkBody(question, 'You can specify only \'' +
-            parentValue + '\'').equals(parentValue);
-        }
+      } else if (!(
+        (parentValue === 'null') && (validators[parentQuestion].expectFalse))
+      ) {
+        req.checkBody(question, 'You can specify only \'' +
+          parentValue + '\'').equals(parentValue);
       }
     } else {
       // parentValue has a truthy value, validate as normal
@@ -143,11 +142,10 @@ var validateQuestion = function(req, question, parentQuestion, validated) {
 
 var validateData = function(req, mappedErrors) {
   /**
-   * Ensures validation data is submitted by checking the POST data on
-   * req.body according to the declared validation logic.
-   * Used for new data submissions, and revision proposals.
+   * Ensure valid data is submitted by checking the POST data on req.body
+   * according to the declared validation logic. Used for new data
+   * submissions, and revision proposals. Returns a promise.
    */
-  var errors;
   var mapped = mappedErrors || false;
 
   req.checkBody('place', 'You must select a Place').notEmpty();
@@ -155,9 +153,21 @@ var validateData = function(req, mappedErrors) {
 
   validateQuestion(req, 'exists');
 
-  errors = req.validationErrors(mapped);
+  // place and dataset must exist
+  return Promise.join(
+    req.app.get('models').Place.findAll({attributes: ['id']}),
+    req.app.get('models').Dataset.findAll({attributes: ['id']}),
+    function(places, datasets) {
+      let placeIds = _.map(places, p => p.id);
+      req.checkBody('place', 'You must select a valid Place').isIn(placeIds);
 
-  return errors;
+      let datasetIds = _.map(datasets, p => p.id);
+      req.checkBody('dataset', 'You must select a valid Dataset')
+      .isIn(datasetIds);
+
+      return req.validationErrors(mapped);
+    }
+  );
 };
 
 var splitFields = function(data) {
@@ -251,7 +261,6 @@ var getFormQuestions = function(req, questions) {
         });
       });
     }
-
   });
   return _.sortByOrder(questions, 'order', 'asc');
 };
