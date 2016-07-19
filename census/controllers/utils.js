@@ -6,6 +6,7 @@ var FIELD_SPLITTER = /[\s,]+/;
 var ANONYMOUS_USER_ID = process.env.ANONYMOUS_USER_ID ||
   '0e7c393e-71dd-4368-93a9-fcfff59f9fff';
 var marked = require('marked');
+const Promise = require('bluebird');
 
 var makeChoiceValidator = function(param) {
   return function(req) {
@@ -141,11 +142,10 @@ var validateQuestion = function(req, question, parentQuestion, validated) {
 
 var validateData = function(req, mappedErrors) {
   /**
-   * Ensures validation data is submitted by checking the POST data on
-   * req.body according to the declared validation logic.
-   * Used for new data submissions, and revision proposals.
+   * Ensure valid data is submitted by checking the POST data on req.body
+   * according to the declared validation logic. Used for new data
+   * submissions, and revision proposals. Returns a promise.
    */
-  var errors;
   var mapped = mappedErrors || false;
 
   req.checkBody('place', 'You must select a Place').notEmpty();
@@ -153,9 +153,21 @@ var validateData = function(req, mappedErrors) {
 
   validateQuestion(req, 'exists');
 
-  errors = req.validationErrors(mapped);
+  // place and dataset must exist
+  return Promise.join(
+    req.app.get('models').Place.findAll({attributes: ['id']}),
+    req.app.get('models').Dataset.findAll({attributes: ['id']}),
+    function(places, datasets) {
+      let placeIds = _.map(places, p => p.id);
+      req.checkBody('place', 'You must select a valid Place').isIn(placeIds);
 
-  return errors;
+      let datasetIds = _.map(datasets, p => p.id);
+      req.checkBody('dataset', 'You must select a valid Dataset')
+      .isIn(datasetIds);
+
+      return req.validationErrors(mapped);
+    }
+  );
 };
 
 var splitFields = function(data) {

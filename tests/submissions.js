@@ -8,11 +8,14 @@ var chai = require('chai');
 var expect = chai.expect;
 var request = require('supertest');
 var validateData = require('../census/controllers/utils').validateData;
+var models = require('../census/models');
+const testUtils = require('./utils');
 
-function validation(req, res) {
-  var errors = validateData(req, true) || {};
-  return res.send(errors);
-}
+var validation = function(req, res) {
+  validateData(req, true).then(function(errors) {
+    return res.send(errors || {});
+  });
+};
 
 var validationApp = function(validation) {
   var port = 8901;
@@ -48,10 +51,17 @@ function postRoute(data, done, test) {
 describe('#validationData()', function() {
   var submission;
 
+  before(testUtils.setupFixtures);
+  after(testUtils.dropFixtures);
+
+  before(function() {
+    app.set('models', models);
+  });
+
   beforeEach(function() {
     submission = {
-      place: 'ar',
-      dataset: 'map',
+      place: 'place11',
+      dataset: 'dataset11',
       exists: 'true',
       digital: 'true',
       online: 'true',
@@ -83,6 +93,19 @@ describe('#validationData()', function() {
         expect(_.size(errors)).to.be.equal(2);
       });
     });
+    it('should return place and dataset errors (incorrect values)',
+      function(done) {
+        // place: 'zz' doesn't exist
+        // dataset: 'not-here' doesn't exist
+        postRoute(_.assign(submission, {
+          place: 'zz',
+          dataset: 'not-here'
+        }), done, function(errors) {
+          expect(errors).to.have.property('place');
+          expect(errors).to.have.property('dataset');
+          expect(_.size(errors)).to.be.equal(2);
+        });
+      });
     it('should return exists, digital, url (invalid values)', function(done) {
       postRoute(_.assign(submission, {
         digital: 'foo', online: 'bar', url: 'example'
