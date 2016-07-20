@@ -94,7 +94,8 @@ describe('Basics', function() {
           this.browser.visit('/', () => {
             assert.ok(this.browser.success);
             var html = this.browser.html();
-            _.forEach(['custom_css', 'navbar_logo', 'custom_footer'],
+            _.forEach(['custom_css', 'navbar_logo',
+                       'custom_footer', 'support_url'],
               settingName => {
                 var textToCheck = site.settings[settingName];
                 assert.include(html, textToCheck);

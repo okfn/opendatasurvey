@@ -13,7 +13,8 @@ var objects = [
         reviewers: ['email1@example.com', 'email3@example.com'],
         'custom_footer': '<span style="display: none;">Custom footer</span>',
         'custom_css': '/* Custom CSS rules */',
-        'navbar_logo': '<span style="display: none;">Custom navbar logo</span>'
+        'navbar_logo': '<span style="display: none;">Custom navbar logo</span>',
+        'support_url': 'https://discuss.okfn.org/c/open-data-index/australia-index'
       }
     }
   },
