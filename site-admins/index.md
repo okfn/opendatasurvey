@@ -296,6 +296,11 @@ Custom footer content
 
 Supply a google analytics key to use on the site
 
+### support_url
+
+Custom support url linked from the top-level 'Support' navigation item. If
+absent, the `discussionForum` global settings will be used instead.
+
 [template-config]: https://docs.google.com/spreadsheets/d/1ziJAlV4F02467oAmH1CDUdWBYdRp7LlVZgDVUuJU-l8/edit#gid=2
 [template-questions]: https://docs.google.com/spreadsheets/d/1nwmk8uJEK-4K6-5SdBgoLUlUos-BhfYRgjS74YkhDGc/edit#gid=3
 [discussion-forum]: https://discuss.okfn.org/c/open-data-index
