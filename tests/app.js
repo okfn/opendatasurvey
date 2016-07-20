@@ -14,25 +14,22 @@ describe('Basics', function() {
   after(testUtils.shutdownApplication);
 
   beforeEach(function() {
-    var browser = testUtils.browser;
+    this.browser = testUtils.browser;
     var port = testUtils.app.get('port');
-    browser.site = 'http://site1.dev.census.org:' + port + '/';
-    browser.removeAllListeners('redirect');
+    this.browser.site = 'http://site1.dev.census.org:' + port + '/';
+    this.browser.removeAllListeners('redirect');
+    this.app = testUtils.app;
   });
 
   this.timeout(20000);
 
   describe('Pages', function() {
-
     it('Front', function(done) {
-      var browser = testUtils.browser;
-      var app = testUtils.app;
-      app.get('models').Site.findById('site1').then(function(site) {
+      this.app.get('models').Site.findById('site1').then(site => {
         if (site) {
-          browser.visit('/', function() {
-            assert.ok(browser.success);
-            var html = browser.html();
-
+          this.browser.visit('/', () => {
+            assert.ok(this.browser.success);
+            var html = this.browser.html();
             var settingName = 'overview_page';
             var textToCheck = site.settings[settingName];
             assert.include(html, textToCheck);
@@ -45,14 +42,11 @@ describe('Basics', function() {
     });
 
     it('About', function(done) {
-      var browser = testUtils.browser;
-      var app = testUtils.app;
-      app.get('models').Site.findById('site1').then(function(site) {
+      this.app.get('models').Site.findById('site1').then(site => {
         if (site) {
-          browser.visit('/about', function() {
-            assert.ok(browser.success);
-            var html = browser.html();
-
+          this.browser.visit('/about', () => {
+            assert.ok(this.browser.success);
+            var html = this.browser.html();
             var settingName = 'about_page';
             var textToCheck = site.settings[settingName];
             assert.include(html, marked(textToCheck));
@@ -63,14 +57,11 @@ describe('Basics', function() {
     });
 
     it('FAQ', function(done) {
-      var browser = testUtils.browser;
-      var app = testUtils.app;
-      app.get('models').Site.findById('site1').then(function(site) {
+      this.app.get('models').Site.findById('site1').then(site => {
         if (site) {
-          browser.visit('/faq', function() {
-            assert.ok(browser.success);
-            var html = browser.html();
-
+          this.browser.visit('/faq', () => {
+            assert.ok(this.browser.success);
+            var html = this.browser.html();
             var settingName = 'faq_page';
             var textToCheck = site.settings[settingName];
             assert.include(html, marked(textToCheck));
@@ -81,16 +72,13 @@ describe('Basics', function() {
     });
 
     it('Contribute', function(done) {
-      var browser = testUtils.browser;
-      var app = testUtils.app;
-      app.get('models').Site.findById('site2').then(function(site) {
+      this.app.get('models').Site.findById('site2').then(site => {
         if (site) {
-          var port = testUtils.app.get('port');
+          var port = this.app.get('port');
           var url = 'http://site2.dev.census.org:' + port + '/contribute';
-          browser.visit(url, function() {
-            assert.ok(browser.success);
-            var html = browser.html();
-
+          this.browser.visit(url, () => {
+            assert.ok(this.browser.success);
+            var html = this.browser.html();
             var settingName = 'contribute_page';
             var textToCheck = site.settings[settingName];
             assert.include(html, marked(textToCheck));
@@ -101,16 +89,14 @@ describe('Basics', function() {
     });
 
     it('Custom content', function(done) {
-      var browser = testUtils.browser;
-      var app = testUtils.app;
-      app.get('models').Site.findById('site1').then(function(site) {
+      this.app.get('models').Site.findById('site1').then(site => {
         if (site) {
-          browser.visit('/', function() {
-            assert.ok(browser.success);
-            var html = browser.html();
-
-            _.forEach(['custom_css', 'navbar_logo', 'custom_footer'],
-              function(settingName) {
+          this.browser.visit('/', () => {
+            assert.ok(this.browser.success);
+            var html = this.browser.html();
+            _.forEach(['custom_css', 'navbar_logo',
+                       'custom_footer', 'support_url'],
+              settingName => {
                 var textToCheck = site.settings[settingName];
                 assert.include(html, textToCheck);
               });
@@ -121,11 +107,9 @@ describe('Basics', function() {
     });
 
     it('Place', function(done) {
-      var browser = testUtils.browser;
-      browser.visit('/place/place12', function() {
-        assert.ok(browser.success);
-        var html = browser.html();
-
+      this.browser.visit('/place/place12', () => {
+        assert.ok(this.browser.success);
+        var html = this.browser.html();
         assert.include(html, 'Place 12');
         assert.include(html, 'Dataset 12');
         done();
@@ -133,50 +117,50 @@ describe('Basics', function() {
     });
 
     it('Dataset', function(done) {
-      var browser = testUtils.browser;
-      browser.visit('/dataset/dataset12', function() {
-        assert.ok(browser.success);
-        var html = browser.html();
-
+      this.browser.visit('/dataset/dataset12', () => {
+        assert.ok(this.browser.success);
+        var html = this.browser.html();
         assert.include(html, 'Description of Dataset 12');
         done();
       });
     });
 
     it('Login', function(done) {
-      var browser = testUtils.browser;
-      var port = testUtils.app.get('port');
-      var site = testUtils.app.get('config').get('auth_subdomain');
+      var port = this.app.get('port');
+      var site = this.app.get('config').get('auth_subdomain');
       var url = 'http://' + site + '.dev.census.org:' + port + '/login';
-      browser.visit(url, function() {
-        assert.ok(browser.success);
-        var html = browser.html();
-
+      this.browser.visit(url, () => {
+        assert.ok(this.browser.success);
+        var html = this.browser.html();
         assert.include(html, 'Login with Facebook');
         done();
       });
     });
-
   });
 
   describe('Check redirects', function() {
     var map = {
       '/country/': '/',
-      '/country/results.json': '/overview.json',
+      '/country/results.json': '/api/entries.json',
       '/country/overview/gb': '/place/gb',
       '/country/gb/timetables': '/entry/gb/timetables',
-      '/country/submit': '/submit',
-      '/country/review/xyz': '/submission/xyz'
+      '/country/submit': '/login'
     };
-    _.forEach(map, function(target, source) {
+    _.forEach(map, (target, source) => {
       it(source + ' -> ' + target, function(done) {
-        var browser = testUtils.browser;
-        browser.on('redirect', function(request, response) {
-          assert.equal(response.headers.get('Location'), target);
-          browser.removeAllListeners('redirect');
-          throw null; // Cancel request
+        this.browser.visit(source, () => {
+          this.browser.assert.redirected();
+          assert.equal(target, this.browser.location.pathname);
+          done();
         });
-        browser.visit(source, function() {
+      });
+    });
+    it('/country/review/uuid -> /submission/uuid', function(done) {
+      this.app.get('models').Entry.findOne().then(entry => {
+        this.browser.visit('/country/review/' + entry.id, () => {
+          this.browser.assert.redirected();
+          assert.equal('/submission/' + entry.id,
+            this.browser.location.pathname);
           done();
         });
       });
@@ -184,9 +168,8 @@ describe('Basics', function() {
   });
 
   describe('Census pages', function() {
-
     beforeEach(function() {
-      var config = testUtils.app.get('config');
+      var config = this.app.get('config');
       config.set('test:testing', true);
       config.set('test:user', {
         userid: userFixtures[0].data.id
@@ -194,15 +177,13 @@ describe('Basics', function() {
     });
 
     it('View submit page', function(done) {
-      var browser = testUtils.browser;
-      var app = testUtils.app;
-      app.get('models').Site.findById('site2').then(function(site) {
+      this.app.get('models').Site.findById('site2').then(site => {
         if (site) {
-          var port = testUtils.app.get('port');
+          var port = this.app.get('port');
           var url = 'http://site2.dev.census.org:' + port + '/submit';
-          browser.visit(url, function() {
-            assert.ok(browser.success);
-            var html = browser.html();
+          this.browser.visit(url, () => {
+            assert.ok(this.browser.success);
+            var html = this.browser.html();
 
             var settingName = 'submit_page';
             var textToCheck = site.settings[settingName];
@@ -215,15 +196,13 @@ describe('Basics', function() {
     });
 
     it('View entry page', function(done) {
-      var browser = testUtils.browser;
-      var app = testUtils.app;
-      app.get('models').Site.findById('site2').then(function(site) {
+      this.app.get('models').Site.findById('site2').then(site => {
         if (site) {
           var entry = entryFixtures[0].data;
           var url = ['', 'entry', entry.place, entry.dataset, entry.year]
             .join('/');
-          browser.visit(url, function() {
-            assert.ok(browser.success);
+          this.browser.visit(url, () => {
+            assert.ok(this.browser.success);
             done();
           });
         }
@@ -231,15 +210,13 @@ describe('Basics', function() {
     });
 
     it('View recent changes page', function(done) {
-      var browser = testUtils.browser;
-      var app = testUtils.app;
-      app.get('models').Site.findById('site2').then(function(site) {
+      this.app.get('models').Site.findById('site2').then(site => {
         if (site) {
-          var port = testUtils.app.get('port');
+          var port = this.app.get('port');
           var url = 'http://site2.dev.census.org:' + port + '/changes';
-          browser.visit(url, function() {
-            assert.ok(browser.success);
-            assert.isAbove(browser.queryAll('.change-list a').length, 0);
+          this.browser.visit(url, () => {
+            assert.ok(this.browser.success);
+            assert.isAbove(this.browser.queryAll('.change-list a').length, 0);
             done();
           });
         }
@@ -247,20 +224,17 @@ describe('Basics', function() {
     });
 
     it('View pre-populated submit page / no entry', function(done) {
-      var browser = testUtils.browser;
-      var app = testUtils.app;
-
       // country with nothing in our test db
-      var entry = _.find(entryFixtures, function(entry) {
-       return (entry.data.dataset === 'datasetOfNoEntry') &&
-         (entry.data.place === 'placeOfNoEntry');
+      var entry = _.find(entryFixtures, entry => {
+        return (entry.data.dataset === 'datasetOfNoEntry') &&
+        (entry.data.place === 'placeOfNoEntry');
       }).data;
 
-      app.get('models').Entry.findAll({where: {
+      this.app.get('models').Entry.findAll({where: {
         site: entry.site,
         place: entry.place,
         dataset: entry.dataset
-      }, order: '"updatedAt" DESC'}).then(function(results) {
+      }, order: '"updatedAt" DESC'}).then(results => {
         var candidate = _.first(results);
 
         var prefill = {
@@ -275,50 +249,47 @@ describe('Basics', function() {
           details: candidate.details
         };
 
-        var port = testUtils.app.get('port');
+        var port = this.app.get('port');
         var url = 'http://site2.dev.census.org:' + port + '/submit?' +
-          _.map(prefill, function(value, key) {
+          _.map(prefill, (value, key) => {
             return encodeURIComponent(key) + '=' + encodeURIComponent(value);
           }).join('&');
 
-        browser.visit(url, function() {
-          assert.ok(browser.success);
+        this.browser.visit(url, () => {
+          assert.ok(this.browser.success);
           assert.equal(
-            browser.query('select[name="place"] option:checked').value,
+            this.browser.query('select[name="place"] option:checked').value,
             prefill.place);
           assert.equal(
-            browser.query('select[name="dataset"] option:checked').value,
+            this.browser.query('select[name="dataset"] option:checked').value,
             prefill.dataset);
           assert.equal(
-            browser.query('textarea[name="details"]').value,
+            this.browser.query('textarea[name="details"]').value,
             prefill.details);
           // !!! Does not work - always checked exists=true checkbox
-          //assert.isNotNull(browser.query('input[name="exists"][value="' +
+          // assert.isNotNull(this.browser.query('input[name="exists"][value="' +
           //  prefill.exists + '"]:checked'));
-          //if (prefill.exists) {
-          //  assert.isNotNull(browser.query('input[name="digital"][value="' +
+          // if (prefill.exists) {
+          //  assert.isNotNull(this.browser.query('input[name="digital"][value="' +
           //    prefill.digital + '"]:checked'));
-          //  assert.isNotNull(browser.query('input[name="online"][value="' +
+          //  assert.isNotNull(this.browser.query('input[name="online"][value="' +
           //    prefill.online + '"]:checked'));
-          //}
+          // }
           done();
         });
       });
     });
 
     it('View pre-populated submit page / with entry', function(done) {
-      var browser = testUtils.browser;
-      var app = testUtils.app;
-
       // country with nothing in our test db
       var entry = entryFixtures[0].data;
 
       // country in our test db for default year
-      app.get('models').Entry.findAll({where: {
+      this.app.get('models').Entry.findAll({where: {
         site: entry.site,
         place: entry.place,
         dataset: entry.dataset
-      }, order: '"updatedAt" DESC'}).then(function(results) {
+      }, order: '"updatedAt" DESC'}).then(results => {
         var candidate = _.findWhere(results, {isCurrent: true});
 
         var prefill = {
@@ -327,30 +298,29 @@ describe('Basics', function() {
           exists: candidate.answers.exists
         };
 
-        var port = testUtils.app.get('port');
+        var port = this.app.get('port');
         var url = 'http://site1.dev.census.org:' + port + '/submit?' +
-          _.map(prefill, function(value, key) {
+          _.map(prefill, (value, key) => {
             return encodeURIComponent(key) + '=' + encodeURIComponent(value);
           }).join('&');
 
-        browser.visit(url, function() {
-          assert.ok(browser.success);
-
+        this.browser.visit(url, () => {
+          assert.ok(this.browser.success);
           assert.equal(
-            browser.query('select[name="place"] option:checked').value,
+            this.browser.query('select[name="place"] option:checked').value,
             prefill.place);
           assert.equal(
-            browser.query('select[name="dataset"] option:checked').value,
+            this.browser.query('select[name="dataset"] option:checked').value,
             prefill.dataset);
 
           // Should it work at all?
-          //var textToCheck = marked(_.find(datasetFixtures, function(item) {
+          // var textToCheck = marked(_.find(datasetFixtures, function(item) {
           //  return item.data.id === candidate.dataset;
-          //}).data.description);
-          //assert.include(browser.html(), textToCheck);
+          // }).data.description);
+          // assert.include(this.browser.html(), textToCheck);
 
           // !!! Does not work - always checked exists=true checkbox
-          //assert.isNotNull(browser.query('input[name="exists"][value="' +
+          // assert.isNotNull(this.browser.query('input[name="exists"][value="' +
           //  prefill.exists + '"]:checked'));
           done();
         });
@@ -358,30 +328,25 @@ describe('Basics', function() {
     });
 
     it('View review page', function(done) {
-      var entry = _.find(entryFixtures, function(item) {
+      var entry = _.find(entryFixtures, item => {
         return (item.data.isCurrent === false) && (item.data.site === 'site2');
       }).data;
-      var dataset = _.find(datasetFixtures, function(item) {
+      var dataset = _.find(datasetFixtures, item => {
         return item.data.id === entry.dataset;
       }).data;
 
-      var browser = testUtils.browser;
-      var app = testUtils.app;
-      var url = 'http://site2.dev.census.org:' + app.get('port') +
+      var url = 'http://site2.dev.census.org:' + this.app.get('port') +
         '/submission/' + entry.id;
-      browser.visit(url, function() {
-        assert.ok(browser.success);
-
-        var html = browser.html();
-        var textToCheck = app.get('config').get('review_page');
-        textToCheck = textToCheck.replace(/\&\#39\;/g, '\'');
+      this.browser.visit(url, () => {
+        assert.ok(this.browser.success);
+        var html = this.browser.html();
+        var textToCheck = this.app.get('config').get('review_page');
+        textToCheck = textToCheck.replace(/&#39;/g, '\'');
         assert.include(html, textToCheck);
         assert.include(html, dataset.description);
 
         done();
       });
     });
-
   });
-
 });
