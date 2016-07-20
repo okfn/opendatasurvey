@@ -137,31 +137,34 @@ describe('Basics', function() {
     });
   });
 
-  // Redirect tests not working. No asserts being run and needs investigation.
-
-  // describe('Check redirects', function() {
-  //   var map = {
-  //     '/country/': '/',
-  //     '/country/results.json': '/overview.json',
-  //     '/country/overview/gb': '/place/gb',
-  //     '/country/gb/timetables': '/entry/gb/timetables',
-  //     '/country/submit': '/submit',
-  //     '/country/review/xyz': '/submission/xyz'
-  //   };
-  //   _.forEach(map, (target, source) => {
-  //     it(source + ' -> ' + target, function(done) {
-  //       this.browser.on('redirect', (request, response) => {
-  //         assert.equal(false, true);
-  //         assert.equal(response.headers.get('asfd'), target);
-  //         this.browser.removeAllListeners('redirect');
-  //         throw null; // Cancel request
-  //       });
-  //       this.browser.visit(source, () => {
-  //         done();
-  //       });
-  //     });
-  //   });
-  // });
+  describe('Check redirects', function() {
+    var map = {
+      '/country/': '/',
+      '/country/results.json': '/api/entries.json',
+      '/country/overview/gb': '/place/gb',
+      '/country/gb/timetables': '/entry/gb/timetables',
+      '/country/submit': '/login'
+    };
+    _.forEach(map, (target, source) => {
+      it(source + ' -> ' + target, function(done) {
+        this.browser.visit(source, () => {
+          this.browser.assert.redirected();
+          assert.equal(target, this.browser.location.pathname);
+          done();
+        });
+      });
+    });
+    it('/country/review/uuid -> /submission/uuid', function(done) {
+      this.app.get('models').Entry.findOne().then(entry => {
+        this.browser.visit('/country/review/' + entry.id, () => {
+          this.browser.assert.redirected();
+          assert.equal('/submission/' + entry.id,
+            this.browser.location.pathname);
+          done();
+        });
+      });
+    });
+  });
 
   describe('Census pages', function() {
     beforeEach(function() {
