@@ -34,7 +34,7 @@ Don't see your country in the list? All you need to do is __register your intere
 
 ## FAQs
 
-## How it Works
+### How it Works
 
 #### Will the Census be hosted for me?
 
@@ -67,7 +67,7 @@ We're working on this!
 #### Where will the Census be located Online?
 Its URL will be {census-name}.census.okfn.org. It is possible to customize this if you need the census at your URL.
 
-## Background
+### Background
 
 #### How did this come about?
 
