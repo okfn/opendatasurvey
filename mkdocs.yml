@@ -8,7 +8,7 @@ pages:
   - Local Census: 'local/index.md'
   - Site Admins: 'site-admins/index.md'
   - Sys Admins: 'sys-admins/index.md'
-  - Survey Flow: 'survey-flow/index.html'
+  - Survey Flow: 'survey-flow/index.md'
   - Event Guide: 'eventguide/index.md'
   - Contact: 'contact/index.md'
 theme: readthedocs
