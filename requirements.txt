@@ -1,0 +1,2 @@
+mkdocs # used to build documentation
+markdown-include
