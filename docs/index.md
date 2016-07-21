@@ -26,7 +26,7 @@ notitle: true
 
 We've created the Local Open Data Census to survey and compare the progress made by different cities and local areas in releasing Open Data. You can help by tracking down Open Data from a city or region where you live or that you're interested in. Here are the Censuses that are already created:
 
-{% include local_census_instances.md %}
+{!_includes/local_census_instances.md!}
 
 Don't see your country in the list? All you need to do is __register your interest in this form__ and we'll get your Local Open Data Census set up and ready to use.
 

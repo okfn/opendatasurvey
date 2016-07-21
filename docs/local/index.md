@@ -1,7 +1,4 @@
----
-layout: default
-title: Local Open Data Census
----
+# Local Open Data Census
 
 ## Instructions for Census Administrators
 
@@ -21,7 +18,7 @@ Discussion and updates:
 
 ## Active Local Census instances
 
-{% include local_census_instances.md %}
+{!_includes/local_census_instances.md!}
 
 To get your own Local Census, start a [new thread on the forum][forum].
 

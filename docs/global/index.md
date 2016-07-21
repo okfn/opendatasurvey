@@ -1,7 +1,4 @@
----
-layout: default
-title: Global Open Data Index
----
+# Global Open Data Index
 
 The [Global Open Data Index][national-census] page.
 

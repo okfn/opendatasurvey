@@ -7,9 +7,12 @@ pages:
   - Global Census: 'global/index.md'
   - Local Census: 'local/index.md'
   - Site Admins: 'site-admins/index.md'
+  - Sys Admins: 'sys-admins/index.md'
   - Survey Flow: 'survey-flow/index.html'
   - Event Guide: 'eventguide/index.md'
   - Contact: 'contact/index.md'
 theme: readthedocs
 markdown_extensions:
-  - markdown_include.include
+  - markdown_include.include:
+      base_path: docs
+

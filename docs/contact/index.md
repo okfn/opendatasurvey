@@ -1,7 +1,4 @@
----
-layout: default
-title: Contact us
----
+# Contact
 
 To discuss the Open Data Census or local or topical censuses, join the [Open Data Index duscussion forum][discussion-forum].
 

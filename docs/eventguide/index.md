@@ -1,7 +1,4 @@
----
-layout: default
-title: Event guide for Index events
----
+# Event guide for Index events 
 
 Getting together at a public event can be a fun way to contribute to the [2015 Global Open Data Index](http://global.census.okfn.org/). It can also be a great way to engage and organize people locally around open data. Here are some guidelines and tips for hosting an event in support of the 2015 Index and getting the most out of it. 
 

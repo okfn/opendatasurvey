@@ -1,7 +1,4 @@
----
-layout: default
-title: Documentation
----
+# Site Admin Documentation
 
 This is a short introduction to how to administer an Open Data Census.
 

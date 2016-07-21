@@ -1,8 +1,3 @@
----
-layout: default
-title: Deployment
----
-
 # System Adminstration of a Census
 
 These instructions are for Developers. It assumes you already have the code installed on your machine.
