@@ -1,0 +1,15 @@
+site_name: Open Data Census
+site_description: Documentation for the Open Data Census application
+site_url: http://census.okfn.org/
+repo_url: https://github.com/okfn/opendatacensus
+pages:
+  - Home: 'index.md'
+  - Global Census: 'global/index.md'
+  - Local Census: 'local/index.md'
+  - Site Admins: 'site-admins/index.md'
+  - Survey Flow: 'survey-flow/index.html'
+  - Event Guide: 'eventguide/index.md'
+  - Contact: 'contact/index.md'
+theme: readthedocs
+markdown_extensions:
+  - markdown_include.include
