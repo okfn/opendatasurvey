@@ -1,26 +1,12 @@
----
-layout: default
-title: Open Data Census – Meta
-notitle: true
----
 
-<div class="hero-unit">
-  <h1>
-    Get your local open data census here!
-    <br />
-    <small>
-      Local data is often the most relevant to citizens on a daily basis – from rubbish collection times to local tax rates.
-      <br />
-      At the moment it's hard to know what local open data is available.
-      <br />
-      Help change that by reporting on the state of open data in your area with a <strong>local open data census</strong>!
-    </small>
-  </h1>
-
-  <p style="margin-top: 20px;">
-    <a class="btn btn-large btn-primary" href="#get-started" style="font-weight: bold;">Get started now &raquo;</a>
-  </p>
-</div>
+<h1>
+  Get your local open data census here!
+  <small>
+    <p>Local data is often the most relevant to citizens on a daily basis – from rubbish collection times to local tax rates.</p>
+    <p>At the moment it's hard to know what local open data is available.</p>
+    <p>Help change that by reporting on the state of open data in your area with a <strong>local open data census</strong>!</p>
+  </small>
+</h1>
 
 ## Get Started
 
