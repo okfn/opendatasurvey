@@ -14,7 +14,7 @@ The Census is configured to use Google and Facebook as auth providers. You must 
 
 ### Google
 
-Go to your Google Cloud account and "Create a New Client ID" under "APIs & auth > Credentials". The type is "web application", and you need to configure the origins and callbacks for your `auth` subdomain (which is `id` by default. e.g.: `http://id.{your_domain}/login`).
+Go to your Google Cloud account and "Create a New Client ID" under "APIs & auth > Credentials". The type is "web application", and you need to configure the origins and callbacks for your `auth` subdomain (which is `id` by default. e.g.: `http://id.{base_domain}/login`).
 
 Get the credentials required for your `GOOGLE_APP_ID` and `GOOGLE_APP_SECRET` settings.
 
@@ -62,13 +62,14 @@ It's useful to check the "Automatically republish when changes are made" box. Ho
 ### Step-by-Step
 
 * Add a new entry to the Registry
-* Reload the Registry on your Census at `http://{system_subdomain}.{base_domain}/control`
+* Reload the Registry on your Census at `http://system.{base_domain}/control`
   * Your email will have to be added as the `sysAdmin` email - see the setup instructions in the README.
 * Ask the Site administrator (who **must** have an email in the `adminemail` field of the Registry entry for her site) to finish all the site-specific configuration and then the site admin must:
-  * Visit `http://{site}.{base_domain}/admin`
+  * Visit `http://{site}.{base_domain}/admin` (e.g. `http://my-site.census.okfn.org/admin`)
   * Load Config
   * Load Places
   * Load Datasets
   * Load Questions
+
 * The Site will now be live at: `http://{site}.{base_domain}/`
 
