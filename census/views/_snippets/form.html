@@ -1,10 +1,6 @@
 {% macro currentEntryValue(qu) %}
-{% if current %}
-  {% if current.answers[qu.id] %}
-    {{current.answers[qu.id]}}
-  {% else %}
-    {{ gettext("No entry") }}
-  {% endif %}
+{% if current and current.answers[qu.id] %}
+  {{ current.answers[qu.id] }}
 {% else %}
   {{ gettext("No entry") }}
 {% endif %}
@@ -12,7 +8,7 @@
 
 {% macro currentEntry(qu) %}
 <div class="current-entry">
-  <label>{{gettext("Current Entry")}}</label>
+  <label>{{ gettext("Current Entry") }}</label>
   <div class="current-entry-value" title="{{ currentEntryValue(qu) }}">
     {{ currentEntryValue(qu) }}
   </div>
@@ -22,13 +18,13 @@
 {% macro question(qu) -%}
 <div class="span6">
   <h4 class="submission-label">{{qu.question}}</h4>
-  <input type="{{qu.type}}" title="{{qu.placeholder}}" name="{{qu.id}}" value="{% if formData %}{{ formData[qu.id] }}{% elif current %}{{current.answers[qu.id]}}{% endif %}" {% if canReview != true or reviewClosed %}disabled="disabled"{% endif %} placeholder="{{qu.placeholder}}" {% if qu.id=='format' %} list="formats" {% endif %} />
+  <input type="{{ qu.type }}" title="{{ qu.placeholder }}" name="{{ qu.id }}" value="{% if formData %}{{ formData[qu.id] }}{% elif current %}{{ current.answers[qu.id] }}{% endif %}" {% if canReview != true or reviewClosed %}disabled="disabled"{% endif %} placeholder="{{ qu.placeholder }}" {% if qu.id=='format' %} list="formats" {% endif %} />
 </div>
 <div class="span6">
   {{ currentEntry(qu) }}
 </div>
 <div class="span12">
-  <span class="help-block">{{qu.description}}</span>
+  <span class="help-block">{{ qu.description }}</span>
 </div>
 {%- endmacro  %}
 
@@ -36,11 +32,11 @@
   <div class="row-fluid submission-row head">
     <div class="span12">
       <div class="submission-question">Question</div>
-      <div class="submission-option">{{gettext("Yes")}}</div>
-      <div class="submission-option">{{gettext("No")}}</div>
-      <div class="submission-option">{{gettext("Unsure")}}</div>
-      <div class="submission-current">{{gettext("Current")}}</div>
-      <div class="submission-info">{{gettext("Information")}}</div>
+      <div class="submission-option">{{ gettext("Yes") }}</div>
+      <div class="submission-option">{{ gettext("No") }}</div>
+      <div class="submission-option">{{ gettext("Unsure") }}</div>
+      <div class="submission-current">{{ gettext("Current") }}</div>
+      <div class="submission-info">{{ gettext("Information") }}</div>
     </div>
   </div>
 
@@ -56,7 +52,7 @@
           {"type": null, "string": "null", "display": "Unsure"}
         ] %}
         <div class="submission-option">
-          <input type="radio" name="{{qu.id}}" value="{{ val.string }}" {% if formData %}{% if formData[qu.id] == val.string %}checked="true"{% endif %}{% else %}{% if (current and current.answers[qu.id] == val.type) %}checked="true" {% endif %}{% endif %}class="{{ val.string }}"{% if canReview != true or reviewClosed %} disabled="disabled"{% endif %} required>
+          <input type="radio" name="{{ qu.id }}" value="{{ val.string }}" {% if formData %}{% if formData[qu.id] == val.string %}checked="true"{% endif %}{% else %}{% if (current and current.answers[qu.id] == val.type) %}checked="true" {% endif %}{% endif %}class="{{ val.string }}"{% if canReview != true or reviewClosed %} disabled="disabled"{% endif %} required>
         </div>
         {% endfor %}
         <div class="submission-current">
@@ -70,7 +66,7 @@
           {{ currentDisplay }}
         </div>
         <div class="submission-info">
-          <span class="help-block readmore">{{qu.description}}</span>
+          <span class="help-block readmore">{{ qu.description }}</span>
         </div>
         {% if qu.dependants %}
         {% for dependant in qu.dependants %}
@@ -92,13 +88,13 @@
   <div class="row">
     <div class="span12">
       <hr />
-      <h4>{{addDetails.question}}</h4>
-      <span class="help-block">{{addDetails.description}}</span>
+      <h4>{{ addDetails.question }}</h4>
+      <span class="help-block">{{ addDetails.description }}</span>
     </div>
     <div class="span6">
       <div class="wmd-panel">
         <div id="wmd-button-bar"></div>
-        <textarea class="wmd-input" id="wmd-input" name="details" {% if canReview != true or reviewClosed %}disabled="disabled"{% endif %} style="min-height: 150px;">{{formData.details or current.details}}</textarea>
+        <textarea class="wmd-input" id="wmd-input" name="details" {% if canReview != true or reviewClosed %}disabled="disabled"{% endif %} style="min-height: 150px;">{{ formData.details or current.details }}</textarea>
       </div>
     </div>
     <div class="span6">
