@@ -1,12 +1,12 @@
 {% macro currentEntryValue(qu) %}
 {% if current %}
-{% if current.answers[qu.id] %}
-{{current.answers[qu.id]}}
+  {% if current.answers[qu.id] %}
+    {{current.answers[qu.id]}}
+  {% else %}
+    {{ gettext("No entry") }}
+  {% endif %}
 {% else %}
-{{ gettext("No entry") }}
-{% endif %}
-{% else %}
-{{ gettext("No entry") }}
+  {{ gettext("No entry") }}
 {% endif %}
 {%- endmacro  %}
 
@@ -60,16 +60,14 @@
         </div>
         {% endfor %}
         <div class="submission-current">
-          {% for val in [
-            {"type": true, "string": "true", "display": "Yes"},
-            {"type": false, "string": "false", "display": "No"},
-            {"type": null, "string": "null", "display": "Unsure"}
-          ] %}
-          {% if current.answers[qu.id] == val.type %}
-          {% set currentDisplay = val.display %}
+          {% if current.answers[qu.id] == true %}
+            {% set currentDisplay = 'Yes' %}
+          {% elif current.answers[qu.id] == false %}
+            {% set currentDisplay = 'No' %}
+          {% else %}
+            {% set currentDisplay = gettext('No entry') %}
           {% endif %}
-          {% endfor %}
-          {{ currentDisplay or gettext('No entry') }}
+          {{ currentDisplay }}
         </div>
         <div class="submission-info">
           <span class="help-block readmore">{{qu.description}}</span>
