@@ -15,5 +15,6 @@ theme: readthedocs
 markdown_extensions:
   - markdown_include.include:
       base_path: docs
+  - toc:
 google_analytics: ['UA-33874954-7', 'census.okfn.org']
 

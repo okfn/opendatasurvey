@@ -4,8 +4,9 @@ This is a short introduction to how to administer an Open Data Census.
 
 Note: it assumes that a census instance has been booted for you (and is __not__ about the technical side of deploying a census instance)
 
-* Table of contents
-{:toc}
+## Table of contents
+
+[TOC]
 
 ## Overview of How a Census is Structured
 
