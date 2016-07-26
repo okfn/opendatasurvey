@@ -89,6 +89,18 @@ var loadRegistry = function(models) {
     });
 };
 
+/* Load data and create model instances based on options param.
+
+  e.g. for an options object:
+  { mapper: [Function],
+  Model: Dataset,
+  setting: 'datasets',
+  site: 'global' }
+
+  using the config for the site 'global', retrieve data from the spreadsheet
+  url defined at setting 'datasets'. Create instances of the Model 'Dataset'
+  with the retrieved data, using the optional mapper function.
+  */
 var loadData = function(options, models) {
   return models.sequelize.transaction(function(t) {
     return models.Site.findById(options.site, {transaction: t}).then(
@@ -104,21 +116,21 @@ var loadData = function(options, models) {
               if (E) {
                 throw E;
               }
-
               return Promise.all(_.map(D, function(DS) {
                 return new Promise(function(RSD, RJD) {
-                  // Allow custom data maping
+                  // Allow custom data mapping
+                  let createData = _.chain(
+                    _.isFunction(options.mapper) ? options.mapper(DS) : DS
+                  )
+                  // All records belongs to certain domain
+                  .extend({site: options.site})
+                  .pairs()
+                  // User may mix up lower cased and upper cased field names
+                  .map(P => [P[0].toLowerCase(), P[1]])
+                  .object()
+                  .value();
                   return options.Model.create(
-                    _.chain(
-                      _.isFunction(options.mapper) ? options.mapper(DS) : DS
-                    )
-                      // All records belongs to certain domain
-                      .extend({site: options.site})
-                      .pairs()
-                      // User may mix up lower cased and upper cased field names
-                      .map(function(P) { return [P[0].toLowerCase(), P[1]]; })
-                      .object()
-                      .value(),
+                    createData,
                     {
                       transaction: t
                     }).then(RSD).catch(RJD);
@@ -130,8 +142,11 @@ var loadData = function(options, models) {
   });
 };
 
-// There may be translated fields. Map field name <name>@<language>
-// into translation: {<language>: {<name>: ..., <another name>: ..., ...}}.
+/* Call loadData with a mapper for translations field.
+
+  There may be translated fields. Map field name <name>@<language>
+  into translation: {<language>: {<name>: ..., <another name>: ..., ...}}.
+*/
 var loadTranslatedData = function(options, models) {
   // Avoid recursive call
   var mapper = options.mapper;

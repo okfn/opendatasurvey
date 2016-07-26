@@ -49,12 +49,16 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       comment: 'Dataset-specific reviewers.'
     },
+    disableforyears: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: true,
+      comment: 'Years for which dataset is disabled.'
+    },
     translations: {
       type: DataTypes.JSONB,
       allowNull: true
     }
-  },
-  {
+  }, {
     tableName: 'dataset',
     indexes: [
       {
@@ -79,8 +83,8 @@ module.exports = function(sequelize, DataTypes) {
         })));
         var score = count * questionMaxScore;
         return score;
-      },
-    },
+      }
+    }
   });
 
   return Dataset;
