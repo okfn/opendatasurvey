@@ -212,6 +212,34 @@ var rankDatasets = function(datasets) {
   return datasets;
 };
 
+/* Return the ids of excluded datasets for each year, as defined by the
+   disableforyears field.
+
+   Returns object in the form:
+
+   {
+      <year>: [<dataset_id>, <dataset_id>, ...],
+      <year>: [<dataset_id>, <dataset_id>, ...],
+      ...
+   }
+*/
+var excludedDatasetsByYear = function(data) {
+  let datasets = [];
+  if (data.dataset) {
+    datasets.push(data.dataset);
+  } else {
+    datasets = data.datasets;
+  }
+
+  let years = _.uniq(_.flatten(_.map(datasets, ds => ds.disableforyears)));
+
+  let excludedDatasetsObj = _.object(years, _.map(years, year =>
+    _.map(_.filter(datasets, ds => _.includes(ds.disableforyears, year)), 'id')
+  ));
+
+  return excludedDatasetsObj;
+};
+
 /*
  * Process the raw entries query.
  */

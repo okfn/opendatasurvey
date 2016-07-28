@@ -1,8 +1,9 @@
 'use strict';
 
+var rewire = require('rewire');
 var _ = require('lodash');
 var models = require('../census/models');
-var modelUtils = require('../census/models').utils;
+var modelUtils = rewire('../census/models/utils');
 var chai = require('chai');
 var assert = chai.assert;
 var expect = chai.expect;
@@ -225,6 +226,84 @@ describe('Data access layer', function() {
       expect(data.entries).to.have.length(2);
       expect(data.pending).to.have.length(2);
       expect(data.rejected).to.have.length(1);
+    });
+  });
+});
+
+describe('Util function', function() {
+  describe('#excludedDatasetsByYear', function() {
+    before(function() {
+      this.excludedDatasetsByYear = modelUtils.__get__('excludedDatasetsByYear');
+    });
+
+    it('returns empty object for single dataset with empty disableforyears',
+    function() {
+      let data = {
+        dataset: {
+          id: 'id1',
+          disableforyears: []
+        }
+      };
+
+      let excludedDatasets = this.excludedDatasetsByYear(data);
+      expect(excludedDatasets).to.be.empty;
+    });
+    it('returns expected object for single dataset with disableforyears',
+    function() {
+      let data = {
+        dataset: {
+          id: 'id1',
+          disableforyears: ['2013', '2016']
+        }
+      };
+
+      let excludedDatasets = this.excludedDatasetsByYear(data);
+      expect(excludedDatasets).not.to.be.empty;
+      expect(excludedDatasets).to.have.all.keys('2013', '2016');
+      expect(excludedDatasets).to.be.deep.equal({2013: ['id1'], 2016: ['id1']});
+    });
+
+    it('returns empty object for array of datasets, all with empty disableforyears',
+    function() {
+      let data = {
+        datasets: [
+          {
+            id: 'id1',
+            disableforyears: []
+          },
+          {
+            id: 'id2',
+            disableforyears: []
+          }
+        ]
+      };
+      let excludedDatasets = this.excludedDatasetsByYear(data);
+      expect(excludedDatasets).to.be.empty;
+    });
+    it('returns expected object for array of datasets, with disableforyears',
+    function() {
+      let data = {
+        datasets: [
+          {
+            id: 'id1',
+            disableforyears: ['2013', '2014']
+          },
+          {
+            id: 'id2',
+            disableforyears: []
+          },
+          {
+            id: 'id3',
+            disableforyears: ['2014', '2015']
+          }
+        ]
+      };
+      let excludedDatasets = this.excludedDatasetsByYear(data);
+      expect(excludedDatasets).not.to.be.empty;
+      expect(excludedDatasets).to.have.all.keys('2013', '2014', '2015');
+      expect(excludedDatasets).to.be.deep.equal({
+        2013: ['id1'], 2014: ['id1', 'id3'], 2015: ['id3']
+      });
     });
   });
 });
