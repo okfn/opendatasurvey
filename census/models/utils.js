@@ -36,7 +36,7 @@ var translateSet = function(locale, results) {
   return results;
 };
 
-/**
+/*
  * Query the database for data.
  * if options.ynQuestions, then only get yn
  * options.models has models
@@ -64,7 +64,7 @@ var queryData = function(options) {
   var querysets = {};
 
   if (options.ynQuestions) {
-    questionParams =  _.merge(questionParams, {where: {type: ''}});
+    questionParams = _.merge(questionParams, {where: {type: ''}});
   }
 
   // prep the querysets object
@@ -74,10 +74,8 @@ var queryData = function(options) {
     if (options.with.Place) {
       querysets.place = options.models.Place.findOne(placeParams);
     }
-  } else {
-    if (options.with.Place) {
-      querysets.places = options.models.Place.findAll(placeParams);
-    }
+  } else if (options.with.Place) {
+    querysets.places = options.models.Place.findAll(placeParams);
   }
 
   if (options.dataset) {
@@ -86,10 +84,8 @@ var queryData = function(options) {
     if (options.with.Dataset) {
       querysets.dataset = options.models.Dataset.findOne(datasetParams);
     }
-  } else {
-    if (options.with.Dataset) {
-      querysets.datasets = options.models.Dataset.findAll(datasetParams);
-    }
+  } else if (options.with.Dataset) {
+    querysets.datasets = options.models.Dataset.findAll(datasetParams);
   }
 
   if (options.with.Entry) {
@@ -102,7 +98,7 @@ var queryData = function(options) {
   return loadModels(querysets, options);
 };
 
-/**
+/*
  * Process all data for stats.
  */
 var processStats = function(data, options) {
@@ -154,7 +150,7 @@ var cascadeEntries = function(entries, currentYear) {
     if (value) {
       candidates = _.sortByOrder(value, ['year', 'updatedAt'], 'desc');
       match = _.find(candidates, {isCurrent: true});
-      if (match) { matches.push(match); }
+      if (match) matches.push(match);
       matches = matches.concat(_.filter(candidates, {
         isCurrent: false,
         year: currentYear
@@ -170,12 +166,82 @@ var setEntryUrl = function(entry) {
     return '/entry/PLACE/DATASET'
       .replace('PLACE', entry.place)
       .replace('DATASET', entry.dataset);
-  } else {
-    return '/submission/ID'.replace('ID', entry.id);
   }
+  return '/submission/ID'.replace('ID', entry.id);
 };
 
-/**
+/*
+ * Do leaderboard ranking on places by computedScore. Places MUST be ordered
+ * by descending score. Tied places have equal rank.
+ */
+var rankPlaces = function(places) {
+  var lastScore = null;
+  var lastRank = 0;
+
+  _.each(places, function(p, i) {
+    if (lastScore === p.computedScore) {
+      p.rank = lastRank;
+    } else {
+      p.rank = i + 1;
+    }
+    lastRank = p.rank;
+    lastScore = p.computedScore;
+  });
+
+  return places;
+};
+
+/*
+ * Do leaderboard ranking on datasets by computedScore. Places MUST be ordered
+ * by descending score. Tied places have equal rank.
+ */
+var rankDatasets = function(datasets) {
+  var lastScore = null;
+  var lastRank = 0;
+
+  _.each(datasets, function(d, i) {
+    if (lastScore === d.computedScore) {
+      d.rank = lastRank;
+    } else {
+      d.rank = i + 1;
+    }
+    lastRank = d.rank;
+    lastScore = d.computedScore;
+  });
+
+  return datasets;
+};
+
+/* Return the ids of excluded datasets for each year, as defined by the
+   disableforyears field.
+
+   Returns object in the form:
+
+   {
+      <year>: [<dataset_id>, <dataset_id>, ...],
+      <year>: [<dataset_id>, <dataset_id>, ...],
+      ...
+   }
+*/
+var excludedDatasetsByYear = function(data) {
+  let datasets = [];
+  if (data.dataset) {
+    datasets.push(data.dataset);
+  } else {
+    datasets = data.datasets;
+  }
+
+  let years = _.uniq(_.flatten(_.map(datasets, 'disableforyears')));
+  years = _.reject(years, _.isNull);
+
+  let excludedDatasetsObj = _.object(years, _.map(years, year =>
+    _.map(_.filter(datasets, ds => _.includes(ds.disableforyears, year)), 'id')
+  ));
+
+  return excludedDatasetsObj;
+};
+
+/*
  * Process the raw entries query.
  */
 var processEntries = function(data, options) {
@@ -187,14 +253,20 @@ var processEntries = function(data, options) {
       data.entries = cascadeEntries(data.entries, options.year);
     }
 
-    // Apply exclude filter
+    excludedDatasetsByYear(data);
+
+    // Apply exclude filters
     data.entries = _.reject(data.entries, function(entry) {
-      var result = false;
+      let result = false;
       if (options.exclude_datasets) {
         result = result || _.contains(options.exclude_datasets, entry.dataset);
       }
       if (options.exclude_places) {
         result = result || _.contains(options.exclude_places, entry.place);
+      }
+      if (options.year) {
+        let excludedForYear = excludedDatasetsByYear(data)[options.year];
+        result = result || _.contains(excludedForYear, entry.dataset);
       }
       return result;
     });
@@ -230,20 +302,16 @@ var processEntries = function(data, options) {
   return data;
 };
 
-/**
+/*
  * Process the raw places query.
  */
 var processPlaces = function(data, options) {
-
   // Single place
   if (data.place) {
-
     // Translate
     data.place = data.place.translated(options.locale);
-
   // Many places
   } else {
-
     // Apply exclude filter
     if (options.exclude_places) {
       data.places = _.reject(data.places, function(place) {
@@ -268,32 +336,31 @@ var processPlaces = function(data, options) {
     } else {
       data.places = translateSet(options.locale, data.places);
     }
-
   }
-
   return data;
-
 };
 
-/**
+/*
  * Process the raw datasets query.
  */
 var processDatasets = function(data, options) {
-
   // Single dataset
   if (data.dataset) {
-
     data.dataset = data.dataset.translated(options.locale);
-
   // Many datasets
   } else {
-
-    // Apply exclude filter
-    if (options.exclude_datasets) {
-      data.datasets = _.reject(data.datasets, function(dataset) {
-        return _.contains(options.exclude_datasets, dataset.id);
-      });
-    }
+    // Apply exclude filters
+    data.datasets = _.reject(data.datasets, dataset => {
+      let result = false;
+      if (options.exclude_datasets) {
+        result = result || _.contains(options.exclude_datasets, dataset.id);
+      }
+      if (options.year) {
+        let excludedForYear = excludedDatasetsByYear(data)[options.year];
+        result = result || _.contains(excludedForYear, dataset.id);
+      }
+      return result;
+    });
 
     // Add scores, translate
     if (Array.isArray(data.entries)) {
@@ -312,14 +379,11 @@ var processDatasets = function(data, options) {
     } else {
       data.datasets = translateSet(options.locale, data.datasets);
     }
-
   }
-
   return data;
-
 };
 
-/**
+/*
  * Process the raw questions query.
  */
 var processQuestions = function(data, options) {
@@ -327,7 +391,7 @@ var processQuestions = function(data, options) {
   return data;
 };
 
-/**
+/*
  * Process the raw query data.
  */
 var processData = function(result) {
@@ -349,56 +413,14 @@ var processData = function(result) {
   return data;
 };
 
-/**
+/*
  * The interface to get data, all clean and ready like.
  */
 var getData = function(options) {
   return queryData(options).then(processData);
 };
 
-/**
- * Do leaderboard ranking on places by computedScore. Places MUST be ordered
- * by descending score. Tied places have equal rank.
- */
-var rankPlaces = function(places) {
-  var lastScore = null;
-  var lastRank = 0;
-
-  _.each(places, function(p, i) {
-    if (lastScore === p.computedScore) {
-      p.rank = lastRank;
-    } else {
-      p.rank = i + 1;
-    }
-    lastRank = p.rank;
-    lastScore = p.computedScore;
-  });
-
-  return places;
-};
-
-/**
- * Do leaderboard ranking on datasets by computedScore. Places MUST be ordered
- * by descending score. Tied places have equal rank.
- */
-var rankDatasets = function(datasets) {
-  var lastScore = null;
-  var lastRank = 0;
-
-  _.each(datasets, function(d, i) {
-    if (lastScore === d.computedScore) {
-      d.rank = lastRank;
-    } else {
-      d.rank = i + 1;
-    }
-    lastRank = d.rank;
-    lastScore = d.computedScore;
-  });
-
-  return datasets;
-};
-
-/**
+/*
  * Extract data options from the request.
  */
 var getDataOptions = function(req) {
@@ -418,19 +440,18 @@ var getDataOptions = function(req) {
   // Add exclude_datasets
   try {
     options = _.merge(options, {
-      exclude_datasets: req.query.exclude_datasets.split(','),
+      exclude_datasets: req.query.exclude_datasets.split(',')
     });
   } catch (err) {}
 
   // Add exclude_places
   try {
     options = _.merge(options, {
-      exclude_places: req.query.exclude_places.split(','),
+      exclude_places: req.query.exclude_places.split(',')
     });
   } catch (err) {}
 
   return options;
-
 };
 
 module.exports = {

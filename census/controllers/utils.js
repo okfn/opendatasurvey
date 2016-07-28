@@ -192,12 +192,17 @@ var datasetMapper = function(data) {
   if (data.reviewers) {
     reviewers = splitFields(data.reviewers);
   }
+  var disableforyears = [];
+  if (data.disableforyears) {
+    disableforyears = splitFields(data.disableforyears);
+  }
   return _.defaults({
     id: data.id.toLowerCase(),
     description: marked(data.description),
     name: data.title,
     order: data.order || 100,
-    reviewers: reviewers
+    reviewers: reviewers,
+    disableforyears: disableforyears
   }, data);
 };
 

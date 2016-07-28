@@ -46,8 +46,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.JSONB,
       allowNull: true
     }
-  },
-  {
+  }, {
     tableName: 'place',
     indexes: [
       {
@@ -66,14 +65,16 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     classMethods: {
+      /* Calculate the max score possible for all unique places used by a given list
+         of entries.*/
       maxScore: function(entries, questionMaxScore) {
-        var count = _.size(_.uniq(_.map(entries, function(entry) {
-          return entry.place;
-        })));
+        // number of unique places across the passed entries.
+        var count = _.size(_.uniq(_.map(entries, entry => entry.place)));
+        // max score possible across all unique places
         var score = count * questionMaxScore;
         return score;
-      },
-    },
+      }
+    }
   });
 
   return Place;

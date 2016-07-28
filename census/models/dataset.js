@@ -49,12 +49,16 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       comment: 'Dataset-specific reviewers.'
     },
+    disableforyears: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: true,
+      comment: 'Years for which dataset is disabled.'
+    },
     translations: {
       type: DataTypes.JSONB,
       allowNull: true
     }
-  },
-  {
+  }, {
     tableName: 'dataset',
     indexes: [
       {
@@ -73,14 +77,16 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     classMethods: {
+      /* Calculate the max score possible for all unique datasets used by a given list
+         of entries.*/
       maxScore: function(entries, questionMaxScore) {
-        var count = _.size(_.uniq(_.map(entries, function(entry) {
-          return entry.dataset;
-        })));
+        // number of unique datasets across the passed entries.
+        var count = _.size(_.uniq(_.map(entries, entry => entry.dataset)));
+        // max score possible across all unique datasets
         var score = count * questionMaxScore;
         return score;
-      },
-    },
+      }
+    }
   });
 
   return Dataset;

@@ -1,3 +1,5 @@
+'use strict';
+
 var objects = [
   {
     model: 'Dataset',
@@ -17,6 +19,17 @@ var objects = [
       name: 'Dataset 12',
       description: 'Description of Dataset 12',
       order: 0
+    }
+  },
+  {
+    model: 'Dataset',
+    data: {
+      id: 'dataset13',
+      site: 'site1',
+      name: 'Dataset 13',
+      description: 'Description of Dataset 13',
+      order: 0,
+      disableforyears: ['2015']
     }
   },
   {

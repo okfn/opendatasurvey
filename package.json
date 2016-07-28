@@ -71,6 +71,7 @@
     "mocha": "^2.2.5",
     "node-inspector": "^0.12.2",
     "optimist": "~0.6.1",
+    "rewire": "^2.5.2",
     "sinon": "^1.14.1",
     "supertest": "^1.0.1",
     "zombie": "^4.1.0"

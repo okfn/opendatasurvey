@@ -25,3 +25,9 @@ rules:
     - warn
   no-else-return:
     - warn
+  camelcase:
+    - warn
+  no-unused-expressions:
+    - off
+  new-cap:
+    - warn

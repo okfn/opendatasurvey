@@ -63,8 +63,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.JSONB,
       allowNull: true
     }
-  },
-  {
+  }, {
     tableName: 'question',
     indexes: [
       {
@@ -75,12 +74,11 @@ module.exports = function(sequelize, DataTypes) {
       translated: mixins.translated
     },
     classMethods: {
+      /* Calculate the max score possible for a given list of questions */
       maxScore: function(questions) {
-        return _.sum(_.map(questions, function(question) {
-          return question.score;
-        }));
-      },
-    },
+        return _.sum(_.map(questions, question => question.score));
+      }
+    }
   });
 
   return Question;
