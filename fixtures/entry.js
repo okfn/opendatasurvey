@@ -1,3 +1,5 @@
+'use strict';
+
 var _ = require('underscore');
 var uuid = require('node-uuid');
 var datasets = require('./dataset');
@@ -152,6 +154,25 @@ var objects = [
       reviewComments: '',
       details: '',
       isCurrent: false,
+      submitterId: _.sample(users).data.id,
+      reviewerId: _.sample(users).data.id
+    }
+  },
+  {
+    model: 'Entry',
+    data: {
+      id: uuid.v4(),
+      site: 'site1',
+      year: 2015,
+      place: 'place11',
+      dataset: 'dataset13',
+      answers: answers(),
+      submissionNotes: '',
+      reviewed: true,
+      reviewResult: true,
+      reviewComments: '',
+      details: '',
+      isCurrent: true,
       submitterId: _.sample(users).data.id,
       reviewerId: _.sample(users).data.id
     }

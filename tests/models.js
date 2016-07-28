@@ -228,6 +228,43 @@ describe('Data access layer', function() {
       expect(data.rejected).to.have.length(1);
     });
   });
+
+  it('excludes dataset if exclude_dataset option is present', function() {
+    var dataOptions = {
+      models: models,
+      domain: 'site1',
+      dataset: null,
+      place: null,
+      year: 2015,
+      cascade: true,
+      ynQuestions: true,
+      locale: null,
+      with: {Entry: true, Dataset: true, Place: true, Question: true},
+      exclude_datasets: ['dataset12']
+    };
+    return modelUtils.getData(dataOptions).then(function(data) {
+      expect(data.entries).to.have.length(2);
+      expect(data.datasets).to.have.length(1);
+    });
+  });
+
+  it('exclude dataset if disableforyears is set for year', function() {
+    var dataOptions = {
+      models: models,
+      domain: 'site1',
+      dataset: null,
+      place: null,
+      year: 2015,
+      cascade: true,
+      ynQuestions: true,
+      locale: null,
+      with: {Entry: true, Dataset: true, Place: true, Question: true}
+    };
+    return modelUtils.getData(dataOptions).then(function(data) {
+      expect(data.entries).to.have.length(3);
+      expect(data.datasets).to.have.length(2);
+    });
+  });
 });
 
 describe('Util function', function() {

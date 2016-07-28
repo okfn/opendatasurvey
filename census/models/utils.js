@@ -253,14 +253,20 @@ var processEntries = function(data, options) {
       data.entries = cascadeEntries(data.entries, options.year);
     }
 
-    // Apply exclude filter
+    excludedDatasetsByYear(data);
+
+    // Apply exclude filters
     data.entries = _.reject(data.entries, function(entry) {
-      var result = false;
+      let result = false;
       if (options.exclude_datasets) {
         result = result || _.contains(options.exclude_datasets, entry.dataset);
       }
       if (options.exclude_places) {
         result = result || _.contains(options.exclude_places, entry.place);
+      }
+      if (options.year) {
+        let excludedForYear = excludedDatasetsByYear(data)[options.year];
+        result = result || _.contains(excludedForYear, entry.dataset);
       }
       return result;
     });
@@ -343,12 +349,18 @@ var processDatasets = function(data, options) {
     data.dataset = data.dataset.translated(options.locale);
   // Many datasets
   } else {
-    // Apply exclude filter
-    if (options.exclude_datasets) {
-      data.datasets = _.reject(data.datasets, function(dataset) {
-        return _.contains(options.exclude_datasets, dataset.id);
-      });
-    }
+    // Apply exclude filters
+    data.datasets = _.reject(data.datasets, dataset => {
+      let result = false;
+      if (options.exclude_datasets) {
+        result = result || _.contains(options.exclude_datasets, dataset.id);
+      }
+      if (options.year) {
+        let excludedForYear = excludedDatasetsByYear(data)[options.year];
+        result = result || _.contains(excludedForYear, dataset.id);
+      }
+      return result;
+    });
 
     // Add scores, translate
     if (Array.isArray(data.entries)) {
