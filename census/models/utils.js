@@ -231,7 +231,8 @@ var excludedDatasetsByYear = function(data) {
     datasets = data.datasets;
   }
 
-  let years = _.uniq(_.flatten(_.map(datasets, ds => ds.disableforyears)));
+  let years = _.uniq(_.flatten(_.map(datasets, 'disableforyears')));
+  years = _.reject(years, _.isNull);
 
   let excludedDatasetsObj = _.object(years, _.map(years, year =>
     _.map(_.filter(datasets, ds => _.includes(ds.disableforyears, year)), 'id')

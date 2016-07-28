@@ -262,7 +262,18 @@ describe('Util function', function() {
       expect(excludedDatasets).to.have.all.keys('2013', '2016');
       expect(excludedDatasets).to.be.deep.equal({2013: ['id1'], 2016: ['id1']});
     });
+    it('returns empty object for single dataset with null disableforyears',
+    function() {
+      let data = {
+        dataset: {
+          id: 'id1',
+          disableforyears: null
+        }
+      };
 
+      let excludedDatasets = this.excludedDatasetsByYear(data);
+      expect(excludedDatasets).to.be.empty;
+    });
     it('returns empty object for array of datasets, all with empty disableforyears',
     function() {
       let data = {
@@ -274,6 +285,23 @@ describe('Util function', function() {
           {
             id: 'id2',
             disableforyears: []
+          }
+        ]
+      };
+      let excludedDatasets = this.excludedDatasetsByYear(data);
+      expect(excludedDatasets).to.be.empty;
+    });
+    it('returns empty object for array of datasets, all with null disableforyears',
+    function() {
+      let data = {
+        datasets: [
+          {
+            id: 'id1',
+            disableforyears: null
+          },
+          {
+            id: 'id2',
+            disableforyears: null
           }
         ]
       };
@@ -295,6 +323,10 @@ describe('Util function', function() {
           {
             id: 'id3',
             disableforyears: ['2014', '2015']
+          },
+          {
+            id: 'id4',
+            disableforyears: null
           }
         ]
       };

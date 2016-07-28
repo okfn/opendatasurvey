@@ -29,3 +29,5 @@ rules:
     - warn
   no-unused-expressions:
     - off
+  new-cap:
+    - warn
