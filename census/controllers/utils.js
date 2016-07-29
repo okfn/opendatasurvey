@@ -176,6 +176,15 @@ var splitFields = function(data) {
   });
 };
 
+/*
+  Return an array of field values where the keys match the regexp pattern.
+*/
+var commonFieldArray = function(data, pattern) {
+  return _.filter(data, (v, k) => {
+    return (pattern.test(k) && v !== '');
+  });
+};
+
 var placeMapper = function(data) {
   var reviewers = [];
   if (data.reviewers) {
@@ -188,11 +197,12 @@ var placeMapper = function(data) {
 };
 
 var datasetMapper = function(data) {
-  var reviewers = [];
+  let characteristics = commonFieldArray(data, /^characteristics:\d+$/i);
+  let reviewers = [];
   if (data.reviewers) {
     reviewers = splitFields(data.reviewers);
   }
-  var disableforyears = [];
+  let disableforyears = [];
   if (data.disableforyears) {
     disableforyears = splitFields(data.disableforyears);
   }
@@ -202,7 +212,8 @@ var datasetMapper = function(data) {
     name: data.title,
     order: data.order || 100,
     reviewers: reviewers,
-    disableforyears: disableforyears
+    disableforyears: disableforyears,
+    characteristics: characteristics
   }, data);
 };
 
