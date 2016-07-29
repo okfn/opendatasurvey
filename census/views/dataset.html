@@ -25,8 +25,17 @@
 <p>{{format("On this page you can see the state of open data for %(dataset)s in all the places for which we have information.", { dataset: dataset.name}) }}</p>
 
 {% if dataset.description %}
-  <h3>{{gettext("Dataset Description")}}</h3>
+  <h3>{{ gettext("Dataset Description") }}</h3>
   {{dataset.description}}
+{% endif %}
+
+{% if dataset.characteristics|length %}
+  <p>{{ gettext("The following minimum criteria must be met:") }}</p>
+  <ul>
+  {% for istic in dataset.characteristics %}
+    <li>{{ istic }}</li>
+  {% endfor %}
+  </ul>
 {% endif %}
 
 <table class="table table-striped">
