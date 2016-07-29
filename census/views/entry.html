@@ -21,7 +21,7 @@
 
 <p>{{dataset.description}}</p>
 
-{% if dataset.characteristics|length %}
+{% if dataset.characteristics and dataset.characteristics|length %}
   {% include '_snippets/dataset-characteristics.html' %}
 {% endif %}
 
