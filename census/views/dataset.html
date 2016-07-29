@@ -30,12 +30,7 @@
 {% endif %}
 
 {% if dataset.characteristics|length %}
-  <p>{{ gettext("The following minimum criteria must be met:") }}</p>
-  <ul>
-  {% for istic in dataset.characteristics %}
-    <li>{{ istic }}</li>
-  {% endfor %}
-  </ul>
+  {% include '_snippets/dataset-characteristics.html' %}
 {% endif %}
 
 <table class="table table-striped">
