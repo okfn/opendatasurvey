@@ -178,6 +178,8 @@ var splitFields = function(data) {
 
 /*
   Return an array of field values where the keys match the regexp pattern.
+
+  Returns an empty array if no matches.
 */
 var commonFieldArray = function(data, pattern) {
   return _.filter(data, (v, k) => {
@@ -186,10 +188,7 @@ var commonFieldArray = function(data, pattern) {
 };
 
 var placeMapper = function(data) {
-  var reviewers = [];
-  if (data.reviewers) {
-    reviewers = splitFields(data.reviewers);
-  }
+  var reviewers = (data.reviewers) ? splitFields(data.reviewers) : [];
   return _.defaults({
     id: data.id.toLowerCase(),
     reviewers: reviewers
@@ -198,14 +197,9 @@ var placeMapper = function(data) {
 
 var datasetMapper = function(data) {
   let characteristics = commonFieldArray(data, /^characteristics:\d+$/i);
-  let reviewers = [];
-  if (data.reviewers) {
-    reviewers = splitFields(data.reviewers);
-  }
-  let disableforyears = [];
-  if (data.disableforyears) {
-    disableforyears = splitFields(data.disableforyears);
-  }
+  let reviewers = (data.reviewers) ? splitFields(data.reviewers) : [];
+  let disableforyears =
+    (data.disableforyears) ? splitFields(data.disableforyears) : [];
   return _.defaults({
     id: data.id.toLowerCase(),
     description: marked(data.description),
@@ -218,10 +212,7 @@ var datasetMapper = function(data) {
 };
 
 var questionMapper = function(data) {
-  var dependants = null;
-  if (data.dependants) {
-    dependants = splitFields(data.dependants);
-  }
+  var dependants = (data.dependants) ? splitFields(data.dependants) : null;
   return _.defaults({
     id: data.id.toLowerCase(),
     description: marked(data.description),
