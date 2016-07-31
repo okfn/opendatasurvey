@@ -1,5 +1,6 @@
 'use strict';
 
+const _ = require('lodash');
 const assert = require('chai').assert;
 const censusConfig = require('../census/config');
 const siteID = 'site1';
@@ -99,6 +100,12 @@ describe('Admin page', function () {
       return this.app.get('models').Dataset.findAll({where: {site: siteID}})
         .then(function (data) {
           assert.equal(data.length, 15);
+          let transport = _.find(data, ds => ds.id === 'transport-realtime');
+          assert.deepEqual(transport.characteristics, [
+            'My first characteristic',
+            'Characteristic the second',
+            'The third and last of the istics'
+          ]);
         });
     });
   });
