@@ -49,6 +49,10 @@
     {{ dataset.description }}
   </p>
 
+  {% if dataset.characteristics and dataset.characteristics|length %}
+    {% include '_snippets/dataset-characteristics.html' %}
+  {% endif %}
+
   {% if current.isCurrent %}
     {% set statusClass = "success" %}
     {% set statusText = "accepted" %}

@@ -25,8 +25,12 @@
 <p>{{format("On this page you can see the state of open data for %(dataset)s in all the places for which we have information.", { dataset: dataset.name}) }}</p>
 
 {% if dataset.description %}
-  <h3>{{gettext("Dataset Description")}}</h3>
+  <h3>{{ gettext("Dataset Description") }}</h3>
   {{dataset.description}}
+{% endif %}
+
+{% if dataset.characteristics and dataset.characteristics|length %}
+  {% include '_snippets/dataset-characteristics.html' %}
 {% endif %}
 
 <table class="table table-striped">

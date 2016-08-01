@@ -54,6 +54,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       comment: 'Years for which dataset is disabled.'
     },
+    characteristics: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: true,
+      comment: 'An array of dataset characterstics.'
+    },
     translations: {
       type: DataTypes.JSONB,
       allowNull: true

@@ -21,6 +21,10 @@
 
 <p>{{dataset.description}}</p>
 
+{% if dataset.characteristics and dataset.characteristics|length %}
+  {% include '_snippets/dataset-characteristics.html' %}
+{% endif %}
+
 <h3>{{gettext("Data Location")}}</h3>
 <a href="{{entry.answers.url}}">{{entry.answers.url}}</a>
 
