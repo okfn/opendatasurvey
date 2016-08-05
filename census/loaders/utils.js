@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('lodash');
 var Promise = require('bluebird');
 var request = require('request');
 var xss = require('xss');
@@ -51,13 +52,13 @@ var _mapParsedCsvData = function(parsedData) {
   for (var i = 0; i < parsedData.length; i++) {
     if (i === 0) {
       for (var j = 0; j < parsedData[i].length; j++) {
-        var key = xss(parsedData[i][j].toLowerCase());
+        var key = xss(_.trim(parsedData[i][j].toLowerCase()));
         keys.push(key);
       }
     } else {
       var object = {};
       for (var n = 0; n < keys.length; n++) {
-        object[keys[n]] = xss(parsedData[i][n]);
+        object[keys[n]] = xss(_.trim(parsedData[i][n]));
       }
       result.push(object);
     }
