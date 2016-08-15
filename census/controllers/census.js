@@ -31,6 +31,7 @@ var submitPostHandler = function(req, res, data) {
   var objToSave = {};
   var answers;
   var saveStrategy;
+  // eslint-disable-next-line no-unused-vars
   var anonymous = true;
   var submitterId = utils.ANONYMOUS_USER_ID;
   var query;
@@ -228,6 +229,34 @@ var submit = function(req, res) {
     }).catch(console.trace.bind(console));
 };
 
+var submitReact = function(req, res) {
+  var dataOptions = _.merge(modelUtils.getDataOptions(req), {
+    ynQuestions: false
+  });
+  modelUtils.getData(dataOptions)
+    .then(function(data) {
+      data.questions = utils.getFormQuestions(req, data.questions);
+
+      data.questions = _.map(data.questions, question => {
+        return {
+          id: question.dataValues.id,
+          text: question.dataValues.question,
+          type: question.dataValues.type
+        };
+      });
+
+      data.currentState = utils.getCurrentState(data, req);
+
+      let qsSchema = JSON.parse('[{"defaultProperties":{"enabled":true,"required":true,"visible":true},"id":"like_apples","position":1},{"defaultProperties":{"enabled":false,"required":false,"visible":false},"id":"bananas_instead","if":[{"dependentId":"like_apples","properties":{"enabled":true,"required":true,"visible":true},"value":"No"}],"position":1.1},{"defaultProperties":{"enabled":false,"required":false,"visible":true},"id":"apple_colour","if":[{"dependentId":"like_apples","properties":{"enabled":true,"required":true},"value":"Yes"}],"position":2},{"defaultProperties":{"enabled":false,"required":false,"visible":true},"id":"red_apple_today","if":[{"dependentId":"apple_colour","properties":{"enabled":true,"required":true},"value":"Yes"}],"position":3},{"defaultProperties":{"enabled":false,"required":false,"visible":false},"id":"doctor_away","if":[{"dependentId":"red_apple_today","properties":{"enabled":true,"visible":true},"value":"Yes"}],"position":3.1}]');
+      let questions = JSON.parse('[{"id":"like_apples","text":"Do you like apples?","type":""},{"id":"bananas_instead","text":"Do you like bananas instead?","type":""},{"id":"apple_colour","text":"Do you like *RED* apples?","type":""},{"id":"red_apple_today","text":"Have you eaten a red apple today?","type":""},{"id":"doctor_away","text":"Did it keep the doctor away?","type":""}]');
+
+      res.render('create-react.html', {
+        qsSchema: JSON.stringify(qsSchema),
+        questions: JSON.stringify(questions)
+      });
+    }).catch(console.trace.bind(console));
+};
+
 var reviewPost = function(req, res) {
   var acceptSubmission = !_.isUndefined(req.body.publish);
   var answers;
@@ -313,5 +342,6 @@ var reviewPost = function(req, res) {
 module.exports = {
   submit: submit,
   pendingEntry: pendingEntry,
-  reviewPost: reviewPost
+  reviewPost: reviewPost,
+  submitReact: submitReact
 };

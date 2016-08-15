@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ gettext("Submit") }}
+{% endblock %}
+
+{% block content %}
+
+<style type="text/css" media="screen">
+  #questions .questionList li {
+    color: #000;
+  }
+
+  #questions .questionList li.disabled  {
+    color: grey;
+  }
+</style>
+
+<div class="page-header">
+  <h1>{{format("Make a Submission &ndash; %(sitename)s", { sitename: site.settings.title }) }}</h1>
+</div>
+
+<div id="questions"></div>
+
+<script src="https://npmcdn.com/react@15.3.0/dist/react.js"></script>
+<script src="https://npmcdn.com/react-dom@15.3.0/dist/react-dom.js"></script>
+<script src="https://npmcdn.com/babel-core@5.8.38/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/lodash/3.10.1/lodash.min.js"></script>
+<script type="text/babel">
+
+
+var questions = {{ questions }};
+var qsSchema = {{ qsSchema }}
+
+var QuestionField = React.createClass({
+
+  render: function() {
+    return (
+      <li className={this._getClassValues()}>
+        <p>{this.props.children.toString()}</p>
+        <label>My Answer</label>
+        <input type="text" value={this.props.value} disabled={!this.props.visibleProps.enabled} onChange={this.handler} />
+        {/*<label>
+          <span>Yes</span>
+          <input type="radio" name={this.props.schema.id} value="yes" disabled={!this.state.enabled}/>
+        </label>
+        <label>
+          <span>No</span>
+          <input type="radio" name={this.props.schema.id} value="no" disabled={!this.state.enabled}/>
+        </label>*/}
+      </li>
+    );
+  },
+
+  handler: function(e) {
+    this.props.onChange(this, e.target.value);
+  },
+
+  _getClassValues: function() {
+    var classValue = "";
+    if (!this.props.visibleProps.enabled) classValue += "disabled ";
+    if (!this.props.visibleProps.visible) classValue += "hide ";
+    if (this.props.visibleProps.required) classValue += "required ";
+    return _.trim(classValue);
+  }
+});
+
+
+var QuestionForm = React.createClass({
+
+  getInitialState: function() {
+    var questionValues = this.props.questions.map(q => {
+      return {
+        'id': q.id,
+        'value': ""
+      }
+    });
+    return {
+      'questionState': questionValues
+    };
+  },
+
+  onFieldChange: function(field, value) {
+    // Set the new value for the field
+    var newQuestionsState = _.map(this.state.questionState, qState => {
+      if (qState.id == field.props.id) qState.value = value;
+      return qState;
+    });
+
+    this.setState({'questionState': newQuestionsState});
+  },
+
+  getVisiblePropsForId: function(id) {
+    /*
+      Return visible properties (required, enabled, visible) for the question
+      with `id`. Value of the properties depends on the value of other
+      dependent questions, based on the question schema.
+    */
+
+    // Get the schema for this id
+    var schema = _.find(this.props.qsSchema, qSchema => qSchema.id == id);
+
+    // Initally set up return value as the defaultProperties for the schema
+    var visProps = _.cloneDeep(schema.defaultProperties);
+
+    // For each `if` object in the schema, get the dependent value
+    _.each(schema['if'], dependency => {
+      var currentDependentValue = _.result(
+        _.find(this.state.questionState, qState => qState.id == dependency.dependentId),
+        'value');
+      // If the actual value of the dependent field is the same as the
+      // expected value
+      if (currentDependentValue == dependency.value) {
+        // Update the return value with the dependency properties.
+        _.assign(visProps, dependency.properties);
+      }
+    });
+    return visProps;
+  },
+
+  getTextForId: function(id) {
+    /*
+      Return question text for the question with `id`.
+    */
+    return _.result(_.find(this.props.questions, q => q.id == id), 'text');
+  },
+
+  render: function() {
+    var questionNodes = this.state.questionState.map(q => {
+      return (
+        <QuestionField ref={q.id}
+                       key={q.id}
+                       id={q.id}
+                       visibleProps={this.getVisiblePropsForId(q.id)}
+                       value={q.value}
+                       onChange={this.onFieldChange}>
+          {this.getTextForId(q.id)}
+        </QuestionField>
+      );
+    });
+    return (
+      <ol className="questionList">
+        {questionNodes}
+      </ol>
+    );
+  }
+});
+
+
+ReactDOM.render(
+  <QuestionForm questions={questions} qsSchema={qsSchema} />,
+  document.getElementById('questions')
+);
+</script>
+
+{% endblock %}
