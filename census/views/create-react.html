@@ -38,16 +38,24 @@ var QuestionField = React.createClass({
     return (
       <li className={this._getClassValues()}>
         <p>{this.props.children.toString()}</p>
-        <label>My Answer</label>
-        <input type="text" value={this.props.value} disabled={!this.props.visibleProps.enabled} onChange={this.handler} />
-        {/*<label>
+        <label>
           <span>Yes</span>
-          <input type="radio" name={this.props.schema.id} value="yes" disabled={!this.state.enabled}/>
+          <input type="radio"
+                 name={this.props.id}
+                 value="Yes"
+                 checked={(this.props.value == 'Yes')}
+                 disabled={!this.props.visibleProps.enabled}
+                 onChange={this.handler} />
         </label>
         <label>
           <span>No</span>
-          <input type="radio" name={this.props.schema.id} value="no" disabled={!this.state.enabled}/>
-        </label>*/}
+          <input type="radio"
+                 name={this.props.id}
+                 value="No"
+                 checked={(this.props.value == 'No')}
+                 disabled={!this.props.visibleProps.enabled}
+                 onChange={this.handler} />
+        </label>
       </li>
     );
   },
