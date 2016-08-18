@@ -70,7 +70,10 @@ const QuestionForm = React.createClass({
     /*
       Return visible properties (required, enabled, visible) for the question
       with `id`. Value of the properties depends on the value of other
-      dependent questions, based on the question schema.
+      provider questions, based on the question schema.
+
+      For the sake of clarity, `dependant` objects depend on `provider`
+      objects.
     */
 
     // Get the schema for this id
@@ -79,22 +82,24 @@ const QuestionForm = React.createClass({
     // Initally set up return value as the defaultProperties for the schema
     var visProps = _.cloneDeep(schema.defaultProperties);
 
-    // For each `if` object in the schema, get the dependent value
+    // For each dependency in the `if` array in the schema
     _.each(schema.if, dependency => {
-      // Find the current dependency state
-      var currentDependency =
+      // Find the current state of the provider
+      var currentProviderState =
         _.find(this.state.questionState,
-               qState => qState.id === dependency.dependentId);
-      // If the actual value of the dependent field is the same as the
-      // expected value, and the dependent field is enabled and visible...
+               qState => qState.id === dependency.providerId);
 
-      // ---> Only activate the dependency properties if the dependent object is itself enabled and visible. <---
-
-      if (currentDependency.value === dependency.value) {
+      // If the actual value of the provider field is the same as the expected
+      // value, and the provider field is enabled and visible...
+      var providerVisProps =
+        this.getVisiblePropsForId(dependency.providerId);
+      if (currentProviderState.value === dependency.value &&
+          providerVisProps.enabled &&
+          providerVisProps.visible) {
         // Update the return value with the dependency properties.
         _.assign(visProps, dependency.properties);
       }
-    });
+    }, this);
     return visProps;
   },
 

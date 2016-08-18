@@ -61,10 +61,11 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	// initial static data for development
 	// eslint-disable-next-line
 	var questions = [{ 'id': 'like_apples', 'text': 'Do you like apples?', 'type': '' }, { 'id': 'bananas_instead', 'text': 'Do you like bananas instead?', 'type': '' }, { 'id': 'apple_colour', 'text': 'Do you like *RED* apples?', 'type': '' }, { 'id': 'red_apple_today', 'text': 'Have you eaten a red apple today?', 'type': '' }, { 'id': 'doctor_away', 'text': 'Did it keep the doctor away?', 'type': '' }];
 	// eslint-disable-next-line
-	var qsSchema = [{ 'defaultProperties': { 'enabled': true, 'required': true, 'visible': true }, 'id': 'like_apples', 'position': 1 }, { 'defaultProperties': { 'enabled': false, 'required': false, 'visible': false }, 'id': 'bananas_instead', 'if': [{ 'dependentId': 'like_apples', 'properties': { 'enabled': true, 'required': true, 'visible': true }, 'value': 'No' }], 'position': 1.1 }, { 'defaultProperties': { 'enabled': false, 'required': false, 'visible': true }, 'id': 'apple_colour', 'if': [{ 'dependentId': 'like_apples', 'properties': { 'enabled': true, 'required': true }, 'value': 'Yes' }], 'position': 2 }, { 'defaultProperties': { 'enabled': false, 'required': false, 'visible': true }, 'id': 'red_apple_today', 'if': [{ 'dependentId': 'apple_colour', 'properties': { 'enabled': true, 'required': true }, 'value': 'Yes' }], 'position': 3 }, { 'defaultProperties': { 'enabled': false, 'required': false, 'visible': false }, 'id': 'doctor_away', 'if': [{ 'dependentId': 'red_apple_today', 'properties': { 'enabled': true, 'visible': true }, 'value': 'Yes' }], 'position': 3.1 }];
+	var qsSchema = [{ 'defaultProperties': { 'enabled': true, 'required': true, 'visible': true }, 'id': 'like_apples', 'position': 1 }, { 'defaultProperties': { 'enabled': false, 'required': false, 'visible': false }, 'id': 'bananas_instead', 'if': [{ 'providerId': 'like_apples', 'properties': { 'enabled': true, 'required': true, 'visible': true }, 'value': 'No' }], 'position': 1.1 }, { 'defaultProperties': { 'enabled': false, 'required': false, 'visible': true }, 'id': 'apple_colour', 'if': [{ 'providerId': 'like_apples', 'properties': { 'enabled': true, 'required': true }, 'value': 'Yes' }], 'position': 2 }, { 'defaultProperties': { 'enabled': false, 'required': false, 'visible': true }, 'id': 'red_apple_today', 'if': [{ 'providerId': 'apple_colour', 'properties': { 'enabled': true, 'required': true }, 'value': 'Yes' }], 'position': 3 }, { 'defaultProperties': { 'enabled': false, 'required': false, 'visible': false }, 'id': 'doctor_away', 'if': [{ 'providerId': 'red_apple_today', 'properties': { 'enabled': true, 'visible': true }, 'value': 'Yes' }], 'position': 3.1 }];
 	
 	(0, _reactDom.render)(_react2.default.createElement(_QuestionForm2.default, { questions: questions, qsSchema: qsSchema }), document.getElementById('questions'));
 
@@ -22102,7 +22103,9 @@
 	    /*
 	      Return visible properties (required, enabled, visible) for the question
 	      with `id`. Value of the properties depends on the value of other
-	      dependent questions, based on the question schema.
+	      provider questions, based on the question schema.
+	       For the sake of clarity, `dependant` objects depend on `provider`
+	      objects.
 	    */
 	
 	    // Get the schema for this id
@@ -22113,22 +22116,21 @@
 	    // Initally set up return value as the defaultProperties for the schema
 	    var visProps = _lodash2.default.cloneDeep(schema.defaultProperties);
 	
-	    // For each `if` object in the schema, get the dependent value
+	    // For each dependency in the `if` array in the schema
 	    _lodash2.default.each(schema.if, function (dependency) {
-	      // Find the current dependency state
-	      var currentDependency = _lodash2.default.find(_this.state.questionState, function (qState) {
-	        return qState.id === dependency.dependentId;
+	      // Find the current state of the provider
+	      var currentProviderState = _lodash2.default.find(_this.state.questionState, function (qState) {
+	        return qState.id === dependency.providerId;
 	      });
-	      // If the actual value of the dependent field is the same as the
-	      // expected value, and the dependent field is enabled and visible...
 	
-	      // ---> Only activate the dependency properties if the dependent object is itself enabled and visible. <---
-	
-	      if (currentDependency.value === dependency.value) {
+	      // If the actual value of the provider field is the same as the expected
+	      // value, and the provider field is enabled and visible...
+	      var providerVisProps = _this.getVisiblePropsForId(dependency.providerId);
+	      if (currentProviderState.value === dependency.value && providerVisProps.enabled && providerVisProps.visible) {
 	        // Update the return value with the dependency properties.
 	        _lodash2.default.assign(visProps, dependency.properties);
 	      }
-	    });
+	    }, this);
 	    return visProps;
 	  },
 	  getTextForId: function getTextForId(id) {
