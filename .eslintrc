@@ -8,10 +8,7 @@ env:
   mocha: true
   browser: true
 parserOptions:
-  sourceType: module
-  ecmaFeatures:
-    jsx: true
-    modules: true
+  sourceType: script
 rules:
   strict:
     - error
