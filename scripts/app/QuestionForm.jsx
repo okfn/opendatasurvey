@@ -117,10 +117,19 @@ const QuestionForm = React.createClass({
 
   getLabelForId(id) {
     /*
-      Return a label for the question with `id`, including prefix.
+      Return a label for the question schema with `id` (including optional
+      prefix), derived from the schema position property.
     */
     var schema = this.getSchemaForId(id);
     return String(this.props.labelPrefix || '') + String(schema.position);
+  },
+
+  getPositionForId(id) {
+    /*
+      Return the position for the question schema with `id`.
+    */
+    var schema = this.getSchemaForId(id);
+    return schema.position;
   },
 
   render() {
@@ -132,11 +141,14 @@ const QuestionForm = React.createClass({
                        visibleProps={this.getVisiblePropsForId(q.id)}
                        value={q.value}
                        onChange={this.onFieldChange}
-                       label={this.getLabelForId(q.id)}>
+                       label={this.getLabelForId(q.id)}
+                       position={this.getPositionForId(q.id)}>
           {this.getTextForId(q.id)}
         </QuestionField>
       );
     });
+    // Sort QuestionField nodes by their position property
+    questionNodes = _.sortBy(questionNodes, q => q.props.position);
     return (
       <ul className="questionList">
         {questionNodes}

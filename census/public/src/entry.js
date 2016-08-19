@@ -22153,10 +22153,18 @@
 	  },
 	  getLabelForId: function getLabelForId(id) {
 	    /*
-	      Return a label for the question with `id`, including prefix.
+	      Return a label for the question schema with `id` (including optional
+	      prefix), derived from the schema position property.
 	    */
 	    var schema = this.getSchemaForId(id);
 	    return String(this.props.labelPrefix || '') + String(schema.position);
+	  },
+	  getPositionForId: function getPositionForId(id) {
+	    /*
+	      Return the position for the question schema with `id`.
+	    */
+	    var schema = this.getSchemaForId(id);
+	    return schema.position;
 	  },
 	  render: function render() {
 	    var _this2 = this;
@@ -22170,9 +22178,14 @@
 	          visibleProps: _this2.getVisiblePropsForId(q.id),
 	          value: q.value,
 	          onChange: _this2.onFieldChange,
-	          label: _this2.getLabelForId(q.id) },
+	          label: _this2.getLabelForId(q.id),
+	          position: _this2.getPositionForId(q.id) },
 	        _this2.getTextForId(q.id)
 	      );
+	    });
+	    // Sort QuestionField nodes by their position property
+	    questionNodes = _lodash2.default.sortBy(questionNodes, function (q) {
+	      return q.props.position;
 	    });
 	    return _react2.default.createElement(
 	      'ul',
