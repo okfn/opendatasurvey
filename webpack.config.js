@@ -5,10 +5,10 @@ var BUILD_DIR = path.resolve(__dirname, 'census/public/src');
 var APP_DIR = path.resolve(__dirname, 'scripts/app');
 
 var config = {
-  entry: APP_DIR + '/index.jsx',
+  entry: APP_DIR + '/entry.jsx',
   output: {
     path: BUILD_DIR,
-    filename: 'bundle.js'
+    filename: 'entry.js'
   },
   module: {
     loaders: [

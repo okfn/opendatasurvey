@@ -43,7 +43,7 @@
 /******/ ([
 /* 0 */
 /*!*******************************!*\
-  !*** ./scripts/app/index.jsx ***!
+  !*** ./scripts/app/entry.jsx ***!
   \*******************************/
 /***/ function(module, exports, __webpack_require__) {
 
@@ -64,7 +64,10 @@
 	var qsSchema = window.qsSchema;
 	var questions = window.questions;
 	
-	(0, _reactDom.render)(_react2.default.createElement(_QuestionForm2.default, { questions: questions, qsSchema: qsSchema }), document.getElementById('questions'));
+	// Add preliminary QuestionSet here, section A.
+	
+	// Main QuestionSet, section B.
+	(0, _reactDom.render)(_react2.default.createElement(_QuestionForm2.default, { questions: questions, qsSchema: qsSchema, labelPrefix: 'B' }), document.getElementById('questions'));
 
 /***/ },
 /* 1 */
@@ -22026,6 +22029,12 @@
 	      _react2.default.createElement(
 	        'p',
 	        null,
+	        _react2.default.createElement(
+	          'span',
+	          null,
+	          this.props.label
+	        ),
+	        ' ',
 	        this.props.children.toString()
 	      ),
 	      _react2.default.createElement(
@@ -22094,6 +22103,14 @@
 	
 	    this.setState({ questionState: newQuestionsState });
 	  },
+	  getSchemaForId: function getSchemaForId(id) {
+	    /*
+	      Return the schema for `id` from the Question Set Schema object in props.
+	    */
+	    return _lodash2.default.find(this.props.qsSchema, function (qSchema) {
+	      return qSchema.id === id;
+	    });
+	  },
 	  getVisiblePropsForId: function getVisiblePropsForId(id) {
 	    var _this = this;
 	
@@ -22104,13 +22121,9 @@
 	       For the sake of clarity, `dependant` objects depend on `provider`
 	      objects.
 	    */
+	    var schema = this.getSchemaForId(id);
 	
-	    // Get the schema for this id
-	    var schema = _lodash2.default.find(this.props.qsSchema, function (qSchema) {
-	      return qSchema.id === id;
-	    });
-	
-	    // Initally set up return value as the defaultProperties for the schema
+	    // Initially set up return value as the defaultProperties for the schema
 	    var visProps = _lodash2.default.cloneDeep(schema.defaultProperties);
 	
 	    // For each dependency in the `if` array in the schema
@@ -22138,6 +22151,13 @@
 	      return q.id === id;
 	    }), 'text');
 	  },
+	  getLabelForId: function getLabelForId(id) {
+	    /*
+	      Return a label for the question with `id`, including prefix.
+	    */
+	    var schema = this.getSchemaForId(id);
+	    return String(this.props.labelPrefix || '') + String(schema.position);
+	  },
 	  render: function render() {
 	    var _this2 = this;
 	
@@ -22149,12 +22169,13 @@
 	          id: q.id,
 	          visibleProps: _this2.getVisiblePropsForId(q.id),
 	          value: q.value,
-	          onChange: _this2.onFieldChange },
+	          onChange: _this2.onFieldChange,
+	          label: _this2.getLabelForId(q.id) },
 	        _this2.getTextForId(q.id)
 	      );
 	    });
 	    return _react2.default.createElement(
-	      'ol',
+	      'ul',
 	      { className: 'questionList' },
 	      questionNodes
 	    );
@@ -34545,4 +34566,4 @@
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=bundle.js.map
+//# sourceMappingURL=entry.js.map

@@ -6,7 +6,7 @@ const QuestionField = React.createClass({
   render() {
     return (
       <li className={this._getClassValues()}>
-        <p>{this.props.children.toString()}</p>
+        <p><span>{this.props.label}</span> {this.props.children.toString()}</p>
         <label>
           <span>Yes</span>
           <input type="radio"
@@ -66,6 +66,13 @@ const QuestionForm = React.createClass({
     this.setState({questionState: newQuestionsState});
   },
 
+  getSchemaForId(id) {
+    /*
+      Return the schema for `id` from the Question Set Schema object in props.
+    */
+    return _.find(this.props.qsSchema, qSchema => qSchema.id === id);
+  },
+
   getVisiblePropsForId(id) {
     /*
       Return visible properties (required, enabled, visible) for the question
@@ -75,11 +82,9 @@ const QuestionForm = React.createClass({
       For the sake of clarity, `dependant` objects depend on `provider`
       objects.
     */
+    var schema = this.getSchemaForId(id);
 
-    // Get the schema for this id
-    var schema = _.find(this.props.qsSchema, qSchema => qSchema.id === id);
-
-    // Initally set up return value as the defaultProperties for the schema
+    // Initially set up return value as the defaultProperties for the schema
     var visProps = _.cloneDeep(schema.defaultProperties);
 
     // For each dependency in the `if` array in the schema
@@ -110,6 +115,14 @@ const QuestionForm = React.createClass({
     return _.result(_.find(this.props.questions, q => q.id === id), 'text');
   },
 
+  getLabelForId(id) {
+    /*
+      Return a label for the question with `id`, including prefix.
+    */
+    var schema = this.getSchemaForId(id);
+    return String(this.props.labelPrefix || '') + String(schema.position);
+  },
+
   render() {
     var questionNodes = this.state.questionState.map(q => {
       return (
@@ -118,15 +131,16 @@ const QuestionForm = React.createClass({
                        id={q.id}
                        visibleProps={this.getVisiblePropsForId(q.id)}
                        value={q.value}
-                       onChange={this.onFieldChange}>
+                       onChange={this.onFieldChange}
+                       label={this.getLabelForId(q.id)}>
           {this.getTextForId(q.id)}
         </QuestionField>
       );
     });
     return (
-      <ol className="questionList">
+      <ul className="questionList">
         {questionNodes}
-      </ol>
+      </ul>
     );
   }
 });

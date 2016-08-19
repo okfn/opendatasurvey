@@ -5,5 +5,8 @@ import QuestionForm from './QuestionForm.jsx';
 let qsSchema = window.qsSchema;
 let questions = window.questions;
 
-render(<QuestionForm questions={questions} qsSchema={qsSchema} />,
+// Add preliminary QuestionSet here, section A.
+
+// Main QuestionSet, section B.
+render(<QuestionForm questions={questions} qsSchema={qsSchema} labelPrefix={'B'} />,
        document.getElementById('questions'));
