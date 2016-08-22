@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ gettext("Submit") }}
+{% endblock %}
+
+{% block content %}
+
+<style type="text/css" media="screen">
+  #questions .questionList li {
+    color: #000;
+  }
+
+  #questions .questionList li.disabled  {
+    color: grey;
+  }
+</style>
+
+<div class="page-header">
+  <h1>{{format("Make a Submission &ndash; %(sitename)s", { sitename: site.settings.title }) }}</h1>
+</div>
+
+<div id="questions"></div>
+<script type="text/javascript">
+  window.qsSchema = {{ qsSchema|safe }};
+  window.questions = {{ questions|safe }};
+</script>
+
+<script src="/src/entry.js" type="text/javascript"></script>
+
+{% endblock %}

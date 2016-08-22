@@ -41,6 +41,8 @@
     "pg-hstore": "^2.3.2",
     "q": "^1.4.1",
     "raven": "^0.8.1",
+    "react": "^15.3.0",
+    "react-dom": "^15.3.0",
     "request": "^2.56.0",
     "scrypt": "^5.1.1",
     "sequelize": "^3.1.1",
@@ -54,13 +56,21 @@
     "xss": "^0.2.13"
   },
   "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-cli": "^6.11.4",
+    "babel-core": "^6.13.2",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.13.2",
+    "babel-preset-react": "^6.11.1",
     "chai": "^2.1.4",
     "chai-as-promised": "^5.1.0",
     "chalk": "^1.1.0",
     "colors": "^1.1.0",
     "coveralls": "^2.11.9",
+    "enzyme": "^2.4.1",
     "eslint": "^3.0.1",
     "eslint-config-google": "^0.6.0",
+    "eslint-plugin-react": "^6.1.1",
     "execSync": "^1.0.2",
     "gulp": "^3.8.9",
     "gulp-concat-po": "^0.1.0",
@@ -68,13 +78,18 @@
     "gulp-xgettext": "^0.2.1",
     "istanbul": "^0.4.4",
     "jscs": "^2.3.1",
+    "jsdom": "9.4.2",
+    "jsdom-global": "2.0.0",
     "jsxgettext": "^0.5.1",
     "mocha": "^2.2.5",
     "node-inspector": "^0.12.2",
     "optimist": "~0.6.1",
+    "react-addons-test-utils": "^15.3.0",
+    "react-dom": "^15.3.0",
     "rewire": "^2.5.2",
     "sinon": "^1.14.1",
     "supertest": "^1.0.1",
+    "webpack": "^1.13.1",
     "zombie": "^4.1.0"
   },
   "engines": {
@@ -87,7 +102,9 @@
     "migrate_users": "node scripts/users.js",
     "start": "node server.js",
     "debug": "node-debug debug-server.js",
-    "test": "NODE_ENV=test ./node_modules/istanbul/lib/cli.js cover -x '**/census/migrations/**' -x '**/scripts/**' ./node_modules/mocha/bin/_mocha -- -R spec tests/ --harmony",
-    "jscs": "jscs census/*.js census/**/*.js fixtures scripts tests"
+    "test": "NODE_ENV=test ./node_modules/istanbul/lib/cli.js cover -x '**/census/migrations/**' -x '**/scripts/**' ./node_modules/mocha/bin/_mocha -- --compilers js:babel-core/register -R spec tests/ --harmony",
+    "jscs": "jscs census/*.js census/**/*.js fixtures scripts tests",
+    "dev": "webpack -d --watch",
+    "build": "webpack -p"
   }
 }
