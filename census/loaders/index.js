@@ -120,7 +120,7 @@ var loadData = function(options, models) {
                 return new Promise(function(RSD, RJD) {
                   // Allow custom data mapping
                   let createData = _.chain(
-                    _.isFunction(options.mapper) ? options.mapper(DS) : DS
+                    _.isFunction(options.mapper) ? options.mapper(DS, S) : DS
                   )
                   // All records belongs to certain domain
                   .extend({site: options.site})
@@ -151,36 +151,31 @@ var loadTranslatedData = function(options, models) {
   // Avoid recursive call
   var mapper = options.mapper;
 
-  return loadData(_.extend(options, {
-    mapper: function(D) {
-      // Don't forget to call user defined mapper function
-      var mapped = _.isFunction(mapper) ? mapper(D) : D;
+  return models.Site.findById(options.site).then(function(site) {
+    return loadData(_.extend(options, {
+      mapper: function(D) {
+        // Don't forget to call user defined mapper function
+        var mapped = _.isFunction(mapper) ? mapper(D, site) : D;
 
-      return _.extend(mapped, {
-        translations: _.chain(mapped)
-          .pairs()
-
-          .reduce(function(R, P) {
-            var fieldLang;
-
-            if (!(P[0].indexOf('@') + 1)) {
+        return _.extend(mapped, {
+          translations: _.chain(mapped)
+            .pairs()
+            .reduce(function(R, P) {
+              var fieldLang;
+              if (!(P[0].indexOf('@') + 1)) {
+                return R;
+              }
+              fieldLang = P[0].split('@');
+              // Default empty dict
+              R[fieldLang[1]] = R[fieldLang[1]] || {};
+              R[fieldLang[1]][fieldLang[0]] = P[1];
               return R;
-            }
-
-            fieldLang = P[0].split('@');
-
-            // Default empty dict
-            R[fieldLang[1]] = R[fieldLang[1]] || {};
-
-            R[fieldLang[1]][fieldLang[0]] = P[1];
-
-            return R;
-          }, {})
-
-          .value()
-      });
-    }
-  }), models);
+            }, {})
+            .value()
+        });
+      }
+    }), models);
+  });
 };
 
 module.exports = {

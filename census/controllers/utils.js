@@ -187,7 +187,7 @@ var commonFieldArray = function(data, pattern) {
   });
 };
 
-var placeMapper = function(data) {
+var placeMapper = function(data, site) {
   var reviewers = (data.reviewers) ? splitFields(data.reviewers) : [];
   return _.defaults({
     id: data.id.toLowerCase(),
@@ -195,11 +195,13 @@ var placeMapper = function(data) {
   }, data);
 };
 
-var datasetMapper = function(data) {
+var datasetMapper = function(data, site) {
   let characteristics = commonFieldArray(data, /^characteristics:\d+$/i);
   let reviewers = (data.reviewers) ? splitFields(data.reviewers) : [];
   let disableforyears =
     (data.disableforyears) ? splitFields(data.disableforyears) : [];
+  let qsurl = (data.questionseturl !== '') ?
+    data.questionseturl : site.settings.question_set_url;
   return _.defaults({
     id: data.id.toLowerCase(),
     description: marked(data.description),
@@ -207,11 +209,12 @@ var datasetMapper = function(data) {
     order: data.order || 100,
     reviewers: reviewers,
     disableforyears: disableforyears,
-    characteristics: characteristics
+    characteristics: characteristics,
+    qsurl: qsurl
   }, data);
 };
 
-var questionMapper = function(data) {
+var questionMapper = function(data, site) {
   var dependants = (data.dependants) ? splitFields(data.dependants) : null;
   return _.defaults({
     id: data.id.toLowerCase(),

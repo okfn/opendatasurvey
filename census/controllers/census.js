@@ -31,7 +31,6 @@ var submitPostHandler = function(req, res, data) {
   var objToSave = {};
   var answers;
   var saveStrategy;
-  // eslint-disable-next-line no-unused-vars
   var anonymous = true;
   var submitterId = utils.ANONYMOUS_USER_ID;
   var query;

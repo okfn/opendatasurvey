@@ -108,6 +108,29 @@ describe('Admin page', function () {
           ]);
         });
     });
+
+    it('adds a dataset.qsurl property from the Dataset sheet', function() {
+      // budget dataset has a qsurl value in spreadsheet
+      return this.app.get('models').Dataset.findById('budget',
+                                                     {where: {site: siteID}})
+        .then(function (budgetInstance) {
+          assert.isDefined(budgetInstance.qsurl);
+          assert.notEqual(budgetInstance.qsurl, '');
+          assert.isTrue(budgetInstance.qsurl.startsWith('https://docs.google.com/spreadsheets'));
+        });
+    });
+
+    it('adds a dataset.qsurl property from the default site config',
+    function() {
+      // transport dataset doesn't have a qsurl value in spreadsheet, so uses default
+      return this.app.get('models').Dataset.findById('transport-realtime',
+                                                     {where: {site: siteID}})
+        .then(function (transportInstance) {
+          assert.isDefined(transportInstance.qsurl);
+          assert.notEqual(transportInstance.qsurl, '');
+          assert.isTrue(transportInstance.qsurl.startsWith('https://docs.google.com/spreadsheets'));
+        });
+    });
   });
 
   describe('reload questions button action', function () {

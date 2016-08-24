@@ -59,6 +59,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       comment: 'An array of dataset characterstics.'
     },
+    qsurl: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      comment: 'A URL pointing to the QuestionSet used by this dataset.'
+    },
     translations: {
       type: DataTypes.JSONB,
       allowNull: true
