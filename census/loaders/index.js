@@ -1,18 +1,19 @@
 'use strict';
 
-var _ = require('lodash');
-var Promise = require('bluebird');
-var config = require('../config');
-var utils = require('./utils');
-var controllerUtils = require('../controllers/utils');
-var marked = require('marked');
+const _ = require('lodash');
+const Promise = require('bluebird');
+const config = require('../config');
+const utils = require('./utils');
+const controllerUtils = require('../controllers/utils');
+const marked = require('marked');
+const crypto = require('crypto');
 
 var loadConfig = function(siteId, models) {
-  return new Promise(function(RS, RJ) {
+  return new Promise(function(resolve, reject) {
     models.Registry.findById(siteId).then(function(R) {
       utils.spreadsheetParse(R.settings.configurl).spread(function(E, C) {
         if (E) {
-          RJ(E);
+          reject(E);
         }
 
         var settings = {};
@@ -41,11 +42,81 @@ var loadConfig = function(siteId, models) {
           settings: settings
         })
           .then(function() {
-            RS(false);
+            resolve(false);
           })
-          .catch(function(E) {
-            RJ(E);
+          .catch(function(e) {
+            reject(e);
           });
+      });
+    });
+  });
+};
+
+/*
+  A helper function to create a QuestionSet from the parsed quesiton set url,
+  and associate it with each dataset in the datasets array.
+*/
+let _createQuestionSetForDatasets = function(datasets,
+                                            qsurl,
+                                            siteId,
+                                            models,
+                                            transaction) {
+  return new Promise((resolve, reject) => {
+    utils.spreadsheetParse(qsurl).spread((err, qsConfig) => {
+      if (err) reject(err);
+      let raw = _.object(_.zip(_.pluck(qsConfig, 'key'),
+                               _.pluck(qsConfig, 'value')));
+      // create QuestionSet instance from raw data obj.
+      let qsHash = crypto.createHash('sha1').update(siteId + qsurl).digest('hex');
+      let qsSchema = JSON.parse(raw.question_set_schema);
+      return models.QuestionSet.create({
+        id: qsHash,
+        site: siteId,
+        qsSchema: qsSchema
+      }, {transaction: transaction})
+      .then(function(qsInstance) {
+        return Promise.each(datasets, function(ds) {
+          return ds.update({questionSetId: qsInstance.id},
+                           {transaction: transaction});
+        }).then(function() {
+          resolve();
+        });
+      }).catch(reject);
+    });
+  });
+};
+
+var loadQuestionSets = function(siteId, models) {
+  return models.sequelize.transaction(t => {
+    return new Promise((resolve, reject) => {
+      // Destroy all QuestionSets associated with siteId.
+      return models.QuestionSet.destroy({
+        where: {site: siteId},
+        transaction: t
+      }).then(destroyed => {
+        // Get the datasets for the site
+        return models.Dataset.findAll({
+          where: {site: siteId},
+          transaction: t
+        }).then(datasets => {
+          // Fetch the qset config at dataset.qsurl for each dataset.
+          let qsLoaders = [];
+          // Group datasets by their ds.qsurl properties.
+          let datasetsByQSUrl = _.groupBy(datasets, ds => ds.qsurl);
+          // Create an array of Promises for each qsurl:datasets, to parse the
+          // spreadsheet at qsurl and create a QuestionSet object.
+          _.each(datasetsByQSUrl, (datasetArr, qsurl) => {
+            qsLoaders.push(
+              _createQuestionSetForDatasets(datasetArr, qsurl, siteId, models, t)
+            );
+          });
+          // Resolve all the Promises in qsLoaders array.
+          Promise.all(qsLoaders).then(function() {
+            resolve();
+          });
+        }).catch(function(e) {
+          reject(e);
+        });
       });
     });
   });
@@ -68,7 +139,7 @@ var loadRegistry = function(models) {
         // Make each upsert (can't do a bulk with upsert,
         // but that is ok for our needs here)
         return Promise.all(_.map(registry, function(R) {
-          return new Promise(function(RS, RJ) {
+          return new Promise(function(resolve, reject) {
             // Normalize data before upsert
             if (R.adminemail) {
               R.adminemail = _.each(R.adminemail
@@ -81,7 +152,7 @@ var loadRegistry = function(models) {
               id: R.censusid,
               settings: _.omit(R, 'censusid')
             })).then(function() {
-              RS(false);
+              resolve(false);
             });
           });
         }));
@@ -104,23 +175,23 @@ var loadRegistry = function(models) {
 var loadData = function(options, models) {
   return models.sequelize.transaction(function(t) {
     return models.Site.findById(options.site, {transaction: t}).then(
-      function(S) {
+      function(site) {
         return options.Model.destroy({
           where: {
             site: options.site
           },
           transaction: t
         }).then(function(destroyed) {
-          return utils.spreadsheetParse(S.settings[options.setting]).spread(
-            function(E, D) {
-              if (E) {
-                throw E;
+          return utils.spreadsheetParse(site.settings[options.setting]).spread(
+            function(err, data) {
+              if (err) {
+                throw err;
               }
-              return Promise.all(_.map(D, function(DS) {
-                return new Promise(function(RSD, RJD) {
+              return Promise.all(_.map(data, function(dataObj) {
+                return new Promise(function(resolve, reject) {
                   // Allow custom data mapping
                   let createData = _.chain(
-                    _.isFunction(options.mapper) ? options.mapper(DS, S) : DS
+                    _.isFunction(options.mapper) ? options.mapper(dataObj, site) : dataObj
                   )
                   // All records belongs to certain domain
                   .extend({site: options.site})
@@ -129,11 +200,8 @@ var loadData = function(options, models) {
                   .map(P => [P[0].toLowerCase(), P[1]])
                   .object()
                   .value();
-                  return options.Model.create(
-                    createData,
-                    {
-                      transaction: t
-                    }).then(RSD).catch(RJD);
+                  return options.Model.create(createData, {transaction: t})
+                    .then(resolve).catch(reject);
                 });
               }));
             });
@@ -182,5 +250,6 @@ module.exports = {
   loadData: loadData,
   loadTranslatedData: loadTranslatedData,
   loadRegistry: loadRegistry,
-  loadConfig: loadConfig
+  loadConfig: loadConfig,
+  loadQuestionSets: loadQuestionSets
 };

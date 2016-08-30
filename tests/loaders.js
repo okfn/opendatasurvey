@@ -20,12 +20,6 @@ describe('Admin page', function () {
     registryUrl: censusConfig.get('registryUrl')
   };
 
-  after(function () {
-    for (var setting in configValues) {
-      censusConfig.set(setting, configValues[setting]);
-    }
-  });
-
   before(function () {
     let config = testUtils.app.get('config');
     config.set('test:testing', true);
@@ -38,17 +32,33 @@ describe('Admin page', function () {
     this.app = testUtils.app;
   });
 
-  beforeEach(function () {
-    return this.browser.visit('/admin');
+  after(function () {
+    for (var setting in configValues) {
+      censusConfig.set(setting, configValues[setting]);
+    }
   });
 
-  it('should load admin page successfully', function () {
-    this.browser.assert.success();
-    this.browser.assert.text('title', 'Dashboard -');
+  before(function() {
+    return;
+  });
+
+  describe('admin page', function() {
+    before(function () {
+      return this.browser.visit('/admin');
+    });
+
+    it('should load successfully', function () {
+      this.browser.assert.success();
+      this.browser.assert.text('title', 'Dashboard -');
+    });
   });
 
   describe('reload config button action', function () {
-    beforeEach(function () {
+    before(function () {
+      return this.browser.visit('/admin');
+    });
+
+    before(function () {
       return this.browser.pressButton('Reload Config');
     });
 
@@ -69,7 +79,11 @@ describe('Admin page', function () {
   });
 
   describe('reload places button action', function () {
-    beforeEach(function () {
+    before(function () {
+      return this.browser.visit('/admin');
+    });
+
+    before(function () {
       return this.browser.pressButton('Reload Places');
     });
 
@@ -87,7 +101,11 @@ describe('Admin page', function () {
   });
 
   describe('reload datasets button action', function () {
-    beforeEach(function () {
+    before(function () {
+      return this.browser.visit('/admin');
+    });
+
+    before(function () {
       return this.browser.pressButton('Reload Datasets');
     });
 
@@ -133,8 +151,49 @@ describe('Admin page', function () {
     });
   });
 
+  describe('reload questionset button action', function() {
+    before(function () {
+      return this.browser.visit('/admin');
+    });
+
+    before(function() {
+      return this.browser.pressButton('Reload QuestionSets');
+    });
+
+    it('should return with ok status', function() {
+      this.browser.assert.success();
+      let html = this.browser.resources[0].response.body;
+      let jsonData = JSON.parse(html);
+      assert.equal(jsonData.status, 'ok');
+      assert.equal(jsonData.message, 'ok');
+    });
+
+    it('should create a single QuestionSet instance', function() {
+      return this.app.get('models').QuestionSet.findAll({where: {site: siteID}})
+        .then(function(data) {
+          assert.equal(data.length, 1);
+        });
+    });
+
+    it('should association QuestionSet with appropriate datasets', function() {
+      return this.app.get('models').QuestionSet.findAll({where: {site: siteID}})
+        .bind(this).then(function(data) {
+          let qsid = data[0].id;
+          return this.app.get('models').Dataset.findAll(
+            {where: {site: siteID, questionSetId: qsid}})
+            .then(datasets => {
+              assert.equal(datasets.length, 15);
+            });
+        });
+    });
+  });
+
   describe('reload questions button action', function () {
-    beforeEach(function () {
+    before(function () {
+      return this.browser.visit('/admin');
+    });
+
+    before(function () {
       return this.browser.pressButton('Reload Questions');
     });
 
