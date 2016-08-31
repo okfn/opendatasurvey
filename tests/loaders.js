@@ -170,45 +170,34 @@ describe('Admin page', function () {
 
     it('should create a single QuestionSet instance', function() {
       return this.app.get('models').QuestionSet.findAll({where: {site: siteID}})
-        .then(function(data) {
-          assert.equal(data.length, 1);
+        .then(function(qsets) {
+          assert.equal(qsets.length, 1);
         });
     });
 
     it('should association QuestionSet with appropriate datasets', function() {
       return this.app.get('models').QuestionSet.findAll({where: {site: siteID}})
-        .bind(this).then(function(data) {
-          let qsid = data[0].id;
+        .bind(this).then(function(qsets) {
+          let qsid = qsets[0].id;
           return this.app.get('models').Dataset.findAll(
-            {where: {site: siteID, questionsetid: qsid}})
-            .then(datasets => {
-              assert.equal(datasets.length, 15);
-            });
+            {where: {site: siteID, questionsetid: qsid}});
+        }).then(datasets => {
+          assert.equal(datasets.length, 15);
         });
     });
+
+    it('should load child Question instances into database', function() {
+      return this.app.get('models').QuestionSet.findAll({where: {site: siteID}})
+      .bind(this).then(qsets => {
+        let qsid = qsets[0].id;
+        return this.app.get('models').Question.findAll(
+          {where: {questionsetid: qsid}});
+      })
+      .then(questions => {
+        assert.equal(questions.length, 18);
+      });
+    });
   });
-
-  // describe('reload questions button action', function () {
-  //   before(function () {
-  //     return this.browser.visit('/admin');
-  //   });
-
-  //   before(function () {
-  //     return this.browser.pressButton('Reload Questions');
-  //   });
-
-  //   it('should load questions', function () {
-  //     this.browser.assert.success();
-  //     let html = this.browser.resources[0].response.body;
-  //     let jsonData = JSON.parse(html);
-  //     assert.equal(jsonData.status, 'ok');
-  //     assert.equal(jsonData.message, 'ok');
-  //     return this.app.get('models').Question.findAll({where: {site: siteID}})
-  //       .then(function (data) {
-  //         assert.equal(data.length, 18);
-  //       });
-  //   });
-  // });
 });
 
 describe('System Control page', function () {
