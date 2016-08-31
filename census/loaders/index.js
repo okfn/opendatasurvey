@@ -153,39 +153,33 @@ var loadQuestionSets = function(siteId, models) {
 var loadRegistry = function(models) {
   var registryUrl = config.get('registryUrl') || false;
 
-  return utils.spreadsheetParse(registryUrl)
-    .spread(function(err, registry) {
-      if (err) {
-        return [err, false];
-      }
-
-      if (!registry) {
-        return ['could not reload registry', false];
-      }
-
-      return models.Registry.count().then(function(C) {
-        // Make each upsert (can't do a bulk with upsert,
-        // but that is ok for our needs here)
-        return Promise.all(_.map(registry, function(R) {
-          return new Promise(function(resolve, reject) {
-            // Normalize data before upsert
-            if (R.adminemail) {
-              R.adminemail = _.each(R.adminemail
-                .split(controllerUtils.FIELD_SPLITTER),
-                function(r) {
-                  r.trim();
-                });
-            }
-            models.Registry.upsert(_.extend(R, {
-              id: R.censusid,
-              settings: _.omit(R, 'censusid')
-            })).then(function() {
-              resolve(false);
+  return utils.spreadsheetParsePromise(registryUrl)
+  .then(registry => {
+    if (!registry) {
+      throw new Error('could not reload registry');
+    }
+    return models.Registry.count().then(() => registry);
+  })
+  .then(registry => {
+    // Make each upsert (can't do a bulk with upsert, but that is ok for our
+    // needs here)
+    return Promise.all(
+      _.map(registry, reg => {
+        // Normalize data before upsert
+        if (reg.adminemail) {
+          reg.adminemail = _.each(reg.adminemail
+            .split(controllerUtils.FIELD_SPLITTER),
+            function(r) {
+              r.trim();
             });
-          });
+        }
+        return models.Registry.upsert(_.extend(reg, {
+          id: reg.censusid,
+          settings: _.omit(reg, 'censusid')
         }));
-      });
-    });
+      })
+    );
+  });
 };
 
 /* Load data and create model instances based on options param.
@@ -202,39 +196,33 @@ var loadRegistry = function(models) {
   */
 var loadData = function(options, models) {
   return models.sequelize.transaction(function(t) {
-    return models.Site.findById(options.site, {transaction: t}).then(
-      function(site) {
-        return options.Model.destroy({
-          where: {
-            site: options.site
-          },
-          transaction: t
-        }).then(function(destroyed) {
-          return utils.spreadsheetParse(site.settings[options.setting]).spread(
-            function(err, data) {
-              if (err) {
-                throw err;
-              }
-              return Promise.all(_.map(data, function(dataObj) {
-                return new Promise(function(resolve, reject) {
-                  // Allow custom data mapping
-                  let createData = _.chain(
-                    _.isFunction(options.mapper) ? options.mapper(dataObj, site) : dataObj
-                  )
-                  // All records belongs to certain domain
-                  .extend({site: options.site})
-                  .pairs()
-                  // User may mix up lower cased and upper cased field names
-                  .map(P => [P[0].toLowerCase(), P[1]])
-                  .object()
-                  .value();
-                  return options.Model.create(createData, {transaction: t})
-                    .then(resolve).catch(reject);
-                });
-              }));
-            });
-        });
-      });
+    return models.Site.findById(options.site, {transaction: t})
+    .then(site => {
+      return options.Model.destroy({
+        where: {site: options.site},
+        transaction: t
+      }).then(() => site);
+    })
+    .then(site => {
+      return utils.spreadsheetParsePromise(site.settings[options.setting])
+      .then(data => [data, site]);
+    })
+    .spread((data, site) => {
+      return Promise.all(_.map(data, dataObj => {
+        // Allow custom data mapping
+        let createData = _.chain(
+          _.isFunction(options.mapper) ? options.mapper(dataObj, site) : dataObj
+        )
+        // All records belongs to certain domain
+        .extend({site: options.site})
+        .pairs()
+        // User may mix up lower cased and upper cased field names
+        .map(P => [P[0].toLowerCase(), P[1]])
+        .object()
+        .value();
+        return options.Model.create(createData, {transaction: t});
+      }));
+    });
   });
 };
 

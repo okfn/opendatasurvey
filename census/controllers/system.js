@@ -13,19 +13,11 @@ var admin = function(req, res) {
 
 var loadRegistry = function(req, res) {
   return loaders.loadRegistry(req.app.get('models'))
-    .spread(function(error, data) {
-      if (error) {
-        res.send({
-          status: 'error',
-          message: error
-        });
-      } else {
-        res.send({
-          status: 'ok',
-          message: 'ok'
-        });
-      }
-    });
+  .then(function() {
+    res.send({status: 'ok', message: 'ok'});
+  }).catch(function(err) {
+    res.send({status: 'error', message: err.message});
+  });
 };
 
 var loadAllConfigs = function(req, res) {
