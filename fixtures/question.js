@@ -3,6 +3,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site1',
+      'questionsetid': 'questionset-hash',
       'id': 'exists',
       'order': 0,
       'question': 'Does the data exist',
@@ -17,6 +18,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site1',
+      'questionsetid': 'questionset-hash',
       'id': 'digital',
       'order': 1,
       'question': 'Is data in digital form',
@@ -31,6 +33,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site1',
+      'questionsetid': 'questionset-hash',
       'id': 'public',
       'order': 2,
       'question': 'Publicly available',
@@ -46,6 +49,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site1',
+      'questionsetid': 'questionset-hash',
       'id': 'free',
       'order': 3,
       'question': 'Is the data available for free',
@@ -60,6 +64,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site1',
+      'questionsetid': 'questionset-hash',
       'id': 'online',
       'order': 4,
       'question': 'Is the data available online',
@@ -75,6 +80,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site1',
+      'questionsetid': 'questionset-hash',
       'id': 'machinereadable',
       'order': 5,
       'question': 'Is the data machine readable',
@@ -90,6 +96,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site1',
+      'questionsetid': 'questionset-hash',
       'id': 'bulk',
       'order': 6,
       'question': 'Available in bulk',
@@ -104,6 +111,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site1',
+      'questionsetid': 'questionset-hash',
       'id': 'openlicense',
       'order': 7,
       'question': 'Openly licensed',
@@ -119,6 +127,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site1',
+      'questionsetid': 'questionset-hash',
       'id': 'uptodate',
       'order': 8,
       'question': 'Is the data provided on a timely and up to date basis',
@@ -133,6 +142,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site1',
+      'questionsetid': 'questionset-hash',
       'id': 'url',
       'order': 9,
       'question': 'URL of data online',
@@ -147,6 +157,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site1',
+      'questionsetid': 'questionset-hash',
       'id': 'format',
       'order': 10,
       'question': 'Format of data',
@@ -161,6 +172,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site1',
+      'questionsetid': 'questionset-hash',
       'id': 'licenseurl',
       'order': 11,
       'question': 'URL to license or terms of use',
@@ -175,6 +187,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site1',
+      'questionsetid': 'questionset-hash',
       'id': 'dateavailable',
       'order': 12,
       'question': 'Date data first openly available',
@@ -189,6 +202,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site1',
+      'questionsetid': 'questionset-hash',
       'id': 'officialtitle',
       'order': 13,
       'question': 'Title and short description',
@@ -203,6 +217,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site1',
+      'questionsetid': 'questionset-hash',
       'id': 'publisher',
       'order': 14,
       'question': 'Data Publisher',
@@ -217,6 +232,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site1',
+      'questionsetid': 'questionset-hash',
       'id': 'qualityinfo',
       'order': 15,
       'question': 'Rate Quality of the Data (Content)',
@@ -231,6 +247,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site1',
+      'questionsetid': 'questionset-hash',
       'id': 'qualitystructure',
       'order': 16,
       'question': 'Rate Quality of Data (Structure)',
@@ -245,6 +262,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site1',
+      'questionsetid': 'questionset-hash',
       'id': 'details',
       'order': 17,
       'question': 'Further Details and Comments (optional but strongly ' +
@@ -260,6 +278,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site2',
+      'questionsetid': 'questionset-hash-site2',
       'id': 'exists',
       'order': 0,
       'question': 'Does the data exist',
@@ -274,6 +293,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site2',
+      'questionsetid': 'questionset-hash-site2',
       'id': 'digital',
       'order': 1,
       'question': 'Is data in digital form',
@@ -288,6 +308,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site2',
+      'questionsetid': 'questionset-hash-site2',
       'id': 'public',
       'order': 2,
       'question': 'Publicly available',
@@ -303,6 +324,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site2',
+      'questionsetid': 'questionset-hash-site2',
       'id': 'free',
       'order': 3,
       'question': 'Is the data available for free',
@@ -317,6 +339,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site2',
+      'questionsetid': 'questionset-hash-site2',
       'id': 'online',
       'order': 4,
       'question': 'Is the data available online',
@@ -332,6 +355,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site2',
+      'questionsetid': 'questionset-hash-site2',
       'id': 'machinereadable',
       'order': 5,
       'question': 'Is the data machine readable',
@@ -347,6 +371,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site2',
+      'questionsetid': 'questionset-hash-site2',
       'id': 'bulk',
       'order': 6,
       'question': 'Available in bulk',
@@ -361,6 +386,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site2',
+      'questionsetid': 'questionset-hash-site2',
       'id': 'openlicense',
       'order': 7,
       'question': 'Openly licensed',
@@ -376,6 +402,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site2',
+      'questionsetid': 'questionset-hash-site2',
       'id': 'uptodate',
       'order': 8,
       'question': 'Is the data provided on a timely and up to date basis',
@@ -390,6 +417,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site2',
+      'questionsetid': 'questionset-hash-site2',
       'id': 'url',
       'order': 9,
       'question': 'URL of data online',
@@ -404,6 +432,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site2',
+      'questionsetid': 'questionset-hash-site2',
       'id': 'format',
       'order': 10,
       'question': 'Format of data',
@@ -418,6 +447,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site2',
+      'questionsetid': 'questionset-hash-site2',
       'id': 'licenseurl',
       'order': 11,
       'question': 'URL to license or terms of use',
@@ -432,6 +462,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site2',
+      'questionsetid': 'questionset-hash-site2',
       'id': 'dateavailable',
       'order': 12,
       'question': 'Date data first openly available',
@@ -446,6 +477,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site2',
+      'questionsetid': 'questionset-hash-site2',
       'id': 'officialtitle',
       'order': 13,
       'question': 'Title and short description',
@@ -460,6 +492,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site2',
+      'questionsetid': 'questionset-hash-site2',
       'id': 'publisher',
       'order': 14,
       'question': 'Data Publisher',
@@ -474,6 +507,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site2',
+      'questionsetid': 'questionset-hash-site2',
       'id': 'qualityinfo',
       'order': 15,
       'question': 'Rate Quality of the Data (Content)',
@@ -488,6 +522,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site2',
+      'questionsetid': 'questionset-hash-site2',
       'id': 'qualitystructure',
       'order': 16,
       'question': 'Rate Quality of Data (Structure)',
@@ -502,6 +537,7 @@ var objects = [
     'model': 'Question',
     'data': {
       'site': 'site2',
+      'questionsetid': 'questionset-hash-site2',
       'id': 'details',
       'order': 17,
       'question': 'Further Details and Comments (optional but strongly ' +

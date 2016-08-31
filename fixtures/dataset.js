@@ -8,7 +8,9 @@ var objects = [
       site: 'site1',
       name: 'Dataset 11',
       description: 'Description of *Dataset* 11',
-      order: 0
+      order: 0,
+      qsurl: 'http://example.com/googlespreadsheet',
+      questionsetid: 'questionset-hash'
     }
   },
   {
@@ -18,7 +20,9 @@ var objects = [
       site: 'site1',
       name: 'Dataset 12',
       description: 'Description of Dataset 12',
-      order: 0
+      order: 0,
+      qsurl: 'http://example.com/googlespreadsheet',
+      questionsetid: 'questionset-hash'
     }
   },
   {
@@ -29,6 +33,8 @@ var objects = [
       name: 'Dataset 13',
       description: 'Description of Dataset 13',
       order: 0,
+      qsurl: 'http://example.com/googlespreadsheet',
+      questionsetid: 'questionset-hash',
       disableforyears: ['2015']
     }
   },
@@ -39,7 +45,9 @@ var objects = [
       site: 'site2',
       name: 'Dataset 21',
       description: 'Description of Dataset 21',
-      order: 0
+      order: 0,
+      qsurl: 'http://example.com/googlespreadsheet',
+      questionsetid: 'questionset-hash'
     }
   },
   {
@@ -49,7 +57,9 @@ var objects = [
       site: 'site2',
       name: 'Dataset 22',
       description: 'Description of Dataset 22',
-      order: 0
+      order: 0,
+      qsurl: 'http://example.com/googlespreadsheet',
+      questionsetid: 'questionset-hash'
     }
   },
   {
@@ -59,7 +69,9 @@ var objects = [
       site: 'site2',
       name: 'Dataset 22 of no entry',
       description: 'Description of Dataset 22 of no entry',
-      order: 0
+      order: 0,
+      qsurl: 'http://example.com/googlespreadsheet',
+      questionsetid: 'questionset-hash'
     }
   }
 

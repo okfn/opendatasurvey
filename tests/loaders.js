@@ -10,7 +10,7 @@ const testUtils = require('./utils');
 const userFixtures = require('../fixtures/user');
 const Promise = require('bluebird');
 
-describe.only('Admin page', function () {
+describe('Admin page', function () {
   this.timeout(20000);
 
   before(testUtils.startApplication);
