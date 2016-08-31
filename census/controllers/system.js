@@ -88,35 +88,21 @@ var loadAllDatasets = function(req, res) {
 };
 
 var loadAllQuestionSets = function(req, res) {
-  res.send('To Do');
-  // req.app.get('models').Site.findAll()
-  //   .then(function(results) {
-  //     Promise.each(results, function(result) {
-  //       var options = {
-  //         mapper: utils.questionMapper,
-  //         Model: req.app.get('models').Question,
-  //         setting: 'questions',
-  //         site: result.id
-  //       };
-  //       return loaders.loadTranslatedData(options, req.app.get('models'))
-  //         .then(function() {
-  //           console.log('questions loaded for ' + result.id);
-  //         })
-  //         .catch(console.trace.bind(console));
-  //     })
-  //       .then(function() {
-  //         res.send({
-  //           status: 'ok',
-  //           message: 'ok'
-  //         });
-  //       })
-  //       .catch(function(E) {
-  //         res.send({
-  //           status: 'error',
-  //           message: E
-  //         });
-  //       });
-  //   });
+  return req.app.get('models').Site.findAll()
+  .then(results => {
+    return Promise.each(results, result => {
+      return loaders.loadQuestionSets(result.id, req.app.get('models'))
+        .then(function() {
+          console.log('questionsets loaded for site:' + result.id);
+        }).catch(console.trace.bind(console));
+    });
+  })
+  .then(function() {
+    res.send({status: 'ok', message: 'ok'});
+  })
+  .catch(function(err) {
+    res.send({status: 'error', message: err});
+  });
 };
 
 module.exports = {
