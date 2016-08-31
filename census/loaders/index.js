@@ -9,45 +9,35 @@ const marked = require('marked');
 const crypto = require('crypto');
 
 var loadConfig = function(siteId, models) {
-  return new Promise(function(resolve, reject) {
-    models.Registry.findById(siteId).then(function(R) {
-      utils.spreadsheetParse(R.settings.configurl).spread(function(E, C) {
-        if (E) {
-          reject(E);
-        }
-
-        var settings = {};
-        var raw = _.object(_.zip(_.pluck(C, 'key'), _.pluck(C, 'value')));
-        _.each(raw, function(v, k) {
-          if (v && v.toLowerCase() === 'true') {
-            settings[k] = true;
-          } else if (v && v.toLowerCase() === 'false') {
-            settings[k] = false;
-          } else if (v && v.toLowerCase() === 'null') {
-            settings[k] = null;
-          } else if (v && ['reviewers', 'locales'].indexOf(k) !== -1) {
-            settings[k] = _.map(v.split(
-              controllerUtils.FIELD_SPLITTER), _.trim);
-          } else if (v && ['navbar_logo', 'overview_page', 'submit_page',
-            'about_page', 'faq_page', 'contribute_page',
-            'banner_text', 'tutorial_page'].indexOf(k) !== -1) {
-            settings[k] = marked(v);
-          } else {
-            settings[k] = v;
-          }
-        });
-        // Insert single record — config for required site
-        models.Site.upsert({
-          id: siteId,
-          settings: settings
-        })
-          .then(function() {
-            resolve(false);
-          })
-          .catch(function(e) {
-            reject(e);
-          });
-      });
+  return models.Registry.findById(siteId)
+  .then(registry => {
+    return utils.spreadsheetParsePromise(registry.settings.configurl);
+  })
+  .then(config => {
+    var settings = {};
+    var raw = _.object(_.zip(_.pluck(config, 'key'), _.pluck(config, 'value')));
+    _.each(raw, function(v, k) {
+      if (v && v.toLowerCase() === 'true') {
+        settings[k] = true;
+      } else if (v && v.toLowerCase() === 'false') {
+        settings[k] = false;
+      } else if (v && v.toLowerCase() === 'null') {
+        settings[k] = null;
+      } else if (v && ['reviewers', 'locales'].indexOf(k) !== -1) {
+        settings[k] = _.map(v.split(
+          controllerUtils.FIELD_SPLITTER), _.trim);
+      } else if (v && ['navbar_logo', 'overview_page', 'submit_page',
+        'about_page', 'faq_page', 'contribute_page',
+        'banner_text', 'tutorial_page'].indexOf(k) !== -1) {
+        settings[k] = marked(v);
+      } else {
+        settings[k] = v;
+      }
+    });
+    // Insert single record — config for required site
+    return models.Site.upsert({
+      id: siteId,
+      settings: settings
     });
   });
 };

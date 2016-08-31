@@ -28,8 +28,8 @@ var loadConfig = function(req, res) {
   return loaders.loadConfig(req.params.domain, req.app.get('models'))
     .then(function() {
       res.send({status: 'ok', message: 'ok'});
-    }).catch(function(E) {
-      res.send({status: 'error', message: E});
+    }).catch(function(err) {
+      res.send({status: 'error', message: err.message});
     });
 };
 
