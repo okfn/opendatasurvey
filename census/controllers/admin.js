@@ -63,20 +63,10 @@ var loadQuestionSets = function(req, res) {
     });
 };
 
-var loadQuestions = function(req, res) {
-  return promisedLoad(req, res, {
-    mapper: utils.questionMapper,
-    Model: req.app.get('models').Question,
-    setting: 'questions',
-    site: req.params.domain
-  });
-};
-
 module.exports = {
   dashboard: dashboard,
   loadConfig: loadConfig,
   loadPlaces: loadPlaces,
   loadDatasets: loadDatasets,
-  loadQuestions: loadQuestions,
   loadQuestionSets: loadQuestionSets
 };
