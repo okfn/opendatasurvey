@@ -11,7 +11,7 @@ const crypto = require('crypto');
 var loadConfig = function(siteId, models) {
   return models.Registry.findById(siteId)
   .then(registry => {
-    return utils.spreadsheetParsePromise(registry.settings.configurl);
+    return utils.spreadsheetParse(registry.settings.configurl);
   })
   .then(config => {
     var settings = {};
@@ -54,7 +54,7 @@ let _createQuestionsForQuestionSet = function(questionsUrl,
     }).then(() => qset);
   })
   .then(qset => {
-    return utils.spreadsheetParsePromise(questionsUrl)
+    return utils.spreadsheetParse(questionsUrl)
     .then(data => [qset, data]);
   })
   .spread((qset, data) => {
@@ -88,7 +88,7 @@ let _createQuestionSetForDatasets = function(datasets,
                                             siteId,
                                             models,
                                             transaction) {
-  return utils.spreadsheetParsePromise(qsurl)
+  return utils.spreadsheetParse(qsurl)
   .then(qsConfig => {
     let raw = _.object(_.zip(_.pluck(qsConfig, 'key'),
                              _.pluck(qsConfig, 'value')));
@@ -153,7 +153,7 @@ var loadQuestionSets = function(siteId, models) {
 var loadRegistry = function(models) {
   var registryUrl = config.get('registryUrl') || false;
 
-  return utils.spreadsheetParsePromise(registryUrl)
+  return utils.spreadsheetParse(registryUrl)
   .then(registry => {
     if (!registry) {
       throw new Error('could not reload registry');
@@ -204,7 +204,7 @@ var loadData = function(options, models) {
       }).then(() => site);
     })
     .then(site => {
-      return utils.spreadsheetParsePromise(site.settings[options.setting])
+      return utils.spreadsheetParse(site.settings[options.setting])
       .then(data => [data, site]);
     })
     .spread((data, site) => {

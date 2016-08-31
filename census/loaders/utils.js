@@ -6,20 +6,7 @@ var request = require('request');
 var xss = require('xss');
 var csv = require('csv');
 
-var spreadsheetParse = function(fileUrl) {
-  return new Promise(function(resolve, reject) {
-    var csvUrl = getCsvForGoogleSheet(fileUrl);
-    getDataAsCsv(csvUrl, function(err, result) {
-      if (err) {
-        resolve([err, false]);
-      } else {
-        resolve([false, result]);
-      }
-    });
-  });
-};
-
-let spreadsheetParsePromise = function(fileUrl) {
+let spreadsheetParse = function(fileUrl) {
   return new Promise(function(resolve, reject) {
     let csvUrl = getCsvForGoogleSheet(fileUrl);
     getDataAsCsv(csvUrl, function(err, result) {
@@ -125,6 +112,5 @@ module.exports = {
   getCsvFromSheetParams: getCsvFromSheetParams,
   getSheetParams: getSheetParams,
   getCsvForGoogleSheet: getCsvForGoogleSheet,
-  getDataAsCsv: getDataAsCsv,
-  spreadsheetParsePromise: spreadsheetParsePromise
+  getDataAsCsv: getDataAsCsv
 };
