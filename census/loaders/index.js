@@ -52,6 +52,43 @@ var loadConfig = function(siteId, models) {
   });
 };
 
+let _createQuestionsForQuestionSet = function(questionsUrl,
+                                              qsId,
+                                              models,
+                                              transaction) {
+  return models.QuestionSet.findById(qsId, {transaction: transaction})
+  .then(qset => {
+    return models.Question.destroy({
+      where: {questionsetid: qsId},
+      transaction: transaction
+    }).then(() => qset);
+  })
+  .then(qset => {
+    return utils.spreadsheetParsePromise(questionsUrl)
+    .then(data => [qset, data]);
+  })
+  .spread((qset, data) => {
+    return Promise.all(
+      _.map(data, dataObj => {
+        // Allow custom data mapping
+        let createData = _.chain(controllerUtils.questionMapper(dataObj,
+                                                                qset.site))
+        // All records belongs to certain domain
+        .extend({
+          site: qset.site,
+          questionsetid: qset.id
+        })
+        .pairs()
+        // User may mix up lower cased and upper cased field names
+        .map(P => [P[0].toLowerCase(), P[1]])
+        .object()
+        .value();
+        return models.Question.create(createData, {transaction: transaction});
+      })
+    );
+  });
+};
+
 /*
   A helper function to create a QuestionSet from the parsed quesiton set url,
   and associate it with each dataset in the datasets array.
@@ -61,62 +98,63 @@ let _createQuestionSetForDatasets = function(datasets,
                                             siteId,
                                             models,
                                             transaction) {
-  return new Promise((resolve, reject) => {
-    utils.spreadsheetParse(qsurl).spread((err, qsConfig) => {
-      if (err) reject(err);
-      let raw = _.object(_.zip(_.pluck(qsConfig, 'key'),
-                               _.pluck(qsConfig, 'value')));
-      // create QuestionSet instance from raw data obj.
-      let qsHash = crypto.createHash('sha1').update(siteId + qsurl).digest('hex');
-      let qsSchema = JSON.parse(raw.question_set_schema);
-      return models.QuestionSet.create({
-        id: qsHash,
-        site: siteId,
-        qsSchema: qsSchema
-      }, {transaction: transaction})
-      .then(function(qsInstance) {
-        return Promise.each(datasets, function(ds) {
-          return ds.update({questionSetId: qsInstance.id},
-                           {transaction: transaction});
-        }).then(function() {
-          resolve();
-        });
-      }).catch(reject);
-    });
+  return utils.spreadsheetParsePromise(qsurl)
+  .then(qsConfig => {
+    let raw = _.object(_.zip(_.pluck(qsConfig, 'key'),
+                             _.pluck(qsConfig, 'value')));
+    // create QuestionSet instance from raw data obj.
+    let qsHash = crypto.createHash('sha1').update(siteId + qsurl).digest('hex');
+    let qsSchema = JSON.parse(raw.question_set_schema);
+    return models.QuestionSet.create({
+      id: qsHash,
+      site: siteId,
+      qsSchema: qsSchema
+    }, {transaction: transaction})
+    .then(qsInstance => [qsInstance, raw]);
+  })
+  .spread((qsInstance, raw) => {
+    return Promise.each(datasets, ds => {
+      return ds.update({questionsetid: qsInstance.id},
+                       {transaction: transaction});
+    }).then(() => [qsInstance, raw]);
+  })
+  .spread((qsInstance, raw) => {
+    return _createQuestionsForQuestionSet(raw.questions,
+                                          qsInstance.id,
+                                          models,
+                                          transaction);
   });
 };
 
 var loadQuestionSets = function(siteId, models) {
   return models.sequelize.transaction(t => {
-    return new Promise((resolve, reject) => {
-      // Destroy all QuestionSets associated with siteId.
-      return models.QuestionSet.destroy({
+    // Destroy all QuestionSets associated with siteId.
+    return models.QuestionSet.destroy({
+      where: {site: siteId},
+      transaction: t
+    })
+    .then(destroyed => {
+      // Get the datasets for the site
+      return models.Dataset.findAll({
         where: {site: siteId},
         transaction: t
-      }).then(destroyed => {
-        // Get the datasets for the site
-        return models.Dataset.findAll({
-          where: {site: siteId},
-          transaction: t
-        }).then(datasets => {
-          // Fetch the qset config at dataset.qsurl for each dataset.
-          let qsLoaders = [];
-          // Group datasets by their ds.qsurl properties.
-          let datasetsByQSUrl = _.groupBy(datasets, ds => ds.qsurl);
-          // Create an array of Promises for each qsurl:datasets, to parse the
-          // spreadsheet at qsurl and create a QuestionSet object.
-          _.each(datasetsByQSUrl, (datasetArr, qsurl) => {
-            qsLoaders.push(
-              _createQuestionSetForDatasets(datasetArr, qsurl, siteId, models, t)
-            );
-          });
-          // Resolve all the Promises in qsLoaders array.
-          Promise.all(qsLoaders).then(function() {
-            resolve();
-          });
-        }).catch(function(e) {
-          reject(e);
-        });
+      });
+    })
+    .then(datasets => {
+      // Fetch the qset config at dataset.qsurl for each dataset.
+      let qsLoaders = [];
+      // Group datasets by their ds.qsurl properties.
+      let datasetsByQSUrl = _.groupBy(datasets, ds => ds.qsurl);
+      // Create an array of Promises for each qsurl:datasets, to parse the
+      // spreadsheet at qsurl and create a QuestionSet object.
+      _.each(datasetsByQSUrl, (datasetArr, qsurl) => {
+        qsLoaders.push(
+          _createQuestionSetForDatasets(datasetArr, qsurl, siteId, models, t)
+        );
+      });
+      // Resolve all the Promises in qsLoaders array.
+      return Promise.all(qsLoaders).then(() => {
+        // console.log('All QS loaded. Resolving.');
       });
     });
   });

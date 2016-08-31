@@ -10,7 +10,7 @@ const testUtils = require('./utils');
 const userFixtures = require('../fixtures/user');
 const Promise = require('bluebird');
 
-describe('Admin page', function () {
+describe.only('Admin page', function () {
   this.timeout(20000);
 
   before(testUtils.startApplication);
@@ -180,7 +180,7 @@ describe('Admin page', function () {
         .bind(this).then(function(data) {
           let qsid = data[0].id;
           return this.app.get('models').Dataset.findAll(
-            {where: {site: siteID, questionSetId: qsid}})
+            {where: {site: siteID, questionsetid: qsid}})
             .then(datasets => {
               assert.equal(datasets.length, 15);
             });
@@ -188,27 +188,27 @@ describe('Admin page', function () {
     });
   });
 
-  describe('reload questions button action', function () {
-    before(function () {
-      return this.browser.visit('/admin');
-    });
+  // describe('reload questions button action', function () {
+  //   before(function () {
+  //     return this.browser.visit('/admin');
+  //   });
 
-    before(function () {
-      return this.browser.pressButton('Reload Questions');
-    });
+  //   before(function () {
+  //     return this.browser.pressButton('Reload Questions');
+  //   });
 
-    it('should load questions', function () {
-      this.browser.assert.success();
-      let html = this.browser.resources[0].response.body;
-      let jsonData = JSON.parse(html);
-      assert.equal(jsonData.status, 'ok');
-      assert.equal(jsonData.message, 'ok');
-      return this.app.get('models').Question.findAll({where: {site: siteID}})
-        .then(function (data) {
-          assert.equal(data.length, 18);
-        });
-    });
-  });
+  //   it('should load questions', function () {
+  //     this.browser.assert.success();
+  //     let html = this.browser.resources[0].response.body;
+  //     let jsonData = JSON.parse(html);
+  //     assert.equal(jsonData.status, 'ok');
+  //     assert.equal(jsonData.message, 'ok');
+  //     return this.app.get('models').Question.findAll({where: {site: siteID}})
+  //       .then(function (data) {
+  //         assert.equal(data.length, 18);
+  //       });
+  //   });
+  // });
 });
 
 describe('System Control page', function () {
@@ -314,24 +314,6 @@ describe('System Control page', function () {
       return this.app.get('models').Dataset.findAll({where: {site: siteID}})
         .then(function (data) {
           assert.equal(data.length, 15);
-        });
-    });
-  });
-
-  describe('Load Questions button action', function () {
-    beforeEach(function () {
-      return this.browser.pressButton('Load Questions');
-    });
-
-    it('should load questions', function () {
-      this.browser.assert.success();
-      let html = this.browser.resources[0].response.body;
-      let jsonData = JSON.parse(html);
-      assert.equal(jsonData.status, 'ok');
-      assert.equal(jsonData.message, 'ok');
-      return this.app.get('models').Question.findAll({where: {site: siteID}})
-        .then(function (data) {
-          assert.equal(data.length, 18);
         });
     });
   });

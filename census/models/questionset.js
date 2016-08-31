@@ -29,7 +29,7 @@ module.exports = function(sequelize, DataTypes) {
     ],
     classMethods: {
       associate: function(models) {
-        QuestionSet.hasMany(models.Dataset, {foreignKey: 'questionSetId', onUpdate: 'CASCADE', onDelete: 'SET NULL'});
+        QuestionSet.hasMany(models.Dataset, {foreignKey: 'questionsetid', onUpdate: 'CASCADE', onDelete: 'SET NULL'});
       }
     }
   });

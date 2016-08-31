@@ -9,8 +9,8 @@ var promisedLoad = function(req, res, options) {
   return loaders.loadTranslatedData(options, req.app.get('models'))
     .then(function() {
       res.send({status: 'ok', message: 'ok'});
-    }).catch(function(E) {
-      res.send({status: 'error', message: E});
+    }).catch(function(err) {
+      res.send({status: 'error', message: err.message});
     });
 };
 
@@ -58,8 +58,8 @@ var loadQuestionSets = function(req, res) {
   return loaders.loadQuestionSets(req.params.domain, req.app.get('models'))
     .then(function() {
       res.send({status: 'ok', message: 'ok'});
-    }).catch(function(E) {
-      res.send({status: 'error', message: E});
+    }).catch(function(err) {
+      res.send({status: 'error', message: err.message});
     });
 };
 

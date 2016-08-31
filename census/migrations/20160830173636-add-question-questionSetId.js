@@ -2,7 +2,7 @@
 
 module.exports = {
   up: function (queryInterface, Sequelize) {
-    return queryInterface.addColumn('dataset', 'questionsetid',
+    return queryInterface.addColumn('question', 'questionsetid',
       {
         type: Sequelize.STRING,
         allowNull: true,
@@ -10,13 +10,13 @@ module.exports = {
           model: 'questionset',
           key: 'id'
         },
-        onDelete: 'SET NULL',
+        onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
         comment: 'Foreign Key to associated QuestionSet.'
       });
   },
 
   down: function (queryInterface, Sequelize) {
-    return queryInterface.removeColumn('dataset', 'questionsetid');
+    return queryInterface.removeColumn('question', 'questionsetid');
   }
 };

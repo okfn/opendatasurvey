@@ -19,8 +19,24 @@ var spreadsheetParse = function(fileUrl) {
   });
 };
 
+let spreadsheetParsePromise = function(fileUrl) {
+  return new Promise(function(resolve, reject) {
+    let csvUrl = getCsvForGoogleSheet(fileUrl);
+    getDataAsCsv(csvUrl, function(err, result) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
+
 var getDataAsCsv = function(url, cb) {
   request.get(url, function(err, res, body) {
+    if (err) {
+      cb(err, false);
+    }
     var output = [];
     var parser = csv.parse({
       relax: true,
@@ -109,5 +125,6 @@ module.exports = {
   getCsvFromSheetParams: getCsvFromSheetParams,
   getSheetParams: getSheetParams,
   getCsvForGoogleSheet: getCsvForGoogleSheet,
-  getDataAsCsv: getDataAsCsv
+  getDataAsCsv: getDataAsCsv,
+  spreadsheetParsePromise: spreadsheetParsePromise
 };

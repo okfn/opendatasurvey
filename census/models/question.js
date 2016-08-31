@@ -74,6 +74,9 @@ module.exports = function(sequelize, DataTypes) {
       translated: mixins.translated
     },
     classMethods: {
+      associate: function(models) {
+        Question.belongsTo(models.QuestionSet, {foreignKey: 'questionsetid', onUpdate: 'CASCADE', onDelete: 'CASCADE'});
+      },
       /* Calculate the max score possible for a given list of questions */
       maxScore: function(questions) {
         return _.sum(_.map(questions, question => question.score));
