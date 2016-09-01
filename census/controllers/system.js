@@ -92,15 +92,15 @@ var loadAllQuestionSets = function(req, res) {
   .then(results => {
     return Promise.each(results, result => {
       return loaders.loadQuestionSets(result.id, req.app.get('models'))
-        .then(function() {
-          console.log('questionsets loaded for site:' + result.id);
+        .then(() => {
+          console.log('questionsets loaded for site: ' + result.id);
         }).catch(console.trace.bind(console));
     });
   })
-  .then(function() {
+  .then(() => {
     res.send({status: 'ok', message: 'ok'});
   })
-  .catch(function(err) {
+  .catch(err => {
     res.send({status: 'error', message: err});
   });
 };

@@ -35,6 +35,7 @@ nconf.defaults({
   'auth_subdomain': process.env.AUTH_SUBDOMAIN || 'id',
   'system_subdomain': process.env.SYSTEM_SUBDOMAIN || 'system',
   'connection_scheme':  process.env.CONNECTION_SCHEME || 'http',
+  'fallback_questionset': process.env.FALLBACK_QUESTIONSET || '',
   'sentry_dsn': process.env.SENTRY_DSN || '',
   'approve_first_submission': 'FALSE',
   reviewers: '',

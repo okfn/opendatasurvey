@@ -1,12 +1,13 @@
 'use strict';
 
-var _ = require('lodash');
-var modelUtils = require('../models/utils');
-var FIELD_SPLITTER = /[\s,]+/;
-var ANONYMOUS_USER_ID = process.env.ANONYMOUS_USER_ID ||
+const _ = require('lodash');
+const modelUtils = require('../models/utils');
+const FIELD_SPLITTER = /[\s,]+/;
+const ANONYMOUS_USER_ID = process.env.ANONYMOUS_USER_ID ||
   '0e7c393e-71dd-4368-93a9-fcfff59f9fff';
-var marked = require('marked');
+const marked = require('marked');
 const Promise = require('bluebird');
+const config = require('../config');
 
 var makeChoiceValidator = function(param) {
   return function(req) {
@@ -200,8 +201,12 @@ var datasetMapper = function(data, site) {
   let reviewers = (data.reviewers) ? splitFields(data.reviewers) : [];
   let disableforyears =
     (data.disableforyears) ? splitFields(data.disableforyears) : [];
-  let qsurl = (data.questionseturl !== '') ?
-    data.questionseturl : site.settings.question_set_url;
+  let qsurl = data.questionseturl ||
+    site.settings.question_set_url || config.get('fallback_questionset');
+  if (!qsurl) {
+    console.log('No QuestionSet is configured for ' +
+                site.id + '/' + data.id.toLowerCase());
+  }
   return _.defaults({
     id: data.id.toLowerCase(),
     description: marked(data.description),
