@@ -22122,6 +22122,7 @@
 	      objects.
 	    */
 	    var schema = this.getSchemaForId(id);
+	    if (schema === undefined) return {};
 	
 	    // Initially set up return value as the defaultProperties for the schema
 	    var visProps = _lodash2.default.cloneDeep(schema.defaultProperties);
@@ -22157,6 +22158,7 @@
 	      prefix), derived from the schema position property.
 	    */
 	    var schema = this.getSchemaForId(id);
+	    if (schema === undefined) return;
 	    return String(this.props.labelPrefix || '') + String(schema.position);
 	  },
 	  getPositionForId: function getPositionForId(id) {
@@ -22164,12 +22166,17 @@
 	      Return the position for the question schema with `id`.
 	    */
 	    var schema = this.getSchemaForId(id);
+	    if (schema === undefined) return;
 	    return schema.position;
 	  },
 	  render: function render() {
 	    var _this2 = this;
 	
 	    var questionNodes = this.state.questionState.map(function (q) {
+	      // check schema
+	      if (_this2.getSchemaForId(q.id) === undefined) {
+	        console.warn('No schema defined for Question with id: ' + q.id);
+	      }
 	      return _react2.default.createElement(
 	        QuestionField,
 	        { ref: q.id,

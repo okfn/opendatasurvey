@@ -311,9 +311,7 @@ var getCurrentState = function(data, req) {
 
 var getReviewers = function(req, data) {
   var reviewers = [];
-  if (!req.user) {
-    return reviewers;
-  } else {
+  if (req.user) {
     if (req.params.site.settings.reviewers) {
       reviewers = reviewers.concat(req.params.site.settings.reviewers);
     }
@@ -323,8 +321,8 @@ var getReviewers = function(req, data) {
     if (data.dataset.reviewers) {
       reviewers = reviewers.concat(data.dataset.reviewers);
     }
-    return reviewers;
   }
+  return reviewers;
 };
 
 var canReview = function(reviewers, user) {

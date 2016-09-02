@@ -29,6 +29,7 @@ module.exports = function(sequelize, DataTypes) {
     ],
     classMethods: {
       associate: function(models) {
+        QuestionSet.hasMany(models.Question, {foreignKey: 'questionsetid'});
         QuestionSet.hasMany(models.Dataset, {foreignKey: 'questionsetid', onUpdate: 'CASCADE', onDelete: 'SET NULL'});
       }
     }

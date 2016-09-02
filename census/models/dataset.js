@@ -84,9 +84,26 @@ module.exports = function(sequelize, DataTypes) {
         }), function(e) {
           return e.yCount(questions);
         }));
+      },
+      /*
+      Get Questions from the associated QuestionSet.
+      */
+      getQuestions: function() {
+        return this.getQuestionSet()
+        .then(qset => qset.getQuestions());
+      },
+      /*
+      Get QuestionSetSchema object from the associated QuestionSet.
+      */
+      getQuestionSetSchema: function() {
+        return this.getQuestionSet()
+        .then(qset => qset.qsSchema);
       }
     },
     classMethods: {
+      associate: function(models) {
+        Dataset.belongsTo(models.QuestionSet, {foreignKey: 'questionsetid'});
+      },
       /* Calculate the max score possible for all unique datasets used by a given list
          of entries.*/
       maxScore: function(entries, questionMaxScore) {
