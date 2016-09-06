@@ -1,7 +1,6 @@
 'use strict';
 
 function start() {
-
   var _ = require('lodash');
   var path = require('path');
   var express = require('express');
@@ -29,7 +28,6 @@ function start() {
   var cacheAge = 3600 * 1000; // in milliseconds
   var staticRoot = path.join(__dirname, 'public');
   var sessionSecret = process.env.SESSION_SECRET || 'dummysecret';
-  var viewPath = __dirname + '/views';
   var faviconPath = __dirname + '/public/favicon.ico';
   var models = require('./models');
   var middlewares = require('./middlewares');
@@ -38,7 +36,8 @@ function start() {
   var availableYears = _.range(startYear, currentYear + 1);
   var rawSysAdmin = process.env.SYS_ADMIN || config.get('sysAdmin') || '';
   var sysAdmin = _.each(rawSysAdmin.split(','), function(e, i, l) {
-    l[i] = e.trim(); return;
+    l[i] = e.trim();
+    return;
   });
 
   nunjucksGlobals.currentTime = Date.now();
@@ -61,7 +60,6 @@ function start() {
 
   app.set('config', config);
   app.set('port', config.get('appconfig:port'));
-  app.set('views', viewPath);
   app.set('models', models);
   app.set('year', currentYear);
   app.set('years', availableYears);
@@ -70,7 +68,7 @@ function start() {
   app.set('systemDomain', config.get('system_subdomain'));
   app.set('urlTmpl', config.get('urlTmpl'));
 
-  env = nunjucks.configure('census/views', {
+  env = nunjucks.configure(['census/views_old'], {
     autoescape: false,
     express: app
   });
@@ -98,9 +96,9 @@ function start() {
     passport.session(),
     flash(),
     i18n.abide({
-      'supported_languages': config.get('availableLocales'),
-      'default_lang': _.first(config.get('locales')),
-      'translation_directory': 'census/locale/'
+      supported_languages: config.get('availableLocales'),
+      default_lang: _.first(config.get('locales')),
+      translation_directory: 'census/locale/'
     }),
     express.static(staticRoot, {maxage: cacheAge})
   ]);
