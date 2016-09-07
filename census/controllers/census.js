@@ -1,12 +1,12 @@
 'use strict';
 
-var _ = require('lodash');
-var marked = require('marked');
-var config = require('../config');
-var uuid = require('node-uuid');
-var utils = require('./utils');
-var modelUtils = require('../models').utils;
-var Promise = require('bluebird');
+const _ = require('lodash');
+const marked = require('marked');
+const config = require('../config');
+const uuid = require('node-uuid');
+const utils = require('./utils');
+const modelUtils = require('../models').utils;
+const Promise = require('bluebird');
 
 var submitGetHandler = function(req, res, data) {
   var addDetails = _.find(data.questions, function(q) {
