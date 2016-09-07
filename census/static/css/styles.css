@@ -9219,7 +9219,7 @@ body.form section {
     body.form section .question.first .comments label {
       height: auto;
       width: auto; }
-    body.form section .question:not(.answered) + :not(.answered) {
+    body.form section .question.disabled {
       opacity: 0.2; }
 
 body.form h2 span, body.form h3 span {
@@ -9294,18 +9294,18 @@ body.form section {
   body.form section .question.sub.text textarea,
   body.form section .question.sub.text input[type="text"] {
     border-radius: 4px; }
-  body.form section .question:not(.answered).scale .answer label span, body.form section .question:not(.answered).yes-no .answer label span {
+  body.form section .question.disabled.scale .answer label span, body.form section .question.disabled.yes-no .answer label span {
     border-color: #777777; }
-  body.form section .question:not(.answered).source .answer ul li input {
+  body.form section .question.disabled.source .answer ul li input {
     border-color: #777777; }
-  body.form section .question:not(.answered).source .answer ul li .select {
+  body.form section .question.disabled.source .answer ul li .select {
     border-color: #777777; }
-  body.form section .question:not(.answered).select .answer {
+  body.form section .question.disabled.select .answer {
     border-color: #777777; }
-  body.form section .question:not(.answered).multiple ul li label {
+  body.form section .question.disabled.multiple ul li label {
     border-color: #777777; }
-  body.form section .question:not(.answered).text textarea,
-  body.form section .question:not(.answered).text input[type="text"] {
+  body.form section .question.disabled.text textarea,
+  body.form section .question.disabled.text input[type="text"] {
     border-color: #777777; }
 
 .home #home-about {

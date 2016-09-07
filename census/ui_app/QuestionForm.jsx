@@ -5,27 +5,59 @@ const QuestionField = React.createClass({
 
   render() {
     return (
-      <li className={this._getClassValues()}>
-        <p><span>{this.props.label}</span> {this.props.children.toString()}</p>
-        <label>
-          <span>Yes</span>
+    <div className={'yes-no question ' + this._getClassValues()}>
+      <div className="instructions">
+        <div className="collapse" id={'instructions' + this.props.id}>
+          <h4>Instructions</h4>
+          <p>Answer “Yes” if the chosen data are collected by government, or a
+          third party officially representing government. This is the case for
+          state-owned-enterprises or contractors delivering public services
+          for government.</p>
+          <p>Answer “No” if one of the following facts apply:</p>
+          <ul>
+            <li>The data is collected by organisations that do not represent government.</li>
+            <li>The data is collected but not for the relevant government level.</li>
+          </ul>
+        </div>
+        <a className="toggle"
+           role="button"
+           data-toggle="collapse"
+           href={'#instructions' + this.props.id}
+           aria-expanded="false"
+           aria-controls={'instructions' + this.props.id}>
+            <span className="sr-only">Help</span><span className="icon">?</span>
+        </a>
+      </div>
+      <div className="main">
+        <h2><span>{this.props.label}</span> {this.props.children.toString()}</h2>
+        <div className="answer">
           <input type="radio"
                  name={this.props.id}
-                 value="Yes"
-                 checked={(this.props.value === 'Yes')}
-                 disabled={!this.props.visibleProps.enabled}
-                 onChange={this.handler} />
-        </label>
-        <label>
-          <span>No</span>
-          <input type="radio"
-                 name={this.props.id}
+                 id={this.props.id + '1'}
                  value="No"
                  checked={(this.props.value === 'No')}
                  disabled={!this.props.visibleProps.enabled}
                  onChange={this.handler} />
-        </label>
-      </li>
+          <label htmlFor={this.props.id + '1'}>
+            <span>No</span>
+          </label>
+          <input type="radio"
+                 name={this.props.id}
+                 id={this.props.id + '2'}
+                 value="Yes"
+                 checked={(this.props.value === 'Yes')}
+                 disabled={!this.props.visibleProps.enabled}
+                 onChange={this.handler} />
+          <label htmlFor={this.props.id + '2'}>
+            <span>Yes</span>
+          </label>
+        </div>
+      </div>
+      <div className="comments">
+        <label htmlFor="commentThree">Comments</label>
+        <textarea placeholder="Add comments" id="commentThree" rows="5"></textarea>
+      </div>
+    </div>
     );
   },
 

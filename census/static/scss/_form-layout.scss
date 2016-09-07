@@ -527,7 +527,7 @@ body.form {
         }
       }
 
-      &:not(.answered) + :not(.answered) {
+      &.disabled {
         opacity: 0.2;
       }
     }

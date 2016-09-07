@@ -22020,48 +22020,124 @@
 	  displayName: 'QuestionField',
 	  render: function render() {
 	    return _react2.default.createElement(
-	      'li',
-	      { className: this._getClassValues() },
+	      'div',
+	      { className: 'yes-no question ' + this._getClassValues() },
 	      _react2.default.createElement(
-	        'p',
-	        null,
+	        'div',
+	        { className: 'instructions' },
 	        _react2.default.createElement(
-	          'span',
-	          null,
-	          this.props.label
+	          'div',
+	          { className: 'collapse', id: 'instructions' + this.props.id },
+	          _react2.default.createElement(
+	            'h4',
+	            null,
+	            'Instructions'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Answer “Yes” if the chosen data are collected by government, or a third party officially representing government. This is the case for state-owned-enterprises or contractors delivering public services for government.'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Answer “No” if one of the following facts apply:'
+	          ),
+	          _react2.default.createElement(
+	            'ul',
+	            null,
+	            _react2.default.createElement(
+	              'li',
+	              null,
+	              'The data is collected by organisations that do not represent government.'
+	            ),
+	            _react2.default.createElement(
+	              'li',
+	              null,
+	              'The data is collected but not for the relevant government level.'
+	            )
+	          )
 	        ),
-	        ' ',
-	        this.props.children.toString()
+	        _react2.default.createElement(
+	          'a',
+	          { className: 'toggle',
+	            role: 'button',
+	            'data-toggle': 'collapse',
+	            href: '#instructions' + this.props.id,
+	            'aria-expanded': 'false',
+	            'aria-controls': 'instructions' + this.props.id },
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'sr-only' },
+	            'Help'
+	          ),
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'icon' },
+	            '?'
+	          )
+	        )
 	      ),
 	      _react2.default.createElement(
-	        'label',
-	        null,
+	        'div',
+	        { className: 'main' },
 	        _react2.default.createElement(
-	          'span',
+	          'h2',
 	          null,
-	          'Yes'
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            this.props.label
+	          ),
+	          ' ',
+	          this.props.children.toString()
 	        ),
-	        _react2.default.createElement('input', { type: 'radio',
-	          name: this.props.id,
-	          value: 'Yes',
-	          checked: this.props.value === 'Yes',
-	          disabled: !this.props.visibleProps.enabled,
-	          onChange: this.handler })
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'answer' },
+	          _react2.default.createElement('input', { type: 'radio',
+	            name: this.props.id,
+	            id: this.props.id + '1',
+	            value: 'No',
+	            checked: this.props.value === 'No',
+	            disabled: !this.props.visibleProps.enabled,
+	            onChange: this.handler }),
+	          _react2.default.createElement(
+	            'label',
+	            { htmlFor: this.props.id + '1' },
+	            _react2.default.createElement(
+	              'span',
+	              null,
+	              'No'
+	            )
+	          ),
+	          _react2.default.createElement('input', { type: 'radio',
+	            name: this.props.id,
+	            id: this.props.id + '2',
+	            value: 'Yes',
+	            checked: this.props.value === 'Yes',
+	            disabled: !this.props.visibleProps.enabled,
+	            onChange: this.handler }),
+	          _react2.default.createElement(
+	            'label',
+	            { htmlFor: this.props.id + '2' },
+	            _react2.default.createElement(
+	              'span',
+	              null,
+	              'Yes'
+	            )
+	          )
+	        )
 	      ),
 	      _react2.default.createElement(
-	        'label',
-	        null,
+	        'div',
+	        { className: 'comments' },
 	        _react2.default.createElement(
-	          'span',
-	          null,
-	          'No'
+	          'label',
+	          { htmlFor: 'commentThree' },
+	          'Comments'
 	        ),
-	        _react2.default.createElement('input', { type: 'radio',
-	          name: this.props.id,
-	          value: 'No',
-	          checked: this.props.value === 'No',
-	          disabled: !this.props.visibleProps.enabled,
-	          onChange: this.handler })
+	        _react2.default.createElement('textarea', { placeholder: 'Add comments', id: 'commentThree', rows: '5' })
 	      )
 	    );
 	  },

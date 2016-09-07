@@ -204,7 +204,7 @@ body.form {
         }
       }
 
-      &:not(.answered) {
+      &.disabled {
         &.scale,
         &.yes-no {
           .answer {
