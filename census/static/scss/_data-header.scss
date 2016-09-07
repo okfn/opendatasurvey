@@ -1,0 +1,90 @@
+#data-header {
+  h1, h3 {
+    font-weight: 300;
+  }
+
+  .place-openness,
+  .dataset-openness {
+    font-size: 24px;
+    font-weight: 300;
+    padding: 8px;
+    display: inline-block;
+
+    @media (min-width: $screen-md-min) {
+      float: right;
+    }
+  }
+
+  .open-badge {
+    text-align: right;
+    float: right;
+    clear: both;
+  }
+
+  .statistics,
+  .relative,
+  .content,
+  .navigate {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .relative {
+    font-size: 20px;
+    font-weight: 300;
+
+    .change {
+      text-align: center;
+      font-size: 32px;
+      margin-top: 4px;
+    }
+  }
+
+  .history {
+    clear: left;
+    margin-top: $grid-gutter-width;
+    font-size: 0.8em;
+
+    h6 {
+      display: inline;
+      font-size: inherit;
+
+      &:after {
+        content: ':';
+      }
+    }
+
+    ul {
+      display: inline;
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      display: inline;
+      border-right: solid 1px $gray-light;
+
+      a {
+        padding-left: 0.3em;
+        padding-right: 0.3em;
+      }
+
+      &:last-of-type {
+        border: none;
+      }
+    }
+  }
+
+  .place-rank,
+  .dataset-rank {
+    float: left;
+    font-size: 24px;
+    font-weight: 300;
+    background-color: #f5f5f5;
+    padding: 8px;
+  }
+
+  #map-container {
+    margin-top: 20px;
+  }
+}

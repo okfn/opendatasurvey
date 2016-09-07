@@ -1,0 +1,63 @@
+.apps {
+  padding: 0;
+  margin-bottom: 0;
+  @include make-row();
+
+  li {
+    display: block;
+    @include make-sm-column(6);
+    @include make-md-column(4);
+    @include make-lg-column(3);
+    margin-bottom: $grid-gutter-width;
+
+    & > span {
+      display: block;
+      border: solid 1px $gray-lighter;
+      border-radius: $border-radius-base;
+      overflow: hidden;
+    }
+
+    .image {
+      display: none;
+      background-size: cover;
+      background-position: center;
+      margin: $padding-base-vertical;
+      box-shadow: inset 0px 0px 50px 0px rgba(0,0,0,0.1);
+
+      @media (min-width: $screen-sm-min) {
+        display: block;
+        padding-top: 62%;
+      }
+    }
+
+    .text {
+      display: block;
+      margin-bottom: $padding-base-horizontal;
+      padding-left: $padding-base-horizontal*2;
+      padding-right: $padding-base-horizontal*2;
+
+      @media (min-width: $screen-sm-min) {
+        height: 10em;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        &:first-child {
+          margin-top: $padding-base-horizontal*2;
+          margin-bottom: $padding-base-vertical;
+        }
+      }
+
+      p {
+        font-size: 0.8em;
+      }
+    }
+
+    .btn {
+      margin-bottom: $padding-base-horizontal*2;
+      margin-left: $padding-base-horizontal*2;
+      margin-right: $padding-base-horizontal*2;
+    }
+
+  }
+
+}

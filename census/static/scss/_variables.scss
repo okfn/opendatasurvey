@@ -1,0 +1,41 @@
+$ui-border: 2px; //Form
+$ui-border-sub: 2px; //Form
+
+$fa-font-path:   "../bower_components/font-awesome/fonts"; //Font Awesome
+
+$brand-primary:         #EAD045; //BS
+$brand-success:         #7AB800; //BS
+$brand-info:            #428bca; //BS
+$brand-warning:         rgb(244, 124, 35); //BS
+$brand-danger:          #ff0000; //BS
+
+$link-color: $brand-info; //BS
+
+$color-okf-green: #7AB800;
+$color-okf-grey: #f0f0f0;
+$color-okf-yellow: #E9D046;
+$color-okf-yellow2: #EAD045;
+$color-okf-black: #181818;
+$color-okf-white: #f5f5f5;
+
+$color-maybe: #2980b9;
+$color-yes: $brand-success;
+$color-no: $brand-danger;
+
+$font-family-sans-serif:  'Lato', "Helvetica Neue", Helvetica, Arial, sans-serif; //BS
+
+$headings-font-weight:  400; //BS
+
+$font-size-base: 17px; //BS
+$font-size-large:         ceil(($font-size-base * 1.15)); //BS
+
+$font-size-h1:            floor(($font-size-base * 2)); //BS
+$font-size-h2:            ceil(($font-size-base * 1.5)); //BS
+$font-size-h3:            ceil(($font-size-base * 1.4)); //BS
+$font-size-h4:            ceil(($font-size-base * 1.15)); //BS
+$font-size-h5:            floor(($font-size-base * 1)); //BS
+$font-size-h6:            ceil(($font-size-base * 0.8)); //BS
+
+$line-height-base: 1.6; //BS
+
+$headings-font-weight: 700; //BS

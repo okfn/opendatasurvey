@@ -1,0 +1,399 @@
+@mixin table-label($bg-colour:$color-okf-grey) {
+  text-align: center;
+  background-color: $bg-colour;
+  opacity: 0.6;
+  padding: 2px;
+  width: 40px;
+  text-align: center;
+  display: inline-block;
+}
+
+// Tables
+.data-table {
+  thead th {
+    font-size: 14px;
+  }
+}
+
+#slice-table {
+
+  tr {
+    &.queued {
+      background-color: lighten($brand-primary, 37%);
+
+      td {
+        opacity: 0.5;
+        border-top-color: lighten($brand-primary, 35%);
+
+        &.queued-context {
+          opacity: 1;
+
+          h6 {
+            margin: 0.2em 0 0 0;
+            font-weight: bold;
+
+            .icon {
+              font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            }
+          }
+
+          .queued-user,
+          .queued-time {
+          	font-size: 0.75em;
+          }
+        }
+
+        &.rank {
+          color: lighten($brand-primary, 37%);
+        }
+
+        &.admin  {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  tr.details {
+    background-color: $color-okf-grey;
+
+    td.info-content {
+      padding-top: $grid-gutter-width/2;
+      padding-bottom: $grid-gutter-width/2;
+      padding-right: 70px;
+
+      hr {
+        border-top-color: rgba($text-color, 0.5);
+        margin-top: 12px;
+        margin-bottom: 12px;
+      }
+    }
+  }
+
+  .year {
+    span {
+      @include table-label();
+    }
+  }
+
+  thead:not(.is_stuck) {
+    th.admin {
+      border-bottom-color: #fff;
+    }
+  }
+
+  td.admin {
+    border-top-color: #fff;
+    text-align: right;
+
+    a {
+      opacity: 0.3;
+
+      &:link {
+        opacity: 1;
+      }
+
+      &.view {
+        color: $brand-warning;
+      }
+    }
+  }
+
+  td {
+    &.breakdown {
+      padding: 5px 8px;
+    }
+    &.info-expander {
+      padding: 0;
+      cursor: pointer;
+      a {
+        display: block;
+        cursor: pointer;
+        padding: 8px;
+        text-align: center;
+        color: black;
+        background-color: #DDD;
+        &.collapsed {
+          color: $link-color;
+          background-color: transparent;
+          &:hover,
+          &:focus
+          &:active {
+            background-color: $color-okf-grey;
+          }
+        }
+      }
+    }
+    &.rank {
+      background-color: transparent;
+      text-align: left;
+    }
+  }
+}
+
+.table-header-stuck thead {
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  &.stuck {
+    background-color: #FFF;
+  }
+}
+
+.rank,
+.score {
+  text-align: center;
+  background-color: $color-okf-grey;
+}
+
+.table td.score {
+  position: relative;
+  padding: 0;
+  span {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 5px;
+    bottom: 0;
+    color: black;
+    line-height: 40px;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+ul.availability, ul.data-table-key {
+  margin-bottom: 0;
+  padding-left: 0;
+  cursor: pointer;
+}
+
+.availability > li {
+  display: inline-block;
+  width: 16px;
+  background-color: #CCC;
+  color: white;
+  line-height: 16px;
+  padding-left: 5px;
+  padding-right: 10px;
+  text-align: center;
+}
+
+.data-table-key li {
+  display: inline-block;
+  border-left: 16px solid #CCC;
+  line-height: 16px;
+  padding-left: 5px;
+  padding-right: 10px;
+}
+
+.data-table-key li.maybe {
+  border-color: $color-maybe;
+}
+
+.data-table-key li.yes {
+  border-color: $color-yes;
+}
+
+.data-table-key li.no {
+  border-color: $color-no;
+}
+
+
+.availability-comparative {
+  display: table;
+  width: 100%;
+
+  li {
+    display: table-cell;
+    line-height: 24px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.availability-slice > li {
+  display: inline-block;
+  line-height: 24px;
+  width: 24px;
+  padding-left: 3px;
+  padding-right: 0;
+}
+
+.availability li.maybe {
+  background-color: $color-maybe;
+}
+
+.availability li.yes {
+  background-color: $color-yes;
+}
+
+.availability li.no {
+  background-color: $color-no;
+}
+
+ul.availability-popover {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.availability-popover {
+  li i {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    color: white;
+    padding: 2px;
+  }
+
+  li.yes i {
+    background-color: $color-yes;
+  }
+
+  li.maybe i {
+    background-color: $color-maybe;
+  }
+
+  li.no i {
+    background-color: $color-no;
+  }
+}
+
+.rank-previous, .score-previous, .score-top, .rank-top {
+  opacity: 0.6;
+  padding: 2px;
+  width: 40px;
+  text-align: center;
+  display: inline-block;
+}
+
+td.previous-results {
+  text-align: center;
+}
+
+
+#places_overview_table thead tr th, #datasets_overview_table thead tr th, #slice-table thead tr th {
+
+  &:first-child {
+    cursor: pointer;
+    color: lighten(black, 15%);
+  }
+
+  &:nth-child(2) {
+    cursor: pointer;
+    color: lighten(black, 15%);
+  }
+
+  &:last-child {
+    cursor: pointer;
+    color: lighten(black, 15%);
+  }
+}
+
+#places_overview_table {
+
+  tr td {
+    padding: 8px 4px 8px 4px !important;
+
+    a {
+      font-size: 12px;
+    }
+  }
+
+  thead tr th {
+    height: 100px;
+
+    .dataset-title-context {
+      display: block;
+      @include rotate(-90deg);
+      padding: 8px;
+    }
+  }
+}
+
+
+th.header.headerSortDown:after {
+  font-family: FontAwesome;
+  content: $fa-var-arrow-circle-down;
+  text-align: right;
+  float: right;
+}
+
+th.header.headerSortUp:after {
+  font-family: FontAwesome;
+  content: $fa-var-arrow-circle-up;
+  text-align: right;
+  float: right;
+}
+
+
+.is_stuck {
+  background-color: white;
+
+  th {
+    min-width: 69px;
+  }
+}
+
+.dataset-title-context {
+  cursor: pointer;
+}
+
+.dataset-context {
+  float: right;
+  cursor: pointer;
+  color: #428bca;
+}
+
+
+// admin status for census
+table {
+  .status {
+    position: relative;
+    overflow: visible;
+
+    .entry-year {
+      clear: left;
+      height: 16px;
+      position: absolute;
+      bottom: 1px;
+      color: #fff;
+      text-align: left;
+      font-size: 9px;
+      line-height: 16px;
+      padding: 0 5px;
+      background-color: rgba(0,0,0, 0.1);
+      pointer-events: none;
+
+      &.label-success {
+        background-color: rgba(0,0,0, 0.05);
+        color: #333;
+        text-shadow: none;
+        font-weight: 500;
+      }
+
+      &.label-important {
+        background-color: #333;
+      }
+
+      &.label-warning {
+        background-color: #666;
+      }
+
+      &.label-success {
+        visibility: hidden;
+      }
+    }
+
+    .pending {
+      position: absolute;
+      top: 1px;
+      right: 0;
+      padding: 2px 4px;
+      z-index: 2;
+      background-color: $brand-warning;
+      font-size: 10px;
+      pointer-events: none;
+    }
+  }
+}

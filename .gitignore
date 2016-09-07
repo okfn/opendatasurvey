@@ -13,3 +13,4 @@ sandbox/*
 .DS_Store
 npm-debug.log
 coverage/*
+.sass-cache/

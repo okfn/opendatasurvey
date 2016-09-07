@@ -1,0 +1,29 @@
+h1 {
+  font-weight: 300;
+}
+h2,
+h3 {
+  font-weight: 400;
+}
+
+h1, .h1,
+h3 {
+  a {
+    color: black;
+    &:hover {
+      color: black;
+      text-decoration: underline;
+    }
+  }
+}
+
+h4, .h4,
+h5, .h5,
+h6, .h6 {
+  margin-top: ($line-height-computed * 0.8);
+  margin-bottom: ($line-height-computed *0.5);
+}
+
+blockquote {
+  color: $gray-light;
+}

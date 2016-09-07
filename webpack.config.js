@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 
-var BUILD_DIR = path.resolve(__dirname, 'census/public/src');
+var BUILD_DIR = path.resolve(__dirname, 'census/static/scripts');
 var APP_DIR = path.resolve(__dirname, 'census/ui_app');
 
 var config = {

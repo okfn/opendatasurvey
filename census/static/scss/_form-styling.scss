@@ -1,0 +1,256 @@
+body.form {
+
+  h2, h3 {
+    span {
+      color: $gray-light;
+    }
+  }
+
+  section {
+    border-bottom: solid 1px $gray-lighter;
+
+    &:nth-of-type(odd) {
+      background-color: lighten($gray-lighter, 3%);
+    }
+
+    &:first-of-type {
+      .container {
+        padding-top: 50px;
+      }
+    }
+
+    &.banner {
+      background-image: url(img/icon-tile.png);
+      background-size: 350px auto;
+      background-position: center top;
+
+      .container {
+        background-image: none;
+      }
+    }
+
+    .question {
+      .instructions {
+        .toggle {
+          .icon {
+            background-color: $brand-info;
+            font-weight: 700;
+          }
+        }
+      }
+
+      .comments {
+        label {
+          font-weight: normal;
+        }
+
+        textarea {
+          font-weight: 300;
+        }
+      }
+
+      &.scale,
+      &.yes-no {
+        .answer {
+          label {
+            font-size: 15px;
+
+            &:first-of-type {
+              span {
+                border-radius: $border-radius-large 0 0 $border-radius-large;
+              }
+            }
+            &:last-of-type {
+              span {
+                border-radius: 0 $border-radius-large $border-radius-large 0;
+              }
+            }
+          }
+        }
+
+        &:not(.neutral) {
+          .answer {
+            input {
+              &:checked {
+                & + label {
+                  span {
+                    background-color: $brand-warning;
+                    border-color: darken($brand-warning, 25%);
+                  }
+                  &:first-of-type {
+                    span {
+                      background-color: $brand-danger;
+                      border-color: darken($brand-danger, 25%);
+                    }
+                  }
+                  &:last-of-type {
+                    span {
+                      background-color: $brand-success;
+                      border-color: darken($brand-success, 20%);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      &.source {
+        .answer {
+          ul {
+            li {
+              input {
+                border-radius: $border-radius-large;
+              }
+
+              .select {
+                border-radius: $border-radius-large;
+              }
+            }
+          }
+        }
+      }
+
+      &.select {
+        .answer {
+          border-radius: $border-radius-large;
+
+          select {
+            background-color: transparent;
+          }
+        }
+      }
+
+      &.multiple {
+        ul {
+          li {
+            label {
+              border-radius: $border-radius-large;
+            }
+            input {
+              &:checked {
+                & + label {
+                  background-color: $brand-success;
+                  border-color: darken($brand-success, 20%);
+                }
+              }
+            }
+          }
+        }
+      }
+
+      &.text {
+        textarea,
+        input[type="text"] {
+          border-radius: $border-radius-large;
+          &:not(:focus) {
+            background-color: transparent;
+          }
+        }
+      }
+
+      &.submit {
+        button {
+          background-color: $link-color;
+          border-radius: $border-radius-large;
+        }
+      }
+
+      &.sub {
+        &.scale,
+        &.yes-no {
+          .answer {
+            label {
+              &:first-of-type {
+                span {
+                  border-radius: $border-radius-base 0 0 $border-radius-base;
+                }
+              }
+
+              &:last-of-type {
+                span {
+                  border-radius: 0 $border-radius-base $border-radius-base 0;
+                }
+              }
+            }
+          }
+        }
+        &.source {
+          .answer {
+            ul {
+              li {
+                input {
+                  border-radius: $border-radius-base;
+                  background-color: transparent;
+                }
+
+                .select {
+                  border-radius: $border-radius-base;
+
+                  select {
+                    background-color: transparent;
+                  }
+                }
+              }
+            }
+          }
+        }
+        &.text {
+          textarea,
+          input[type="text"] {
+            border-radius: $border-radius-base;
+          }
+        }
+      }
+
+      &:not(.answered) {
+        &.scale,
+        &.yes-no {
+          .answer {
+            label {
+
+              span {
+                border-color: $gray-light;
+              }
+            }
+          }
+        }
+        &.source {
+          .answer {
+            ul {
+              li {
+                input {
+                  border-color: $gray-light;
+                }
+                .select {
+                  border-color: $gray-light;
+                }
+              }
+            }
+          }
+        }
+        &.select {
+          .answer {
+            border-color: $gray-light;
+          }
+        }
+        &.multiple {
+          ul {
+            li {
+              label {
+                border-color: $gray-light;
+              }
+            }
+          }
+        }
+        &.text {
+          textarea,
+          input[type="text"] {
+            border-color: $gray-light;
+          }
+        }
+      }
+    }
+  }
+}
