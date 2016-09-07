@@ -1,5 +1,9 @@
 'use strict';
 
+require('babel-core/register')({
+  presets: ['es2015', 'react']
+});
+
 function start() {
   var _ = require('lodash');
   var path = require('path');
@@ -26,9 +30,9 @@ function start() {
   var templateFilters = require('./filters');
   var app = express();
   var cacheAge = 3600 * 1000; // in milliseconds
-  var staticRoot = path.join(__dirname, 'public');
+  var staticRoot = path.join(__dirname, 'static');
   var sessionSecret = process.env.SESSION_SECRET || 'dummysecret';
-  var faviconPath = __dirname + '/public/favicon.ico';
+  var faviconPath = path.join(__dirname, '/public/favicon.ico');
   var models = require('./models');
   var middlewares = require('./middlewares');
   var currentYear = new Date().getFullYear();
@@ -68,7 +72,7 @@ function start() {
   app.set('systemDomain', config.get('system_subdomain'));
   app.set('urlTmpl', config.get('urlTmpl'));
 
-  env = nunjucks.configure(['census/views_old'], {
+  env = nunjucks.configure(['census/views', 'census/views_old'], {
     autoescape: false,
     express: app
   });

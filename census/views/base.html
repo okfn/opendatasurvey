@@ -1,0 +1,145 @@
+{% set godi = "true" %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Open Knowledge">
+    <title>{% block title%}{{title}}{% endblock %} - {{ site.settings.title }}</title>
+    <!--[if lt IE 9]>
+    <script src="/bower_components/html5shiv/dist/html5shiv.min.js"></script>
+    <![endif]-->
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic,700,300' rel='stylesheet' type='text/css'>
+    {% if godi == "true" %}
+    <link rel="stylesheet" href="//a.okfn.org/html/oki/panel/assets/css/frontend.css"/>
+    {% endif %}
+    <link rel="stylesheet" href="/css/styles.css?{{currentTime}}">
+    <style type="text/css">
+      {{ site.settings.custom_css }}
+    </style>
+  </head>
+
+  <body class="{% if godi == "true" %}godi {% endif %}{% block body_class %}{% endblock %}">
+    {% if godi == "true" %}
+    <div id="ok-panel" class="closed"><div class="container"><iframe src="//a.okfn.org/html/oki/panel/panel.html" scrolling="no"></iframe></div></div>
+    {% endif %}
+    <header id="header">
+      <div class="container">
+        {% if godi == "true" %}
+        <div id="ok-panel-wrapper" data-breakpoint="768px"><a class="black ok-ribbon" href="//okfn.org/"><img src="//a.okfn.org/html/oki/panel/assets/images/oki-ribbon.png" alt="Open Knowledge"></a></div>
+        <a href="http://index.okfn.org/" class="logo">
+          {% include 'includes/godi-logo.svg' %}
+        </a>
+        {% else %}
+        <div class="logo">
+          <a class="glyphicon glyphicon-th-list" aria-hidden="true"></a>
+          <div>
+            <a class="title" href="/" title="{{ gettext('Home')}}">{{ site.settings.title }}</a>
+            <span class="tagline">Powered by <a href="http://census.okfn.org">Open Data Census</a></span>
+          </div>
+        </div>
+        {% endif %}
+
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <nav class="collapse navbar-collapse" id="nav">
+          {% if godi != "true" %}
+          <span class="user">
+            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+            {% if currentUser %}
+              {{format("Logged in as %(name)s", { name: currentUser.firstName })}}
+              | <a href="{{ logoutUrl }}">{{gettext("Log out")}}</a>
+            {% else %}
+              <a href="{{ loginUrl }}">{{gettext("Login")}}</a>
+            {% endif %}
+          </span>
+          {% endif %}
+
+          <ul class="menu">
+            <li><a href="/about/">{{gettext("About")}}</a></li>
+            <li><a href="/changes/">{{gettext("Changes")}}</a></li>
+            <li><a href="/faq/">{{gettext("FAQ")}}</a></li>
+            {% if site.settings.contribute_page %}
+            <li><a href="/contribute/">{{gettext("Contribute")}}</a></li>
+            {% endif %}
+            {% if site.settings.tutorial_page %}
+            <li><a href="/tutorial/">{{gettext("Tutorial")}}</a></li>
+            {% endif %}
+            {% if site.settings.support_url %}
+              <li><a target="_blank" href="{{ site.settings.support_url }}">{{ gettext("Support") }}</a></li>
+            {% elif discussionForum %}
+              <li><a target="_blank" href="{{ discussionForum }}">{{ gettext("Support") }}</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    {% block breadcrumb %}{% endblock %}
+
+    {% if site.settings.banner_text %}
+    <div id="banner" class="alert">
+      {{ site.settings.banner_text }}
+    </div>
+    {% endif %}
+
+    {% if error_messages.length > 0 %}
+    <div class="flash alert alert-error">
+      {{ error_messages }}
+    </div>
+    {% endif %}
+    {% if info_messages.length > 0 %}
+    <div class="flash alert alert-info">
+      {{ info_messages }}
+      {% if url_query.post_submission %}
+      {% include '_snippets/share_submission_buttons.html' %}
+      {% endif %}
+    </div>
+    {% endif %}
+
+    {% block content %}{{content}}{% endblock %}
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-primary">
+          <a class="footer-logo" href="https://okfn.org/">
+          <img src="https://a.okfn.org/img/oki/landscape-white-468x122.png" alt="Open Knowledge International">
+          </a>
+          <ul class="footer-links">
+            <li><a href="/privacy-policy/">Privacy policy</a></li>
+            <li><a href="/ip-policy/">IP policy</a></li>
+            <li><a href="/cookie-policy/">Cookie policy</a></li>
+            <li><a href="/terms-of-use/">Terms of use</a></li>
+            <li><a href="http://okfn.org/opendata/" title="More about Open Data">What is Open Data</a></li>
+            <li><a href="http://meta.census.okfn.org/">Run Your Own Local Open Data Census</a></li>
+          </ul>
+        </div>
+        <div class="footer-secondary">
+          <p class="pull-right">
+            <strong>{{ gettext("Download") }}:</strong> <a href="/api/entries.cascade.csv">{{gettext("Current (CSV)")}}</a> |
+            <a href="/api/entries.csv">{{gettext("All (CSV)")}}</a> |
+            <a href="/api/entries.cascade.json">{{gettext("Current (JSON)")}}</a> |
+            <a href="/api/entries.json">{{gettext("All (JSON)")}}</a>
+          <p>
+            <a href="http://opendatacommons.org/licenses/pddl/1.0">Data License (Public Domain)</a>. <a href="https://github.com/okfn/opendatacensus/">Source code</a>.
+          </p>
+        </div>
+        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+        {% if currentUser %}
+          {{format("Logged in as %(name)s", { name: currentUser.firstName })}}
+          | <a href="{{ logoutUrl }}">{{gettext("Log out")}}</a>
+        {% else %}
+          <a href="{{ loginUrl }}">{{gettext("Login")}}</a>
+        {% endif %}
+      </div>
+    </footer>
+
+  </body>
+</html>

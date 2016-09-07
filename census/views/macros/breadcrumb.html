@@ -1,0 +1,10 @@
+{% macro breadcrumb(childTitle) %}
+<div class="breadcrumb-wrapper">
+  <ol class="breadcrumb container">
+    <li>
+        <a href="/">Home</a>
+    </li>
+    <li class="active">{{ childTitle }}</li>
+  </ol>
+</div>
+{% endmacro %}
