@@ -5,20 +5,64 @@ var _ = require('lodash');
 var models = require('../census/models');
 var modelUtils = rewire('../census/models/utils');
 var chai = require('chai');
-var assert = chai.assert;
 var expect = chai.expect;
 var utils = require('./utils');
-var defaultOptions = {
-  models: models,
-  domain: 'site1',
-  dataset: null,
-  place: null,
-  year: null,
-  cascade: true,
-  ynQuestions: true,
-  locale: null,
-  with: {Entry: true, Dataset: true, Place: true, Question: true}
-};
+
+describe('Dataset instance methods', function() {
+  this.timeout(20000);
+
+  beforeEach(utils.setupFixtures);
+  afterEach(utils.dropFixtures);
+
+  it('.getQuestions', function() {
+    var dataOptions = {
+      models: models,
+      domain: 'site1',
+      dataset: 'dataset11',
+      place: null,
+      year: null,
+      cascade: true,
+      ynQuestions: true,
+      locale: null,
+      with: {Entry: true, Dataset: true, Place: true, Question: true}
+    };
+    return modelUtils.getData(dataOptions)
+    .then(data => {
+      expect(data).to.have.property('dataset');
+      return data.dataset.getQuestions();
+    })
+    .then(questions => {
+      expect(questions).to.have.length(18);
+    });
+  });
+
+  it('.getQuestionSetSchema', function() {
+    var dataOptions = {
+      models: models,
+      domain: 'site1',
+      dataset: 'dataset11',
+      place: null,
+      year: null,
+      cascade: true,
+      ynQuestions: true,
+      locale: null,
+      with: {Entry: true, Dataset: true, Place: true, Question: true}
+    };
+    return modelUtils.getData(dataOptions)
+    .then(data => {
+      expect(data).to.have.property('dataset');
+      return data.dataset.getQuestionSetSchema();
+    })
+    .then(qsSchema => {
+      expect(qsSchema).to.have.length(12);
+      var firstQuestionSchema = qsSchema[0];
+      expect(firstQuestionSchema).to.have.property('id');
+      expect(firstQuestionSchema).to.have.property('if');
+      expect(firstQuestionSchema).to.have.property('position');
+      expect(firstQuestionSchema).to.have.property('defaultProperties');
+    });
+  });
+});
 
 describe('Data access layer', function() {
   this.timeout(20000);

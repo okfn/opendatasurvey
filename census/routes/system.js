@@ -14,8 +14,8 @@ var systemRoutes = function(router) {
   router.post(utils.scoped('/load/places'), coreMixins, system.loadAllPlaces);
   router.post(utils.scoped('/load/datasets'), coreMixins,
     system.loadAllDatasets);
-  router.post(utils.scoped('/load/questions'), coreMixins,
-    system.loadAllQuestions);
+  router.post(utils.scoped('/load/questionsets'), coreMixins,
+    system.loadAllQuestionSets);
 
   return router;
 };

@@ -59,6 +59,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       comment: 'An array of dataset characterstics.'
     },
+    qsurl: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      comment: 'A URL pointing to the QuestionSet used by this dataset.'
+    },
     translations: {
       type: DataTypes.JSONB,
       allowNull: true
@@ -79,9 +84,26 @@ module.exports = function(sequelize, DataTypes) {
         }), function(e) {
           return e.yCount(questions);
         }));
+      },
+      /*
+      Get Questions from the associated QuestionSet.
+      */
+      getQuestions: function() {
+        return this.getQuestionSet()
+        .then(qset => qset.getQuestions());
+      },
+      /*
+      Get QuestionSetSchema object from the associated QuestionSet.
+      */
+      getQuestionSetSchema: function() {
+        return this.getQuestionSet()
+        .then(qset => qset.qsSchema);
       }
     },
     classMethods: {
+      associate: function(models) {
+        Dataset.belongsTo(models.QuestionSet, {foreignKey: 'questionsetid'});
+      },
       /* Calculate the max score possible for all unique datasets used by a given list
          of entries.*/
       maxScore: function(entries, questionMaxScore) {

@@ -83,6 +83,7 @@ const QuestionForm = React.createClass({
       objects.
     */
     var schema = this.getSchemaForId(id);
+    if (schema === undefined) return {};
 
     // Initially set up return value as the defaultProperties for the schema
     var visProps = _.cloneDeep(schema.defaultProperties);
@@ -121,6 +122,7 @@ const QuestionForm = React.createClass({
       prefix), derived from the schema position property.
     */
     var schema = this.getSchemaForId(id);
+    if (schema === undefined) return;
     return String(this.props.labelPrefix || '') + String(schema.position);
   },
 
@@ -129,11 +131,16 @@ const QuestionForm = React.createClass({
       Return the position for the question schema with `id`.
     */
     var schema = this.getSchemaForId(id);
+    if (schema === undefined) return;
     return schema.position;
   },
 
   render() {
     var questionNodes = this.state.questionState.map(q => {
+      // check schema
+      if (this.getSchemaForId(q.id) === undefined) {
+        console.warn('No schema defined for Question with id: ' + q.id);
+      }
       return (
         <QuestionField ref={q.id}
                        key={q.id}

@@ -4,6 +4,7 @@ var data = require('../fixtures/registry')
       .concat(require('../fixtures/site'))
       .concat(require('../fixtures/user'))
       .concat(require('../fixtures/place'))
+      .concat(require('../fixtures/questionset'))
       .concat(require('../fixtures/dataset'))
       .concat(require('../fixtures/question'))
       .concat(require('../fixtures/entry'));

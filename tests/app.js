@@ -8,6 +8,7 @@ var marked = require('marked');
 var entryFixtures = require('../fixtures/entry');
 var datasetFixtures = require('../fixtures/dataset');
 var userFixtures = require('../fixtures/user');
+var questionSetFixtures = require('../fixtures/questionset');
 
 describe('Basics', function() {
   before(testUtils.startApplication);
@@ -192,6 +193,25 @@ describe('Basics', function() {
             done();
           });
         }
+      });
+    });
+
+    it('View submit-react page contains qsSchema', function(done) {
+      var port = this.app.get('port');
+      var url = 'http://site2.dev.census.org:' + port +
+        '/submit-react?place=placeOfNoEntry&dataset=datasetOfNoEntry';
+
+      return this.browser.visit(url, () => {
+        var expectedQSetSchema = _.find(questionSetFixtures, qSet => {
+          return (qSet.data.site === 'site2');
+        }).data.qsSchema;
+        assert.ok(this.browser.success);
+        this.browser.assert.evaluate('window.qsSchema', expectedQSetSchema);
+        this.browser.assert.evaluate('window.qsSchema.length', 12);
+        this.browser.assert.evaluate('window.qsSchema[0].id', 'exists');
+        this.browser.assert.evaluate('window.qsSchema[0].if', []);
+        this.browser.assert.evaluate('window.qsSchema[0].position', 0);
+        done();
       });
     });
 

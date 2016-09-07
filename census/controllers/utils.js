@@ -1,12 +1,13 @@
 'use strict';
 
-var _ = require('lodash');
-var modelUtils = require('../models/utils');
-var FIELD_SPLITTER = /[\s,]+/;
-var ANONYMOUS_USER_ID = process.env.ANONYMOUS_USER_ID ||
+const _ = require('lodash');
+const modelUtils = require('../models/utils');
+const FIELD_SPLITTER = /[\s,]+/;
+const ANONYMOUS_USER_ID = process.env.ANONYMOUS_USER_ID ||
   '0e7c393e-71dd-4368-93a9-fcfff59f9fff';
-var marked = require('marked');
+const marked = require('marked');
 const Promise = require('bluebird');
+const config = require('../config');
 
 var makeChoiceValidator = function(param) {
   return function(req) {
@@ -187,7 +188,7 @@ var commonFieldArray = function(data, pattern) {
   });
 };
 
-var placeMapper = function(data) {
+var placeMapper = function(data, site) {
   var reviewers = (data.reviewers) ? splitFields(data.reviewers) : [];
   return _.defaults({
     id: data.id.toLowerCase(),
@@ -195,11 +196,17 @@ var placeMapper = function(data) {
   }, data);
 };
 
-var datasetMapper = function(data) {
+var datasetMapper = function(data, site) {
   let characteristics = commonFieldArray(data, /^characteristics:\d+$/i);
   let reviewers = (data.reviewers) ? splitFields(data.reviewers) : [];
   let disableforyears =
     (data.disableforyears) ? splitFields(data.disableforyears) : [];
+  let qsurl = data.questionseturl ||
+    site.settings.question_set_url || config.get('fallback_questionset');
+  if (!qsurl) {
+    console.log('No QuestionSet is configured for ' +
+                site.id + '/' + data.id.toLowerCase());
+  }
   return _.defaults({
     id: data.id.toLowerCase(),
     description: marked(data.description),
@@ -207,11 +214,12 @@ var datasetMapper = function(data) {
     order: data.order || 100,
     reviewers: reviewers,
     disableforyears: disableforyears,
-    characteristics: characteristics
+    characteristics: characteristics,
+    qsurl: qsurl
   }, data);
 };
 
-var questionMapper = function(data) {
+var questionMapper = function(data, site) {
   var dependants = (data.dependants) ? splitFields(data.dependants) : null;
   return _.defaults({
     id: data.id.toLowerCase(),
@@ -303,9 +311,7 @@ var getCurrentState = function(data, req) {
 
 var getReviewers = function(req, data) {
   var reviewers = [];
-  if (!req.user) {
-    return reviewers;
-  } else {
+  if (req.user) {
     if (req.params.site.settings.reviewers) {
       reviewers = reviewers.concat(req.params.site.settings.reviewers);
     }
@@ -315,8 +321,8 @@ var getReviewers = function(req, data) {
     if (data.dataset.reviewers) {
       reviewers = reviewers.concat(data.dataset.reviewers);
     }
-    return reviewers;
   }
+  return reviewers;
 };
 
 var canReview = function(reviewers, user) {
