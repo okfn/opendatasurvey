@@ -7,6 +7,9 @@ const uuid = require('node-uuid');
 const utils = require('./utils');
 const modelUtils = require('../models').utils;
 const Promise = require('bluebird');
+const React = require('react');
+const renderToString = require('react-dom/server').renderToString;
+const QuestionForm = require('../ui_app/QuestionForm');
 
 var submitGetHandler = function(req, res, data) {
   var addDetails = _.find(data.questions, function(q) {
@@ -254,9 +257,13 @@ var submitReact = function(req, res) {
           type: question.type
         };
       });
+      let initialHTML = renderToString(
+        <QuestionForm questions={questions} qsSchema={qsSchema} labelPrefix={'B'} />
+      );
       res.render('create-react.html', {
         qsSchema: JSON.stringify(qsSchema),
-        questions: JSON.stringify(questions)
+        questions: JSON.stringify(questions),
+        initialRenderedQuestions: initialHTML
       });
     });
   }).catch(console.trace.bind(console));

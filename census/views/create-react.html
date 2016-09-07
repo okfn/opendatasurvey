@@ -1,0 +1,27 @@
+{% extends "page.html" %}
+{% from "macros/breadcrumb.html" import breadcrumb %}
+
+{% block title %}
+{{ gettext("Submit") }}
+{% endblock %}
+
+{% block body_class %}form{% endblock %}
+
+{% block breadcrumb %}
+{{ breadcrumb('Make a Submission') }}
+{% endblock %}
+
+{% block content %}
+
+<section>
+  <div class="container" id="questions">{{ initialRenderedQuestions }}</div>
+  <script type="text/javascript">
+    window.qsSchema = {{ qsSchema|safe }};
+    window.questions = {{ questions|safe }};
+  </script>
+</section>
+
+
+<script src="/scripts/entry.js" type="text/javascript"></script>
+
+{% endblock %}

@@ -44,6 +44,11 @@ const QuestionField = React.createClass({
 
 const QuestionForm = React.createClass({
 
+  propTypes: {
+    questions: React.PropTypes.array.isRequired,
+    qsSchema: React.PropTypes.array.isRequired
+  },
+
   getInitialState() {
     var questionValues = this.props.questions.map(q => {
       return {
@@ -164,4 +169,4 @@ const QuestionForm = React.createClass({
   }
 });
 
-export default QuestionForm;
+module.exports = QuestionForm;
