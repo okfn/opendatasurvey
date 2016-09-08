@@ -22137,18 +22137,24 @@
 	          { htmlFor: 'commentThree' },
 	          'Comments'
 	        ),
-	        _react2.default.createElement('textarea', { placeholder: 'Add comments', id: 'commentThree', rows: '5' })
+	        _react2.default.createElement('textarea', { placeholder: 'Add comments',
+	          id: 'commentThree',
+	          rows: '5' })
 	      )
 	    );
 	  },
 	  handler: function handler(e) {
 	    this.props.onChange(this, e.target.value);
 	  },
+	  _isSub: function _isSub() {
+	    return this.props.position % 1 !== 0;
+	  },
 	  _getClassValues: function _getClassValues() {
 	    var classValue = '';
 	    if (!this.props.visibleProps.enabled) classValue += 'disabled ';
 	    if (!this.props.visibleProps.visible) classValue += 'hide ';
 	    if (this.props.visibleProps.required) classValue += 'required ';
+	    if (this._isSub()) classValue += 'sub ';
 	    return _lodash2.default.trim(classValue);
 	  }
 	});
@@ -22238,7 +22244,7 @@
 	    */
 	    var schema = this.getSchemaForId(id);
 	    if (schema === undefined) return;
-	    return String(this.props.labelPrefix || '') + String(schema.position);
+	    return String(this.props.labelPrefix || '') + String(schema.position) + '.';
 	  },
 	  getPositionForId: function getPositionForId(id) {
 	    /*
@@ -22274,7 +22280,7 @@
 	      return q.props.position;
 	    });
 	    return _react2.default.createElement(
-	      'ul',
+	      'div',
 	      { className: 'questionList' },
 	      questionNodes
 	    );

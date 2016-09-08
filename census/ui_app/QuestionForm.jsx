@@ -4,8 +4,7 @@ import _ from 'lodash';
 const QuestionField = React.createClass({
 
   render() {
-    return (
-    <div className={'yes-no question ' + this._getClassValues()}>
+    return (<div className={'yes-no question ' + this._getClassValues()}>
       <div className="instructions">
         <div className="collapse" id={'instructions' + this.props.id}>
           <h4>Instructions</h4>
@@ -29,7 +28,9 @@ const QuestionField = React.createClass({
         </a>
       </div>
       <div className="main">
-        <h2><span>{this.props.label}</span> {this.props.children.toString()}</h2>
+        <h2>
+          <span>{this.props.label}</span> {this.props.children.toString()}
+        </h2>
         <div className="answer">
           <input type="radio"
                  name={this.props.id}
@@ -55,14 +56,19 @@ const QuestionField = React.createClass({
       </div>
       <div className="comments">
         <label htmlFor="commentThree">Comments</label>
-        <textarea placeholder="Add comments" id="commentThree" rows="5"></textarea>
+        <textarea placeholder="Add comments"
+                  id="commentThree"
+                  rows="5"></textarea>
       </div>
-    </div>
-    );
+    </div>);
   },
 
   handler(e) {
     this.props.onChange(this, e.target.value);
+  },
+
+  _isSub() {
+    return (this.props.position % 1 !== 0);
   },
 
   _getClassValues() {
@@ -70,6 +76,7 @@ const QuestionField = React.createClass({
     if (!this.props.visibleProps.enabled) classValue += 'disabled ';
     if (!this.props.visibleProps.visible) classValue += 'hide ';
     if (this.props.visibleProps.required) classValue += 'required ';
+    if (this._isSub()) classValue += 'sub ';
     return _.trim(classValue);
   }
 });
@@ -160,7 +167,7 @@ const QuestionForm = React.createClass({
     */
     var schema = this.getSchemaForId(id);
     if (schema === undefined) return;
-    return String(this.props.labelPrefix || '') + String(schema.position);
+    return String(this.props.labelPrefix || '') + String(schema.position) + '.';
   },
 
   getPositionForId(id) {
@@ -194,9 +201,9 @@ const QuestionForm = React.createClass({
     // Sort QuestionField nodes by their position property
     questionNodes = _.sortBy(questionNodes, q => q.props.position);
     return (
-      <ul className="questionList">
+      <div className="questionList">
         {questionNodes}
-      </ul>
+      </div>
     );
   }
 });

@@ -14,11 +14,14 @@
 {% block content %}
 
 <section>
-  <div class="container" id="questions">{{ initialRenderedQuestions }}</div>
-  <script type="text/javascript">
-    window.qsSchema = {{ qsSchema|safe }};
-    window.questions = {{ questions|safe }};
-  </script>
+  <div class="container">
+    <div id="questions">{{ initialRenderedQuestions }}</div>
+    <script type="text/javascript">
+      window.qsSchema = {{ qsSchema|safe }};
+      window.questions = {{ questions|safe }};
+    </script>
+  </div>
+
 </section>
 
 
