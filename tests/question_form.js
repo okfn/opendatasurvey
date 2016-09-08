@@ -2,7 +2,7 @@ import 'jsdom-global/register';
 import React from 'react'; // eslint-disable-line no-unused-vars
 import {mount} from 'enzyme';
 import {expect} from 'chai';
-import QuestionForm from '../scripts/app/QuestionForm';
+import QuestionForm from '../census/ui_app/QuestionForm';
 
 let qsSchema = [
   {

@@ -1,4 +1,4 @@
-{% set godi = "true" %}
+{% set godi = "false" %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +35,11 @@
         </a>
         {% else %}
         <div class="logo">
-          <a class="glyphicon glyphicon-th-list" aria-hidden="true"></a>
+          {% if site.settings.navbar_logo %}
+            {{ site.settings.navbar_logo }}
+          {% else %}
+            <a class="glyphicon glyphicon-th-list" aria-hidden="true"></a>
+          {% endif %}
           <div>
             <a class="title" href="/" title="{{ gettext('Home')}}">{{ site.settings.title }}</a>
             <span class="tagline">Powered by <a href="http://census.okfn.org">Open Data Census</a></span>
@@ -121,6 +125,11 @@
             <li><a href="http://meta.census.okfn.org/">Run Your Own Local Open Data Census</a></li>
           </ul>
         </div>
+        {% if site.settings.custom_footer %}
+        <div class="footer-secondary">
+          {{ site.settings.custom_footer }}
+        </div>
+        {% endif %}
         <div class="footer-secondary">
           <p class="pull-right">
             <strong>{{ gettext("Download") }}:</strong> <a href="/api/entries.cascade.csv">{{gettext("Current (CSV)")}}</a> |
@@ -138,6 +147,18 @@
         {% else %}
           <a href="{{ loginUrl }}">{{gettext("Login")}}</a>
         {% endif %}
+        {% if locales.length > 1 %}
+            <p class="lang-picker">
+            {{gettext("Change language:")}}
+            {% for locale in locales %}
+              {% if locale == currentLocale %}
+                <span>{{locale.toUpperCase()}}</span>
+              {% else %}
+                <a href="/setlocale/{{locale}}">{{locale.toUpperCase()}}</a>
+              {% endif %}
+            {% endfor %}
+            </p>
+         {% endif %}
       </div>
     </footer>
 
