@@ -5,28 +5,7 @@ const QuestionField = React.createClass({
 
   render() {
     return (<div className={'yes-no question ' + this._getClassValues()}>
-      <div className="instructions">
-        <div className="collapse" id={'instructions' + this.props.id}>
-          <h4>Instructions</h4>
-          <p>Answer “Yes” if the chosen data are collected by government, or a
-          third party officially representing government. This is the case for
-          state-owned-enterprises or contractors delivering public services
-          for government.</p>
-          <p>Answer “No” if one of the following facts apply:</p>
-          <ul>
-            <li>The data is collected by organisations that do not represent government.</li>
-            <li>The data is collected but not for the relevant government level.</li>
-          </ul>
-        </div>
-        <a className="toggle"
-           role="button"
-           data-toggle="collapse"
-           href={'#instructions' + this.props.id}
-           aria-expanded="false"
-           aria-controls={'instructions' + this.props.id}>
-            <span className="sr-only">Help</span><span className="icon">?</span>
-        </a>
-      </div>
+      { this._getInstuctions() }
       <div className="main">
         <h2>
           <span>{this.props.label}</span> {this.props.children.toString()}
@@ -69,6 +48,28 @@ const QuestionField = React.createClass({
 
   _isSub() {
     return (this.props.position % 1 !== 0);
+  },
+
+  _getInstuctions() {
+    if (this.props.instructions) {
+      return (
+      <div className="instructions">
+        <div className="collapse" id={'instructions' + this.props.id}>
+          <h4>Instructions</h4>
+          <span dangerouslySetInnerHTML={{__html: this.props.instructions}} />
+        </div>
+        <a className="toggle"
+           role="button"
+           data-toggle="collapse"
+           href={'#instructions' + this.props.id}
+           aria-expanded="false"
+           aria-controls={'instructions' + this.props.id}>
+            <span className="sr-only">Help</span><span className="icon">?</span>
+        </a>
+      </div>
+      );
+    }
+    return (<div className="instructions"></div>);
   },
 
   _getClassValues() {
@@ -160,6 +161,13 @@ const QuestionForm = React.createClass({
     return _.result(_.find(this.props.questions, q => q.id === id), 'text');
   },
 
+  getInstructionsForId(id) {
+    /*
+      Return question instructions for the question with `id`.
+    */
+    return _.result(_.find(this.props.questions, q => q.id === id), 'description');
+  },
+
   getLabelForId(id) {
     /*
       Return a label for the question schema with `id` (including optional
@@ -193,7 +201,8 @@ const QuestionForm = React.createClass({
                        value={q.value}
                        onChange={this.onFieldChange}
                        label={this.getLabelForId(q.id)}
-                       position={this.getPositionForId(q.id)}>
+                       position={this.getPositionForId(q.id)}
+                       instructions={this.getInstructionsForId(q.id)}>
           {this.getTextForId(q.id)}
         </QuestionField>
       );

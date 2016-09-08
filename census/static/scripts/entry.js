@@ -22022,62 +22022,7 @@
 	    return _react2.default.createElement(
 	      'div',
 	      { className: 'yes-no question ' + this._getClassValues() },
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'instructions' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'collapse', id: 'instructions' + this.props.id },
-	          _react2.default.createElement(
-	            'h4',
-	            null,
-	            'Instructions'
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'Answer “Yes” if the chosen data are collected by government, or a third party officially representing government. This is the case for state-owned-enterprises or contractors delivering public services for government.'
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'Answer “No” if one of the following facts apply:'
-	          ),
-	          _react2.default.createElement(
-	            'ul',
-	            null,
-	            _react2.default.createElement(
-	              'li',
-	              null,
-	              'The data is collected by organisations that do not represent government.'
-	            ),
-	            _react2.default.createElement(
-	              'li',
-	              null,
-	              'The data is collected but not for the relevant government level.'
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'a',
-	          { className: 'toggle',
-	            role: 'button',
-	            'data-toggle': 'collapse',
-	            href: '#instructions' + this.props.id,
-	            'aria-expanded': 'false',
-	            'aria-controls': 'instructions' + this.props.id },
-	          _react2.default.createElement(
-	            'span',
-	            { className: 'sr-only' },
-	            'Help'
-	          ),
-	          _react2.default.createElement(
-	            'span',
-	            { className: 'icon' },
-	            '?'
-	          )
-	        )
-	      ),
+	      this._getInstuctions(),
 	      _react2.default.createElement(
 	        'div',
 	        { className: 'main' },
@@ -22148,6 +22093,44 @@
 	  },
 	  _isSub: function _isSub() {
 	    return this.props.position % 1 !== 0;
+	  },
+	  _getInstuctions: function _getInstuctions() {
+	    if (this.props.instructions) {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'instructions' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'collapse', id: 'instructions' + this.props.id },
+	          _react2.default.createElement(
+	            'h4',
+	            null,
+	            'Instructions'
+	          ),
+	          _react2.default.createElement('span', { dangerouslySetInnerHTML: { __html: this.props.instructions } })
+	        ),
+	        _react2.default.createElement(
+	          'a',
+	          { className: 'toggle',
+	            role: 'button',
+	            'data-toggle': 'collapse',
+	            href: '#instructions' + this.props.id,
+	            'aria-expanded': 'false',
+	            'aria-controls': 'instructions' + this.props.id },
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'sr-only' },
+	            'Help'
+	          ),
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'icon' },
+	            '?'
+	          )
+	        )
+	      );
+	    }
+	    return _react2.default.createElement('div', { className: 'instructions' });
 	  },
 	  _getClassValues: function _getClassValues() {
 	    var classValue = '';
@@ -22237,6 +22220,14 @@
 	      return q.id === id;
 	    }), 'text');
 	  },
+	  getInstructionsForId: function getInstructionsForId(id) {
+	    /*
+	      Return question instructions for the question with `id`.
+	    */
+	    return _lodash2.default.result(_lodash2.default.find(this.props.questions, function (q) {
+	      return q.id === id;
+	    }), 'description');
+	  },
 	  getLabelForId: function getLabelForId(id) {
 	    /*
 	      Return a label for the question schema with `id` (including optional
@@ -22271,7 +22262,8 @@
 	          value: q.value,
 	          onChange: _this2.onFieldChange,
 	          label: _this2.getLabelForId(q.id),
-	          position: _this2.getPositionForId(q.id) },
+	          position: _this2.getPositionForId(q.id),
+	          instructions: _this2.getInstructionsForId(q.id) },
 	        _this2.getTextForId(q.id)
 	      );
 	    });

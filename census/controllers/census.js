@@ -254,7 +254,8 @@ var submitReact = function(req, res) {
         return {
           id: question.id,
           text: question.question,
-          type: question.type
+          type: question.type,
+          description: question.description
         };
       });
       let initialHTML = renderToString(
