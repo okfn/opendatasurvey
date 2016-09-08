@@ -15,15 +15,82 @@
 
 <section>
   <div class="container">
+    <div class="intro">
+      <h1>Section A - About you</h1>
+      <p>This section is not scored, but could provide valuable insights.</p>
+    </div>
+
+    <div class="scale first question">
+      <div class="instructions">
+
+      </div>
+      <div class="main">
+        <h2><span>A1.</span> Rate your knowledge of {...}.</h2>
+        <div class="answer">
+          <input type="radio" name="scaleOne" id="scaleOne1">
+          <label for="scaleOne1">
+            <span>1</span> <em class="description"> I'm not familiar at all with the field</em>
+          </label>
+          <input type="radio" name="scaleOne" id="scaleOne2">
+          <label for="scaleOne2">
+            <span>2</span> <em class="description">I have some knowledge about the field</em>
+          </label>
+          <input type="radio" name="scaleOne" id="scaleOne3">
+          <label for="scaleOne3">
+            <span>3</span> <em class="description">I have advanced knowledge in this field</em>
+          </label>
+        </div>
+
+      </div>
+      <div class="comments">
+        <label for="commentOne">Comments</label>
+        <textarea placeholder="Click here to tell us more about your background. What is your knowledge about the data category, the government in your country, and Open Data in general?" id="commentOne" rows="5"></textarea>
+      </div>
+    </div>
+
+    <div class="scale question">
+      <div class="instructions">
+
+      </div>
+      <div class="main">
+        <h2><span>A2.</span> Rate your knowledge of open data.</h2>
+        <div class="answer">
+          <input type="radio" name="scaleTwo" id="scaleTwo1">
+          <label for="scaleTwo1">
+            <span>1</span> <em class="description">I'm not familiar at all with open data</em>
+          </label>
+          <input type="radio" name="scaleTwo" id="scaleTwo2">
+          <label for="scaleTwo2">
+            <span>2</span> <em class="description">I have some knowledge about open data</em>
+          </label>
+          <input type="radio" name="scaleTwo" id="scaleTwo3">
+          <label for="scaleTwo3">
+            <span>3</span> <em class="description">I have advanced knowledge</em>
+          </label>
+        </div>
+
+      </div>
+      <div class="comments">
+        <label for="commentTwo">Comments</label>
+        <textarea placeholder="Add comments" id="commentTwo" rows="5"></textarea>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="intro">
+      <h1>Section B - About the data</h1>
+    </div>
+
     <div id="questions">{{ initialRenderedQuestions }}</div>
     <script type="text/javascript">
       window.qsSchema = {{ qsSchema|safe }};
       window.questions = {{ questions|safe }};
     </script>
   </div>
-
 </section>
-
 
 <script src="/scripts/entry.js" type="text/javascript"></script>
 
