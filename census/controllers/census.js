@@ -264,7 +264,8 @@ var submitReact = function(req, res) {
       res.render('create-react.html', {
         qsSchema: JSON.stringify(qsSchema),
         questions: JSON.stringify(questions),
-        initialRenderedQuestions: initialHTML
+        initialRenderedQuestions: initialHTML,
+        breadcrumbTitle: 'Make a Submission'
       });
     });
   }).catch(console.trace.bind(console));
