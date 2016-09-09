@@ -35,7 +35,7 @@ const QuestionField = React.createClass({
       </div>
       <div className="comments">
         <label htmlFor="commentThree">Comments</label>
-        <textarea placeholder="Add comments"
+        <textarea placeholder={this.props.placeholder || 'Add comments' }
                   id="commentThree"
                   rows="5"></textarea>
       </div>
@@ -154,18 +154,11 @@ const QuestionForm = React.createClass({
     return visProps;
   },
 
-  getTextForId(id) {
+  getValueForId(id, key) {
     /*
-      Return question text for the question with `id`.
+      Helper to return the value for key from question with `id`.
     */
-    return _.result(_.find(this.props.questions, q => q.id === id), 'text');
-  },
-
-  getInstructionsForId(id) {
-    /*
-      Return question instructions for the question with `id`.
-    */
-    return _.result(_.find(this.props.questions, q => q.id === id), 'description');
+    return _.result(_.find(this.props.questions, q => q.id === id), key);
   },
 
   getLabelForId(id) {
@@ -202,8 +195,9 @@ const QuestionForm = React.createClass({
                        onChange={this.onFieldChange}
                        label={this.getLabelForId(q.id)}
                        position={this.getPositionForId(q.id)}
-                       instructions={this.getInstructionsForId(q.id)}>
-          {this.getTextForId(q.id)}
+                       instructions={this.getValueForId(q.id, 'description')}
+                       placeholder={this.getValueForId(q.id, 'placeholder')}>
+          {this.getValueForId(q.id, 'text')}
         </QuestionField>
       );
     });

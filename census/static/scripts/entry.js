@@ -22082,7 +22082,7 @@
 	          { htmlFor: 'commentThree' },
 	          'Comments'
 	        ),
-	        _react2.default.createElement('textarea', { placeholder: 'Add comments',
+	        _react2.default.createElement('textarea', { placeholder: this.props.placeholder || 'Add comments',
 	          id: 'commentThree',
 	          rows: '5' })
 	      )
@@ -22212,21 +22212,13 @@
 	    }, this);
 	    return visProps;
 	  },
-	  getTextForId: function getTextForId(id) {
+	  getValueForId: function getValueForId(id, key) {
 	    /*
-	      Return question text for the question with `id`.
+	      Helper to return the value for key from question with `id`.
 	    */
 	    return _lodash2.default.result(_lodash2.default.find(this.props.questions, function (q) {
 	      return q.id === id;
-	    }), 'text');
-	  },
-	  getInstructionsForId: function getInstructionsForId(id) {
-	    /*
-	      Return question instructions for the question with `id`.
-	    */
-	    return _lodash2.default.result(_lodash2.default.find(this.props.questions, function (q) {
-	      return q.id === id;
-	    }), 'description');
+	    }), key);
 	  },
 	  getLabelForId: function getLabelForId(id) {
 	    /*
@@ -22263,8 +22255,9 @@
 	          onChange: _this2.onFieldChange,
 	          label: _this2.getLabelForId(q.id),
 	          position: _this2.getPositionForId(q.id),
-	          instructions: _this2.getInstructionsForId(q.id) },
-	        _this2.getTextForId(q.id)
+	          instructions: _this2.getValueForId(q.id, 'description'),
+	          placeholder: _this2.getValueForId(q.id, 'placeholder') },
+	        _this2.getValueForId(q.id, 'text')
 	      );
 	    });
 	    // Sort QuestionField nodes by their position property

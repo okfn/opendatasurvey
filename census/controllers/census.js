@@ -255,7 +255,8 @@ var submitReact = function(req, res) {
           id: question.id,
           text: question.question,
           type: question.type,
-          description: question.description
+          description: question.description,
+          placeholder: question.placeholder
         };
       });
       let initialHTML = renderToString(
