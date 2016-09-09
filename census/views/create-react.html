@@ -92,6 +92,71 @@
   </div>
 </section>
 
+<section>
+  <div class="container">
+
+    <div class="text question">
+      <div class="instructions">
+
+      </div>
+      <div class="main">
+        <h2>Any other comments?</h2>
+        <div class="answer">
+          <textarea rows="5"></textarea>
+        </div>
+      </div>
+      <div class="comments">
+
+      </div>
+    </div>
+
+    <div class="yes-no sub neutral question">
+      <div class="instructions">
+        <div class="collapse" id="instructionsAttribution">
+          <h4>Instructions</h4>
+          <p>
+            By default, submissions to the census are credited to the submitter. If you would prefer to remain anonymous, please indicate so by checking the box.
+          </p>
+        </div>
+        <a class="toggle" role="button" data-toggle="collapse" href="#instructionsAttribution" aria-expanded="false" aria-controls="instructionsAttribution"><span class="sr-only">Help</span><span class="icon">?</span></a>
+
+      </div>
+      <div class="main">
+        <h2>Would you prefer your submission to remain anonymous?</h2>
+        <div class="answer">
+          <input type="radio" name="yesnoAttribution" id="yesnoAttributionNo" checked="">
+          <label for="yesnoAttributionNo">
+            <span>No</span>
+          </label>
+          <input type="radio" name="yesnoAttribution" id="yesnoAttributionYes">
+          <label for="yesnoAttributionYes">
+            <span>Yes</span>
+          </label>
+        </div>
+      </div>
+      <div class="comments">
+      </div>
+    </div>
+
+    <div class="submit continuation question">
+      <div class="instructions">
+      </div>
+      <div class="main">
+        <p>
+          <small>
+            By submitting material to the index you agreeing to <a href="http://okfn.org/terms-of-use/">terms of use</a> and also to license your contribution (to the extent there are any rights in it!) under the <a href="http://opendatacommons.org/licenses/pddl/1.0/">Open Data Commons Public Domain Dedication and License</a>.
+          </small>
+        </p>
+        <div class="answer">
+          <button>Submit</button>
+        </div>
+      </div>
+      <div class="comments">
+      </div>
+    </div>
+  </div>
+</section>
+
 <script src="/scripts/entry.js" type="text/javascript"></script>
 
 {% endblock %}
