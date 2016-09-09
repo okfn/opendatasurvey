@@ -1,6 +1,6 @@
 <div class="table-responsive">
     <table id="slice-table" class="table data-table table-header-stuck">
-        {% if godi == "true" %}
+        {% if godi %}
         <colgroup>
           <col style="width:6%">
           <col style="width:24%">
@@ -32,11 +32,11 @@
                 <th>Location (URL)</th>
                 <th>Format</th>
                 <th>Info</th>
-                {% if godi != "true" %}
+                {% if not godi %}
                 <th>Year</th>
                 {% endif %}
                 <th>Score</th>
-                {% if godi != "true" %}
+                {% if not godi %}
                 <th class="admin"><span class="sr-only">Admin</span></th>
                 {% endif %}
             </tr>
@@ -135,7 +135,7 @@
                         <i class="fa fa-info-circle"></i>
                       </a>
                   </td>
-                  {% if godi != "true" %}
+                  {% if not godi %}
                   <td class="year">
                     <span title="5:21pm on 16th Oct 2015 (Submitted by Stephen Gates and reviewed by Stephen Gates)">2015</span>
                   </td>
@@ -143,7 +143,7 @@
                   <td style="background-color: rgb(122, 184, 0); color: white;" class="score" data-score="100">
                       <span>100%</span>
                   </td>
-                  {% if godi != "true" %}
+                  {% if not godi %}
                   <td class="admin">
                     <a href="#" class="propose" title="Propose Revisions"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                   </td>
@@ -159,7 +159,7 @@
                     <p>(3) Offline, <strong>data can be downloded in bulk data, for a fee, after submitting a specific request</strong> </p>
                     <p>(4) the data are under copyright © 1998-2014 Institutul National de Statistica - ROMANIA, and it is unclear if there is a licence.</p>
 
-                    {% if godi == "true" %}
+                    {% if godi %}
                     <hr />
                       <strong>Previous (2014):</strong>
                       <span class="rank rank-previous">#23</span>&nbsp;&nbsp;<span style="background-color: rgb(191, 197, 35); color: white;" class="score score-previous" data-score="70">70%</span>
@@ -257,7 +257,7 @@ HTML,PD ...                  </td>
                         <i class="fa fa-info-circle"></i>
                       </a>
                   </td>
-                  {% if godi != "true" %}
+                  {% if not godi %}
                   <td class="year">
                     <span title="5:21pm on 16th Oct 2015 (Submitted by Stephen Gates and reviewed by Stephen Gates)">2015</span>
                   </td>
@@ -265,7 +265,7 @@ HTML,PD ...                  </td>
                   <td style="background-color: rgb(145, 188, 11); color: white;" class="score" data-score="90">
                       <span>90%</span>
                   </td>
-                  {% if godi != "true" %}
+                  {% if not godi %}
                   <td class="admin">
                     <a href="#" class="propose" title="Propose Revisions"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                   </td>
@@ -276,7 +276,7 @@ HTML,PD ...                  </td>
                   <td colspan="7">
 <span style="visibility: hidden;">Tunisia</span>
                       <p>Population up to 2014. Unemployment up to 2012. GDP up to 2013 on this <a href="http://dataportal.ins.tn/fr/Map">data</a> portal. </p>
-                      {% if godi == "true" %}
+                      {% if godi %}
                       <hr />
                       <strong>Previous (2014):</strong>
                       <span class="rank rank-previous">#66</span>&nbsp;&nbsp;<span style="background-color: rgb(238, 186, 53); color: white;" class="score score-previous" data-score="45">45%</span>
@@ -374,7 +374,7 @@ Excel, ...                  </td>
                         <i class="fa fa-info-circle"></i>
                       </a>
                   </td>
-                  {% if godi != "true" %}
+                  {% if not godi %}
                   <td class="year">
                     <span title="5:21pm on 16th Oct 2015 (Submitted by Stephen Gates and reviewed by Stephen Gates)">2015</span>
                   </td>
@@ -382,7 +382,7 @@ Excel, ...                  </td>
                   <td style="background-color: rgb(191, 197, 35); color: white;" class="score" data-score="70">
                       <span>70%</span>
                   </td>
-                  {% if godi != "true" %}
+                  {% if not godi %}
                   <td class="admin">
                     <a class="propose" title="Sorry, only one submission can be waiting for review at a time - please come back in a few days to submit new information"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                   </td>
@@ -396,7 +396,7 @@ Excel, ...                  </td>
                       <p>More data is available at <a href="http://www.census2011.be/">http://www.census2011.be/</a>.</p>
                       <p>Note that all statistics are also published by Eurostat. Where they are available in bulk. See <a href="https://ec.europa.eu/CensusHub2/query.do?step=selectHyperCube&amp;qhc=false&amp;countrycode=be">https://ec.europa.eu/CensusHub2/query.do?step=selectHyperCube&amp;qhc=false&amp;countrycode=be</a>
                       This holds for every European Union Member state.</p>
-                      {% if godi == "true" %}
+                      {% if godi %}
                       <hr />
                       <strong>Previous (2014):</strong>
                       <span class="rank rank-previous">#23</span>&nbsp;&nbsp;<span style="background-color: rgb(191, 197, 35); color: white;" class="score score-previous" data-score="70">70%</span>
@@ -404,7 +404,7 @@ Excel, ...                  </td>
                   </td>
               </tr>
 
-              {% if godi != "true" %}
+              {% if not godi %}
               {# row #}
               <tr data-rank="33" data-score="70" data-place="belgium" class="queued">
                   <td class="rank">
@@ -447,7 +447,7 @@ Excel, ...                  </td>
                         <i class="fa fa-info-circle"></i>
                       </a>
                   </td>
-                  {% if godi != "true" %}
+                  {% if not godi %}
                   <td class="year">
                     <span title="5:21pm on 16th Oct 2015 (Submitted by Stephen Gates and reviewed by Stephen Gates)">2016</span>
                   </td>
@@ -455,7 +455,7 @@ Excel, ...                  </td>
                   <td style="background-color: rgb(191, 197, 35); color: white;" class="score" data-score="70">
                       <span>70%</span>
                   </td>
-                  {% if godi != "true" %}
+                  {% if not godi %}
                   <td class="admin">
                     <a href="#" class="view" title="View Submission"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                   </td>
@@ -469,7 +469,7 @@ Excel, ...                  </td>
                       <p>More data is available at <a href="http://www.census2011.be/">http://www.census2011.be/</a>.</p>
                       <p>Note that all statistics are also published by Eurostat. Where they are available in bulk. See <a href="https://ec.europa.eu/CensusHub2/query.do?step=selectHyperCube&amp;qhc=false&amp;countrycode=be">https://ec.europa.eu/CensusHub2/query.do?step=selectHyperCube&amp;qhc=false&amp;countrycode=be</a>
                       This holds for every European Union Member state.</p>
-                      {% if godi == "true" %}
+                      {% if godi %}
                       <hr />
                       <strong>Previous (2014):</strong>
                       <span class="rank rank-previous">#23</span>&nbsp;&nbsp;<span style="background-color: rgb(191, 197, 35); color: white;" class="score score-previous" data-score="70">70%</span>
@@ -568,7 +568,7 @@ Excel, ...                  </td>
                         <i class="fa fa-info-circle"></i>
                       </a>
                   </td>
-                  {% if godi != "true" %}
+                  {% if not godi %}
                   <td class="year">
                     <span title="5:21pm on 16th Oct 2015 (Submitted by Stephen Gates and reviewed by Stephen Gates)">2015</span>
                   </td>
@@ -576,7 +576,7 @@ Excel, ...                  </td>
                   <td style="background-color: rgb(237, 207, 59); color: white;" class="score" data-score="50">
                       <span>50%</span>
                   </td>
-                  {% if godi != "true" %}
+                  {% if not godi %}
                   <td class="admin">
                     <a href="#" class="propose" title="Propose Revisions"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                   </td>
@@ -682,7 +682,7 @@ n/a                  </td>
                         <i class="fa fa-info-circle"></i>
                       </a>
                   </td>
-                  {% if godi != "true" %}
+                  {% if not godi %}
                   <td class="year">
                     <span title="5:21pm on 16th Oct 2015 (Submitted by Stephen Gates and reviewed by Stephen Gates)">2015</span>
                   </td>
@@ -690,7 +690,7 @@ n/a                  </td>
                   <td style="background-color: rgb(238, 186, 53); color: white;" class="score" data-score="45">
                       <span>45%</span>
                   </td>
-                  {% if godi != "true" %}
+                  {% if not godi %}
                   <td class="admin">
                     <a href="#" class="propose" title="Propose Revisions"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                   </td>
@@ -702,7 +702,7 @@ n/a                  </td>
                       <span style="visibility: hidden;">Kenya</span>
                       <p>The Kenya National Bureau of statistics which is the central government agency that collects data has statistics on census, economic activities, demographics. It has many channels through which the some of the data is distributed, with links for these pages on their website, one of which is the Kenya Open Data Initiative (KODI). However there seems to be no standard for distributing data. Some are available and open e.g. KODI but some are available on the KNBS website itself but not open. Some of these are not charged while others are. KNBS applies a statistics act and a form has to be submitted for data requests. On the plus side some include metadata, background information, data description. On the Kenya Open Data portal, the datasets are mostly from KNBS but not up to date. [According to Ahmed ]</p>
                       <p>Other areas i.e. Consumer Price Indices have regularly updated data within the site, the Statistics section has data between 2006 and 2012 which is pretty outdated at present.</p>
-                      {% if godi == "true" %}
+                      {% if godi %}
                       <hr />
                       <strong>Previous (2014):</strong>
                       <span class="rank rank-previous">#92</span>&nbsp;&nbsp;<span style="background-color: rgb(251, 41, 11); color: white;" class="score score-previous" data-score="10">10%</span>
@@ -800,7 +800,7 @@ PDF                  </td>
                         <i class="fa fa-info-circle"></i>
                       </a>
                   </td>
-                  {% if godi != "true" %}
+                  {% if not godi %}
                   <td class="year">
                     <span title="5:21pm on 16th Oct 2015 (Submitted by Stephen Gates and reviewed by Stephen Gates)">2015</span>
                   </td>
@@ -808,7 +808,7 @@ PDF                  </td>
                   <td style="background-color: rgb(242, 144, 41); color: white;" class="score" data-score="35">
                       <span>35%</span>
                   </td>
-                  {% if godi != "true" %}
+                  {% if not godi %}
                   <td class="admin">
                     <a href="#" class="propose" title="Propose Revisions"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                   </td>
@@ -915,7 +915,7 @@ n/a                  </td>
                         <i class="fa fa-info-circle"></i>
                       </a>
                   </td>
-                  {% if godi != "true" %}
+                  {% if not godi %}
                   <td class="year">
                     <span title="5:21pm on 16th Oct 2015 (Submitted by Stephen Gates and reviewed by Stephen Gates)">2015</span>
                   </td>
@@ -923,7 +923,7 @@ n/a                  </td>
                   <td style="background-color: rgb(255, 0, 0); color: white;" class="score" data-score="0">
                       <span>0%</span>
                   </td>
-                  {% if godi != "true" %}
+                  {% if not godi %}
                   <td class="admin">
                     <a href="#" class="propose" title="Propose Revisions"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                   </td>
@@ -940,7 +940,7 @@ n/a                  </td>
                     3. Yearly population data</p>
                     <p>However, based upon the new minimum criteria set by index (2015 version), that means China does not have the right statistic data opened up by the government.</p>
 
-                    {% if godi == "true" %}
+                    {% if godi %}
                     <hr />
                     <strong>Previous (2014):</strong>
                     <span class="rank rank-previous">#41</span>&nbsp;&nbsp;<span style="background-color: rgb(214, 202, 47); color: white;" class="score score-previous" data-score="60">60%</span>

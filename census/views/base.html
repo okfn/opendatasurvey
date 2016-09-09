@@ -1,4 +1,4 @@
-{% set godi = "false" %}
+{% set godi = site.settings.is_godi or false %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +13,7 @@
     <script src="/bower_components/html5shiv/dist/html5shiv.min.js"></script>
     <![endif]-->
     <link href='//fonts.googleapis.com/css?family=Lato:400,400italic,700,300' rel='stylesheet' type='text/css'>
-    {% if godi == "true" %}
+    {% if godi %}
     <link rel="stylesheet" href="//a.okfn.org/html/oki/panel/assets/css/frontend.css"/>
     {% endif %}
     <link rel="stylesheet" href="/css/styles.css?{{currentTime}}">
@@ -22,13 +22,13 @@
     </style>
   </head>
 
-  <body class="{% if godi == "true" %}godi {% endif %}{% block body_class %}{% endblock %}">
-    {% if godi == "true" %}
+  <body class="{% if godi %}godi {% endif %}{% block body_class %}{% endblock %}">
+    {% if godi %}
     <div id="ok-panel" class="closed"><div class="container"><iframe src="//a.okfn.org/html/oki/panel/panel.html" scrolling="no"></iframe></div></div>
     {% endif %}
     <header id="header">
       <div class="container">
-        {% if godi == "true" %}
+        {% if godi %}
         <div id="ok-panel-wrapper" data-breakpoint="768px"><a class="black ok-ribbon" href="//okfn.org/"><img src="//a.okfn.org/html/oki/panel/assets/images/oki-ribbon.png" alt="Open Knowledge"></a></div>
         <a href="http://index.okfn.org/" class="logo">
           {% include 'includes/godi-logo.svg' %}
@@ -54,7 +54,7 @@
           <span class="icon-bar"></span>
         </button>
         <nav class="collapse navbar-collapse" id="nav">
-          {% if godi != "true" %}
+          {% if not godi %}
           <span class="user">
             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
             {% if currentUser %}
