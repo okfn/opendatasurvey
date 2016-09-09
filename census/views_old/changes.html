@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "page.html" %}
 
 
 {% block title %}
@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block content %}
+<div class="container">
 <h1>{{gettext("Changelog")}}</h1>
 <p>
     {{ gettext("A log of the most recent submission and entry activity.") }}
@@ -43,5 +44,5 @@
     </li>
     {% endfor %}
 </ul>
-
+</div>
 {% endblock %}
