@@ -8160,6 +8160,8 @@ body #header {
       font-weight: 300; }
       body #header .logo .tagline a {
         font-weight: normal; }
+    body #header .logo .custom-logo img {
+      height: 30px; }
   body #header .navbar-toggle {
     margin: 24px 0 0 10px; }
     body #header .navbar-toggle .icon-bar {

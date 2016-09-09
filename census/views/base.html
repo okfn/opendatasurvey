@@ -36,7 +36,9 @@
         {% else %}
         <div class="logo">
           {% if site.settings.navbar_logo %}
-            {{ site.settings.navbar_logo }}
+            <div class="custom-logo">
+              {{ site.settings.navbar_logo }}
+            </div>
           {% else %}
             <a class="glyphicon glyphicon-th-list" aria-hidden="true"></a>
           {% endif %}
