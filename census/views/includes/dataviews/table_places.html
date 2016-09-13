@@ -208,13 +208,13 @@
     &lt;p&gt;Data are openly licensed, current, and available in open formats. ...&lt;/p&gt;
 &lt;/p&gt;
 
-{% if godi != "true" %}
+{% if not is_index %}
 &lt;div class='btn-group'&gt;
 {% endif %}
 &lt;a class=&quot;btn btn-primary&quot; href=&quot;http://index.okfn.org/place/taiwan/statistics/&quot;&gt;
     Read more &amp;raquo;
 &lt;/a&gt;
-{% if godi != "true" %}
+{% if not is_index %}
 &lt;a class='btn btn-warning' href='/submission/84e34de4-44a3-445b-a13c-23b0d852d308'&gt;
     Comment
 &lt;/a&gt;
@@ -232,7 +232,7 @@
                     <li class="yes" data-content="Yes">&nbsp;</li>
                   </ul>
 
-                  {% if godi != "true" %}
+                  {% if not is_index %}
                   <div class="entry-year label-warning" title="12:37pm on 7th Nov 2015 (Submitted by TH Schee and reviewed by TH Schee)">
                     2015
                   </div>
