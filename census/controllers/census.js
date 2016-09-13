@@ -7,7 +7,7 @@ const uuid = require('node-uuid');
 const utils = require('./utils');
 const modelUtils = require('../models').utils;
 const Promise = require('bluebird');
-const React = require('react');
+const React = require('react'); // eslint-disable-line no-unused-vars
 const renderToString = require('react-dom/server').renderToString;
 const QuestionForm = require('../ui_app/QuestionForm');
 
@@ -243,6 +243,8 @@ var submitReact = function(req, res) {
     let currentDataset = _.find(data.datasets,
                                 {id: data.currentState.match.dataset});
 
+    let places = modelUtils.translateSet(req, data.places);
+    let datasets = modelUtils.translateSet(req, data.datasets);
     let qsSchemaPromise;
     let questionsPromise;
     if (currentDataset) {
@@ -260,11 +262,16 @@ var submitReact = function(req, res) {
         };
       });
       let initialHTML = renderToString(
-        <QuestionForm questions={questions} qsSchema={qsSchema} labelPrefix={'B'} />
+        <QuestionForm questions={questions}
+                      qsSchema={qsSchema}
+                      labelPrefix={'B'} />
       );
       res.render('create-react.html', {
+        places: places,
+        datasets: datasets,
         qsSchema: JSON.stringify(qsSchema),
         questions: JSON.stringify(questions),
+        current: data.currentState.match,
         initialRenderedQuestions: initialHTML,
         breadcrumbTitle: 'Make a Submission'
       });
