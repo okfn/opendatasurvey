@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% from "macros/breadcrumb.html" import breadcrumb %}
+
+{% block title %}{{ title }}{% endblock %}
+
+
+{% block breadcrumb %}
+  {% if breadcrumbTitle %}
+    {{ breadcrumb(breadcrumbTitle) }}
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+  {{ content }}
+</div>
+{% endblock %}

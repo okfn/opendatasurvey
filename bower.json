@@ -1,0 +1,36 @@
+{
+  "name": "census-mockup",
+  "homepage": "https://github.com/okfn/census-mockup",
+  "authors": [
+    "Sam Smith"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "<3",
+    "bootstrap-sass": "^3.3.6",
+    "font-awesome": "fontawesome#^4.6.3",
+    "requirejs": "^2.2.0",
+    "domReady": "^2.0.1",
+    "tablesorter": "*",
+    "sticky-kit": "^1.1.2",
+    "leaflet": "0.7.3",
+    "chroma-js": "0.6.1",
+    "pubsub-js": "1.5.0",
+    "lodash": "2.4.1",
+    "html5shiv": "^3.7.3",
+    "marked": "^0.3.5",
+    "Leaflet.label": "^0.2.1",
+    "jQuery.dotdotdot": "^1.8.3",
+    "jquery.kinetic": "^2.1.0"
+  }
+}

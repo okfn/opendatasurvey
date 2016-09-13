@@ -3,7 +3,6 @@
 var _ = require('lodash');
 var marked = require('marked');
 var modelUtils = require('../models').utils;
-var Promise = require('bluebird');
 
 var faq = function(req, res) {
   var qTmpl = req.app.get('view_env').getTemplate('_snippets/questions.html');
@@ -34,7 +33,8 @@ var faq = function(req, res) {
         .replace('{{questions}}', qContent)
         .replace('{{datasets}}', dContent)
         .replace('{{missing_place}}', mContent);
-      return res.render('base.html', data);
+      data.breadcrumbTitle = 'FAQ';
+      return res.render('page.html', data);
     }).catch(console.trace.bind(console));
 };
 
@@ -48,31 +48,35 @@ var changes = function(req, res) {
       data.items = _.sortByOrder(data.entries
         .concat(data.pending)
         .concat(data.rejected), 'updatedAt', 'desc');
+      data.breadcrumbTitle = 'Recent Changes';
       res.render('changes.html', data);
     }).catch(console.trace.bind(console));
 };
 
 var contribute = function(req, res) {
   var settingName = 'contribute_page';
-  res.render('base.html', {
+  res.render('page.html', {
     content: marked(req.params.site.settings[settingName]),
-    title: 'Contribute'
+    title: 'Contribute',
+    breadcrumbTitle: 'Contribute'
   });
 };
 
 var tutorial = function(req, res) {
   var settingName = 'tutorial_page';
-  res.render('base.html', {
+  res.render('page.html', {
     content: marked(req.params.site.settings[settingName]),
-    title: 'Tutorial'
+    title: 'Tutorial',
+    breadcrumbTitle: 'Tutorial'
   });
 };
 
 var about = function(req, res) {
   var settingName = 'about_page';
-  res.render('base.html', {
+  res.render('page.html', {
     content: marked(req.params.site.settings[settingName]),
-    title: 'About'
+    title: 'About',
+    breadcrumbTitle: 'About'
   });
 };
 

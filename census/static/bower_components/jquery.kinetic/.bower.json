@@ -1,0 +1,39 @@
+{
+  "name": "jquery.kinetic",
+  "main": "jquery.kinetic.js",
+  "version": "2.1.0",
+  "homepage": "http://davetayls.me/jquery.kinetic",
+  "authors": [
+    "davetayls <dave@the-taylors.org>"
+  ],
+  "description": "smooth drag scrolling with gradual deceleration to containers",
+  "keywords": [
+    "jquery",
+    "kinetic",
+    "touch",
+    "drag",
+    "decelerate"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "Gruntfile.js"
+  ],
+  "dependencies": {
+    "jquery": ">1.8.0"
+  },
+  "_release": "2.1.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "2.1.0",
+    "commit": "bbe538c307868c5507ff45165eb2f1b8a4bc3c95"
+  },
+  "_source": "https://github.com/davetayls/jquery.kinetic.git",
+  "_target": "^2.1.0",
+  "_originalSource": "jquery.kinetic",
+  "_direct": true
+}

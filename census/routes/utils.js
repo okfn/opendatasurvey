@@ -1,13 +1,12 @@
 'use strict';
 
-var _ = require('underscore');
-var bcrypt = require('bcrypt');
-var passport = require('passport');
-var uuid = require('node-uuid');
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-var FacebookStrategy = require('passport-facebook').Strategy;
-var models = require('../models');
-var config = require('../config');
+const _ = require('underscore');
+const passport = require('passport');
+const uuid = require('node-uuid');
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
+const models = require('../models');
+const config = require('../config');
 
 var makeRedirect = function(dest) {
   return function(req, res) {
@@ -23,7 +22,9 @@ var resolveProfile = function(profile, provider, done) {
   var obj = {
     id: uuid.v4(),
     anonymous: false,
-    emails: _.each(profile.emails, function(e, i, l) {l[i] = e.value;}),
+    emails: _.each(profile.emails, function(e, i, l) {
+      l[i] = e.value;
+    }),
     firstName: profile.name.givenName,
     lastName: profile.name.familyName,
     homePage: profile.profileUrl,
@@ -56,7 +57,7 @@ var setupAuth = function() {
   passport.use(new GoogleStrategy({
     clientID: config.get('google:app_id'),
     clientSecret: config.get('google:app_secret'),
-    callbackURL:  config.get('urlTmpl')
+    callbackURL: config.get('urlTmpl')
       .replace('SCHEME', config.get('connection_scheme'))
       .replace('SUB', config.get('auth_subdomain'))
       .replace('DOMAIN', config.get('base_domain'))
@@ -69,7 +70,7 @@ var setupAuth = function() {
   passport.use(new FacebookStrategy({
     clientID: config.get('facebook:app_id'),
     clientSecret: config.get('facebook:app_secret'),
-    callbackURL:  config.get('urlTmpl')
+    callbackURL: config.get('urlTmpl')
       .replace('SCHEME', config.get('connection_scheme'))
       .replace('SUB', config.get('auth_subdomain'))
       .replace('DOMAIN', config.get('base_domain'))
@@ -107,7 +108,7 @@ var setLocals = function(req, res, next) {
 
   res.locals.currentUser = req.user ? req.user : null;
 
-  res.locals.baseDomain =  config.get('base_domain');
+  res.locals.baseDomain = config.get('base_domain');
   res.locals.authDomain = config.get('auth_subdomain');
   res.locals.systemDomain = config.get('system_subdomain');
   res.locals.loginUrl = config.get('urlTmpl')
@@ -135,26 +136,23 @@ var setLocals = function(req, res, next) {
   res.locals.currentLocale = req.locale;
   res.locals.currentYear = req.app.get('year');
 
-  var settingName = 'current_url';
-  res.locals[settingName] = 'SCHEME://DOMAIN_PATH'
+  /* eslint-disable dot-notation */
+  res.locals['current_url'] = 'SCHEME://DOMAIN_PATH'
     .replace('SCHEME', req.protocol)
     .replace('DOMAIN_', req.get('host'))
     .replace('PATH', req.path);
 
-  var settingName = 'current_domain';
-  res.locals[settingName] = 'SCHEME://DOMAIN_'
+  res.locals['current_domain'] = 'SCHEME://DOMAIN_'
     .replace('SCHEME', req.protocol)
     .replace('DOMAIN_', req.get('host'));
 
-  var settingName = 'url_query';
-  res.locals[settingName] = req.query;
+  res.locals['url_query'] = req.query;
 
-  var settingName = 'error_messages';
-  res.locals[settingName] = req.flash('error');
+  res.locals['error_messages'] = req.flash('error');
 
-  var settingName = 'info_messages';
-  res.locals[settingName] = req.flash('info');
+  res.locals['info_messages'] = req.flash('info');
   res.locals.discussionForum = config.get('discussion_forum');
+  /* eslint-enable dot-notation */
 
   res.locals.urlFor = function(name) {
     if (name === 'overview') {

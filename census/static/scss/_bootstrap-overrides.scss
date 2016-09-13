@@ -1,0 +1,24 @@
+.jumbotron p {
+  font-weight: 300;
+}
+
+
+.table {
+  font-size: 14px;
+  table-layout: fixed;
+  td {
+    overflow: hidden;
+  }
+}
+
+.table > thead > tr > th,
+.table > thead > tr > td, {
+  vertical-align: bottom;
+}
+
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+  vertical-align: middle;
+}

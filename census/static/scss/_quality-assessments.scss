@@ -1,0 +1,60 @@
+.quality-assessments {
+
+  ul {
+    display: table;
+    margin: -$padding-base-vertical 0 0 0;
+    padding: 0;
+    border-collapse:separate;
+    border-spacing:0 $padding-base-vertical;
+
+    li {
+      display: table-row-group;
+    }
+
+    dl {
+      display: table-row;
+
+      dt,
+      dd {
+        display: table-cell;
+        font-size: 0.7em;
+        border: solid 1px $gray-light;
+      }
+
+      dt {
+        font-weight: normal;
+        border-right: none;
+        padding: 1px 5px;
+      }
+
+      dd {
+        padding-left:$padding-base-horizontal/2;
+        border-left: none;
+        padding: 1px;
+        margin-right: $padding-base-horizontal;
+
+        & > span {
+          background-color: $brand-info;
+          color: #fff;
+          padding: 0.05em 0.5em;
+          display: block;
+        }
+
+        &.pass {
+          & > span {
+            background-color: $brand-success;
+          }
+        }
+        &.fail {
+          & > span {
+            background-color: $brand-danger;
+          }
+        }
+
+        .glyphicon {
+          padding-right: 0.1em;
+        }
+      }
+    }
+  }
+}

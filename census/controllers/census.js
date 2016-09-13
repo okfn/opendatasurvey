@@ -1,12 +1,15 @@
 'use strict';
 
-var _ = require('lodash');
-var marked = require('marked');
-var config = require('../config');
-var uuid = require('node-uuid');
-var utils = require('./utils');
-var modelUtils = require('../models').utils;
-var Promise = require('bluebird');
+const _ = require('lodash');
+const marked = require('marked');
+const config = require('../config');
+const uuid = require('node-uuid');
+const utils = require('./utils');
+const modelUtils = require('../models').utils;
+const Promise = require('bluebird');
+const React = require('react');
+const renderToString = require('react-dom/server').renderToString;
+const QuestionForm = require('../ui_app/QuestionForm');
 
 var submitGetHandler = function(req, res, data) {
   var addDetails = _.find(data.questions, function(q) {
@@ -251,12 +254,19 @@ var submitReact = function(req, res) {
         return {
           id: question.id,
           text: question.question,
-          type: question.type
+          type: question.type,
+          description: question.description,
+          placeholder: question.placeholder
         };
       });
+      let initialHTML = renderToString(
+        <QuestionForm questions={questions} qsSchema={qsSchema} labelPrefix={'B'} />
+      );
       res.render('create-react.html', {
         qsSchema: JSON.stringify(qsSchema),
-        questions: JSON.stringify(questions)
+        questions: JSON.stringify(questions),
+        initialRenderedQuestions: initialHTML,
+        breadcrumbTitle: 'Make a Submission'
       });
     });
   }).catch(console.trace.bind(console));

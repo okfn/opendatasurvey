@@ -1,0 +1,220 @@
+.home {
+  #home-about {
+    $banner-bg-colour: $brand-primary;
+    $banner-text-colour: $gray-base;
+    color: $banner-text-colour;
+    background-color: $banner-bg-colour;
+    background-image: url("images/icon-tile.png");
+    background-position: center top;
+    background-size: 350px auto;
+    margin-top: -5px;
+    padding: 20px 0 $grid-gutter-width 0;
+    text-align: center;
+
+    @media (min-width: $screen-sm-min) {
+      padding-bottom: 40px;
+    }
+
+    @media (min-width: $screen-md-min) {
+      margin-top: -20px;
+    }
+
+    h1 {
+      font-size: 2.8em;
+      margin-bottom: 0.3em;
+      font-weight: 400;
+
+      @media (min-width: $screen-sm-min) {
+        margin-top: 50px;
+      }
+    }
+
+    .btn {
+      margin: 15px 10px;
+      background-color: $banner-text-colour;
+      border-color: darken($banner-text-colour, 5%);
+      color: #fff;
+      padding: 10px 16px;
+      font-size: 1.05em;
+
+      &:hover,
+      &:focus,
+      &.focus,
+      &:active,
+      &.active {
+        background-color: lighten($banner-text-colour, 10%);
+        border-color: lighten($banner-text-colour, 7%);
+        color: #fff;
+      }
+    }
+
+    p {
+      max-width: 770px;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      font-size: 1.1em;
+    }
+  }
+
+  .summary-stats {
+    text-align: center;
+
+    .explain {
+      span {
+        font-size: 0.85em;
+        margin-top: $grid-gutter-width;
+        display: block;
+        text-align: center;
+        i {
+          line-height: 20px;
+          padding: 2px 4px 2px 4px;
+          border-radius: 4px;
+          font-style: normal;
+        }
+      }
+    }
+
+    .stat {
+      a {
+        text-decoration: none;
+      }
+      strong {
+        padding: 10px 10px;
+        font-size: 2.5em;
+        background-color: $color-okf-black;
+        color: $color-okf-white;
+      }
+      span {
+        display: block;
+        margin-top: 10px;
+        text-transform: uppercase;
+      }
+      small {
+        display: block;
+        margin-top: 5px;
+        font-size: 14px;
+      }
+    }
+  }
+
+
+  .map_visualisation {
+    .container {
+      & > div {
+        @include make-row();
+        .summary-stats {
+          @include make-md-column(4);
+          padding: 40px $grid-gutter-width;
+
+          @media (min-width: $screen-md-min) {
+            padding-top: 80px;
+          }
+        }
+        .map {
+          @include make-md-column(8);
+          padding-top: $grid-gutter-width;
+          padding-bottom:  $grid-gutter-width;
+        }
+      }
+    }
+  }
+
+  .chart_visualisation {
+    background-color: $gray-lighter;
+    .container {
+      & > div {
+        @include make-row();
+        padding-bottom: $grid-gutter-width;
+
+        @media (min-width: $screen-md-min) {
+          padding-bottom: ($grid-gutter-width*2) - 14px;
+        }
+
+        .chart {
+          @include make-md-column(4);
+          text-align: center;
+          padding-top: $grid-gutter-width;
+
+          @media (min-width: $screen-md-min) {
+            padding-top: $grid-gutter-width*2;
+          }
+
+          svg {
+            width: 175px;
+            height: 175px;
+            border-radius: 50%;
+            transform: rotate(-90deg);
+
+            circle {
+              fill: #fff;
+              stroke: $brand-success;
+              stroke-width: 32;
+            }
+          }
+        }
+
+        .summary-stats {
+          @include make-md-column(8);
+          padding-top: 40px;
+
+          @media (min-width: $screen-md-min) {
+            padding-top: 80px;
+            text-align: left;
+          }
+        }
+      }
+    }
+  }
+
+  .summary.featured {
+    padding: $grid-gutter-width 0 0 0;
+    margin: 0;
+    font-size: 1.1em;
+
+    li {
+      display: block;
+      margin-bottom: $padding-base-vertical;
+
+      dl {
+        margin: 0;
+        padding: 0;
+
+        dt,
+        dd {
+          display: inline-block;
+          vertical-align: middle;
+        }
+
+        dt {
+          margin-right: $padding-base-vertical;
+        }
+
+        dd {
+          padding: 0 $padding-base-vertical;
+          font-size: 1.1em;
+          background-color: $color-okf-black;
+          color: $color-okf-white;
+          font-weight: bold;
+        }
+      }
+    }
+
+    @media (min-width: $screen-md-min) {
+      display: table;
+      width: 100%;
+
+      li {
+        display: table-cell;
+        text-align: center;
+
+        &:first-child {
+          text-align: left;
+        }
+        &:last-child {
+          text-align: right;
+        }
+      }
+    }
+  }
+}

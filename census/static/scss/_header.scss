@@ -1,0 +1,235 @@
+body {
+  #header {
+    $header-bg: $brand-info;
+    $header-fg: #fff;
+    background-color: $header-bg;
+    border-bottom: solid 2px darken($header-bg, 10%);
+    color: $header-fg;
+
+    a {
+      color: inherit;
+
+      &:hover {
+        color: inherit;
+      }
+    }
+
+    .logo {
+      padding-top: 23px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding-bottom: 23px;
+      display: inline-block;
+      max-width: 80%;
+
+      @media (min-width: $screen-md-min) {
+        padding-top: 1.8em;
+        padding-bottom: 1.8em;
+        float: left;
+        white-space: nowrap;
+      }
+
+      .glyphicon {
+        float: left;
+        font-size: 33px;
+        line-height: 1.1;
+        margin-right: 7px;
+        text-decoration: none;
+        display: none;
+
+        @media (min-width: $screen-sm-min) {
+          display: block;
+
+          & + div {
+            margin-left: 45px;
+          }
+        }
+      }
+
+      .title {
+        font-weight: 700;
+        font-size: 20px;
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+
+      .tagline {
+        display: block;
+        font-size: 12px;
+        line-height: 1.1;
+        font-weight: 300;
+
+        a {
+          font-weight: normal;
+        }
+      }
+
+      .custom-logo img {
+        height: 30px;
+      }
+    }
+
+    .navbar-toggle {
+      margin: 24px 0 0 10px;
+
+      .icon-bar {
+        background-color: currentColor;
+      }
+    }
+
+    nav {
+      clear: both;
+
+      @media (min-width: $screen-md-min) {
+        clear: none;
+        text-align: right;
+      }
+
+      .user {
+        display: none;
+
+        @media (min-width: $screen-md-min) {
+          display: block;
+          padding-top: 10px;
+          padding-bottom: 0.5em;
+          color: rgba($header-fg, 0.8);
+          font-size: 14px;
+        }
+
+        a:hover {
+          text-decoration: none;
+          color: $header-fg;
+        }
+      }
+
+      .menu {
+        $menu-h-padding: 10px;
+        margin: 0;
+        margin-left: -$menu-h-padding;
+        padding: 0 0 0.5em 0;
+        font-size: 16px;
+
+        @media (min-width: $screen-md-min) {
+          margin-left: 0;
+          margin-right: -$menu-h-padding;
+          padding-top: 0.5em;
+        }
+
+        li {
+          display: block;
+
+          @media (min-width: $screen-sm-min) {
+            display: inline-block;
+          }
+
+          a {
+            display: block;
+            padding: 8px $menu-h-padding;
+            border-radius: $border-radius-base;
+
+            @media (min-width: $screen-md-min) {
+              display: inline-block;
+            }
+
+            &:hover {
+              text-decoration: none;
+              background-color: rgba(#fff, 0.2);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .breadcrumb-wrapper {
+    display: none;
+
+    @media (min-width: $screen-sm-min) {
+      display: block;
+      position: absolute;
+      width: 100%;
+
+      .breadcrumb {
+        background-color: inherit;
+        margin-bottom: 0;
+        padding-top: $grid-gutter-width*0.5;
+      }
+
+      & + div.container,
+      & + * > .container {
+        padding-top: 50px;
+      }
+
+      & + div.container {
+        padding-bottom: $grid-gutter-width;
+      }
+    }
+  }
+
+  &.godi {
+    #ok-panel {
+      border-bottom-color: currentColor;
+    }
+
+    #header {
+      $header-bg: $brand-primary;
+      $header-fg: $gray-dark;
+      background-color: $header-bg;
+      border-bottom: solid 2px darken($header-bg, 10%);
+      color: $header-fg;
+
+      .container {
+        position: relative;
+      }
+
+      #ok-panel-wrapper {
+        margin-left: -15px;
+        margin-right: -15px;
+
+        @media (min-width: $screen-sm-min) {
+          margin: 0;
+        }
+
+        .ok-ribbon.black {
+          background-color: currentColor;
+
+          @media (min-width: $screen-sm-min) {
+            background-color: transparent;
+            position: absolute;
+
+            &:before {
+              background-color: currentColor;
+            }
+          }
+        }
+      }
+
+      .logo {
+        padding-top: 1.3em;
+        margin-right: $grid-gutter-width;
+        padding-bottom: 12px;
+
+        svg {
+          height: 50px;
+          fill: currentColor;
+        }
+      }
+
+      .navbar-toggle {
+        margin-top: 30px;
+      }
+
+      nav {
+        text-align: left;
+
+        .menu {
+          @media (min-width: $screen-md-min) {
+            padding-top: 1.7em;
+          }
+        }
+      }
+    }
+  }
+}

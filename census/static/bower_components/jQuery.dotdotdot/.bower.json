@@ -1,0 +1,38 @@
+{
+  "name": "jQuery.dotdotdot",
+  "main": "src/jquery.dotdotdot.min.umd.js",
+  "version": "1.8.3",
+  "homepage": "http://dotdotdot.frebsite.nl/",
+  "authors": [
+    "Fred Heusschen <info@frebsite.nl>"
+  ],
+  "description": "A jQuery plugin for advanced cross-browser ellipsis on multiple line content.",
+  "keywords": [
+    "ellipsis",
+    "dotdotdot",
+    "multiline",
+    "text",
+    "text-overflow",
+    "overflow",
+    "dots"
+  ],
+  "ignore": [
+    ".jshintrc",
+    "Guardfile",
+    "index.html",
+    "*.json",
+    "README.md"
+  ],
+  "dependencies": {
+    "jquery": ">= 1.4.3"
+  },
+  "_release": "1.8.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.8.3",
+    "commit": "779ab93d259c3a67c45b2f80124aa8391ef49165"
+  },
+  "_source": "https://github.com/BeSite/jQuery.dotdotdot.git",
+  "_target": "^1.8.3",
+  "_originalSource": "jQuery.dotdotdot"
+}
