@@ -82,7 +82,6 @@
     "optimist": "~0.6.1",
     "react-addons-test-utils": "^15.3.0",
     "rewire": "^2.5.2",
-    "sinon": "^1.14.1",
     "supertest": "^2.0.0",
     "webpack": "^1.13.1",
     "zombie": "^4.1.0"
