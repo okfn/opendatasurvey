@@ -51,7 +51,7 @@
     "sequelize": "^3.1.1",
     "serve-favicon": "^2.2.1",
     "subdomain": "^1.2.0",
-    "throng": "^1.0.0",
+    "throng": "^4.0.0",
     "umzug": "^1.6.0",
     "underscore": "^1.8.3",
     "validator": "^3.41.2",
