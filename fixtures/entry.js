@@ -1,22 +1,24 @@
 'use strict';
 
-var _ = require('underscore');
+var _ = require('lodash');
 var uuid = require('node-uuid');
 var datasets = require('./dataset');
 var places = require('./place');
 var users = require('./user');
 
-function answers() { return {
-  digital: _.sample([false, true]),
-  exists: _.sample([false, true]),
-  machinereadable: _.sample([false, true]),
-  openlicense: _.sample([false, true]),
-  online: _.sample([false, true]),
-  public: _.sample([false, true]),
-  publisher: 'Acme',
-  format: ['CSV', 'PSF'],
-  license: 'http://example.com'
-}; }
+function answers() {
+  return {
+    digital: _.sample([false, true]),
+    exists: _.sample([false, true]),
+    machinereadable: _.sample([false, true]),
+    openlicense: _.sample([false, true]),
+    online: _.sample([false, true]),
+    public: _.sample([false, true]),
+    publisher: 'Acme',
+    format: ['CSV', 'PSF'],
+    license: 'http://example.com'
+  };
+}
 
 function bySite(fixtures, siteId) {
   return _.filter(fixtures, function(D) {
