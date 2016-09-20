@@ -5,7 +5,6 @@ var moment = require('moment');
 var Promise = require('bluebird');
 var csv = require('csv');
 var uuid = require('node-uuid');
-var validator = require('validator');
 var entriesData = fs.readFileSync(process.argv[2], {encoding: 'utf-8'});
 var parser = Promise.promisify(csv.parse);
 var utils = require('./utils');
