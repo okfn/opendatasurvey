@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% include '_snippets/entry-summary-row.html' %}
+{% import '_snippets/entry-summary-row.html' as entrysummary_macro %}
 
 {% block title %}
 {{place.name}} &mdash; {{gettext("Places")}}
@@ -61,7 +61,7 @@
                   data-content="{{ dataset.description }}"
                   title="{{ dataset.title }}"><i class="icon-info-sign"></i></a>
               </td>
-              {{entrysummary(dataset, place, entry, questions)}}
+              {{entrysummary_macro.entrysummary(dataset, place, entry, questions, gettext)}}
 
               <td>
                 {% if submissionsAllowed %}
@@ -97,7 +97,7 @@
                   {{ submission.createdAt|simpledelta }}
                 </span>
               </td>
-              {{entrysummary(dataset, place, submission, questions)}}
+              {{entrysummary_macro.entrysummary(dataset, place, submission, questions, gettext)}}
               <td>
                  <a href="/submission/{{submission.id}}" class="btn btn-mini btn-danger">
                   {{gettext("View Submission")}}
