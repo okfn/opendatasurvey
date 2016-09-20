@@ -1,6 +1,6 @@
 'use strict';
 
-const _ = require('underscore');
+const _ = require('lodash');
 const passport = require('passport');
 const uuid = require('node-uuid');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -22,7 +22,7 @@ var resolveProfile = function(profile, provider, done) {
   var obj = {
     id: uuid.v4(),
     anonymous: false,
-    emails: _.each(profile.emails, function(e, i, l) {
+    emails: _.forEach(profile.emails, function(e, i, l) {
       l[i] = e.value;
     }),
     firstName: profile.name.givenName,
@@ -40,7 +40,7 @@ var resolveProfile = function(profile, provider, done) {
   }).then(function(result) {
     if (result) {
       // We have a match. Ensure that the user has this provider saved.
-      result.providers = _.extend(result.providers, obj.providers);
+      result.providers = _.assign(result.providers, obj.providers);
       result.save().then(function(result) {
         done(null, result);
       });
@@ -103,7 +103,7 @@ var setLocals = function(req, res, next) {
   if (req.session.lang && (locales.indexOf(req.session.lang) >= 0)) {
     req.setLocale(req.session.lang);
   } else {
-    req.setLocale(_.first(locales));
+    req.setLocale(_.head(locales));
   }
 
   res.locals.currentUser = req.user ? req.user : null;
