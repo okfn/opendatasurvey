@@ -36,9 +36,35 @@ const QuestionComments = React.createClass({
   }
 });
 
-const QuestionFieldText = React.createClass({
+// A base Higher-Order Component providing common behaviour for all Question
+// Fields.
+const baseQuestionField = function(QuestionField) {
+  const BaseQuestionField = React.createClass({
+    _isSub() {
+      return (this.props.position % 1 !== 0);
+    },
+
+    getClassValues() {
+      var classValue = '';
+      if (!this.props.visibleProps.enabled) classValue += 'disabled ';
+      if (!this.props.visibleProps.visible) classValue += 'hide ';
+      if (this.props.visibleProps.required) classValue += 'required ';
+      if (this._isSub()) classValue += 'sub ';
+      return _.trim(classValue);
+    },
+
+    render() {
+      return <QuestionField getClassValues={this.getClassValues}
+                            {...this.props}
+                            {...this.state} />;
+    }
+  });
+  return BaseQuestionField;
+};
+
+let QuestionFieldText = React.createClass({
   render() {
-    return (<div className={'text question ' + this._getClassValues()}>
+    return (<div className={'text question ' + this.props.getClassValues()}>
       <QuestionInstructions instructionText={this.props.instructions}
                             id={this.props.id} />
       <div className="main">
@@ -56,25 +82,13 @@ const QuestionFieldText = React.createClass({
 
   handler(e) {
     this.props.onChange(this, e.target.value);
-  },
-
-  _isSub() {
-    return (this.props.position % 1 !== 0);
-  },
-
-  _getClassValues() {
-    var classValue = '';
-    if (!this.props.visibleProps.enabled) classValue += 'disabled ';
-    if (!this.props.visibleProps.visible) classValue += 'hide ';
-    if (this.props.visibleProps.required) classValue += 'required ';
-    if (this._isSub()) classValue += 'sub ';
-    return _.trim(classValue);
   }
 });
+QuestionFieldText = baseQuestionField(QuestionFieldText);
 
-const QuestionFieldYesNo = React.createClass({
+let QuestionFieldYesNo = React.createClass({
   render() {
-    return (<div className={'yes-no question ' + this._getClassValues()}>
+    return (<div className={'yes-no question ' + this.props.getClassValues()}>
       <QuestionInstructions instructionText={this.props.instructions}
                             id={this.props.id} />
       <div className="main">
@@ -111,21 +125,9 @@ const QuestionFieldYesNo = React.createClass({
 
   handler(e) {
     this.props.onChange(this, e.target.value);
-  },
-
-  _isSub() {
-    return (this.props.position % 1 !== 0);
-  },
-
-  _getClassValues() {
-    var classValue = '';
-    if (!this.props.visibleProps.enabled) classValue += 'disabled ';
-    if (!this.props.visibleProps.visible) classValue += 'hide ';
-    if (this.props.visibleProps.required) classValue += 'required ';
-    if (this._isSub()) classValue += 'sub ';
-    return _.trim(classValue);
   }
 });
+QuestionFieldYesNo = baseQuestionField(QuestionFieldYesNo);
 
 const QuestionForm = React.createClass({
 

@@ -21957,6 +21957,8 @@
 
 	'use strict';
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	var _react = __webpack_require__(/*! react */ 1);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -22027,12 +22029,36 @@
 	  }
 	});
 	
+	// A base Higher-Order Component providing common behaviour for all Question
+	// Fields.
+	var baseQuestionField = function baseQuestionField(QuestionField) {
+	  var BaseQuestionField = _react2.default.createClass({
+	    displayName: 'BaseQuestionField',
+	    _isSub: function _isSub() {
+	      return this.props.position % 1 !== 0;
+	    },
+	    getClassValues: function getClassValues() {
+	      var classValue = '';
+	      if (!this.props.visibleProps.enabled) classValue += 'disabled ';
+	      if (!this.props.visibleProps.visible) classValue += 'hide ';
+	      if (this.props.visibleProps.required) classValue += 'required ';
+	      if (this._isSub()) classValue += 'sub ';
+	      return _lodash2.default.trim(classValue);
+	    },
+	    render: function render() {
+	      return _react2.default.createElement(QuestionField, _extends({ getClassValues: this.getClassValues
+	      }, this.props, this.state));
+	    }
+	  });
+	  return BaseQuestionField;
+	};
+	
 	var QuestionFieldText = _react2.default.createClass({
 	  displayName: 'QuestionFieldText',
 	  render: function render() {
 	    return _react2.default.createElement(
 	      'div',
-	      { className: 'text question ' + this._getClassValues() },
+	      { className: 'text question ' + this.props.getClassValues() },
 	      _react2.default.createElement(QuestionInstructions, { instructionText: this.props.instructions,
 	        id: this.props.id }),
 	      _react2.default.createElement(
@@ -22061,26 +22087,16 @@
 	  },
 	  handler: function handler(e) {
 	    this.props.onChange(this, e.target.value);
-	  },
-	  _isSub: function _isSub() {
-	    return this.props.position % 1 !== 0;
-	  },
-	  _getClassValues: function _getClassValues() {
-	    var classValue = '';
-	    if (!this.props.visibleProps.enabled) classValue += 'disabled ';
-	    if (!this.props.visibleProps.visible) classValue += 'hide ';
-	    if (this.props.visibleProps.required) classValue += 'required ';
-	    if (this._isSub()) classValue += 'sub ';
-	    return _lodash2.default.trim(classValue);
 	  }
 	});
+	QuestionFieldText = baseQuestionField(QuestionFieldText);
 	
 	var QuestionFieldYesNo = _react2.default.createClass({
 	  displayName: 'QuestionFieldYesNo',
 	  render: function render() {
 	    return _react2.default.createElement(
 	      'div',
-	      { className: 'yes-no question ' + this._getClassValues() },
+	      { className: 'yes-no question ' + this.props.getClassValues() },
 	      _react2.default.createElement(QuestionInstructions, { instructionText: this.props.instructions,
 	        id: this.props.id }),
 	      _react2.default.createElement(
@@ -22140,19 +22156,9 @@
 	  },
 	  handler: function handler(e) {
 	    this.props.onChange(this, e.target.value);
-	  },
-	  _isSub: function _isSub() {
-	    return this.props.position % 1 !== 0;
-	  },
-	  _getClassValues: function _getClassValues() {
-	    var classValue = '';
-	    if (!this.props.visibleProps.enabled) classValue += 'disabled ';
-	    if (!this.props.visibleProps.visible) classValue += 'hide ';
-	    if (this.props.visibleProps.required) classValue += 'required ';
-	    if (this._isSub()) classValue += 'sub ';
-	    return _lodash2.default.trim(classValue);
 	  }
 	});
+	QuestionFieldYesNo = baseQuestionField(QuestionFieldYesNo);
 	
 	var QuestionForm = _react2.default.createClass({
 	  displayName: 'QuestionForm',
