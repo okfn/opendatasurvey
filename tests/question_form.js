@@ -1,8 +1,10 @@
-import 'jsdom-global/register';
-import React from 'react'; // eslint-disable-line no-unused-vars
-import {mount} from 'enzyme';
-import {expect} from 'chai';
-import QuestionForm from '../census/ui_app/QuestionForm';
+'use strict';
+
+require('jsdom-global')();
+const React = require('react'); // eslint-disable-line no-unused-vars
+const mount = require('enzyme').mount;
+const expect = require('chai').expect;
+const QuestionForm = require('../census/ui_app/QuestionForm');
 
 let qsSchema = [
   {
@@ -97,27 +99,27 @@ let questions = [
   {
     id: 'like_apples',
     text: 'Do you like apples?',
-    type: ''
+    type: 'yesno'
   },
   {
     id: 'bananas_instead',
     text: 'Do you like bananas instead?',
-    type: ''
+    type: 'yesno'
   },
   {
     id: 'apple_colour',
     text: 'Do you like *RED* apples?',
-    type: ''
+    type: 'yesno'
   },
   {
     id: 'red_apple_today',
     text: 'Have you eaten a red apple today?',
-    type: ''
+    type: 'yesno'
   },
   {
     id: 'doctor_away',
     text: 'Did it keep the doctor away?',
-    type: ''
+    type: 'yesno'
   }
 ];
 
@@ -129,7 +131,7 @@ describe('<QuestionForm />', () => {
     });
 
     it('renders list of Questions', function() {
-      expect(this.wrapper.find('QuestionField')).to.have.length(5);
+      expect(this.wrapper.find('QuestionFieldYesNo')).to.have.length(5);
     });
 
     it('first question', function() {
