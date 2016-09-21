@@ -437,7 +437,7 @@ body.form {
         }
       }
 
-      &.text {
+      &.text .answer {
         textarea,
         input[type="text"] {
           width: 100%;
@@ -501,7 +501,7 @@ body.form {
           }
         }
 
-        &.text {
+        &.text .answer {
           textarea,
           input[type="text"] {
             border-width: $ui-border-sub;
