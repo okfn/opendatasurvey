@@ -97,8 +97,8 @@
     "debug": "node-debug debug-server.js --no-preload --hidden='node_modules'",
     "test": "NODE_ENV=test ./node_modules/istanbul/lib/cli.js cover -x '**/census/migrations/**' -x '**/scripts/**' ./node_modules/mocha/bin/_mocha -- --compilers js:babel-core/register -R spec tests/ --harmony",
     "jscs": "jscs census/*.js census/**/*.js fixtures scripts tests",
-    "dev": "webpack -d --watch",
-    "build": "webpack -p --progress",
+    "dev": "webpack -d --watch --config webpack.config.development.js",
+    "build": "webpack -p --progress --config webpack.config.production.js",
     "postinstall": "npm run build"
   }
 }
