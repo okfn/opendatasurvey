@@ -9182,8 +9182,8 @@ body.form section {
               body.form section .question.multiple ul li input:checked + label .letter:after {
                 display: block;
                 content: "\e013"; }
-    body.form section .question.text textarea,
-    body.form section .question.text input[type="text"] {
+    body.form section .question.text .answer textarea,
+    body.form section .question.text .answer input[type="text"] {
       width: 100%;
       border: solid 2px #333333;
       padding: 15px;
@@ -9209,11 +9209,11 @@ body.form section {
         border-width: 2px; }
       body.form section .question.sub.source .answer ul li .select {
         border-width: 2px; }
-      body.form section .question.sub.text textarea,
-      body.form section .question.sub.text input[type="text"] {
+      body.form section .question.sub.text .answer textarea,
+      body.form section .question.sub.text .answer input[type="text"] {
         border-width: 2px;
         font-size: 14px; }
-      body.form section .question.sub.text input[type="text"] {
+      body.form section .question.sub.text .answer input[type="text"] {
         padding-top: 7.5px;
         padding-bottom: 7.5px; }
     body.form section .question.continuation {
@@ -9273,11 +9273,11 @@ body.form section {
   body.form section .question.multiple ul li input:checked + label {
     background-color: #7AB800;
     border-color: #365200; }
-  body.form section .question.text textarea,
-  body.form section .question.text input[type="text"] {
+  body.form section .question.text .answer textarea,
+  body.form section .question.text .answer input[type="text"] {
     border-radius: 6px; }
-    body.form section .question.text textarea:not(:focus),
-    body.form section .question.text input[type="text"]:not(:focus) {
+    body.form section .question.text .answer textarea:not(:focus),
+    body.form section .question.text .answer input[type="text"]:not(:focus) {
       background-color: transparent; }
   body.form section .question.submit button {
     background-color: #428bca;
@@ -9293,8 +9293,8 @@ body.form section {
     border-radius: 4px; }
     body.form section .question.sub.source .answer ul li .select select {
       background-color: transparent; }
-  body.form section .question.sub.text textarea,
-  body.form section .question.sub.text input[type="text"] {
+  body.form section .question.sub.text .answer textarea,
+  body.form section .question.sub.text .answer input[type="text"] {
     border-radius: 4px; }
   body.form section .question.disabled.scale .answer label span, body.form section .question.disabled.yes-no .answer label span {
     border-color: #777777; }

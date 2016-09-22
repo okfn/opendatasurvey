@@ -1,11 +1,103 @@
 import React from 'react';
 import _ from 'lodash';
 
-const QuestionField = React.createClass({
-
+const QuestionInstructions = React.createClass({
   render() {
-    return (<div className={'yes-no question ' + this._getClassValues()}>
-      { this._getInstuctions() }
+    if (this.props.instructionText) {
+      return (
+      <div className="instructions">
+        <div className="collapse" id={'instructions' + this.props.id}>
+          <h4>Instructions</h4>
+          <span dangerouslySetInnerHTML={{__html: this.props.instructionText}} />
+        </div>
+        <a className="toggle"
+           role="button"
+           data-toggle="collapse"
+           href={'#instructions' + this.props.id}
+           aria-expanded="false"
+           aria-controls={'instructions' + this.props.id}>
+            <span className="sr-only">Help</span><span className="icon">?</span>
+        </a>
+      </div>
+      );
+    }
+    return (<div className="instructions"></div>);
+  }
+});
+
+const QuestionComments = React.createClass({
+  render() {
+    return (<div className="comments">
+      <label htmlFor={this.props.id + '_comment'}>Comments</label>
+      <textarea placeholder={this.props.placeholder || 'Add comments' }
+                id={this.props.id + '_comment'}
+                rows="5"></textarea>
+    </div>);
+  }
+});
+
+// A base Higher-Order Component providing common behaviour for all Question
+// Fields.
+const baseQuestionField = function(QuestionField) {
+  const BaseQuestionField = React.createClass({
+    _isSub() {
+      /* Return a boolean to determine if the question should be considered a 'sub-
+         question', based on the value of `position`.
+
+        e.g.
+        `1` would return False
+        `1.1` would return True
+      */
+      return (this.props.position % 1 !== 0);
+    },
+
+    getClassValues() {
+      var classValue = '';
+      if (!this.props.visibleProps.enabled) classValue += 'disabled ';
+      if (!this.props.visibleProps.visible) classValue += 'hide ';
+      if (this.props.visibleProps.required) classValue += 'required ';
+      if (this._isSub()) classValue += 'sub ';
+      return _.trim(classValue);
+    },
+
+    render() {
+      return <QuestionField getClassValues={this.getClassValues}
+                            {...this.props}
+                            {...this.state} />;
+    }
+  });
+  return BaseQuestionField;
+};
+
+let QuestionFieldText = React.createClass({
+  render() {
+    return (<div className={'text question ' + this.props.getClassValues()}>
+      <QuestionInstructions instructionText={this.props.instructions}
+                            id={this.props.id} />
+      <div className="main">
+        <h2>
+          <span>{this.props.label}</span> {this.props.children.toString()}
+        </h2>
+        <div className="answer">
+          <input type="text" />
+        </div>
+      </div>
+      <QuestionComments id={this.props.id}
+                        placeholder={this.props.placeholder} />
+    </div>);
+  },
+
+  handler(e) {
+    this.props.onChange(this, e.target.value);
+  }
+});
+QuestionFieldText = baseQuestionField(QuestionFieldText);
+
+let QuestionFieldYesNo = React.createClass({
+  render() {
+    return (<div className={'yes-no question ' + this.props.getClassValues()}>
+      <QuestionInstructions instructionText={this.props.instructions}
+                            id={this.props.id} />
       <div className="main">
         <h2>
           <span>{this.props.label}</span> {this.props.children.toString()}
@@ -33,54 +125,16 @@ const QuestionField = React.createClass({
           </label>
         </div>
       </div>
-      <div className="comments">
-        <label htmlFor="commentThree">Comments</label>
-        <textarea placeholder={this.props.placeholder || 'Add comments' }
-                  id="commentThree"
-                  rows="5"></textarea>
-      </div>
+      <QuestionComments id={this.props.id}
+                        placeholder={this.props.placeholder} />
     </div>);
   },
 
   handler(e) {
     this.props.onChange(this, e.target.value);
-  },
-
-  _isSub() {
-    return (this.props.position % 1 !== 0);
-  },
-
-  _getInstuctions() {
-    if (this.props.instructions) {
-      return (
-      <div className="instructions">
-        <div className="collapse" id={'instructions' + this.props.id}>
-          <h4>Instructions</h4>
-          <span dangerouslySetInnerHTML={{__html: this.props.instructions}} />
-        </div>
-        <a className="toggle"
-           role="button"
-           data-toggle="collapse"
-           href={'#instructions' + this.props.id}
-           aria-expanded="false"
-           aria-controls={'instructions' + this.props.id}>
-            <span className="sr-only">Help</span><span className="icon">?</span>
-        </a>
-      </div>
-      );
-    }
-    return (<div className="instructions"></div>);
-  },
-
-  _getClassValues() {
-    var classValue = '';
-    if (!this.props.visibleProps.enabled) classValue += 'disabled ';
-    if (!this.props.visibleProps.visible) classValue += 'hide ';
-    if (this.props.visibleProps.required) classValue += 'required ';
-    if (this._isSub()) classValue += 'sub ';
-    return _.trim(classValue);
   }
 });
+QuestionFieldYesNo = baseQuestionField(QuestionFieldYesNo);
 
 const QuestionForm = React.createClass({
 
@@ -186,20 +240,66 @@ const QuestionForm = React.createClass({
       if (this.getSchemaForId(q.id) === undefined) {
         console.warn('No schema defined for Question with id: ' + q.id);
       }
-      return (
-        <QuestionField ref={q.id}
-                       key={q.id}
-                       id={q.id}
-                       visibleProps={this.getVisiblePropsForId(q.id)}
-                       value={q.value}
-                       onChange={this.onFieldChange}
-                       label={this.getLabelForId(q.id)}
-                       position={this.getPositionForId(q.id)}
-                       instructions={this.getValueForId(q.id, 'description')}
-                       placeholder={this.getValueForId(q.id, 'placeholder')}>
-          {this.getValueForId(q.id, 'text')}
-        </QuestionField>
-      );
+      let questionNode = '';
+      switch (this.getValueForId(q.id, 'type')) {
+        case 'yesno':
+          questionNode =
+          <QuestionFieldYesNo ref={q.id}
+                              key={q.id}
+                              id={q.id}
+                              visibleProps={this.getVisiblePropsForId(q.id)}
+                              value={q.value}
+                              onChange={this.onFieldChange}
+                              label={this.getLabelForId(q.id)}
+                              position={this.getPositionForId(q.id)}
+                              instructions={
+                                this.getValueForId(q.id, 'description')
+                              }
+                              placeholder={
+                                this.getValueForId(q.id, 'placeholder')
+                              }>
+            {this.getValueForId(q.id, 'text')}
+          </QuestionFieldYesNo>;
+          break;
+        case 'text':
+          questionNode =
+          <QuestionFieldText ref={q.id}
+                             key={q.id}
+                             id={q.id}
+                             visibleProps={this.getVisiblePropsForId(q.id)}
+                             value={q.value}
+                             onChange={this.onFieldChange}
+                             label={this.getLabelForId(q.id)}
+                             position={this.getPositionForId(q.id)}
+                             instructions={
+                               this.getValueForId(q.id, 'description')
+                             }
+                             placeholder={
+                               this.getValueForId(q.id, 'placeholder')
+                             }>
+            {this.getValueForId(q.id, 'text')}
+          </QuestionFieldText>;
+          break;
+        default:
+          questionNode =
+          <QuestionFieldYesNo ref={q.id}
+                              key={q.id}
+                              id={q.id}
+                              visibleProps={this.getVisiblePropsForId(q.id)}
+                              value={q.value}
+                              onChange={this.onFieldChange}
+                              label={this.getLabelForId(q.id)}
+                              position={this.getPositionForId(q.id)}
+                              instructions={
+                                this.getValueForId(q.id, 'description')
+                              }
+                              placeholder={
+                                this.getValueForId(q.id, 'placeholder')
+                              }>
+            {this.getValueForId(q.id, 'text')}
+          </QuestionFieldYesNo>;
+      }
+      return questionNode;
     });
     // Sort QuestionField nodes by their position property
     questionNodes = _.sortBy(questionNodes, q => q.props.position);
