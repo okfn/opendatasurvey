@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 
-var BUILD_DIR = path.resolve(__dirname, 'census/static/scripts');
+var BUILD_DIR = path.resolve(__dirname, 'census/static/scripts/compiled');
 var APP_DIR = path.resolve(__dirname, 'census/ui_app');
 
 var config = {
@@ -12,11 +12,7 @@ var config = {
   },
   module: {
     loaders: [
-      {
-        test: /\.jsx?/,
-        include: APP_DIR,
-        loader: 'babel'
-      }
+      {test: /\.jsx?/, include: APP_DIR, loaders: ['babel']}
     ]
   }
 };
