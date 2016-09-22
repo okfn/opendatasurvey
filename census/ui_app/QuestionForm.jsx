@@ -41,6 +41,13 @@ const QuestionComments = React.createClass({
 const baseQuestionField = function(QuestionField) {
   const BaseQuestionField = React.createClass({
     _isSub() {
+      /* Return a boolean to determine if the question should be considered a 'sub-
+         question', based on the value of `position`.
+
+        e.g.
+        `1` would return False
+        `1.1` would return True
+      */
       return (this.props.position % 1 !== 0);
     },
 
