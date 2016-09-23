@@ -240,66 +240,34 @@ const QuestionForm = React.createClass({
       if (this.getSchemaForId(q.id) === undefined) {
         console.warn('No schema defined for Question with id: ' + q.id);
       }
-      let questionNode = '';
-      switch (this.getValueForId(q.id, 'type')) {
-        case 'yesno':
-          questionNode =
-          <QuestionFieldYesNo ref={q.id}
-                              key={q.id}
-                              id={q.id}
-                              visibleProps={this.getVisiblePropsForId(q.id)}
-                              value={q.value}
-                              onChange={this.onFieldChange}
-                              label={this.getLabelForId(q.id)}
-                              position={this.getPositionForId(q.id)}
-                              instructions={
-                                this.getValueForId(q.id, 'description')
-                              }
-                              placeholder={
-                                this.getValueForId(q.id, 'placeholder')
-                              }>
-            {this.getValueForId(q.id, 'text')}
-          </QuestionFieldYesNo>;
-          break;
-        case 'text':
-          questionNode =
-          <QuestionFieldText ref={q.id}
-                             key={q.id}
-                             id={q.id}
-                             visibleProps={this.getVisiblePropsForId(q.id)}
-                             value={q.value}
-                             onChange={this.onFieldChange}
-                             label={this.getLabelForId(q.id)}
-                             position={this.getPositionForId(q.id)}
-                             instructions={
-                               this.getValueForId(q.id, 'description')
-                             }
-                             placeholder={
-                               this.getValueForId(q.id, 'placeholder')
-                             }>
-            {this.getValueForId(q.id, 'text')}
-          </QuestionFieldText>;
-          break;
-        default:
-          questionNode =
-          <QuestionFieldYesNo ref={q.id}
-                              key={q.id}
-                              id={q.id}
-                              visibleProps={this.getVisiblePropsForId(q.id)}
-                              value={q.value}
-                              onChange={this.onFieldChange}
-                              label={this.getLabelForId(q.id)}
-                              position={this.getPositionForId(q.id)}
-                              instructions={
-                                this.getValueForId(q.id, 'description')
-                              }
-                              placeholder={
-                                this.getValueForId(q.id, 'placeholder')
-                              }>
-            {this.getValueForId(q.id, 'text')}
-          </QuestionFieldYesNo>;
+      // Map question.type to appropriate React Component class.
+      const typesToComponent = {
+        yesno: QuestionFieldYesNo,
+        text: QuestionFieldText
+      };
+      const type = this.getValueForId(q.id, 'type');
+      let ComponentClass = typesToComponent.yesno;
+      if (_.has(typesToComponent, type)) {
+        ComponentClass = typesToComponent[type];
       }
-      return questionNode;
+      return (
+        <ComponentClass ref={q.id}
+                        key={q.id}
+                        id={q.id}
+                        visibleProps={this.getVisiblePropsForId(q.id)}
+                        value={q.value}
+                        onChange={this.onFieldChange}
+                        label={this.getLabelForId(q.id)}
+                        position={this.getPositionForId(q.id)}
+                        instructions={
+                          this.getValueForId(q.id, 'description')
+                        }
+                        placeholder={
+                          this.getValueForId(q.id, 'placeholder')
+                        }>
+          {this.getValueForId(q.id, 'text')}
+        </ComponentClass>
+      );
     });
     // Sort QuestionField nodes by their position property
     questionNodes = _.sortBy(questionNodes, q => q.props.position);
