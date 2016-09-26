@@ -8,6 +8,20 @@ In the CMS, the Datasets sheet has a new `QuestionSetURL` column. The value is t
 
 The new Question Set config sheet is like the `Site` config. It has `key` and `value` columns. It expects a `questions` key, the value is the url the questions sheet, and a `question_set_schema` key, the value is the question set schema in json format (see the [Question Set Schema](#question-set-schema-json-format) section below).
 
+### Extra Question Config
+
+Some question types require extra configuration. For example, the `likert` question type has configuration to define the number of options, and description and value for each option. This will be used to setup the survey form. There is a column called 'Config' in the spreadsheet where a small snippet of json can be added. Below are example configurations for question types that require it:
+
+#### Likert config
+
+```json
+[
+    {"description": "None", "value": "0"},
+    {"description": "Some", "value": "1"},
+    {"description": "All", "value": "2"}
+]
+```
+
 ## Changes to the database
 
 Once loaded into the database, each `Dataset` has a foreignKey to the `QuestionSet` it uses. `Questions` now have a foreignKey to the parent `QuestionSet` (`Question.questionsetid`). `Questions` have altered their primaryKey to be (id, questionsetid). The `QuestionSet.id` primaryKey is a hash of the `site` + `qsurl`. This ensures that sites using a Question Set located at the same url will load into the database as distinct `QuestionSet` instances.
