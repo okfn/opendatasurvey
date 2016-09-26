@@ -36,6 +36,14 @@ const QuestionComments = React.createClass({
   }
 });
 
+const QuestionHeader = React.createClass({
+  render() {
+    return (<h2>
+      <span>{this.props.label}</span> {this.props.children.toString()}
+    </h2>);
+  }
+});
+
 // A base Higher-Order Component providing common behaviour for all Question
 // Fields.
 const baseQuestionField = function(QuestionField) {
@@ -75,9 +83,9 @@ let QuestionFieldText = React.createClass({
       <QuestionInstructions instructionText={this.props.instructions}
                             id={this.props.id} />
       <div className="main">
-        <h2>
-          <span>{this.props.label}</span> {this.props.children.toString()}
-        </h2>
+        <QuestionHeader label={this.props.label}>
+          {this.props.children.toString()}
+        </QuestionHeader>
         <div className="answer">
           <input type="text" />
         </div>
@@ -99,9 +107,9 @@ let QuestionFieldYesNo = React.createClass({
       <QuestionInstructions instructionText={this.props.instructions}
                             id={this.props.id} />
       <div className="main">
-        <h2>
-          <span>{this.props.label}</span> {this.props.children.toString()}
-        </h2>
+        <QuestionHeader label={this.props.label}>
+          {this.props.children.toString()}
+        </QuestionHeader>
         <div className="answer">
           <input type="radio"
                  name={this.props.id}
