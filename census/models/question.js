@@ -37,6 +37,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       comment: 'Placeholder text for this question. Used in UI.'
     },
+    config: {
+      type: DataTypes.JSONB,
+      allowNull: true,
+      comment: 'Question-type specific configuration.'
+    },
     score: {
       type: DataTypes.INTEGER,
       allowNull: false,

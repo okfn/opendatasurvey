@@ -144,7 +144,53 @@ let QuestionFieldYesNo = React.createClass({
 });
 QuestionFieldYesNo = baseQuestionField(QuestionFieldYesNo);
 
+const QuestionFieldLikertOption = React.createClass({
+  render() {
+    return (
+      <span>
+        <input type="radio" name={this.props.id}
+                            id={this.props.id + this.props.value}
+                            value={this.props.value} />
+        <label htmlFor={this.props.id + this.props.value}>
+          <span>{this.props.value}</span> <em className="description">{this.props.description}</em>
+        </label>
+      </span>
+    );
+  }
+});
+
+let QuestionFieldLikert = React.createClass({
+  render() {
+    let scaleOptionNodes = _.map(this.props.config, option => {
+      return <QuestionFieldLikertOption id={this.props.id}
+                                        value={option.value}
+                                        description={option.description}
+                                        key={this.props.id + option.value} />;
+    });
+    return (<div className={'scale question ' + this.props.getClassValues()}>
+      <QuestionInstructions instructionText={this.props.instructions}
+                            id={this.props.id} />
+      <div className="main">
+        <QuestionHeader label={this.props.label}>
+          {this.props.children.toString()}
+        </QuestionHeader>
+        <div className="answer">
+          {scaleOptionNodes}
+        </div>
+      </div>
+      <QuestionComments id={this.props.id}
+                        placeholder={this.props.placeholder} />
+    </div>);
+  },
+
+  handler(e) {
+    this.props.onChange(this, e.target.value);
+  }
+});
+QuestionFieldLikert = baseQuestionField(QuestionFieldLikert);
+
 module.exports = {
   QuestionFieldText: QuestionFieldText,
-  QuestionFieldYesNo: QuestionFieldYesNo
+  QuestionFieldYesNo: QuestionFieldYesNo,
+  QuestionFieldLikert: QuestionFieldLikert
 };

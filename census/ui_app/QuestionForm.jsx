@@ -109,7 +109,8 @@ const QuestionForm = React.createClass({
       // Map question.type to appropriate React Component class.
       const typesToComponent = {
         yesno: fields.QuestionFieldYesNo,
-        text: fields.QuestionFieldText
+        text: fields.QuestionFieldText,
+        likert: fields.QuestionFieldLikert
       };
       const type = this.getValueForId(q.id, 'type');
       let ComponentClass = typesToComponent.yesno;
@@ -130,6 +131,9 @@ const QuestionForm = React.createClass({
                         }
                         placeholder={
                           this.getValueForId(q.id, 'placeholder')
+                        }
+                        config={
+                          this.getValueForId(q.id, 'config')
                         }>
           {this.getValueForId(q.id, 'text')}
         </ComponentClass>
