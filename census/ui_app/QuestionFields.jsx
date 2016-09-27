@@ -150,7 +150,9 @@ const QuestionFieldLikertOption = React.createClass({
       <span>
         <input type="radio" name={this.props.id}
                             id={this.props.id + this.props.value}
-                            value={this.props.value} />
+                            value={this.props.value}
+                            onChange={this.props.handler}
+                            checked={this.props.checked} />
         <label htmlFor={this.props.id + this.props.value}>
           <span>{this.props.value}</span> <em className="description">{this.props.description}</em>
         </label>
@@ -165,7 +167,9 @@ let QuestionFieldLikert = React.createClass({
       return <QuestionFieldLikertOption id={this.props.id}
                                         value={option.value}
                                         description={option.description}
-                                        key={this.props.id + option.value} />;
+                                        key={this.props.id + option.value}
+                                        handler={this.handler}
+                                        checked={this.props.value === option.value} />;
     });
     return (<div className={'scale question ' + this.props.getClassValues()}>
       <QuestionInstructions instructionText={this.props.instructions}
