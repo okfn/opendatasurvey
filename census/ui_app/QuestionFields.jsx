@@ -87,7 +87,7 @@ let QuestionFieldText = React.createClass({
           {this.props.children.toString()}
         </QuestionHeader>
         <div className="answer">
-          <input type="text" />
+          <input type="text" value={this.props.value} onChange={this.handler} />
         </div>
       </div>
       <QuestionComments id={this.props.id}
