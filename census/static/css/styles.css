@@ -9028,20 +9028,20 @@ body.form section {
             border: none; } }
         body.form section .question .comments textarea:focus {
           background-color: #eeeeee; }
-    body.form section .question.scale .answer, body.form section .question.yes-no .answer {
+    body.form section .question.yes-no .answer {
       display: table;
       width: 100%;
       table-layout: fixed; }
-      body.form section .question.scale .answer input, body.form section .question.yes-no .answer input {
+      body.form section .question.yes-no .answer input {
         display: none; }
-        body.form section .question.scale .answer input:checked + label span, body.form section .question.yes-no .answer input:checked + label span {
+        body.form section .question.yes-no .answer input:checked + label span {
           background-color: #333333;
           color: #fff; }
-      body.form section .question.scale .answer label, body.form section .question.yes-no .answer label {
+      body.form section .question.yes-no .answer label {
         display: table-cell;
         text-align: center;
         font-weight: normal; }
-        body.form section .question.scale .answer label span, body.form section .question.yes-no .answer label span {
+        body.form section .question.yes-no .answer label span {
           display: block;
           border-style: solid;
           border-color: #333333;
@@ -9053,19 +9053,60 @@ body.form section {
           text-align: center;
           font-weight: bold;
           margin-bottom: 0.5em; }
-        body.form section .question.scale .answer label em, body.form section .question.yes-no .answer label em {
+        body.form section .question.yes-no .answer label em {
           display: none; }
-        body.form section .question.scale .answer label:first-of-type, body.form section .question.yes-no .answer label:first-of-type {
+        body.form section .question.yes-no .answer label:first-of-type {
           text-align: left; }
-          body.form section .question.scale .answer label:first-of-type span, body.form section .question.yes-no .answer label:first-of-type span {
+          body.form section .question.yes-no .answer label:first-of-type span {
             border-left-width: 2px; }
-          body.form section .question.scale .answer label:first-of-type em, body.form section .question.yes-no .answer label:first-of-type em {
+          body.form section .question.yes-no .answer label:first-of-type em {
             display: block; }
-        body.form section .question.scale .answer label:last-of-type, body.form section .question.yes-no .answer label:last-of-type {
+        body.form section .question.yes-no .answer label:last-of-type {
           text-align: right; }
-          body.form section .question.scale .answer label:last-of-type span, body.form section .question.yes-no .answer label:last-of-type span {
+          body.form section .question.yes-no .answer label:last-of-type span {
             border-right-width: 2px; }
-          body.form section .question.scale .answer label:last-of-type em, body.form section .question.yes-no .answer label:last-of-type em {
+          body.form section .question.yes-no .answer label:last-of-type em {
+            display: block; }
+    body.form section .question.scale .answer {
+      display: table;
+      width: 100%;
+      table-layout: fixed; }
+      body.form section .question.scale .answer input {
+        display: none; }
+        body.form section .question.scale .answer input:checked + label span {
+          background-color: #333333;
+          color: #fff; }
+      body.form section .question.scale .answer > span {
+        display: table-cell;
+        text-align: center;
+        font-weight: normal; }
+        body.form section .question.scale .answer > span label {
+          display: block; }
+        body.form section .question.scale .answer > span span {
+          display: block;
+          border-style: solid;
+          border-color: #333333;
+          border-width: 2px 1px;
+          cursor: pointer;
+          font-size: 20px;
+          padding-top: 0.5em;
+          padding-bottom: 0.5em;
+          text-align: center;
+          font-weight: bold;
+          margin-bottom: 0.5em; }
+        body.form section .question.scale .answer > span em {
+          display: none; }
+        body.form section .question.scale .answer > span:first-of-type {
+          text-align: left; }
+          body.form section .question.scale .answer > span:first-of-type span {
+            border-left-width: 2px; }
+          body.form section .question.scale .answer > span:first-of-type em {
+            display: block; }
+        body.form section .question.scale .answer > span:last-of-type {
+          text-align: right; }
+          body.form section .question.scale .answer > span:last-of-type span {
+            border-right-width: 2px; }
+          body.form section .question.scale .answer > span:last-of-type em {
             display: block; }
     body.form section .question.source .answer {
       display: table;
@@ -9198,12 +9239,12 @@ body.form section {
     body.form section .question.sub {
       padding-top: 0;
       padding-bottom: 15px; }
-      body.form section .question.sub.scale .answer label span, body.form section .question.sub.yes-no .answer label span {
+      body.form section .question.sub.scale .answer > label span, body.form section .question.sub.scale .answer > span span, body.form section .question.sub.yes-no .answer > label span, body.form section .question.sub.yes-no .answer > span span {
         border-width: 2px 1px;
         font-size: 16px; }
-      body.form section .question.sub.scale .answer label:first-of-type span, body.form section .question.sub.yes-no .answer label:first-of-type span {
+      body.form section .question.sub.scale .answer > label:first-of-type span, body.form section .question.sub.scale .answer > span:first-of-type span, body.form section .question.sub.yes-no .answer > label:first-of-type span, body.form section .question.sub.yes-no .answer > span:first-of-type span {
         border-left-width: 2px; }
-      body.form section .question.sub.scale .answer label:last-of-type span, body.form section .question.sub.yes-no .answer label:last-of-type span {
+      body.form section .question.sub.scale .answer > label:last-of-type span, body.form section .question.sub.scale .answer > span:last-of-type span, body.form section .question.sub.yes-no .answer > label:last-of-type span, body.form section .question.sub.yes-no .answer > span:last-of-type span {
         border-right-width: 2px; }
       body.form section .question.sub.source .answer ul li input {
         border-width: 2px; }
@@ -9245,19 +9286,28 @@ body.form section {
     font-weight: normal; }
   body.form section .question .comments textarea {
     font-weight: 300; }
-  body.form section .question.scale .answer label, body.form section .question.yes-no .answer label {
+  body.form section .question.scale .answer > label, body.form section .question.scale .answer > span, body.form section .question.yes-no .answer > label, body.form section .question.yes-no .answer > span {
     font-size: 15px; }
-    body.form section .question.scale .answer label:first-of-type span, body.form section .question.yes-no .answer label:first-of-type span {
+    body.form section .question.scale .answer > label:first-of-type span, body.form section .question.scale .answer > span:first-of-type span, body.form section .question.yes-no .answer > label:first-of-type span, body.form section .question.yes-no .answer > span:first-of-type span {
       border-radius: 6px 0 0 6px; }
-    body.form section .question.scale .answer label:last-of-type span, body.form section .question.yes-no .answer label:last-of-type span {
+    body.form section .question.scale .answer > label:last-of-type span, body.form section .question.scale .answer > span:last-of-type span, body.form section .question.yes-no .answer > label:last-of-type span, body.form section .question.yes-no .answer > span:last-of-type span {
       border-radius: 0 6px 6px 0; }
-  body.form section .question.scale:not(.neutral) .answer input:checked + label span, body.form section .question.yes-no:not(.neutral) .answer input:checked + label span {
+  body.form section .question.yes-no:not(.neutral) .answer input:checked + label span {
     background-color: #f47c23;
     border-color: #904207; }
-  body.form section .question.scale:not(.neutral) .answer input:checked + label:first-of-type span, body.form section .question.yes-no:not(.neutral) .answer input:checked + label:first-of-type span {
+  body.form section .question.yes-no:not(.neutral) .answer input:checked + label:first-of-type span {
     background-color: #ff0000;
     border-color: maroon; }
-  body.form section .question.scale:not(.neutral) .answer input:checked + label:last-of-type span, body.form section .question.yes-no:not(.neutral) .answer input:checked + label:last-of-type span {
+  body.form section .question.yes-no:not(.neutral) .answer input:checked + label:last-of-type span {
+    background-color: #7AB800;
+    border-color: #365200; }
+  body.form section .question.scale:not(.neutral) .answer > span input:checked + label span {
+    background-color: #f47c23;
+    border-color: #904207; }
+  body.form section .question.scale:not(.neutral) .answer > span:first-of-type input:checked + label span {
+    background-color: #ff0000;
+    border-color: maroon; }
+  body.form section .question.scale:not(.neutral) .answer > span:last-of-type input:checked + label span {
     background-color: #7AB800;
     border-color: #365200; }
   body.form section .question.source .answer ul li input {
@@ -9282,9 +9332,9 @@ body.form section {
   body.form section .question.submit button {
     background-color: #428bca;
     border-radius: 6px; }
-  body.form section .question.sub.scale .answer label:first-of-type span, body.form section .question.sub.yes-no .answer label:first-of-type span {
+  body.form section .question.sub.scale .answer > label:first-of-type span, body.form section .question.sub.scale .answer > span:first-of-type span, body.form section .question.sub.yes-no .answer > label:first-of-type span, body.form section .question.sub.yes-no .answer > span:first-of-type span {
     border-radius: 4px 0 0 4px; }
-  body.form section .question.sub.scale .answer label:last-of-type span, body.form section .question.sub.yes-no .answer label:last-of-type span {
+  body.form section .question.sub.scale .answer > label:last-of-type span, body.form section .question.sub.scale .answer > span:last-of-type span, body.form section .question.sub.yes-no .answer > label:last-of-type span, body.form section .question.sub.yes-no .answer > span:last-of-type span {
     border-radius: 0 4px 4px 0; }
   body.form section .question.sub.source .answer ul li input {
     border-radius: 4px;
