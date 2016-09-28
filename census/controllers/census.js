@@ -258,7 +258,8 @@ var submitReact = function(req, res) {
           text: question.question,
           type: question.type,
           description: question.description,
-          placeholder: question.placeholder
+          placeholder: question.placeholder,
+          config: question.config
         };
       });
       let initialHTML = renderToString(

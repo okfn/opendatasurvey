@@ -52,7 +52,8 @@ body.form {
       &.scale,
       &.yes-no {
         .answer {
-          label {
+          & > label,
+          & > span {
             font-size: 15px;
 
             &:first-of-type {
@@ -67,7 +68,9 @@ body.form {
             }
           }
         }
+      }
 
+      &.yes-no {
         &:not(.neutral) {
           .answer {
             input {
@@ -85,6 +88,45 @@ body.form {
                   }
                   &:last-of-type {
                     span {
+                      background-color: $brand-success;
+                      border-color: darken($brand-success, 20%);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      &.scale {
+        &:not(.neutral) {
+          .answer {
+            & > span {
+              input {
+                &:checked {
+                  & + label {
+                    span {
+                      background-color: $brand-warning;
+                      border-color: darken($brand-warning, 25%);
+                    }
+                  }
+                }
+              }
+              &:first-of-type {
+                input {
+                  &:checked {
+                    & + label span {
+                      background-color: $brand-danger;
+                      border-color: darken($brand-danger, 25%);
+                    }
+                  }
+                }
+              }
+              &:last-of-type {
+                input {
+                  &:checked {
+                    & + label span {
                       background-color: $brand-success;
                       border-color: darken($brand-success, 20%);
                     }
@@ -161,7 +203,8 @@ body.form {
         &.scale,
         &.yes-no {
           .answer {
-            label {
+            & > label,
+            & > span {
               &:first-of-type {
                 span {
                   border-radius: $border-radius-base 0 0 $border-radius-base;

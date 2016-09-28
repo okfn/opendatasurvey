@@ -44,6 +44,20 @@ describe('<QuestionForm />', () => {
         mount(<QuestionForm questions={this.baseQuestions} qsSchema={this.baseQSSchema} />);
       expect(this.wrapper.find('QuestionFieldText')).to.have.length(1);
     });
+    it('renders QuestionFieldLikert type', function() {
+      // Replace `type` in baseQuestions.
+      let question = {type: 'likert', config: [
+        {description: 'None', value: '0'},
+        {description: 'Some', value: '1'},
+        {description: 'All', value: '2'}
+      ]};
+      this.baseQuestions[0] = _.assign(this.baseQuestions[0], question);
+      this.wrapper =
+        mount(<QuestionForm questions={this.baseQuestions} qsSchema={this.baseQSSchema} />);
+      expect(this.wrapper.find('QuestionFieldLikert')).to.have.length(1);
+      // Scale has three options.
+      expect(this.wrapper.find('QuestionFieldLikertOption')).to.have.length(3);
+    });
   });
 
   let qsSchema = [

@@ -210,7 +210,21 @@ body.form {
         }
       }
 
-      &.scale,
+
+      @mixin fauxButton () {
+        display: block;
+        border-style: solid;
+        border-color: $text-color;
+        border-width: $ui-border $ui-border/2;
+        cursor: pointer;
+        font-size: 20px;
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 0.5em;
+      }
+
       &.yes-no {
         .answer {
           display: table;
@@ -235,17 +249,65 @@ body.form {
             font-weight: normal;
 
             span {
+              @include fauxButton;
+            }
+
+            em {
+              display: none;
+            }
+
+            &:first-of-type {
+              text-align: left;
+              span {
+                border-left-width: $ui-border;
+              }
+              em {
+                display: block;
+              }
+            }
+
+            &:last-of-type {
+              text-align: right;
+              span {
+                border-right-width: $ui-border;
+              }
+              em{
+                display: block;
+              }
+            }
+          }
+        }
+      }
+
+      &.scale {
+        .answer {
+          display: table;
+          width: 100%;
+          table-layout: fixed;
+
+          input {
+            display: none;
+
+            &:checked {
+
+              & + label span {
+                background-color: $text-color;
+                color: $body-bg;
+              }
+            }
+          }
+
+          & > span {
+            display: table-cell;
+            text-align: center;
+            font-weight: normal;
+
+            label {
               display: block;
-              border-style: solid;
-              border-color: $text-color;
-              border-width: $ui-border $ui-border/2;
-              cursor: pointer;
-              font-size: 20px;
-              padding-top: 0.5em;
-              padding-bottom: 0.5em;
-              text-align: center;
-              font-weight: bold;
-              margin-bottom: 0.5em;
+            }
+
+            span {
+              @include fauxButton;
             }
 
             em {
@@ -465,7 +527,8 @@ body.form {
         &.scale,
         &.yes-no {
           .answer {
-            label {
+            & > label,
+            & > span {
               span {
                 border-width: $ui-border-sub $ui-border-sub/2;
                 font-size: 16px;
