@@ -1,6 +1,5 @@
 import React from 'react';
 import _ from 'lodash';
-// import serialize from 'form-serialize';
 
 const QuestionInstructions = props => {
   if (props.instructionText) {
@@ -190,8 +189,80 @@ let QuestionFieldLikert = React.createClass({
 });
 QuestionFieldLikert = baseQuestionField(QuestionFieldLikert);
 
+const QuestionFieldSourceLine = props => {
+  return (
+    <ul onChange={props.handler}>
+      <li>
+        <label htmlFor={props.id + '_url'}>Source URL</label>
+        <input id={props.id + '_url'}
+               name={props.id + '_url'}
+               type="url"
+               data-key={'urlValue'}
+               placeholder="http://"
+               value={props.urlValue} />
+      </li>
+      <li>
+        <label htmlFor={props.id + '_desc'}>Source description</label>
+        <input id={props.id + '_desc'}
+               name={props.id + '_desc'}
+               type="text"
+               data-key={'descValue'}
+               value={props.descValue} />
+      </li>
+    </ul>
+  );
+};
+
+let QuestionFieldSource = React.createClass({
+  emptySource: {urlValue: '', descValue: ''},
+
+  _getSourceValues() {
+    let sourceValues = (_.isArray(this.props.value)) ? this.props.value : [];
+    sourceValues.push(_.clone(this.emptySource));
+    return sourceValues;
+  },
+
+  render() {
+    let sourceLines = [];
+    let sourceValues = this._getSourceValues();
+    for (var i = 0; i < sourceValues.length; i++) {
+      let sourceValue = sourceValues[i];
+      let node = <QuestionFieldSourceLine key={this.props.id + i}
+                                          id={this.props.id + i}
+                                          urlValue={sourceValue.urlValue}
+                                          descValue={sourceValue.descValue}
+                                          handler={this.handler.bind(this, i)} />;
+      sourceLines.push(node);
+    }
+    return (<div className={'source question ' + this.props.getClassValues()}>
+      <QuestionInstructions instructionText={this.props.instructions}
+                            id={this.props.id} />
+      <div className="main">
+        <QuestionHeader label={this.props.label}>
+          {this.props.children.toString()}
+        </QuestionHeader>
+        <div className="answer">
+          {sourceLines}
+        </div>
+      </div>
+      <QuestionComments id={this.props.id}
+                        placeholder={this.props.placeholder} />
+    </div>);
+  },
+
+  handler(i, e) {
+    let newSourceValues = this._getSourceValues();
+    newSourceValues[i] = _.assign(newSourceValues[i],
+                                  {[e.target.dataset.key]: e.target.value});
+    newSourceValues = _.reject(newSourceValues, this.emptySource);
+    this.props.onChange(this, newSourceValues);
+  }
+});
+QuestionFieldSource = baseQuestionField(QuestionFieldSource);
+
 module.exports = {
   QuestionFieldText: QuestionFieldText,
   QuestionFieldYesNo: QuestionFieldYesNo,
-  QuestionFieldLikert: QuestionFieldLikert
+  QuestionFieldLikert: QuestionFieldLikert,
+  QuestionFieldSource: QuestionFieldSource
 };

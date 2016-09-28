@@ -110,7 +110,8 @@ const QuestionForm = React.createClass({
       const typesToComponent = {
         yesno: fields.QuestionFieldYesNo,
         text: fields.QuestionFieldText,
-        likert: fields.QuestionFieldLikert
+        likert: fields.QuestionFieldLikert,
+        source: fields.QuestionFieldSource
       };
       const type = this.getValueForId(q.id, 'type');
       let ComponentClass = typesToComponent.yesno;
