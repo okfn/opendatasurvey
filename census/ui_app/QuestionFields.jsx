@@ -1,52 +1,51 @@
 import React from 'react';
 import _ from 'lodash';
+// import serialize from 'form-serialize';
 
-const QuestionInstructions = React.createClass({
-  render() {
-    if (this.props.instructionText) {
-      return (
+const QuestionInstructions = props => {
+  if (props.instructionText) {
+    return (
       <div className="instructions">
-        <div className="collapse" id={'instructions' + this.props.id}>
+        <div className="collapse" id={'instructions' + props.id}>
           <h4>Instructions</h4>
-          <span dangerouslySetInnerHTML={{__html: this.props.instructionText}} />
+          <span dangerouslySetInnerHTML={{__html: props.instructionText}} />
         </div>
         <a className="toggle"
            role="button"
            data-toggle="collapse"
-           href={'#instructions' + this.props.id}
+           href={'#instructions' + props.id}
            aria-expanded="false"
-           aria-controls={'instructions' + this.props.id}>
+           aria-controls={'instructions' + props.id}>
             <span className="sr-only">Help</span><span className="icon">?</span>
         </a>
       </div>
-      );
-    }
-    return (<div className="instructions"></div>);
+    );
   }
-});
+  return (<div className="instructions"></div>);
+};
 
-const QuestionComments = React.createClass({
-  render() {
-    return (<div className="comments">
-      <label htmlFor={this.props.id + '_comment'}>Comments</label>
-      <textarea placeholder={this.props.placeholder || 'Add comments' }
-                id={this.props.id + '_comment'}
+const QuestionComments = props => {
+  return (
+    <div className="comments">
+      <label htmlFor={props.id + '_comment'}>Comments</label>
+      <textarea placeholder={props.placeholder || 'Add comments' }
+                id={props.id + '_comment'}
                 rows="5"></textarea>
-    </div>);
-  }
-});
+    </div>
+  );
+};
 
-const QuestionHeader = React.createClass({
-  render() {
-    return (<h2>
-      <span>{this.props.label}</span> {this.props.children.toString()}
-    </h2>);
-  }
-});
+const QuestionHeader = props => {
+  return (
+    <h2>
+      <span>{props.label}</span> {props.children.toString()}
+    </h2>
+  );
+};
 
 // A base Higher-Order Component providing common behaviour for all Question
 // Fields.
-const baseQuestionField = function(QuestionField) {
+const baseQuestionField = QuestionField => {
   const BaseQuestionField = React.createClass({
     _isSub() {
       /* Return a boolean to determine if the question should be considered a 'sub-
@@ -144,22 +143,20 @@ let QuestionFieldYesNo = React.createClass({
 });
 QuestionFieldYesNo = baseQuestionField(QuestionFieldYesNo);
 
-const QuestionFieldLikertOption = React.createClass({
-  render() {
-    return (
-      <span>
-        <input type="radio" name={this.props.id}
-                            id={this.props.id + this.props.value}
-                            value={this.props.value}
-                            onChange={this.props.handler}
-                            checked={this.props.checked} />
-        <label htmlFor={this.props.id + this.props.value}>
-          <span>{this.props.value}</span> <em className="description">{this.props.description}</em>
-        </label>
-      </span>
-    );
-  }
-});
+const QuestionFieldLikertOption = props => {
+  return (
+    <span>
+      <input type="radio" name={props.id}
+                          id={props.id + props.value}
+                          value={props.value}
+                          onChange={props.handler}
+                          checked={props.checked} />
+      <label htmlFor={props.id + props.value}>
+        <span>{props.value}</span> <em className="description">{props.description}</em>
+      </label>
+    </span>
+  );
+};
 
 let QuestionFieldLikert = React.createClass({
   render() {
