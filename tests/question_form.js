@@ -58,6 +58,16 @@ describe('<QuestionForm />', () => {
       // Scale has three options.
       expect(this.wrapper.find('QuestionFieldLikertOption')).to.have.length(3);
     });
+    it('renders QuestionFieldSource type', function() {
+      // Replace `type` in baseQuestions.
+      let question = {type: 'source'};
+      this.baseQuestions[0] = _.assign(this.baseQuestions[0], question);
+      this.wrapper =
+        mount(<QuestionForm questions={this.baseQuestions} qsSchema={this.baseQSSchema} />);
+      expect(this.wrapper.find('QuestionFieldSource')).to.have.length(1);
+      // Default has one empty line.
+      expect(this.wrapper.find('QuestionFieldSourceLine')).to.have.length(1);
+    });
   });
 
   let qsSchema = [
