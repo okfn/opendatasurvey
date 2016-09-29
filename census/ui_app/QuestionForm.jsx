@@ -38,6 +38,27 @@ const QuestionForm = React.createClass({
     return _.find(this.props.qsSchema, qSchema => qSchema.id === id);
   },
 
+  canAssignProperties(currentProviderState, dependency) {
+    /*
+      Determine if the passed dependency should assign visible properties
+      based on the currentProviderState object.
+
+      dependency objects can have a `value` property, which compares against
+      the currentProviderState.value, or a `isNotEmpty` property, which is
+      used to check whether currentProviderState.value is empty or not.
+    */
+    let canAssign = false;
+    if (_.has(dependency, 'value') &&
+        currentProviderState.value === dependency.value) {
+      canAssign = true;
+    }
+    if (_.has(dependency, 'isNotEmpty') &&
+        dependency.isNotEmpty === !_.isEmpty(currentProviderState.value)) {
+      canAssign = true;
+    }
+    return canAssign;
+  },
+
   getVisiblePropsForId(id) {
     /*
       Return visible properties (required, enabled, visible) for the question
@@ -64,7 +85,8 @@ const QuestionForm = React.createClass({
       // value, and the provider field is enabled and visible...
       let providerVisProps =
         this.getVisiblePropsForId(dependency.providerId);
-      if (currentProviderState.value === dependency.value &&
+
+      if (this.canAssignProperties(currentProviderState, dependency) &&
           providerVisProps.enabled &&
           providerVisProps.visible) {
         // Update the return value with the dependency properties.

@@ -6,6 +6,7 @@ require('jsdom-global')();
 const _ = require('lodash');
 const React = require('react'); // eslint-disable-line no-unused-vars
 const mount = require('enzyme').mount;
+const shallow = require('enzyme').shallow;
 const expect = require('chai').expect;
 const QuestionForm = require('../census/ui_app/QuestionForm');
 
@@ -405,6 +406,92 @@ describe('<QuestionForm />', () => {
       expect(this.wrapper.ref('doctor_away').prop('visibleProps').required).is.false;
       expect(this.wrapper.ref('doctor_away').prop('visibleProps').enabled).is.true;
       expect(this.wrapper.ref('doctor_away').prop('visibleProps').visible).is.true;
+    });
+  });
+
+  describe.only('QuestionForm.canAssignProperties returns as expected', function() {
+    beforeEach(function () {
+      // Very basic QuestionForm
+      this.questionForm = shallow(<QuestionForm questions={[]} qsSchema={[]} />);
+    });
+    it('returns false if dependency and currentState are empty', function() {
+      let currentState = {};
+      let dependency = {};
+      expect(this.questionForm.instance().canAssignProperties(currentState, dependency)).to.be.false;
+    });
+    it('returns true if dependency.value and currentState.value are the same', function() {
+      let currentState = {value: 'my-value'};
+      let dependency = {value: 'my-value'};
+      expect(this.questionForm.instance().canAssignProperties(currentState, dependency)).to.be.true;
+    });
+    it('returns false if dependency.value and currentState.value are different', function() {
+      let currentState = {value: 'my-value'};
+      let dependency = {value: 'my-other-value'};
+      expect(this.questionForm.instance().canAssignProperties(currentState, dependency)).to.be.false;
+    });
+
+    it('returns false if dependency.isNotEmpty and currentState.value is empty string', function() {
+      let currentState = {value: ''};
+      let dependency = {isNotEmpty: true};
+      expect(this.questionForm.instance().canAssignProperties(currentState, dependency)).to.be.false;
+    });
+    it('returns false if dependency.isNotEmpty and currentState.value is empty array', function() {
+      let currentState = {value: []};
+      let dependency = {isNotEmpty: true};
+      expect(this.questionForm.instance().canAssignProperties(currentState, dependency)).to.be.false;
+    });
+    it('returns false if dependency.isNotEmpty and currentState.value is empty object', function() {
+      let currentState = {value: {}};
+      let dependency = {isNotEmpty: true};
+      expect(this.questionForm.instance().canAssignProperties(currentState, dependency)).to.be.false;
+    });
+
+    it('returns true if dependency.isNotEmpty and currentState.value is not empty string', function() {
+      let currentState = {value: 'not empty'};
+      let dependency = {isNotEmpty: true};
+      expect(this.questionForm.instance().canAssignProperties(currentState, dependency)).to.be.true;
+    });
+    it('returns true if dependency.isNotEmpty and currentState.value is not empty array', function() {
+      let currentState = {value: ['a', 'b']};
+      let dependency = {isNotEmpty: true};
+      expect(this.questionForm.instance().canAssignProperties(currentState, dependency)).to.be.true;
+    });
+    it('returns true if dependency.isNotEmpty and currentState.value is not empty object', function() {
+      let currentState = {value: {a: 'hi'}};
+      let dependency = {isNotEmpty: true};
+      expect(this.questionForm.instance().canAssignProperties(currentState, dependency)).to.be.true;
+    });
+
+    it('returns false if dependency.isNotEmpty is false and currentState.value is not empty string', function() {
+      let currentState = {value: 'not empty'};
+      let dependency = {isNotEmpty: false};
+      expect(this.questionForm.instance().canAssignProperties(currentState, dependency)).to.be.false;
+    });
+    it('returns false if dependency.isNotEmpty is false and currentState.value is not empty array', function() {
+      let currentState = {value: ['a', 'b']};
+      let dependency = {isNotEmpty: false};
+      expect(this.questionForm.instance().canAssignProperties(currentState, dependency)).to.be.false;
+    });
+    it('returns false if dependency.isNotEmpty is false and currentState.value is not empty object', function() {
+      let currentState = {value: {a: 'hi'}};
+      let dependency = {isNotEmpty: false};
+      expect(this.questionForm.instance().canAssignProperties(currentState, dependency)).to.be.false;
+    });
+
+    it('returns true if dependency.isNotEmpty is false and currentState.value is empty string', function() {
+      let currentState = {value: ''};
+      let dependency = {isNotEmpty: false};
+      expect(this.questionForm.instance().canAssignProperties(currentState, dependency)).to.be.true;
+    });
+    it('returns true if dependency.isNotEmpty is false and currentState.value is empty array', function() {
+      let currentState = {value: []};
+      let dependency = {isNotEmpty: false};
+      expect(this.questionForm.instance().canAssignProperties(currentState, dependency)).to.be.true;
+    });
+    it('returns true if dependency.isNotEmpty is false and currentState.value is empty object', function() {
+      let currentState = {value: {}};
+      let dependency = {isNotEmpty: false};
+      expect(this.questionForm.instance().canAssignProperties(currentState, dependency)).to.be.true;
     });
   });
 });
