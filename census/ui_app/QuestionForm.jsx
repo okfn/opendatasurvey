@@ -10,7 +10,7 @@ const QuestionForm = React.createClass({
   },
 
   getInitialState() {
-    var questionValues = this.props.questions.map(q => {
+    let questionValues = this.props.questions.map(q => {
       return {
         id: q.id,
         value: ''
@@ -23,7 +23,7 @@ const QuestionForm = React.createClass({
 
   onFieldChange(field, value) {
     // Set the new value for the field
-    var newQuestionsState = _.map(this.state.questionState, qState => {
+    let newQuestionsState = _.map(this.state.questionState, qState => {
       if (qState.id === field.props.id) qState.value = value;
       return qState;
     });
@@ -47,22 +47,22 @@ const QuestionForm = React.createClass({
       For the sake of clarity, `dependant` objects depend on `provider`
       objects.
     */
-    var schema = this.getSchemaForId(id);
+    let schema = this.getSchemaForId(id);
     if (schema === undefined) return {};
 
     // Initially set up return value as the defaultProperties for the schema
-    var visProps = _.cloneDeep(schema.defaultProperties);
+    let visProps = _.cloneDeep(schema.defaultProperties);
 
     // For each dependency in the `if` array in the schema
     _.each(schema.if, dependency => {
       // Find the current state of the provider
-      var currentProviderState =
+      let currentProviderState =
         _.find(this.state.questionState,
                qState => qState.id === dependency.providerId);
 
       // If the actual value of the provider field is the same as the expected
       // value, and the provider field is enabled and visible...
-      var providerVisProps =
+      let providerVisProps =
         this.getVisiblePropsForId(dependency.providerId);
       if (currentProviderState.value === dependency.value &&
           providerVisProps.enabled &&
@@ -86,7 +86,7 @@ const QuestionForm = React.createClass({
       Return a label for the question schema with `id` (including optional
       prefix), derived from the schema position property.
     */
-    var schema = this.getSchemaForId(id);
+    let schema = this.getSchemaForId(id);
     if (schema === undefined) return;
     return String(this.props.labelPrefix || '') + String(schema.position) + '.';
   },
@@ -95,13 +95,13 @@ const QuestionForm = React.createClass({
     /*
       Return the position for the question schema with `id`.
     */
-    var schema = this.getSchemaForId(id);
+    let schema = this.getSchemaForId(id);
     if (schema === undefined) return;
     return schema.position;
   },
 
   render() {
-    var questionNodes = this.state.questionState.map(q => {
+    let questionNodes = this.state.questionState.map(q => {
       // check schema
       if (this.getSchemaForId(q.id) === undefined) {
         console.warn('No schema defined for Question with id: ' + q.id);
