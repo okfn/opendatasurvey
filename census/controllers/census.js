@@ -252,6 +252,7 @@ var submitReact = function(req, res) {
       questionsPromise = currentDataset.getQuestions();
     }
     Promise.join(qsSchemaPromise, questionsPromise, (qsSchema, questions) => {
+      if (qsSchema === undefined) qsSchema = [];
       questions = _.map(questions, question => {
         return {
           id: question.id,
