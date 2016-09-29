@@ -218,7 +218,8 @@ let QuestionFieldSource = React.createClass({
 
   _getSourceValues() {
     let sourceValues = (_.isArray(this.props.value)) ? this.props.value : [];
-    sourceValues.push(_.clone(this.emptySource));
+    if (!_.isEqual(_.last(sourceValues), this.emptySource))
+      sourceValues.push(_.clone(this.emptySource));
     return sourceValues;
   },
 
