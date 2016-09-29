@@ -8,7 +8,7 @@ let questions = window.questions;
 
 $(function() {
   // Reload page with Dataset QuestionSet if dataset is changed.
-  $('#dataset-select, #place-select').change(function(e) {
+  $('#dataset-select').change(function(e) {
     e.preventDefault();
     let form = $(this).parents('form:first');
     form.submit();
