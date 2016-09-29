@@ -261,9 +261,9 @@ let QuestionFieldSource = React.createClass({
 });
 QuestionFieldSource = baseQuestionField(QuestionFieldSource);
 
-module.exports = {
-  QuestionFieldText: QuestionFieldText,
-  QuestionFieldYesNo: QuestionFieldYesNo,
-  QuestionFieldLikert: QuestionFieldLikert,
-  QuestionFieldSource: QuestionFieldSource
+export {
+  QuestionFieldText,
+  QuestionFieldYesNo,
+  QuestionFieldLikert,
+  QuestionFieldSource
 };
