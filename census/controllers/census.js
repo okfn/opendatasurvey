@@ -247,9 +247,13 @@ var submitReact = function(req, res) {
     let datasets = modelUtils.translateSet(req, data.datasets);
     let qsSchemaPromise;
     let questionsPromise;
+    let datasetContext = {};
     if (currentDataset) {
       qsSchemaPromise = currentDataset.getQuestionSetSchema();
       questionsPromise = currentDataset.getQuestions();
+      datasetContext = _.assign(datasetContext, {
+        characteristics: currentDataset.characteristics
+      });
     }
     Promise.join(qsSchemaPromise, questionsPromise, (qsSchema, questions) => {
       if (qsSchema === undefined) qsSchema = [];
@@ -266,13 +270,15 @@ var submitReact = function(req, res) {
       let initialHTML = renderToString(
         <QuestionForm questions={questions}
                       qsSchema={qsSchema}
-                      labelPrefix={'B'} />
+                      labelPrefix={'B'}
+                      context={datasetContext} />
       );
       res.render('create-react.html', {
         places: places,
         datasets: datasets,
         qsSchema: JSON.stringify(qsSchema),
         questions: JSON.stringify(questions),
+        datasetContext: JSON.stringify(datasetContext),
         current: data.currentState.match,
         initialRenderedQuestions: initialHTML,
         breadcrumbTitle: 'Make a Submission'

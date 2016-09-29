@@ -6,7 +6,8 @@ const QuestionForm = React.createClass({
 
   propTypes: {
     questions: React.PropTypes.array.isRequired,
-    qsSchema: React.PropTypes.array.isRequired
+    qsSchema: React.PropTypes.array.isRequired,
+    context: React.PropTypes.object.isRequired
   },
 
   getInitialState() {
@@ -157,7 +158,8 @@ const QuestionForm = React.createClass({
                         }
                         config={
                           this.getValueForId(q.id, 'config')
-                        }>
+                        }
+                        context={this.context}>
           {this.getValueForId(q.id, 'text')}
         </ComponentClass>
       );
