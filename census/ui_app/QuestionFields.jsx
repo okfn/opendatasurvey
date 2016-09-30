@@ -278,33 +278,33 @@ const QuestionFieldMultipleChoiceOption = props => {
 };
 
 let QuestionFieldMultipleChoice = React.createClass({
-  getDefaultOptionsForCharacteristics(characteristics) {
-    return _.map(characteristics, char => {
-      return {description: char, checked: false};
+  getDefaultOptionValuesForOptionList(optionList) {
+    return _.map(optionList, option => {
+      return {description: option, checked: false};
     });
   },
 
   componentWillMount() {
-    // Set the defaultCharacteristics collection, either from a list of
+    // Set the defaultOptions collection, either from a list of
     // `options` in the Question's config, or from the context using a key
     // defined in the Question's config (`optionsContextKey`).
-    let defaultCharacteristics = [];
+    let defaultOptions = [];
     if (_.has(this.props.config, 'optionsContextKey')) {
       // Config directs to get the value from the context for the key set in
       // `optionsContextKey`.
-      let contextCharacteristics =
+      let contextOptions =
         this.props.context[this.props.config.optionsContextKey];
-      defaultCharacteristics =
-        this.getDefaultOptionsForCharacteristics(contextCharacteristics);
+      defaultOptions =
+        this.getDefaultOptionValuesForOptionList(contextOptions);
     }
     if (_.has(this.props.config, 'options')) {
       // Config has a list of options to use directly.
-      defaultCharacteristics =
-        this.getDefaultOptionsForCharacteristics(this.props.config.options);
+      defaultOptions =
+        this.getDefaultOptionValuesForOptionList(this.props.config.options);
     }
-    // Merge the defaultCharacteristics with those from the value in props to
+    // Merge the defaultOptions with those from the value in props to
     // get the value store we'll use for the render.
-    this.optionValues = _.assign(defaultCharacteristics, this.props.value);
+    this.optionValues = _.assign(defaultOptions, this.props.value);
   },
 
   render() {
