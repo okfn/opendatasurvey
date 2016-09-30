@@ -134,7 +134,8 @@ const QuestionForm = React.createClass({
         yesno: fields.QuestionFieldYesNo,
         text: fields.QuestionFieldText,
         likert: fields.QuestionFieldLikert,
-        source: fields.QuestionFieldSource
+        source: fields.QuestionFieldSource,
+        multiple: fields.QuestionFieldMultipleChoice
       };
       const type = this.getValueForId(q.id, 'type');
       let ComponentClass = typesToComponent.yesno;
@@ -159,7 +160,7 @@ const QuestionForm = React.createClass({
                         config={
                           this.getValueForId(q.id, 'config')
                         }
-                        context={this.context}>
+                        context={this.props.context}>
           {this.getValueForId(q.id, 'text')}
         </ComponentClass>
       );

@@ -261,9 +261,94 @@ let QuestionFieldSource = React.createClass({
 });
 QuestionFieldSource = baseQuestionField(QuestionFieldSource);
 
+const QuestionFieldMultipleChoiceOption = props => {
+  return (
+    <li>
+      <input type="checkbox"
+             name={props.id}
+             id={props.id}
+             value="1"
+             checked={props.checked}
+             onChange={props.handler} />
+      <label htmlFor={props.id}>
+        <span className="letter">{props.label}</span> <span className="description">{props.children.toString()}</span>
+      </label>
+    </li>
+  );
+};
+
+let QuestionFieldMultipleChoice = React.createClass({
+  getDefaultOptionsForCharacteristics(characteristics) {
+    return _.map(characteristics, char => {
+      return {description: char, checked: false};
+    });
+  },
+
+  componentWillMount() {
+    // Set the defaultCharacteristics collection, either from a list of
+    // `options` in the Question's config, or from the context using a key
+    // defined in the Question's config (`optionsContextKey`).
+    let defaultCharacteristics = [];
+    if (_.has(this.props.config, 'optionsContextKey')) {
+      // Config directs to get the value from the context for the key set in
+      // `optionsContextKey`.
+      let contextCharacteristics =
+        this.props.context[this.props.config.optionsContextKey];
+      defaultCharacteristics =
+        this.getDefaultOptionsForCharacteristics(contextCharacteristics);
+    }
+    if (_.has(this.props.config, 'options')) {
+      // Config has a list of options to use directly.
+      defaultCharacteristics =
+        this.getDefaultOptionsForCharacteristics(this.props.config.options);
+    }
+    // Merge the defaultCharacteristics with those from the value in props to
+    // get the value store we'll use for the render.
+    this.optionValues = _.assign(defaultCharacteristics, this.props.value);
+  },
+
+  render() {
+    let choices = _.map(this.optionValues, (option, i) => {
+      // i ==> letter, good for the first 26 options!
+      let label = String.fromCharCode(97 + i).toUpperCase();
+      return <QuestionFieldMultipleChoiceOption key={i}
+                                                id={this.props.id + i}
+                                                checked={option.checked}
+                                                label={label}
+                                                handler={this.handler.bind(this, i)}>
+                {option.description}
+              </QuestionFieldMultipleChoiceOption>;
+    });
+    return (<div className={'multiple question ' + this.props.getClassValues()}>
+      <QuestionInstructions instructionText={this.props.instructions}
+                            id={this.props.id} />
+      <div className="main">
+        <QuestionHeader label={this.props.label}>
+          {this.props.children.toString()}
+        </QuestionHeader>
+        <div className="answer">
+          <ul>
+            {choices}
+          </ul>
+        </div>
+      </div>
+      <QuestionComments id={this.props.id}
+                        placeholder={this.props.placeholder} />
+    </div>);
+  },
+
+  handler(i, e) {
+    let newOptionValues = this.optionValues;
+    newOptionValues[i].checked = e.target.checked;
+    this.props.onChange(this, newOptionValues);
+  }
+});
+QuestionFieldMultipleChoice = baseQuestionField(QuestionFieldMultipleChoice);
+
 export {
   QuestionFieldText,
   QuestionFieldYesNo,
   QuestionFieldLikert,
-  QuestionFieldSource
+  QuestionFieldSource,
+  QuestionFieldMultipleChoice
 };

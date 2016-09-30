@@ -69,6 +69,35 @@ describe('<QuestionForm />', () => {
       // Default has one empty line.
       expect(this.wrapper.find('QuestionFieldSourceLine')).to.have.length(1);
     });
+    it('renders QuestionFieldMultipleChoice type with options in config', function() {
+      let question = {
+        type: 'multiple',
+        config: {
+          options: ['txt', 'json', 'xls', 'xml']
+        }
+      };
+      this.baseQuestions[0] = _.assign(this.baseQuestions[0], question);
+      this.wrapper =
+        mount(<QuestionForm questions={this.baseQuestions} qsSchema={this.baseQSSchema} context={{}} />);
+      expect(this.wrapper.find('QuestionFieldMultipleChoice')).to.have.length(1);
+      expect(this.wrapper.find('QuestionFieldMultipleChoiceOption')).to.have.length(4);
+    });
+    it('renders QuestionFieldMultipleChoice type with optionsContextKey in config', function() {
+      let question = {
+        type: 'multiple',
+        config: {
+          optionsContextKey: 'characteristics'
+        }
+      };
+      let context = {
+        characteristics: ['txt', 'json', 'xml']
+      };
+      this.baseQuestions[0] = _.assign(this.baseQuestions[0], question);
+      this.wrapper =
+        mount(<QuestionForm questions={this.baseQuestions} qsSchema={this.baseQSSchema} context={context} />);
+      expect(this.wrapper.find('QuestionFieldMultipleChoice')).to.have.length(1);
+      expect(this.wrapper.find('QuestionFieldMultipleChoiceOption')).to.have.length(3);
+    });
   });
 
   let qsSchema = [
