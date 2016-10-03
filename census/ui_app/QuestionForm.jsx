@@ -6,11 +6,12 @@ const QuestionForm = React.createClass({
 
   propTypes: {
     questions: React.PropTypes.array.isRequired,
-    qsSchema: React.PropTypes.array.isRequired
+    qsSchema: React.PropTypes.array.isRequired,
+    context: React.PropTypes.object.isRequired
   },
 
   getInitialState() {
-    var questionValues = this.props.questions.map(q => {
+    let questionValues = this.props.questions.map(q => {
       return {
         id: q.id,
         value: ''
@@ -23,7 +24,7 @@ const QuestionForm = React.createClass({
 
   onFieldChange(field, value) {
     // Set the new value for the field
-    var newQuestionsState = _.map(this.state.questionState, qState => {
+    let newQuestionsState = _.map(this.state.questionState, qState => {
       if (qState.id === field.props.id) qState.value = value;
       return qState;
     });
@@ -38,6 +39,27 @@ const QuestionForm = React.createClass({
     return _.find(this.props.qsSchema, qSchema => qSchema.id === id);
   },
 
+  canAssignProperties(currentProviderState, dependency) {
+    /*
+      Determine if the passed dependency should assign visible properties
+      based on the currentProviderState object.
+
+      dependency objects can have a `value` property, which compares against
+      the currentProviderState.value, or a `isNotEmpty` property, which is
+      used to check whether currentProviderState.value is empty or not.
+    */
+    let canAssign = false;
+    if (_.has(dependency, 'value') &&
+        currentProviderState.value === dependency.value) {
+      canAssign = true;
+    }
+    if (_.has(dependency, 'isNotEmpty') &&
+        dependency.isNotEmpty === !_.isEmpty(currentProviderState.value)) {
+      canAssign = true;
+    }
+    return canAssign;
+  },
+
   getVisiblePropsForId(id) {
     /*
       Return visible properties (required, enabled, visible) for the question
@@ -47,24 +69,25 @@ const QuestionForm = React.createClass({
       For the sake of clarity, `dependant` objects depend on `provider`
       objects.
     */
-    var schema = this.getSchemaForId(id);
+    let schema = this.getSchemaForId(id);
     if (schema === undefined) return {};
 
     // Initially set up return value as the defaultProperties for the schema
-    var visProps = _.cloneDeep(schema.defaultProperties);
+    let visProps = _.cloneDeep(schema.defaultProperties);
 
     // For each dependency in the `if` array in the schema
     _.each(schema.if, dependency => {
       // Find the current state of the provider
-      var currentProviderState =
+      let currentProviderState =
         _.find(this.state.questionState,
                qState => qState.id === dependency.providerId);
 
       // If the actual value of the provider field is the same as the expected
       // value, and the provider field is enabled and visible...
-      var providerVisProps =
+      let providerVisProps =
         this.getVisiblePropsForId(dependency.providerId);
-      if (currentProviderState.value === dependency.value &&
+
+      if (this.canAssignProperties(currentProviderState, dependency) &&
           providerVisProps.enabled &&
           providerVisProps.visible) {
         // Update the return value with the dependency properties.
@@ -86,7 +109,7 @@ const QuestionForm = React.createClass({
       Return a label for the question schema with `id` (including optional
       prefix), derived from the schema position property.
     */
-    var schema = this.getSchemaForId(id);
+    let schema = this.getSchemaForId(id);
     if (schema === undefined) return;
     return String(this.props.labelPrefix || '') + String(schema.position) + '.';
   },
@@ -95,13 +118,13 @@ const QuestionForm = React.createClass({
     /*
       Return the position for the question schema with `id`.
     */
-    var schema = this.getSchemaForId(id);
+    let schema = this.getSchemaForId(id);
     if (schema === undefined) return;
     return schema.position;
   },
 
   render() {
-    var questionNodes = this.state.questionState.map(q => {
+    let questionNodes = this.state.questionState.map(q => {
       // check schema
       if (this.getSchemaForId(q.id) === undefined) {
         console.warn('No schema defined for Question with id: ' + q.id);
@@ -111,7 +134,8 @@ const QuestionForm = React.createClass({
         yesno: fields.QuestionFieldYesNo,
         text: fields.QuestionFieldText,
         likert: fields.QuestionFieldLikert,
-        source: fields.QuestionFieldSource
+        source: fields.QuestionFieldSource,
+        multiple: fields.QuestionFieldMultipleChoice
       };
       const type = this.getValueForId(q.id, 'type');
       let ComponentClass = typesToComponent.yesno;
@@ -135,7 +159,8 @@ const QuestionForm = React.createClass({
                         }
                         config={
                           this.getValueForId(q.id, 'config')
-                        }>
+                        }
+                        context={this.props.context}>
           {this.getValueForId(q.id, 'text')}
         </ComponentClass>
       );

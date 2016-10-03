@@ -5,10 +5,11 @@ import $ from 'jquery';
 
 let qsSchema = window.qsSchema;
 let questions = window.questions;
+let datasetContext = window.datasetContext;
 
 $(function() {
   // Reload page with Dataset QuestionSet if dataset is changed.
-  $('#dataset-select, #place-select').change(function(e) {
+  $('#dataset-select').change(function(e) {
     e.preventDefault();
     let form = $(this).parents('form:first');
     form.submit();
@@ -18,5 +19,6 @@ $(function() {
 // Main QuestionSet, section B.
 render(<QuestionForm questions={questions}
                      qsSchema={qsSchema}
-                     labelPrefix={'B'} />,
+                     labelPrefix={'B'}
+                     context={datasetContext} />,
        document.getElementById('questions'));
