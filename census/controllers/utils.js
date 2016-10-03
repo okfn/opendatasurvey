@@ -215,6 +215,7 @@ var datasetMapper = function(data, site) {
     reviewers: reviewers,
     disableforyears: disableforyears,
     characteristics: characteristics,
+    updateevery: data.updateevery,
     qsurl: qsurl
   }, data);
 };

@@ -59,6 +59,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       comment: 'An array of dataset characterstics.'
     },
+    updateevery: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      comment: 'A time interval to determine timeliness for the dataset.'
+    },
     qsurl: {
       type: DataTypes.STRING,
       allowNull: true,

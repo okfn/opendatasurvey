@@ -6,6 +6,8 @@ In the old codebase, Questions were associated with Datasets at the site level, 
 
 In the CMS, the Datasets sheet has a new `QuestionSetURL` column. The value is the url pointing to the `QuestionSet` config sheet. A site-wide Question Set url can be added to the site config page under the key `question_set_url`. A further system-wide fallback Question Set url can be set as an env var, `FALLBACK_QUESTIONSET` (this is provided for backward-compatibility to smooth migration to the new system).
 
+Datasets also have a new `UpdateEvery` column. The value for each cell in this column should be a time interval as a string in the question: "Data should be updated every {{ time interval }}." E.g. year, month, 6 months, day, second Thursday, etc. 
+
 The new Question Set config sheet is like the `Site` config. It has `key` and `value` columns. It expects a `questions` key, the value is the url the questions sheet, and a `question_set_schema` key, the value is the question set schema in json format (see the [Question Set Schema](#question-set-schema-json-format) section below).
 
 ### Extra Question Config
