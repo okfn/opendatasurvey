@@ -220,7 +220,7 @@ describe('<QuestionForm />', () => {
   describe('QuestionFields have correct initial state', function() {
     beforeEach(function () {
       this.wrapper =
-        mount(<QuestionForm questions={questions} qsSchema={qsSchema} context={{}} context={{}} />);
+        mount(<QuestionForm questions={questions} qsSchema={qsSchema} context={{}} />);
     });
 
     it('renders list of Questions', function() {
