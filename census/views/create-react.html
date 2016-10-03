@@ -49,6 +49,7 @@
 </section>
 </form>
 
+{% if datasetContext|length %}
 <form action="." method="post" accept-charset="utf-8">
 <section>
   <div class="container">
@@ -60,7 +61,7 @@
     <div class="scale first question">
       <div class="instructions"></div>
       <div class="main">
-        <h2><span>A1.</span> Rate your knowledge of {...}.</h2>
+        <h2><span>A1.</span> Rate your knowledge of <em>{{ datasetContext.datasetName }}</em>.</h2>
         <div class="answer">
           <span>
             <input type="radio" name="scaleOne" id="scaleOne1">
@@ -134,7 +135,7 @@
     <script type="text/javascript">
       window.qsSchema = {{ qsSchema|safe }};
       window.questions = {{ questions|safe }};
-      window.datasetContext = {{ datasetContext|safe }};
+      window.datasetContext = {{ datasetContext|dump }};
     </script>
   </div>
 </section>
@@ -201,6 +202,7 @@
   </div>
 </section>
 </form>
+{% endif %}
 
 <script src="/scripts/compiled/entry.js" type="text/javascript"></script>
 

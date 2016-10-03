@@ -252,7 +252,8 @@ var submitReact = function(req, res) {
       qsSchemaPromise = currentDataset.getQuestionSetSchema();
       questionsPromise = currentDataset.getQuestions();
       datasetContext = _.assign(datasetContext, {
-        characteristics: currentDataset.characteristics
+        characteristics: currentDataset.characteristics,
+        datasetName: currentDataset.name
       });
     }
     Promise.join(qsSchemaPromise, questionsPromise, (qsSchema, questions) => {
@@ -278,7 +279,7 @@ var submitReact = function(req, res) {
         datasets: datasets,
         qsSchema: JSON.stringify(qsSchema),
         questions: JSON.stringify(questions),
-        datasetContext: JSON.stringify(datasetContext),
+        datasetContext: datasetContext,
         current: data.currentState.match,
         initialRenderedQuestions: initialHTML,
         breadcrumbTitle: 'Make a Submission'
