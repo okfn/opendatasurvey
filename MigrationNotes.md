@@ -185,6 +185,10 @@ The schema above must validate against the following JSON Schema:
                                 "description": "The expected value that will trigger this condition.",
                                 "type": ["string", "boolean", "number"]
                             },
+                            "isNotEmpty": {
+                                "description": "A boolean to determine whether an expected value is not an empty string, array or object, triggering the condition",
+                                "type": "boolean"
+                            },
                             "properties": {
                                 "description": "The properties to set if the Question with dependentId returns the value.",
                                 "type": "object",
@@ -195,7 +199,10 @@ The schema above must validate against the following JSON Schema:
                                 }
                             }
                         },
-                        "required": ["providerId", "value", "properties"]
+                        "oneOf": [
+                            {"required": ["value", "providerId", "properties"]},
+                            {"required": ["isNotEmpty", "providerId", "properties"]}
+                        ]
                     }
                 }
             },
