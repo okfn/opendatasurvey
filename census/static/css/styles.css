@@ -9223,8 +9223,11 @@ body.form section {
               body.form section .question.multiple ul li input:checked + label .letter:after {
                 display: block;
                 content: "\e013"; }
+    body.form section .question.multiple .other {
+      margin: 0; }
     body.form section .question.text .answer textarea,
-    body.form section .question.text .answer input[type="text"] {
+    body.form section .question.text .answer input[type="text"], body.form section .question .text.other .answer textarea,
+    body.form section .question .text.other .answer input[type="text"] {
       width: 100%;
       border: solid 2px #333333;
       padding: 15px;
@@ -9236,27 +9239,31 @@ body.form section {
       border: none;
       font-size: 18px;
       padding: 15px 30px; }
-    body.form section .question.sub {
+    body.form section .question.sub, body.form section .question .sub {
       padding-top: 0;
       padding-bottom: 15px; }
-      body.form section .question.sub.scale .answer > label span, body.form section .question.sub.scale .answer > span span, body.form section .question.sub.yes-no .answer > label span, body.form section .question.sub.yes-no .answer > span span {
+      body.form section .question.sub.scale .answer > label span, body.form section .question.sub.scale .answer > span span, body.form section .question.sub.yes-no .answer > label span, body.form section .question.sub.yes-no .answer > span span, body.form section .question .sub.scale .answer > label span, body.form section .question .sub.scale .answer > span span, body.form section .question .sub.yes-no .answer > label span, body.form section .question .sub.yes-no .answer > span span {
         border-width: 2px 1px;
         font-size: 16px; }
-      body.form section .question.sub.scale .answer > label:first-of-type span, body.form section .question.sub.scale .answer > span:first-of-type span, body.form section .question.sub.yes-no .answer > label:first-of-type span, body.form section .question.sub.yes-no .answer > span:first-of-type span {
+      body.form section .question.sub.scale .answer > label:first-of-type span, body.form section .question.sub.scale .answer > span:first-of-type span, body.form section .question.sub.yes-no .answer > label:first-of-type span, body.form section .question.sub.yes-no .answer > span:first-of-type span, body.form section .question .sub.scale .answer > label:first-of-type span, body.form section .question .sub.scale .answer > span:first-of-type span, body.form section .question .sub.yes-no .answer > label:first-of-type span, body.form section .question .sub.yes-no .answer > span:first-of-type span {
         border-left-width: 2px; }
-      body.form section .question.sub.scale .answer > label:last-of-type span, body.form section .question.sub.scale .answer > span:last-of-type span, body.form section .question.sub.yes-no .answer > label:last-of-type span, body.form section .question.sub.yes-no .answer > span:last-of-type span {
+      body.form section .question.sub.scale .answer > label:last-of-type span, body.form section .question.sub.scale .answer > span:last-of-type span, body.form section .question.sub.yes-no .answer > label:last-of-type span, body.form section .question.sub.yes-no .answer > span:last-of-type span, body.form section .question .sub.scale .answer > label:last-of-type span, body.form section .question .sub.scale .answer > span:last-of-type span, body.form section .question .sub.yes-no .answer > label:last-of-type span, body.form section .question .sub.yes-no .answer > span:last-of-type span {
         border-right-width: 2px; }
-      body.form section .question.sub.source .answer ul li input {
+      body.form section .question.sub.source .answer ul li input, body.form section .question .sub.source .answer ul li input {
         border-width: 2px; }
-      body.form section .question.sub.source .answer ul li .select {
+      body.form section .question.sub.source .answer ul li .select, body.form section .question .sub.source .answer ul li .select {
         border-width: 2px; }
       body.form section .question.sub.text .answer textarea,
-      body.form section .question.sub.text .answer input[type="text"] {
+      body.form section .question.sub.text .answer input[type="text"], body.form section .question .sub.text .answer textarea,
+      body.form section .question .sub.text .answer input[type="text"] {
         border-width: 2px;
         font-size: 14px; }
-      body.form section .question.sub.text .answer input[type="text"] {
+      body.form section .question.sub.text .answer input[type="text"], body.form section .question .sub.text .answer input[type="text"] {
         padding-top: 7.5px;
         padding-bottom: 7.5px; }
+      body.form section .question.sub.other h3, body.form section .question .sub.other h3 {
+        float: left;
+        margin-top: 15px; }
     body.form section .question.continuation {
       margin-top: -30px; }
     body.form section .question.first .comments label {
@@ -9324,10 +9331,12 @@ body.form section {
     background-color: #7AB800;
     border-color: #365200; }
   body.form section .question.text .answer textarea,
-  body.form section .question.text .answer input[type="text"] {
+  body.form section .question.text .answer input[type="text"], body.form section .question .text.other .answer textarea,
+  body.form section .question .text.other .answer input[type="text"] {
     border-radius: 6px; }
     body.form section .question.text .answer textarea:not(:focus),
-    body.form section .question.text .answer input[type="text"]:not(:focus) {
+    body.form section .question.text .answer input[type="text"]:not(:focus), body.form section .question .text.other .answer textarea:not(:focus),
+    body.form section .question .text.other .answer input[type="text"]:not(:focus) {
       background-color: transparent; }
   body.form section .question.submit button {
     background-color: #428bca;
@@ -9344,7 +9353,8 @@ body.form section {
     body.form section .question.sub.source .answer ul li .select select {
       background-color: transparent; }
   body.form section .question.sub.text .answer textarea,
-  body.form section .question.sub.text .answer input[type="text"] {
+  body.form section .question.sub.text .answer input[type="text"], body.form section .question.sub .text.other .answer textarea,
+  body.form section .question.sub .text.other .answer input[type="text"] {
     border-radius: 4px; }
   body.form section .question.disabled.scale .answer label span, body.form section .question.disabled.yes-no .answer label span {
     border-color: #777777; }
@@ -9357,7 +9367,8 @@ body.form section {
   body.form section .question.disabled.multiple ul li label {
     border-color: #777777; }
   body.form section .question.disabled.text textarea,
-  body.form section .question.disabled.text input[type="text"] {
+  body.form section .question.disabled.text input[type="text"], body.form section .question.disabled .text.other textarea,
+  body.form section .question.disabled .text.other input[type="text"] {
     border-color: #777777; }
 
 .home #home-about {

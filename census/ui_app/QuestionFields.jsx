@@ -277,6 +277,20 @@ const QuestionFieldMultipleChoiceOption = props => {
   );
 };
 
+const QuestionFieldMultipleChoiceOther = props => {
+  if (props.includeOther) {
+    return (
+      <div className="other text sub">
+        <h3>Other</h3>
+        <div className="answer">
+          <input name={props.id} value={props.value} type="text" />
+        </div>
+      </div>
+    );
+  }
+  return null;
+};
+
 let QuestionFieldMultipleChoice = React.createClass({
   getDefaultOptionValuesForOptionList(optionList) {
     return _.map(optionList, option => {
@@ -331,6 +345,8 @@ let QuestionFieldMultipleChoice = React.createClass({
             {choices}
           </ul>
         </div>
+        <QuestionFieldMultipleChoiceOther includeOther={this.props.config.includeOther}
+                                          id={this.props.id + '_other'} />
       </div>
       <QuestionComments id={this.props.id}
                         placeholder={this.props.placeholder} />
