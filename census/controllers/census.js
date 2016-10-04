@@ -7,6 +7,7 @@ const uuid = require('node-uuid');
 const utils = require('./utils');
 const modelUtils = require('../models').utils;
 const Promise = require('bluebird');
+const nunjucks = require('nunjucks');
 const React = require('react'); // eslint-disable-line no-unused-vars
 const renderToString = require('react-dom/server').renderToString;
 const QuestionForm = require('../ui_app/QuestionForm');
@@ -252,7 +253,9 @@ var submitReact = function(req, res) {
       qsSchemaPromise = currentDataset.getQuestionSetSchema();
       questionsPromise = currentDataset.getQuestions();
       datasetContext = _.assign(datasetContext, {
-        characteristics: currentDataset.characteristics
+        characteristics: currentDataset.characteristics,
+        datasetName: currentDataset.name,
+        updateEvery: currentDataset.updateevery
       });
     }
     Promise.join(qsSchemaPromise, questionsPromise, (qsSchema, questions) => {
@@ -260,9 +263,11 @@ var submitReact = function(req, res) {
       questions = _.map(questions, question => {
         return {
           id: question.id,
-          text: question.question,
+          text: nunjucks.renderString(question.question,
+                                      {datasetContext: datasetContext}),
           type: question.type,
-          description: question.description,
+          description: nunjucks.renderString(question.description,
+                                             {datasetContext: datasetContext}),
           placeholder: question.placeholder,
           config: question.config
         };
@@ -278,7 +283,7 @@ var submitReact = function(req, res) {
         datasets: datasets,
         qsSchema: JSON.stringify(qsSchema),
         questions: JSON.stringify(questions),
-        datasetContext: JSON.stringify(datasetContext),
+        datasetContext: datasetContext,
         current: data.currentState.match,
         initialRenderedQuestions: initialHTML,
         breadcrumbTitle: 'Make a Submission'
