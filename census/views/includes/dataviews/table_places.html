@@ -30,7 +30,7 @@
               <a href="submit/" data-toggle="tooltip" class="unknown no-data count-0" title="{{ gettext("Click here to add to the census!") }}">{{ gettext("Add new") }}</a>
             {% endif %}
           </td>
-          {% for dataset in datasets %}
+          {% for dataset in datasets -%}
 
               <td class="status">
                 {% set entry = entries|find({'dataset': dataset.id , 'place': place.id }) %}
@@ -54,8 +54,7 @@
                     {% else %}
                       {% set actionText = gettext("Add") %}
                     {%- endif %}
-                {%- endif %}
-
+                  {%- endif %}
                 {% else %}
                   {% if submissions|length -%}
                     {% set actionUrl = '/submission/ID'|replace('ID', submissions[0].id) %}
@@ -65,21 +64,22 @@
                     {% set actionText = gettext("Add") %}
                   {%- endif %}
                 {%- endif %}
+
                 {% set popoverTitle = popovers.popover_comparison_title(dataset, place) %}
                 {% set popoverContent = popovers.popover_comparison_content(entry, place, dataset, questions, gettext) %}
                 <ul class="availability availability-comparative" data-toggle="popover" title="{% filter escape %}{{ popoverTitle }}{% endfilter %}" data-content="{% filter escape %}{{ popoverContent }}{% endfilter %}">
-                {% for question in questions %}
-                  {% if entry %}
+                {% for question in questions -%}
+                  {% if entry -%}
                     {% set state = entry.answers[question.id] %}
                   {% else %}
                     {% set state = '' %}
-                  {% endif %}
+                  {%- endif %}
                   <li class="{% if state == 'Yes' %}yes{% elif state == 'No' %}no{% elif state == 'Unsure' %}maybe{% else %}{{ state }}{% endif %}" data-content="{% if state %}{{ state }}{% else %}{{ gettext('No data') }}{% endif %}">&nbsp;</li>
-                {% endfor %}
+                {%- endfor %}
                 </ul>
               </td>
 
-          {% endfor %}
+          {%- endfor %}
           <td class="score" data-score="{{ place.computedScore }}">
             <span>{{ place.computedScore }}%</span>
           </td>

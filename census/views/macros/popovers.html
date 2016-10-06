@@ -9,9 +9,9 @@
     {{ gettext('There is no data available.') }}
 {% else %}
 <ul class="availability-popover">
-    {% for question in questions %}
+    {% for question in questions -%}
     {% if question.score %}
-        {% set state = entry[question.id] %}
+        {% set state = entry.answers[question.id] %}
         {% if state == 'Yes' %}
             {% set no = '' %}
         {% elif state == 'No' %}
@@ -48,7 +48,7 @@
             {% endif %}
         </li>
     {% endif %}
-    {% endfor %}
+    {%- endfor %}
 </ul>
 <p>
     {% if entry and entry.details %}

@@ -140,7 +140,7 @@
             {% if entry %}
 
             <ul class="availability icons mini">
-              {% for qu in questions %}
+              {% for qu in questions -%}
               {% set state = entry.answers[qu.id] %}
 
               {% if state == true %}
@@ -158,7 +158,7 @@
                 <i class="icon-{{ qu.icon }}"></i>
                 <span class="text">{{ stateDisplay }}</span>
               </li>
-              {% endfor %}
+              {%- endfor %}
             </ul>
 
             <div class="entry-year {{ badgeClass }}" title="{{ entry.updatedAt|dateformat }} ({{ gettext("Submitted by") }} {{ entry.Submitter.fullName() }} {{ gettext("and reviewed by") }} {{ entry.Submitter.fullName() }})">
