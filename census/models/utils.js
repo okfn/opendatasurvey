@@ -63,9 +63,9 @@ var queryData = function(options) {
   });
   var querysets = {};
 
-  if (options.ynQuestions) {
-    questionParams = _.merge(questionParams, {where: {type: ''}});
-  }
+  // if (options.ynQuestions) {
+  //   questionParams = _.merge(questionParams, {where: {type: ''}});
+  // }
 
   // prep the querysets object
   if (options.place) {

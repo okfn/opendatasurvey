@@ -84,30 +84,28 @@
       </th>
       {% for dataset in datasets %}
 
-      {% set entry = entries|find({'dataset': dataset.id , 'place': place.id }) %}
-      {% set submissions = pending|where({'dataset': dataset.id , 'place': place.id }) %}
-      {% if entry.year == currentYear %}
-        {% set badgeClass = 'label-success' %}
-      {% elif entry.year == (currentYear - 1) %}
-        {% set badgeClass = 'label-warning' %}
-      {% else %}
-        {% set badgeClass = 'label-important'%}
-      {% endif %}
-
-
+        {% set entry = entries|find({'dataset': dataset.id , 'place': place.id }) %}
+        {% set submissions = pending|where({'dataset': dataset.id , 'place': place.id }) %}
+        {% if entry.year == currentYear %}
+          {% set badgeClass = 'label-success' %}
+        {% elif entry.year == (currentYear - 1) %}
+          {% set badgeClass = 'label-warning' %}
+        {% else %}
+          {% set badgeClass = 'label-important'%}
+        {% endif %}
 
         {% if entry %}
-            {% if submissions|length %}
-                      {% set actionUrl = '/submission/ID'|replace('ID', submissions[0].id) %}
-                      {% set actionText = gettext("Comment") %}
+          {% if submissions|length %}
+                    {% set actionUrl = '/submission/ID'|replace('ID', submissions[0].id) %}
+                    {% set actionText = gettext("Comment") %}
+                {% else %}
+                  {% set actionUrl = '/submit/?place=PL&dataset=DS'|replace('PL', place.id)|replace('DS', dataset.id) %}
+                  {% if entry %}
+                      {% set actionText = gettext("Update") %}
                   {% else %}
-                    {% set actionUrl = '/submit/?place=PL&dataset=DS'|replace('PL', place.id)|replace('DS', dataset.id) %}
-                    {% if entry %}
-                        {% set actionText = gettext("Update") %}
-                    {% else %}
-                        {% set actionText = gettext("Add") %}
-                    {% endif %}
-                {% endif %}
+                      {% set actionText = gettext("Add") %}
+                  {% endif %}
+              {% endif %}
 
         {% else %}
             {% if submissions|length %}
