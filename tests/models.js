@@ -22,7 +22,7 @@ describe('Dataset instance methods', function() {
       place: null,
       year: null,
       cascade: true,
-      ynQuestions: true,
+      scoredQuestionsOnly: true,
       locale: null,
       with: {Entry: true, Dataset: true, Place: true, Question: true}
     };
@@ -44,7 +44,7 @@ describe('Dataset instance methods', function() {
       place: null,
       year: null,
       cascade: true,
-      ynQuestions: true,
+      scoredQuestionsOnly: true,
       locale: null,
       with: {Entry: true, Dataset: true, Place: true, Question: true}
     };
@@ -78,7 +78,7 @@ describe('Data access layer', function() {
       place: null,
       year: null,
       cascade: true,
-      ynQuestions: true,
+      scoredQuestionsOnly: true,
       locale: null,
       with: {Entry: true, Dataset: true, Place: true, Question: true}
     };
@@ -100,7 +100,7 @@ describe('Data access layer', function() {
       place: null,
       year: null,
       cascade: false,
-      ynQuestions: false,
+      scoredQuestionsOnly: false,
       locale: null,
       keepAll: true,
       with: {Entry: true, Dataset: false, Place: false, Question: false}
@@ -125,7 +125,7 @@ describe('Data access layer', function() {
       place: null,
       year: null,
       cascade: false,
-      ynQuestions: false,
+      scoredQuestionsOnly: false,
       locale: null,
       with: {Entry: true, Dataset: false, Place: false, Question: false}
     };
@@ -149,7 +149,7 @@ describe('Data access layer', function() {
       place: null,
       year: null,
       cascade: true,
-      ynQuestions: true,
+      scoredQuestionsOnly: true,
       locale: null,
       with: {Entry: false, Dataset: true, Place: true, Question: true}
     };
@@ -163,7 +163,7 @@ describe('Data access layer', function() {
     });
   });
 
-  it('only returns yn questions by default', function() {
+  it('only returns scored questions by default', function() {
     var dataOptions = {
       models: models,
       domain: 'site1',
@@ -171,7 +171,7 @@ describe('Data access layer', function() {
       place: null,
       year: null,
       cascade: true,
-      ynQuestions: true,
+      scoredQuestionsOnly: true,
       locale: null,
       with: {Entry: true, Dataset: true, Place: true, Question: true}
     };
@@ -188,7 +188,7 @@ describe('Data access layer', function() {
       place: null,
       year: null,
       cascade: true,
-      ynQuestions: false,
+      scoredQuestionsOnly: false,
       locale: null,
       with: {Entry: true, Dataset: true, Place: true, Question: true}
     };
@@ -206,7 +206,7 @@ describe('Data access layer', function() {
         place: 'place11',
         year: null,
         cascade: true,
-        ynQuestions: true,
+        scoredQuestionsOnly: true,
         locale: null,
         with: {Entry: true, Dataset: true, Place: true, Question: true}
       };
@@ -225,7 +225,7 @@ describe('Data access layer', function() {
         place: null,
         year: null,
         cascade: true,
-        ynQuestions: true,
+        scoredQuestionsOnly: true,
         locale: null,
         with: {Entry: true, Dataset: true, Place: true, Question: true}
       };
@@ -243,7 +243,7 @@ describe('Data access layer', function() {
       place: null,
       year: 2015,
       cascade: true,
-      ynQuestions: true,
+      scoredQuestionsOnly: true,
       locale: null,
       with: {Entry: true, Dataset: true, Place: true, Question: true}
     };
@@ -262,7 +262,7 @@ describe('Data access layer', function() {
       place: null,
       year: 2015,
       cascade: false,
-      ynQuestions: true,
+      scoredQuestionsOnly: true,
       locale: null,
       with: {Entry: true, Dataset: true, Place: true, Question: true}
     };
@@ -281,7 +281,7 @@ describe('Data access layer', function() {
       place: null,
       year: 2015,
       cascade: true,
-      ynQuestions: true,
+      scoredQuestionsOnly: true,
       locale: null,
       with: {Entry: true, Dataset: true, Place: true, Question: true},
       exclude_datasets: ['dataset12']
@@ -300,7 +300,7 @@ describe('Data access layer', function() {
       place: null,
       year: 2015,
       cascade: true,
-      ynQuestions: true,
+      scoredQuestionsOnly: true,
       locale: null,
       with: {Entry: true, Dataset: true, Place: true, Question: true}
     };

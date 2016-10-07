@@ -154,7 +154,7 @@ var entry = function(req, res) {
    * An overview of the current entry for a place/dataset, optionally by year.
    */
   var dataOptions = _.merge(modelUtils.getDataOptions(req), {
-    ynQuestions: false
+    scoredQuestionsOnly: false
   });
 
   modelUtils.getData(dataOptions)

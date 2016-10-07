@@ -38,7 +38,7 @@ var translateSet = function(locale, results) {
 
 /*
  * Query the database for data.
- * if options.ynQuestions, then only get yn
+ * If options.scoredQuestionsOnly, then only get scoreable questions.
  * options.models has models
  * options.with.{MODELNAME} to control queries actually made can be done better.
  */
@@ -63,7 +63,7 @@ var queryData = function(options) {
   });
   var querysets = {};
 
-  if (options.ynQuestions) {
+  if (options.scoredQuestionsOnly) {
     questionParams = _.merge(questionParams, {where: {score: {$ne: 0}}});
   }
 
@@ -432,7 +432,7 @@ var getDataOptions = function(req) {
     place: req.params.place,
     year: req.params.year,
     cascade: req.params.cascade,
-    ynQuestions: true,
+    scoredQuestionsOnly: true,
     locale: req.params.locale,
     with: {Entry: true, Dataset: true, Place: true, Question: true}
   };

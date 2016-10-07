@@ -196,7 +196,7 @@ var pendingEntry = function(req, res) {
       dataOptions = _.merge(modelUtils.getDataOptions(req), {
         place: result.place,
         dataset: result.dataset,
-        ynQuestions: false,
+        scoredQuestionsOnly: false,
         with: {
           Entry: false
         }
@@ -219,7 +219,7 @@ var pendingEntry = function(req, res) {
 
 var submit = function(req, res) {
   var dataOptions = _.merge(modelUtils.getDataOptions(req), {
-    ynQuestions: false
+    scoredQuestionsOnly: false
   });
   modelUtils.getData(dataOptions)
     .then(function(data) {
@@ -235,7 +235,7 @@ var submit = function(req, res) {
 
 var submitReact = function(req, res) {
   let dataOptions = _.merge(modelUtils.getDataOptions(req), {
-    ynQuestions: false
+    scoredQuestionsOnly: false
   });
   modelUtils.getData(dataOptions)
   .then(data => {
