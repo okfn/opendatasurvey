@@ -204,6 +204,13 @@ The schema above must validate against the following JSON Schema:
                             {"required": ["isNotEmpty", "providerId", "properties"]}
                         ]
                     }
+                },
+                "score": {
+                    "description": "An object defining the scoring characteristics for this question.",
+                    "type": "object",
+                    "properties": {
+                        "weight": {"type": "number"}
+                    }
                 }
             },
             "required": ["id"]            

@@ -62,10 +62,15 @@ let _createQuestionsForQuestionSet = function(questionsUrl,
       _.map(data, dataObj => {
         // Allow custom data mapping
         let createData = controllerUtils.questionMapper(dataObj, qset.site);
-        // All records belongs to certain domain
+        // All Questions belong to a site and questionset
         createData = _.extend(createData, {
           site: qset.site,
           questionsetid: qset.id
+        });
+        // Derive question.score from the qsSchema
+        let qsSchemaEntry = _.find(qset.qsSchema, {id: dataObj.id});
+        createData = _.extend(createData, {
+          score: _.get(qsSchemaEntry, 'score.weight', 0)
         });
         // User may mix up lower cased and upper cased field names
         createData = _.mapKeys(createData, (v, key) => key.toLowerCase());
