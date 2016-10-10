@@ -47,11 +47,13 @@ describe('<QuestionForm />', () => {
     });
     it('renders QuestionFieldLikert type', function() {
       // Replace `type` in baseQuestions.
-      let question = {type: 'likert', config: [
-        {description: 'None', value: '0'},
-        {description: 'Some', value: '1'},
-        {description: 'All', value: '2'}
-      ]};
+      let question = {type: 'likert', config: {
+        options: [
+          {description: 'None', value: '0'},
+          {description: 'Some', value: '1'},
+          {description: 'All', value: '2'}
+        ]
+      }};
       this.baseQuestions[0] = _.assign(this.baseQuestions[0], question);
       this.wrapper =
         mount(<QuestionForm questions={this.baseQuestions} qsSchema={this.baseQSSchema} context={{}} />);

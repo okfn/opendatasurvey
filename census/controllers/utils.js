@@ -222,7 +222,7 @@ var datasetMapper = function(data, site) {
 
 var questionMapper = function(data, site) {
   var dependants = (data.dependants) ? splitFields(data.dependants) : null;
-  let config = (data.config) ? JSON.parse(data.config) : [];
+  let config = (data.config) ? JSON.parse(data.config) : {};
   return _.defaults({
     id: data.id.toLowerCase(),
     description: marked(data.description),
