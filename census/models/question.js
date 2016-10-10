@@ -77,6 +77,12 @@ module.exports = function(sequelize, DataTypes) {
     ],
     instanceMethods: {
       translated: mixins.translated,
+      scoreForAnswer: function(answer) {
+        /* Return the score for the provided answer. Either the full score or 0. */
+
+        let returnScore = (this.pass(answer)) ? this.score : 0;
+        return returnScore;
+      },
       pass: function(answer) {
         /* Determine whether the provided answer passes the question. */
 

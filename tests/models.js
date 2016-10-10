@@ -66,6 +66,46 @@ describe('Question instance methods', function() {
       expect(existsQuestion.pass()).to.be.false;
     });
   });
+
+  it('.scoreForAnswer returns correctly for simple expected value', function() {
+    return modelUtils.getData(this.dataOptions)
+    .then(data => {
+      expect(data).to.have.property('questions');
+      let existsQuestion = _.find(data.questions, {id: 'exists'});
+      expect(existsQuestion.scoreForAnswer('Yes')).to.equal(5);
+      expect(existsQuestion.scoreForAnswer(true)).to.equal(0);
+      expect(existsQuestion.scoreForAnswer('No')).to.equal(0);
+      expect(existsQuestion.scoreForAnswer(false)).to.equal(0);
+      expect(existsQuestion.scoreForAnswer()).to.equal(0);
+    });
+  });
+  it('.scoreForAnswer returns correctly for array of expected values',
+  function() {
+    return modelUtils.getData(this.dataOptions)
+    .then(data => {
+      expect(data).to.have.property('questions');
+      let existsQuestion = _.find(data.questions, {id: 'public'});
+      expect(existsQuestion.scoreForAnswer('Yes')).to.equal(5);
+      expect(existsQuestion.scoreForAnswer(true)).to.equal(5);
+      expect(existsQuestion.scoreForAnswer(123)).to.equal(5);
+      expect(existsQuestion.scoreForAnswer('No')).to.equal(0);
+      expect(existsQuestion.scoreForAnswer(false)).to.equal(0);
+      expect(existsQuestion.scoreForAnswer(234)).to.equal(0);
+      expect(existsQuestion.scoreForAnswer()).to.equal(0);
+    });
+  });
+  it('.scoreForAnswer returns correctly for empty config', function() {
+    return modelUtils.getData(this.dataOptions)
+    .then(data => {
+      expect(data).to.have.property('questions');
+      let existsQuestion = _.find(data.questions, {id: 'digital'});
+      expect(existsQuestion.scoreForAnswer('Yes')).to.equal(0);
+      expect(existsQuestion.scoreForAnswer(true)).to.equal(0);
+      expect(existsQuestion.scoreForAnswer('No')).to.equal(0);
+      expect(existsQuestion.scoreForAnswer(false)).to.equal(0);
+      expect(existsQuestion.scoreForAnswer()).to.equal(0);
+    });
+  });
 });
 
 describe('Dataset instance methods', function() {

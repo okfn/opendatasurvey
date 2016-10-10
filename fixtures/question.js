@@ -14,7 +14,7 @@ var objects = [
       'icon': 'file-alt',
       'config': {
         'score': {
-          'weight': 30,
+          'weight': 5,
           'passValue': 'Yes'
         }
       }
@@ -52,7 +52,7 @@ var objects = [
       'dependants': ['publisher', 'officialtitle'],
       'config': {
         'score': {
-          'weight': 30,
+          'weight': 5,
           'passValue': ['Yes', true, 123]
         }
       }
