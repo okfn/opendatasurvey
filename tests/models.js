@@ -57,7 +57,7 @@ describe('Dataset instance methods', function() {
       expect(qsSchema).to.have.length(12);
       var firstQuestionSchema = qsSchema[0];
       expect(firstQuestionSchema).to.have.property('id');
-      expect(firstQuestionSchema).to.have.property('if');
+      expect(firstQuestionSchema).to.have.property('ifProvider');
       expect(firstQuestionSchema).to.have.property('position');
       expect(firstQuestionSchema).to.have.property('defaultProperties');
     });

@@ -64,7 +64,7 @@ Here is a question set schema for this example set of questions:
             "enabled": false,
             "required": false
         },
-        "if": [
+        "ifProvider": [
             {
                 "providerId": "like_apples",
                 "value": "No",
@@ -85,7 +85,7 @@ Here is a question set schema for this example set of questions:
             "enabled": false,
             "required": false
         },
-        "if": [
+        "ifProvider": [
             {
                 "providerId": "like_apples",
                 "value": "Yes",
@@ -105,7 +105,7 @@ Here is a question set schema for this example set of questions:
             "enabled": false,
             "required": false
         },
-        "if": [
+        "ifProvider": [
             {
                 "providerId": "apple_colour",
                 "value": "Yes",
@@ -125,7 +125,7 @@ Here is a question set schema for this example set of questions:
             "enabled": false,
             "required": false
         },
-        "if": [
+        "ifProvider": [
             {
                 "providerId": "red_apple_today",
                 "value": "Yes",
@@ -172,8 +172,8 @@ The schema above must validate against the following JSON Schema:
                         "visible": {"type": "boolean"}
                     }
                 },
-                "if": {
-                    "description": "An array of objects containing conditional logic to determine the state of Question properties dependent on the value of other Questions in the Question Set. First matching member takes presidents.",
+                "ifProvider": {
+                    "description": "An array of objects containing conditional logic to determine the state of Question properties dependent on the value of other 'Provider' Questions in the Question Set. First matching member takes presidents.",
                     "type": "array",
                     "items": {
                         "properties": {

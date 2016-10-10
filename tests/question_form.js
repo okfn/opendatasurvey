@@ -117,7 +117,7 @@ describe('<QuestionForm />', () => {
         visible: false
       },
       id: 'bananas_instead',
-      if: [
+      ifProvider: [
         {
           providerId: 'like_apples',
           properties: {
@@ -137,7 +137,7 @@ describe('<QuestionForm />', () => {
         visible: true
       },
       id: 'apple_colour',
-      if: [
+      ifProvider: [
         {
           providerId: 'like_apples',
           properties: {
@@ -156,7 +156,7 @@ describe('<QuestionForm />', () => {
         visible: true
       },
       id: 'red_apple_today',
-      if: [
+      ifProvider: [
         {
           providerId: 'apple_colour',
           properties: {
@@ -175,7 +175,7 @@ describe('<QuestionForm />', () => {
         visible: false
       },
       id: 'doctor_away',
-      if: [
+      ifProvider: [
         {
           providerId: 'red_apple_today',
           properties: {

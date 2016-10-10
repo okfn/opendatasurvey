@@ -75,8 +75,8 @@ const QuestionForm = React.createClass({
     // Initially set up return value as the defaultProperties for the schema
     let visProps = _.cloneDeep(schema.defaultProperties);
 
-    // For each dependency in the `if` array in the schema
-    _.each(schema.if, dependency => {
+    // For each dependency in the `ifProvider` array in the schema
+    _.each(schema.ifProvider, dependency => {
       // Find the current state of the provider
       let currentProviderState =
         _.find(this.state.questionState,
