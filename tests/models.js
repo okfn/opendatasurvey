@@ -8,6 +8,66 @@ var chai = require('chai');
 var expect = chai.expect;
 var utils = require('./utils');
 
+describe('Question instance methods', function() {
+  this.timeout(20000);
+
+  beforeEach(utils.setupFixtures);
+  afterEach(utils.dropFixtures);
+
+  before(function() {
+    this.dataOptions = {
+      models: models,
+      domain: 'site1',
+      dataset: null,
+      place: null,
+      year: null,
+      cascade: true,
+      scoredQuestionsOnly: true,
+      locale: null,
+      with: {Entry: false, Dataset: false, Place: false, Question: true}
+    };
+  });
+
+  it('.pass returns correctly for simple expected value', function() {
+    return modelUtils.getData(this.dataOptions)
+    .then(data => {
+      expect(data).to.have.property('questions');
+      let existsQuestion = _.find(data.questions, {id: 'exists'});
+      expect(existsQuestion.pass('Yes')).to.be.true;
+      expect(existsQuestion.pass(true)).to.be.false;
+      expect(existsQuestion.pass('No')).to.be.false;
+      expect(existsQuestion.pass(false)).to.be.false;
+      expect(existsQuestion.pass()).to.be.false;
+    });
+  });
+  it('.pass returns correctly for array of expected values', function() {
+    return modelUtils.getData(this.dataOptions)
+    .then(data => {
+      expect(data).to.have.property('questions');
+      let existsQuestion = _.find(data.questions, {id: 'public'});
+      expect(existsQuestion.pass('Yes')).to.be.true;
+      expect(existsQuestion.pass(true)).to.be.true;
+      expect(existsQuestion.pass(123)).to.be.true;
+      expect(existsQuestion.pass('No')).to.be.false;
+      expect(existsQuestion.pass(false)).to.be.false;
+      expect(existsQuestion.pass(234)).to.be.false;
+      expect(existsQuestion.pass()).to.be.false;
+    });
+  });
+  it('.pass returns correctly for empty config', function() {
+    return modelUtils.getData(this.dataOptions)
+    .then(data => {
+      expect(data).to.have.property('questions');
+      let existsQuestion = _.find(data.questions, {id: 'digital'});
+      expect(existsQuestion.pass('Yes')).to.be.false;
+      expect(existsQuestion.pass(true)).to.be.false;
+      expect(existsQuestion.pass('No')).to.be.false;
+      expect(existsQuestion.pass(false)).to.be.false;
+      expect(existsQuestion.pass()).to.be.false;
+    });
+  });
+});
+
 describe('Dataset instance methods', function() {
   this.timeout(20000);
 

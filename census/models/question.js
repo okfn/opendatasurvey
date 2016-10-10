@@ -76,7 +76,20 @@ module.exports = function(sequelize, DataTypes) {
       }
     ],
     instanceMethods: {
-      translated: mixins.translated
+      translated: mixins.translated,
+      pass: function(answer) {
+        /* Determine whether the provided answer passes the question. */
+
+        // If config doesn't provide a way of passing, answer can't pass.
+        if (!_.has(this.config, 'score.passValue'))
+          return false;
+
+        let expected = _.get(this.config, 'score.passValue');
+        if (!_.isArray(expected)) {
+          expected = [expected];
+        }
+        return _.includes(expected, answer);
+      }
     },
     classMethods: {
       associate: function(models) {

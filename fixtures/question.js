@@ -11,7 +11,13 @@ var objects = [
       'placeholder': 'the placeholder',
       'type': '',
       'score': 5,
-      'icon': 'file-alt'
+      'icon': 'file-alt',
+      'config': {
+        'score': {
+          'weight': 30,
+          'passValue': 'Yes'
+        }
+      }
     }
   },
   {
@@ -26,7 +32,8 @@ var objects = [
       'placeholder': 'the placeholder',
       'type': '',
       'score': 5,
-      'icon': 'save'
+      'icon': 'save',
+      'config': {}
     }
   },
   {
@@ -42,7 +49,13 @@ var objects = [
       'type': '',
       'score': 5,
       'icon': 'eye-open',
-      'dependants': ['publisher', 'officialtitle']
+      'dependants': ['publisher', 'officialtitle'],
+      'config': {
+        'score': {
+          'weight': 30,
+          'passValue': ['Yes', true, 123]
+        }
+      }
     }
   },
   {
