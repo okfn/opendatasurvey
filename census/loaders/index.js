@@ -67,10 +67,15 @@ let _createQuestionsForQuestionSet = function(questionsUrl,
           site: qset.site,
           questionsetid: qset.id
         });
-        // Derive question.score from the qsSchema
-        let qsSchemaEntry = _.find(qset.qsSchema, {id: dataObj.id});
+
+        let parsedConfig = '';
+        if (dataObj.config !== '') {
+          parsedConfig = JSON.parse(dataObj.config);
+        }
+
+        // Put score into question.score from the question config.
         createData = _.extend(createData, {
-          score: _.get(qsSchemaEntry, 'score.weight', 0)
+          score: _.get(parsedConfig, 'score.weight', 0)
         });
         // User may mix up lower cased and upper cased field names
         createData = _.mapKeys(createData, (v, key) => key.toLowerCase());
