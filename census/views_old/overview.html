@@ -118,7 +118,7 @@
         {% endif %}
 
       <td
-         class="{{ dataset.id }} ycount-{{entry.computedYCount}}{% if entry %} showpopover{% endif %}"
+         class="{{ dataset.id }} ycount-{{entry.computedScore}}{% if entry %} showpopover{% endif %}"
          data-dataset="{{entry.dataset}}"
          data-datasetTitle="{{dataset.name}}"
          data-answers="{{ entry.answers|stringify|escape }}"

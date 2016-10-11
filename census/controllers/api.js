@@ -308,7 +308,7 @@ var entries = function(req, res, next) {
           isOpen: item.isOpen() ? 'Yes' : 'No',
           submitter: item.Submitter ? item.Submitter.fullName() : '',
           reviewer: item.Reviewer ? item.Reviewer.fullName() : '',
-          score: item.computedYCount,
+          score: item.computedScore,
         };
       };
 

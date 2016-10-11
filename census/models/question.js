@@ -95,6 +95,10 @@ module.exports = function(sequelize, DataTypes) {
           expected = [expected];
         }
         return _.includes(expected, answer);
+      },
+      isScored: function() {
+        /* Return a boolean to determine whether the question contributes to scoring.*/
+        return this.score > 0;
       }
     },
     classMethods: {

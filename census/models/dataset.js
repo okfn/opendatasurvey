@@ -83,12 +83,13 @@ module.exports = function(sequelize, DataTypes) {
     instanceMethods: {
       translated: mixins.translated,
       score: function(entries, questions) {
-        var self = this;
-        return _.sum(_.map(_.where(entries, {
-          dataset: self.id
-        }), function(e) {
-          return e.yCount(questions);
-        }));
+        let entriesForDataset = _.filter(entries, {dataset: this.id});
+        let scoreableQuestions = _.filter(questions, q => q.isScored());
+        return _.sum(
+          _.map(entriesForDataset, entry => {
+            return entry.scoreForQuestions(scoreableQuestions);
+          })
+        );
       },
       /*
       Get Questions from the associated QuestionSet.

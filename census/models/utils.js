@@ -272,7 +272,7 @@ var processEntries = function(data, options) {
     });
 
     _.each(data.entries, function(e) {
-      e.computedYCount = e.yCount(data.questions);
+      e.computedScore = e.scoreForQuestions(data.questions);
       e.url = setEntryUrl(e);
     });
 
