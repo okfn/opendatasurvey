@@ -1,10 +1,8 @@
 'use strict';
 
-var _ = require('lodash');
-var Promise = require('bluebird');
-var path = require('path');
-var models = require('../census/models');
-var utils = require('./utils');
+const assert = require('chai').assert;
+const models = require('../census/models');
+const utils = require('./utils');
 
 describe('Open Data Census Tests', function() {
   this.timeout(20000);
@@ -12,74 +10,52 @@ describe('Open Data Census Tests', function() {
   before(utils.setupFixtures);
   after(utils.dropFixtures);
 
-  it('counts all registry entries', function(done) {
-    var query = models.Registry.findAll();
-    query
-      .then(function(results) {
-        console.log(results.length);
-        done();
-      })
-      .catch(console.trace.bind(console));
+  it('counts all registry entries', function() {
+    let query = models.Registry.findAll();
+    return query.then(results => {
+      assert.equal(results.length, 2);
+    });
   });
 
-  it('counts all sites', function(done) {
-    var query = models.Site.findAll();
-    query
-      .then(function(results) {
-        console.log(results.length);
-        done();
-      })
-      .catch(console.trace.bind(console));
+  it('counts all sites', function() {
+    let query = models.Site.findAll();
+    return query.then(results => {
+      assert.equal(results.length, 2);
+    });
   });
 
-  it('counts all users', function(done) {
-    var query = models.User.findAll();
-    query
-      .then(function(results) {
-        console.log(results.length);
-        done();
-      })
-      .catch(console.trace.bind(console));
+  it('counts all users', function() {
+    let query = models.User.findAll();
+    return query.then(results => {
+      assert.equal(results.length, 4);
+    });
   });
 
-  it('counts all places', function(done) {
-    var query = models.Place.findAll();
-    query
-      .then(function(results) {
-        console.log(results.length);
-        done();
-      })
-      .catch(console.trace.bind(console));
+  it('counts all places', function() {
+    let query = models.Place.findAll();
+    return query.then(results => {
+      assert.equal(results.length, 5);
+    });
   });
 
-  it('counts all datasets', function(done) {
-    var query = models.Dataset.findAll();
-    query
-      .then(function(results) {
-        console.log(results.length);
-        done();
-      })
-      .catch(console.trace.bind(console));
+  it('counts all datasets', function() {
+    let query = models.Dataset.findAll();
+    return query.then(results => {
+      assert.equal(results.length, 6);
+    });
   });
 
-  it('counts all questions', function(done) {
-    var query = models.Question.findAll();
-    query
-      .then(function(results) {
-        console.log(results.length);
-        done();
-      })
-      .catch(console.trace.bind(console));
+  it('counts all questions', function() {
+    let query = models.Question.findAll();
+    return query.then(results => {
+      assert.equal(results.length, 36);
+    });
   });
 
-  it('counts all entries', function(done) {
-    var query = models.Entry.findAll();
-    query
-      .then(function(results) {
-        console.log(results.length);
-        done();
-      })
-      .catch(console.trace.bind(console));
+  it('counts all entries', function() {
+    let query = models.Entry.findAll();
+    return query.then(results => {
+      assert.equal(results.length, 14);
+    });
   });
-
 });
