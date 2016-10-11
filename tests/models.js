@@ -4,8 +4,8 @@ var rewire = require('rewire');
 var _ = require('lodash');
 var models = require('../census/models');
 var modelUtils = rewire('../census/models/utils');
-var chai = require('chai');
-var expect = chai.expect;
+var assert = require('chai').assert;
+var expect = require('chai').expect;
 var utils = require('./utils');
 
 describe('Question instance methods', function() {
@@ -114,8 +114,8 @@ describe('Dataset instance methods', function() {
   beforeEach(utils.setupFixtures);
   afterEach(utils.dropFixtures);
 
-  it('.getQuestions', function() {
-    var dataOptions = {
+  before(function() {
+    this.dataOptions = {
       models: models,
       domain: 'site1',
       dataset: 'dataset11',
@@ -126,7 +126,10 @@ describe('Dataset instance methods', function() {
       locale: null,
       with: {Entry: true, Dataset: true, Place: true, Question: true}
     };
-    return modelUtils.getData(dataOptions)
+  });
+
+  it('.getQuestions', function() {
+    return modelUtils.getData(this.dataOptions)
     .then(data => {
       expect(data).to.have.property('dataset');
       return data.dataset.getQuestions();
@@ -137,29 +140,87 @@ describe('Dataset instance methods', function() {
   });
 
   it('.getQuestionSetSchema', function() {
-    var dataOptions = {
-      models: models,
-      domain: 'site1',
-      dataset: 'dataset11',
-      place: null,
-      year: null,
-      cascade: true,
-      scoredQuestionsOnly: true,
-      locale: null,
-      with: {Entry: true, Dataset: true, Place: true, Question: true}
-    };
-    return modelUtils.getData(dataOptions)
+    return modelUtils.getData(this.dataOptions)
     .then(data => {
       expect(data).to.have.property('dataset');
       return data.dataset.getQuestionSetSchema();
     })
     .then(qsSchema => {
       expect(qsSchema).to.have.length(12);
-      var firstQuestionSchema = qsSchema[0];
+      let firstQuestionSchema = qsSchema[0];
       expect(firstQuestionSchema).to.have.property('id');
       expect(firstQuestionSchema).to.have.property('ifProvider');
       expect(firstQuestionSchema).to.have.property('position');
       expect(firstQuestionSchema).to.have.property('defaultProperties');
+    });
+  });
+
+  it('.score with cascading', function() {
+    let dataOptions = _.assign(this.dataOptions, {year: 2015, cascade: true});
+    return modelUtils.getData(dataOptions)
+    .then(data => {
+      expect(data).to.have.property('dataset');
+      return data.dataset.score(data.entries, data.questions);
+    })
+    .then(score => {
+      assert.equal(score, 25);
+    });
+  });
+
+  it('.score without cascading', function() {
+    let dataOptions = _.assign(this.dataOptions, {year: 2015, cascade: false});
+    return modelUtils.getData(dataOptions)
+    .then(data => {
+      expect(data).to.have.property('dataset');
+      return data.dataset.score(data.entries, data.questions);
+    })
+    .then(score => {
+      assert.equal(score, 15);
+    });
+  });
+});
+
+describe('Place instance methods', function() {
+  this.timeout(20000);
+
+  beforeEach(utils.setupFixtures);
+  afterEach(utils.dropFixtures);
+
+  before(function() {
+    this.dataOptions = {
+      models: models,
+      domain: 'site1',
+      dataset: null,
+      place: 'place11',
+      year: null,
+      cascade: true,
+      scoredQuestionsOnly: true,
+      locale: null,
+      with: {Entry: true, Dataset: true, Place: true, Question: true}
+    };
+  });
+
+  it('.score with cascading', function() {
+    let dataOptions = _.assign(this.dataOptions, {year: 2015, cascade: true});
+    return modelUtils.getData(dataOptions)
+    .then(data => {
+      expect(data).to.have.property('place');
+      return data.place.score(data.entries, data.questions);
+    })
+    .then(score => {
+      assert.equal(score, 25);
+    });
+  });
+
+  it('.score without cascading', function() {
+    let dataOptions = _.assign(this.dataOptions, {year: 2015, cascade: false});
+    return modelUtils.getData(dataOptions)
+    .then(data => {
+      expect(data).to.have.property('place');
+      return data.place.score(data.entries, data.questions);
+    })
+    .then(score => {
+      assert.equal(score, 25);
     });
   });
 });

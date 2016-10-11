@@ -69,8 +69,14 @@ var objects = [
       'description': 'the description',
       'placeholder': 'the placeholder',
       'type': '',
-      'score': 15,
-      'icon': 'dollar'
+      'score': 5,
+      'icon': 'dollar',
+      'config': {
+        'score': {
+          'weight': 5,
+          'passValue': ['Yes', true]
+        }
+      }
     }
   },
   {
@@ -86,7 +92,13 @@ var objects = [
       'type': '',
       'score': 5,
       'icon': 'download',
-      'dependants': ['url']
+      'dependants': ['url'],
+      'config': {
+        'score': {
+          'weight': 5,
+          'passValue': ['Yes', true]
+        }
+      }
     }
   },
   {
@@ -100,9 +112,15 @@ var objects = [
       'description': 'the description',
       'placeholder': 'the placeholder',
       'type': '',
-      'score': 15,
+      'score': 5,
       'icon': 'keyboard',
-      'dependants': ['format']
+      'dependants': ['format'],
+      'config': {
+        'score': {
+          'weight': 5,
+          'passValue': ['Yes', true]
+        }
+      }
     }
   },
   {
@@ -131,9 +149,15 @@ var objects = [
       'description': 'the description',
       'placeholder': 'the placeholder',
       'type': '',
-      'score': 30,
+      'score': 5,
       'icon': 'unlock-alt',
-      'dependants': ['licenseurl']
+      'dependants': ['licenseurl'],
+      'config': {
+        'score': {
+          'weight': 5,
+          'passValue': ['Yes', true]
+        }
+      }
     }
   },
   {
