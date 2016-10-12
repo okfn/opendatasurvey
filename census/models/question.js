@@ -64,6 +64,12 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       comment: 'Questions that depend on this question. Used in UI.'
     },
+    openquestion: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+      comment: 'Flag to indicate if Question should be used to decide if an entry is Open.'
+    },
     translations: {
       type: DataTypes.JSONB,
       allowNull: true

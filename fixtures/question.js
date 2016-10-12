@@ -17,7 +17,8 @@ var objects = [
           'weight': 5,
           'passValue': 'Yes'
         }
-      }
+      },
+      'openquestion': false
     }
   },
   {
@@ -33,7 +34,8 @@ var objects = [
       'type': '',
       'score': 5,
       'icon': 'save',
-      'config': {}
+      'config': {},
+      'openquestion': false
     }
   },
   {
@@ -55,7 +57,8 @@ var objects = [
           'weight': 5,
           'passValue': ['Yes', true, 123]
         }
-      }
+      },
+      'openquestion': true
     }
   },
   {
@@ -76,7 +79,8 @@ var objects = [
           'weight': 5,
           'passValue': ['Yes', true]
         }
-      }
+      },
+      'openquestion': false
     }
   },
   {
@@ -98,7 +102,8 @@ var objects = [
           'weight': 5,
           'passValue': ['Yes', true]
         }
-      }
+      },
+      'openquestion': true
     }
   },
   {
@@ -120,7 +125,8 @@ var objects = [
           'weight': 5,
           'passValue': ['Yes', true]
         }
-      }
+      },
+      'openquestion': false
     }
   },
   {
@@ -135,7 +141,8 @@ var objects = [
       'placeholder': 'the placeholder',
       'type': '',
       'score': 10,
-      'icon': 'copy'
+      'icon': 'copy',
+      'openquestion': false
     }
   },
   {
@@ -157,7 +164,8 @@ var objects = [
           'weight': 5,
           'passValue': ['Yes', true]
         }
-      }
+      },
+      'openquestion': true
     }
   },
   {
@@ -172,7 +180,8 @@ var objects = [
       'placeholder': 'the placeholder',
       'type': '',
       'score': 10,
-      'icon': 'time'
+      'icon': 'time',
+      'openquestion': false
     }
   },
   {
@@ -187,7 +196,8 @@ var objects = [
       'placeholder': 'the placeholder',
       'type': 'url',
       'score': 0,
-      'icon': ''
+      'icon': '',
+      'openquestion': false
     }
   },
   {
@@ -202,7 +212,8 @@ var objects = [
       'placeholder': 'the placeholder',
       'type': 'text',
       'score': 0,
-      'icon': ''
+      'icon': '',
+      'openquestion': false
     }
   },
   {
@@ -217,7 +228,8 @@ var objects = [
       'placeholder': 'the placeholder',
       'type': 'url',
       'score': 0,
-      'icon': ''
+      'icon': '',
+      'openquestion': false
     }
   },
   {
@@ -232,7 +244,8 @@ var objects = [
       'placeholder': 'the placeholder',
       'type': 'text',
       'score': 0,
-      'icon': ''
+      'icon': '',
+      'openquestion': false
     }
   },
   {
@@ -247,7 +260,8 @@ var objects = [
       'placeholder': 'the placeholder',
       'type': 'text',
       'score': 0,
-      'icon': ''
+      'icon': '',
+      'openquestion': false
     }
   },
   {
@@ -262,7 +276,8 @@ var objects = [
       'placeholder': 'the placeholder',
       'type': 'text',
       'score': 0,
-      'icon': ''
+      'icon': '',
+      'openquestion': false
     }
   },
   {
@@ -277,7 +292,8 @@ var objects = [
       'placeholder': 'the placeholder',
       'type': 'select',
       'score': 0,
-      'icon': ''
+      'icon': '',
+      'openquestion': false
     }
   },
   {
@@ -292,7 +308,8 @@ var objects = [
       'placeholder': 'the placeholder',
       'type': 'select',
       'score': 0,
-      'icon': ''
+      'icon': '',
+      'openquestion': false
     }
   },
   {
@@ -308,7 +325,8 @@ var objects = [
       'placeholder': 'the placeholder',
       'type': 'textarea',
       'score': 0,
-      'icon': ''
+      'icon': '',
+      'openquestion': false
     }
   },
   {

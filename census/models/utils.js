@@ -107,7 +107,7 @@ var processStats = function(data, options) {
   if (Array.isArray(data.entries)) {
     data.stats.currentEntryCount = data.entries.length;
     data.stats.currentEntryOpenCount = _.filter(data.entries, function(e) {
-      return e.isOpen() === true;
+      return e.isOpenForQuestions(data.questions) === true;
     }).length;
     data.stats.openDataPercent = parseInt(
       (data.stats.currentEntryOpenCount / data.stats.currentEntryCount) * 100,
