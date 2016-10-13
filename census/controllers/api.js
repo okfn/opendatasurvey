@@ -305,10 +305,10 @@ var entries = function(req, res, next) {
           reviewComments: item.reviewComments,
           details: item.details,
           isCurrent: item.isCurrent ? 'Yes' : 'No',
-          isOpen: item.isOpen() ? 'Yes' : 'No',
+          isOpen: item.isOpenForQuestions(data.questions) ? 'Yes' : 'No',
           submitter: item.Submitter ? item.Submitter.fullName() : '',
           reviewer: item.Reviewer ? item.Reviewer.fullName() : '',
-          score: item.computedScore,
+          score: item.computedScore
         };
       };
 

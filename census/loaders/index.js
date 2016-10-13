@@ -44,6 +44,7 @@ var loadConfig = function(siteId, models) {
 
 let _createQuestionsForQuestionSet = function(questionsUrl,
                                               qsId,
+                                              openQuestions,
                                               models,
                                               transaction) {
   return models.QuestionSet.findById(qsId, {transaction: transaction})
@@ -62,10 +63,12 @@ let _createQuestionsForQuestionSet = function(questionsUrl,
       _.map(data, dataObj => {
         // Allow custom data mapping
         let createData = controllerUtils.questionMapper(dataObj, qset.site);
+        let isOpen = _.contains(openQuestions, createData.id);
         // All Questions belong to a site and questionset
         createData = _.extend(createData, {
           site: qset.site,
-          questionsetid: qset.id
+          questionsetid: qset.id,
+          openquestion: isOpen
         });
 
         let parsedConfig = '';
@@ -101,22 +104,30 @@ let _createQuestionSetForDatasets = function(datasets,
     // create QuestionSet instance from raw data obj.
     let qsHash = crypto.createHash('sha1').update(siteId + qsurl).digest('hex');
     let qsSchema = JSON.parse(raw.question_set_schema);
+    // create array of question ids which are required for dataset to be
+    // considered 'open'.
+    let openQuestions = [];
+    if (_.has(raw, 'open_questions')) {
+      openQuestions = _.map(raw.open_questions.split(
+                            controllerUtils.FIELD_SPLITTER), _.trim);
+    }
     return models.QuestionSet.create({
       id: qsHash,
       site: siteId,
       qsSchema: qsSchema
     }, {transaction: transaction})
-    .then(qsInstance => [qsInstance, raw]);
+    .then(qsInstance => [qsInstance, raw, openQuestions]);
   })
-  .spread((qsInstance, raw) => {
+  .spread((qsInstance, raw, openQuestions) => {
     return Promise.each(datasets, ds => {
       return ds.update({questionsetid: qsInstance.id},
                        {transaction: transaction});
-    }).then(() => [qsInstance, raw]);
+    }).then(() => [qsInstance, raw, openQuestions]);
   })
-  .spread((qsInstance, raw) => {
+  .spread((qsInstance, raw, openQuestions) => {
     return _createQuestionsForQuestionSet(raw.questions,
                                           qsInstance.id,
+                                          openQuestions,
                                           models,
                                           transaction);
   });

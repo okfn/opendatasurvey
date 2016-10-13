@@ -86,13 +86,14 @@ module.exports = function(sequelize, DataTypes) {
       }
     ],
     instanceMethods: {
-      isOpen: function() {
-        return (
-          (this.answers.exists === true) &&
-          (this.answers.openlicense === true) &&
-          (this.answers.public === true) &&
-          (this.answers.machinereadable === true)
-        );
+      isOpenForQuestions: function(questions) {
+        // Only interested in 'open' questions.
+        let openQuestions = _.filter(questions, q => q.openquestion);
+        // We must have some Open Questions to be an Open entry.
+        if (openQuestions.length === 0)
+          return false;
+        // All Open Questions must pass for the answers in this entry.
+        return _.all(openQuestions, q => q.pass(this.answers[q.id]));
       },
       scoreForQuestions: function(questions) {
         var scores = [];

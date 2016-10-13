@@ -8,6 +8,46 @@ var assert = require('chai').assert;
 var expect = require('chai').expect;
 var utils = require('./utils');
 
+describe('Entry instance methods', function() {
+  this.timeout(20000);
+
+  beforeEach(utils.setupFixtures);
+  afterEach(utils.dropFixtures);
+
+  before(function() {
+    this.dataOptions = {
+      models: models,
+      domain: 'site1',
+      dataset: 'dataset11',
+      place: null,
+      year: 2015,
+      cascade: false,
+      scoredQuestionsOnly: false,
+      locale: null,
+      with: {Entry: true, Dataset: true, Place: true, Question: true}
+    };
+  });
+
+  it('.isOpenForQuestions is true for open entry', function() {
+    // Entry for dataset11 in 2015 is open
+    return modelUtils.getData(this.dataOptions)
+    .then(data => {
+      expect(data.entries.length).to.be.equal(1);
+      expect(data.entries[0].isOpenForQuestions(data.questions)).to.be.true;
+    });
+  });
+
+  it('.isOpenForQuestions is false for non-open entry', function() {
+    // Entry for dataset11 in 2014 isn't open
+    let dataOptions = _.assign(this.dataOptions, {year: 2014});
+    return modelUtils.getData(dataOptions)
+    .then(data => {
+      expect(data.entries.length).to.be.equal(1);
+      expect(data.entries[0].isOpenForQuestions(data.questions)).to.be.false;
+    });
+  });
+});
+
 describe('Question instance methods', function() {
   this.timeout(20000);
 
