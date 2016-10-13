@@ -56,12 +56,13 @@ module.exports = function(sequelize, DataTypes) {
     instanceMethods: {
       translated: mixins.translated,
       score: function(entries, questions) {
-        var self = this;
-        return _.sum(_.map(_.where(entries, {
-          place: self.id
-        }), function(e) {
-          return e.yCount(questions);
-        }));
+        let entriesForPlace = _.filter(entries, {place: this.id});
+        let scoreableQuestions = _.filter(questions, q => q.isScored());
+        return _.sum(
+          _.map(entriesForPlace, entry => {
+            return entry.scoreForQuestions(scoreableQuestions);
+          })
+        );
       }
     },
     classMethods: {

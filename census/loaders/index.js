@@ -61,18 +61,24 @@ let _createQuestionsForQuestionSet = function(questionsUrl,
     return Promise.all(
       _.map(data, dataObj => {
         // Allow custom data mapping
-        let createData = _.chain(controllerUtils.questionMapper(dataObj,
-                                                                qset.site))
-        // All records belongs to certain domain
-        .extend({
+        let createData = controllerUtils.questionMapper(dataObj, qset.site);
+        // All Questions belong to a site and questionset
+        createData = _.extend(createData, {
           site: qset.site,
           questionsetid: qset.id
-        })
-        .pairs()
+        });
+
+        let parsedConfig = '';
+        if (dataObj.config !== '') {
+          parsedConfig = JSON.parse(dataObj.config);
+        }
+
+        // Put score into question.score from the question config.
+        createData = _.extend(createData, {
+          score: _.get(parsedConfig, 'score.weight', 0)
+        });
         // User may mix up lower cased and upper cased field names
-        .map(P => [P[0].toLowerCase(), P[1]])
-        .object()
-        .value();
+        createData = _.mapKeys(createData, (v, key) => key.toLowerCase());
         return models.Question.create(createData, {transaction: transaction});
       })
     );
@@ -80,7 +86,7 @@ let _createQuestionsForQuestionSet = function(questionsUrl,
 };
 
 /*
-  A helper function to create a QuestionSet from the parsed quesiton set url,
+  A helper function to create a QuestionSet from the parsed question set url,
   and associate it with each dataset in the datasets array.
 */
 let _createQuestionSetForDatasets = function(datasets,
@@ -210,16 +216,12 @@ var loadData = function(options, models) {
     .spread((data, site) => {
       return Promise.all(_.map(data, dataObj => {
         // Allow custom data mapping
-        let createData = _.chain(
-          _.isFunction(options.mapper) ? options.mapper(dataObj, site) : dataObj
-        )
+        let createData = _.isFunction(options.mapper) ?
+          options.mapper(dataObj, site) : dataObj;
         // All records belongs to certain domain
-        .extend({site: options.site})
-        .pairs()
+        createData = _.extend(createData, {site: options.site});
         // User may mix up lower cased and upper cased field names
-        .map(P => [P[0].toLowerCase(), P[1]])
-        .object()
-        .value();
+        createData = _.mapKeys(createData, (v, key) => key.toLowerCase());
         return options.Model.create(createData, {transaction: t});
       }));
     });

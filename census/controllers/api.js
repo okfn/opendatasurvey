@@ -253,7 +253,7 @@ var entries = function(req, res, next) {
   // Initial data options
   var dataOptions = _.merge(modelUtils.getDataOptions(req), {
       cascade: false,
-      ynQuestions: false,
+      scoredQuestionsOnly: false,
       with: {Dataset: false, Place: false, Question: true}
     }
   );
@@ -308,7 +308,7 @@ var entries = function(req, res, next) {
           isOpen: item.isOpen() ? 'Yes' : 'No',
           submitter: item.Submitter ? item.Submitter.fullName() : '',
           reviewer: item.Reviewer ? item.Reviewer.fullName() : '',
-          score: item.computedYCount,
+          score: item.computedScore,
         };
       };
 

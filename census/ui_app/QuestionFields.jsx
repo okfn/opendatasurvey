@@ -159,7 +159,8 @@ const QuestionFieldLikertOption = props => {
 
 let QuestionFieldLikert = React.createClass({
   render() {
-    let scaleOptionNodes = _.map(this.props.config, option => {
+    let options = _.get(this.props.config, 'options', []);
+    let scaleOptionNodes = _.map(options, option => {
       return <QuestionFieldLikertOption id={this.props.id}
                                         value={option.value}
                                         description={option.description}

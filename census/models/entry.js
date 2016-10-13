@@ -78,8 +78,7 @@ module.exports = function(sequelize, DataTypes) {
       comment: 'A flag to indicate if this is the current entry for ' +
         'this year/place/dataset.'
     }
-  },
-  {
+  }, {
     tableName: 'entry',
     indexes: [
       {
@@ -95,16 +94,11 @@ module.exports = function(sequelize, DataTypes) {
           (this.answers.machinereadable === true)
         );
       },
-      yCount: function(questions) {
+      scoreForQuestions: function(questions) {
         var scores = [];
-        var self = this;
-
-        _.each(questions, function(q) {
-          if (self.answers[q.id] === true && q.score) {
-            scores.push(q.score);
-          }
+        _.each(questions, q => {
+          scores.push(q.scoreForAnswer(this.answers[q.id]));
         });
-
         return _.sum(scores);
       }
     },

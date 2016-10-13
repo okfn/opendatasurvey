@@ -84,30 +84,28 @@
       </th>
       {% for dataset in datasets %}
 
-      {% set entry = entries|find({'dataset': dataset.id , 'place': place.id }) %}
-      {% set submissions = pending|where({'dataset': dataset.id , 'place': place.id }) %}
-      {% if entry.year == currentYear %}
-        {% set badgeClass = 'label-success' %}
-      {% elif entry.year == (currentYear - 1) %}
-        {% set badgeClass = 'label-warning' %}
-      {% else %}
-        {% set badgeClass = 'label-important'%}
-      {% endif %}
-
-
+        {% set entry = entries|find({'dataset': dataset.id , 'place': place.id }) %}
+        {% set submissions = pending|where({'dataset': dataset.id , 'place': place.id }) %}
+        {% if entry.year == currentYear %}
+          {% set badgeClass = 'label-success' %}
+        {% elif entry.year == (currentYear - 1) %}
+          {% set badgeClass = 'label-warning' %}
+        {% else %}
+          {% set badgeClass = 'label-important'%}
+        {% endif %}
 
         {% if entry %}
-            {% if submissions|length %}
-                      {% set actionUrl = '/submission/ID'|replace('ID', submissions[0].id) %}
-                      {% set actionText = gettext("Comment") %}
+          {% if submissions|length %}
+                    {% set actionUrl = '/submission/ID'|replace('ID', submissions[0].id) %}
+                    {% set actionText = gettext("Comment") %}
+                {% else %}
+                  {% set actionUrl = '/submit/?place=PL&dataset=DS'|replace('PL', place.id)|replace('DS', dataset.id) %}
+                  {% if entry %}
+                      {% set actionText = gettext("Update") %}
                   {% else %}
-                    {% set actionUrl = '/submit/?place=PL&dataset=DS'|replace('PL', place.id)|replace('DS', dataset.id) %}
-                    {% if entry %}
-                        {% set actionText = gettext("Update") %}
-                    {% else %}
-                        {% set actionText = gettext("Add") %}
-                    {% endif %}
-                {% endif %}
+                      {% set actionText = gettext("Add") %}
+                  {% endif %}
+              {% endif %}
 
         {% else %}
             {% if submissions|length %}
@@ -120,7 +118,7 @@
         {% endif %}
 
       <td
-         class="{{ dataset.id }} ycount-{{entry.computedYCount}}{% if entry %} showpopover{% endif %}"
+         class="{{ dataset.id }} ycount-{{entry.computedScore}}{% if entry %} showpopover{% endif %}"
          data-dataset="{{entry.dataset}}"
          data-datasetTitle="{{dataset.name}}"
          data-answers="{{ entry.answers|stringify|escape }}"
@@ -142,7 +140,7 @@
             {% if entry %}
 
             <ul class="availability icons mini">
-              {% for qu in questions %}
+              {% for qu in questions -%}
               {% set state = entry.answers[qu.id] %}
 
               {% if state == true %}
@@ -160,7 +158,7 @@
                 <i class="icon-{{ qu.icon }}"></i>
                 <span class="text">{{ stateDisplay }}</span>
               </li>
-              {% endfor %}
+              {%- endfor %}
             </ul>
 
             <div class="entry-year {{ badgeClass }}" title="{{ entry.updatedAt|dateformat }} ({{ gettext("Submitted by") }} {{ entry.Submitter.fullName() }} {{ gettext("and reviewed by") }} {{ entry.Submitter.fullName() }})">

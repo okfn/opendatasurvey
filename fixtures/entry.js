@@ -8,12 +8,26 @@ var users = require('./user');
 
 function answers() {
   return {
-    digital: _.sample([false, true]),
-    exists: _.sample([false, true]),
-    machinereadable: _.sample([false, true]),
-    openlicense: _.sample([false, true]),
-    online: _.sample([false, true]),
-    public: _.sample([false, true]),
+    digital: true,
+    exists: 'Yes',
+    machinereadable: true,
+    openlicense: false,
+    online: false,
+    public: false,
+    publisher: 'Acme',
+    format: ['CSV', 'PSF'],
+    license: 'http://example.com'
+  };
+}
+
+function currentAnswers() {
+  return {
+    digital: false,
+    exists: false,
+    machinereadable: false,
+    openlicense: true,
+    online: true,
+    public: true,
     publisher: 'Acme',
     format: ['CSV', 'PSF'],
     license: 'http://example.com'
@@ -54,7 +68,7 @@ var objects = [
       year: 2015,
       place: 'place11',
       dataset: 'dataset11',
-      answers: answers(),
+      answers: currentAnswers(),
       submissionNotes: '',
       reviewed: true,
       reviewResult: true,

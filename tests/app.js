@@ -209,7 +209,7 @@ describe('Basics', function() {
         this.browser.assert.evaluate('window.qsSchema', expectedQSetSchema);
         this.browser.assert.evaluate('window.qsSchema.length', 12);
         this.browser.assert.evaluate('window.qsSchema[0].id', 'exists');
-        this.browser.assert.evaluate('window.qsSchema[0].if', []);
+        this.browser.assert.evaluate('window.qsSchema[0].ifProvider', []);
         this.browser.assert.evaluate('window.qsSchema[0].position', 0);
         done();
       });
