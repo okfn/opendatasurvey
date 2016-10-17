@@ -17,11 +17,11 @@ var loadConfig = function(siteId, models) {
     var settings = {};
     var raw = _.object(_.zip(_.pluck(config, 'key'), _.pluck(config, 'value')));
     _.each(raw, function(v, k) {
-      if (v && v.toLowerCase() === 'true') {
+      if (v && _.trim(v.toLowerCase()) === 'true') {
         settings[k] = true;
-      } else if (v && v.toLowerCase() === 'false') {
+      } else if (v && _.trim(v.toLowerCase()) === 'false') {
         settings[k] = false;
-      } else if (v && v.toLowerCase() === 'null') {
+      } else if (v && _.trim(v.toLowerCase()) === 'null') {
         settings[k] = null;
       } else if (v && ['reviewers', 'locales'].indexOf(k) !== -1) {
         settings[k] = _.map(v.split(
