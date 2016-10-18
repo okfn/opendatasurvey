@@ -14,7 +14,8 @@ const QuestionForm = React.createClass({
     let questionValues = this.props.questions.map(q => {
       return {
         id: q.id,
-        value: ''
+        value: this.props.answers[q.id] || '',
+        commentValue: this.props.answers[q.id + '_comment'] || ''
       };
     });
     return {
@@ -26,6 +27,16 @@ const QuestionForm = React.createClass({
     // Set the new value for the field
     let newQuestionsState = _.map(this.state.questionState, qState => {
       if (qState.id === field.props.id) qState.value = value;
+      return qState;
+    });
+
+    this.setState({questionState: newQuestionsState});
+  },
+
+  onCommentChange(field, value) {
+    // Set the new value for the field
+    let newQuestionsState = _.map(this.state.questionState, qState => {
+      if (qState.id === field.props.id) qState.commentValue = value;
       return qState;
     });
 
@@ -148,7 +159,9 @@ const QuestionForm = React.createClass({
                         id={q.id}
                         visibleProps={this.getVisiblePropsForId(q.id)}
                         value={q.value}
+                        commentValue={q.commentValue}
                         onChange={this.onFieldChange}
+                        onCommentChange={this.onCommentChange}
                         label={this.getLabelForId(q.id)}
                         position={this.getPositionForId(q.id)}
                         instructions={

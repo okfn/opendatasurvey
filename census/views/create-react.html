@@ -136,6 +136,7 @@
       window.qsSchema = {{ qsSchema|safe }};
       window.questions = {{ questions|safe }};
       window.datasetContext = {{ datasetContext|dump }};
+      window.formData = {{ formData|dump }};
     </script>
   </div>
 </section>
@@ -148,7 +149,7 @@
       <div class="main">
         <h2>Any other comments?</h2>
         <div class="answer">
-          <textarea rows="5"></textarea>
+          <textarea name="otherComments" rows="5"></textarea>
         </div>
       </div>
       <div class="comments">
@@ -170,11 +171,11 @@
       <div class="main">
         <h2>Would you prefer your submission to remain anonymous?</h2>
         <div class="answer">
-          <input type="radio" name="yesnoAttribution" id="yesnoAttributionNo" checked="">
+          <input type="radio" name="yesnoAttribution" id="yesnoAttributionNo" value="No">
           <label for="yesnoAttributionNo">
             <span>No</span>
           </label>
-          <input type="radio" name="yesnoAttribution" id="yesnoAttributionYes">
+          <input type="radio" name="yesnoAttribution" id="yesnoAttributionYes" value="Yes">
           <label for="yesnoAttributionYes">
             <span>Yes</span>
           </label>

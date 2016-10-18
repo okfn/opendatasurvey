@@ -6,6 +6,7 @@ import $ from 'jquery';
 let qsSchema = window.qsSchema;
 let questions = window.questions;
 let datasetContext = window.datasetContext;
+let answers = window.formData;
 
 $(function() {
   // Reload page with Dataset QuestionSet if dataset is changed.
@@ -20,5 +21,6 @@ $(function() {
 render(<QuestionForm questions={questions}
                      qsSchema={qsSchema}
                      labelPrefix={'B'}
-                     context={datasetContext} />,
+                     context={datasetContext}
+                     answers={answers} />,
        document.getElementById('questions'));

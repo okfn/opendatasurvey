@@ -23,16 +23,23 @@ const QuestionInstructions = props => {
   return (<div className="instructions"></div>);
 };
 
-const QuestionComments = props => {
-  return (
-    <div className="comments">
-      <label htmlFor={props.id + '_comment'}>Comments</label>
-      <textarea placeholder={props.placeholder || 'Add comments' }
-                id={props.id + '_comment'}
-                rows="5"></textarea>
-    </div>
-  );
-};
+const QuestionComments = React.createClass({
+  render() {
+    return (<div className="comments">
+      <label htmlFor={this.props.id + '_comment'}>Comments</label>
+      <textarea placeholder={this.props.placeholder || 'Add comments' }
+                id={this.props.id + '_comment'}
+                rows="5"
+                name={this.props.id + '_comment'}
+                value={this.props.commentValue}
+                onChange={this.handler}></textarea>
+    </div>);
+  },
+
+  handler(e) {
+    this.props.onCommentChange(this, e.target.value);
+  }
+});
 
 const QuestionHeader = props => {
   return (
@@ -85,11 +92,13 @@ let QuestionFieldText = React.createClass({
           {this.props.children.toString()}
         </QuestionHeader>
         <div className="answer">
-          <input type="text" value={this.props.value} onChange={this.handler} />
+          <input type="text" value={this.props.value} name={this.props.id} onChange={this.handler} />
         </div>
       </div>
       <QuestionComments id={this.props.id}
-                        placeholder={this.props.placeholder} />
+                        placeholder={this.props.placeholder}
+                        commentValue={this.props.commentValue}
+                        onCommentChange={this.props.onCommentChange} />
     </div>);
   },
 
@@ -132,7 +141,9 @@ let QuestionFieldYesNo = React.createClass({
         </div>
       </div>
       <QuestionComments id={this.props.id}
-                        placeholder={this.props.placeholder} />
+                        placeholder={this.props.placeholder}
+                        commentValue={this.props.commentValue}
+                        onCommentChange={this.props.onCommentChange} />
     </div>);
   },
 
@@ -180,7 +191,9 @@ let QuestionFieldLikert = React.createClass({
         </div>
       </div>
       <QuestionComments id={this.props.id}
-                        placeholder={this.props.placeholder} />
+                        placeholder={this.props.placeholder}
+                        commentValue={this.props.commentValue}
+                        onCommentChange={this.props.onCommentChange} />
     </div>);
   },
 
@@ -248,7 +261,9 @@ let QuestionFieldSource = React.createClass({
         </div>
       </div>
       <QuestionComments id={this.props.id}
-                        placeholder={this.props.placeholder} />
+                        placeholder={this.props.placeholder}
+                        commentValue={this.props.commentValue}
+                        onCommentChange={this.props.onCommentChange} />
     </div>);
   },
 
@@ -350,7 +365,9 @@ let QuestionFieldMultipleChoice = React.createClass({
                                           id={this.props.id + '_other'} />
       </div>
       <QuestionComments id={this.props.id}
-                        placeholder={this.props.placeholder} />
+                        placeholder={this.props.placeholder}
+                        commentValue={this.props.commentValue}
+                        onCommentChange={this.props.onCommentChange} />
     </div>);
   },
 

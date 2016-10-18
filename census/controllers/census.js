@@ -233,6 +233,94 @@ var submit = function(req, res) {
     }).catch(console.trace.bind(console));
 };
 
+var submitReactGet = function(req, res, data) {
+  let currentDataset = _.find(data.datasets,
+                              {id: data.currentState.match.dataset});
+
+  let places = modelUtils.translateSet(req, data.places);
+  let datasets = modelUtils.translateSet(req, data.datasets);
+  let qsSchemaPromise;
+  let questionsPromise;
+  let datasetContext = {};
+  if (currentDataset) {
+    qsSchemaPromise = currentDataset.getQuestionSetSchema();
+    questionsPromise = currentDataset.getQuestions();
+    datasetContext = _.assign(datasetContext, {
+      characteristics: currentDataset.characteristics,
+      datasetName: currentDataset.name,
+      updateEvery: currentDataset.updateevery
+    });
+  }
+  Promise.join(qsSchemaPromise, questionsPromise, (qsSchema, questions) => {
+    if (qsSchema === undefined) qsSchema = [];
+    questions = _.map(questions, question => {
+      return {
+        id: question.id,
+        text: nunjucks.renderString(question.question,
+                                    {datasetContext: datasetContext}),
+        type: question.type,
+        description: nunjucks.renderString(question.description,
+                                           {datasetContext: datasetContext}),
+        placeholder: question.placeholder,
+        config: question.config
+      };
+    });
+    // We might have form data to prefill the QuestionForm with.
+    let formData = _.get(data, 'formData', {});
+    console.log(formData);
+    let initialHTML = renderToString(
+      <QuestionForm questions={questions}
+                    qsSchema={qsSchema}
+                    labelPrefix={'B'}
+                    context={datasetContext}
+                    answers={formData} />
+    );
+    res.render('create-react.html', {
+      places: places,
+      datasets: datasets,
+      qsSchema: JSON.stringify(qsSchema),
+      questions: JSON.stringify(questions),
+      datasetContext: datasetContext,
+      current: data.currentState.match,
+      formData: formData,
+      initialRenderedQuestions: initialHTML,
+      breadcrumbTitle: 'Make a Submission'
+    });
+  });
+};
+
+var submitReactPost = function(req, res, data) {
+  let approveFirstSubmission =
+    _.get(req.params.site.settings, 'approve_first_submission', false);
+
+  let current = data.currentState.match;
+  let pending = data.currentState.pending;
+  let errors = [];
+
+  // validation would go here, encapsulating the bulk of the controller code
+
+  if (pending) {
+    if (!Array.isArray(errors)) errors = [];
+    errors.push({
+      param: 'conflict',
+      msg: 'There is already a queued submission for this data. ' +
+        '<a href="/place/PL/YR">See the queued submission</a>'
+        .replace('PL', current.place).replace('YR', current.year)
+    });
+  }
+
+  errors.push({param: 'fake', msg: 'My fake error'});
+
+  if (errors) {
+    res.statusCode = 400;
+    data.formData = req.body;
+    // Call the GET submit page with formData.
+    submitReactGet(req, res, data);
+  } else {
+    res.render('create-react.html');
+  }
+};
+
 var submitReact = function(req, res) {
   let dataOptions = _.merge(modelUtils.getDataOptions(req), {
     scoredQuestionsOnly: false
@@ -240,56 +328,12 @@ var submitReact = function(req, res) {
   modelUtils.getData(dataOptions)
   .then(data => {
     data.currentState = utils.getCurrentState(data, req);
-
-    let currentDataset = _.find(data.datasets,
-                                {id: data.currentState.match.dataset});
-
-    let places = modelUtils.translateSet(req, data.places);
-    let datasets = modelUtils.translateSet(req, data.datasets);
-    let qsSchemaPromise;
-    let questionsPromise;
-    let datasetContext = {};
-    if (currentDataset) {
-      qsSchemaPromise = currentDataset.getQuestionSetSchema();
-      questionsPromise = currentDataset.getQuestions();
-      datasetContext = _.assign(datasetContext, {
-        characteristics: currentDataset.characteristics,
-        datasetName: currentDataset.name,
-        updateEvery: currentDataset.updateevery
-      });
+    if (req.method === 'POST') {
+      submitReactPost(req, res, data);
+    } else {
+      submitReactGet(req, res, data);
     }
-    Promise.join(qsSchemaPromise, questionsPromise, (qsSchema, questions) => {
-      if (qsSchema === undefined) qsSchema = [];
-      questions = _.map(questions, question => {
-        return {
-          id: question.id,
-          text: nunjucks.renderString(question.question,
-                                      {datasetContext: datasetContext}),
-          type: question.type,
-          description: nunjucks.renderString(question.description,
-                                             {datasetContext: datasetContext}),
-          placeholder: question.placeholder,
-          config: question.config
-        };
-      });
-      let initialHTML = renderToString(
-        <QuestionForm questions={questions}
-                      qsSchema={qsSchema}
-                      labelPrefix={'B'}
-                      context={datasetContext} />
-      );
-      res.render('create-react.html', {
-        places: places,
-        datasets: datasets,
-        qsSchema: JSON.stringify(qsSchema),
-        questions: JSON.stringify(questions),
-        datasetContext: datasetContext,
-        current: data.currentState.match,
-        initialRenderedQuestions: initialHTML,
-        breadcrumbTitle: 'Make a Submission'
-      });
-    });
-  }).catch(console.trace.bind(console));
+  });
 };
 
 var reviewPost = function(req, res) {
