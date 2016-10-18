@@ -10,7 +10,7 @@ const Promise = require('bluebird');
 const nunjucks = require('nunjucks');
 const React = require('react'); // eslint-disable-line no-unused-vars
 const renderToString = require('react-dom/server').renderToString;
-const QuestionForm = require('../ui_app/QuestionForm');
+const EntryForm = require('../ui_app/EntryForm');
 
 var submitGetHandler = function(req, res, data) {
   var addDetails = _.find(data.questions, function(q) {
@@ -265,16 +265,14 @@ var submitReactGet = function(req, res, data) {
         config: question.config
       };
     });
-    // We might have form data to prefill the QuestionForm with.
+    // We might have form data to prefill the EntryForm with.
     let formData = _.get(data, 'formData', {});
-    console.log(formData);
-    let initialHTML = renderToString(
-      <QuestionForm questions={questions}
-                    qsSchema={qsSchema}
-                    labelPrefix={'B'}
-                    context={datasetContext}
-                    answers={formData} />
-    );
+    let initialHTML = renderToString(<EntryForm questions={questions}
+                                                qsSchema={qsSchema}
+                                                context={datasetContext}
+                                                answers={formData}
+                                                currentPlace={data.currentState.match.place}
+                                                currentDataset={data.currentState.match.dataset} />);
     res.render('create-react.html', {
       places: places,
       datasets: datasets,
@@ -283,7 +281,7 @@ var submitReactGet = function(req, res, data) {
       datasetContext: datasetContext,
       current: data.currentState.match,
       formData: formData,
-      initialRenderedQuestions: initialHTML,
+      initialRenderedEntry: initialHTML,
       breadcrumbTitle: 'Make a Submission'
     });
   });
