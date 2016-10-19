@@ -158,7 +158,7 @@ QuestionFieldLikert = baseQuestionField(QuestionFieldLikert);
 
 const QuestionFieldSourceLine = props => {
   return (
-    <ul onChange={props.handler}>
+    <ul>
       <li>
         <label htmlFor={props.id + '_url'}>Source URL</label>
         <input id={props.id + '_url'}
@@ -166,7 +166,8 @@ const QuestionFieldSourceLine = props => {
                type="url"
                data-key={'urlValue'}
                placeholder="http://"
-               value={props.urlValue} />
+               value={props.urlValue}
+               onChange={props.onChange} />
       </li>
       <li>
         <label htmlFor={props.id + '_desc'}>Source description</label>
@@ -174,7 +175,8 @@ const QuestionFieldSourceLine = props => {
                name={props.id + '_desc'}
                type="text"
                data-key={'descValue'}
-               value={props.descValue} />
+               value={props.descValue}
+               onChange={props.onChange} />
       </li>
     </ul>
   );
@@ -199,7 +201,7 @@ let QuestionFieldSource = React.createClass({
                                           id={this.props.id + i}
                                           urlValue={sourceValue.urlValue}
                                           descValue={sourceValue.descValue}
-                                          handler={this.handler.bind(this, i)} />;
+                                          onChange={this.handler.bind(this, i)} />;
       sourceLines.push(node);
     }
     return (<div className={'source question ' + this.props.getClassValues()}>
