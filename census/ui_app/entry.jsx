@@ -1,6 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import {render} from 'react-dom';
-// import QuestionForm from './QuestionForm.jsx';
 import EntryForm from './EntryForm.jsx';
 import $ from 'jquery';
 
