@@ -49,6 +49,14 @@
 </section>
 </form>
 
+{# submit instructions added here temporarily #}
+{% if submitInstructions %}
+<div class="alert alert-info alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  {{ submitInstructions }}
+</div>
+{% endif %}
+
 {% if datasetContext|length %}
 <div id="entry_form">{{ initialRenderedEntry }}</div>
 <script type="text/javascript">

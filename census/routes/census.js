@@ -10,8 +10,6 @@ var censusRoutes = function(router) {
 
   router.get(utils.scoped('/submit'), coreMixins, census.submit);
   router.post(utils.scoped('/submit'), coreMixins, census.submit);
-  router.get(utils.scoped('/submit-react'), coreMixins, census.submitReact);
-  router.post(utils.scoped('/submit-react'), coreMixins, census.submitReact);
   router.get(utils.scoped('/submission/:id'),
     [mixins.requireDomain, mixins.requireAvailableYear],
     census.pendingEntry);

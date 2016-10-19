@@ -12,7 +12,12 @@ const React = require('react'); // eslint-disable-line no-unused-vars
 const renderToString = require('react-dom/server').renderToString;
 const EntryForm = require('../ui_app/EntryForm');
 
-var submitGetHandler = function(req, res, data) {
+var submitGetHandler = function(req, res, data) { // eslint-disable-line no-unused-vars
+  /*
+  This controller is now orphaned, not called from anywhere and will soon be
+  removed.
+  */
+
   var addDetails = _.find(data.questions, function(q) {
     return q.id === 'details';
   });
@@ -32,7 +37,12 @@ var submitGetHandler = function(req, res, data) {
   });
 };
 
-var submitPostHandler = function(req, res, data) {
+var submitPostHandler = function(req, res, data) { // eslint-disable-line no-unused-vars
+  /*
+  This controller is now orphaned, not called from anywhere and will soon be
+  removed.
+  */
+
   var objToSave = {};
   var answers;
   var saveStrategy;
@@ -217,22 +227,6 @@ var pendingEntry = function(req, res) {
     });
 };
 
-var submit = function(req, res) {
-  var dataOptions = _.merge(modelUtils.getDataOptions(req), {
-    scoredQuestionsOnly: false
-  });
-  modelUtils.getData(dataOptions)
-    .then(function(data) {
-      data.questions = utils.getFormQuestions(req, data.questions);
-      data.currentState = utils.getCurrentState(data, req);
-      if (req.method === 'POST') {
-        submitPostHandler(req, res, data);
-      } else {
-        submitGetHandler(req, res, data);
-      }
-    }).catch(console.trace.bind(console));
-};
-
 var submitReactGet = function(req, res, data) {
   let currentDataset = _.find(data.datasets,
                               {id: data.currentState.match.dataset});
@@ -273,7 +267,9 @@ var submitReactGet = function(req, res, data) {
                                                 answers={formData}
                                                 currentPlace={data.currentState.match.place}
                                                 currentDataset={data.currentState.match.dataset} />);
-    res.render('create-react.html', {
+
+    let submitInstructions = _.get(req.params.site.settings, 'submit_page', '');
+    res.render('create.html', {
       places: places,
       datasets: datasets,
       qsSchema: JSON.stringify(qsSchema),
@@ -282,7 +278,8 @@ var submitReactGet = function(req, res, data) {
       current: data.currentState.match,
       formData: formData,
       initialRenderedEntry: initialHTML,
-      breadcrumbTitle: 'Make a Submission'
+      breadcrumbTitle: 'Make a Submission',
+      submitInstructions: marked(submitInstructions)
     });
   });
 };
@@ -315,11 +312,11 @@ var submitReactPost = function(req, res, data) {
     // Call the GET submit page with formData.
     submitReactGet(req, res, data);
   } else {
-    res.render('create-react.html');
+    res.render('create.html');
   }
 };
 
-var submitReact = function(req, res) {
+var submit = function(req, res) {
   let dataOptions = _.merge(modelUtils.getDataOptions(req), {
     scoredQuestionsOnly: false
   });
@@ -419,6 +416,5 @@ var reviewPost = function(req, res) {
 module.exports = {
   submit: submit,
   pendingEntry: pendingEntry,
-  reviewPost: reviewPost,
-  submitReact: submitReact
+  reviewPost: reviewPost
 };

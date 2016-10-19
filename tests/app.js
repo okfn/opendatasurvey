@@ -199,7 +199,7 @@ describe('Basics', function() {
     it('View submit-react page contains qsSchema', function(done) {
       var port = this.app.get('port');
       var url = 'http://site2.dev.census.org:' + port +
-        '/submit-react?place=placeOfNoEntry&dataset=datasetOfNoEntry';
+        '/submit?place=placeOfNoEntry&dataset=datasetOfNoEntry';
 
       return this.browser.visit(url, () => {
         var expectedQSetSchema = _.find(questionSetFixtures, qSet => {
@@ -283,9 +283,9 @@ describe('Basics', function() {
           assert.equal(
             this.browser.query('select[name="dataset"] option:checked').value,
             prefill.dataset);
-          assert.equal(
-            this.browser.query('textarea[name="details"]').value,
-            prefill.details);
+          // assert.equal(
+          //   this.browser.query('textarea[name="details"]').value,
+          //   prefill.details);
           // !!! Does not work - always checked exists=true checkbox
           // assert.isNotNull(this.browser.query('input[name="exists"][value="' +
           //  prefill.exists + '"]:checked'));
