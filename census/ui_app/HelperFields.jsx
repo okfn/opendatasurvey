@@ -31,7 +31,8 @@ const QuestionComments = React.createClass({
                 rows="5"
                 name={this.props.id + '_comment'}
                 value={this.props.commentValue}
-                onChange={this.handler}></textarea>
+                onChange={this.handler}
+                disabled={this.props.disabled}></textarea>
     </div>);
   },
 
