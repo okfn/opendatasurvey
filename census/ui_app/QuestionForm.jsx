@@ -14,8 +14,8 @@ const QuestionForm = React.createClass({
     let questionValues = this.props.questions.map(q => {
       return {
         id: q.id,
-        value: this.props.answers[q.id] || '',
-        commentValue: this.props.answers[q.id + '_comment'] || ''
+        value: _.get(this.props.answers[q.id], 'value', ''),
+        commentValue: _.get(this.props.answers[q.id], 'commentValue', '')
       };
     });
     return {

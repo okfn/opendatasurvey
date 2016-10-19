@@ -1,10 +1,50 @@
 import React from 'react';
 import QuestionForm from './QuestionForm.jsx';
+import $ from 'jquery';
 
 const EntryForm = React.createClass({
+
+  _post(path) {
+    let form = document.createElement('form');
+    form.setAttribute('method', 'post');
+    form.setAttribute('action', path);
+
+    let questionData = this.refs.questions.state.questionState;
+    for (let key in questionData) {
+      if (questionData.hasOwnProperty(key)) {
+        let hiddenField = document.createElement('input');
+        hiddenField.setAttribute('type', 'hidden');
+        hiddenField.setAttribute('name', questionData[key].id);
+        hiddenField.setAttribute('value', JSON.stringify(questionData[key]));
+        form.appendChild(hiddenField);
+      }
+    }
+    let additionalInputs = $('.uncontrolled-fields :input').serializeArray();
+    for (let i in additionalInputs) {
+      if (additionalInputs.hasOwnProperty(i)) {
+        let hiddenField = document.createElement('input');
+        hiddenField.setAttribute('type', 'hidden');
+        hiddenField.setAttribute('name', additionalInputs[i].name);
+        hiddenField.setAttribute('value', additionalInputs[i].value);
+        form.appendChild(hiddenField);
+      }
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+  },
+
+  onSubmitHandler(e) {
+    e.preventDefault();
+    this._post('.');
+  },
+
   render() {
-    return (<form action="." method="post" acceptCharset="utf-8">
-<section>
+    return (<form action="." method="post" acceptCharset="utf-8" onSubmit={this.onSubmitHandler}>
+<section className="uncontrolled-fields">
+  <input type="hidden" name="place" value={ this.props.currentPlace } />
+  <input type="hidden" name="dataset" value={ this.props.currentDataset } />
+
   <div className="container">
     <div className="intro">
       <h1>Section A - About you</h1>
@@ -81,14 +121,11 @@ const EntryForm = React.createClass({
       <h1>Section B - About the data</h1>
     </div>
 
-    <input type="hidden" name="place" value={ this.props.currentPlace } />
-    <input type="hidden" name="dataset" value={ this.props.currentDataset } />
-
-    <div id="questions"><QuestionForm {...this.props} labelPrefix={'B'} /></div>
+    <div id="questions"><QuestionForm {...this.props} labelPrefix={'B'} ref={'questions'} /></div>
   </div>
 </section>
 
-<section>
+<section className="uncontrolled-fields">
   <div className="container">
     <div className="text question">
       <div className="instructions"></div>
