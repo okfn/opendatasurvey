@@ -12,10 +12,11 @@ const QuestionForm = React.createClass({
 
   getInitialState() {
     let questionValues = this.props.questions.map(q => {
+      let answer = JSON.parse(_.get(this.props.answers, q.id, '{}'));
       return {
         id: q.id,
-        value: _.get(this.props.answers[q.id], 'value', ''),
-        commentValue: _.get(this.props.answers[q.id], 'commentValue', '')
+        value: _.get(answer, 'value', ''),
+        commentValue: _.get(answer, 'commentValue', '')
       };
     });
     return {
