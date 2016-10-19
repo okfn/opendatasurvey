@@ -17,28 +17,28 @@ const EntryForm = React.createClass({
         <h2><span>A1.</span> Rate your knowledge of <em>{ this.props.context.datasetName }</em>.</h2>
         <div className="answer">
           <span>
-            <input type="radio" name="youKnowledgeDomain" id="youKnowledgeDomain1" value="1" />
-            <label htmlFor="youKnowledgeDomain1">
+            <input type="radio" name="yourKnowledgeDomain" id="yourKnowledgeDomain1" value="1" />
+            <label htmlFor="yourKnowledgeDomain1">
               <span>1</span> <em className="description"> I'm not familiar at all with the field</em>
             </label>
           </span>
           <span>
-            <input type="radio" name="youKnowledgeDomain" id="youKnowledgeDomain2" value="2" />
-            <label htmlFor="youKnowledgeDomain2">
+            <input type="radio" name="yourKnowledgeDomain" id="yourKnowledgeDomain2" value="2" />
+            <label htmlFor="yourKnowledgeDomain2">
               <span>2</span> <em className="description">I have some knowledge about the field</em>
             </label>
           </span>
           <span>
-            <input type="radio" name="youKnowledgeDomain" id="youKnowledgeDomain3" value="3" />
-            <label htmlFor="youKnowledgeDomain3">
+            <input type="radio" name="yourKnowledgeDomain" id="yourKnowledgeDomain3" value="3" />
+            <label htmlFor="yourKnowledgeDomain3">
               <span>3</span> <em className="description">I have advanced knowledge in this field</em>
             </label>
           </span>
         </div>
       </div>
       <div className="comments">
-        <label htmlFor="youKnowledgeDomainComment" name="youKnowledgeDomainComment">Comments</label>
-        <textarea placeholder="Click here to tell us more about your background. What is your knowledge about the data category, the government in your country, and Open Data in general?" id="youKnowledgeDomainComment" name="youKnowledgeDomainComment" rows="5"></textarea>
+        <label htmlFor="yourKnowledgeDomainComment" name="yourKnowledgeDomainComment">Comments</label>
+        <textarea placeholder="Click here to tell us more about your background. What is your knowledge about the data category, the government in your country, and Open Data in general?" id="yourKnowledgeDomainComment" name="yourKnowledgeDomainComment" rows="5"></textarea>
       </div>
     </div>
 
@@ -48,28 +48,28 @@ const EntryForm = React.createClass({
         <h2><span>A2.</span> Rate your knowledge of open data.</h2>
         <div className="answer">
           <span>
-            <input type="radio" name="youKnowledgeOpenData" id="youKnowledgeOpenData1" value="1" />
-            <label htmlFor="youKnowledgeOpenData1">
+            <input type="radio" name="yourKnowledgeOpenData" id="yourKnowledgeOpenData1" value="1" />
+            <label htmlFor="yourKnowledgeOpenData1">
               <span>1</span> <em className="description">I'm not familiar at all with open data</em>
             </label>
           </span>
           <span>
-            <input type="radio" name="youKnowledgeOpenData" id="youKnowledgeOpenData2" value="2" />
-            <label htmlFor="youKnowledgeOpenData2">
+            <input type="radio" name="yourKnowledgeOpenData" id="yourKnowledgeOpenData2" value="2" />
+            <label htmlFor="yourKnowledgeOpenData2">
               <span>2</span> <em className="description">I have some knowledge about open data</em>
             </label>
           </span>
           <span>
-            <input type="radio" name="youKnowledgeOpenData" id="youKnowledgeOpenData3" value="3" />
-            <label htmlFor="youKnowledgeOpenData3">
+            <input type="radio" name="yourKnowledgeOpenData" id="yourKnowledgeOpenData3" value="3" />
+            <label htmlFor="yourKnowledgeOpenData3">
               <span>3</span> <em className="description">I have advanced knowledge</em>
             </label>
           </span>
         </div>
       </div>
       <div className="comments">
-        <label htmlFor="youKnowledgeOpenDatacomment">Comments</label>
-        <textarea placeholder="Add comments" id="youKnowledgeOpenDatacomment" name="youKnowledgeOpenDatacomment" rows="5"></textarea>
+        <label htmlFor="yourKnowledgeOpenDatacomment">Comments</label>
+        <textarea placeholder="Add comments" id="yourKnowledgeOpenDatacomment" name="yourKnowledgeOpenDatacomment" rows="5"></textarea>
       </div>
     </div>
   </div>
