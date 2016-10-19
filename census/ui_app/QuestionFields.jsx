@@ -1,53 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-
-const QuestionInstructions = props => {
-  if (props.instructionText) {
-    return (
-      <div className="instructions">
-        <div className="collapse" id={'instructions' + props.id}>
-          <h4>Instructions</h4>
-          <span dangerouslySetInnerHTML={{__html: props.instructionText}} />
-        </div>
-        <a className="toggle"
-           role="button"
-           data-toggle="collapse"
-           href={'#instructions' + props.id}
-           aria-expanded="false"
-           aria-controls={'instructions' + props.id}>
-            <span className="sr-only">Help</span><span className="icon">?</span>
-        </a>
-      </div>
-    );
-  }
-  return (<div className="instructions"></div>);
-};
-
-const QuestionComments = React.createClass({
-  render() {
-    return (<div className="comments">
-      <label htmlFor={this.props.id + '_comment'}>Comments</label>
-      <textarea placeholder={this.props.placeholder || 'Add comments' }
-                id={this.props.id + '_comment'}
-                rows="5"
-                name={this.props.id + '_comment'}
-                value={this.props.commentValue}
-                onChange={this.handler}></textarea>
-    </div>);
-  },
-
-  handler(e) {
-    this.props.onCommentChange(this, e.target.value);
-  }
-});
-
-const QuestionHeader = props => {
-  return (
-    <h2>
-      <span>{props.label}</span> {props.children.toString()}
-    </h2>
-  );
-};
+import * as helpers from './HelperFields.jsx';
 
 // A base Higher-Order Component providing common behaviour for all Question
 // Fields.
@@ -85,17 +38,17 @@ const baseQuestionField = QuestionField => {
 let QuestionFieldText = React.createClass({
   render() {
     return (<div className={'text question ' + this.props.getClassValues()}>
-      <QuestionInstructions instructionText={this.props.instructions}
+      <helpers.QuestionInstructions instructionText={this.props.instructions}
                             id={this.props.id} />
       <div className="main">
-        <QuestionHeader label={this.props.label}>
+        <helpers.QuestionHeader label={this.props.label}>
           {this.props.children.toString()}
-        </QuestionHeader>
+        </helpers.QuestionHeader>
         <div className="answer">
           <input type="text" value={this.props.value} name={this.props.id} onChange={this.handler} />
         </div>
       </div>
-      <QuestionComments id={this.props.id}
+      <helpers.QuestionComments id={this.props.id}
                         placeholder={this.props.placeholder}
                         commentValue={this.props.commentValue}
                         onCommentChange={this.props.onCommentChange} />
@@ -111,12 +64,12 @@ QuestionFieldText = baseQuestionField(QuestionFieldText);
 let QuestionFieldYesNo = React.createClass({
   render() {
     return (<div className={'yes-no question ' + this.props.getClassValues()}>
-      <QuestionInstructions instructionText={this.props.instructions}
+      <helpers.QuestionInstructions instructionText={this.props.instructions}
                             id={this.props.id} />
       <div className="main">
-        <QuestionHeader label={this.props.label}>
+        <helpers.QuestionHeader label={this.props.label}>
           {this.props.children.toString()}
-        </QuestionHeader>
+        </helpers.QuestionHeader>
         <div className="answer">
           <input type="radio"
                  name={this.props.id}
@@ -140,7 +93,7 @@ let QuestionFieldYesNo = React.createClass({
           </label>
         </div>
       </div>
-      <QuestionComments id={this.props.id}
+      <helpers.QuestionComments id={this.props.id}
                         placeholder={this.props.placeholder}
                         commentValue={this.props.commentValue}
                         onCommentChange={this.props.onCommentChange} />
@@ -180,17 +133,17 @@ let QuestionFieldLikert = React.createClass({
                                         checked={this.props.value === option.value} />;
     });
     return (<div className={'scale question ' + this.props.getClassValues()}>
-      <QuestionInstructions instructionText={this.props.instructions}
+      <helpers.QuestionInstructions instructionText={this.props.instructions}
                             id={this.props.id} />
       <div className="main">
-        <QuestionHeader label={this.props.label}>
+        <helpers.QuestionHeader label={this.props.label}>
           {this.props.children.toString()}
-        </QuestionHeader>
+        </helpers.QuestionHeader>
         <div className="answer">
           {scaleOptionNodes}
         </div>
       </div>
-      <QuestionComments id={this.props.id}
+      <helpers.QuestionComments id={this.props.id}
                         placeholder={this.props.placeholder}
                         commentValue={this.props.commentValue}
                         onCommentChange={this.props.onCommentChange} />
@@ -250,17 +203,17 @@ let QuestionFieldSource = React.createClass({
       sourceLines.push(node);
     }
     return (<div className={'source question ' + this.props.getClassValues()}>
-      <QuestionInstructions instructionText={this.props.instructions}
+      <helpers.QuestionInstructions instructionText={this.props.instructions}
                             id={this.props.id} />
       <div className="main">
-        <QuestionHeader label={this.props.label}>
+        <helpers.QuestionHeader label={this.props.label}>
           {this.props.children.toString()}
-        </QuestionHeader>
+        </helpers.QuestionHeader>
         <div className="answer">
           {sourceLines}
         </div>
       </div>
-      <QuestionComments id={this.props.id}
+      <helpers.QuestionComments id={this.props.id}
                         placeholder={this.props.placeholder}
                         commentValue={this.props.commentValue}
                         onCommentChange={this.props.onCommentChange} />
@@ -350,12 +303,12 @@ let QuestionFieldMultipleChoice = React.createClass({
               </QuestionFieldMultipleChoiceOption>;
     });
     return (<div className={'multiple question ' + this.props.getClassValues()}>
-      <QuestionInstructions instructionText={this.props.instructions}
+      <helpers.QuestionInstructions instructionText={this.props.instructions}
                             id={this.props.id} />
       <div className="main">
-        <QuestionHeader label={this.props.label}>
+        <helpers.QuestionHeader label={this.props.label}>
           {this.props.children.toString()}
-        </QuestionHeader>
+        </helpers.QuestionHeader>
         <div className="answer">
           <ul>
             {choices}
@@ -364,7 +317,7 @@ let QuestionFieldMultipleChoice = React.createClass({
         <QuestionFieldMultipleChoiceOther includeOther={this.props.config.includeOther}
                                           id={this.props.id + '_other'} />
       </div>
-      <QuestionComments id={this.props.id}
+      <helpers.QuestionComments id={this.props.id}
                         placeholder={this.props.placeholder}
                         commentValue={this.props.commentValue}
                         onCommentChange={this.props.onCommentChange} />
