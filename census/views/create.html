@@ -49,6 +49,19 @@
 </section>
 </form>
 
+{% if errors %}
+<div class="flash alert alert-error">
+    <p>
+        {{ gettext("The form has missing or incorrect data")}}:
+    </p>
+    {% for error in errors %}
+    <ul>
+        <li>{{ error.param }}: {{ error.msg }} {% if error.value %}(Current is '{{ error.value }}'){% endif %}</li>
+    </ul>
+    {% endfor %}
+</div>
+{% endif %}
+
 {# submit instructions added here temporarily #}
 {% if submitInstructions %}
 <div class="alert alert-info alert-dismissible" role="alert">
@@ -63,7 +76,7 @@
   window.qsSchema = {{ qsSchema|safe }};
   window.questions = {{ questions|safe }};
   window.datasetContext = {{ datasetContext|dump }};
-  window.formData = {{ formData|dump }};
+  window.formData = {{ formData|safe }};
   window.current = {{ current|dump }};
 </script>
 {% endif %}

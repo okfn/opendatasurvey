@@ -10,15 +10,12 @@ const EntryForm = React.createClass({
     form.setAttribute('action', path);
 
     let questionData = this.refs.questions.state.questionState;
-    for (let key in questionData) {
-      if (questionData.hasOwnProperty(key)) {
-        let hiddenField = document.createElement('input');
-        hiddenField.setAttribute('type', 'hidden');
-        hiddenField.setAttribute('name', questionData[key].id);
-        hiddenField.setAttribute('value', JSON.stringify(questionData[key]));
-        form.appendChild(hiddenField);
-      }
-    }
+    let answersField = document.createElement('input');
+    answersField.setAttribute('type', 'hidden');
+    answersField.setAttribute('name', 'answers');
+    answersField.setAttribute('value', JSON.stringify(questionData));
+    form.appendChild(answersField);
+
     let additionalInputs = $('.uncontrolled-fields :input').serializeArray();
     for (let i in additionalInputs) {
       if (additionalInputs.hasOwnProperty(i)) {
@@ -147,7 +144,12 @@ const EntryForm = React.createClass({
       <h1>Section B - About the data</h1>
     </div>
 
-    <div id="questions"><QuestionForm {...this.props} labelPrefix={'B'} ref={'questions'} /></div>
+    <div id="questions"><QuestionForm context={this.props.context}
+                                      qsSchema={this.props.qsSchema}
+                                      questions={this.props.questions}
+                                      answers={this.props.answers.answers}
+                                      labelPrefix={'B'}
+                                      ref={'questions'} /></div>
   </div>
 </section>
 
@@ -158,8 +160,8 @@ const EntryForm = React.createClass({
       <div className="main">
         <h2>Any other comments?</h2>
         <div className="answer">
-          <textarea name="otherComments" rows="5"
-                    defaultValue={this.props.answers.otherComments}></textarea>
+          <textarea name="details" rows="5"
+                    defaultValue={this.props.answers.details}></textarea>
         </div>
       </div>
       <div className="comments"></div>
