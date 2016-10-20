@@ -8,29 +8,29 @@ var users = require('./user');
 
 function answers() {
   return {
-    digital: true,
-    exists: 'Yes',
-    machinereadable: true,
-    openlicense: false,
-    online: false,
-    public: false,
-    publisher: 'Acme',
-    format: ['CSV', 'PSF'],
-    license: 'http://example.com'
+    digital: {id: 'digital', value: true, commentValue: ''},
+    exists: {id: 'exists', value: 'Yes', commentValue: ''},
+    machinereadable: {id: 'machinereadable', value: true, commentValue: ''},
+    openlicense: {id: 'openlicense', value: false, commentValue: ''},
+    online: {id: 'online', value: false, commentValue: ''},
+    public: {id: 'public', value: false, commentValue: ''},
+    publisher: {id: 'publisher', value: 'Acme', commentValue: ''},
+    format: {id: 'format', value: ['CSV', 'PSF'], commentValue: ''},
+    license: {id: 'license', value: 'http://example.com', commentValue: ''}
   };
 }
 
 function currentAnswers() {
   return {
-    digital: false,
-    exists: false,
-    machinereadable: false,
-    openlicense: true,
-    online: true,
-    public: true,
-    publisher: 'Acme',
-    format: ['CSV', 'PSF'],
-    license: 'http://example.com'
+    digital: {id: 'digital', value: false, commentValue: ''},
+    exists: {id: 'exists', value: false, commentValue: ''},
+    machinereadable: {id: 'machinereadable', value: false, commentValue: ''},
+    openlicense: {id: 'openlicense', value: true, commentValue: ''},
+    online: {id: 'online', value: true, commentValue: ''},
+    public: {id: 'public', value: true, commentValue: ''},
+    publisher: {id: 'publisher', value: 'Acme', commentValue: ''},
+    format: {id: 'format', value: ['CSV', 'PSF'], commentValue: ''},
+    license: {id: 'license', value: 'http://example.com', commentValue: ''}
   };
 }
 
