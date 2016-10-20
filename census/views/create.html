@@ -1,0 +1,73 @@
+{% extends "page.html" %}
+
+{% block title %}
+{{ gettext("Submit") }}
+{% endblock %}
+
+{% block body_class %}form{% endblock %}
+
+{% block content %}
+
+<form action="." method="get" accept-charset="utf-8">
+<section>
+  <div class="container">
+    <div class="select question">
+      <div class="instructions">
+      </div>
+      <div class="main">
+        <h2>{{gettext("Place")}}</h2>
+        <div class="answer">
+          <select name="place" id="place-select" required autocomplete="off">
+            <option value="">{{gettext("Please select")}}</option>
+            {% for place in places %}
+            <option value="{{place.id}}" {% if (formData and place.id == formData.place) or (current and place.id == current.place) %}selected="true"{% endif %}>{{place.name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="comments">
+      </div>
+    </div>
+
+    <div class="select question">
+      <div class="instructions"></div>
+      <div class="main">
+        <h2>{{gettext("Dataset")}}</h2>
+        <div class="answer">
+          <select name="dataset" id="dataset-select" required>
+            <option value="">{{gettext("Please select")}}</option>
+            {% for dataset in datasets %}
+            <option value="{{dataset.id}}" {% if (formData and dataset.id == formData.dataset) or (current and dataset.id == current.dataset) %}selected="true"{% endif %}>{{dataset.name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="comments">
+      </div>
+    </div>
+  </div>
+</section>
+</form>
+
+{# submit instructions added here temporarily #}
+{% if submitInstructions %}
+<div class="alert alert-info alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  {{ submitInstructions }}
+</div>
+{% endif %}
+
+{% if datasetContext|length %}
+<div id="entry_form">{{ initialRenderedEntry }}</div>
+<script type="text/javascript">
+  window.qsSchema = {{ qsSchema|safe }};
+  window.questions = {{ questions|safe }};
+  window.datasetContext = {{ datasetContext|dump }};
+  window.formData = {{ formData|dump }};
+  window.current = {{ current|dump }};
+</script>
+{% endif %}
+
+<script src="/scripts/compiled/entry.js" type="text/javascript"></script>
+
+{% endblock %}
