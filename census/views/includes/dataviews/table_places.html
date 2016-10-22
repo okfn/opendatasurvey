@@ -1,9 +1,9 @@
 {% import "macros/popovers.html" as popovers %}
 
 <div class="table-responsive">
-  <div class="sexyTableContainer" style="margin: 0px 0px 20px;">
+  <div class="sexyTableContainer">
   <div class="sexyDragContainer kinetic-active kinetic-moving-left kinetic-moving-up" style="cursor: move;">
-  <table id="places_overview_table" class="table data-table sexyTable" style="margin: 0px;">
+  <table id="places_overview_table" class="table data-table sexyTable">
     <thead>
       <tr>
         <th class="sort_rank header headerSortDown" title="{{ gettext('Sort by Rank') }}">{{ gettext('Rank') }}</th>
@@ -35,6 +35,7 @@
               <td class="status">
                 {% set entry = entries|find({'dataset': dataset.id , 'place': place.id }) %}
                 {% set submissions = pending|where({'dataset': dataset.id , 'place': place.id }) %}
+
                 {% if entry.year == currentYear -%}
                   {% set badgeClass = 'label-success' %}
                 {% elif entry.year == (currentYear - 1) %}

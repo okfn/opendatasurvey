@@ -10,9 +10,14 @@ const Promise = require('bluebird');
 const nunjucks = require('nunjucks');
 const React = require('react'); // eslint-disable-line no-unused-vars
 const renderToString = require('react-dom/server').renderToString;
-const QuestionForm = require('../ui_app/QuestionForm');
+const EntryForm = require('../ui_app/EntryForm');
 
-var submitGetHandler = function(req, res, data) {
+var submitGetHandler = function(req, res, data) { // eslint-disable-line no-unused-vars
+  /*
+  This controller is now orphaned, not called from anywhere and will soon be
+  removed.
+  */
+
   var addDetails = _.find(data.questions, function(q) {
     return q.id === 'details';
   });
@@ -32,7 +37,12 @@ var submitGetHandler = function(req, res, data) {
   });
 };
 
-var submitPostHandler = function(req, res, data) {
+var submitPostHandler = function(req, res, data) { // eslint-disable-line no-unused-vars
+  /*
+  This controller is now orphaned, not called from anywhere and will soon be
+  removed.
+  */
+
   var objToSave = {};
   var answers;
   var saveStrategy;
@@ -217,79 +227,108 @@ var pendingEntry = function(req, res) {
     });
 };
 
-var submit = function(req, res) {
-  var dataOptions = _.merge(modelUtils.getDataOptions(req), {
-    scoredQuestionsOnly: false
+var submitReactGet = function(req, res, data) {
+  let currentDataset = _.find(data.datasets,
+                              {id: data.currentState.match.dataset});
+
+  let places = modelUtils.translateSet(req, data.places);
+  let datasets = modelUtils.translateSet(req, data.datasets);
+  let qsSchemaPromise;
+  let questionsPromise;
+  let datasetContext = {};
+  if (currentDataset) {
+    qsSchemaPromise = currentDataset.getQuestionSetSchema();
+    questionsPromise = currentDataset.getQuestions();
+    datasetContext = _.assign(datasetContext, {
+      characteristics: currentDataset.characteristics,
+      datasetName: currentDataset.name,
+      updateEvery: currentDataset.updateevery
+    });
+  }
+  Promise.join(qsSchemaPromise, questionsPromise, (qsSchema, questions) => {
+    if (qsSchema === undefined) qsSchema = [];
+    questions = _.map(questions, question => {
+      return {
+        id: question.id,
+        text: nunjucks.renderString(question.question,
+                                    {datasetContext: datasetContext}),
+        type: question.type,
+        description: nunjucks.renderString(question.description,
+                                           {datasetContext: datasetContext}),
+        placeholder: question.placeholder,
+        config: question.config
+      };
+    });
+    // We might have form data to prefill the EntryForm with.
+    let formData = _.get(data, 'formData', {});
+    let initialHTML = renderToString(<EntryForm questions={questions}
+                                                qsSchema={qsSchema}
+                                                context={datasetContext}
+                                                answers={formData}
+                                                currentPlace={data.currentState.match.place}
+                                                currentDataset={data.currentState.match.dataset} />);
+
+    let submitInstructions = _.get(req.params.site.settings, 'submit_page', '');
+    res.render('create.html', {
+      places: places,
+      datasets: datasets,
+      qsSchema: JSON.stringify(qsSchema),
+      questions: JSON.stringify(questions),
+      datasetContext: datasetContext,
+      current: data.currentState.match,
+      formData: formData,
+      initialRenderedEntry: initialHTML,
+      breadcrumbTitle: 'Make a Submission',
+      submitInstructions: marked(submitInstructions)
+    });
   });
-  modelUtils.getData(dataOptions)
-    .then(function(data) {
-      data.questions = utils.getFormQuestions(req, data.questions);
-      data.currentState = utils.getCurrentState(data, req);
-      if (req.method === 'POST') {
-        submitPostHandler(req, res, data);
-      } else {
-        submitGetHandler(req, res, data);
-      }
-    }).catch(console.trace.bind(console));
 };
 
-var submitReact = function(req, res) {
+var submitReactPost = function(req, res, data) {
+  let approveFirstSubmission =
+    _.get(req.params.site.settings, 'approve_first_submission', false);
+
+  let current = data.currentState.match;
+  let pending = data.currentState.pending;
+  let errors = [];
+
+  // validation would go here, encapsulating the bulk of the controller code
+
+  if (pending) {
+    if (!Array.isArray(errors)) errors = [];
+    errors.push({
+      param: 'conflict',
+      msg: 'There is already a queued submission for this data. ' +
+        '<a href="/place/PL/YR">See the queued submission</a>'
+        .replace('PL', current.place).replace('YR', current.year)
+    });
+  }
+
+  errors.push({param: 'fake', msg: 'My fake error'});
+
+  if (errors) {
+    res.statusCode = 400;
+    data.formData = req.body;
+    // Call the GET submit page with formData.
+    submitReactGet(req, res, data);
+  } else {
+    res.render('create.html');
+  }
+};
+
+var submit = function(req, res) {
   let dataOptions = _.merge(modelUtils.getDataOptions(req), {
     scoredQuestionsOnly: false
   });
   modelUtils.getData(dataOptions)
   .then(data => {
     data.currentState = utils.getCurrentState(data, req);
-
-    let currentDataset = _.find(data.datasets,
-                                {id: data.currentState.match.dataset});
-
-    let places = modelUtils.translateSet(req, data.places);
-    let datasets = modelUtils.translateSet(req, data.datasets);
-    let qsSchemaPromise;
-    let questionsPromise;
-    let datasetContext = {};
-    if (currentDataset) {
-      qsSchemaPromise = currentDataset.getQuestionSetSchema();
-      questionsPromise = currentDataset.getQuestions();
-      datasetContext = _.assign(datasetContext, {
-        characteristics: currentDataset.characteristics,
-        datasetName: currentDataset.name,
-        updateEvery: currentDataset.updateevery
-      });
+    if (req.method === 'POST') {
+      submitReactPost(req, res, data);
+    } else {
+      submitReactGet(req, res, data);
     }
-    Promise.join(qsSchemaPromise, questionsPromise, (qsSchema, questions) => {
-      if (qsSchema === undefined) qsSchema = [];
-      questions = _.map(questions, question => {
-        return {
-          id: question.id,
-          text: nunjucks.renderString(question.question,
-                                      {datasetContext: datasetContext}),
-          type: question.type,
-          description: nunjucks.renderString(question.description,
-                                             {datasetContext: datasetContext}),
-          placeholder: question.placeholder,
-          config: question.config
-        };
-      });
-      let initialHTML = renderToString(
-        <QuestionForm questions={questions}
-                      qsSchema={qsSchema}
-                      labelPrefix={'B'}
-                      context={datasetContext} />
-      );
-      res.render('create-react.html', {
-        places: places,
-        datasets: datasets,
-        qsSchema: JSON.stringify(qsSchema),
-        questions: JSON.stringify(questions),
-        datasetContext: datasetContext,
-        current: data.currentState.match,
-        initialRenderedQuestions: initialHTML,
-        breadcrumbTitle: 'Make a Submission'
-      });
-    });
-  }).catch(console.trace.bind(console));
+  });
 };
 
 var reviewPost = function(req, res) {
@@ -377,6 +416,5 @@ var reviewPost = function(req, res) {
 module.exports = {
   submit: submit,
   pendingEntry: pendingEntry,
-  reviewPost: reviewPost,
-  submitReact: submitReact
+  reviewPost: reviewPost
 };

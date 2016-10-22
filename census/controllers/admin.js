@@ -10,6 +10,7 @@ var promisedLoad = function(req, res, options) {
     .then(function() {
       res.send({status: 'ok', message: 'ok'});
     }).catch(function(err) {
+      console.log(err.stack);
       res.send({status: 'error', message: err.message});
     });
 };
@@ -29,6 +30,7 @@ var loadConfig = function(req, res) {
     .then(function() {
       res.send({status: 'ok', message: 'ok'});
     }).catch(function(err) {
+      console.log(err.stack);
       res.send({status: 'error', message: err.message});
     });
 };
@@ -59,6 +61,7 @@ var loadQuestionSets = function(req, res) {
     .then(function() {
       res.send({status: 'ok', message: 'ok'});
     }).catch(function(err) {
+      console.log(err.stack);
       res.send({status: 'error', message: err.message});
     });
 };

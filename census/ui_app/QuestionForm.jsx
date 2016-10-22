@@ -12,9 +12,11 @@ const QuestionForm = React.createClass({
 
   getInitialState() {
     let questionValues = this.props.questions.map(q => {
+      let answer = JSON.parse(_.get(this.props.answers, q.id, '{}'));
       return {
         id: q.id,
-        value: ''
+        value: _.get(answer, 'value', ''),
+        commentValue: _.get(answer, 'commentValue', '')
       };
     });
     return {
@@ -26,6 +28,16 @@ const QuestionForm = React.createClass({
     // Set the new value for the field
     let newQuestionsState = _.map(this.state.questionState, qState => {
       if (qState.id === field.props.id) qState.value = value;
+      return qState;
+    });
+
+    this.setState({questionState: newQuestionsState});
+  },
+
+  onCommentChange(field, value) {
+    // Set the new value for the field
+    let newQuestionsState = _.map(this.state.questionState, qState => {
+      if (qState.id === field.props.id) qState.commentValue = value;
       return qState;
     });
 
@@ -148,7 +160,9 @@ const QuestionForm = React.createClass({
                         id={q.id}
                         visibleProps={this.getVisiblePropsForId(q.id)}
                         value={q.value}
+                        commentValue={q.commentValue}
                         onChange={this.onFieldChange}
+                        onCommentChange={this.onCommentChange}
                         label={this.getLabelForId(q.id)}
                         position={this.getPositionForId(q.id)}
                         instructions={
