@@ -67,7 +67,7 @@
                 {%- endif %}
 
                 {% set popoverTitle = popovers.popover_comparison_title(dataset, place) %}
-                {% set popoverContent = popovers.popover_comparison_content(entry, place, dataset, questions, gettext) %}
+                {% set popoverContent = popovers.popover_comparison_content(entry, place, dataset, questions, gettext, format) %}
                 <ul class="availability availability-comparative" data-toggle="popover" title="{% filter escape %}{{ popoverTitle }}{% endfilter %}" data-content="{% filter escape %}{{ popoverContent }}{% endfilter %}">
                 {% for question in questions -%}
                   {% if entry -%}

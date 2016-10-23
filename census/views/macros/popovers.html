@@ -3,7 +3,7 @@
 {%- endmacro %}
 
 
-{% macro popover_comparison_content(entry, place, dataset, questions, gettext) -%}
+{% macro popover_comparison_content(entry, place, dataset, questions, gettext, format) -%}
 
 {% if not entry %}
     {{ gettext('There is no data available.') }}
@@ -27,24 +27,24 @@
                     {{ gettext('Data does not exist') }}
                 {% endif %}
             {% elif question.id == 'digital' %}
-                {{ gettext("It's %(no)s digital", no=no) }}
+                {{ format("It's %(no)s digital", {no: no}) }}
             {% elif question.id == 'public' %}
-                {{ gettext("It's %(no)s public", no=no) }}
+                {{ format("It's %(no)s public", {no: no}) }}
             {% elif question.id == 'free' %}
-                {{ gettext("It's %(no)s free", no=no) }}
+                {{ format("It's %(no)s free", {no: no}) }}
             {% elif question.id == 'online' %}
-                {{ gettext("It's %(no)s online", no=no) }}
+                {{ format("It's %(no)s online", {no: no}) }}
                 {% if no == '' %}
                     <a href="{{ entry.url }}" title="{{ gettext('%(dataset)s for %(place)s on the web', dataset=dataset.id, place=place.name) }}">{{ gettext('here') }}</a>
                 {% endif %}
             {% elif question.id == 'machinereadable' %}
-                {{ gettext("It's %(no)s machine readable", no=no) }}
+                {{ format("It's %(no)s machine readable", {no: no}) }}
             {% elif question.id == 'bulk' %}
-                {{ gettext("It's %(no)s available in bulk", no=no) }}
+                {{ format("It's %(no)s available in bulk", {no: no}) }}
             {% elif question.id == 'openlicense' %}
-                {{ gettext("It's %(no)s openly licensed", no=no) }}
+                {{ format("It's %(no)s openly licensed", {no: no}) }}
             {% elif question.id == 'uptodate' %}
-                {{ gettext("It's %(no)s up to date", no=no) }}
+                {{ format("It's %(no)s up to date", {no: no}) }}
             {% endif %}
         </li>
     {% endif %}
@@ -57,8 +57,6 @@
     {{ gettext('No additional details') }}
     {% endif %}
 </p>
-<a class="btn btn-primary" href="/entry/{{ place.id }}/{{ dataset.id }}/">
-    {{ gettext('Read more') }} &raquo;
-</a>
+<a class="btn btn-primary" href="/entry/{{ place.id }}/{{ dataset.id }}/">{{ gettext('Read more') }} &raquo;</a>
 {% endif %}
 {%- endmacro %}

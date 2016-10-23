@@ -109,8 +109,8 @@ var place = function(req, res) {
       if (!data.place) {
         return res.status(404)
           .send('There is no matching place in our database. ' +
-            'Are you sure you have spelled it correctly? Please check the ' +
-            '<a href="/">overview page</a> for the list of places');
+                'Are you sure you have spelled it correctly? Please check the ' +
+                '<a href="/">overview page</a> for the list of places');
       }
 
       data.urlContext = '';
@@ -134,8 +134,8 @@ var dataset = function(req, res) {
       if (!data.dataset) {
         return res.status(404)
           .send('There is no matching dataset in our database. ' +
-            'Are you sure you have spelled it correctly? Please check the ' +
-            '<a href="/">overview page</a> for the list of places');
+                'Are you sure you have spelled it correctly? Please check the ' +
+                '<a href="/">overview page</a> for the list of places');
       }
 
       data.urlContext = '';
@@ -163,8 +163,8 @@ var entry = function(req, res) {
       if (!data.entry) {
         return res.status(404)
           .send('There is no matching entry in our database. ' +
-            'Are you sure you have spelled it correctly? Please check the ' +
-            '<a href="/">overview page</a> for the list of places');
+                'Are you sure you have spelled it correctly? Please check the ' +
+                '<a href="/">overview page</a> for the list of places');
       }
 
       data.urlContext = '';
