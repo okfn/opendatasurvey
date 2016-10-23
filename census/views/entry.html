@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{format("Entry for %(place)s / %(title)s", { place: place.name, title: dataset.name}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="page-header">
+
+    <h1>
+      <a href="/place/{{place.id}}{{ urlContext }}" data-toggle="tooltip" class="count-0" title="Go to place overview">{{place.name}}</a>
+      / <a href="/dataset/{{dataset.id}}{{ urlContext }}" data-toggle="tooltip" class="count-0" title="{{gettext("
+           Return to dataset overview")}}">{{dataset.name}}
+      </a> / <a href="{% if urlContext %}/year{{ urlContext }}{% else %}/{% endif %}">{{ entry.year }}</a>
+
+      <span class="pull-right">
+      {% include '_snippets/share_page_buttons.html' %}
+    </span>
+
+    </h1>
+
+  </div>
+
+  <p>{{dataset.description}}</p>
+
+  {% if dataset.characteristics and dataset.characteristics|length %}
+  {% include '_snippets/dataset-characteristics.html' %}
+  {% endif %}
+
+  <h3>{{gettext("Data Location")}}</h3>
+  <a href="{{entry.answers.url}}">{{entry.answers.url}}</a>
+
+  <h3>{{gettext("Comments")}}</h3>
+  <p>{{entry.details|marked}}</p>
+  {% if entry.reviewComments %}
+  <h5><strong>{{gettext("Reviewer comments")}}</strong></h5>
+  <p>{{entry.reviewComments|marked}}</p>
+  {% endif %}
+  <h3>{{gettext("Data Availability")}}</h3>
+  <ul class="data-availability clearfix unstyled">
+
+    {% for qu in questions %}
+    {% if qu.type == '' %}
+
+    {% set description = '' %}
+    {% set state = entry.answers[qu.id] %}
+
+    {% if state == true %}
+    {% set stateClass = 'yes' %}
+    {% set stateDisplay = 'Y' %}
+    {% elif state == false %}
+    {% set stateClass = 'no' %}
+    {% set stateDisplay = 'N' %}
+    {% elif state == null %}
+    {% set stateClass = 'maybe' %}
+    {% set stateDisplay = '?' %}
+
+    {% else %}
+
+    {% set stateClass = '' %}
+    {% set stateDisplay = 'No data' %}
+
+    {% endif %}
+
+    <li>
+      <span class="data-icon-wrapper">
+        <span class="data-icon {{ stateClass }}">
+          <i class="icon-{{ qu.icon }}"></i>
+          <span class="text">{{ stateDisplay }}</span>
+        </span>
+        <span class="data-icon-text">{{ qu.question }}</span>
+      </span>
+
+      <a href="javascript:;" data-toggle="popover" data-trigger="focus"
+         data-content="{{ qu.description|replace ('\"', '\'') }}" data-placement="top" data-html="true">
+      <i class="icon-info-sign"></i>
+      </a>
+
+    </li>
+    {% endif %}
+    {% endfor %}
+  </ul>
+
+  {% include '_snippets/key.html' %}
+
+  <h3>{{gettext("Details")}}</h3>
+  <table class="table table-striped yntable">
+    <tr>
+      <td>{{gettext("Date the data became available")}}</td>
+      <td>&nbsp;&nbsp;&nbsp;{% if entry.answers.dateavailable %}{{ entry.answers.dateavailable }}{% else
+        %}{{gettext("Unknown")}}{% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>{{gettext("Format of data")}}</td>
+      <td>&nbsp;&nbsp;&nbsp;{% if entry.answers.format %}{{ entry.answers.format }}{% else %}{{gettext("Unknown")}}{%
+        endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>{{gettext("Reviewer")}}</td>
+      <td>&nbsp;&nbsp;&nbsp;{% if entry.Reviewer %}{{entry.Reviewer.fullName()}}{% endif %}</td>
+    </tr>
+    <tr>
+      <td>{{gettext("Submitters")}}</td>
+      <td>&nbsp;&nbsp;&nbsp;{% if entry.Submitter %}{{entry.Submitter.fullName()}}{% endif %}</td>
+    </tr>
+    <tr>
+      <td>{{gettext("Last modified")}}</td>
+      <td>&nbsp;&nbsp;&nbsp;{% if entry.createdAt %}{{ entry.createdAt }}{% else %}{{gettext("Unknown")}}{% endif %}
+      </td>
+    </tr>
+  </table>
+</div>
+<script>
+  jQuery(function() {
+    jQuery('[data-toggle="popover"]').popover();
+  });
+</script>
+<script src="{{page.root}}/src/common.js?{{currentTime}}"></script>
+
+{% endblock %}
