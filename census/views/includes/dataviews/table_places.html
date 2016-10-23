@@ -19,7 +19,7 @@
     <tbody>
       {% for place in places %}
 
-        <tr data-rank="{{ place.rank }}" data-score="{{ place.computedScore }}" data-place="{{ place.id }}">
+        <tr data-rank="{{ place.rank }}" data-score="{{ place.computedScore }}" data-place="{{ place.id }}" data-name="{{ place.name }}">
           <td class="rank" data-rank="{{ place.rank }}">
             <div>{{ place.rank }}</div>
           </td>
@@ -91,4 +91,5 @@
   </table>
   </div>
   </div>
+  <div id="popover" class="popover fade bottom in" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>
 </div>
