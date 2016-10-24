@@ -194,7 +194,7 @@ describe('Admin page', function () {
           {where: {questionsetid: qsid}});
       })
       .then(questions => {
-        assert.equal(questions.length, 15);
+        assert.equal(questions.length, 16);
       });
     });
   });

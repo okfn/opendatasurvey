@@ -36,7 +36,6 @@ describe('<QuestionForm />', () => {
     it('renders QuestionFieldYesNo type', function() {
       this.wrapper =
         mount(<QuestionForm questions={this.baseQuestions} qsSchema={this.baseQSSchema} context={{}} answers={{}} />);
-      console.log(this.wrapper);
       expect(this.wrapper.find('QuestionFieldYesNo')).to.have.length(1);
     });
     it('renders QuestionFieldText type', function() {

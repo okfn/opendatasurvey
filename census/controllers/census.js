@@ -5,6 +5,7 @@ const marked = require('marked');
 const config = require('../config');
 const uuid = require('node-uuid');
 const utils = require('./utils');
+const util = require('util');
 const modelUtils = require('../models').utils;
 const Promise = require('bluebird');
 const nunjucks = require('nunjucks');
@@ -276,10 +277,11 @@ var submitReactGet = function(req, res, data) {
       questions: JSON.stringify(questions),
       datasetContext: datasetContext,
       current: data.currentState.match,
-      formData: formData,
+      formData: JSON.stringify(formData),
       initialRenderedEntry: initialHTML,
       breadcrumbTitle: 'Make a Submission',
-      submitInstructions: marked(submitInstructions)
+      submitInstructions: marked(submitInstructions),
+      errors: _.get(data, 'errors')
     });
   });
 };
@@ -296,23 +298,105 @@ var submitReactPost = function(req, res, data) {
 
   if (pending) {
     if (!Array.isArray(errors)) errors = [];
+    let msg = util.format('There is already a queued submission for this data. ' +
+                          '<a href="/place/%s/%s">See the queued submission</a>',
+                          current.place, req.params.year);
     errors.push({
       param: 'conflict',
-      msg: 'There is already a queued submission for this data. ' +
-        '<a href="/place/PL/YR">See the queued submission</a>'
-        .replace('PL', current.place).replace('YR', current.year)
+      msg: msg
     });
   }
 
-  errors.push({param: 'fake', msg: 'My fake error'});
+  // errors.push({param: 'fake', msg: 'My fake error'});
 
-  if (errors) {
+  if (errors.length) {
     res.statusCode = 400;
     data.formData = req.body;
+    data.formData.answers = JSON.parse(data.formData.answers);
+    data.errors = errors;
     // Call the GET submit page with formData.
     submitReactGet(req, res, data);
   } else {
-    res.render('create.html');
+    let saveStrategy;
+    let objToSave = {};
+    let submitterId = utils.ANONYMOUS_USER_ID;
+
+    let defaultObjectToSave = {
+      id: uuid.v4(),
+      site: req.params.site.id,
+      place: req.body.place,
+      dataset: req.body.dataset,
+      details: req.body.details,
+      year: req.app.get('year'),
+      submitterId: submitterId
+    };
+
+    if (!current || current.year !== req.app.get('year')) {
+      console.log('We are definitely creating a new entry');
+
+      objToSave = defaultObjectToSave;
+
+      if (approveFirstSubmission) {
+        objToSave.isCurrent = true;
+        objToSave.reviewed = true;
+        objToSave.reviewResult = true;
+        objToSave.reviewerId = submitterId;
+      } else {
+        objToSave.isCurrent = false;
+      }
+
+      saveStrategy = 'create';
+    } else if (current.isCurrent) {
+      console.log('We have existing current entry, so create a new submission');
+
+      objToSave = defaultObjectToSave;
+      objToSave.isCurrent = false;
+
+      saveStrategy = 'create';
+    } else {
+      console.log('We have existing submission and no current entry. We ' +
+        'usually should not get here because of earlier condition that ' +
+        'lodges a conflict error on the form');
+
+      objToSave = current;
+
+      saveStrategy = 'update';
+    }
+
+    objToSave.answers = JSON.parse(req.body.answers);
+    // objToSave.answers = utils.normalizedAnswers(answers);
+
+    let query;
+    if (saveStrategy === 'create') {
+      query = req.app.get('models').Entry.create(objToSave);
+    } else if (saveStrategy === 'update') {
+      query = objToSave.save();
+    }
+
+    query.then(function(result) {
+      let msg;
+      let redirectPath;
+      let submissionPath;
+
+      if (result) {
+        let msgTmpl = 'Thanks for your submission.%s You can check ' +
+          'back here any time to see the current status.';
+        submissionPath = '/submission/' + result.id;
+        if (result.isCurrent) {
+          msg = util.format(msgTmpl, '');
+          redirectPath = '/place/' + result.place;
+        } else {
+          msg = util.format(msgTmpl, ' It will now be reviewed by the editors.');
+          redirectPath = submissionPath;
+        }
+        req.flash('info', msg);
+      } else {
+        msg = 'There was an error!';
+        req.flash('error', msg);
+      }
+
+      res.redirect(redirectPath + '?post_submission=' + submissionPath);
+    }).catch(console.trace.bind(console));
   }
 };
 
