@@ -189,7 +189,7 @@ var submitPostHandler = function(req, res, data) { // eslint-disable-line no-unu
 };
 
 var submitReactGet = function(req, res, data) {
-  let currentDataset = _.find(data.datasets,
+  let dataset = _.find(data.datasets,
                               {id: data.currentState.match.dataset});
 
   let places = modelUtils.translateSet(req, data.places);
@@ -197,13 +197,13 @@ var submitReactGet = function(req, res, data) {
   let qsSchemaPromise;
   let questionsPromise;
   let datasetContext = {};
-  if (currentDataset) {
-    qsSchemaPromise = currentDataset.getQuestionSetSchema();
-    questionsPromise = currentDataset.getQuestions();
+  if (dataset) {
+    qsSchemaPromise = dataset.getQuestionSetSchema();
+    questionsPromise = dataset.getQuestions();
     datasetContext = _.assign(datasetContext, {
-      characteristics: currentDataset.characteristics,
-      datasetName: currentDataset.name,
-      updateEvery: currentDataset.updateevery
+      characteristics: dataset.characteristics,
+      datasetName: dataset.name,
+      updateEvery: dataset.updateevery
     });
   }
   Promise.join(qsSchemaPromise, questionsPromise, (qsSchema, questions) => {
@@ -226,8 +226,8 @@ var submitReactGet = function(req, res, data) {
                                                 qsSchema={qsSchema}
                                                 context={datasetContext}
                                                 answers={formData}
-                                                currentPlace={data.currentState.match.place}
-                                                currentDataset={data.currentState.match.dataset} />);
+                                                place={data.currentState.match.place}
+                                                dataset={data.currentState.match.dataset} />);
 
     let submitInstructions = _.get(req.params.site.settings, 'submit_page', '');
     res.render('create.html', {

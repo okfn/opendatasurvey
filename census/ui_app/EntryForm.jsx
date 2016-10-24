@@ -39,8 +39,8 @@ const EntryForm = React.createClass({
   render() {
     return (<form action="." method="post" acceptCharset="utf-8" onSubmit={this.onSubmitHandler}>
 <section className="uncontrolled-fields">
-  <input type="hidden" name="place" value={ this.props.currentPlace } />
-  <input type="hidden" name="dataset" value={ this.props.currentDataset } />
+  <input type="hidden" name="place" value={ this.props.place } />
+  <input type="hidden" name="dataset" value={ this.props.dataset } />
 
   <div className="container">
     <div className="intro">

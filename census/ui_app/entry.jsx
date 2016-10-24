@@ -23,6 +23,6 @@ render(<EntryForm questions={questions}
                   qsSchema={qsSchema}
                   context={datasetContext}
                   answers={answers}
-                  currentPlace={current.place}
-                  currentDataset={current.dataset} />,
+                  place={current.place}
+                  dataset={current.dataset} />,
        document.getElementById('entry_form'));
