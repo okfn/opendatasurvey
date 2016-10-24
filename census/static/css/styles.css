@@ -8266,7 +8266,7 @@ body.godi #header {
 
 .site-footer {
   color: rgba(255, 255, 255, 0.6);
-  padding: 30px;
+  padding: 30px 0;
   font-size: 14px; }
   .site-footer a {
     color: rgba(255, 255, 255, 0.9); }
@@ -8829,44 +8829,63 @@ body.form select,
 body.form a:active,
 body.form a:focus {
   outline: none; }
-body.form section {
+body.form section,
+body.form .form-header,
+body.form .form-footer {
   border-bottom: solid 2px #333333; }
-  body.form section .container {
+  body.form section .container,
+  body.form .form-header .container,
+  body.form .form-footer .container {
     padding-top: 30px;
     padding-bottom: 30px; }
-    @media (min-width: 992px) {
-      body.form section .container {
-        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAABCAYAAAD0In+KAAAAEklEQVQImWP48OHD/w8fPvwHACIjB58VdezUAAAAAElFTkSuQmCC);
-        background-repeat: repeat-y;
-        background-position: 76% 0; } }
-  body.form section .intro {
+  body.form section .intro,
+  body.form .form-header .intro,
+  body.form .form-footer .intro {
     margin-left: -15px;
     margin-right: -15px; }
-    body.form section .intro:before, body.form section .intro:after {
+    body.form section .intro:before, body.form section .intro:after,
+    body.form .form-header .intro:before,
+    body.form .form-header .intro:after,
+    body.form .form-footer .intro:before,
+    body.form .form-footer .intro:after {
       content: " ";
       display: table; }
-    body.form section .intro:after {
+    body.form section .intro:after,
+    body.form .form-header .intro:after,
+    body.form .form-footer .intro:after {
       clear: both; }
     @media (min-width: 992px) {
-      body.form section .intro {
+      body.form section .intro,
+      body.form .form-header .intro,
+      body.form .form-footer .intro {
         margin-bottom: 30px; } }
-    body.form section .intro h1 {
+    body.form section .intro h1,
+    body.form .form-header .intro h1,
+    body.form .form-footer .intro h1 {
       position: relative;
       min-height: 1px;
       padding-left: 15px;
       padding-right: 15px;
       margin: 0; }
       @media (min-width: 992px) {
-        body.form section .intro h1 {
+        body.form section .intro h1,
+        body.form .form-header .intro h1,
+        body.form .form-footer .intro h1 {
           float: left;
           width: 50%; } }
       @media (min-width: 992px) {
-        body.form section .intro h1 {
+        body.form section .intro h1,
+        body.form .form-header .intro h1,
+        body.form .form-footer .intro h1 {
           margin-left: 25%; } }
       @media (min-width: 992px) {
-        body.form section .intro h1 {
+        body.form section .intro h1,
+        body.form .form-header .intro h1,
+        body.form .form-footer .intro h1 {
           margin-top: 20px; } }
-    body.form section .intro p {
+    body.form section .intro p,
+    body.form .form-header .intro p,
+    body.form .form-footer .intro p {
       clear: left;
       position: relative;
       min-height: 1px;
@@ -8875,33 +8894,55 @@ body.form section {
       font-size: 16px;
       margin-top: 10px; }
       @media (min-width: 992px) {
-        body.form section .intro p {
+        body.form section .intro p,
+        body.form .form-header .intro p,
+        body.form .form-footer .intro p {
           float: left;
           width: 50%; } }
       @media (min-width: 992px) {
-        body.form section .intro p {
+        body.form section .intro p,
+        body.form .form-header .intro p,
+        body.form .form-footer .intro p {
           margin-left: 25%; } }
-  body.form section .question {
+  body.form section .question,
+  body.form .form-header .question,
+  body.form .form-footer .question {
     clear: both;
     margin-left: -15px;
     margin-right: -15px;
     padding-top: 30px; }
-    body.form section .question:before, body.form section .question:after {
+    body.form section .question:before, body.form section .question:after,
+    body.form .form-header .question:before,
+    body.form .form-header .question:after,
+    body.form .form-footer .question:before,
+    body.form .form-footer .question:after {
       content: " ";
       display: table; }
-    body.form section .question:after {
+    body.form section .question:after,
+    body.form .form-header .question:after,
+    body.form .form-footer .question:after {
       clear: both; }
     @media (min-width: 992px) {
-      body.form section .question {
+      body.form section .question,
+      body.form .form-header .question,
+      body.form .form-footer .question {
         padding-bottom: 30px; } }
-    body.form section .question h2 {
+    body.form section .question h2,
+    body.form .form-header .question h2,
+    body.form .form-footer .question h2 {
       font-size: 26px;
       margin-top: 0;
       margin-bottom: 0.6em; }
-    body.form section .question h3, body.form section .question.sub h2 {
+    body.form section .question h3, body.form section .question.sub h2,
+    body.form .form-header .question h3,
+    body.form .form-header .question.sub h2,
+    body.form .form-footer .question h3,
+    body.form .form-footer .question.sub h2 {
       font-size: 20px;
       margin-top: 0; }
-    body.form section .question .instructions {
+    body.form section .question .instructions,
+    body.form .form-header .question .instructions,
+    body.form .form-footer .question .instructions {
       position: relative;
       min-height: 1px;
       padding-left: 15px;
@@ -8910,24 +8951,36 @@ body.form section {
       text-align: right;
       font-size: 14px; }
       @media (min-width: 992px) {
-        body.form section .question .instructions {
+        body.form section .question .instructions,
+        body.form .form-header .question .instructions,
+        body.form .form-footer .question .instructions {
           float: left;
           width: 25%; } }
-      body.form section .question .instructions div {
+      body.form section .question .instructions div,
+      body.form .form-header .question .instructions div,
+      body.form .form-footer .question .instructions div {
         text-align: left;
         background-color: #333333;
         z-index: 1;
         padding: 22.5px;
         margin-bottom: 30px; }
-        body.form section .question .instructions div h4 {
+        body.form section .question .instructions div h4,
+        body.form .form-header .question .instructions div h4,
+        body.form .form-footer .question .instructions div h4 {
           margin-top: 0; }
-        body.form section .question .instructions div :last-child {
+        body.form section .question .instructions div :last-child,
+        body.form .form-header .question .instructions div :last-child,
+        body.form .form-footer .question .instructions div :last-child {
           margin-bottom: 0; }
         @media (min-width: 992px) {
-          body.form section .question .instructions div {
+          body.form section .question .instructions div,
+          body.form .form-header .question .instructions div,
+          body.form .form-footer .question .instructions div {
             position: absolute;
             top: -20%; }
-            body.form section .question .instructions div:after {
+            body.form section .question .instructions div:after,
+            body.form .form-header .question .instructions div:after,
+            body.form .form-footer .question .instructions div:after {
               content: '';
               width: 0;
               height: 0;
@@ -8937,21 +8990,41 @@ body.form section {
               position: absolute;
               top: 10px;
               right: -8px; } }
-        body.form section .question .instructions div.in, body.form section .question .instructions div.collapsing {
+        body.form section .question .instructions div.in, body.form section .question .instructions div.collapsing,
+        body.form .form-header .question .instructions div.in,
+        body.form .form-header .question .instructions div.collapsing,
+        body.form .form-footer .question .instructions div.in,
+        body.form .form-footer .question .instructions div.collapsing {
           color: #fff; }
           @media (min-width: 992px) {
-            body.form section .question .instructions div.in + .toggle, body.form section .question .instructions div.collapsing + .toggle {
+            body.form section .question .instructions div.in + .toggle, body.form section .question .instructions div.collapsing + .toggle,
+            body.form .form-header .question .instructions div.in + .toggle,
+            body.form .form-header .question .instructions div.collapsing + .toggle,
+            body.form .form-footer .question .instructions div.in + .toggle,
+            body.form .form-footer .question .instructions div.collapsing + .toggle {
               position: relative;
               z-index: 2; } }
-          body.form section .question .instructions div.in + .toggle .icon, body.form section .question .instructions div.collapsing + .toggle .icon {
+          body.form section .question .instructions div.in + .toggle .icon, body.form section .question .instructions div.collapsing + .toggle .icon,
+          body.form .form-header .question .instructions div.in + .toggle .icon,
+          body.form .form-header .question .instructions div.collapsing + .toggle .icon,
+          body.form .form-footer .question .instructions div.in + .toggle .icon,
+          body.form .form-footer .question .instructions div.collapsing + .toggle .icon {
             background-color: #fff;
             top: 5px;
             right: 25px; }
             @media (min-width: 992px) {
-              body.form section .question .instructions div.in + .toggle .icon, body.form section .question .instructions div.collapsing + .toggle .icon {
+              body.form section .question .instructions div.in + .toggle .icon, body.form section .question .instructions div.collapsing + .toggle .icon,
+              body.form .form-header .question .instructions div.in + .toggle .icon,
+              body.form .form-header .question .instructions div.collapsing + .toggle .icon,
+              body.form .form-footer .question .instructions div.in + .toggle .icon,
+              body.form .form-footer .question .instructions div.collapsing + .toggle .icon {
                 top: auto;
                 right: auto; } }
-            body.form section .question .instructions div.in + .toggle .icon:after, body.form section .question .instructions div.collapsing + .toggle .icon:after {
+            body.form section .question .instructions div.in + .toggle .icon:after, body.form section .question .instructions div.collapsing + .toggle .icon:after,
+            body.form .form-header .question .instructions div.in + .toggle .icon:after,
+            body.form .form-header .question .instructions div.collapsing + .toggle .icon:after,
+            body.form .form-footer .question .instructions div.in + .toggle .icon:after,
+            body.form .form-footer .question .instructions div.collapsing + .toggle .icon:after {
               content: 'x';
               position: absolute;
               top: 0;
@@ -8959,7 +9032,9 @@ body.form section {
               right: 0;
               color: #333333;
               line-height: 1.3; }
-      body.form section .question .instructions .toggle .icon {
+      body.form section .question .instructions .toggle .icon,
+      body.form .form-header .question .instructions .toggle .icon,
+      body.form .form-footer .question .instructions .toggle .icon {
         background-color: #777777;
         color: #fff;
         width: 20px;
@@ -8974,36 +9049,52 @@ body.form section {
         right: 20px;
         z-index: 2; }
         @media (min-width: 992px) {
-          body.form section .question .instructions .toggle .icon {
+          body.form section .question .instructions .toggle .icon,
+          body.form .form-header .question .instructions .toggle .icon,
+          body.form .form-footer .question .instructions .toggle .icon {
             position: relative;
             top: auto;
             right: auto;
             z-index: auto; } }
-    body.form section .question .main {
+    body.form section .question .main,
+    body.form .form-header .question .main,
+    body.form .form-footer .question .main {
       position: relative;
       min-height: 1px;
       padding-left: 15px;
       padding-right: 15px; }
       @media (min-width: 992px) {
-        body.form section .question .main {
+        body.form section .question .main,
+        body.form .form-header .question .main,
+        body.form .form-footer .question .main {
           float: left;
           width: 50%; } }
-      body.form section .question .main p {
+      body.form section .question .main p,
+      body.form .form-header .question .main p,
+      body.form .form-footer .question .main p {
         margin-bottom: 1.2em; }
-    body.form section .question .comments {
+    body.form section .question .comments,
+    body.form .form-header .question .comments,
+    body.form .form-footer .question .comments {
       position: relative;
       min-height: 1px;
       padding-left: 15px;
       padding-right: 15px; }
       @media (min-width: 992px) {
-        body.form section .question .comments {
+        body.form section .question .comments,
+        body.form .form-header .question .comments,
+        body.form .form-footer .question .comments {
           float: left;
           width: 25%; } }
-      body.form section .question .comments label {
+      body.form section .question .comments label,
+      body.form .form-header .question .comments label,
+      body.form .form-footer .question .comments label {
         color: #777777;
         margin-top: 15px; }
         @media (min-width: 992px) {
-          body.form section .question .comments label {
+          body.form section .question .comments label,
+          body.form .form-header .question .comments label,
+          body.form .form-footer .question .comments label {
             margin-top: 0;
             padding-left: 18px;
             height: 0;
@@ -9011,7 +9102,9 @@ body.form section {
             overflow: hidden;
             position: absolute;
             top: -30px; } }
-      body.form section .question .comments textarea {
+      body.form section .question .comments textarea,
+      body.form .form-header .question .comments textarea,
+      body.form .form-footer .question .comments textarea {
         width: 100%;
         padding: 15px 20px;
         resize: none;
@@ -9021,27 +9114,41 @@ body.form section {
         background-color: transparent;
         font-size: 14px; }
         @media (min-width: 992px) {
-          body.form section .question .comments textarea {
+          body.form section .question .comments textarea,
+          body.form .form-header .question .comments textarea,
+          body.form .form-footer .question .comments textarea {
             margin-top: -10px;
             margin-left: -2px;
             margin-bottom: 0;
             border: none; } }
-        body.form section .question .comments textarea:focus {
+        body.form section .question .comments textarea:focus,
+        body.form .form-header .question .comments textarea:focus,
+        body.form .form-footer .question .comments textarea:focus {
           background-color: #eeeeee; }
-    body.form section .question.yes-no .answer {
+    body.form section .question.yes-no .answer,
+    body.form .form-header .question.yes-no .answer,
+    body.form .form-footer .question.yes-no .answer {
       display: table;
       width: 100%;
       table-layout: fixed; }
-      body.form section .question.yes-no .answer input {
+      body.form section .question.yes-no .answer input,
+      body.form .form-header .question.yes-no .answer input,
+      body.form .form-footer .question.yes-no .answer input {
         display: none; }
-        body.form section .question.yes-no .answer input:checked + label span {
+        body.form section .question.yes-no .answer input:checked + label span,
+        body.form .form-header .question.yes-no .answer input:checked + label span,
+        body.form .form-footer .question.yes-no .answer input:checked + label span {
           background-color: #333333;
           color: #fff; }
-      body.form section .question.yes-no .answer label {
+      body.form section .question.yes-no .answer label,
+      body.form .form-header .question.yes-no .answer label,
+      body.form .form-footer .question.yes-no .answer label {
         display: table-cell;
         text-align: center;
         font-weight: normal; }
-        body.form section .question.yes-no .answer label span {
+        body.form section .question.yes-no .answer label span,
+        body.form .form-header .question.yes-no .answer label span,
+        body.form .form-footer .question.yes-no .answer label span {
           display: block;
           border-style: solid;
           border-color: #333333;
@@ -9053,36 +9160,62 @@ body.form section {
           text-align: center;
           font-weight: bold;
           margin-bottom: 0.5em; }
-        body.form section .question.yes-no .answer label em {
+        body.form section .question.yes-no .answer label em,
+        body.form .form-header .question.yes-no .answer label em,
+        body.form .form-footer .question.yes-no .answer label em {
           display: none; }
-        body.form section .question.yes-no .answer label:first-of-type {
+        body.form section .question.yes-no .answer label:first-of-type,
+        body.form .form-header .question.yes-no .answer label:first-of-type,
+        body.form .form-footer .question.yes-no .answer label:first-of-type {
           text-align: left; }
-          body.form section .question.yes-no .answer label:first-of-type span {
+          body.form section .question.yes-no .answer label:first-of-type span,
+          body.form .form-header .question.yes-no .answer label:first-of-type span,
+          body.form .form-footer .question.yes-no .answer label:first-of-type span {
             border-left-width: 2px; }
-          body.form section .question.yes-no .answer label:first-of-type em {
+          body.form section .question.yes-no .answer label:first-of-type em,
+          body.form .form-header .question.yes-no .answer label:first-of-type em,
+          body.form .form-footer .question.yes-no .answer label:first-of-type em {
             display: block; }
-        body.form section .question.yes-no .answer label:last-of-type {
+        body.form section .question.yes-no .answer label:last-of-type,
+        body.form .form-header .question.yes-no .answer label:last-of-type,
+        body.form .form-footer .question.yes-no .answer label:last-of-type {
           text-align: right; }
-          body.form section .question.yes-no .answer label:last-of-type span {
+          body.form section .question.yes-no .answer label:last-of-type span,
+          body.form .form-header .question.yes-no .answer label:last-of-type span,
+          body.form .form-footer .question.yes-no .answer label:last-of-type span {
             border-right-width: 2px; }
-          body.form section .question.yes-no .answer label:last-of-type em {
+          body.form section .question.yes-no .answer label:last-of-type em,
+          body.form .form-header .question.yes-no .answer label:last-of-type em,
+          body.form .form-footer .question.yes-no .answer label:last-of-type em {
             display: block; }
-    body.form section .question.scale .answer {
+    body.form section .question.scale .answer,
+    body.form .form-header .question.scale .answer,
+    body.form .form-footer .question.scale .answer {
       display: table;
       width: 100%;
       table-layout: fixed; }
-      body.form section .question.scale .answer input {
+      body.form section .question.scale .answer input,
+      body.form .form-header .question.scale .answer input,
+      body.form .form-footer .question.scale .answer input {
         display: none; }
-        body.form section .question.scale .answer input:checked + label span {
+        body.form section .question.scale .answer input:checked + label span,
+        body.form .form-header .question.scale .answer input:checked + label span,
+        body.form .form-footer .question.scale .answer input:checked + label span {
           background-color: #333333;
           color: #fff; }
-      body.form section .question.scale .answer > span {
+      body.form section .question.scale .answer > span,
+      body.form .form-header .question.scale .answer > span,
+      body.form .form-footer .question.scale .answer > span {
         display: table-cell;
         text-align: center;
         font-weight: normal; }
-        body.form section .question.scale .answer > span label {
+        body.form section .question.scale .answer > span label,
+        body.form .form-header .question.scale .answer > span label,
+        body.form .form-footer .question.scale .answer > span label {
           display: block; }
-        body.form section .question.scale .answer > span span {
+        body.form section .question.scale .answer > span span,
+        body.form .form-header .question.scale .answer > span span,
+        body.form .form-footer .question.scale .answer > span span {
           display: block;
           border-style: solid;
           border-color: #333333;
@@ -9094,61 +9227,101 @@ body.form section {
           text-align: center;
           font-weight: bold;
           margin-bottom: 0.5em; }
-        body.form section .question.scale .answer > span em {
+        body.form section .question.scale .answer > span em,
+        body.form .form-header .question.scale .answer > span em,
+        body.form .form-footer .question.scale .answer > span em {
           display: none; }
-        body.form section .question.scale .answer > span:first-of-type {
+        body.form section .question.scale .answer > span:first-of-type,
+        body.form .form-header .question.scale .answer > span:first-of-type,
+        body.form .form-footer .question.scale .answer > span:first-of-type {
           text-align: left; }
-          body.form section .question.scale .answer > span:first-of-type span {
+          body.form section .question.scale .answer > span:first-of-type span,
+          body.form .form-header .question.scale .answer > span:first-of-type span,
+          body.form .form-footer .question.scale .answer > span:first-of-type span {
             border-left-width: 2px; }
-          body.form section .question.scale .answer > span:first-of-type em {
+          body.form section .question.scale .answer > span:first-of-type em,
+          body.form .form-header .question.scale .answer > span:first-of-type em,
+          body.form .form-footer .question.scale .answer > span:first-of-type em {
             display: block; }
-        body.form section .question.scale .answer > span:last-of-type {
+        body.form section .question.scale .answer > span:last-of-type,
+        body.form .form-header .question.scale .answer > span:last-of-type,
+        body.form .form-footer .question.scale .answer > span:last-of-type {
           text-align: right; }
-          body.form section .question.scale .answer > span:last-of-type span {
+          body.form section .question.scale .answer > span:last-of-type span,
+          body.form .form-header .question.scale .answer > span:last-of-type span,
+          body.form .form-footer .question.scale .answer > span:last-of-type span {
             border-right-width: 2px; }
-          body.form section .question.scale .answer > span:last-of-type em {
+          body.form section .question.scale .answer > span:last-of-type em,
+          body.form .form-header .question.scale .answer > span:last-of-type em,
+          body.form .form-footer .question.scale .answer > span:last-of-type em {
             display: block; }
-    body.form section .question.source .answer {
+    body.form section .question.source .answer,
+    body.form .form-header .question.source .answer,
+    body.form .form-footer .question.source .answer {
       display: table;
       width: 100%; }
-      body.form section .question.source .answer ul {
+      body.form section .question.source .answer ul,
+      body.form .form-header .question.source .answer ul,
+      body.form .form-footer .question.source .answer ul {
         display: table-row; }
-        body.form section .question.source .answer ul li {
+        body.form section .question.source .answer ul li,
+        body.form .form-header .question.source .answer ul li,
+        body.form .form-footer .question.source .answer ul li {
           display: table-cell;
           padding: 2px; }
-          body.form section .question.source .answer ul li input {
+          body.form section .question.source .answer ul li input,
+          body.form .form-header .question.source .answer ul li input,
+          body.form .form-footer .question.source .answer ul li input {
             width: 100%;
             border: solid 2px #333333;
             padding: 4px 8px; }
-          body.form section .question.source .answer ul li .select {
+          body.form section .question.source .answer ul li .select,
+          body.form .form-header .question.source .answer ul li .select,
+          body.form .form-footer .question.source .answer ul li .select {
             display: block;
             border: solid 2px #333333;
             padding: 4px 2px 4px 0; }
-            body.form section .question.source .answer ul li .select select {
+            body.form section .question.source .answer ul li .select select,
+            body.form .form-header .question.source .answer ul li .select select,
+            body.form .form-footer .question.source .answer ul li .select select {
               width: 100%;
               border: none;
               background-color: #fff; }
-        body.form section .question.source .answer ul:nth-child(n+2) label {
+        body.form section .question.source .answer ul:nth-child(n+2) label,
+        body.form .form-header .question.source .answer ul:nth-child(n+2) label,
+        body.form .form-footer .question.source .answer ul:nth-child(n+2) label {
           display: none; }
-      body.form section .question.source .answer .add {
+      body.form section .question.source .answer .add,
+      body.form .form-header .question.source .answer .add,
+      body.form .form-footer .question.source .answer .add {
         color: #777777;
         display: inline-block;
         margin-top: 0.25em; }
-        body.form section .question.source .answer .add:before {
+        body.form section .question.source .answer .add:before,
+        body.form .form-header .question.source .answer .add:before,
+        body.form .form-footer .question.source .answer .add:before {
           content: '+';
           font-weight: bold; }
-    body.form section .question.select .answer {
+    body.form section .question.select .answer,
+    body.form .form-header .question.select .answer,
+    body.form .form-footer .question.select .answer {
       border: solid 2px #333333;
       font-size: 18px;
       font-weight: bold;
       padding: 0.6em 0.5em;
       position: relative; }
-      body.form section .question.select .answer select {
+      body.form section .question.select .answer select,
+      body.form .form-header .question.select .answer select,
+      body.form .form-footer .question.select .answer select {
         width: 100%;
         border: none;
         background-color: #fff;
-        -webkit-appearance: none; }
-      body.form section .question.select .answer:after {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        line-height: normal; }
+      body.form section .question.select .answer:after,
+      body.form .form-header .question.select .answer:after,
+      body.form .form-footer .question.select .answer:after {
         content: '';
         width: 0;
         height: 0;
@@ -9161,10 +9334,14 @@ body.form section {
         right: 1em;
         top: 50%;
         margin-top: -2px; }
-    body.form section .question.multiple ul {
+    body.form section .question.multiple ul,
+    body.form .form-header .question.multiple ul,
+    body.form .form-footer .question.multiple ul {
       margin: 0 -5px;
       padding: 0; }
-      body.form section .question.multiple ul li {
+      body.form section .question.multiple ul li,
+      body.form .form-header .question.multiple ul li,
+      body.form .form-footer .question.multiple ul li {
         display: block;
         position: relative;
         min-height: 1px;
@@ -9172,17 +9349,23 @@ body.form section {
         padding-right: 15px;
         padding: 5px; }
         @media (min-width: 992px) {
-          body.form section .question.multiple ul li {
+          body.form section .question.multiple ul li,
+          body.form .form-header .question.multiple ul li,
+          body.form .form-footer .question.multiple ul li {
             float: left;
             width: 50%; } }
-        body.form section .question.multiple ul li label {
+        body.form section .question.multiple ul li label,
+        body.form .form-header .question.multiple ul li label,
+        body.form .form-footer .question.multiple ul li label {
           display: block;
           border: solid 2px #333333;
           font-size: 18px;
           padding: 0.5em;
           margin: 0;
           cursor: pointer; }
-          body.form section .question.multiple ul li label .letter {
+          body.form section .question.multiple ul li label .letter,
+          body.form .form-header .question.multiple ul li label .letter,
+          body.form .form-footer .question.multiple ul li label .letter {
             display: inline-block;
             border: solid 2px #333333;
             width: 1.95em;
@@ -9194,7 +9377,9 @@ body.form section {
             float: left;
             overflow: hidden;
             position: relative; }
-            body.form section .question.multiple ul li label .letter:after {
+            body.form section .question.multiple ul li label .letter:after,
+            body.form .form-header .question.multiple ul li label .letter:after,
+            body.form .form-footer .question.multiple ul li label .letter:after {
               position: absolute;
               top: 0;
               right: 0;
@@ -9208,168 +9393,445 @@ body.form section {
               line-height: 1;
               -webkit-font-smoothing: antialiased;
               -moz-osx-font-smoothing: grayscale; }
-          body.form section .question.multiple ul li label .description {
+          body.form section .question.multiple ul li label .description,
+          body.form .form-header .question.multiple ul li label .description,
+          body.form .form-footer .question.multiple ul li label .description {
             display: block;
             margin-left: 2em; }
-        body.form section .question.multiple ul li input {
+        body.form section .question.multiple ul li input,
+        body.form .form-header .question.multiple ul li input,
+        body.form .form-footer .question.multiple ul li input {
           display: none; }
-          body.form section .question.multiple ul li input:checked + label {
+          body.form section .question.multiple ul li input:checked + label,
+          body.form .form-header .question.multiple ul li input:checked + label,
+          body.form .form-footer .question.multiple ul li input:checked + label {
             background-color: #333333;
             color: #fff; }
-            body.form section .question.multiple ul li input:checked + label .letter {
+            body.form section .question.multiple ul li input:checked + label .letter,
+            body.form .form-header .question.multiple ul li input:checked + label .letter,
+            body.form .form-footer .question.multiple ul li input:checked + label .letter {
               border-color: #fff;
               opacity: 1;
               text-indent: -4em; }
-              body.form section .question.multiple ul li input:checked + label .letter:after {
+              body.form section .question.multiple ul li input:checked + label .letter:after,
+              body.form .form-header .question.multiple ul li input:checked + label .letter:after,
+              body.form .form-footer .question.multiple ul li input:checked + label .letter:after {
                 display: block;
                 content: "\e013"; }
-    body.form section .question.multiple .other {
+    body.form section .question.multiple .other,
+    body.form .form-header .question.multiple .other,
+    body.form .form-footer .question.multiple .other {
       margin: 0; }
     body.form section .question.text .answer textarea,
     body.form section .question.text .answer input[type="text"], body.form section .question .text.other .answer textarea,
-    body.form section .question .text.other .answer input[type="text"] {
+    body.form section .question .text.other .answer input[type="text"],
+    body.form .form-header .question.text .answer textarea,
+    body.form .form-header .question.text .answer input[type="text"],
+    body.form .form-header .question .text.other .answer textarea,
+    body.form .form-header .question .text.other .answer input[type="text"],
+    body.form .form-footer .question.text .answer textarea,
+    body.form .form-footer .question.text .answer input[type="text"],
+    body.form .form-footer .question .text.other .answer textarea,
+    body.form .form-footer .question .text.other .answer input[type="text"] {
       width: 100%;
       border: solid 2px #333333;
       padding: 15px;
       font-size: 16px;
       max-width: 100%; }
-    body.form section .question.submit button {
+    body.form section .question.submit button,
+    body.form .form-header .question.submit button,
+    body.form .form-footer .question.submit button {
       background-color: #333333;
       color: #fff;
       border: none;
       font-size: 18px;
       padding: 15px 30px; }
-    body.form section .question.sub, body.form section .question .sub {
+    body.form section .question.sub, body.form section .question .sub,
+    body.form .form-header .question.sub,
+    body.form .form-header .question .sub,
+    body.form .form-footer .question.sub,
+    body.form .form-footer .question .sub {
       padding-top: 0;
       padding-bottom: 15px; }
-      body.form section .question.sub.scale .answer > label span, body.form section .question.sub.scale .answer > span span, body.form section .question.sub.yes-no .answer > label span, body.form section .question.sub.yes-no .answer > span span, body.form section .question .sub.scale .answer > label span, body.form section .question .sub.scale .answer > span span, body.form section .question .sub.yes-no .answer > label span, body.form section .question .sub.yes-no .answer > span span {
+      body.form section .question.sub.scale .answer > label span, body.form section .question.sub.scale .answer > span span, body.form section .question.sub.yes-no .answer > label span, body.form section .question.sub.yes-no .answer > span span, body.form section .question .sub.scale .answer > label span, body.form section .question .sub.scale .answer > span span, body.form section .question .sub.yes-no .answer > label span, body.form section .question .sub.yes-no .answer > span span,
+      body.form .form-header .question.sub.scale .answer > label span,
+      body.form .form-header .question.sub.scale .answer > span span,
+      body.form .form-header .question.sub.yes-no .answer > label span,
+      body.form .form-header .question.sub.yes-no .answer > span span,
+      body.form .form-header .question .sub.scale .answer > label span,
+      body.form .form-header .question .sub.scale .answer > span span,
+      body.form .form-header .question .sub.yes-no .answer > label span,
+      body.form .form-header .question .sub.yes-no .answer > span span,
+      body.form .form-footer .question.sub.scale .answer > label span,
+      body.form .form-footer .question.sub.scale .answer > span span,
+      body.form .form-footer .question.sub.yes-no .answer > label span,
+      body.form .form-footer .question.sub.yes-no .answer > span span,
+      body.form .form-footer .question .sub.scale .answer > label span,
+      body.form .form-footer .question .sub.scale .answer > span span,
+      body.form .form-footer .question .sub.yes-no .answer > label span,
+      body.form .form-footer .question .sub.yes-no .answer > span span {
         border-width: 2px 1px;
         font-size: 16px; }
-      body.form section .question.sub.scale .answer > label:first-of-type span, body.form section .question.sub.scale .answer > span:first-of-type span, body.form section .question.sub.yes-no .answer > label:first-of-type span, body.form section .question.sub.yes-no .answer > span:first-of-type span, body.form section .question .sub.scale .answer > label:first-of-type span, body.form section .question .sub.scale .answer > span:first-of-type span, body.form section .question .sub.yes-no .answer > label:first-of-type span, body.form section .question .sub.yes-no .answer > span:first-of-type span {
+      body.form section .question.sub.scale .answer > label:first-of-type span, body.form section .question.sub.scale .answer > span:first-of-type span, body.form section .question.sub.yes-no .answer > label:first-of-type span, body.form section .question.sub.yes-no .answer > span:first-of-type span, body.form section .question .sub.scale .answer > label:first-of-type span, body.form section .question .sub.scale .answer > span:first-of-type span, body.form section .question .sub.yes-no .answer > label:first-of-type span, body.form section .question .sub.yes-no .answer > span:first-of-type span,
+      body.form .form-header .question.sub.scale .answer > label:first-of-type span,
+      body.form .form-header .question.sub.scale .answer > span:first-of-type span,
+      body.form .form-header .question.sub.yes-no .answer > label:first-of-type span,
+      body.form .form-header .question.sub.yes-no .answer > span:first-of-type span,
+      body.form .form-header .question .sub.scale .answer > label:first-of-type span,
+      body.form .form-header .question .sub.scale .answer > span:first-of-type span,
+      body.form .form-header .question .sub.yes-no .answer > label:first-of-type span,
+      body.form .form-header .question .sub.yes-no .answer > span:first-of-type span,
+      body.form .form-footer .question.sub.scale .answer > label:first-of-type span,
+      body.form .form-footer .question.sub.scale .answer > span:first-of-type span,
+      body.form .form-footer .question.sub.yes-no .answer > label:first-of-type span,
+      body.form .form-footer .question.sub.yes-no .answer > span:first-of-type span,
+      body.form .form-footer .question .sub.scale .answer > label:first-of-type span,
+      body.form .form-footer .question .sub.scale .answer > span:first-of-type span,
+      body.form .form-footer .question .sub.yes-no .answer > label:first-of-type span,
+      body.form .form-footer .question .sub.yes-no .answer > span:first-of-type span {
         border-left-width: 2px; }
-      body.form section .question.sub.scale .answer > label:last-of-type span, body.form section .question.sub.scale .answer > span:last-of-type span, body.form section .question.sub.yes-no .answer > label:last-of-type span, body.form section .question.sub.yes-no .answer > span:last-of-type span, body.form section .question .sub.scale .answer > label:last-of-type span, body.form section .question .sub.scale .answer > span:last-of-type span, body.form section .question .sub.yes-no .answer > label:last-of-type span, body.form section .question .sub.yes-no .answer > span:last-of-type span {
+      body.form section .question.sub.scale .answer > label:last-of-type span, body.form section .question.sub.scale .answer > span:last-of-type span, body.form section .question.sub.yes-no .answer > label:last-of-type span, body.form section .question.sub.yes-no .answer > span:last-of-type span, body.form section .question .sub.scale .answer > label:last-of-type span, body.form section .question .sub.scale .answer > span:last-of-type span, body.form section .question .sub.yes-no .answer > label:last-of-type span, body.form section .question .sub.yes-no .answer > span:last-of-type span,
+      body.form .form-header .question.sub.scale .answer > label:last-of-type span,
+      body.form .form-header .question.sub.scale .answer > span:last-of-type span,
+      body.form .form-header .question.sub.yes-no .answer > label:last-of-type span,
+      body.form .form-header .question.sub.yes-no .answer > span:last-of-type span,
+      body.form .form-header .question .sub.scale .answer > label:last-of-type span,
+      body.form .form-header .question .sub.scale .answer > span:last-of-type span,
+      body.form .form-header .question .sub.yes-no .answer > label:last-of-type span,
+      body.form .form-header .question .sub.yes-no .answer > span:last-of-type span,
+      body.form .form-footer .question.sub.scale .answer > label:last-of-type span,
+      body.form .form-footer .question.sub.scale .answer > span:last-of-type span,
+      body.form .form-footer .question.sub.yes-no .answer > label:last-of-type span,
+      body.form .form-footer .question.sub.yes-no .answer > span:last-of-type span,
+      body.form .form-footer .question .sub.scale .answer > label:last-of-type span,
+      body.form .form-footer .question .sub.scale .answer > span:last-of-type span,
+      body.form .form-footer .question .sub.yes-no .answer > label:last-of-type span,
+      body.form .form-footer .question .sub.yes-no .answer > span:last-of-type span {
         border-right-width: 2px; }
-      body.form section .question.sub.source .answer ul li input, body.form section .question .sub.source .answer ul li input {
+      body.form section .question.sub.source .answer ul li input, body.form section .question .sub.source .answer ul li input,
+      body.form .form-header .question.sub.source .answer ul li input,
+      body.form .form-header .question .sub.source .answer ul li input,
+      body.form .form-footer .question.sub.source .answer ul li input,
+      body.form .form-footer .question .sub.source .answer ul li input {
         border-width: 2px; }
-      body.form section .question.sub.source .answer ul li .select, body.form section .question .sub.source .answer ul li .select {
+      body.form section .question.sub.source .answer ul li .select, body.form section .question .sub.source .answer ul li .select,
+      body.form .form-header .question.sub.source .answer ul li .select,
+      body.form .form-header .question .sub.source .answer ul li .select,
+      body.form .form-footer .question.sub.source .answer ul li .select,
+      body.form .form-footer .question .sub.source .answer ul li .select {
         border-width: 2px; }
       body.form section .question.sub.text .answer textarea,
       body.form section .question.sub.text .answer input[type="text"], body.form section .question .sub.text .answer textarea,
-      body.form section .question .sub.text .answer input[type="text"] {
+      body.form section .question .sub.text .answer input[type="text"],
+      body.form .form-header .question.sub.text .answer textarea,
+      body.form .form-header .question.sub.text .answer input[type="text"],
+      body.form .form-header .question .sub.text .answer textarea,
+      body.form .form-header .question .sub.text .answer input[type="text"],
+      body.form .form-footer .question.sub.text .answer textarea,
+      body.form .form-footer .question.sub.text .answer input[type="text"],
+      body.form .form-footer .question .sub.text .answer textarea,
+      body.form .form-footer .question .sub.text .answer input[type="text"] {
         border-width: 2px;
         font-size: 14px; }
-      body.form section .question.sub.text .answer input[type="text"], body.form section .question .sub.text .answer input[type="text"] {
+      body.form section .question.sub.text .answer input[type="text"], body.form section .question .sub.text .answer input[type="text"],
+      body.form .form-header .question.sub.text .answer input[type="text"],
+      body.form .form-header .question .sub.text .answer input[type="text"],
+      body.form .form-footer .question.sub.text .answer input[type="text"],
+      body.form .form-footer .question .sub.text .answer input[type="text"] {
         padding-top: 7.5px;
         padding-bottom: 7.5px; }
-      body.form section .question.sub.other h3, body.form section .question .sub.other h3 {
+      body.form section .question.sub.other h3, body.form section .question .sub.other h3,
+      body.form .form-header .question.sub.other h3,
+      body.form .form-header .question .sub.other h3,
+      body.form .form-footer .question.sub.other h3,
+      body.form .form-footer .question .sub.other h3 {
         float: left;
         margin-top: 15px; }
-    body.form section .question.continuation {
+    body.form section .question.continuation,
+    body.form .form-header .question.continuation,
+    body.form .form-footer .question.continuation {
       margin-top: -30px; }
-    body.form section .question.first .comments label {
+    body.form section .question.first .comments label,
+    body.form .form-header .question.first .comments label,
+    body.form .form-footer .question.first .comments label {
       height: auto;
       width: auto; }
-    body.form section .question.disabled {
+    body.form section .question.disabled,
+    body.form .form-header .question.disabled,
+    body.form .form-footer .question.disabled {
       opacity: 0.2; }
+body.form .form-header h1 {
+  font-weight: bold; }
+  @media (min-width: 992px) {
+    body.form .form-header h1 {
+      position: relative;
+      min-height: 1px;
+      padding-left: 15px;
+      padding-right: 15px; } }
+  @media (min-width: 992px) and (min-width: 992px) {
+    body.form .form-header h1 {
+      float: left;
+      width: 50%; } }
+  @media (min-width: 992px) and (min-width: 992px) {
+    body.form .form-header h1 {
+      margin-left: 25%; } }
+
+  body.form .form-header h1 > span {
+    position: relative;
+    white-space: nowrap; }
+    body.form .form-header h1 > span span {
+      display: none; }
+    body.form .form-header h1 > span:hover span {
+      display: inline-block;
+      position: absolute;
+      z-index: 1;
+      top: 1em;
+      right: 0;
+      padding: 0.5em 0 0 0; }
+      body.form .form-header h1 > span:hover span ul {
+        max-height: 60vh;
+        overflow: auto;
+        background-color: #eeeeee;
+        border-radius: 3px;
+        box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.3);
+        margin: 0;
+        padding: 7.5px 0; }
+        body.form .form-header h1 > span:hover span ul li {
+          display: block;
+          font-size: 0.5em;
+          font-weight: normal;
+          padding: 7.5px 15px; }
+          body.form .form-header h1 > span:hover span ul li.selected {
+            background-color: #428bca;
+            color: #fff; }
+        body.form .form-header h1 > span:hover span ul:hover li.selected {
+          background-color: transparent;
+          color: inherit; }
+        body.form .form-header h1 > span:hover span ul:hover li:hover {
+          background-color: #428bca;
+          color: #fff; }
+    body.form .form-header h1 > span > a {
+      display: inline-block;
+      position: relative; }
+      body.form .form-header h1 > span > a span {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0; }
+      body.form .form-header h1 > span > a:after {
+        content: '';
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 8px 5px 0 5px;
+        border-color: #333333 transparent transparent transparent;
+        display: inline-block;
+        position: relative;
+        top: -0.15em;
+        margin-right: 0.3em; }
+@media (min-width: 992px) {
+  body.form .form-header p {
+    position: relative;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    clear: left; } }
+  @media (min-width: 992px) and (min-width: 992px) {
+    body.form .form-header p {
+      float: left;
+      width: 50%; } }
+  @media (min-width: 992px) and (min-width: 992px) {
+    body.form .form-header p {
+      margin-left: 25%; } }
+
+@media (min-width: 992px) {
+  body.form section .container {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAABCAYAAAD0In+KAAAAEklEQVQImWP48OHD/w8fPvwHACIjB58VdezUAAAAAElFTkSuQmCC);
+    background-repeat: repeat-y;
+    background-position: 76% 0; } }
 
 body.form h2 span, body.form h3 span {
   color: #777777; }
-body.form section {
+body.form section,
+body.form .form-footer {
   border-bottom: solid 1px #eeeeee; }
-  body.form section:nth-of-type(odd) {
+  body.form section:nth-of-type(odd),
+  body.form .form-footer:nth-of-type(odd) {
     background-color: #f6f6f6; }
-  body.form section:first-of-type .container {
+  body.form section:first-of-type .container,
+  body.form .form-footer:first-of-type .container {
     padding-top: 50px; }
-  body.form section.banner {
-    background-image: url(img/icon-tile.png);
+  body.form section.banner,
+  body.form .form-footer.banner {
+    background-image: url(images/icon-tile.png);
     background-size: 350px auto;
     background-position: center top; }
-    body.form section.banner .container {
+    body.form section.banner .container,
+    body.form .form-footer.banner .container {
       background-image: none; }
-  body.form section .question .instructions .toggle .icon {
+  body.form section .question .instructions .toggle .icon,
+  body.form .form-footer .question .instructions .toggle .icon {
     background-color: #428bca;
     font-weight: 700; }
-  body.form section .question .comments label {
+  body.form section .question .comments label,
+  body.form .form-footer .question .comments label {
     font-weight: normal; }
-  body.form section .question .comments textarea {
+  body.form section .question .comments textarea,
+  body.form .form-footer .question .comments textarea {
     font-weight: 300; }
-  body.form section .question.scale .answer > label, body.form section .question.scale .answer > span, body.form section .question.yes-no .answer > label, body.form section .question.yes-no .answer > span {
+  body.form section .question.scale .answer > label, body.form section .question.scale .answer > span, body.form section .question.yes-no .answer > label, body.form section .question.yes-no .answer > span,
+  body.form .form-footer .question.scale .answer > label,
+  body.form .form-footer .question.scale .answer > span,
+  body.form .form-footer .question.yes-no .answer > label,
+  body.form .form-footer .question.yes-no .answer > span {
     font-size: 15px; }
-    body.form section .question.scale .answer > label:first-of-type span, body.form section .question.scale .answer > span:first-of-type span, body.form section .question.yes-no .answer > label:first-of-type span, body.form section .question.yes-no .answer > span:first-of-type span {
+    body.form section .question.scale .answer > label:first-of-type span, body.form section .question.scale .answer > span:first-of-type span, body.form section .question.yes-no .answer > label:first-of-type span, body.form section .question.yes-no .answer > span:first-of-type span,
+    body.form .form-footer .question.scale .answer > label:first-of-type span,
+    body.form .form-footer .question.scale .answer > span:first-of-type span,
+    body.form .form-footer .question.yes-no .answer > label:first-of-type span,
+    body.form .form-footer .question.yes-no .answer > span:first-of-type span {
       border-radius: 6px 0 0 6px; }
-    body.form section .question.scale .answer > label:last-of-type span, body.form section .question.scale .answer > span:last-of-type span, body.form section .question.yes-no .answer > label:last-of-type span, body.form section .question.yes-no .answer > span:last-of-type span {
+    body.form section .question.scale .answer > label:last-of-type span, body.form section .question.scale .answer > span:last-of-type span, body.form section .question.yes-no .answer > label:last-of-type span, body.form section .question.yes-no .answer > span:last-of-type span,
+    body.form .form-footer .question.scale .answer > label:last-of-type span,
+    body.form .form-footer .question.scale .answer > span:last-of-type span,
+    body.form .form-footer .question.yes-no .answer > label:last-of-type span,
+    body.form .form-footer .question.yes-no .answer > span:last-of-type span {
       border-radius: 0 6px 6px 0; }
-  body.form section .question.yes-no:not(.neutral) .answer input:checked + label span {
+  body.form section .question.yes-no:not(.neutral) .answer input:checked + label span,
+  body.form .form-footer .question.yes-no:not(.neutral) .answer input:checked + label span {
     background-color: #f47c23;
     border-color: #904207; }
-  body.form section .question.yes-no:not(.neutral) .answer input:checked + label:first-of-type span {
+  body.form section .question.yes-no:not(.neutral) .answer input:checked + label:first-of-type span,
+  body.form .form-footer .question.yes-no:not(.neutral) .answer input:checked + label:first-of-type span {
     background-color: #ff0000;
     border-color: maroon; }
-  body.form section .question.yes-no:not(.neutral) .answer input:checked + label:last-of-type span {
+  body.form section .question.yes-no:not(.neutral) .answer input:checked + label:last-of-type span,
+  body.form .form-footer .question.yes-no:not(.neutral) .answer input:checked + label:last-of-type span {
     background-color: #7AB800;
     border-color: #365200; }
-  body.form section .question.scale:not(.neutral) .answer > span input:checked + label span {
+  body.form section .question.scale:not(.neutral) .answer > span input:checked + label span,
+  body.form .form-footer .question.scale:not(.neutral) .answer > span input:checked + label span {
     background-color: #f47c23;
     border-color: #904207; }
-  body.form section .question.scale:not(.neutral) .answer > span:first-of-type input:checked + label span {
+  body.form section .question.scale:not(.neutral) .answer > span:first-of-type input:checked + label span,
+  body.form .form-footer .question.scale:not(.neutral) .answer > span:first-of-type input:checked + label span {
     background-color: #ff0000;
     border-color: maroon; }
-  body.form section .question.scale:not(.neutral) .answer > span:last-of-type input:checked + label span {
+  body.form section .question.scale:not(.neutral) .answer > span:last-of-type input:checked + label span,
+  body.form .form-footer .question.scale:not(.neutral) .answer > span:last-of-type input:checked + label span {
     background-color: #7AB800;
     border-color: #365200; }
-  body.form section .question.source .answer ul li input {
+  body.form section .question.source .answer ul li input,
+  body.form .form-footer .question.source .answer ul li input {
     border-radius: 6px; }
-  body.form section .question.source .answer ul li .select {
+  body.form section .question.source .answer ul li .select,
+  body.form .form-footer .question.source .answer ul li .select {
     border-radius: 6px; }
-  body.form section .question.select .answer {
+  body.form section .question.select .answer,
+  body.form .form-footer .question.select .answer {
     border-radius: 6px; }
-    body.form section .question.select .answer select {
+    body.form section .question.select .answer select,
+    body.form .form-footer .question.select .answer select {
       background-color: transparent; }
-  body.form section .question.multiple ul li label {
+  body.form section .question.multiple ul li label,
+  body.form .form-footer .question.multiple ul li label {
     border-radius: 6px; }
-  body.form section .question.multiple ul li input:checked + label {
+  body.form section .question.multiple ul li input:checked + label,
+  body.form .form-footer .question.multiple ul li input:checked + label {
     background-color: #7AB800;
     border-color: #365200; }
   body.form section .question.text .answer textarea,
   body.form section .question.text .answer input[type="text"], body.form section .question .text.other .answer textarea,
-  body.form section .question .text.other .answer input[type="text"] {
+  body.form section .question .text.other .answer input[type="text"],
+  body.form .form-footer .question.text .answer textarea,
+  body.form .form-footer .question.text .answer input[type="text"],
+  body.form .form-footer .question .text.other .answer textarea,
+  body.form .form-footer .question .text.other .answer input[type="text"] {
     border-radius: 6px; }
     body.form section .question.text .answer textarea:not(:focus),
     body.form section .question.text .answer input[type="text"]:not(:focus), body.form section .question .text.other .answer textarea:not(:focus),
-    body.form section .question .text.other .answer input[type="text"]:not(:focus) {
+    body.form section .question .text.other .answer input[type="text"]:not(:focus),
+    body.form .form-footer .question.text .answer textarea:not(:focus),
+    body.form .form-footer .question.text .answer input[type="text"]:not(:focus),
+    body.form .form-footer .question .text.other .answer textarea:not(:focus),
+    body.form .form-footer .question .text.other .answer input[type="text"]:not(:focus) {
       background-color: transparent; }
-  body.form section .question.submit button {
+  body.form section .question.submit button,
+  body.form .form-footer .question.submit button {
     background-color: #428bca;
     border-radius: 6px; }
-  body.form section .question.sub.scale .answer > label:first-of-type span, body.form section .question.sub.scale .answer > span:first-of-type span, body.form section .question.sub.yes-no .answer > label:first-of-type span, body.form section .question.sub.yes-no .answer > span:first-of-type span {
+  body.form section .question.sub.scale .answer > label:first-of-type span, body.form section .question.sub.scale .answer > span:first-of-type span, body.form section .question.sub.yes-no .answer > label:first-of-type span, body.form section .question.sub.yes-no .answer > span:first-of-type span,
+  body.form .form-footer .question.sub.scale .answer > label:first-of-type span,
+  body.form .form-footer .question.sub.scale .answer > span:first-of-type span,
+  body.form .form-footer .question.sub.yes-no .answer > label:first-of-type span,
+  body.form .form-footer .question.sub.yes-no .answer > span:first-of-type span {
     border-radius: 4px 0 0 4px; }
-  body.form section .question.sub.scale .answer > label:last-of-type span, body.form section .question.sub.scale .answer > span:last-of-type span, body.form section .question.sub.yes-no .answer > label:last-of-type span, body.form section .question.sub.yes-no .answer > span:last-of-type span {
+  body.form section .question.sub.scale .answer > label:last-of-type span, body.form section .question.sub.scale .answer > span:last-of-type span, body.form section .question.sub.yes-no .answer > label:last-of-type span, body.form section .question.sub.yes-no .answer > span:last-of-type span,
+  body.form .form-footer .question.sub.scale .answer > label:last-of-type span,
+  body.form .form-footer .question.sub.scale .answer > span:last-of-type span,
+  body.form .form-footer .question.sub.yes-no .answer > label:last-of-type span,
+  body.form .form-footer .question.sub.yes-no .answer > span:last-of-type span {
     border-radius: 0 4px 4px 0; }
-  body.form section .question.sub.source .answer ul li input {
+  body.form section .question.sub.source .answer ul li input,
+  body.form .form-footer .question.sub.source .answer ul li input {
     border-radius: 4px;
     background-color: transparent; }
-  body.form section .question.sub.source .answer ul li .select {
+  body.form section .question.sub.source .answer ul li .select,
+  body.form .form-footer .question.sub.source .answer ul li .select {
     border-radius: 4px; }
-    body.form section .question.sub.source .answer ul li .select select {
+    body.form section .question.sub.source .answer ul li .select select,
+    body.form .form-footer .question.sub.source .answer ul li .select select {
       background-color: transparent; }
   body.form section .question.sub.text .answer textarea,
   body.form section .question.sub.text .answer input[type="text"], body.form section .question.sub .text.other .answer textarea,
-  body.form section .question.sub .text.other .answer input[type="text"] {
+  body.form section .question.sub .text.other .answer input[type="text"],
+  body.form .form-footer .question.sub.text .answer textarea,
+  body.form .form-footer .question.sub.text .answer input[type="text"],
+  body.form .form-footer .question.sub .text.other .answer textarea,
+  body.form .form-footer .question.sub .text.other .answer input[type="text"] {
     border-radius: 4px; }
-  body.form section .question.disabled.scale .answer label span, body.form section .question.disabled.yes-no .answer label span {
+  body.form section .question.disabled.scale .answer label span, body.form section .question.disabled.yes-no .answer label span,
+  body.form .form-footer .question.disabled.scale .answer label span,
+  body.form .form-footer .question.disabled.yes-no .answer label span {
     border-color: #777777; }
-  body.form section .question.disabled.source .answer ul li input {
+  body.form section .question.disabled.source .answer ul li input,
+  body.form .form-footer .question.disabled.source .answer ul li input {
     border-color: #777777; }
-  body.form section .question.disabled.source .answer ul li .select {
+  body.form section .question.disabled.source .answer ul li .select,
+  body.form .form-footer .question.disabled.source .answer ul li .select {
     border-color: #777777; }
-  body.form section .question.disabled.select .answer {
+  body.form section .question.disabled.select .answer,
+  body.form .form-footer .question.disabled.select .answer {
     border-color: #777777; }
-  body.form section .question.disabled.multiple ul li label {
+  body.form section .question.disabled.multiple ul li label,
+  body.form .form-footer .question.disabled.multiple ul li label {
     border-color: #777777; }
   body.form section .question.disabled.text textarea,
   body.form section .question.disabled.text input[type="text"], body.form section .question.disabled .text.other textarea,
-  body.form section .question.disabled .text.other input[type="text"] {
+  body.form section .question.disabled .text.other input[type="text"],
+  body.form .form-footer .question.disabled.text textarea,
+  body.form .form-footer .question.disabled.text input[type="text"],
+  body.form .form-footer .question.disabled .text.other textarea,
+  body.form .form-footer .question.disabled .text.other input[type="text"] {
     border-color: #777777; }
+body.form .form-header {
+  border-bottom: solid 1px #eeeeee; }
+  body.form .form-header .question h2 {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0; }
+  body.form .form-header .question.select .answer {
+    border: none;
+    font-size: 24px; }
 
 .home #home-about {
   color: #000;

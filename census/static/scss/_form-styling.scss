@@ -6,7 +6,8 @@ body.form {
     }
   }
 
-  section {
+  section,
+  .form-footer {
     border-bottom: solid 1px $gray-lighter;
 
     &:nth-of-type(odd) {
@@ -20,7 +21,7 @@ body.form {
     }
 
     &.banner {
-      background-image: url(img/icon-tile.png);
+      background-image: url(images/icon-tile.png);
       background-size: 350px auto;
       background-position: center top;
 
@@ -292,6 +293,23 @@ body.form {
           input[type="text"] {
             border-color: $gray-light;
           }
+        }
+      }
+    }
+  }
+
+  .form-header {
+    border-bottom: solid 1px $gray-lighter;
+
+    .question {
+      h2 {
+        @include sr-only;
+      }
+
+      &.select {
+        .answer {
+          border: none;
+          font-size: 24px;
         }
       }
     }

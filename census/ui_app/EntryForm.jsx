@@ -153,7 +153,7 @@ const EntryForm = React.createClass({
   </div>
 </section>
 
-<section className="uncontrolled-fields">
+<footer className="form-footer uncontrolled-fields">
   <div className="container">
     <div className="text question">
       <div className="instructions"></div>
@@ -210,7 +210,7 @@ const EntryForm = React.createClass({
       </div>
     </div>
   </div>
-</section>
+</footer>
 </form>);
   }
 });
