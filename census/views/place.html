@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% import '_snippets/entry-summary-row.html' as entrysummary_macro %}
+
+{% block title %}
+{{place.name}} &mdash; {{gettext("Places")}}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <h1>
+    {% if overview %}<a href="{{urlFor('overview')}}" data-toggle="tooltip" class="count-0"
+                        title="Return to results overview">{{gettext("Places")}}</a>
+    / {% endif %}{{ place.name }} {% if not cascade %}/ {{ year }}{% endif %}
+
+    <span class="pull-right">
+    {% include '_snippets/share_page_buttons.html' %}
+  </span>
+  </h1>
+
+  <div id="spacer"></div>
+  <div class="tabbable"> <!-- Only required for left/right tabs -->
+    <div class="tab-content">
+      <div class="tab-pane active" id="table-overview">
+        <div class="table">
+          <p>{{gettext("This is the overview page where you can see the state of open data across each key
+            dataset.")}}</p>
+
+          <table class="table table-striped">
+            <colgroup>
+              <col width="25%"/>
+              <col width="1%"/>
+              <col width="25%"/>
+              <col/>
+              <col/>
+              <col width="13%"/>
+              <col width="15%"/>
+            </colgroup>
+            <thead>
+            <tr>
+              <th>{{gettext("Dataset")}}</th>
+              <th>{{gettext("Score")}}</th>
+              <th>{{gettext("Breakdown")}}</th>
+              <th>{{ gettext("Last Updated") }}</th>
+              <th>{{gettext("Location (URL)")}}</th>
+              <th>{{gettext("Information")}}</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for dataset in datasets %}
+            {% set entry = entries|find({'dataset': dataset.id}) %}
+            {% set submissions = pending|where({'dataset': dataset.id, 'place': place.id, 'year': year}) %}
+            <tr>
+              <td>
+                {% if entry %}<a href="/entry/{{place.id}}/{{dataset.id}}{{ urlContext }}">{% endif %}
+                {{ dataset.name }}
+                {% if entry %}</a>{% endif %}
+                &nbsp;
+                <a href="javascript:;"
+                   data-toggle="popover"
+                   class="count-0"
+                   data-content="{{ dataset.description }}"
+                   title="{{ dataset.title }}"><i class="icon-info-sign"></i></a>
+              </td>
+              {{entrysummary_macro.entrysummary(dataset, place, entry, questions, gettext)}}
+
+              <td>
+                {% if submissionsAllowed %}
+
+                {% if entry %}
+                <a id="submit-{{ dataset.id }}" href="/submit/?dataset={{ dataset.id }}&place={{ place.id }}"
+                   class="btn btn-mini btn-primary">
+                  <!-- <i class="icon-plus"></i> -->{{gettext("Propose Revisions")}}
+                </a>
+                {% else %}
+                <a id="submit-{{ dataset.id }}" href="/submit/?dataset={{ dataset.id }}&place={{ place.id }}"
+                   class="btn btn-mini btn-primary">
+                  <!-- <i class="icon-plus"></i> -->{{gettext("Submit information")}}
+                </a>
+                {% endif %}
+
+                {% else %}
+                <i class="muted">{{ gettext('Closed') }}</i>
+                {% endif %}
+              </td>
+
+            </tr>
+            {% for submission in submissions %}
+            <tr class="queued">
+              <td>
+                <strong>{{gettext("&#8627; Awaiting review")}}</strong><br/>
+
+                <span title="{{ gettext('Submitted by')}} {{ submission.Submitter.firstName}}" class="queued-context">
+                  <i class="icon icon-user"></i>&nbsp;
+                  {{ submission.Submitter.firstName }}
+                </span>
+                <br/>
+                <span title="{{ gettext('Submitted on')}} {{ submission.createdAt|dateformat }}" class="queued-context">
+                  <i class="icon icon-time"></i>&nbsp;
+                  {{ submission.createdAt|simpledelta }}
+                </span>
+              </td>
+              {{entrysummary_macro.entrysummary(dataset, place, submission, questions, gettext)}}
+              <td>
+                <a href="/submission/{{submission.id}}" class="btn btn-mini btn-danger">
+                  {{gettext("View Submission")}}
+                </a>
+                <script>
+                  $("#submit-{{ dataset.id }}").addClass("disabled");
+                  $("#submit-{{ dataset.id }}").attr("onclick", "return false");
+                  $("#submit-{{ dataset.id }}").attr("href", "#");
+                  $("#submit-{{ dataset.id }}").attr("data-toggle", "tooltip");
+                  $("#submit-{{ dataset.id }}").attr("title",
+                      '{{gettext("Sorry, only one submission can be waiting for review at a time - please come back in a few days to submit new information")}}');
+                </script>
+              </td>
+            </tr>
+            {% endfor %}
+
+            {% endfor %}
+            </tbody>
+          </table>
+
+          {% include '_snippets/key.html' %}
+
+          <h3>{{gettext("Contributors")}}</h3>
+          <h4>{{ format("Reviewers for %(name)s:", { name: place.name }) }}</h4>
+          <p>
+            {% if reviewers %}
+            {% for reviewer in reviewers %}
+            {% if loop.index>1 %}, {% endif %}
+            {% if reviewer %}
+            {{reviewer.fullName()}}
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+          </p>
+          <h4>{{gettext("With submissions from:")}} </h4>
+          <p>
+            {% if submitters %}
+            {% for submitter in submitters %}
+            {% if loop.index>1 %}, {% endif %}
+            {% if submitter %}
+            {{submitter.fullName()}}
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="{{page.root}}/src/common.js?{{currentTime}}"></script>
+<script src="{{page.root}}/src/census.js?{{currentTime}}"></script>
+{% endblock %}

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "macros/availability_keys.html" import availability_keys %}
 
 {% block title %}
 {{format("Entry for %(place)s / %(title)s", { place: place.name, title: dataset.name}) }}
@@ -42,28 +43,22 @@
   <ul class="data-availability clearfix unstyled">
 
     {% for qu in questions %}
-    {% if qu.type == '' %}
-
-    {% set description = '' %}
-    {% set state = entry.answers[qu.id] %}
-
-    {% if state == true %}
-    {% set stateClass = 'yes' %}
-    {% set stateDisplay = 'Y' %}
-    {% elif state == false %}
-    {% set stateClass = 'no' %}
-    {% set stateDisplay = 'N' %}
-    {% elif state == null %}
-    {% set stateClass = 'maybe' %}
-    {% set stateDisplay = '?' %}
-
-    {% else %}
-
-    {% set stateClass = '' %}
-    {% set stateDisplay = 'No data' %}
-
-    {% endif %}
-
+      {% if qu.type == '' %}
+        {% set description = '' %}
+        {% set state = entry.answers[qu.id] %}
+          {% if state == true %}
+            {% set stateClass = 'yes' %}
+            {% set stateDisplay = 'Y' %}
+          {% elif state == false %}
+            {% set stateClass = 'no' %}
+            {% set stateDisplay = 'N' %}
+          {% elif state == null %}
+            {% set stateClass = 'maybe' %}
+            {% set stateDisplay = '?' %}
+          {% else %}
+            {% set stateClass = '' %}
+            {% set stateDisplay = 'No data' %}
+          {% endif %}
     <li>
       <span class="data-icon-wrapper">
         <span class="data-icon {{ stateClass }}">
@@ -83,14 +78,14 @@
     {% endfor %}
   </ul>
 
-  {% include '_snippets/key.html' %}
+  {{availability_keys(gettext)}}
 
-  <h3>{{gettext("Details")}}</h3>
+  <h3>{{ gettext("Details") }}</h3>
   <table class="table table-striped yntable">
     <tr>
       <td>{{gettext("Date the data became available")}}</td>
-      <td>&nbsp;&nbsp;&nbsp;{% if entry.answers.dateavailable %}{{ entry.answers.dateavailable }}{% else
-        %}{{gettext("Unknown")}}{% endif %}
+      <td>&nbsp;&nbsp;&nbsp;{% if entry.answers.dateavailable %}{{ entry.answers.dateavailable }}{% else %}
+        {{gettext("Unknown")}}{% endif %}
       </td>
     </tr>
     <tr>
