@@ -1241,7 +1241,7 @@ small,
 
 mark,
 .mark {
-  background-color: #fcf8e3;
+  background-color: #f47c23;
   padding: .2em; }
 
 .text-left {
@@ -1279,32 +1279,32 @@ a.text-primary:focus {
   color: #e2c31a; }
 
 .text-success {
-  color: #3c763d; }
+  color: #fff; }
 
 a.text-success:hover,
 a.text-success:focus {
-  color: #2b542c; }
+  color: #e6e6e6; }
 
 .text-info {
-  color: #31708f; }
+  color: #fff; }
 
 a.text-info:hover,
 a.text-info:focus {
-  color: #245269; }
+  color: #e6e6e6; }
 
 .text-warning {
-  color: #8a6d3b; }
+  color: #fff; }
 
 a.text-warning:hover,
 a.text-warning:focus {
-  color: #66512c; }
+  color: #e6e6e6; }
 
 .text-danger {
-  color: #a94442; }
+  color: #fff; }
 
 a.text-danger:hover,
 a.text-danger:focus {
-  color: #843534; }
+  color: #e6e6e6; }
 
 .bg-primary {
   color: #fff; }
@@ -1317,32 +1317,32 @@ a.bg-primary:focus {
   background-color: #e2c31a; }
 
 .bg-success {
-  background-color: #dff0d8; }
+  background-color: #7AB800; }
 
 a.bg-success:hover,
 a.bg-success:focus {
-  background-color: #c1e2b3; }
+  background-color: #588500; }
 
 .bg-info {
-  background-color: #d9edf7; }
+  background-color: #333333; }
 
 a.bg-info:hover,
 a.bg-info:focus {
-  background-color: #afd9ee; }
+  background-color: #1a1a1a; }
 
 .bg-warning {
-  background-color: #fcf8e3; }
+  background-color: #f47c23; }
 
 a.bg-warning:hover,
 a.bg-warning:focus {
-  background-color: #f7ecb5; }
+  background-color: #d9630b; }
 
 .bg-danger {
-  background-color: #f2dede; }
+  background-color: #ff0000; }
 
 a.bg-danger:hover,
 a.bg-danger:focus {
-  background-color: #e4b9b9; }
+  background-color: #cc0000; }
 
 .page-header {
   padding-bottom: 12.5px;
@@ -2284,11 +2284,11 @@ table th[class*="col-"] {
 .table > tfoot > tr > th.success,
 .table > tfoot > tr.success > td,
 .table > tfoot > tr.success > th {
-  background-color: #dff0d8; }
+  background-color: #7AB800; }
 
 .table-hover > tbody > tr > td.success:hover,
 .table-hover > tbody > tr > th.success:hover, .table-hover > tbody > tr.success:hover > td, .table-hover > tbody > tr:hover > .success, .table-hover > tbody > tr.success:hover > th {
-  background-color: #d0e9c6; }
+  background-color: #699f00; }
 
 .table > thead > tr > td.info,
 .table > thead > tr > th.info, .table > thead > tr.info > td, .table > thead > tr.info > th,
@@ -2300,11 +2300,11 @@ table th[class*="col-"] {
 .table > tfoot > tr > th.info,
 .table > tfoot > tr.info > td,
 .table > tfoot > tr.info > th {
-  background-color: #d9edf7; }
+  background-color: #333333; }
 
 .table-hover > tbody > tr > td.info:hover,
 .table-hover > tbody > tr > th.info:hover, .table-hover > tbody > tr.info:hover > td, .table-hover > tbody > tr:hover > .info, .table-hover > tbody > tr.info:hover > th {
-  background-color: #c4e3f3; }
+  background-color: #262626; }
 
 .table > thead > tr > td.warning,
 .table > thead > tr > th.warning, .table > thead > tr.warning > td, .table > thead > tr.warning > th,
@@ -2316,11 +2316,11 @@ table th[class*="col-"] {
 .table > tfoot > tr > th.warning,
 .table > tfoot > tr.warning > td,
 .table > tfoot > tr.warning > th {
-  background-color: #fcf8e3; }
+  background-color: #f47c23; }
 
 .table-hover > tbody > tr > td.warning:hover,
 .table-hover > tbody > tr > th.warning:hover, .table-hover > tbody > tr.warning:hover > td, .table-hover > tbody > tr:hover > .warning, .table-hover > tbody > tr.warning:hover > th {
-  background-color: #faf2cc; }
+  background-color: #f16e0c; }
 
 .table > thead > tr > td.danger,
 .table > thead > tr > th.danger, .table > thead > tr.danger > td, .table > thead > tr.danger > th,
@@ -2332,11 +2332,11 @@ table th[class*="col-"] {
 .table > tfoot > tr > th.danger,
 .table > tfoot > tr.danger > td,
 .table > tfoot > tr.danger > th {
-  background-color: #f2dede; }
+  background-color: #ff0000; }
 
 .table-hover > tbody > tr > td.danger:hover,
 .table-hover > tbody > tr > th.danger:hover, .table-hover > tbody > tr.danger:hover > td, .table-hover > tbody > tr:hover > .danger, .table-hover > tbody > tr.danger:hover > th {
-  background-color: #ebcccc; }
+  background-color: #e60000; }
 
 .table-responsive {
   overflow-x: auto;
@@ -2725,21 +2725,21 @@ select[multiple].input-lg,
 .has-success .checkbox,
 .has-success .radio-inline,
 .has-success .checkbox-inline, .has-success.radio label, .has-success.checkbox label, .has-success.radio-inline label, .has-success.checkbox-inline label {
-  color: #3c763d; }
+  color: #fff; }
 .has-success .form-control {
-  border-color: #3c763d;
+  border-color: #fff;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); }
   .has-success .form-control:focus {
-    border-color: #2b542c;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #67b168;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #67b168; }
+    border-color: #e6e6e6;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px white;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px white; }
 .has-success .input-group-addon {
-  color: #3c763d;
-  border-color: #3c763d;
-  background-color: #dff0d8; }
+  color: #fff;
+  border-color: #fff;
+  background-color: #7AB800; }
 .has-success .form-control-feedback {
-  color: #3c763d; }
+  color: #fff; }
 
 .has-warning .help-block,
 .has-warning .control-label,
@@ -2747,21 +2747,21 @@ select[multiple].input-lg,
 .has-warning .checkbox,
 .has-warning .radio-inline,
 .has-warning .checkbox-inline, .has-warning.radio label, .has-warning.checkbox label, .has-warning.radio-inline label, .has-warning.checkbox-inline label {
-  color: #8a6d3b; }
+  color: #fff; }
 .has-warning .form-control {
-  border-color: #8a6d3b;
+  border-color: #fff;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); }
   .has-warning .form-control:focus {
-    border-color: #66512c;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #c0a16b;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #c0a16b; }
+    border-color: #e6e6e6;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px white;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px white; }
 .has-warning .input-group-addon {
-  color: #8a6d3b;
-  border-color: #8a6d3b;
-  background-color: #fcf8e3; }
+  color: #fff;
+  border-color: #fff;
+  background-color: #f47c23; }
 .has-warning .form-control-feedback {
-  color: #8a6d3b; }
+  color: #fff; }
 
 .has-error .help-block,
 .has-error .control-label,
@@ -2769,21 +2769,21 @@ select[multiple].input-lg,
 .has-error .checkbox,
 .has-error .radio-inline,
 .has-error .checkbox-inline, .has-error.radio label, .has-error.checkbox label, .has-error.radio-inline label, .has-error.checkbox-inline label {
-  color: #a94442; }
+  color: #fff; }
 .has-error .form-control {
-  border-color: #a94442;
+  border-color: #fff;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); }
   .has-error .form-control:focus {
-    border-color: #843534;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ce8483;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ce8483; }
+    border-color: #e6e6e6;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px white;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px white; }
 .has-error .input-group-addon {
-  color: #a94442;
-  border-color: #a94442;
-  background-color: #f2dede; }
+  color: #fff;
+  border-color: #fff;
+  background-color: #ff0000; }
 .has-error .form-control-feedback {
-  color: #a94442; }
+  color: #fff; }
 
 .has-feedback label ~ .form-control-feedback {
   top: 32px; }
@@ -4376,40 +4376,40 @@ a.thumbnail.active {
     color: inherit; }
 
 .alert-success {
-  background-color: #dff0d8;
-  border-color: #d6e9c6;
-  color: #3c763d; }
+  background-color: #7AB800;
+  border-color: #849f00;
+  color: #fff; }
   .alert-success hr {
-    border-top-color: #c9e2b3; }
+    border-top-color: #6e8500; }
   .alert-success .alert-link {
-    color: #2b542c; }
+    color: #e6e6e6; }
 
 .alert-info {
-  background-color: #d9edf7;
-  border-color: #bce8f1;
-  color: #31708f; }
+  background-color: #333333;
+  border-color: #212121;
+  color: #fff; }
   .alert-info hr {
-    border-top-color: #a6e1ec; }
+    border-top-color: #141414; }
   .alert-info .alert-link {
-    color: #245269; }
+    color: #e6e6e6; }
 
 .alert-warning {
-  background-color: #fcf8e3;
-  border-color: #faebcc;
-  color: #8a6d3b; }
+  background-color: #f47c23;
+  border-color: #f1480c;
+  color: #fff; }
   .alert-warning hr {
-    border-top-color: #f7e1b5; }
+    border-top-color: #d9400b; }
   .alert-warning .alert-link {
-    color: #66512c; }
+    color: #e6e6e6; }
 
 .alert-danger {
-  background-color: #f2dede;
-  border-color: #ebccd1;
-  color: #a94442; }
+  background-color: #ff0000;
+  border-color: #e60026;
+  color: #fff; }
   .alert-danger hr {
-    border-top-color: #e4b9c0; }
+    border-top-color: #cc0022; }
   .alert-danger .alert-link {
-    color: #843534; }
+    color: #e6e6e6; }
 
 @-webkit-keyframes progress-bar-stripes {
   from {
@@ -4593,96 +4593,96 @@ button.list-group-item {
     color: #fffefc; }
 
 .list-group-item-success {
-  color: #3c763d;
-  background-color: #dff0d8; }
+  color: #fff;
+  background-color: #7AB800; }
 
 a.list-group-item-success,
 button.list-group-item-success {
-  color: #3c763d; }
+  color: #fff; }
   a.list-group-item-success .list-group-item-heading,
   button.list-group-item-success .list-group-item-heading {
     color: inherit; }
   a.list-group-item-success:hover, a.list-group-item-success:focus,
   button.list-group-item-success:hover,
   button.list-group-item-success:focus {
-    color: #3c763d;
-    background-color: #d0e9c6; }
+    color: #fff;
+    background-color: #699f00; }
   a.list-group-item-success.active, a.list-group-item-success.active:hover, a.list-group-item-success.active:focus,
   button.list-group-item-success.active,
   button.list-group-item-success.active:hover,
   button.list-group-item-success.active:focus {
     color: #fff;
-    background-color: #3c763d;
-    border-color: #3c763d; }
+    background-color: #fff;
+    border-color: #fff; }
 
 .list-group-item-info {
-  color: #31708f;
-  background-color: #d9edf7; }
+  color: #fff;
+  background-color: #333333; }
 
 a.list-group-item-info,
 button.list-group-item-info {
-  color: #31708f; }
+  color: #fff; }
   a.list-group-item-info .list-group-item-heading,
   button.list-group-item-info .list-group-item-heading {
     color: inherit; }
   a.list-group-item-info:hover, a.list-group-item-info:focus,
   button.list-group-item-info:hover,
   button.list-group-item-info:focus {
-    color: #31708f;
-    background-color: #c4e3f3; }
+    color: #fff;
+    background-color: #262626; }
   a.list-group-item-info.active, a.list-group-item-info.active:hover, a.list-group-item-info.active:focus,
   button.list-group-item-info.active,
   button.list-group-item-info.active:hover,
   button.list-group-item-info.active:focus {
     color: #fff;
-    background-color: #31708f;
-    border-color: #31708f; }
+    background-color: #fff;
+    border-color: #fff; }
 
 .list-group-item-warning {
-  color: #8a6d3b;
-  background-color: #fcf8e3; }
+  color: #fff;
+  background-color: #f47c23; }
 
 a.list-group-item-warning,
 button.list-group-item-warning {
-  color: #8a6d3b; }
+  color: #fff; }
   a.list-group-item-warning .list-group-item-heading,
   button.list-group-item-warning .list-group-item-heading {
     color: inherit; }
   a.list-group-item-warning:hover, a.list-group-item-warning:focus,
   button.list-group-item-warning:hover,
   button.list-group-item-warning:focus {
-    color: #8a6d3b;
-    background-color: #faf2cc; }
+    color: #fff;
+    background-color: #f16e0c; }
   a.list-group-item-warning.active, a.list-group-item-warning.active:hover, a.list-group-item-warning.active:focus,
   button.list-group-item-warning.active,
   button.list-group-item-warning.active:hover,
   button.list-group-item-warning.active:focus {
     color: #fff;
-    background-color: #8a6d3b;
-    border-color: #8a6d3b; }
+    background-color: #fff;
+    border-color: #fff; }
 
 .list-group-item-danger {
-  color: #a94442;
-  background-color: #f2dede; }
+  color: #fff;
+  background-color: #ff0000; }
 
 a.list-group-item-danger,
 button.list-group-item-danger {
-  color: #a94442; }
+  color: #fff; }
   a.list-group-item-danger .list-group-item-heading,
   button.list-group-item-danger .list-group-item-heading {
     color: inherit; }
   a.list-group-item-danger:hover, a.list-group-item-danger:focus,
   button.list-group-item-danger:hover,
   button.list-group-item-danger:focus {
-    color: #a94442;
-    background-color: #ebcccc; }
+    color: #fff;
+    background-color: #e60000; }
   a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-group-item-danger.active:focus,
   button.list-group-item-danger.active,
   button.list-group-item-danger.active:hover,
   button.list-group-item-danger.active:focus {
     color: #fff;
-    background-color: #a94442;
-    border-color: #a94442; }
+    background-color: #fff;
+    border-color: #fff; }
 
 .list-group-item-heading {
   margin-top: 0;
@@ -4932,60 +4932,60 @@ button.list-group-item-danger {
     border-bottom-color: #EAD045; }
 
 .panel-success {
-  border-color: #d6e9c6; }
+  border-color: #849f00; }
   .panel-success > .panel-heading {
-    color: #3c763d;
-    background-color: #dff0d8;
-    border-color: #d6e9c6; }
+    color: #fff;
+    background-color: #7AB800;
+    border-color: #849f00; }
     .panel-success > .panel-heading + .panel-collapse > .panel-body {
-      border-top-color: #d6e9c6; }
+      border-top-color: #849f00; }
     .panel-success > .panel-heading .badge {
-      color: #dff0d8;
-      background-color: #3c763d; }
+      color: #7AB800;
+      background-color: #fff; }
   .panel-success > .panel-footer + .panel-collapse > .panel-body {
-    border-bottom-color: #d6e9c6; }
+    border-bottom-color: #849f00; }
 
 .panel-info {
-  border-color: #bce8f1; }
+  border-color: #212121; }
   .panel-info > .panel-heading {
-    color: #31708f;
-    background-color: #d9edf7;
-    border-color: #bce8f1; }
+    color: #fff;
+    background-color: #333333;
+    border-color: #212121; }
     .panel-info > .panel-heading + .panel-collapse > .panel-body {
-      border-top-color: #bce8f1; }
+      border-top-color: #212121; }
     .panel-info > .panel-heading .badge {
-      color: #d9edf7;
-      background-color: #31708f; }
+      color: #333333;
+      background-color: #fff; }
   .panel-info > .panel-footer + .panel-collapse > .panel-body {
-    border-bottom-color: #bce8f1; }
+    border-bottom-color: #212121; }
 
 .panel-warning {
-  border-color: #faebcc; }
+  border-color: #f1480c; }
   .panel-warning > .panel-heading {
-    color: #8a6d3b;
-    background-color: #fcf8e3;
-    border-color: #faebcc; }
+    color: #fff;
+    background-color: #f47c23;
+    border-color: #f1480c; }
     .panel-warning > .panel-heading + .panel-collapse > .panel-body {
-      border-top-color: #faebcc; }
+      border-top-color: #f1480c; }
     .panel-warning > .panel-heading .badge {
-      color: #fcf8e3;
-      background-color: #8a6d3b; }
+      color: #f47c23;
+      background-color: #fff; }
   .panel-warning > .panel-footer + .panel-collapse > .panel-body {
-    border-bottom-color: #faebcc; }
+    border-bottom-color: #f1480c; }
 
 .panel-danger {
-  border-color: #ebccd1; }
+  border-color: #e60026; }
   .panel-danger > .panel-heading {
-    color: #a94442;
-    background-color: #f2dede;
-    border-color: #ebccd1; }
+    color: #fff;
+    background-color: #ff0000;
+    border-color: #e60026; }
     .panel-danger > .panel-heading + .panel-collapse > .panel-body {
-      border-top-color: #ebccd1; }
+      border-top-color: #e60026; }
     .panel-danger > .panel-heading .badge {
-      color: #f2dede;
-      background-color: #a94442; }
+      color: #ff0000;
+      background-color: #fff; }
   .panel-danger > .panel-footer + .panel-collapse > .panel-body {
-    border-bottom-color: #ebccd1; }
+    border-bottom-color: #e60026; }
 
 .embed-responsive {
   position: relative;
@@ -8266,7 +8266,7 @@ body.godi #header {
 
 .site-footer {
   color: rgba(255, 255, 255, 0.6);
-  padding: 30px;
+  padding: 30px 0;
   font-size: 14px; }
   .site-footer a {
     color: rgba(255, 255, 255, 0.9); }
@@ -8829,44 +8829,86 @@ body.form select,
 body.form a:active,
 body.form a:focus {
   outline: none; }
-body.form section {
+body.form section,
+body.form .form-header,
+body.form .form-footer {
   border-bottom: solid 2px #333333; }
-  body.form section .container {
+  body.form section .container,
+  body.form .form-header .container,
+  body.form .form-footer .container {
     padding-top: 30px;
     padding-bottom: 30px; }
-    @media (min-width: 992px) {
-      body.form section .container {
-        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAABCAYAAAD0In+KAAAAEklEQVQImWP48OHD/w8fPvwHACIjB58VdezUAAAAAElFTkSuQmCC);
-        background-repeat: repeat-y;
-        background-position: 76% 0; } }
-  body.form section .intro {
+    body.form section .container > .alert,
+    body.form .form-header .container > .alert,
+    body.form .form-footer .container > .alert {
+      font-size: 0.9em;
+      position: relative;
+      min-height: 1px;
+      padding-left: 15px;
+      padding-right: 15px; }
+      @media (min-width: 992px) {
+        body.form section .container > .alert,
+        body.form .form-header .container > .alert,
+        body.form .form-footer .container > .alert {
+          float: left;
+          width: 66.66667%; } }
+      @media (min-width: 992px) {
+        body.form section .container > .alert,
+        body.form .form-header .container > .alert,
+        body.form .form-footer .container > .alert {
+          margin-left: 16.66667%; } }
+      body.form section .container > .alert .close,
+      body.form .form-header .container > .alert .close,
+      body.form .form-footer .container > .alert .close {
+        right: auto; }
+  body.form section .intro,
+  body.form .form-header .intro,
+  body.form .form-footer .intro {
     margin-left: -15px;
     margin-right: -15px; }
-    body.form section .intro:before, body.form section .intro:after {
+    body.form section .intro:before, body.form section .intro:after,
+    body.form .form-header .intro:before,
+    body.form .form-header .intro:after,
+    body.form .form-footer .intro:before,
+    body.form .form-footer .intro:after {
       content: " ";
       display: table; }
-    body.form section .intro:after {
+    body.form section .intro:after,
+    body.form .form-header .intro:after,
+    body.form .form-footer .intro:after {
       clear: both; }
     @media (min-width: 992px) {
-      body.form section .intro {
+      body.form section .intro,
+      body.form .form-header .intro,
+      body.form .form-footer .intro {
         margin-bottom: 30px; } }
-    body.form section .intro h1 {
+    body.form section .intro h1,
+    body.form .form-header .intro h1,
+    body.form .form-footer .intro h1 {
       position: relative;
       min-height: 1px;
       padding-left: 15px;
       padding-right: 15px;
       margin: 0; }
       @media (min-width: 992px) {
-        body.form section .intro h1 {
+        body.form section .intro h1,
+        body.form .form-header .intro h1,
+        body.form .form-footer .intro h1 {
           float: left;
           width: 50%; } }
       @media (min-width: 992px) {
-        body.form section .intro h1 {
+        body.form section .intro h1,
+        body.form .form-header .intro h1,
+        body.form .form-footer .intro h1 {
           margin-left: 25%; } }
       @media (min-width: 992px) {
-        body.form section .intro h1 {
+        body.form section .intro h1,
+        body.form .form-header .intro h1,
+        body.form .form-footer .intro h1 {
           margin-top: 20px; } }
-    body.form section .intro p {
+    body.form section .intro p,
+    body.form .form-header .intro p,
+    body.form .form-footer .intro p {
       clear: left;
       position: relative;
       min-height: 1px;
@@ -8875,33 +8917,55 @@ body.form section {
       font-size: 16px;
       margin-top: 10px; }
       @media (min-width: 992px) {
-        body.form section .intro p {
+        body.form section .intro p,
+        body.form .form-header .intro p,
+        body.form .form-footer .intro p {
           float: left;
           width: 50%; } }
       @media (min-width: 992px) {
-        body.form section .intro p {
+        body.form section .intro p,
+        body.form .form-header .intro p,
+        body.form .form-footer .intro p {
           margin-left: 25%; } }
-  body.form section .question {
+  body.form section .question,
+  body.form .form-header .question,
+  body.form .form-footer .question {
     clear: both;
     margin-left: -15px;
     margin-right: -15px;
     padding-top: 30px; }
-    body.form section .question:before, body.form section .question:after {
+    body.form section .question:before, body.form section .question:after,
+    body.form .form-header .question:before,
+    body.form .form-header .question:after,
+    body.form .form-footer .question:before,
+    body.form .form-footer .question:after {
       content: " ";
       display: table; }
-    body.form section .question:after {
+    body.form section .question:after,
+    body.form .form-header .question:after,
+    body.form .form-footer .question:after {
       clear: both; }
     @media (min-width: 992px) {
-      body.form section .question {
+      body.form section .question,
+      body.form .form-header .question,
+      body.form .form-footer .question {
         padding-bottom: 30px; } }
-    body.form section .question h2 {
+    body.form section .question h2,
+    body.form .form-header .question h2,
+    body.form .form-footer .question h2 {
       font-size: 26px;
       margin-top: 0;
       margin-bottom: 0.6em; }
-    body.form section .question h3, body.form section .question.sub h2 {
+    body.form section .question h3, body.form section .question.sub h2,
+    body.form .form-header .question h3,
+    body.form .form-header .question.sub h2,
+    body.form .form-footer .question h3,
+    body.form .form-footer .question.sub h2 {
       font-size: 20px;
       margin-top: 0; }
-    body.form section .question .instructions {
+    body.form section .question .instructions,
+    body.form .form-header .question .instructions,
+    body.form .form-footer .question .instructions {
       position: relative;
       min-height: 1px;
       padding-left: 15px;
@@ -8910,24 +8974,36 @@ body.form section {
       text-align: right;
       font-size: 14px; }
       @media (min-width: 992px) {
-        body.form section .question .instructions {
+        body.form section .question .instructions,
+        body.form .form-header .question .instructions,
+        body.form .form-footer .question .instructions {
           float: left;
-          width: 25%; } }
-      body.form section .question .instructions div {
+          width: 33.33333%; } }
+      body.form section .question .instructions div,
+      body.form .form-header .question .instructions div,
+      body.form .form-footer .question .instructions div {
         text-align: left;
         background-color: #333333;
         z-index: 1;
         padding: 22.5px;
         margin-bottom: 30px; }
-        body.form section .question .instructions div h4 {
+        body.form section .question .instructions div h4,
+        body.form .form-header .question .instructions div h4,
+        body.form .form-footer .question .instructions div h4 {
           margin-top: 0; }
-        body.form section .question .instructions div :last-child {
+        body.form section .question .instructions div :last-child,
+        body.form .form-header .question .instructions div :last-child,
+        body.form .form-footer .question .instructions div :last-child {
           margin-bottom: 0; }
         @media (min-width: 992px) {
-          body.form section .question .instructions div {
+          body.form section .question .instructions div,
+          body.form .form-header .question .instructions div,
+          body.form .form-footer .question .instructions div {
             position: absolute;
             top: -20%; }
-            body.form section .question .instructions div:after {
+            body.form section .question .instructions div:after,
+            body.form .form-header .question .instructions div:after,
+            body.form .form-footer .question .instructions div:after {
               content: '';
               width: 0;
               height: 0;
@@ -8937,21 +9013,41 @@ body.form section {
               position: absolute;
               top: 10px;
               right: -8px; } }
-        body.form section .question .instructions div.in, body.form section .question .instructions div.collapsing {
+        body.form section .question .instructions div.in, body.form section .question .instructions div.collapsing,
+        body.form .form-header .question .instructions div.in,
+        body.form .form-header .question .instructions div.collapsing,
+        body.form .form-footer .question .instructions div.in,
+        body.form .form-footer .question .instructions div.collapsing {
           color: #fff; }
           @media (min-width: 992px) {
-            body.form section .question .instructions div.in + .toggle, body.form section .question .instructions div.collapsing + .toggle {
+            body.form section .question .instructions div.in + .toggle, body.form section .question .instructions div.collapsing + .toggle,
+            body.form .form-header .question .instructions div.in + .toggle,
+            body.form .form-header .question .instructions div.collapsing + .toggle,
+            body.form .form-footer .question .instructions div.in + .toggle,
+            body.form .form-footer .question .instructions div.collapsing + .toggle {
               position: relative;
               z-index: 2; } }
-          body.form section .question .instructions div.in + .toggle .icon, body.form section .question .instructions div.collapsing + .toggle .icon {
+          body.form section .question .instructions div.in + .toggle .icon, body.form section .question .instructions div.collapsing + .toggle .icon,
+          body.form .form-header .question .instructions div.in + .toggle .icon,
+          body.form .form-header .question .instructions div.collapsing + .toggle .icon,
+          body.form .form-footer .question .instructions div.in + .toggle .icon,
+          body.form .form-footer .question .instructions div.collapsing + .toggle .icon {
             background-color: #fff;
             top: 5px;
             right: 25px; }
             @media (min-width: 992px) {
-              body.form section .question .instructions div.in + .toggle .icon, body.form section .question .instructions div.collapsing + .toggle .icon {
+              body.form section .question .instructions div.in + .toggle .icon, body.form section .question .instructions div.collapsing + .toggle .icon,
+              body.form .form-header .question .instructions div.in + .toggle .icon,
+              body.form .form-header .question .instructions div.collapsing + .toggle .icon,
+              body.form .form-footer .question .instructions div.in + .toggle .icon,
+              body.form .form-footer .question .instructions div.collapsing + .toggle .icon {
                 top: auto;
                 right: auto; } }
-            body.form section .question .instructions div.in + .toggle .icon:after, body.form section .question .instructions div.collapsing + .toggle .icon:after {
+            body.form section .question .instructions div.in + .toggle .icon:after, body.form section .question .instructions div.collapsing + .toggle .icon:after,
+            body.form .form-header .question .instructions div.in + .toggle .icon:after,
+            body.form .form-header .question .instructions div.collapsing + .toggle .icon:after,
+            body.form .form-footer .question .instructions div.in + .toggle .icon:after,
+            body.form .form-footer .question .instructions div.collapsing + .toggle .icon:after {
               content: 'x';
               position: absolute;
               top: 0;
@@ -8959,7 +9055,9 @@ body.form section {
               right: 0;
               color: #333333;
               line-height: 1.3; }
-      body.form section .question .instructions .toggle .icon {
+      body.form section .question .instructions .toggle .icon,
+      body.form .form-header .question .instructions .toggle .icon,
+      body.form .form-footer .question .instructions .toggle .icon {
         background-color: #777777;
         color: #fff;
         width: 20px;
@@ -8974,36 +9072,225 @@ body.form section {
         right: 20px;
         z-index: 2; }
         @media (min-width: 992px) {
-          body.form section .question .instructions .toggle .icon {
+          body.form section .question .instructions .toggle .icon,
+          body.form .form-header .question .instructions .toggle .icon,
+          body.form .form-footer .question .instructions .toggle .icon {
             position: relative;
             top: auto;
             right: auto;
             z-index: auto; } }
-    body.form section .question .main {
+      body.form section .question .instructions + h2, body.form section .question .instructions + h3, body.form section .question .instructions + h4, body.form section .question .instructions + p,
+      body.form .form-header .question .instructions + h2,
+      body.form .form-header .question .instructions + h3,
+      body.form .form-header .question .instructions + h4,
+      body.form .form-header .question .instructions + p,
+      body.form .form-footer .question .instructions + h2,
+      body.form .form-footer .question .instructions + h3,
+      body.form .form-footer .question .instructions + h4,
+      body.form .form-footer .question .instructions + p {
+        position: relative;
+        min-height: 1px;
+        padding-left: 15px;
+        padding-right: 15px; }
+        @media (min-width: 992px) {
+          body.form section .question .instructions + h2, body.form section .question .instructions + h3, body.form section .question .instructions + h4, body.form section .question .instructions + p,
+          body.form .form-header .question .instructions + h2,
+          body.form .form-header .question .instructions + h3,
+          body.form .form-header .question .instructions + h4,
+          body.form .form-header .question .instructions + p,
+          body.form .form-footer .question .instructions + h2,
+          body.form .form-footer .question .instructions + h3,
+          body.form .form-footer .question .instructions + h4,
+          body.form .form-footer .question .instructions + p {
+            float: left;
+            width: 66.66667%; } }
+        body.form section .question .instructions + h2 ~ p, body.form section .question .instructions + h3 ~ p, body.form section .question .instructions + h4 ~ p, body.form section .question .instructions + p ~ p,
+        body.form .form-header .question .instructions + h2 ~ p,
+        body.form .form-header .question .instructions + h3 ~ p,
+        body.form .form-header .question .instructions + h4 ~ p,
+        body.form .form-header .question .instructions + p ~ p,
+        body.form .form-footer .question .instructions + h2 ~ p,
+        body.form .form-footer .question .instructions + h3 ~ p,
+        body.form .form-footer .question .instructions + h4 ~ p,
+        body.form .form-footer .question .instructions + p ~ p {
+          position: relative;
+          min-height: 1px;
+          padding-left: 15px;
+          padding-right: 15px; }
+          @media (min-width: 992px) {
+            body.form section .question .instructions + h2 ~ p, body.form section .question .instructions + h3 ~ p, body.form section .question .instructions + h4 ~ p, body.form section .question .instructions + p ~ p,
+            body.form .form-header .question .instructions + h2 ~ p,
+            body.form .form-header .question .instructions + h3 ~ p,
+            body.form .form-header .question .instructions + h4 ~ p,
+            body.form .form-header .question .instructions + p ~ p,
+            body.form .form-footer .question .instructions + h2 ~ p,
+            body.form .form-footer .question .instructions + h3 ~ p,
+            body.form .form-footer .question .instructions + h4 ~ p,
+            body.form .form-footer .question .instructions + p ~ p {
+              float: left;
+              width: 66.66667%; } }
+          @media (min-width: 992px) {
+            body.form section .question .instructions + h2 ~ p, body.form section .question .instructions + h3 ~ p, body.form section .question .instructions + h4 ~ p, body.form section .question .instructions + p ~ p,
+            body.form .form-header .question .instructions + h2 ~ p,
+            body.form .form-header .question .instructions + h3 ~ p,
+            body.form .form-header .question .instructions + h4 ~ p,
+            body.form .form-header .question .instructions + p ~ p,
+            body.form .form-footer .question .instructions + h2 ~ p,
+            body.form .form-footer .question .instructions + h3 ~ p,
+            body.form .form-footer .question .instructions + h4 ~ p,
+            body.form .form-footer .question .instructions + p ~ p {
+              margin-left: 33.33333%; } }
+    body.form section .question .current,
+    body.form .form-header .question .current,
+    body.form .form-footer .question .current {
       position: relative;
       min-height: 1px;
       padding-left: 15px;
-      padding-right: 15px; }
+      padding-right: 15px;
+      clear: left;
+      position: relative;
+      display: none; }
       @media (min-width: 992px) {
-        body.form section .question .main {
+        body.form section .question .current,
+        body.form .form-header .question .current,
+        body.form .form-footer .question .current {
           float: left;
-          width: 50%; } }
-      body.form section .question .main p {
-        margin-bottom: 1.2em; }
-    body.form section .question .comments {
+          width: 33.33333%; } }
+      @media (min-width: 992px) {
+        body.form section .question .current,
+        body.form .form-header .question .current,
+        body.form .form-footer .question .current {
+          display: block; } }
+      body.form section .question .current dl,
+      body.form .form-header .question .current dl,
+      body.form .form-footer .question .current dl {
+        border: solid 2px rgba(119, 119, 119, 0.2);
+        margin-top: 30px;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 3.75px 0; }
+        @media (min-width: 992px) {
+          body.form section .question .current dl,
+          body.form .form-header .question .current dl,
+          body.form .form-footer .question .current dl {
+            border-top: none;
+            border-left: none;
+            border-bottom: none;
+            margin: -2px 0 0 0;
+            padding: 7.5px 0 3.75px 0; } }
+        body.form section .question .current dl dt,
+        body.form .form-header .question .current dl dt,
+        body.form .form-footer .question .current dl dt {
+          font-size: 13px;
+          font-weight: normal;
+          padding-left: 1em; }
+          @media (min-width: 992px) {
+            body.form section .question .current dl dt,
+            body.form .form-header .question .current dl dt,
+            body.form .form-footer .question .current dl dt {
+              position: absolute;
+              bottom: 100%;
+              padding-left: 0.1em; } }
+        body.form section .question .current dl dd,
+        body.form .form-header .question .current dl dd,
+        body.form .form-footer .question .current dl dd {
+          display: block;
+          font-size: 0.9em;
+          padding: 0.5em 1em;
+          margin: 15px;
+          border: solid 2px #333333;
+          word-wrap: break-word; }
+          @media (min-width: 992px) {
+            body.form section .question .current dl dd,
+            body.form .form-header .question .current dl dd,
+            body.form .form-footer .question .current dl dd {
+              margin: 0 30px 7.5px 0; } }
+          body.form section .question .current dl dd ul,
+          body.form .form-header .question .current dl dd ul,
+          body.form .form-footer .question .current dl dd ul {
+            margin: 0;
+            padding: 0; }
+            body.form section .question .current dl dd ul li,
+            body.form .form-header .question .current dl dd ul li,
+            body.form .form-footer .question .current dl dd ul li {
+              display: block; }
+              body.form section .question .current dl dd ul li:nth-child(2),
+              body.form .form-header .question .current dl dd ul li:nth-child(2),
+              body.form .form-footer .question .current dl dd ul li:nth-child(2) {
+                border-top-style: solid;
+                border-width: 2px;
+                border-color: inherit;
+                margin-top: 0.4em;
+                padding-top: 0.4em; }
+        body.form section .question .current dl > *,
+        body.form .form-header .question .current dl > *,
+        body.form .form-footer .question .current dl > * {
+          opacity: 0.2; }
+        body.form section .question .current dl:hover > *,
+        body.form .form-header .question .current dl:hover > *,
+        body.form .form-footer .question .current dl:hover > * {
+          opacity: 1; }
+      body.form section .question .current.changed,
+      body.form .form-header .question .current.changed,
+      body.form .form-footer .question .current.changed {
+        display: block; }
+        body.form section .question .current.changed dl,
+        body.form .form-header .question .current.changed dl,
+        body.form .form-footer .question .current.changed dl {
+          border-color: #777777; }
+          body.form section .question .current.changed dl > *,
+          body.form .form-header .question .current.changed dl > *,
+          body.form .form-footer .question .current.changed dl > * {
+            opacity: 1; }
+    body.form section .question .answer-wrapper,
+    body.form .form-header .question .answer-wrapper,
+    body.form .form-footer .question .answer-wrapper {
       position: relative;
       min-height: 1px;
       padding-left: 15px;
       padding-right: 15px; }
       @media (min-width: 992px) {
-        body.form section .question .comments {
+        body.form section .question .answer-wrapper,
+        body.form .form-header .question .answer-wrapper,
+        body.form .form-footer .question .answer-wrapper {
+          float: left;
+          width: 66.66667%; } }
+    body.form section .question .main,
+    body.form .form-header .question .main,
+    body.form .form-footer .question .main {
+      position: relative;
+      min-height: 1px;
+      padding-left: 15px;
+      padding-right: 15px;
+      padding: 0; }
+      @media (min-width: 992px) {
+        body.form section .question .main,
+        body.form .form-header .question .main,
+        body.form .form-footer .question .main {
+          float: left;
+          width: 75%; } }
+    body.form section .question .comments,
+    body.form .form-header .question .comments,
+    body.form .form-footer .question .comments {
+      position: relative;
+      min-height: 1px;
+      padding-left: 15px;
+      padding-right: 15px; }
+      @media (min-width: 992px) {
+        body.form section .question .comments,
+        body.form .form-header .question .comments,
+        body.form .form-footer .question .comments {
           float: left;
           width: 25%; } }
-      body.form section .question .comments label {
+      body.form section .question .comments label,
+      body.form .form-header .question .comments label,
+      body.form .form-footer .question .comments label {
         color: #777777;
         margin-top: 15px; }
         @media (min-width: 992px) {
-          body.form section .question .comments label {
+          body.form section .question .comments label,
+          body.form .form-header .question .comments label,
+          body.form .form-footer .question .comments label {
             margin-top: 0;
             padding-left: 18px;
             height: 0;
@@ -9011,7 +9298,9 @@ body.form section {
             overflow: hidden;
             position: absolute;
             top: -30px; } }
-      body.form section .question .comments textarea {
+      body.form section .question .comments textarea,
+      body.form .form-header .question .comments textarea,
+      body.form .form-footer .question .comments textarea {
         width: 100%;
         padding: 15px 20px;
         resize: none;
@@ -9021,27 +9310,41 @@ body.form section {
         background-color: transparent;
         font-size: 14px; }
         @media (min-width: 992px) {
-          body.form section .question .comments textarea {
+          body.form section .question .comments textarea,
+          body.form .form-header .question .comments textarea,
+          body.form .form-footer .question .comments textarea {
             margin-top: -10px;
             margin-left: -2px;
             margin-bottom: 0;
             border: none; } }
-        body.form section .question .comments textarea:focus {
+        body.form section .question .comments textarea:focus,
+        body.form .form-header .question .comments textarea:focus,
+        body.form .form-footer .question .comments textarea:focus {
           background-color: #eeeeee; }
-    body.form section .question.yes-no .answer {
+    body.form section .question.yes-no .answer,
+    body.form .form-header .question.yes-no .answer,
+    body.form .form-footer .question.yes-no .answer {
       display: table;
       width: 100%;
       table-layout: fixed; }
-      body.form section .question.yes-no .answer input {
+      body.form section .question.yes-no .answer input,
+      body.form .form-header .question.yes-no .answer input,
+      body.form .form-footer .question.yes-no .answer input {
         display: none; }
-        body.form section .question.yes-no .answer input:checked + label span {
+        body.form section .question.yes-no .answer input:checked + label span,
+        body.form .form-header .question.yes-no .answer input:checked + label span,
+        body.form .form-footer .question.yes-no .answer input:checked + label span {
           background-color: #333333;
           color: #fff; }
-      body.form section .question.yes-no .answer label {
+      body.form section .question.yes-no .answer label,
+      body.form .form-header .question.yes-no .answer label,
+      body.form .form-footer .question.yes-no .answer label {
         display: table-cell;
         text-align: center;
         font-weight: normal; }
-        body.form section .question.yes-no .answer label span {
+        body.form section .question.yes-no .answer label span,
+        body.form .form-header .question.yes-no .answer label span,
+        body.form .form-footer .question.yes-no .answer label span {
           display: block;
           border-style: solid;
           border-color: #333333;
@@ -9053,36 +9356,67 @@ body.form section {
           text-align: center;
           font-weight: bold;
           margin-bottom: 0.5em; }
-        body.form section .question.yes-no .answer label em {
+        body.form section .question.yes-no .answer label em,
+        body.form .form-header .question.yes-no .answer label em,
+        body.form .form-footer .question.yes-no .answer label em {
           display: none; }
-        body.form section .question.yes-no .answer label:first-of-type {
+        body.form section .question.yes-no .answer label:first-of-type,
+        body.form .form-header .question.yes-no .answer label:first-of-type,
+        body.form .form-footer .question.yes-no .answer label:first-of-type {
           text-align: left; }
-          body.form section .question.yes-no .answer label:first-of-type span {
+          body.form section .question.yes-no .answer label:first-of-type span,
+          body.form .form-header .question.yes-no .answer label:first-of-type span,
+          body.form .form-footer .question.yes-no .answer label:first-of-type span {
             border-left-width: 2px; }
-          body.form section .question.yes-no .answer label:first-of-type em {
+          body.form section .question.yes-no .answer label:first-of-type em,
+          body.form .form-header .question.yes-no .answer label:first-of-type em,
+          body.form .form-footer .question.yes-no .answer label:first-of-type em {
             display: block; }
-        body.form section .question.yes-no .answer label:last-of-type {
+        body.form section .question.yes-no .answer label:last-of-type,
+        body.form .form-header .question.yes-no .answer label:last-of-type,
+        body.form .form-footer .question.yes-no .answer label:last-of-type {
           text-align: right; }
-          body.form section .question.yes-no .answer label:last-of-type span {
+          body.form section .question.yes-no .answer label:last-of-type span,
+          body.form .form-header .question.yes-no .answer label:last-of-type span,
+          body.form .form-footer .question.yes-no .answer label:last-of-type span {
             border-right-width: 2px; }
-          body.form section .question.yes-no .answer label:last-of-type em {
+          body.form section .question.yes-no .answer label:last-of-type em,
+          body.form .form-header .question.yes-no .answer label:last-of-type em,
+          body.form .form-footer .question.yes-no .answer label:last-of-type em {
             display: block; }
-    body.form section .question.scale .answer {
+    body.form section .question.yes-no .current dd,
+    body.form .form-header .question.yes-no .current dd,
+    body.form .form-footer .question.yes-no .current dd {
+      font-weight: bold;
+      text-align: center; }
+    body.form section .question.scale .answer,
+    body.form .form-header .question.scale .answer,
+    body.form .form-footer .question.scale .answer {
       display: table;
       width: 100%;
       table-layout: fixed; }
-      body.form section .question.scale .answer input {
+      body.form section .question.scale .answer input,
+      body.form .form-header .question.scale .answer input,
+      body.form .form-footer .question.scale .answer input {
         display: none; }
-        body.form section .question.scale .answer input:checked + label span {
+        body.form section .question.scale .answer input:checked + label span,
+        body.form .form-header .question.scale .answer input:checked + label span,
+        body.form .form-footer .question.scale .answer input:checked + label span {
           background-color: #333333;
           color: #fff; }
-      body.form section .question.scale .answer > span {
+      body.form section .question.scale .answer > span,
+      body.form .form-header .question.scale .answer > span,
+      body.form .form-footer .question.scale .answer > span {
         display: table-cell;
         text-align: center;
         font-weight: normal; }
-        body.form section .question.scale .answer > span label {
+        body.form section .question.scale .answer > span label,
+        body.form .form-header .question.scale .answer > span label,
+        body.form .form-footer .question.scale .answer > span label {
           display: block; }
-        body.form section .question.scale .answer > span span {
+        body.form section .question.scale .answer > span span,
+        body.form .form-header .question.scale .answer > span span,
+        body.form .form-footer .question.scale .answer > span span {
           display: block;
           border-style: solid;
           border-color: #333333;
@@ -9094,61 +9428,106 @@ body.form section {
           text-align: center;
           font-weight: bold;
           margin-bottom: 0.5em; }
-        body.form section .question.scale .answer > span em {
+        body.form section .question.scale .answer > span em,
+        body.form .form-header .question.scale .answer > span em,
+        body.form .form-footer .question.scale .answer > span em {
           display: none; }
-        body.form section .question.scale .answer > span:first-of-type {
+        body.form section .question.scale .answer > span:first-of-type,
+        body.form .form-header .question.scale .answer > span:first-of-type,
+        body.form .form-footer .question.scale .answer > span:first-of-type {
           text-align: left; }
-          body.form section .question.scale .answer > span:first-of-type span {
+          body.form section .question.scale .answer > span:first-of-type span,
+          body.form .form-header .question.scale .answer > span:first-of-type span,
+          body.form .form-footer .question.scale .answer > span:first-of-type span {
             border-left-width: 2px; }
-          body.form section .question.scale .answer > span:first-of-type em {
+          body.form section .question.scale .answer > span:first-of-type em,
+          body.form .form-header .question.scale .answer > span:first-of-type em,
+          body.form .form-footer .question.scale .answer > span:first-of-type em {
             display: block; }
-        body.form section .question.scale .answer > span:last-of-type {
+        body.form section .question.scale .answer > span:last-of-type,
+        body.form .form-header .question.scale .answer > span:last-of-type,
+        body.form .form-footer .question.scale .answer > span:last-of-type {
           text-align: right; }
-          body.form section .question.scale .answer > span:last-of-type span {
+          body.form section .question.scale .answer > span:last-of-type span,
+          body.form .form-header .question.scale .answer > span:last-of-type span,
+          body.form .form-footer .question.scale .answer > span:last-of-type span {
             border-right-width: 2px; }
-          body.form section .question.scale .answer > span:last-of-type em {
+          body.form section .question.scale .answer > span:last-of-type em,
+          body.form .form-header .question.scale .answer > span:last-of-type em,
+          body.form .form-footer .question.scale .answer > span:last-of-type em {
             display: block; }
-    body.form section .question.source .answer {
+    body.form section .question.scale .current dd,
+    body.form .form-header .question.scale .current dd,
+    body.form .form-footer .question.scale .current dd {
+      font-weight: bold;
+      text-align: center; }
+    body.form section .question.source .answer,
+    body.form .form-header .question.source .answer,
+    body.form .form-footer .question.source .answer {
       display: table;
       width: 100%; }
-      body.form section .question.source .answer ul {
+      body.form section .question.source .answer ul,
+      body.form .form-header .question.source .answer ul,
+      body.form .form-footer .question.source .answer ul {
         display: table-row; }
-        body.form section .question.source .answer ul li {
+        body.form section .question.source .answer ul li,
+        body.form .form-header .question.source .answer ul li,
+        body.form .form-footer .question.source .answer ul li {
           display: table-cell;
           padding: 2px; }
-          body.form section .question.source .answer ul li input {
+          body.form section .question.source .answer ul li input,
+          body.form .form-header .question.source .answer ul li input,
+          body.form .form-footer .question.source .answer ul li input {
             width: 100%;
             border: solid 2px #333333;
             padding: 4px 8px; }
-          body.form section .question.source .answer ul li .select {
+          body.form section .question.source .answer ul li .select,
+          body.form .form-header .question.source .answer ul li .select,
+          body.form .form-footer .question.source .answer ul li .select {
             display: block;
             border: solid 2px #333333;
             padding: 4px 2px 4px 0; }
-            body.form section .question.source .answer ul li .select select {
+            body.form section .question.source .answer ul li .select select,
+            body.form .form-header .question.source .answer ul li .select select,
+            body.form .form-footer .question.source .answer ul li .select select {
               width: 100%;
               border: none;
               background-color: #fff; }
-        body.form section .question.source .answer ul:nth-child(n+2) label {
+        body.form section .question.source .answer ul:nth-child(n+2) label,
+        body.form .form-header .question.source .answer ul:nth-child(n+2) label,
+        body.form .form-footer .question.source .answer ul:nth-child(n+2) label {
           display: none; }
-      body.form section .question.source .answer .add {
+      body.form section .question.source .answer .add,
+      body.form .form-header .question.source .answer .add,
+      body.form .form-footer .question.source .answer .add {
         color: #777777;
         display: inline-block;
         margin-top: 0.25em; }
-        body.form section .question.source .answer .add:before {
+        body.form section .question.source .answer .add:before,
+        body.form .form-header .question.source .answer .add:before,
+        body.form .form-footer .question.source .answer .add:before {
           content: '+';
           font-weight: bold; }
-    body.form section .question.select .answer {
+    body.form section .question.select .answer,
+    body.form .form-header .question.select .answer,
+    body.form .form-footer .question.select .answer {
       border: solid 2px #333333;
       font-size: 18px;
       font-weight: bold;
       padding: 0.6em 0.5em;
       position: relative; }
-      body.form section .question.select .answer select {
+      body.form section .question.select .answer select,
+      body.form .form-header .question.select .answer select,
+      body.form .form-footer .question.select .answer select {
         width: 100%;
         border: none;
         background-color: #fff;
-        -webkit-appearance: none; }
-      body.form section .question.select .answer:after {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        line-height: normal; }
+      body.form section .question.select .answer:after,
+      body.form .form-header .question.select .answer:after,
+      body.form .form-footer .question.select .answer:after {
         content: '';
         width: 0;
         height: 0;
@@ -9161,28 +9540,32 @@ body.form section {
         right: 1em;
         top: 50%;
         margin-top: -2px; }
-    body.form section .question.multiple ul {
+    body.form section .question.select .current dd,
+    body.form .form-header .question.select .current dd,
+    body.form .form-footer .question.select .current dd {
+      font-weight: bold; }
+    body.form section .question.multiple .answer ul,
+    body.form .form-header .question.multiple .answer ul,
+    body.form .form-footer .question.multiple .answer ul {
       margin: 0 -5px;
       padding: 0; }
-      body.form section .question.multiple ul li {
+      body.form section .question.multiple .answer ul li,
+      body.form .form-header .question.multiple .answer ul li,
+      body.form .form-footer .question.multiple .answer ul li {
         display: block;
-        position: relative;
-        min-height: 1px;
-        padding-left: 15px;
-        padding-right: 15px;
         padding: 5px; }
-        @media (min-width: 992px) {
-          body.form section .question.multiple ul li {
-            float: left;
-            width: 50%; } }
-        body.form section .question.multiple ul li label {
+        body.form section .question.multiple .answer ul li label,
+        body.form .form-header .question.multiple .answer ul li label,
+        body.form .form-footer .question.multiple .answer ul li label {
           display: block;
           border: solid 2px #333333;
           font-size: 18px;
           padding: 0.5em;
           margin: 0;
           cursor: pointer; }
-          body.form section .question.multiple ul li label .letter {
+          body.form section .question.multiple .answer ul li label .letter,
+          body.form .form-header .question.multiple .answer ul li label .letter,
+          body.form .form-footer .question.multiple .answer ul li label .letter {
             display: inline-block;
             border: solid 2px #333333;
             width: 1.95em;
@@ -9194,7 +9577,9 @@ body.form section {
             float: left;
             overflow: hidden;
             position: relative; }
-            body.form section .question.multiple ul li label .letter:after {
+            body.form section .question.multiple .answer ul li label .letter:after,
+            body.form .form-header .question.multiple .answer ul li label .letter:after,
+            body.form .form-footer .question.multiple .answer ul li label .letter:after {
               position: absolute;
               top: 0;
               right: 0;
@@ -9208,168 +9593,593 @@ body.form section {
               line-height: 1;
               -webkit-font-smoothing: antialiased;
               -moz-osx-font-smoothing: grayscale; }
-          body.form section .question.multiple ul li label .description {
+          body.form section .question.multiple .answer ul li label .description,
+          body.form .form-header .question.multiple .answer ul li label .description,
+          body.form .form-footer .question.multiple .answer ul li label .description {
             display: block;
             margin-left: 2em; }
-        body.form section .question.multiple ul li input {
+        body.form section .question.multiple .answer ul li input,
+        body.form .form-header .question.multiple .answer ul li input,
+        body.form .form-footer .question.multiple .answer ul li input {
           display: none; }
-          body.form section .question.multiple ul li input:checked + label {
+          body.form section .question.multiple .answer ul li input:checked + label,
+          body.form .form-header .question.multiple .answer ul li input:checked + label,
+          body.form .form-footer .question.multiple .answer ul li input:checked + label {
             background-color: #333333;
             color: #fff; }
-            body.form section .question.multiple ul li input:checked + label .letter {
+            body.form section .question.multiple .answer ul li input:checked + label .letter,
+            body.form .form-header .question.multiple .answer ul li input:checked + label .letter,
+            body.form .form-footer .question.multiple .answer ul li input:checked + label .letter {
               border-color: #fff;
               opacity: 1;
               text-indent: -4em; }
-              body.form section .question.multiple ul li input:checked + label .letter:after {
+              body.form section .question.multiple .answer ul li input:checked + label .letter:after,
+              body.form .form-header .question.multiple .answer ul li input:checked + label .letter:after,
+              body.form .form-footer .question.multiple .answer ul li input:checked + label .letter:after {
                 display: block;
                 content: "\e013"; }
-    body.form section .question.multiple .other {
-      margin: 0; }
+    body.form section .question.multiple .answer.short ul li,
+    body.form .form-header .question.multiple .answer.short ul li,
+    body.form .form-footer .question.multiple .answer.short ul li {
+      position: relative;
+      min-height: 1px;
+      padding-left: 15px;
+      padding-right: 15px;
+      padding: 5px; }
+      @media (min-width: 992px) {
+        body.form section .question.multiple .answer.short ul li,
+        body.form .form-header .question.multiple .answer.short ul li,
+        body.form .form-footer .question.multiple .answer.short ul li {
+          float: left;
+          width: 50%; } }
+    body.form section .question.multiple .current dd,
+    body.form .form-header .question.multiple .current dd,
+    body.form .form-footer .question.multiple .current dd {
+      font-weight: bold; }
     body.form section .question.text .answer textarea,
     body.form section .question.text .answer input[type="text"], body.form section .question .text.other .answer textarea,
-    body.form section .question .text.other .answer input[type="text"] {
+    body.form section .question .text.other .answer input[type="text"],
+    body.form .form-header .question.text .answer textarea,
+    body.form .form-header .question.text .answer input[type="text"],
+    body.form .form-header .question .text.other .answer textarea,
+    body.form .form-header .question .text.other .answer input[type="text"],
+    body.form .form-footer .question.text .answer textarea,
+    body.form .form-footer .question.text .answer input[type="text"],
+    body.form .form-footer .question .text.other .answer textarea,
+    body.form .form-footer .question .text.other .answer input[type="text"] {
       width: 100%;
       border: solid 2px #333333;
       padding: 15px;
       font-size: 16px;
       max-width: 100%; }
-    body.form section .question.submit button {
+    body.form section .question.text .answer .current dd, body.form section .question .text.other .answer .current dd,
+    body.form .form-header .question.text .answer .current dd,
+    body.form .form-header .question .text.other .answer .current dd,
+    body.form .form-footer .question.text .answer .current dd,
+    body.form .form-footer .question .text.other .answer .current dd {
+      font-size: 0.8em;
+      max-height: 11em;
+      overflow: auto; }
+    body.form section .question.submit button,
+    body.form .form-header .question.submit button,
+    body.form .form-footer .question.submit button {
       background-color: #333333;
       color: #fff;
       border: none;
       font-size: 18px;
-      padding: 15px 30px; }
-    body.form section .question.sub, body.form section .question .sub {
+      padding: 10px 30px;
+      margin-top: 1.2em; }
+      body.form section .question.submit button.reject,
+      body.form .form-header .question.submit button.reject,
+      body.form .form-footer .question.submit button.reject {
+        background-color: #ff0000; }
+      body.form section .question.submit button + button,
+      body.form .form-header .question.submit button + button,
+      body.form .form-footer .question.submit button + button {
+        margin-left: 15px; }
+    body.form section .question.sub, body.form section .question .sub,
+    body.form .form-header .question.sub,
+    body.form .form-header .question .sub,
+    body.form .form-footer .question.sub,
+    body.form .form-footer .question .sub {
       padding-top: 0;
       padding-bottom: 15px; }
-      body.form section .question.sub.scale .answer > label span, body.form section .question.sub.scale .answer > span span, body.form section .question.sub.yes-no .answer > label span, body.form section .question.sub.yes-no .answer > span span, body.form section .question .sub.scale .answer > label span, body.form section .question .sub.scale .answer > span span, body.form section .question .sub.yes-no .answer > label span, body.form section .question .sub.yes-no .answer > span span {
+      body.form section .question.sub.scale .answer > label span, body.form section .question.sub.scale .answer > span span, body.form section .question.sub.yes-no .answer > label span, body.form section .question.sub.yes-no .answer > span span, body.form section .question .sub.scale .answer > label span, body.form section .question .sub.scale .answer > span span, body.form section .question .sub.yes-no .answer > label span, body.form section .question .sub.yes-no .answer > span span,
+      body.form .form-header .question.sub.scale .answer > label span,
+      body.form .form-header .question.sub.scale .answer > span span,
+      body.form .form-header .question.sub.yes-no .answer > label span,
+      body.form .form-header .question.sub.yes-no .answer > span span,
+      body.form .form-header .question .sub.scale .answer > label span,
+      body.form .form-header .question .sub.scale .answer > span span,
+      body.form .form-header .question .sub.yes-no .answer > label span,
+      body.form .form-header .question .sub.yes-no .answer > span span,
+      body.form .form-footer .question.sub.scale .answer > label span,
+      body.form .form-footer .question.sub.scale .answer > span span,
+      body.form .form-footer .question.sub.yes-no .answer > label span,
+      body.form .form-footer .question.sub.yes-no .answer > span span,
+      body.form .form-footer .question .sub.scale .answer > label span,
+      body.form .form-footer .question .sub.scale .answer > span span,
+      body.form .form-footer .question .sub.yes-no .answer > label span,
+      body.form .form-footer .question .sub.yes-no .answer > span span {
         border-width: 2px 1px;
         font-size: 16px; }
-      body.form section .question.sub.scale .answer > label:first-of-type span, body.form section .question.sub.scale .answer > span:first-of-type span, body.form section .question.sub.yes-no .answer > label:first-of-type span, body.form section .question.sub.yes-no .answer > span:first-of-type span, body.form section .question .sub.scale .answer > label:first-of-type span, body.form section .question .sub.scale .answer > span:first-of-type span, body.form section .question .sub.yes-no .answer > label:first-of-type span, body.form section .question .sub.yes-no .answer > span:first-of-type span {
+      body.form section .question.sub.scale .answer > label:first-of-type span, body.form section .question.sub.scale .answer > span:first-of-type span, body.form section .question.sub.yes-no .answer > label:first-of-type span, body.form section .question.sub.yes-no .answer > span:first-of-type span, body.form section .question .sub.scale .answer > label:first-of-type span, body.form section .question .sub.scale .answer > span:first-of-type span, body.form section .question .sub.yes-no .answer > label:first-of-type span, body.form section .question .sub.yes-no .answer > span:first-of-type span,
+      body.form .form-header .question.sub.scale .answer > label:first-of-type span,
+      body.form .form-header .question.sub.scale .answer > span:first-of-type span,
+      body.form .form-header .question.sub.yes-no .answer > label:first-of-type span,
+      body.form .form-header .question.sub.yes-no .answer > span:first-of-type span,
+      body.form .form-header .question .sub.scale .answer > label:first-of-type span,
+      body.form .form-header .question .sub.scale .answer > span:first-of-type span,
+      body.form .form-header .question .sub.yes-no .answer > label:first-of-type span,
+      body.form .form-header .question .sub.yes-no .answer > span:first-of-type span,
+      body.form .form-footer .question.sub.scale .answer > label:first-of-type span,
+      body.form .form-footer .question.sub.scale .answer > span:first-of-type span,
+      body.form .form-footer .question.sub.yes-no .answer > label:first-of-type span,
+      body.form .form-footer .question.sub.yes-no .answer > span:first-of-type span,
+      body.form .form-footer .question .sub.scale .answer > label:first-of-type span,
+      body.form .form-footer .question .sub.scale .answer > span:first-of-type span,
+      body.form .form-footer .question .sub.yes-no .answer > label:first-of-type span,
+      body.form .form-footer .question .sub.yes-no .answer > span:first-of-type span {
         border-left-width: 2px; }
-      body.form section .question.sub.scale .answer > label:last-of-type span, body.form section .question.sub.scale .answer > span:last-of-type span, body.form section .question.sub.yes-no .answer > label:last-of-type span, body.form section .question.sub.yes-no .answer > span:last-of-type span, body.form section .question .sub.scale .answer > label:last-of-type span, body.form section .question .sub.scale .answer > span:last-of-type span, body.form section .question .sub.yes-no .answer > label:last-of-type span, body.form section .question .sub.yes-no .answer > span:last-of-type span {
+      body.form section .question.sub.scale .answer > label:last-of-type span, body.form section .question.sub.scale .answer > span:last-of-type span, body.form section .question.sub.yes-no .answer > label:last-of-type span, body.form section .question.sub.yes-no .answer > span:last-of-type span, body.form section .question .sub.scale .answer > label:last-of-type span, body.form section .question .sub.scale .answer > span:last-of-type span, body.form section .question .sub.yes-no .answer > label:last-of-type span, body.form section .question .sub.yes-no .answer > span:last-of-type span,
+      body.form .form-header .question.sub.scale .answer > label:last-of-type span,
+      body.form .form-header .question.sub.scale .answer > span:last-of-type span,
+      body.form .form-header .question.sub.yes-no .answer > label:last-of-type span,
+      body.form .form-header .question.sub.yes-no .answer > span:last-of-type span,
+      body.form .form-header .question .sub.scale .answer > label:last-of-type span,
+      body.form .form-header .question .sub.scale .answer > span:last-of-type span,
+      body.form .form-header .question .sub.yes-no .answer > label:last-of-type span,
+      body.form .form-header .question .sub.yes-no .answer > span:last-of-type span,
+      body.form .form-footer .question.sub.scale .answer > label:last-of-type span,
+      body.form .form-footer .question.sub.scale .answer > span:last-of-type span,
+      body.form .form-footer .question.sub.yes-no .answer > label:last-of-type span,
+      body.form .form-footer .question.sub.yes-no .answer > span:last-of-type span,
+      body.form .form-footer .question .sub.scale .answer > label:last-of-type span,
+      body.form .form-footer .question .sub.scale .answer > span:last-of-type span,
+      body.form .form-footer .question .sub.yes-no .answer > label:last-of-type span,
+      body.form .form-footer .question .sub.yes-no .answer > span:last-of-type span {
         border-right-width: 2px; }
-      body.form section .question.sub.source .answer ul li input, body.form section .question .sub.source .answer ul li input {
+      body.form section .question.sub.source .answer ul li input, body.form section .question .sub.source .answer ul li input,
+      body.form .form-header .question.sub.source .answer ul li input,
+      body.form .form-header .question .sub.source .answer ul li input,
+      body.form .form-footer .question.sub.source .answer ul li input,
+      body.form .form-footer .question .sub.source .answer ul li input {
         border-width: 2px; }
-      body.form section .question.sub.source .answer ul li .select, body.form section .question .sub.source .answer ul li .select {
+      body.form section .question.sub.source .answer ul li .select, body.form section .question .sub.source .answer ul li .select,
+      body.form .form-header .question.sub.source .answer ul li .select,
+      body.form .form-header .question .sub.source .answer ul li .select,
+      body.form .form-footer .question.sub.source .answer ul li .select,
+      body.form .form-footer .question .sub.source .answer ul li .select {
         border-width: 2px; }
       body.form section .question.sub.text .answer textarea,
       body.form section .question.sub.text .answer input[type="text"], body.form section .question .sub.text .answer textarea,
-      body.form section .question .sub.text .answer input[type="text"] {
+      body.form section .question .sub.text .answer input[type="text"],
+      body.form .form-header .question.sub.text .answer textarea,
+      body.form .form-header .question.sub.text .answer input[type="text"],
+      body.form .form-header .question .sub.text .answer textarea,
+      body.form .form-header .question .sub.text .answer input[type="text"],
+      body.form .form-footer .question.sub.text .answer textarea,
+      body.form .form-footer .question.sub.text .answer input[type="text"],
+      body.form .form-footer .question .sub.text .answer textarea,
+      body.form .form-footer .question .sub.text .answer input[type="text"] {
         border-width: 2px;
         font-size: 14px; }
-      body.form section .question.sub.text .answer input[type="text"], body.form section .question .sub.text .answer input[type="text"] {
+      body.form section .question.sub.text .answer input[type="text"], body.form section .question .sub.text .answer input[type="text"],
+      body.form .form-header .question.sub.text .answer input[type="text"],
+      body.form .form-header .question .sub.text .answer input[type="text"],
+      body.form .form-footer .question.sub.text .answer input[type="text"],
+      body.form .form-footer .question .sub.text .answer input[type="text"] {
         padding-top: 7.5px;
         padding-bottom: 7.5px; }
-      body.form section .question.sub.other h3, body.form section .question .sub.other h3 {
-        float: left;
-        margin-top: 15px; }
-    body.form section .question.continuation {
+      body.form section .question.sub .current dl, body.form section .question .sub .current dl,
+      body.form .form-header .question.sub .current dl,
+      body.form .form-header .question .sub .current dl,
+      body.form .form-footer .question.sub .current dl,
+      body.form .form-footer .question .sub .current dl {
+        font-size: 0.9em; }
+        body.form section .question.sub .current dl dd, body.form section .question .sub .current dl dd,
+        body.form .form-header .question.sub .current dl dd,
+        body.form .form-header .question .sub .current dl dd,
+        body.form .form-footer .question.sub .current dl dd,
+        body.form .form-footer .question .sub .current dl dd {
+          border-width: 2px;
+          padding-top: 0.3em;
+          padding: 0.3em 0.8em; }
+    body.form section .question.continuation,
+    body.form .form-header .question.continuation,
+    body.form .form-footer .question.continuation {
       margin-top: -30px; }
-    body.form section .question.first .comments label {
+    body.form section .question.first .comments label,
+    body.form .form-header .question.first .comments label,
+    body.form .form-footer .question.first .comments label {
       height: auto;
       width: auto; }
-    body.form section .question.disabled {
+    body.form section .question.disabled,
+    body.form .form-header .question.disabled,
+    body.form .form-footer .question.disabled {
       opacity: 0.2; }
+body.form .form-header .container > div {
+  margin-left: -15px;
+  margin-right: -15px; }
+  body.form .form-header .container > div:before, body.form .form-header .container > div:after {
+    content: " ";
+    display: table; }
+  body.form .form-header .container > div:after {
+    clear: both; }
+body.form .form-header .primary-meta {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px; }
+  @media (min-width: 992px) {
+    body.form .form-header .primary-meta {
+      float: left;
+      width: 50%; } }
+  @media (min-width: 992px) {
+    body.form .form-header .primary-meta {
+      margin-left: 25%; } }
+body.form .form-header .secondary-meta {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px; }
+  @media (min-width: 992px) {
+    body.form .form-header .secondary-meta {
+      float: left;
+      width: 25%; } }
+  @media (min-width: 992px) {
+    body.form .form-header .secondary-meta {
+      text-align: right;
+      margin-top: 27px; } }
+  body.form .form-header .secondary-meta dl {
+    text-align: left;
+    background-color: #333333;
+    color: #fff;
+    margin: 0;
+    padding-bottom: 0.3em; }
+    @media (min-width: 992px) {
+      body.form .form-header .secondary-meta dl {
+        display: inline-block; } }
+    body.form .form-header .secondary-meta dl dd {
+      font-size: 0.8em;
+      padding: 2px 12px; }
+    body.form .form-header .secondary-meta dl dt {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0; }
+      body.form .form-header .secondary-meta dl dt.status + dd {
+        font-size: 1em;
+        text-transform: capitalize;
+        background-color: #f47c23;
+        padding-top: 4px;
+        margin-bottom: 4px; }
+    body.form .form-header .secondary-meta dl.accepted dt.status + dd {
+      background-color: #7AB800; }
+    body.form .form-header .secondary-meta dl.rejected dt.status + dd {
+      background-color: #ff0000; }
+body.form .form-header h1 {
+  font-weight: bold; }
+  body.form .form-header h1 > span {
+    position: relative;
+    white-space: nowrap;
+    display: inline-block; }
+    body.form .form-header h1 > span span {
+      display: none; }
+    body.form .form-header h1 > span.no-js:hover span, body.form .form-header h1 > span.active span {
+      display: inline-block;
+      position: absolute;
+      z-index: 1;
+      top: 1em;
+      left: 0;
+      padding: 0.5em 0 0 0; }
+      body.form .form-header h1 > span.no-js:hover span ul, body.form .form-header h1 > span.active span ul {
+        max-height: 60vh;
+        max-width: 90vw;
+        overflow: auto;
+        background-color: #eeeeee;
+        border-radius: 3px;
+        box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.3);
+        margin: 0;
+        padding: 7.5px 0; }
+        body.form .form-header h1 > span.no-js:hover span ul li, body.form .form-header h1 > span.active span ul li {
+          display: block;
+          font-size: 0.5em;
+          font-weight: normal;
+          padding: 7.5px 15px; }
+          body.form .form-header h1 > span.no-js:hover span ul li.selected, body.form .form-header h1 > span.active span ul li.selected {
+            background-color: #428bca;
+            color: #fff; }
+          body.form .form-header h1 > span.no-js:hover span ul li a, body.form .form-header h1 > span.active span ul li a {
+            color: inherit;
+            text-decoration: none; }
+        body.form .form-header h1 > span.no-js:hover span ul:hover li.selected, body.form .form-header h1 > span.active span ul:hover li.selected {
+          background-color: transparent;
+          color: inherit; }
+        body.form .form-header h1 > span.no-js:hover span ul:hover li:hover, body.form .form-header h1 > span.active span ul:hover li:hover {
+          background-color: #428bca;
+          color: #fff; }
+    body.form .form-header h1 > span > a {
+      display: inline-block; }
+      body.form .form-header h1 > span > a span {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0; }
+      body.form .form-header h1 > span > a:before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0; }
+      body.form .form-header h1 > span > a:after {
+        content: '';
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 8px 5px 0 5px;
+        border-color: #333333 transparent transparent transparent;
+        display: inline-block;
+        position: relative;
+        top: -0.15em;
+        margin-right: 0.3em; }
+@media (min-width: 992px) {
+  body.form section .container {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAABCAYAAAD0In+KAAAAEklEQVQImWP48OHD/w8fPvwHACIjB58VdezUAAAAAElFTkSuQmCC);
+    background-repeat: repeat-y;
+    background-position: 76% 0; } }
+body.form > .alert {
+  margin-top: -1px;
+  margin-bottom: 0;
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+  padding-left: 0;
+  padding-right: 0; }
+  body.form > .alert .container > div {
+    margin-left: -15px;
+    margin-right: -15px; }
+    body.form > .alert .container > div:before, body.form > .alert .container > div:after {
+      content: " ";
+      display: table; }
+    body.form > .alert .container > div:after {
+      clear: both; }
+    body.form > .alert .container > div > * {
+      position: relative;
+      min-height: 1px;
+      padding-left: 15px;
+      padding-right: 15px; }
+      @media (min-width: 992px) {
+        body.form > .alert .container > div > * {
+          float: left;
+          width: 50%; } }
+      @media (min-width: 992px) {
+        body.form > .alert .container > div > * {
+          margin-left: 25%; } }
+      body.form > .alert .container > div > *:last-child {
+        margin-bottom: 0; }
+      body.form > .alert .container > div > * .btn {
+        vertical-align: inherit;
+        background-color: #fff;
+        color: #333333;
+        font-weight: bold; }
+  body.form > .alert.alert-dismissible .close {
+    top: 3px;
+    right: 15px; }
+body.form .error-message {
+  display: block;
+  background-color: #ff0000;
+  color: #fff;
+  font-size: 0.8em;
+  padding: 6px 8px; }
 
 body.form h2 span, body.form h3 span {
   color: #777777; }
-body.form section {
+body.form section,
+body.form .form-footer {
   border-bottom: solid 1px #eeeeee; }
-  body.form section:nth-of-type(odd) {
+  body.form section:nth-of-type(odd),
+  body.form .form-footer:nth-of-type(odd) {
     background-color: #f6f6f6; }
-  body.form section:first-of-type .container {
+  body.form section:first-of-type .container,
+  body.form .form-footer:first-of-type .container {
     padding-top: 50px; }
-  body.form section.banner {
-    background-image: url(img/icon-tile.png);
+  body.form section.banner,
+  body.form .form-footer.banner {
+    background-image: url(images/icon-tile.png);
     background-size: 350px auto;
     background-position: center top; }
-    body.form section.banner .container {
+    body.form section.banner .container,
+    body.form .form-footer.banner .container {
       background-image: none; }
-  body.form section .question .instructions .toggle .icon {
+  body.form section .question .instructions .toggle .icon,
+  body.form .form-footer .question .instructions .toggle .icon {
     background-color: #428bca;
     font-weight: 700; }
-  body.form section .question .comments label {
+  body.form section .question .current dl dd,
+  body.form .form-footer .question .current dl dd {
+    border-radius: 6px; }
+  body.form section .question .current.changed dl,
+  body.form .form-footer .question .current.changed dl {
+    border-color: #f47c23; }
+  body.form section .question .comments label,
+  body.form .form-footer .question .comments label {
     font-weight: normal; }
-  body.form section .question .comments textarea {
+  body.form section .question .comments textarea,
+  body.form .form-footer .question .comments textarea {
     font-weight: 300; }
-  body.form section .question.scale .answer > label, body.form section .question.scale .answer > span, body.form section .question.yes-no .answer > label, body.form section .question.yes-no .answer > span {
+  body.form section .question.scale .answer > label, body.form section .question.scale .answer > span, body.form section .question.yes-no .answer > label, body.form section .question.yes-no .answer > span,
+  body.form .form-footer .question.scale .answer > label,
+  body.form .form-footer .question.scale .answer > span,
+  body.form .form-footer .question.yes-no .answer > label,
+  body.form .form-footer .question.yes-no .answer > span {
     font-size: 15px; }
-    body.form section .question.scale .answer > label:first-of-type span, body.form section .question.scale .answer > span:first-of-type span, body.form section .question.yes-no .answer > label:first-of-type span, body.form section .question.yes-no .answer > span:first-of-type span {
+    body.form section .question.scale .answer > label:first-of-type span, body.form section .question.scale .answer > span:first-of-type span, body.form section .question.yes-no .answer > label:first-of-type span, body.form section .question.yes-no .answer > span:first-of-type span,
+    body.form .form-footer .question.scale .answer > label:first-of-type span,
+    body.form .form-footer .question.scale .answer > span:first-of-type span,
+    body.form .form-footer .question.yes-no .answer > label:first-of-type span,
+    body.form .form-footer .question.yes-no .answer > span:first-of-type span {
       border-radius: 6px 0 0 6px; }
-    body.form section .question.scale .answer > label:last-of-type span, body.form section .question.scale .answer > span:last-of-type span, body.form section .question.yes-no .answer > label:last-of-type span, body.form section .question.yes-no .answer > span:last-of-type span {
+    body.form section .question.scale .answer > label:last-of-type span, body.form section .question.scale .answer > span:last-of-type span, body.form section .question.yes-no .answer > label:last-of-type span, body.form section .question.yes-no .answer > span:last-of-type span,
+    body.form .form-footer .question.scale .answer > label:last-of-type span,
+    body.form .form-footer .question.scale .answer > span:last-of-type span,
+    body.form .form-footer .question.yes-no .answer > label:last-of-type span,
+    body.form .form-footer .question.yes-no .answer > span:last-of-type span {
       border-radius: 0 6px 6px 0; }
-  body.form section .question.yes-no:not(.neutral) .answer input:checked + label span {
+  body.form section .question.yes-no:not(.neutral) .answer input:checked + label span,
+  body.form .form-footer .question.yes-no:not(.neutral) .answer input:checked + label span {
     background-color: #f47c23;
     border-color: #904207; }
-  body.form section .question.yes-no:not(.neutral) .answer input:checked + label:first-of-type span {
+  body.form section .question.yes-no:not(.neutral) .answer input:checked + label:first-of-type span,
+  body.form .form-footer .question.yes-no:not(.neutral) .answer input:checked + label:first-of-type span {
     background-color: #ff0000;
     border-color: maroon; }
-  body.form section .question.yes-no:not(.neutral) .answer input:checked + label:last-of-type span {
+  body.form section .question.yes-no:not(.neutral) .answer input:checked + label:last-of-type span,
+  body.form .form-footer .question.yes-no:not(.neutral) .answer input:checked + label:last-of-type span {
     background-color: #7AB800;
     border-color: #365200; }
-  body.form section .question.scale:not(.neutral) .answer > span input:checked + label span {
+  body.form section .question.scale:not(.neutral) .answer > span input:checked + label span,
+  body.form .form-footer .question.scale:not(.neutral) .answer > span input:checked + label span {
     background-color: #f47c23;
     border-color: #904207; }
-  body.form section .question.scale:not(.neutral) .answer > span:first-of-type input:checked + label span {
+  body.form section .question.scale:not(.neutral) .answer > span:first-of-type input:checked + label span,
+  body.form .form-footer .question.scale:not(.neutral) .answer > span:first-of-type input:checked + label span {
     background-color: #ff0000;
     border-color: maroon; }
-  body.form section .question.scale:not(.neutral) .answer > span:last-of-type input:checked + label span {
+  body.form section .question.scale:not(.neutral) .answer > span:last-of-type input:checked + label span,
+  body.form .form-footer .question.scale:not(.neutral) .answer > span:last-of-type input:checked + label span {
     background-color: #7AB800;
     border-color: #365200; }
-  body.form section .question.source .answer ul li input {
+  body.form section .question.source .answer ul li input,
+  body.form .form-footer .question.source .answer ul li input {
     border-radius: 6px; }
-  body.form section .question.source .answer ul li .select {
+  body.form section .question.source .answer ul li .select,
+  body.form .form-footer .question.source .answer ul li .select {
     border-radius: 6px; }
-  body.form section .question.select .answer {
+  body.form section .question.select .answer,
+  body.form .form-footer .question.select .answer {
     border-radius: 6px; }
-    body.form section .question.select .answer select {
+    body.form section .question.select .answer select,
+    body.form .form-footer .question.select .answer select {
       background-color: transparent; }
-  body.form section .question.multiple ul li label {
+  body.form section .question.multiple .answer ul li label,
+  body.form .form-footer .question.multiple .answer ul li label {
     border-radius: 6px; }
-  body.form section .question.multiple ul li input:checked + label {
+  body.form section .question.multiple .answer ul li input:checked + label,
+  body.form .form-footer .question.multiple .answer ul li input:checked + label {
     background-color: #7AB800;
     border-color: #365200; }
   body.form section .question.text .answer textarea,
   body.form section .question.text .answer input[type="text"], body.form section .question .text.other .answer textarea,
-  body.form section .question .text.other .answer input[type="text"] {
+  body.form section .question .text.other .answer input[type="text"],
+  body.form .form-footer .question.text .answer textarea,
+  body.form .form-footer .question.text .answer input[type="text"],
+  body.form .form-footer .question .text.other .answer textarea,
+  body.form .form-footer .question .text.other .answer input[type="text"] {
     border-radius: 6px; }
     body.form section .question.text .answer textarea:not(:focus),
     body.form section .question.text .answer input[type="text"]:not(:focus), body.form section .question .text.other .answer textarea:not(:focus),
-    body.form section .question .text.other .answer input[type="text"]:not(:focus) {
+    body.form section .question .text.other .answer input[type="text"]:not(:focus),
+    body.form .form-footer .question.text .answer textarea:not(:focus),
+    body.form .form-footer .question.text .answer input[type="text"]:not(:focus),
+    body.form .form-footer .question .text.other .answer textarea:not(:focus),
+    body.form .form-footer .question .text.other .answer input[type="text"]:not(:focus) {
       background-color: transparent; }
-  body.form section .question.submit button {
+  body.form section .question.submit button,
+  body.form .form-footer .question.submit button {
     background-color: #428bca;
     border-radius: 6px; }
-  body.form section .question.sub.scale .answer > label:first-of-type span, body.form section .question.sub.scale .answer > span:first-of-type span, body.form section .question.sub.yes-no .answer > label:first-of-type span, body.form section .question.sub.yes-no .answer > span:first-of-type span {
+  body.form section .question.sub.scale .answer > label:first-of-type span, body.form section .question.sub.scale .answer > span:first-of-type span, body.form section .question.sub.yes-no .answer > label:first-of-type span, body.form section .question.sub.yes-no .answer > span:first-of-type span,
+  body.form .form-footer .question.sub.scale .answer > label:first-of-type span,
+  body.form .form-footer .question.sub.scale .answer > span:first-of-type span,
+  body.form .form-footer .question.sub.yes-no .answer > label:first-of-type span,
+  body.form .form-footer .question.sub.yes-no .answer > span:first-of-type span {
     border-radius: 4px 0 0 4px; }
-  body.form section .question.sub.scale .answer > label:last-of-type span, body.form section .question.sub.scale .answer > span:last-of-type span, body.form section .question.sub.yes-no .answer > label:last-of-type span, body.form section .question.sub.yes-no .answer > span:last-of-type span {
+  body.form section .question.sub.scale .answer > label:last-of-type span, body.form section .question.sub.scale .answer > span:last-of-type span, body.form section .question.sub.yes-no .answer > label:last-of-type span, body.form section .question.sub.yes-no .answer > span:last-of-type span,
+  body.form .form-footer .question.sub.scale .answer > label:last-of-type span,
+  body.form .form-footer .question.sub.scale .answer > span:last-of-type span,
+  body.form .form-footer .question.sub.yes-no .answer > label:last-of-type span,
+  body.form .form-footer .question.sub.yes-no .answer > span:last-of-type span {
     border-radius: 0 4px 4px 0; }
-  body.form section .question.sub.source .answer ul li input {
+  body.form section .question.sub.source .answer ul li input,
+  body.form .form-footer .question.sub.source .answer ul li input {
     border-radius: 4px;
     background-color: transparent; }
-  body.form section .question.sub.source .answer ul li .select {
+  body.form section .question.sub.source .answer ul li .select,
+  body.form .form-footer .question.sub.source .answer ul li .select {
     border-radius: 4px; }
-    body.form section .question.sub.source .answer ul li .select select {
+    body.form section .question.sub.source .answer ul li .select select,
+    body.form .form-footer .question.sub.source .answer ul li .select select {
       background-color: transparent; }
   body.form section .question.sub.text .answer textarea,
   body.form section .question.sub.text .answer input[type="text"], body.form section .question.sub .text.other .answer textarea,
-  body.form section .question.sub .text.other .answer input[type="text"] {
+  body.form section .question.sub .text.other .answer input[type="text"],
+  body.form .form-footer .question.sub.text .answer textarea,
+  body.form .form-footer .question.sub.text .answer input[type="text"],
+  body.form .form-footer .question.sub .text.other .answer textarea,
+  body.form .form-footer .question.sub .text.other .answer input[type="text"] {
     border-radius: 4px; }
-  body.form section .question.disabled.scale .answer label span, body.form section .question.disabled.yes-no .answer label span {
+  body.form section .question.sub .current dl dd,
+  body.form .form-footer .question.sub .current dl dd {
+    border-radius: 4px; }
+  body.form section .question.disabled.scale .answer label span, body.form section .question.disabled.yes-no .answer label span,
+  body.form .form-footer .question.disabled.scale .answer label span,
+  body.form .form-footer .question.disabled.yes-no .answer label span {
     border-color: #777777; }
-  body.form section .question.disabled.source .answer ul li input {
+  body.form section .question.disabled.source .answer ul li input,
+  body.form .form-footer .question.disabled.source .answer ul li input {
     border-color: #777777; }
-  body.form section .question.disabled.source .answer ul li .select {
+  body.form section .question.disabled.source .answer ul li .select,
+  body.form .form-footer .question.disabled.source .answer ul li .select {
     border-color: #777777; }
-  body.form section .question.disabled.select .answer {
+  body.form section .question.disabled.source .answer ul li.has-error input,
+  body.form .form-footer .question.disabled.source .answer ul li.has-error input {
+    border-color: #ff0000; }
+  body.form section .question.disabled.source .answer ul li.has-error .error-message,
+  body.form .form-footer .question.disabled.source .answer ul li.has-error .error-message {
+    margin-top: -4px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0; }
+  body.form section .question.disabled.select .answer,
+  body.form .form-footer .question.disabled.select .answer {
     border-color: #777777; }
-  body.form section .question.disabled.multiple ul li label {
+  body.form section .question.disabled.multiple .answer ul li label,
+  body.form .form-footer .question.disabled.multiple .answer ul li label {
     border-color: #777777; }
   body.form section .question.disabled.text textarea,
   body.form section .question.disabled.text input[type="text"], body.form section .question.disabled .text.other textarea,
-  body.form section .question.disabled .text.other input[type="text"] {
+  body.form section .question.disabled .text.other input[type="text"],
+  body.form .form-footer .question.disabled.text textarea,
+  body.form .form-footer .question.disabled.text input[type="text"],
+  body.form .form-footer .question.disabled .text.other textarea,
+  body.form .form-footer .question.disabled .text.other input[type="text"] {
     border-color: #777777; }
+body.form .form-header {
+  border-bottom: solid 1px #eeeeee; }
+  body.form .form-header .question h2 {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0; }
+  body.form .form-header .question.select .answer {
+    border: none;
+    font-size: 24px; }
+body.form .error-message {
+  border-radius: 4px; }
 
 .home #home-about {
   color: #000;

@@ -277,15 +277,13 @@ describe('Basics', function() {
 
         this.browser.visit(url, () => {
           assert.ok(this.browser.success);
+          this.browser.assert.text('header .place ul li[class="selected"] a',
+                                   'Place 22 of no entry');
+          this.browser.assert.text('header .dataset ul li[class="selected"] a',
+                                   'Dataset 22 of no entry');
           assert.equal(
-            this.browser.query('select[name="place"] option:checked').value,
-            prefill.place);
-          assert.equal(
-            this.browser.query('select[name="dataset"] option:checked').value,
-            prefill.dataset);
-          // assert.equal(
-          //   this.browser.query('textarea[name="details"]').value,
-          //   prefill.details);
+            this.browser.query('textarea[name="details"]').value,
+            prefill.details);
           // !!! Does not work - always checked exists=true checkbox
           // assert.isNotNull(this.browser.query('input[name="exists"][value="' +
           //  prefill.exists + '"]:checked'));
@@ -326,13 +324,10 @@ describe('Basics', function() {
 
         this.browser.visit(url, () => {
           assert.ok(this.browser.success);
-          assert.equal(
-            this.browser.query('select[name="place"] option:checked').value,
-            prefill.place);
-          assert.equal(
-            this.browser.query('select[name="dataset"] option:checked').value,
-            prefill.dataset);
-
+          this.browser.assert.text('header .place ul li[class="selected"] a',
+                                   'Place 12');
+          this.browser.assert.text('header .dataset ul li[class="selected"] a',
+                                   'Dataset 11');
           // Should it work at all?
           // var textToCheck = marked(_.find(datasetFixtures, function(item) {
           //  return item.data.id === candidate.dataset;
