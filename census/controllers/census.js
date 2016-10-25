@@ -13,182 +13,7 @@ const React = require('react'); // eslint-disable-line no-unused-vars
 const renderToString = require('react-dom/server').renderToString;
 const EntryForm = require('../ui_app/EntryForm');
 
-var submitGetHandler = function(req, res, data) { // eslint-disable-line no-unused-vars
-  /*
-  This controller is now orphaned, not called from anywhere and will soon be
-  removed.
-  */
-
-  var addDetails = _.find(data.questions, function(q) {
-    return q.id === 'details';
-  });
-  var current = data.currentState.match;
-
-  var settingName = 'submit_page';
-  var submitInstructions = req.params.site.settings[settingName];
-  res.render('create.html', {
-    canReview: true, // flag always on for submission
-    submitInstructions: submitInstructions ? marked(submitInstructions) : '',
-    places: modelUtils.translateSet(req, data.places),
-    current: current,
-    datasets: modelUtils.translateSet(req, data.datasets),
-    questions: data.questions,
-    addDetails: addDetails,
-    year: req.app.get('year')
-  });
-};
-
-var submitPostHandler = function(req, res, data) { // eslint-disable-line no-unused-vars
-  /*
-  This controller is now orphaned, not called from anywhere and will soon be
-  removed.
-  */
-
-  var objToSave = {};
-  var answers;
-  var saveStrategy;
-  // var anonymous = true;
-  var submitterId = utils.ANONYMOUS_USER_ID;
-  var query;
-  var approveFirstSubmission;
-  var current = data.currentState.match;
-  var pending = data.currentState.pending;
-
-  var settingName = 'approve_first_submission';
-  if (req.params.site.settings[settingName]) {
-    approveFirstSubmission = req.params.site.settings[settingName];
-  }
-
-  utils.validateData(req).then(function(errors) {
-    if (pending) {
-      if (!Array.isArray(errors)) {
-        errors = [];
-      }
-      errors.push({
-        param: 'conflict',
-        msg: 'There is already a queued submission for this data. ' +
-          '<a href="/place/PL/YR">See the queued submission</a>'
-          .replace('PL', current.place).replace('YR', current.year)
-      });
-    }
-
-    if (errors) {
-      var addDetails = _.find(data.questions, function(q) {
-        return q.id === 'details';
-      });
-
-      res.statusCode = 400;
-      var settingName = 'submit_page';
-      res.render('create.html', {
-        canReview: true, // flag always on for submission
-        submitInstructions: req.params.site.settings[settingName],
-        places: modelUtils.translateSet(req, data.places),
-        datasets: modelUtils.translateSet(req, data.datasets),
-        questions: data.questions,
-        addDetails: addDetails,
-        year: req.app.get('year'),
-        current: current,
-        errors: errors,
-        formData: req.body
-      });
-    } else {
-      if (req.body.anonymous && req.body.anonymous === 'false') {
-        // anonymous = false;
-        submitterId = req.user.id;
-      }
-
-      if (!current || current.year !== req.app.get('year')) {
-        console.log('we are definitely creating a new entry');
-
-        objToSave.id = uuid.v4();
-        objToSave.site = req.params.site.id;
-        objToSave.place = req.body.place;
-        objToSave.dataset = req.body.dataset;
-        objToSave.details = req.body.details;
-        objToSave.year = req.app.get('year');
-        objToSave.submitterId = submitterId;
-
-        if (approveFirstSubmission) {
-          objToSave.isCurrent = true;
-          objToSave.reviewed = true;
-          objToSave.reviewResult = true;
-          objToSave.reviewerId = submitterId;
-        } else {
-          objToSave.isCurrent = false;
-        }
-
-        saveStrategy = 'create';
-      } else if (current.isCurrent) {
-        console.log('we have existing current entry, so create a new submission');
-
-        objToSave.id = uuid.v4();
-        objToSave.site = req.params.site.id;
-        objToSave.place = req.body.place;
-        objToSave.dataset = req.body.dataset;
-        objToSave.submissionNotes = req.body.details;
-        objToSave.details = req.body.details;
-        objToSave.year = req.app.get('year');
-        objToSave.isCurrent = false;
-        objToSave.submitterId = submitterId;
-
-        saveStrategy = 'create';
-      } else {
-        console.log('we have existing submission and no current entry. we ' +
-          'usually should not get here because of earlier condition that ' +
-          'lodges a conflict error on the form');
-
-        objToSave = current;
-
-        saveStrategy = 'update';
-      }
-
-      answers = req.body;
-      delete answers.place;
-      delete answers.dataset;
-      delete answers.year;
-      delete answers.details;
-      delete answers.anonymous;
-      objToSave.answers = utils.normalizedAnswers(answers);
-
-      if (saveStrategy === 'create') {
-        query = req.app.get('models').Entry.create(objToSave);
-      } else if (saveStrategy === 'update') {
-        query = objToSave.save();
-      }
-
-      query.then(function(result) {
-        var msg;
-        var msgTmpl;
-        var redirectPath;
-        var submissionPath;
-
-        if (!result) {
-          msg = 'There was an error!';
-          req.flash('error', msg);
-        } else {
-          msgTmpl = 'Thanks for your submission.REVIEWED You can check ' +
-            'back here any time to see the current status.';
-
-          if (!result.isCurrent) {
-            msg = msgTmpl.replace('REVIEWED',
-              ' It will now be reviewed by the editors.');
-            submissionPath = '/submission/' + result.id;
-            redirectPath = submissionPath;
-          } else {
-            msg = msgTmpl.replace('REVIEWED', '');
-            submissionPath = '/submission/' + result.id;
-            redirectPath = '/place/' + result.place;
-          }
-
-          req.flash('info', msg);
-        }
-        res.redirect(redirectPath + '?post_submission=' + submissionPath);
-      }).catch(console.trace.bind(console));
-    }
-  });
-};
-
-var submitReactGet = function(req, res, data) {
+var submitGet = function(req, res, data) {
   let dataset = _.find(data.datasets,
                        {id: data.currentState.match.dataset});
   if (!dataset)
@@ -259,7 +84,7 @@ var submitReactGet = function(req, res, data) {
   });
 };
 
-var submitReactPost = function(req, res, data) {
+var submitPost = function(req, res, data) {
   let approveFirstSubmission =
     _.get(req.params.site.settings, 'approve_first_submission', false);
 
@@ -288,7 +113,7 @@ var submitReactPost = function(req, res, data) {
     data.formData.answers = JSON.parse(data.formData.answers);
     data.errors = errors;
     // Call the GET submit page with formData.
-    submitReactGet(req, res, data);
+    submitGet(req, res, data);
   } else {
     let saveStrategy;
     let objToSave = {};
@@ -381,9 +206,9 @@ var submit = function(req, res) {
   .then(data => {
     data.currentState = utils.getCurrentState(data, req);
     if (req.method === 'POST') {
-      submitReactPost(req, res, data);
+      submitPost(req, res, data);
     } else {
-      submitReactGet(req, res, data);
+      submitGet(req, res, data);
     }
   });
 };
@@ -486,6 +311,9 @@ var pending = function(req, res) {
 };
 
 var pendingEntry = function(req, res) { // eslint-disable-line no-unused-vars
+  /*
+  Currently orphaned, pending removal.
+  */
   var dataOptions;
   var entryQueryParams = {
     where: {id: req.params.id},
