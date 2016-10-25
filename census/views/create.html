@@ -13,97 +13,31 @@
     <div>
       <div class="primary-meta">
         <h1>
-          <span class="no-js">
-            Cambridge <a href="#"><span>(change place)</span></a>
+          <span class="no-js place">
+            {{ placeName or 'Select a Place' }}
+            {% if not isReview %}
+            <a href="#"><span>(change place)</span></a>
             <span>
               <ul>
-                <li>Nottingham</li>
-                <li class="selected">Cambridge</li>
-                <li>Leeds</li>
-                <li>Manchester</li>
-                <li>Bristol</li>
-                <li>Sheffield</li>
-                <li>Oxford</li>
-                <li>London</li>
-                <li>Birmingham</li>
-                <li>Liverpool</li>
-                <li>York</li>
-                <li>Belfast</li>
-                <li>Oldham</li>
-                <li>Glasgow</li>
-                <li>Cardiff</li>
-                <li>Chelmsford</li>
-                <li>Bury</li>
-                <li>Rochdale</li>
-                <li>Stockport</li>
-                <li>Tameside</li>
-                <li>Trafford</li>
-                <li>Aberdeen</li>
-                <li>Aldershot</li>
-                <li>Bath</li>
-                <li>Birkenhead</li>
-                <li>Blackburn</li>
-                <li>Blackpool</li>
-                <li>Bolton</li>
-                <li>Bournemouth</li>
-                <li>Brighton</li>
-                <li>Coventry</li>
-                <li>Crawley</li>
-                <li>Derby</li>
-                <li>Dundee</li>
-                <li>Eastbourne</li>
-                <li>Edinburgh</li>
-                <li>Exeter</li>
-                <li>Falkirk</li>
-                <li>Gloucester</li>
-                <li>Grimsby/Cleethorpes</li>
-                <li>Ipswich</li>
-                <li>Kingston-upon-Hull</li>
-                <li>Leicester</li>
-                <li>Lincoln</li>
-                <li>Luton/Dunstable</li>
-                <li>Milton Keynes</li>
-                <li>Newcastle</li>
-                <li>Newport</li>
-                <li>Northampton</li>
-                <li>Norwich</li>
-                <li>Peterborough</li>
-                <li>Plymouth</li>
-                <li>Portsmouth</li>
-                <li>Preston</li>
-                <li>Reading</li>
-                <li>Slough</li>
-                <li>Southampton</li>
-                <li>Southend</li>
-                <li>Sunderland</li>
-                <li>Swansea</li>
-                <li>Swindon</li>
-                <li>Telford</li>
-                <li>Wigan</li>
+                {% for place in places -%}
+                <li {% if (formData and place.id == formData.place) or (current and place.id == current.place) %}class="selected"{% endif %}><a href="/submit/?place={{place.id}}&amp;dataset={{formData.dataset}}">{{ place.name }}</a></li>
+                {%- endfor %}
               </ul>
             </span>
-
+            {% endif %}
           </span>
-          <span class="no-js">
-            Air Quality <a href="#"><span>(change dataset)</span></a>
+          <span class="no-js dataset">
+            {{ datasetName or 'Select a Dataset'}}
+            {% if not isReview %}
+            <a href="#"><span>(change dataset)</span></a>
             <span>
               <ul>
-                <li>Dataset</li>
-                <li>Expenditure (detailed)</li>
-                <li>Procurement contracts</li>
-                <li class="selected">Air Quality</li>
-                <li>Public Facilities</li>
-                <li>Election results</li>
-                <li>Transport Timetables</li>
-                <li>Annual Budget</li>
-                <li>Building permits</li>
-                <li>Traffic accidents</li>
-                <li>Real-Time Transit</li>
-                <li>Business Permits</li>
-                <li>Business Listings</li>
-                <li>Service Requests</li>
+                {% for dataset in datasets -%}
+                <li {% if (formData and dataset.id == formData.dataset) or (current and dataset.id == current.dataset) %}class="selected"{% endif %}><a href="/submit/?place={{formData.place}}&amp;dataset={{dataset.id}}">{{ dataset.name }}</a></li>
+                {%- endfor %}
               </ul>
             </span>
+            {% endif %}
           </span>
         </h1>
         {{ datasetContext.datasetDescription }}
@@ -127,47 +61,6 @@
     </div>
   </div>
 </header>
-
-<form action="." method="get" accept-charset="utf-8">
-<section>
-  <div class="container">
-    <div class="select question">
-      <div class="instructions">
-      </div>
-      <div class="main">
-        <h2>{{gettext("Place")}}</h2>
-        <div class="answer">
-          <select name="place" id="place-select" required autocomplete="off">
-            <option value="">{{gettext("Please select")}}</option>
-            {% for place in places %}
-            <option value="{{place.id}}" {% if (formData and place.id == formData.place) or (current and place.id == current.place) %}selected="true"{% endif %}>{{place.name}}</option>
-            {% endfor %}
-          </select>
-        </div>
-      </div>
-      <div class="comments">
-      </div>
-    </div>
-
-    <div class="select question">
-      <div class="instructions"></div>
-      <div class="main">
-        <h2>{{gettext("Dataset")}}</h2>
-        <div class="answer">
-          <select name="dataset" id="dataset-select" required>
-            <option value="">{{gettext("Please select")}}</option>
-            {% for dataset in datasets %}
-            <option value="{{dataset.id}}" {% if (formData and dataset.id == formData.dataset) or (current and dataset.id == current.dataset) %}selected="true"{% endif %}>{{dataset.name}}</option>
-            {% endfor %}
-          </select>
-        </div>
-      </div>
-      <div class="comments">
-      </div>
-    </div>
-  </div>
-</section>
-</form>
 
 {% if isReview -%}
   {% if currentUser -%}

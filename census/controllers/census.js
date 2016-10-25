@@ -190,8 +190,14 @@ var submitPostHandler = function(req, res, data) { // eslint-disable-line no-unu
 
 var submitReactGet = function(req, res, data) {
   let dataset = _.find(data.datasets,
-                              {id: data.currentState.match.dataset});
+                       {id: data.currentState.match.dataset});
+  if (!dataset)
+    dataset = data.datasets[0];
 
+  let place = _.find(data.places,
+                     {id: data.currentState.match.place});
+  if (!place)
+    place = data.places[0];
   let places = modelUtils.translateSet(req, data.places);
   let datasets = modelUtils.translateSet(req, data.datasets);
   let qsSchemaPromise;
@@ -223,8 +229,8 @@ var submitReactGet = function(req, res, data) {
     });
     // We might have form data to prefill the EntryForm with.
     let formData = _.get(data, 'formData', {
-      place: data.currentState.match.place,
-      dataset: data.currentState.match.dataset
+      place: _.get(place, 'id'),
+      dataset: _.get(dataset, 'id')
     });
     let initialHTML = renderToString(<EntryForm questions={questions}
                                                 qsSchema={qsSchema}
@@ -238,6 +244,8 @@ var submitReactGet = function(req, res, data) {
     res.render('create.html', {
       places: places,
       datasets: datasets,
+      placeName: _.get(place, 'name'),
+      datasetName: _.get(dataset, 'name'),
       qsSchema: JSON.stringify(qsSchema),
       questions: JSON.stringify(questions),
       datasetContext: datasetContext,
@@ -455,6 +463,8 @@ var pending = function(req, res) {
         res.render('create.html', {
           places: places,
           datasets: datasets,
+          placeName: _.get(place, 'name'),
+          datasetName: _.get(dataset, 'name'),
           qsSchema: JSON.stringify(qsSchema),
           questions: JSON.stringify(questions),
           datasetContext: datasetContext,
