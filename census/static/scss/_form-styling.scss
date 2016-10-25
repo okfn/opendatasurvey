@@ -40,6 +40,20 @@ body.form {
         }
       }
 
+      .current {
+        dl {
+          dd {
+            border-radius: $border-radius-large;
+          }
+        }
+
+        &.changed {
+          dl {
+            border-color: $brand-warning;
+          }
+        }
+      }
+
       .comments {
         label {
           font-weight: normal;
@@ -166,16 +180,18 @@ body.form {
       }
 
       &.multiple {
-        ul {
-          li {
-            label {
-              border-radius: $border-radius-large;
-            }
-            input {
-              &:checked {
-                & + label {
-                  background-color: $brand-success;
-                  border-color: darken($brand-success, 20%);
+        .answer {
+          ul {
+            li {
+              label {
+                border-radius: $border-radius-large;
+              }
+              input {
+                &:checked {
+                  & + label {
+                    background-color: $brand-success;
+                    border-color: darken($brand-success, 20%);
+                  }
                 }
               }
             }
@@ -246,6 +262,14 @@ body.form {
             border-radius: $border-radius-base;
           }
         }
+
+        .current {
+          dl {
+            dd {
+              border-radius: $border-radius-base;
+            }
+          }
+        }
       }
 
       &.disabled {
@@ -270,6 +294,17 @@ body.form {
                 .select {
                   border-color: $gray-light;
                 }
+
+                &.has-error {
+                  input {
+                    border-color: $brand-danger;
+                  }
+                  .error-message {
+                    margin-top: -$border-radius-base;
+                    border-top-left-radius: 0;
+                    border-top-right-radius: 0;
+                  }
+                }
               }
             }
           }
@@ -280,10 +315,12 @@ body.form {
           }
         }
         &.multiple {
-          ul {
-            li {
-              label {
-                border-color: $gray-light;
+          .answer {
+            ul {
+              li {
+                label {
+                  border-color: $gray-light;
+                }
               }
             }
           }
@@ -313,5 +350,9 @@ body.form {
         }
       }
     }
+  }
+
+  .error-message {
+    border-radius: $border-radius-base;
   }
 }

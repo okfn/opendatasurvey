@@ -38,24 +38,32 @@ const baseQuestionField = QuestionField => {
 let QuestionFieldText = React.createClass({
   render() {
     return (<div className={'text question ' + this.props.getClassValues()}>
-      <helpers.QuestionInstructions instructionText={this.props.instructions}
-                            id={this.props.id} />
       <div className="main">
-        <helpers.QuestionHeader label={this.props.label}>
-          {this.props.children.toString()}
-        </helpers.QuestionHeader>
-        <div className="answer">
-          <input type="text" value={this.props.value}
-                             name={this.props.id}
-                             onChange={this.handler}
-                             disabled={!this.props.visibleProps.enabled} />
+        <div>
+          <helpers.QuestionInstructions instructionText={this.props.instructions}
+                                        id={this.props.id} />
+          <helpers.QuestionHeader label={this.props.label}>
+            {this.props.children.toString()}
+          </helpers.QuestionHeader>
+        </div>
+        <div>
+          <div className="current"></div>
+          <div className="answer-wrapper">
+            <div className="answer">
+              <input type="text"
+                     value={this.props.value}
+                     name={this.props.id}
+                     onChange={this.handler}
+                     disabled={!this.props.visibleProps.enabled} />
+            </div>
+          </div>
         </div>
       </div>
       <helpers.QuestionComments id={this.props.id}
-                        placeholder={this.props.placeholder}
-                        commentValue={this.props.commentValue}
-                        onCommentChange={this.props.onCommentChange}
-                        disabled={!this.props.visibleProps.enabled} />
+                                placeholder={this.props.placeholder}
+                                commentValue={this.props.commentValue}
+                                onCommentChange={this.props.onCommentChange}
+                                disabled={!this.props.visibleProps.enabled} />
     </div>);
   },
 
@@ -68,33 +76,40 @@ QuestionFieldText = baseQuestionField(QuestionFieldText);
 let QuestionFieldYesNo = React.createClass({
   render() {
     return (<div className={'yes-no question ' + this.props.getClassValues()}>
-      <helpers.QuestionInstructions instructionText={this.props.instructions}
-                            id={this.props.id} />
       <div className="main">
-        <helpers.QuestionHeader label={this.props.label}>
-          {this.props.children.toString()}
-        </helpers.QuestionHeader>
-        <div className="answer">
-          <input type="radio"
-                 name={this.props.id}
-                 id={this.props.id + '1'}
-                 value="No"
-                 checked={(this.props.value === 'No')}
-                 disabled={!this.props.visibleProps.enabled}
-                 onChange={this.handler} />
-          <label htmlFor={this.props.id + '1'}>
-            <span>No</span>
-          </label>
-          <input type="radio"
-                 name={this.props.id}
-                 id={this.props.id + '2'}
-                 value="Yes"
-                 checked={(this.props.value === 'Yes')}
-                 disabled={!this.props.visibleProps.enabled}
-                 onChange={this.handler} />
-          <label htmlFor={this.props.id + '2'}>
-            <span>Yes</span>
-          </label>
+        <div>
+          <helpers.QuestionInstructions instructionText={this.props.instructions}
+                                        id={this.props.id} />
+          <helpers.QuestionHeader label={this.props.label}>
+            {this.props.children.toString()}
+          </helpers.QuestionHeader>
+        </div>
+        <div>
+          <div className="current"></div>
+          <div className="answer-wrapper">
+            <div className="answer">
+              <input type="radio"
+                     name={this.props.id}
+                     id={this.props.id + '1'}
+                     value="No"
+                     checked={(this.props.value === 'No')}
+                     disabled={!this.props.visibleProps.enabled}
+                     onChange={this.handler} />
+              <label htmlFor={this.props.id + '1'}>
+                <span>No</span>
+              </label>
+              <input type="radio"
+                     name={this.props.id}
+                     id={this.props.id + '2'}
+                     value="Yes"
+                     checked={(this.props.value === 'Yes')}
+                     disabled={!this.props.visibleProps.enabled}
+                     onChange={this.handler} />
+              <label htmlFor={this.props.id + '2'}>
+                <span>Yes</span>
+              </label>
+            </div>
+          </div>
         </div>
       </div>
       <helpers.QuestionComments id={this.props.id}
@@ -141,14 +156,21 @@ let QuestionFieldLikert = React.createClass({
                                         disabled={!this.props.visibleProps.enabled} />;
     });
     return (<div className={'scale question ' + this.props.getClassValues()}>
-      <helpers.QuestionInstructions instructionText={this.props.instructions}
-                                    id={this.props.id} />
       <div className="main">
-        <helpers.QuestionHeader label={this.props.label}>
-          {this.props.children.toString()}
-        </helpers.QuestionHeader>
-        <div className="answer">
-          {scaleOptionNodes}
+        <div>
+          <helpers.QuestionInstructions instructionText={this.props.instructions}
+                                        id={this.props.id} />
+          <helpers.QuestionHeader label={this.props.label}>
+            {this.props.children.toString()}
+          </helpers.QuestionHeader>
+        </div>
+        <div>
+          <div className="current"></div>
+          <div className="answer-wrapper">
+            <div className="answer">
+              {scaleOptionNodes}
+            </div>
+          </div>
         </div>
       </div>
       <helpers.QuestionComments id={this.props.id}
@@ -218,14 +240,21 @@ let QuestionFieldSource = React.createClass({
       sourceLines.push(node);
     }
     return (<div className={'source question ' + this.props.getClassValues()}>
-      <helpers.QuestionInstructions instructionText={this.props.instructions}
-                            id={this.props.id} />
       <div className="main">
-        <helpers.QuestionHeader label={this.props.label}>
-          {this.props.children.toString()}
-        </helpers.QuestionHeader>
-        <div className="answer">
-          {sourceLines}
+        <div>
+          <helpers.QuestionInstructions instructionText={this.props.instructions}
+                                        id={this.props.id} />
+          <helpers.QuestionHeader label={this.props.label}>
+            {this.props.children.toString()}
+          </helpers.QuestionHeader>
+        </div>
+        <div>
+          <div className="current"></div>
+          <div className="answer-wrapper">
+            <div className="answer">
+              {sourceLines}
+            </div>
+          </div>
         </div>
       </div>
       <helpers.QuestionComments id={this.props.id}
@@ -325,20 +354,27 @@ let QuestionFieldMultipleChoice = React.createClass({
               </QuestionFieldMultipleChoiceOption>;
     });
     return (<div className={'multiple question ' + this.props.getClassValues()}>
-      <helpers.QuestionInstructions instructionText={this.props.instructions}
-                                    id={this.props.id} />
       <div className="main">
-        <helpers.QuestionHeader label={this.props.label}>
-          {this.props.children.toString()}
-        </helpers.QuestionHeader>
-        <div className="answer">
-          <ul>
-            {choices}
-          </ul>
+        <div>
+          <helpers.QuestionInstructions instructionText={this.props.instructions}
+                                        id={this.props.id} />
+          <helpers.QuestionHeader label={this.props.label}>
+            {this.props.children.toString()}
+          </helpers.QuestionHeader>
         </div>
-        <QuestionFieldMultipleChoiceOther includeOther={this.props.config.includeOther}
-                                          id={this.props.id + '_other'}
-                                          disabled={!this.props.visibleProps.enabled} />
+        <div>
+          <div className="current"></div>
+          <div className="answer-wrapper">
+            <div className="answer">
+              <ul>
+                {choices}
+              </ul>
+            </div>
+            <QuestionFieldMultipleChoiceOther includeOther={this.props.config.includeOther}
+                                              id={this.props.id + '_other'}
+                                              disabled={!this.props.visibleProps.enabled} />
+          </div>
+        </div>
       </div>
       <helpers.QuestionComments id={this.props.id}
                                 placeholder={this.props.placeholder}
