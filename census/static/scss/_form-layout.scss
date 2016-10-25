@@ -836,6 +836,7 @@ body.form {
       & > span {
         position: relative;
         white-space: nowrap;
+        display: inline-block;
 
         span {
           display: none;
@@ -848,11 +849,12 @@ body.form {
             position: absolute;
             z-index: 1;
             top: 1em;
-            right: 0;
+            left: 0;
             padding: 0.5em 0 0 0;
 
             ul {
               max-height: 60vh;
+              max-width: 90vw;
               overflow: auto;
               background-color: $gray-lighter;
               border-radius: 3px;

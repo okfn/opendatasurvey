@@ -9866,7 +9866,8 @@ body.form .form-header h1 {
   font-weight: bold; }
   body.form .form-header h1 > span {
     position: relative;
-    white-space: nowrap; }
+    white-space: nowrap;
+    display: inline-block; }
     body.form .form-header h1 > span span {
       display: none; }
     body.form .form-header h1 > span.no-js:hover span, body.form .form-header h1 > span.active span {
@@ -9874,10 +9875,11 @@ body.form .form-header h1 {
       position: absolute;
       z-index: 1;
       top: 1em;
-      right: 0;
+      left: 0;
       padding: 0.5em 0 0 0; }
       body.form .form-header h1 > span.no-js:hover span ul, body.form .form-header h1 > span.active span ul {
         max-height: 60vh;
+        max-width: 90vw;
         overflow: auto;
         background-color: #eeeeee;
         border-radius: 3px;
