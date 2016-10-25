@@ -1,8 +1,15 @@
 {% extends "base.html" %}
-{% import '_snippets/entry-summary-row.html' as entrysummary_macro %}
+{% import 'macros/entry_summary_row.html' as entry_summary_row %}
+{% from "macros/breadcrumb.html" import breadcrumb %}
 
 {% block title %}
 {{place.name}} &mdash; {{gettext("Places")}}
+{% endblock %}
+
+{% block breadcrumb %}
+{% if breadcrumbTitle %}
+{{ breadcrumb(breadcrumbTitle) }}
+{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -63,7 +70,7 @@
                    data-content="{{ dataset.description }}"
                    title="{{ dataset.title }}"><i class="icon-info-sign"></i></a>
               </td>
-              {{entrysummary_macro.entrysummary(dataset, place, entry, questions, gettext)}}
+              {{entry_summary_row.entrysummary(dataset, place, entry, questions, gettext)}}
 
               <td>
                 {% if submissionsAllowed %}
@@ -101,7 +108,7 @@
                   {{ submission.createdAt|simpledelta }}
                 </span>
               </td>
-              {{entrysummary_macro.entrysummary(dataset, place, submission, questions, gettext)}}
+              {{entry_summary_row.entrysummary(dataset, place, submission, questions, gettext)}}
               <td>
                 <a href="/submission/{{submission.id}}" class="btn btn-mini btn-danger">
                   {{gettext("View Submission")}}

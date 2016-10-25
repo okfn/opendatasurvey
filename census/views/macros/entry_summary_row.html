@@ -1,0 +1,107 @@
+{% macro entrysummary(dataset, place, entry, questions, gettext) -%}
+<td>
+  {% if entry %}
+  {{ entry.computedScore }}%
+  {% else %}
+  -
+  {% endif %}
+</td>
+<td{% if entry %} data-place="{{ entry.place }}" data-dataset="{{ entry.dataset }}" data-datasetTitle="{{ dataset.name }}"{% endif %}>
+<ul class="availability icons">
+  {% for qu in questions %}
+
+  {% if entry %}
+
+  {% set state = entry.answers[qu.id] %}
+  {% if state == true %}
+  {% set stateClass = 'yes' %}
+  {% set stateDisplay = 'Y' %}
+  {% elif state == false %}
+  {% set stateClass = 'no' %}
+  {% set stateDisplay = 'N' %}
+  {% elif state == null %}
+  {% set stateClass = 'maybe' %}
+  {% set stateDisplay = '?' %}
+  {% endif %}
+
+  {% else %}
+
+  {% set stateClass = '' %}
+  {% set stateDisplay = 'No data' %}
+
+  {% endif %}
+
+  <a data-toggle="tooltip" title="{{ qu.description|escape }}">
+    <li class="{{ stateClass }}">
+      <i class="icon-{{ qu.icon }}"></i>
+      <span class="text">{{ stateDisplay }}</span>
+    </li>
+  </a>
+  {% endfor %}
+</ul>
+</td>
+
+<td>
+  {% if entry %}
+
+  {% if entry.year == currentYear %}
+  {% set badgeClass = 'label-success' %}
+  {% elif entry.year == (currentYear - 1) %}
+  {% set badgeClass = 'label-warning' %}
+  {% else %}
+  {% set badgeClass = 'label-important'%}
+  {% endif %}
+
+  <div class="entry-year label {{ badgeClass}}"
+       title="{{ entry.updatedAt|dateformat }} ({{ gettext('Submitted by') }} {{ entry.Submitter.fullName() }} {{ gettext('and reviewed by') }} {{ entry.Submitter.fullName() }})">
+    {{entry.year}}
+  </div>
+  {% endif %}
+</td>
+
+{% if entry and entry.answers.url %}
+<td class="recordurl"><a href="{{entry.answers.url}}" title="{{entry.answers.url}}" target="_blank">{{ entry.answers.url
+  }}</a></td>
+{% else %}
+<td><!-- No URL given --></td>
+{% endif %}
+
+<td>
+  <ul class="icons">
+    <li>
+      {% if entry and entry.answers.dateavailable %}
+      <a class="icon-hover" title="{{gettext('Date available:')}} {{ entry.answers.dateavailable }}"
+         data-toggle="tooltip"><i class="icon-calendar"></i></a>
+      {% else %}
+      <a class="icon-hover" data-toggle="tooltip" data-trigger="hover" title="{{gettext('No date available given')}}">
+        <i class="icon-calendar icons-nodata"></i>
+      </a>
+      {% endif %}
+    </li>
+    <li>
+      {% if entry and entry.answers.format %}
+      <a class="icon-hover" title="Data format: {{ entry.answers.format }}" data-toggle="tooltip"><i
+          class="icon-file"></i></a>
+      {% else %}
+      <a class="icon-hover" data-toggle="tooltip" data-trigger="hover" title="{{gettext('No data format given')}}">
+        <i class="icon-file icons-nodata"></i>
+      </a>
+      {% endif %}
+    </li>
+    <li>
+      {% if entry and entry.details and (entry.details | trim | length) > 0 %}
+      {% set content = entry.details | urlize | replace('\n', '<br>') | replace ('\"', '\'') | wordwrap(100, '\n', true)
+      %}
+      <a href="javascript:;" class="count-0" title="{{gettext('Details')}}" data-toggle="popover"
+         data-content="{{ content }}" data-html="true" data-placement="left">
+        <i class="icon-info-sign"></i>
+      </a>
+      {% else %}
+      <a class="icon-hover" data-toggle="tooltip" data-trigger="hover" title="{{gettext('No details')}}">
+        <i class="icon-info-sign icons-nodata"></i>
+      </a>
+      {% endif %}
+    </li>
+  </ul>
+</td>
+{%- endmacro  %}
