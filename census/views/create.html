@@ -106,10 +106,9 @@
             </span>
           </span>
         </h1>
-        <p>
-          Data on air quality (e.g. levels of major pollutants) on a granular basis - that is at least broken down by month (preferably by day). Geographic breakdown (e.g. by grid point) would be nice but is not required.
-        </p>
+        {{ datasetContext.datasetDescription }}
       </div>
+      {% if isReview -%}
       <div class="secondary-meta">
         <dl class="pending">
           <dt class="status">Status</dt>
@@ -124,6 +123,7 @@
           </dd>
         </dl>
       </div>
+      {%- endif %}
     </div>
   </div>
 </header>

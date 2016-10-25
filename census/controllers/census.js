@@ -203,6 +203,7 @@ var submitReactGet = function(req, res, data) {
     datasetContext = _.assign(datasetContext, {
       characteristics: dataset.characteristics,
       datasetName: dataset.name,
+      datasetDescription: dataset.description,
       updateEvery: dataset.updateevery
     });
   }
@@ -412,6 +413,7 @@ var pending = function(req, res) {
         datasetContext = _.assign(datasetContext, {
           characteristics: dataset.characteristics,
           datasetName: dataset.name,
+          datasetDescription: dataset.description,
           updateEvery: dataset.updateevery
         });
       }
