@@ -341,6 +341,9 @@ let QuestionFieldMultipleChoice = React.createClass({
   },
 
   render() {
+    if (_.get(this.props.config, 'orderOptions', false)) {
+      this.optionValues = _.sortBy(this.optionValues, 'description');
+    }
     let choices = _.map(this.optionValues, (option, i) => {
       // i ==> letter, good for the first 26 options!
       let label = String.fromCharCode(97 + i).toUpperCase();
@@ -365,7 +368,7 @@ let QuestionFieldMultipleChoice = React.createClass({
         <div>
           <div className="current"></div>
           <div className="answer-wrapper">
-            <div className="answer">
+            <div className={this._getAnswerClassNames()}>
               <ul>
                 {choices}
               </ul>
@@ -382,6 +385,14 @@ let QuestionFieldMultipleChoice = React.createClass({
                                 onCommentChange={this.props.onCommentChange}
                                 disabled={!this.props.visibleProps.enabled} />
     </div>);
+  },
+
+  _getAnswerClassNames() {
+    let classNames = 'answer';
+    if (_.get(this.props.config, 'short', false)) {
+      classNames += ' short';
+    }
+    return classNames;
   },
 
   handler(i, e) {
