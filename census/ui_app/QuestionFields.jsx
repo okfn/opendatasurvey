@@ -341,6 +341,9 @@ let QuestionFieldMultipleChoice = React.createClass({
   },
 
   render() {
+    if (_.get(this.props.config, 'orderOptions', false)) {
+      this.optionValues = _.sortBy(this.optionValues, 'description');
+    }
     let choices = _.map(this.optionValues, (option, i) => {
       // i ==> letter, good for the first 26 options!
       let label = String.fromCharCode(97 + i).toUpperCase();
