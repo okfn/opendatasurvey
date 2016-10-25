@@ -6,7 +6,8 @@ body.form {
     }
   }
 
-  section {
+  section,
+  .form-footer {
     border-bottom: solid 1px $gray-lighter;
 
     &:nth-of-type(odd) {
@@ -20,7 +21,7 @@ body.form {
     }
 
     &.banner {
-      background-image: url(img/icon-tile.png);
+      background-image: url(images/icon-tile.png);
       background-size: 350px auto;
       background-position: center top;
 
@@ -35,6 +36,20 @@ body.form {
           .icon {
             background-color: $brand-info;
             font-weight: 700;
+          }
+        }
+      }
+
+      .current {
+        dl {
+          dd {
+            border-radius: $border-radius-large;
+          }
+        }
+
+        &.changed {
+          dl {
+            border-color: $brand-warning;
           }
         }
       }
@@ -165,16 +180,18 @@ body.form {
       }
 
       &.multiple {
-        ul {
-          li {
-            label {
-              border-radius: $border-radius-large;
-            }
-            input {
-              &:checked {
-                & + label {
-                  background-color: $brand-success;
-                  border-color: darken($brand-success, 20%);
+        .answer {
+          ul {
+            li {
+              label {
+                border-radius: $border-radius-large;
+              }
+              input {
+                &:checked {
+                  & + label {
+                    background-color: $brand-success;
+                    border-color: darken($brand-success, 20%);
+                  }
                 }
               }
             }
@@ -245,6 +262,14 @@ body.form {
             border-radius: $border-radius-base;
           }
         }
+
+        .current {
+          dl {
+            dd {
+              border-radius: $border-radius-base;
+            }
+          }
+        }
       }
 
       &.disabled {
@@ -269,6 +294,17 @@ body.form {
                 .select {
                   border-color: $gray-light;
                 }
+
+                &.has-error {
+                  input {
+                    border-color: $brand-danger;
+                  }
+                  .error-message {
+                    margin-top: -$border-radius-base;
+                    border-top-left-radius: 0;
+                    border-top-right-radius: 0;
+                  }
+                }
               }
             }
           }
@@ -279,10 +315,12 @@ body.form {
           }
         }
         &.multiple {
-          ul {
-            li {
-              label {
-                border-color: $gray-light;
+          .answer {
+            ul {
+              li {
+                label {
+                  border-color: $gray-light;
+                }
               }
             }
           }
@@ -295,5 +333,26 @@ body.form {
         }
       }
     }
+  }
+
+  .form-header {
+    border-bottom: solid 1px $gray-lighter;
+
+    .question {
+      h2 {
+        @include sr-only;
+      }
+
+      &.select {
+        .answer {
+          border: none;
+          font-size: 24px;
+        }
+      }
+    }
+  }
+
+  .error-message {
+    border-radius: $border-radius-base;
   }
 }

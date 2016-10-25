@@ -22,6 +22,20 @@ $color-maybe: #2980b9;
 $color-yes: $brand-success;
 $color-no: $brand-danger;
 
+
+$state-success-text:             #fff; //BS
+$state-success-bg:               $brand-success; //BS
+
+$state-info-text:                #fff; //BS
+$state-info-bg:                  #333333; //BS
+
+$state-warning-text:             #fff; //BS
+$state-warning-bg:               $brand-warning; //BS
+
+$state-danger-text:              #fff; //BS
+$state-danger-bg:                $brand-danger; //BS
+
+
 $font-family-sans-serif:  'Lato', "Helvetica Neue", Helvetica, Arial, sans-serif; //BS
 
 $headings-font-weight:  400; //BS

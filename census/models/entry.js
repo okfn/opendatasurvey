@@ -93,12 +93,13 @@ module.exports = function(sequelize, DataTypes) {
         if (openQuestions.length === 0)
           return false;
         // All Open Questions must pass for the answers in this entry.
-        return _.all(openQuestions, q => q.pass(this.answers[q.id]));
+        return _.all(openQuestions, q => q.pass(_.get(this.answers[q.id], 'value')));
       },
       scoreForQuestions: function(questions) {
         var scores = [];
         _.each(questions, q => {
-          scores.push(q.scoreForAnswer(this.answers[q.id]));
+          let answer = _.get(this.answers[q.id], 'value');
+          scores.push(q.scoreForAnswer(answer));
         });
         return _.sum(scores);
       }

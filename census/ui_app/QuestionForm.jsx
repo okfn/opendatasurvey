@@ -12,7 +12,8 @@ const QuestionForm = React.createClass({
 
   getInitialState() {
     let questionValues = this.props.questions.map(q => {
-      let answer = JSON.parse(_.get(this.props.answers, q.id, '{}'));
+      let answer = _.find(this.props.answers, {id: q.id});
+      if (answer === undefined) answer = '{}';
       return {
         id: q.id,
         value: _.get(answer, 'value', ''),

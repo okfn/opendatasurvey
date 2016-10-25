@@ -38,4 +38,18 @@ $( document ).ready(function() {
     $( this ).parents(".question").addClass( "answered" );
   });
 
+
+  // heading dropdown
+  $(".form-header .primary-meta h1").each(function() {
+    var wrapper = $( this ).children("span");
+    var btn = $( wrapper ).children("a");
+
+    $(wrapper).removeClass( "no-js" );
+
+    $(btn).click(function(event) {
+      event.preventDefault();
+      $(this).parent("span").toggleClass("active");
+    });
+  });
+
 });

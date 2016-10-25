@@ -8,63 +8,134 @@
 
 {% block content %}
 
-<form action="." method="get" accept-charset="utf-8">
-<section>
+<header class="form-header">
   <div class="container">
-    <div class="select question">
-      <div class="instructions">
+    <div>
+      <div class="primary-meta">
+        <h1>
+          <span class="no-js place">
+            {{ placeName or 'Select a Place' }}
+            {% if not isReview %}
+            <a href="#"><span>(change place)</span></a>
+            <span>
+              <ul>
+                {% for place in places -%}
+                <li {% if (formData and place.id == formData.place) or (current and place.id == current.place) %}class="selected"{% endif %}><a href="/submit/?place={{place.id}}&amp;dataset={{formData.dataset}}">{{ place.name }}</a></li>
+                {%- endfor %}
+              </ul>
+            </span>
+            {% endif %}
+          </span>
+          <span class="no-js dataset">
+            {{ datasetName or 'Select a Dataset'}}
+            {% if not isReview %}
+            <a href="#"><span>(change dataset)</span></a>
+            <span>
+              <ul>
+                {% for dataset in datasets -%}
+                <li {% if (formData and dataset.id == formData.dataset) or (current and dataset.id == current.dataset) %}class="selected"{% endif %}><a href="/submit/?place={{formData.place}}&amp;dataset={{dataset.id}}">{{ dataset.name }}</a></li>
+                {%- endfor %}
+              </ul>
+            </span>
+            {% endif %}
+          </span>
+        </h1>
+        {{ datasetContext.datasetDescription }}
       </div>
-      <div class="main">
-        <h2>{{gettext("Place")}}</h2>
-        <div class="answer">
-          <select name="place" id="place-select" required autocomplete="off">
-            <option value="">{{gettext("Please select")}}</option>
-            {% for place in places %}
-            <option value="{{place.id}}" {% if (formData and place.id == formData.place) or (current and place.id == current.place) %}selected="true"{% endif %}>{{place.name}}</option>
-            {% endfor %}
-          </select>
-        </div>
+      {% if isReview -%}
+      <div class="secondary-meta">
+        <dl class="pending">
+          <dt class="status">Status</dt>
+          <dd>pending</dd>
+          <dt class="date">Submission date</dt>
+          <dd>
+            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 1:17pm on 21st Feb 2016
+          </dd>
+          <dt class="submitter">Submitter</dt>
+          <dd>
+            <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Артур Волков
+          </dd>
+        </dl>
       </div>
-      <div class="comments">
-      </div>
-    </div>
-
-    <div class="select question">
-      <div class="instructions"></div>
-      <div class="main">
-        <h2>{{gettext("Dataset")}}</h2>
-        <div class="answer">
-          <select name="dataset" id="dataset-select" required>
-            <option value="">{{gettext("Please select")}}</option>
-            {% for dataset in datasets %}
-            <option value="{{dataset.id}}" {% if (formData and dataset.id == formData.dataset) or (current and dataset.id == current.dataset) %}selected="true"{% endif %}>{{dataset.name}}</option>
-            {% endfor %}
-          </select>
-        </div>
-      </div>
-      <div class="comments">
-      </div>
+      {%- endif %}
     </div>
   </div>
-</section>
-</form>
+</header>
 
-{# submit instructions added here temporarily #}
-{% if submitInstructions %}
-<div class="alert alert-info alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  {{ submitInstructions }}
+{% if isReview -%}
+  {% if currentUser -%}
+    {% if not canReview -%}
+      <div class="alert alert-warning" role="alert">
+        <div class="container">
+          <div>
+            <p>{{ currentUser.firstName }}, {{ gettext("You do not have permissions to review this submission.") }}</p>
+          </div>
+        </div>
+      </div>
+    {%- endif %}
+
+  {% else %}
+    <div class="alert alert-warning" role="alert">
+      <div class="container">
+        <div>
+          <p>{{gettext("If you are a reviewer, please login to review.")}}</p>
+          <div class="span2" style="text-align: right;">
+            <a class="btn btn-primary" href="{{ loginUrl }}?next=census/submission/{{ current.id }}">{{gettext("Login")}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  {%- endif %}
+{%- endif %}
+
+{% if errors %}
+<div class="alert alert-error" role="alert">
+    <p>{{ gettext("The form has missing or incorrect data")}}:</p>
+    <ul>
+    {% for error in errors %}
+      <li>{{ error.param }}: {{ error.msg }} {% if error.value %}(Current is '{{ error.value }}'){% endif %}</li>
+    {% endfor %}
+    </ul>
 </div>
 {% endif %}
 
-{% if datasetContext|length %}
+{% if submitInstructions %}
+<div class="alert alert-info alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <div class="container">
+    <div>
+      <p>
+        Please read the <a class="btn btn-sm" data-toggle="modal" data-target="#guidance">{% if isReview %}Review{% else %}Submission{% endif %} Guidance</a> before proceeding.
+      </p>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="guidance" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">{% if isReview %}Review{% else %}Submission{% endif %} Guidance</h4>
+      </div>
+      <div class="modal-body">
+        {{ submitInstructions }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Got it</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% if datasetContext|length and (not isReview or canReview) %}
 <div id="entry_form">{{ initialRenderedEntry }}</div>
 <script type="text/javascript">
   window.qsSchema = {{ qsSchema|safe }};
   window.questions = {{ questions|safe }};
   window.datasetContext = {{ datasetContext|dump }};
   window.formData = {{ formData|dump }};
-  window.current = {{ current|dump }};
+  window.isReview = {{ isReview }};
 </script>
 {% endif %}
 
