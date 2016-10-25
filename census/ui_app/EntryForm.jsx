@@ -1,43 +1,56 @@
 import React from 'react';
 import QuestionForm from './QuestionForm.jsx';
 import $ from 'jquery';
+import * as helpers from './HelperFields.jsx';
 
 const EntryForm = React.createClass({
 
-  _post(path) {
-    let form = document.createElement('form');
-    form.setAttribute('method', 'post');
-    form.setAttribute('action', path);
+  _post(path, targetForm) {
+    // disable all buttons
+    $('button').attr('disabled', 'disable');
+
+    let form = $('<form>').attr({ // eslint-disable-line quote-props
+      method: 'post',
+      action: path,
+      'accept-charset': 'utf-8'
+    });
 
     let questionData = this.refs.questions.state.questionState;
-    let answersField = document.createElement('input');
-    answersField.setAttribute('type', 'hidden');
-    answersField.setAttribute('name', 'answers');
-    answersField.setAttribute('value', JSON.stringify(questionData));
-    form.appendChild(answersField);
+    $('<input>').attr({
+      type: 'hidden',
+      name: 'answers',
+      value: JSON.stringify(questionData)
+    }).appendTo(form);
 
     let additionalInputs = $('.uncontrolled-fields :input').serializeArray();
     for (let i in additionalInputs) {
       if (additionalInputs.hasOwnProperty(i)) {
-        let hiddenField = document.createElement('input');
-        hiddenField.setAttribute('type', 'hidden');
-        hiddenField.setAttribute('name', additionalInputs[i].name);
-        hiddenField.setAttribute('value', additionalInputs[i].value);
-        form.appendChild(hiddenField);
+        $('<input>').attr({
+          type: 'hidden',
+          name: additionalInputs[i].name,
+          value: additionalInputs[i].value
+        }).appendTo(form);
       }
     }
-
-    document.body.appendChild(form);
+    if (this.props.isReview) {
+      let reviewAction = $(targetForm).find('button[name=reviewAction]').val();
+      $('<input>').attr({
+        type: 'hidden',
+        name: 'reviewAction',
+        value: reviewAction
+      }).appendTo(form);
+    }
+    form.appendTo(document.body);
     form.submit();
   },
 
   onSubmitHandler(e) {
     e.preventDefault();
-    this._post('.');
+    this._post($(e.target).attr('action'), e.target);
   },
 
   render() {
-    return (<form action="." method="post" acceptCharset="utf-8" onSubmit={this.onSubmitHandler}>
+    return (<div>
 <section className="uncontrolled-fields">
   <input type="hidden" name="place" value={ this.props.place } />
   <input type="hidden" name="dataset" value={ this.props.dataset } />
@@ -194,24 +207,14 @@ const EntryForm = React.createClass({
           </label>
         </div>
       </div>
-      <div className="comments">
-      </div>
+      <div className="comments"></div>
     </div>
 
-    <div className="submit continuation question">
-      <div className="instructions"></div>
-      <div className="main">
-        <p><small>By submitting material to the index you agreeing to <a href="http://okfn.org/terms-of-use/">terms of use</a> and also to license your contribution (to the extent there are any rights in it!) under the <a href="http://opendatacommons.org/licenses/pddl/1.0/">Open Data Commons Public Domain Dedication and License</a>.</small></p>
-        <div className="answer">
-          <button>Submit</button>
-        </div>
-      </div>
-      <div className="comments">
-      </div>
-    </div>
+    <helpers.SubmitActions isReview={this.props.isReview} onSubmitHandler={this.onSubmitHandler} />
+
   </div>
 </footer>
-</form>);
+</div>);
   }
 });
 

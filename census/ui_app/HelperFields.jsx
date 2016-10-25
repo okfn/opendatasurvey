@@ -1,5 +1,81 @@
 import React from 'react';
 
+const SubmitActions = props => {
+  if (props.isReview) {
+    return (<div>
+    <div className="text question">
+      <div className="main">
+        <div>
+          <div className="instructions"></div>
+          <h2>Please add a short comment as to why you are accepting or rejecting this submission. <strong>Note that your message will be publically visible</strong></h2>
+        </div>
+        <div>
+          <div className="current">
+          </div>
+          <div className="answer-wrapper">
+            <div className="answer">
+              <textarea rows="5"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="comments"></div>
+    </div>
+    <div className="submit continuation question">
+      <div className="main">
+        <div>
+          <div className="instructions"></div>
+          <h4>Important</h4>
+          <p>As the reviewer, your name will be logged and displayed with the entry.</p>
+          <p>
+            If necessary, edit the submission before accepting it. In particular, please correct any spelling mistakes.
+          </p>
+          <p>
+            <span className="label label-info">Publish</span> will overwite the whole entry with the data in this form.
+          </p>
+        </div>
+        <div>
+          <div className="current">
+          </div>
+          <div className="answer-wrapper">
+            <div className="answer">
+              <form action="." method="post" acceptCharset="utf-8" onSubmit={props.onSubmitHandler}>
+                <button type="submit" value="publish" name="reviewAction">Publish</button>
+              </form>
+              <form action="." method="post" acceptCharset="utf-8" onSubmit={props.onSubmitHandler}>
+                <button type="submit" value="reject" name="reviewAction" className="reject">Reject</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="comments"></div>
+    </div>
+    </div>);
+  } else {
+    return (<div className="submit continuation question">
+      <div className="main">
+        <div>
+          <div className="instructions"></div>
+          <p><small>By submitting material to the index you agreeing to <a href="http://okfn.org/terms-of-use/">terms of use</a> and also to license your contribution (to the extent there are any rights in it!) under the <a href="http://opendatacommons.org/licenses/pddl/1.0/">Open Data Commons Public Domain Dedication and License</a>.</small></p>
+        </div>
+        <div>
+          <div className="current">
+          </div>
+          <div className="answer-wrapper">
+            <div className="answer">
+              <form action="." method="post" acceptCharset="utf-8" onSubmit={props.onSubmitHandler}>
+                <button type="submit">Submit</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="comments"></div>
+    </div>);
+  }
+};
+
 const QuestionInstructions = props => {
   if (props.instructionText) {
     return (
@@ -52,5 +128,6 @@ const QuestionHeader = props => {
 export {
   QuestionInstructions,
   QuestionComments,
-  QuestionHeader
+  QuestionHeader,
+  SubmitActions
 };

@@ -7,7 +7,7 @@ let qsSchema = window.qsSchema;
 let questions = window.questions;
 let datasetContext = window.datasetContext;
 let answers = window.formData;
-let current = window.current;
+let isReview = window.isReview;
 
 $(function() {
   // Reload page with Dataset QuestionSet if dataset is changed.
@@ -23,6 +23,7 @@ render(<EntryForm questions={questions}
                   qsSchema={qsSchema}
                   context={datasetContext}
                   answers={answers}
-                  place={current.place}
-                  dataset={current.dataset} />,
+                  place={answers.place}
+                  dataset={answers.dataset}
+                  isReview={isReview} />,
        document.getElementById('entry_form'));

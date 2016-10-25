@@ -221,13 +221,17 @@ var submitReactGet = function(req, res, data) {
       };
     });
     // We might have form data to prefill the EntryForm with.
-    let formData = _.get(data, 'formData', {});
+    let formData = _.get(data, 'formData', {
+      place: data.currentState.match.place,
+      dataset: data.currentState.match.dataset
+    });
     let initialHTML = renderToString(<EntryForm questions={questions}
                                                 qsSchema={qsSchema}
                                                 context={datasetContext}
                                                 answers={formData}
-                                                place={data.currentState.match.place}
-                                                dataset={data.currentState.match.dataset} />);
+                                                place={formData.place}
+                                                dataset={formData.dataset}
+                                                isReview={false} />);
 
     let submitInstructions = _.get(req.params.site.settings, 'submit_page', '');
     res.render('create.html', {
@@ -236,12 +240,12 @@ var submitReactGet = function(req, res, data) {
       qsSchema: JSON.stringify(qsSchema),
       questions: JSON.stringify(questions),
       datasetContext: datasetContext,
-      current: data.currentState.match,
-      formData: JSON.stringify(formData),
+      formData: formData,
       initialRenderedEntry: initialHTML,
       breadcrumbTitle: 'Make a Submission',
       submitInstructions: marked(submitInstructions),
-      errors: _.get(data, 'errors')
+      errors: _.get(data, 'errors'),
+      isReview: false
     });
   });
 };
@@ -375,7 +379,101 @@ var submit = function(req, res) {
   });
 };
 
-var pendingEntry = function(req, res) {
+var pending = function(req, res) {
+  let entryQueryParams = {
+    where: {id: req.params.id},
+    include: [
+      {model: req.app.get('models').User, as: 'Submitter'},
+      {model: req.app.get('models').User, as: 'Reviewer'}
+    ]
+  };
+
+  req.app.get('models').Entry.findOne(entryQueryParams)
+  .then(function(entry) {
+    if (!entry) {
+      res.status(404).send('There is no submission with id ' + req.params.id);
+      return;
+    }
+    let dataOptions = _.merge(modelUtils.getDataOptions(req), {
+      scoredQuestionsOnly: false
+    });
+    modelUtils.getData(dataOptions)
+    .then(function(data) {
+      let dataset = _.find(data.datasets, {id: entry.dataset});
+      let place = _.find(data.places, {id: entry.place});
+      let places = modelUtils.translateSet(req, data.places);
+      let datasets = modelUtils.translateSet(req, data.datasets);
+      let qsSchemaPromise;
+      let questionsPromise;
+      let datasetContext = {};
+      if (dataset) {
+        qsSchemaPromise = dataset.getQuestionSetSchema();
+        questionsPromise = dataset.getQuestions();
+        datasetContext = _.assign(datasetContext, {
+          characteristics: dataset.characteristics,
+          datasetName: dataset.name,
+          updateEvery: dataset.updateevery
+        });
+      }
+
+      Promise.join(qsSchemaPromise, questionsPromise, (qsSchema, questions) => {
+        if (qsSchema === undefined) qsSchema = [];
+        questions = _.map(questions, question => {
+          return {
+            id: question.id,
+            text: nunjucks.renderString(question.question,
+                                        {datasetContext: datasetContext}),
+            type: question.type,
+            description: nunjucks.renderString(question.description,
+                                               {datasetContext: datasetContext}),
+            placeholder: question.placeholder,
+            config: question.config
+          };
+        });
+        // We might have form data to prefill the EntryForm with.
+        let formData = {
+          place: entry.place,
+          dataset: entry.dataset,
+          answers: entry.answers,
+          details: entry.details,
+          anonymous: (entry.submitterId === null) ? 'Yes' : 'No',
+          reviewComments: entry.reviewComments
+          // yourKnowledge* fields here too
+        };
+
+        let initialHTML = renderToString(<EntryForm questions={questions}
+                                                    qsSchema={qsSchema}
+                                                    context={datasetContext}
+                                                    answers={formData}
+                                                    place={entry.place}
+                                                    dataset={entry.dataset}
+                                                    isReview={true} />);
+        let reviewersData = {place: place, dataset: dataset};
+        let reviewers = utils.getReviewers(req, reviewersData);
+        res.render('create.html', {
+          places: places,
+          datasets: datasets,
+          qsSchema: JSON.stringify(qsSchema),
+          questions: JSON.stringify(questions),
+          datasetContext: datasetContext,
+          formData: formData,
+          initialRenderedEntry: initialHTML,
+          breadcrumbTitle: 'Review a Submission',
+          submitInstructions: config.get('review_page'),
+          errors: _.get(data, 'errors'),
+          isReview: true,
+          canReview: utils.canReview(reviewers, req.user),
+          reviewClosed: entry.reviewResult ||
+            (entry.year !== req.app.get('year'))
+        });
+      });
+    })
+    .catch(err => console.log(err.stack));
+  })
+  .catch(err => console.log(err.stack));
+};
+
+var pendingEntry = function(req, res) { // eslint-disable-line no-unused-vars
   var dataOptions;
   var entryQueryParams = {
     where: {id: req.params.id},
@@ -411,7 +509,7 @@ var pendingEntry = function(req, res) {
       data.reviewInstructions = config.get('review_page');
       data.questions = utils.getFormQuestions(req, data.questions);
       res.render('review.html', data);
-    }).catch(console.trace.bind(console));
+    }).catch(err => console.log(err.stack));
   });
 };
 
@@ -502,7 +600,7 @@ var review = function(req, res) {
   if (req.method === 'POST') {
     reviewPost(req, res);
   } else {
-    pendingEntry(req, res);
+    pending(req, res);
   }
 };
 

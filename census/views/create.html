@@ -151,6 +151,29 @@
 </section>
 </form>
 
+{% if isReview -%}
+  {% if currentUser -%}
+    {% if not canReview -%}
+      <div class="alert alert-danger">
+        <p>
+          {{ currentUser.firstName }}, {{ gettext("You do not have permissions to review this submission.") }}
+        </p>
+      </div>
+    {%- endif %}
+
+  {% else %}
+    <div class="alert alert-danger">
+      <p>
+        {{gettext("If you are a reviewer, please login to review.")}}
+      </p>
+      <div class="span2" style="text-align: right;">
+        <a class="btn btn-primary" href="{{ loginUrl }}?next=census/submission/{{ current.id }}">{{gettext("Login")}}</a>
+      </div>
+    </div>
+  {%- endif %}
+{%- endif %}
+
+
 {% if errors %}
 <div class="flash alert alert-error">
     <p>
@@ -172,14 +195,14 @@
 </div>
 {% endif %}
 
-{% if datasetContext|length %}
+{% if datasetContext|length and (not isReview or canReview) %}
 <div id="entry_form">{{ initialRenderedEntry }}</div>
 <script type="text/javascript">
   window.qsSchema = {{ qsSchema|safe }};
   window.questions = {{ questions|safe }};
   window.datasetContext = {{ datasetContext|dump }};
-  window.formData = {{ formData|safe }};
-  window.current = {{ current|dump }};
+  window.formData = {{ formData|dump }};
+  window.isReview = {{ isReview }};
 </script>
 {% endif %}
 
