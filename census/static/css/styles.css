@@ -9637,7 +9637,8 @@ body.form .form-footer {
     body.form .form-footer .question.multiple .current dd {
       font-weight: bold; }
     body.form section .question.text .answer textarea,
-    body.form section .question.text .answer input[type="text"], body.form section .question .text.other .answer textarea,
+    body.form section .question.text .answer input[type="text"],
+    body.form section .question .text.other .answer textarea,
     body.form section .question .text.other .answer input[type="text"],
     body.form .form-header .question.text .answer textarea,
     body.form .form-header .question.text .answer input[type="text"],
@@ -9652,11 +9653,12 @@ body.form .form-footer {
       padding: 15px;
       font-size: 16px;
       max-width: 100%; }
-    body.form section .question.text .answer .current dd, body.form section .question .text.other .answer .current dd,
-    body.form .form-header .question.text .answer .current dd,
-    body.form .form-header .question .text.other .answer .current dd,
-    body.form .form-footer .question.text .answer .current dd,
-    body.form .form-footer .question .text.other .answer .current dd {
+    body.form section .question.text .current dd,
+    body.form section .question .text.other .current dd,
+    body.form .form-header .question.text .current dd,
+    body.form .form-header .question .text.other .current dd,
+    body.form .form-footer .question.text .current dd,
+    body.form .form-footer .question .text.other .current dd {
       font-size: 0.8em;
       max-height: 11em;
       overflow: auto; }
@@ -10066,6 +10068,14 @@ body.form .form-footer {
   body.form section .question.source .answer ul li .select,
   body.form .form-footer .question.source .answer ul li .select {
     border-radius: 6px; }
+  body.form section .question.source .answer ul li.has-error input,
+  body.form .form-footer .question.source .answer ul li.has-error input {
+    border-color: #ff0000 !important; }
+  body.form section .question.source .answer ul li.has-error .error-message,
+  body.form .form-footer .question.source .answer ul li.has-error .error-message {
+    margin-top: -4px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0; }
   body.form section .question.select .answer,
   body.form .form-footer .question.select .answer {
     border-radius: 6px; }
@@ -10080,7 +10090,8 @@ body.form .form-footer {
     background-color: #7AB800;
     border-color: #365200; }
   body.form section .question.text .answer textarea,
-  body.form section .question.text .answer input[type="text"], body.form section .question .text.other .answer textarea,
+  body.form section .question.text .answer input[type="text"],
+  body.form section .question .text.other .answer textarea,
   body.form section .question .text.other .answer input[type="text"],
   body.form .form-footer .question.text .answer textarea,
   body.form .form-footer .question.text .answer input[type="text"],
@@ -10088,7 +10099,8 @@ body.form .form-footer {
   body.form .form-footer .question .text.other .answer input[type="text"] {
     border-radius: 6px; }
     body.form section .question.text .answer textarea:not(:focus),
-    body.form section .question.text .answer input[type="text"]:not(:focus), body.form section .question .text.other .answer textarea:not(:focus),
+    body.form section .question.text .answer input[type="text"]:not(:focus),
+    body.form section .question .text.other .answer textarea:not(:focus),
     body.form section .question .text.other .answer input[type="text"]:not(:focus),
     body.form .form-footer .question.text .answer textarea:not(:focus),
     body.form .form-footer .question.text .answer input[type="text"]:not(:focus),
@@ -10122,7 +10134,8 @@ body.form .form-footer {
     body.form .form-footer .question.sub.source .answer ul li .select select {
       background-color: transparent; }
   body.form section .question.sub.text .answer textarea,
-  body.form section .question.sub.text .answer input[type="text"], body.form section .question.sub .text.other .answer textarea,
+  body.form section .question.sub.text .answer input[type="text"],
+  body.form section .question.sub .text.other .answer textarea,
   body.form section .question.sub .text.other .answer input[type="text"],
   body.form .form-footer .question.sub.text .answer textarea,
   body.form .form-footer .question.sub.text .answer input[type="text"],
@@ -10142,14 +10155,6 @@ body.form .form-footer {
   body.form section .question.disabled.source .answer ul li .select,
   body.form .form-footer .question.disabled.source .answer ul li .select {
     border-color: #777777; }
-  body.form section .question.disabled.source .answer ul li.has-error input,
-  body.form .form-footer .question.disabled.source .answer ul li.has-error input {
-    border-color: #ff0000; }
-  body.form section .question.disabled.source .answer ul li.has-error .error-message,
-  body.form .form-footer .question.disabled.source .answer ul li.has-error .error-message {
-    margin-top: -4px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0; }
   body.form section .question.disabled.select .answer,
   body.form .form-footer .question.disabled.select .answer {
     border-color: #777777; }
