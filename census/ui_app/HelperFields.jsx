@@ -14,7 +14,7 @@ const SubmitActions = props => {
           </div>
           <div className="answer-wrapper">
             <div className="answer">
-              <textarea rows="5"></textarea>
+              <textarea name="reviewComments" rows="5" defaultValue={props.reviewComments}></textarea>
             </div>
           </div>
         </div>
@@ -39,10 +39,10 @@ const SubmitActions = props => {
           </div>
           <div className="answer-wrapper">
             <div className="answer">
-              <form action="." method="post" acceptCharset="utf-8" onSubmit={props.onSubmitHandler}>
+              <form method="post" acceptCharset="utf-8" onSubmit={props.onSubmitHandler}>
                 <button type="submit" value="publish" name="reviewAction">Publish</button>
               </form>
-              <form action="." method="post" acceptCharset="utf-8" onSubmit={props.onSubmitHandler}>
+              <form method="post" acceptCharset="utf-8" onSubmit={props.onSubmitHandler}>
                 <button type="submit" value="reject" name="reviewAction" className="reject">Reject</button>
               </form>
             </div>
@@ -64,7 +64,7 @@ const SubmitActions = props => {
           </div>
           <div className="answer-wrapper">
             <div className="answer">
-              <form action="." method="post" acceptCharset="utf-8" onSubmit={props.onSubmitHandler}>
+              <form method="post" acceptCharset="utf-8" onSubmit={props.onSubmitHandler}>
                 <button type="submit">Submit</button>
               </form>
             </div>

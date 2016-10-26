@@ -5,13 +5,12 @@ import * as helpers from './HelperFields.jsx';
 
 const EntryForm = React.createClass({
 
-  _post(path, targetForm) {
+  _post(targetForm) {
     // disable all buttons
     $('button').attr('disabled', 'disable');
 
     let form = $('<form>').attr({ // eslint-disable-line quote-props
       method: 'post',
-      action: path,
       'accept-charset': 'utf-8'
     });
 
@@ -46,7 +45,7 @@ const EntryForm = React.createClass({
 
   onSubmitHandler(e) {
     e.preventDefault();
-    this._post($(e.target).attr('action'), e.target);
+    this._post(e.target);
   },
 
   render() {
@@ -239,7 +238,9 @@ const EntryForm = React.createClass({
       <div className="comments"></div>
     </div>
 
-    <helpers.SubmitActions isReview={this.props.isReview} onSubmitHandler={this.onSubmitHandler} />
+    <helpers.SubmitActions isReview={this.props.isReview}
+                           onSubmitHandler={this.onSubmitHandler}
+                           reviewComments={this.props.answers.reviewComments} />
 
   </div>
 </footer>

@@ -265,7 +265,7 @@ var pending = function(req, res) {
             config: question.config
           };
         });
-        // We might have form data to prefill the EntryForm with.
+        // Prefill the EntryForm with entry data.
         let formData = {
           place: entry.place,
           dataset: entry.dataset,
@@ -354,86 +354,75 @@ var pendingEntry = function(req, res) { // eslint-disable-line no-unused-vars
 };
 
 var reviewPost = function(req, res) {
-  var acceptSubmission = !_.isUndefined(req.body.publish);
-  var answers;
-
+  // Get the entry from the DB
   req.app.get('models').Entry.findById(req.params.id)
-  .then(function(result) {
-    if (!result) {
-      res.send(400, 'There is no matching entry.');
+  .then(entry => {
+    if (!entry) {
+      res.status(404).send('There is no entry with id ' + req.params.id);
       return;
     }
 
-    var dataOptions = _.merge(modelUtils.getDataOptions(req), {
-      place: result.place,
-      dataset: result.dataset,
+    // Get current data for this place/dataset
+    let dataOptions = _.merge(modelUtils.getDataOptions(req), {
+      place: entry.place,
+      dataset: entry.dataset,
       cascade: true,
       with: {
         Question: false
       }
     });
-    modelUtils.getData(dataOptions)
-    .then(function(data) {
-      data.reviewers = utils.getReviewers(req, data);
-      if (!utils.canReview(data.reviewers, req.user)) {
-        res.status(403).send('You are not allowed to review this entry');
-        return;
-      }
+    return modelUtils.getData(dataOptions)
+    .then(data => [entry, data]);
+  })
+  .spread((entry, data) => {
+    // Save the proposed entry
+    let acceptSubmission = (req.body.reviewAction === 'publish');
 
-      var ex = _.first(data.entries);
-      result.reviewerId = req.user.id;
-      result.reviewed = true;
-      result.reviewComments = req.body.reviewcomments;
-      result.details = req.body.details;
+    data.reviewers = utils.getReviewers(req, data);
+    if (!utils.canReview(data.reviewers, req.user)) {
+      res.status(403).send('You are not allowed to review this entry.');
+      return;
+    }
+    entry.reviewerId = req.user.id;
+    entry.reviewed = true;
+    entry.reviewComments = req.body.reviewComments;
+    entry.details = req.body.details;
+    entry.answers = JSON.parse(req.body.answers);
 
-      answers = req.body;
-      delete answers.place;
-      delete answers.dataset;
-      delete answers.year;
-      delete answers.anonymous;
-      delete answers.reviewcomments;
-      delete answers.submit;
-      delete answers.details;
-      result.answers = utils.normalizedAnswers(answers);
+    if (acceptSubmission) {
+      entry.isCurrent = true;
+      entry.reviewResult = true;
+    } else {
+      entry.reviewResult = false;
+    }
+    return entry.save()
+    .then(() => [entry, data, acceptSubmission]);
+  })
+  .spread((entry, data, acceptSubmission) => {
+    // Update the previous existing entry, if necessary.
+    let existingEntry = _.first(data.entries);
+    if (acceptSubmission &&
+        existingEntry &&
+        existingEntry.year === entry.year &&
+        entry.id !== existingEntry.id) {
+      existingEntry.isCurrent = false;
 
-      if (acceptSubmission) {
-        result.isCurrent = true;
-        result.reviewResult = true;
-      } else {
-        result.reviewResult = false;
-      }
-
-      result.save().then(function() {
-        if (ex && ex.year === result.year) {
-          if (acceptSubmission) {
-            ex.isCurrent = false;
-          }
-
-          ex.save().then(function() {
-            var msg;
-            if (acceptSubmission) {
-              msg = 'Submission processed and entered into the census.';
-              req.flash('info', msg);
-            } else {
-              msg = 'Submission marked as rejected.';
-              req.flash('info', msg);
-            }
-            res.redirect('/');
-          }).catch(console.trace.bind(console));
-        } else {
-          var msg;
-          if (acceptSubmission) {
-            msg = 'Submission processed and entered into the census.';
-            req.flash('info', msg);
-          } else {
-            msg = 'Submission marked as rejected.';
-            req.flash('info', msg);
-          }
-          res.redirect('/');
-        }
-      }).catch(console.trace.bind(console));
-    }).catch(console.trace.bind(console));
-  }).catch(console.trace.bind(console));
+      return existingEntry.save()
+      .then(acceptSubmission => acceptSubmission);
+    }
+    return acceptSubmission;
+  })
+  .then(acceptSubmission => {
+    // Set the flash message and redirect to homepage.
+    if (acceptSubmission) {
+      let msg = 'Submission processed and entered into the census.';
+      req.flash('info', msg);
+    } else {
+      let msg = 'Submission marked as rejected.';
+      req.flash('info', msg);
+    }
+    res.redirect('/');
+  }).catch(err => console.log(err));
 };
 
 var review = function(req, res) {
