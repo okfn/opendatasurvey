@@ -643,14 +643,17 @@ body.form {
         }
       }
 
-      &.text .answer, .text.other .answer {
-        textarea,
-        input[type="text"] {
-          width: 100%;
-          border: solid $ui-border $text-color;
-          padding: $grid-gutter-width/2;
-          font-size: 16px;
-          max-width: 100%;
+      &.text,
+      .text.other {
+        .answer {
+          textarea,
+          input[type="text"] {
+            width: 100%;
+            border: solid $ui-border $text-color;
+            padding: $grid-gutter-width/2;
+            font-size: 16px;
+            max-width: 100%;
+          }
         }
 
         .current {
@@ -725,15 +728,17 @@ body.form {
           }
         }
 
-        &.text .answer {
-          textarea,
-          input[type="text"] {
-            border-width: $ui-border-sub;
-            font-size: 14px;
-          }
-          input[type="text"] {
-            padding-top: $grid-gutter-width*0.25;
-            padding-bottom: $grid-gutter-width*0.25;
+        &.text {
+          .answer {
+            textarea,
+            input[type="text"] {
+              border-width: $ui-border-sub;
+              font-size: 14px;
+            }
+            input[type="text"] {
+              padding-top: $grid-gutter-width*0.25;
+              padding-bottom: $grid-gutter-width*0.25;
+            }
           }
         }
 

@@ -164,6 +164,17 @@ body.form {
               .select {
                 border-radius: $border-radius-large;
               }
+
+              &.has-error {
+                input {
+                  border-color: $brand-danger !important;
+                }
+                .error-message {
+                  margin-top: -$border-radius-base;
+                  border-top-left-radius: 0;
+                  border-top-right-radius: 0;
+                }
+              }
             }
           }
         }
@@ -199,12 +210,15 @@ body.form {
         }
       }
 
-      &.text .answer, .text.other .answer {
-        textarea,
-        input[type="text"] {
-          border-radius: $border-radius-large;
-          &:not(:focus) {
-            background-color: transparent;
+      &.text,
+      .text.other {
+        .answer {
+          textarea,
+          input[type="text"] {
+            border-radius: $border-radius-large;
+            &:not(:focus) {
+              background-color: transparent;
+            }
           }
         }
       }
@@ -256,10 +270,13 @@ body.form {
             }
           }
         }
-        &.text .answer, .text.other .answer {
-          textarea,
-          input[type="text"] {
-            border-radius: $border-radius-base;
+        &.text,
+        .text.other {
+          .answer {
+            textarea,
+            input[type="text"] {
+              border-radius: $border-radius-base;
+            }
           }
         }
 
@@ -293,17 +310,6 @@ body.form {
                 }
                 .select {
                   border-color: $gray-light;
-                }
-
-                &.has-error {
-                  input {
-                    border-color: $brand-danger;
-                  }
-                  .error-message {
-                    margin-top: -$border-radius-base;
-                    border-top-left-radius: 0;
-                    border-top-right-radius: 0;
-                  }
                 }
               }
             }
