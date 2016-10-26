@@ -285,6 +285,12 @@ var pending = function(req, res) {
                                                     isReview={true} />);
         let reviewersData = {place: place, dataset: dataset};
         let reviewers = utils.getReviewers(req, reviewersData);
+        let entryStatus = 'pending';
+        if (entry.isCurrent) {
+          entryStatus = 'accepted';
+        } else if (entry.reviewed && !entry.reviewResult) {
+          entryStatus = 'rejected';
+        }
         res.render('create.html', {
           places: places,
           datasets: datasets,
@@ -299,6 +305,8 @@ var pending = function(req, res) {
           submitInstructions: config.get('review_page'),
           errors: _.get(data, 'errors'),
           isReview: true,
+          entryStatus: entryStatus,
+          entry: entry,
           canReview: utils.canReview(reviewers, req.user),
           reviewClosed: entry.reviewResult ||
             (entry.year !== req.app.get('year'))
