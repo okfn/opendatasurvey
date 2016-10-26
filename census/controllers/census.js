@@ -171,7 +171,7 @@ var submitPost = function(req, res, data) {
       query = objToSave.save();
     }
 
-    query.then(function(result) {
+    query.then(result => {
       let msg;
       let redirectPath;
       let submissionPath;
@@ -194,7 +194,7 @@ var submitPost = function(req, res, data) {
       }
 
       res.redirect(redirectPath + '?post_submission=' + submissionPath);
-    }).catch(console.trace.bind(console));
+    }).catch(err => console.log(err.stack));
   }
 };
 
@@ -223,7 +223,7 @@ var pending = function(req, res) {
   };
 
   req.app.get('models').Entry.findOne(entryQueryParams)
-  .then(function(entry) {
+  .then(entry => {
     if (!entry) {
       res.status(404).send('There is no submission with id ' + req.params.id);
       return;
@@ -231,91 +231,90 @@ var pending = function(req, res) {
     let dataOptions = _.merge(modelUtils.getDataOptions(req), {
       scoredQuestionsOnly: false
     });
-    modelUtils.getData(dataOptions)
-    .then(function(data) {
-      let dataset = _.find(data.datasets, {id: entry.dataset});
-      let place = _.find(data.places, {id: entry.place});
-      let places = modelUtils.translateSet(req, data.places);
-      let datasets = modelUtils.translateSet(req, data.datasets);
-      let qsSchemaPromise;
-      let questionsPromise;
-      let datasetContext = {};
-      if (dataset) {
-        qsSchemaPromise = dataset.getQuestionSetSchema();
-        questionsPromise = dataset.getQuestions();
-        datasetContext = _.assign(datasetContext, {
-          characteristics: dataset.characteristics,
-          datasetName: dataset.name,
-          datasetDescription: dataset.description,
-          updateEvery: dataset.updateevery
-        });
-      }
-
-      Promise.join(qsSchemaPromise, questionsPromise, (qsSchema, questions) => {
-        if (qsSchema === undefined) qsSchema = [];
-        questions = _.map(questions, question => {
-          return {
-            id: question.id,
-            text: nunjucks.renderString(question.question,
-                                        {datasetContext: datasetContext}),
-            type: question.type,
-            description: nunjucks.renderString(question.description,
-                                               {datasetContext: datasetContext}),
-            placeholder: question.placeholder,
-            config: question.config
-          };
-        });
-        // Prefill the EntryForm with entry data.
-        let formData = {
-          place: entry.place,
-          dataset: entry.dataset,
-          answers: entry.answers,
-          details: entry.details,
-          anonymous: (entry.submitterId === null) ? 'Yes' : 'No',
-          reviewComments: entry.reviewComments
-          // yourKnowledge* fields here too
-        };
-
-        let initialHTML = renderToString(<EntryForm questions={questions}
-                                                    qsSchema={qsSchema}
-                                                    context={datasetContext}
-                                                    answers={formData}
-                                                    place={entry.place}
-                                                    dataset={entry.dataset}
-                                                    isReview={true} />);
-        let reviewersData = {place: place, dataset: dataset};
-        let reviewers = utils.getReviewers(req, reviewersData);
-        let entryStatus = 'pending';
-        if (entry.isCurrent) {
-          entryStatus = 'accepted';
-        } else if (entry.reviewed && !entry.reviewResult) {
-          entryStatus = 'rejected';
-        }
-        res.render('create.html', {
-          places: places,
-          datasets: datasets,
-          placeName: _.get(place, 'name'),
-          datasetName: _.get(dataset, 'name'),
-          qsSchema: JSON.stringify(qsSchema),
-          questions: JSON.stringify(questions),
-          datasetContext: datasetContext,
-          formData: formData,
-          initialRenderedEntry: initialHTML,
-          breadcrumbTitle: 'Review a Submission',
-          submitInstructions: config.get('review_page'),
-          errors: _.get(data, 'errors'),
-          isReview: true,
-          entryStatus: entryStatus,
-          entry: entry,
-          canReview: utils.canReview(reviewers, req.user),
-          reviewClosed: entry.reviewResult ||
-            (entry.year !== req.app.get('year'))
-        });
-      });
-    })
-    .catch(err => console.log(err.stack));
+    return modelUtils.getData(dataOptions)
+    .then(data => [data, entry]);
   })
-  .catch(err => console.log(err.stack));
+  .spread(function(data, entry) {
+    let dataset = _.find(data.datasets, {id: entry.dataset});
+    let place = _.find(data.places, {id: entry.place});
+    let places = modelUtils.translateSet(req, data.places);
+    let datasets = modelUtils.translateSet(req, data.datasets);
+    let qsSchemaPromise;
+    let questionsPromise;
+    let datasetContext = {};
+    if (dataset) {
+      qsSchemaPromise = dataset.getQuestionSetSchema();
+      questionsPromise = dataset.getQuestions();
+      datasetContext = _.assign(datasetContext, {
+        characteristics: dataset.characteristics,
+        datasetName: dataset.name,
+        datasetDescription: dataset.description,
+        updateEvery: dataset.updateevery
+      });
+    }
+
+    Promise.join(qsSchemaPromise, questionsPromise, (qsSchema, questions) => {
+      if (qsSchema === undefined) qsSchema = [];
+      questions = _.map(questions, question => {
+        return {
+          id: question.id,
+          text: nunjucks.renderString(question.question,
+                                      {datasetContext: datasetContext}),
+          type: question.type,
+          description: nunjucks.renderString(question.description,
+                                             {datasetContext: datasetContext}),
+          placeholder: question.placeholder,
+          config: question.config
+        };
+      });
+      // Prefill the EntryForm with entry data.
+      let formData = {
+        place: entry.place,
+        dataset: entry.dataset,
+        answers: entry.answers,
+        details: entry.details,
+        anonymous: (entry.submitterId === null) ? 'Yes' : 'No',
+        reviewComments: entry.reviewComments
+        // yourKnowledge* fields here too
+      };
+
+      let initialHTML = renderToString(<EntryForm questions={questions}
+                                                  qsSchema={qsSchema}
+                                                  context={datasetContext}
+                                                  answers={formData}
+                                                  place={entry.place}
+                                                  dataset={entry.dataset}
+                                                  isReview={true} />);
+      let reviewersData = {place: place, dataset: dataset};
+      let reviewers = utils.getReviewers(req, reviewersData);
+      let entryStatus = 'pending';
+      if (entry.isCurrent) {
+        entryStatus = 'accepted';
+      } else if (entry.reviewed && !entry.reviewResult) {
+        entryStatus = 'rejected';
+      }
+      res.render('create.html', {
+        places: places,
+        datasets: datasets,
+        placeName: _.get(place, 'name'),
+        datasetName: _.get(dataset, 'name'),
+        qsSchema: JSON.stringify(qsSchema),
+        questions: JSON.stringify(questions),
+        datasetContext: datasetContext,
+        formData: formData,
+        initialRenderedEntry: initialHTML,
+        breadcrumbTitle: 'Review a Submission',
+        submitInstructions: config.get('review_page'),
+        errors: _.get(data, 'errors'),
+        isReview: true,
+        entryStatus: entryStatus,
+        entry: entry,
+        canReview: utils.canReview(reviewers, req.user),
+        reviewClosed: entry.reviewResult ||
+          (entry.year !== req.app.get('year'))
+      });
+    });
+  }).catch(err => console.log(err.stack));
 };
 
 var reviewPost = function(req, res) {
@@ -384,7 +383,7 @@ var reviewPost = function(req, res) {
       req.flash('info', msg);
     }
     res.redirect('/');
-  }).catch(err => console.log(err));
+  }).catch(err => console.log(err.stack));
 };
 
 var review = function(req, res) {
