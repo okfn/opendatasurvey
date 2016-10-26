@@ -346,12 +346,9 @@ var reviewPost = function(req, res) {
     entry.details = req.body.details;
     entry.answers = JSON.parse(req.body.answers);
 
-    if (acceptSubmission) {
-      entry.isCurrent = true;
-      entry.reviewResult = true;
-    } else {
-      entry.reviewResult = false;
-    }
+    entry.isCurrent = acceptSubmission;
+    entry.reviewResult = acceptSubmission;
+
     return entry.save()
     .then(() => [entry, data, acceptSubmission]);
   })
