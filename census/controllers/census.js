@@ -105,8 +105,6 @@ var submitPost = function(req, res, data) {
     });
   }
 
-  // errors.push({param: 'fake', msg: 'My fake error'});
-
   if (errors.length) {
     res.statusCode = 400;
     data.formData = req.body;
@@ -118,6 +116,10 @@ var submitPost = function(req, res, data) {
     let saveStrategy;
     let objToSave = {};
     let submitterId = utils.ANONYMOUS_USER_ID;
+
+    if (req.body.anonymous && req.body.anonymous === 'No') {
+      submitterId = req.user.id;
+    }
 
     let defaultObjectToSave = {
       id: uuid.v4(),
@@ -273,7 +275,8 @@ var pending = function(req, res) {
         dataset: entry.dataset,
         answers: entry.answers,
         details: entry.details,
-        anonymous: (entry.submitterId === null) ? 'Yes' : 'No',
+        anonymous: (entry.submitterId === utils.ANONYMOUS_USER_ID) ?
+          'Yes' : 'No',
         reviewComments: entry.reviewComments
         // yourKnowledge* fields here too
       };
