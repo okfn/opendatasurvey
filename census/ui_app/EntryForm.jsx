@@ -48,6 +48,79 @@ const EntryForm = React.createClass({
     this._post(e.target);
   },
 
+  componentWillMount() {
+    this.yourKnowledgeQuestions = [
+      {
+        id: 'yourKnowledgeDomain',
+        text: 'Rate your knowledge of ' + this.props.context.datasetName + '.',
+        description: '',
+        type: 'likert',
+        placeholder: 'Click here to tell us more about your background. What is your knowledge about the data category, the government in your country, and Open Data in general?',
+        config: {
+          options: [
+            {
+              description: 'I\'m not familiar at all with the field',
+              value: '1'
+            },
+            {
+              description: 'I have some knowledge about the field',
+              value: '2'
+            },
+            {
+              description: 'I have advanced knowledge in this field',
+              value: '3'
+            }
+          ]
+        }
+      },
+      {
+        id: 'yourKnowledgeOpenData',
+        text: 'Rate your knowledge of open data.',
+        description: '',
+        type: 'likert',
+        placeholder: '',
+        config: {
+          options: [
+            {
+              description: 'I\'m not familiar at all with open data',
+              value: '1'
+            },
+            {
+              description: 'I have some knowledge about open data',
+              value: '2'
+            },
+            {
+              description: 'I have advanced knowledge',
+              value: '3'
+            }
+          ]
+        }
+      }
+    ];
+    this.yourKnowledgeQSSchema = [
+      {
+        id: 'yourKnowledgeDomain',
+        position: 1,
+        defaultProperties: {
+          required: true,
+          enabled: true,
+          visible: true
+        },
+        ifProvider: []
+      },
+      {
+        id: 'yourKnowledgeOpenData',
+        position: 2,
+        defaultProperties: {
+          required: true,
+          enabled: true,
+          visible: true
+        },
+        ifProvider: []
+      }
+    ];
+  },
+
   render() {
     return (<div>
 <section className="uncontrolled-fields">
@@ -60,107 +133,12 @@ const EntryForm = React.createClass({
       <p>This section is not scored, but could provide valuable insights.</p>
     </div>
 
-    <div className="scale first question">
-      <div className="main">
-        <div>
-          <div className="instructions"></div>
-          <h2><span>A1.</span> Rate your knowledge of <em>{ this.props.context.datasetName }</em>.</h2>
-        </div>
-        <div>
-          <div className="current"></div>
-          <div className="answer-wrapper">
-            <div className="answer">
-              <span>
-                <input type="radio" name="yourKnowledgeDomain"
-                       id="yourKnowledgeDomain1"
-                       value="1"
-                       defaultChecked={this.props.answers.yourKnowledgeDomain === '1'} />
-                <label htmlFor="yourKnowledgeDomain1">
-                  <span>1</span> <em className="description"> I'm not familiar at all with the field</em>
-                </label>
-              </span>
-              <span>
-                <input type="radio" name="yourKnowledgeDomain"
-                       id="yourKnowledgeDomain2"
-                       value="2"
-                       defaultChecked={this.props.answers.yourKnowledgeDomain === '2'} />
-                <label htmlFor="yourKnowledgeDomain2">
-                  <span>2</span> <em className="description">I have some knowledge about the field</em>
-                </label>
-              </span>
-              <span>
-                <input type="radio" name="yourKnowledgeDomain"
-                       id="yourKnowledgeDomain3"
-                       value="3"
-                       defaultChecked={this.props.answers.yourKnowledgeDomain === '3'} />
-                <label htmlFor="yourKnowledgeDomain3">
-                  <span>3</span> <em className="description">I have advanced knowledge in this field</em>
-                </label>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="comments">
-        <label htmlFor="yourKnowledgeDomainComment" name="yourKnowledgeDomainComment">Comments</label>
-        <textarea placeholder="Click here to tell us more about your background. What is your knowledge about the data category, the government in your country, and Open Data in general?"
-                  id="yourKnowledgeDomainComment"
-                  name="yourKnowledgeDomainComment"
-                  rows="5"
-                  defaultValue={this.props.answers.yourKnowledgeDomainComment}></textarea>
-      </div>
-    </div>
-
-    <div className="scale question">
-      <div className="main">
-        <div>
-          <div className="instructions"></div>
-          <h2><span>A2.</span> Rate your knowledge of open data.</h2>
-        </div>
-        <div>
-          <div className="current"></div>
-          <div className="answer-wrapper">
-            <div className="answer">
-              <span>
-                <input type="radio" name="yourKnowledgeOpenData"
-                       id="yourKnowledgeOpenData1"
-                       value="1"
-                       defaultChecked={this.props.answers.yourKnowledgeOpenData === '1'} />
-                <label htmlFor="yourKnowledgeOpenData1">
-                  <span>1</span> <em className="description">I'm not familiar at all with open data</em>
-                </label>
-              </span>
-              <span>
-                <input type="radio" name="yourKnowledgeOpenData"
-                       id="yourKnowledgeOpenData2"
-                       value="2"
-                       defaultChecked={this.props.answers.yourKnowledgeOpenData === '2'} />
-                <label htmlFor="yourKnowledgeOpenData2">
-                  <span>2</span> <em className="description">I have some knowledge about open data</em>
-                </label>
-              </span>
-              <span>
-                <input type="radio" name="yourKnowledgeOpenData"
-                       id="yourKnowledgeOpenData3"
-                       value="3"
-                       defaultChecked={this.props.answers.yourKnowledgeOpenData === '3'} />
-                <label htmlFor="yourKnowledgeOpenData3">
-                  <span>3</span> <em className="description">I have advanced knowledge</em>
-                </label>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="comments">
-        <label htmlFor="yourKnowledgeOpenDataComment">Comments</label>
-        <textarea placeholder="Add comments"
-                  id="yourKnowledgeOpenDataComment"
-                  name="yourKnowledgeOpenDataComment"
-                  rows="5"
-                  defaultValue={this.props.answers.yourKnowledgeOpenDataComment}></textarea>
-      </div>
-    </div>
+    <QuestionForm context={this.props.context}
+                  qsSchema={this.yourKnowledgeQSSchema}
+                  questions={this.yourKnowledgeQuestions}
+                  answers={this.props.answers.answers}
+                  labelPrefix={'A'}
+                  ref={'yourKnowledgeQuestions'} />
   </div>
 </section>
 
@@ -170,12 +148,12 @@ const EntryForm = React.createClass({
       <h1>Section B - About the data</h1>
     </div>
 
-    <div id="questions"><QuestionForm context={this.props.context}
-                                      qsSchema={this.props.qsSchema}
-                                      questions={this.props.questions}
-                                      answers={this.props.answers.answers}
-                                      labelPrefix={'B'}
-                                      ref={'questions'} /></div>
+    <QuestionForm context={this.props.context}
+                  qsSchema={this.props.qsSchema}
+                  questions={this.props.questions}
+                  answers={this.props.answers.answers}
+                  labelPrefix={'B'}
+                  ref={'questions'} />
   </div>
 </section>
 

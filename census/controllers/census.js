@@ -97,7 +97,7 @@ var submitPost = function(req, res, data) {
   if (pending) {
     if (!Array.isArray(errors)) errors = [];
     let msg = util.format('There is already a queued submission for this data. ' +
-                          '<a href="/place/%s/%s">See the queued submission</a>',
+                          '<a href="/place/%s/%s">See the queued submission</a>.',
                           current.place, req.params.year);
     errors.push({
       param: 'conflict',
