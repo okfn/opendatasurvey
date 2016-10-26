@@ -310,49 +310,6 @@ var pending = function(req, res) {
   .catch(err => console.log(err.stack));
 };
 
-var pendingEntry = function(req, res) { // eslint-disable-line no-unused-vars
-  /*
-  Currently orphaned, pending removal.
-  */
-  var dataOptions;
-  var entryQueryParams = {
-    where: {id: req.params.id},
-    include: [
-      {model: req.app.get('models').User, as: 'Submitter'},
-      {model: req.app.get('models').User, as: 'Reviewer'}
-    ]
-  };
-
-  req.app.get('models').Entry.findOne(entryQueryParams)
-  .then(function(result) {
-    if (!result) {
-      res.status(404).send('There is no submission with id ' + req.params.id);
-      return;
-    }
-    dataOptions = _.merge(modelUtils.getDataOptions(req), {
-      place: result.place,
-      dataset: result.dataset,
-      scoredQuestionsOnly: false,
-      with: {
-        Entry: false
-      }
-    });
-    var settingName = 'disqus_shortname';
-    modelUtils.getData(dataOptions)
-    .then(function(data) {
-      data.current = result;
-      data.reviewers = utils.getReviewers(req, data);
-      data.canReview = utils.canReview(data.reviewers, req.user);
-      data[settingName] = config.get('disqus_shortname');
-      data.reviewClosed = result.reviewResult ||
-        (result.year !== req.app.get('year'));
-      data.reviewInstructions = config.get('review_page');
-      data.questions = utils.getFormQuestions(req, data.questions);
-      res.render('review.html', data);
-    }).catch(err => console.log(err.stack));
-  });
-};
-
 var reviewPost = function(req, res) {
   // Get the entry from the DB
   req.app.get('models').Entry.findById(req.params.id)
