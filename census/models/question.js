@@ -90,17 +90,30 @@ module.exports = function(sequelize, DataTypes) {
         return returnScore;
       },
       pass: function(answer) {
-        /* Determine whether the provided answer passes the question. */
+        /*
+          Determine whether the provided answer passes the question. Ways of
+          passing are defined in the score config object and include:
 
-        // If config doesn't provide a way of passing, answer can't pass.
-        if (!_.has(this.config, 'score.passValue'))
-          return false;
-
-        let expected = _.get(this.config, 'score.passValue');
-        if (!_.isArray(expected)) {
-          expected = [expected];
+          `passValue`: a single value or array or values that the answer be
+                       equal to.
+          `passAnyOption`: if true, the answer must include at least one
+                           option found in the question.config.options array.
+         */
+        if (_.has(this.config, 'score.passValue')) {
+          let expected = _.get(this.config, 'score.passValue');
+          if (!_.isArray(expected)) expected = [expected];
+          return _.includes(expected, answer);
+        } else if (_.has(this.config, 'score.passAnyOption') &&
+                   _.has(this.config, 'options')) {
+          let expected = this.config.options;
+          if (!_.isArray(expected)) expected = [expected];
+          if (!_.isArray(answer)) answer = [answer];
+          return _.any(answer, o => {
+            return _.includes(expected, o);
+          });
         }
-        return _.includes(expected, answer);
+        // The config doesn't provide a way of passing, answer can't pass.
+        return false;
       },
       isScored: function() {
         /* Return a boolean to determine whether the question contributes to scoring.*/

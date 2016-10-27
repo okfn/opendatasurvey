@@ -99,6 +99,17 @@ module.exports = function(sequelize, DataTypes) {
       }
     ],
     instanceMethods: {
+      _getAnswerValueForQuestion: function(q) {
+        // Find the `value` property for the answer with `id`.
+        let answer = _.result(_.find(this.answers, {id: q.id}), 'value');
+        // Multiple-choice answers need special treatment to get the checked
+        // answers.
+        if (q.type === 'multiple') {
+          answer = _.filter(answer, option => option.checked);
+          answer = _.map(answer, option => option.description);
+        }
+        return answer;
+      },
       isOpenForQuestions: function(questions) {
         // Only interested in 'open' questions.
         let openQuestions = _.filter(questions, q => q.openquestion);
@@ -106,12 +117,12 @@ module.exports = function(sequelize, DataTypes) {
         if (openQuestions.length === 0)
           return false;
         // All Open Questions must pass for the answers in this entry.
-        return _.all(openQuestions, q => q.pass(_.get(this.answers[q.id], 'value')));
+        return _.all(openQuestions, q => q.pass(this._getAnswerValueForQuestion(q)));
       },
       scoreForQuestions: function(questions) {
         var scores = [];
         _.each(questions, q => {
-          let answer = _.get(this.answers[q.id], 'value');
+          let answer = this._getAnswerValueForQuestion(q);
           scores.push(q.scoreForAnswer(answer));
         });
         return _.sum(scores);
