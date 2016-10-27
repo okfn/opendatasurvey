@@ -105,8 +105,6 @@ var submitPost = function(req, res, data) {
     });
   }
 
-  // errors.push({param: 'fake', msg: 'My fake error'});
-
   if (errors.length) {
     res.statusCode = 400;
     data.formData = req.body;
@@ -118,6 +116,10 @@ var submitPost = function(req, res, data) {
     let saveStrategy;
     let objToSave = {};
     let submitterId = utils.ANONYMOUS_USER_ID;
+
+    if (req.body.anonymous && req.body.anonymous === 'No') {
+      submitterId = req.user.id;
+    }
 
     let defaultObjectToSave = {
       id: uuid.v4(),
@@ -171,7 +173,7 @@ var submitPost = function(req, res, data) {
       query = objToSave.save();
     }
 
-    query.then(function(result) {
+    query.then(result => {
       let msg;
       let redirectPath;
       let submissionPath;
@@ -194,7 +196,7 @@ var submitPost = function(req, res, data) {
       }
 
       res.redirect(redirectPath + '?post_submission=' + submissionPath);
-    }).catch(console.trace.bind(console));
+    }).catch(err => console.log(err.stack));
   }
 };
 
@@ -223,7 +225,7 @@ var pending = function(req, res) {
   };
 
   req.app.get('models').Entry.findOne(entryQueryParams)
-  .then(function(entry) {
+  .then(entry => {
     if (!entry) {
       res.status(404).send('There is no submission with id ' + req.params.id);
       return;
@@ -231,209 +233,160 @@ var pending = function(req, res) {
     let dataOptions = _.merge(modelUtils.getDataOptions(req), {
       scoredQuestionsOnly: false
     });
-    modelUtils.getData(dataOptions)
-    .then(function(data) {
-      let dataset = _.find(data.datasets, {id: entry.dataset});
-      let place = _.find(data.places, {id: entry.place});
-      let places = modelUtils.translateSet(req, data.places);
-      let datasets = modelUtils.translateSet(req, data.datasets);
-      let qsSchemaPromise;
-      let questionsPromise;
-      let datasetContext = {};
-      if (dataset) {
-        qsSchemaPromise = dataset.getQuestionSetSchema();
-        questionsPromise = dataset.getQuestions();
-        datasetContext = _.assign(datasetContext, {
-          characteristics: dataset.characteristics,
-          datasetName: dataset.name,
-          datasetDescription: dataset.description,
-          updateEvery: dataset.updateevery
-        });
-      }
-
-      Promise.join(qsSchemaPromise, questionsPromise, (qsSchema, questions) => {
-        if (qsSchema === undefined) qsSchema = [];
-        questions = _.map(questions, question => {
-          return {
-            id: question.id,
-            text: nunjucks.renderString(question.question,
-                                        {datasetContext: datasetContext}),
-            type: question.type,
-            description: nunjucks.renderString(question.description,
-                                               {datasetContext: datasetContext}),
-            placeholder: question.placeholder,
-            config: question.config
-          };
-        });
-        // We might have form data to prefill the EntryForm with.
-        let formData = {
-          place: entry.place,
-          dataset: entry.dataset,
-          answers: entry.answers,
-          details: entry.details,
-          anonymous: (entry.submitterId === null) ? 'Yes' : 'No',
-          reviewComments: entry.reviewComments
-          // yourKnowledge* fields here too
-        };
-
-        let initialHTML = renderToString(<EntryForm questions={questions}
-                                                    qsSchema={qsSchema}
-                                                    context={datasetContext}
-                                                    answers={formData}
-                                                    place={entry.place}
-                                                    dataset={entry.dataset}
-                                                    isReview={true} />);
-        let reviewersData = {place: place, dataset: dataset};
-        let reviewers = utils.getReviewers(req, reviewersData);
-        res.render('create.html', {
-          places: places,
-          datasets: datasets,
-          placeName: _.get(place, 'name'),
-          datasetName: _.get(dataset, 'name'),
-          qsSchema: JSON.stringify(qsSchema),
-          questions: JSON.stringify(questions),
-          datasetContext: datasetContext,
-          formData: formData,
-          initialRenderedEntry: initialHTML,
-          breadcrumbTitle: 'Review a Submission',
-          submitInstructions: config.get('review_page'),
-          errors: _.get(data, 'errors'),
-          isReview: true,
-          canReview: utils.canReview(reviewers, req.user),
-          reviewClosed: entry.reviewResult ||
-            (entry.year !== req.app.get('year'))
-        });
-      });
-    })
-    .catch(err => console.log(err.stack));
+    return modelUtils.getData(dataOptions)
+    .then(data => [data, entry]);
   })
-  .catch(err => console.log(err.stack));
-};
-
-var pendingEntry = function(req, res) { // eslint-disable-line no-unused-vars
-  /*
-  Currently orphaned, pending removal.
-  */
-  var dataOptions;
-  var entryQueryParams = {
-    where: {id: req.params.id},
-    include: [
-      {model: req.app.get('models').User, as: 'Submitter'},
-      {model: req.app.get('models').User, as: 'Reviewer'}
-    ]
-  };
-
-  req.app.get('models').Entry.findOne(entryQueryParams)
-  .then(function(result) {
-    if (!result) {
-      res.status(404).send('There is no submission with id ' + req.params.id);
-      return;
+  .spread(function(data, entry) {
+    let dataset = _.find(data.datasets, {id: entry.dataset});
+    let place = _.find(data.places, {id: entry.place});
+    let places = modelUtils.translateSet(req, data.places);
+    let datasets = modelUtils.translateSet(req, data.datasets);
+    let qsSchemaPromise;
+    let questionsPromise;
+    let datasetContext = {};
+    if (dataset) {
+      qsSchemaPromise = dataset.getQuestionSetSchema();
+      questionsPromise = dataset.getQuestions();
+      datasetContext = _.assign(datasetContext, {
+        characteristics: dataset.characteristics,
+        datasetName: dataset.name,
+        datasetDescription: dataset.description,
+        updateEvery: dataset.updateevery
+      });
     }
-    dataOptions = _.merge(modelUtils.getDataOptions(req), {
-      place: result.place,
-      dataset: result.dataset,
-      scoredQuestionsOnly: false,
-      with: {
-        Entry: false
+
+    Promise.join(qsSchemaPromise, questionsPromise, (qsSchema, questions) => {
+      if (qsSchema === undefined) qsSchema = [];
+      questions = _.map(questions, question => {
+        return {
+          id: question.id,
+          text: nunjucks.renderString(question.question,
+                                      {datasetContext: datasetContext}),
+          type: question.type,
+          description: nunjucks.renderString(question.description,
+                                             {datasetContext: datasetContext}),
+          placeholder: question.placeholder,
+          config: question.config
+        };
+      });
+      // Prefill the EntryForm with entry data.
+      let formData = {
+        place: entry.place,
+        dataset: entry.dataset,
+        answers: entry.answers,
+        details: entry.details,
+        anonymous: (entry.submitterId === utils.ANONYMOUS_USER_ID) ?
+          'Yes' : 'No',
+        reviewComments: entry.reviewComments
+        // yourKnowledge* fields here too
+      };
+
+      let initialHTML = renderToString(<EntryForm questions={questions}
+                                                  qsSchema={qsSchema}
+                                                  context={datasetContext}
+                                                  answers={formData}
+                                                  place={entry.place}
+                                                  dataset={entry.dataset}
+                                                  isReview={true} />);
+      let reviewersData = {place: place, dataset: dataset};
+      let reviewers = utils.getReviewers(req, reviewersData);
+      let entryStatus = 'pending';
+      if (entry.isCurrent) {
+        entryStatus = 'accepted';
+      } else if (entry.reviewed && !entry.reviewResult) {
+        entryStatus = 'rejected';
       }
+      res.render('create.html', {
+        places: places,
+        datasets: datasets,
+        placeName: _.get(place, 'name'),
+        datasetName: _.get(dataset, 'name'),
+        qsSchema: JSON.stringify(qsSchema),
+        questions: JSON.stringify(questions),
+        datasetContext: datasetContext,
+        formData: formData,
+        initialRenderedEntry: initialHTML,
+        breadcrumbTitle: 'Review a Submission',
+        submitInstructions: config.get('review_page'),
+        errors: _.get(data, 'errors'),
+        isReview: true,
+        entryStatus: entryStatus,
+        entry: entry,
+        canReview: utils.canReview(reviewers, req.user),
+        reviewClosed: entry.reviewResult ||
+          (entry.year !== req.app.get('year'))
+      });
     });
-    var settingName = 'disqus_shortname';
-    modelUtils.getData(dataOptions)
-    .then(function(data) {
-      data.current = result;
-      data.reviewers = utils.getReviewers(req, data);
-      data.canReview = utils.canReview(data.reviewers, req.user);
-      data[settingName] = config.get('disqus_shortname');
-      data.reviewClosed = result.reviewResult ||
-        (result.year !== req.app.get('year'));
-      data.reviewInstructions = config.get('review_page');
-      data.questions = utils.getFormQuestions(req, data.questions);
-      res.render('review.html', data);
-    }).catch(err => console.log(err.stack));
-  });
+  }).catch(err => console.log(err.stack));
 };
 
 var reviewPost = function(req, res) {
-  var acceptSubmission = !_.isUndefined(req.body.publish);
-  var answers;
-
+  // Get the entry from the DB
   req.app.get('models').Entry.findById(req.params.id)
-  .then(function(result) {
-    if (!result) {
-      res.send(400, 'There is no matching entry.');
+  .then(entry => {
+    if (!entry) {
+      res.status(404).send('There is no entry with id ' + req.params.id);
       return;
     }
 
-    var dataOptions = _.merge(modelUtils.getDataOptions(req), {
-      place: result.place,
-      dataset: result.dataset,
+    // Get current data for this place/dataset
+    let dataOptions = _.merge(modelUtils.getDataOptions(req), {
+      place: entry.place,
+      dataset: entry.dataset,
       cascade: true,
       with: {
         Question: false
       }
     });
-    modelUtils.getData(dataOptions)
-    .then(function(data) {
-      data.reviewers = utils.getReviewers(req, data);
-      if (!utils.canReview(data.reviewers, req.user)) {
-        res.status(403).send('You are not allowed to review this entry');
-        return;
-      }
+    return modelUtils.getData(dataOptions)
+    .then(data => [entry, data]);
+  })
+  .spread((entry, data) => {
+    // Save the proposed entry
+    let acceptSubmission = (req.body.reviewAction === 'publish');
 
-      var ex = _.first(data.entries);
-      result.reviewerId = req.user.id;
-      result.reviewed = true;
-      result.reviewComments = req.body.reviewcomments;
-      result.details = req.body.details;
+    data.reviewers = utils.getReviewers(req, data);
+    if (!utils.canReview(data.reviewers, req.user)) {
+      res.status(403).send('You are not allowed to review this entry.');
+      return;
+    }
+    entry.reviewerId = req.user.id;
+    entry.reviewed = true;
+    entry.reviewComments = req.body.reviewComments;
+    entry.details = req.body.details;
+    entry.answers = JSON.parse(req.body.answers);
 
-      answers = req.body;
-      delete answers.place;
-      delete answers.dataset;
-      delete answers.year;
-      delete answers.anonymous;
-      delete answers.reviewcomments;
-      delete answers.submit;
-      delete answers.details;
-      result.answers = utils.normalizedAnswers(answers);
+    entry.isCurrent = acceptSubmission;
+    entry.reviewResult = acceptSubmission;
 
-      if (acceptSubmission) {
-        result.isCurrent = true;
-        result.reviewResult = true;
-      } else {
-        result.reviewResult = false;
-      }
+    return entry.save()
+    .then(() => [entry, data, acceptSubmission]);
+  })
+  .spread((entry, data, acceptSubmission) => {
+    // Update the previous existing entry, if necessary.
+    let existingEntry = _.first(data.entries);
+    if (acceptSubmission &&
+        existingEntry &&
+        existingEntry.year === entry.year &&
+        entry.id !== existingEntry.id) {
+      existingEntry.isCurrent = false;
 
-      result.save().then(function() {
-        if (ex && ex.year === result.year) {
-          if (acceptSubmission) {
-            ex.isCurrent = false;
-          }
-
-          ex.save().then(function() {
-            var msg;
-            if (acceptSubmission) {
-              msg = 'Submission processed and entered into the census.';
-              req.flash('info', msg);
-            } else {
-              msg = 'Submission marked as rejected.';
-              req.flash('info', msg);
-            }
-            res.redirect('/');
-          }).catch(console.trace.bind(console));
-        } else {
-          var msg;
-          if (acceptSubmission) {
-            msg = 'Submission processed and entered into the census.';
-            req.flash('info', msg);
-          } else {
-            msg = 'Submission marked as rejected.';
-            req.flash('info', msg);
-          }
-          res.redirect('/');
-        }
-      }).catch(console.trace.bind(console));
-    }).catch(console.trace.bind(console));
-  }).catch(console.trace.bind(console));
+      return existingEntry.save()
+      .then(acceptSubmission => acceptSubmission);
+    }
+    return acceptSubmission;
+  })
+  .then(acceptSubmission => {
+    // Set the flash message and redirect to homepage.
+    if (acceptSubmission) {
+      let msg = 'Submission processed and entered into the census.';
+      req.flash('info', msg);
+    } else {
+      let msg = 'Submission marked as rejected.';
+      req.flash('info', msg);
+    }
+    res.redirect('/');
+  }).catch(err => console.log(err.stack));
 };
 
 var review = function(req, res) {

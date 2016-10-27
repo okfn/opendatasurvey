@@ -88,8 +88,6 @@
       </div>
     </header>
 
-    {% block breadcrumb %}{% endblock %}
-
     {% if site.settings.banner_text %}
     <div id="banner" class="container alert">
       {{ site.settings.banner_text }}
@@ -109,6 +107,8 @@
       {% endif %}
     </div>
     {% endif %}
+
+    {% block breadcrumb %}{% endblock %}
 
     {% block content %}{{content}}{% endblock %}
 
