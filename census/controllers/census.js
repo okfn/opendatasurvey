@@ -105,8 +105,6 @@ var submitPost = function(req, res, data) {
     });
   }
 
-  // errors.push({param: 'fake', msg: 'My fake error'});
-
   if (errors.length) {
     res.statusCode = 400;
     data.formData = req.body;
