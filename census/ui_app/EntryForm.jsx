@@ -21,6 +21,13 @@ const EntryForm = React.createClass({
       value: JSON.stringify(questionData)
     }).appendTo(form);
 
+    let aboutYouQuestionData = this.refs.yourKnowledgeQuestions.state.questionState;
+    $('<input>').attr({
+      type: 'hidden',
+      name: 'aboutYouAnswers',
+      value: JSON.stringify(aboutYouQuestionData)
+    }).appendTo(form);
+
     let additionalInputs = $('.uncontrolled-fields :input').serializeArray();
     for (let i in additionalInputs) {
       if (additionalInputs.hasOwnProperty(i)) {
@@ -123,10 +130,7 @@ const EntryForm = React.createClass({
 
   render() {
     return (<div>
-<section className="uncontrolled-fields">
-  <input type="hidden" name="place" value={ this.props.place } />
-  <input type="hidden" name="dataset" value={ this.props.dataset } />
-
+<section>
   <div className="container">
     <div className="intro">
       <h1>Section A - About you</h1>
@@ -136,7 +140,7 @@ const EntryForm = React.createClass({
     <QuestionForm context={this.props.context}
                   qsSchema={this.yourKnowledgeQSSchema}
                   questions={this.yourKnowledgeQuestions}
-                  answers={this.props.answers.answers}
+                  answers={this.props.answers.aboutYouAnswers}
                   labelPrefix={'A'}
                   ref={'yourKnowledgeQuestions'} />
   </div>
@@ -158,6 +162,8 @@ const EntryForm = React.createClass({
 </section>
 
 <footer className="form-footer uncontrolled-fields">
+  <input type="hidden" name="place" value={ this.props.place } />
+  <input type="hidden" name="dataset" value={ this.props.dataset } />
   <div className="container">
     <div className="text question">
       <div className="instructions"></div>

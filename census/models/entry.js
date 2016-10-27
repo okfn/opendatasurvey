@@ -32,15 +32,28 @@ module.exports = function(sequelize, DataTypes) {
       comment: 'Dataset this entry belongs to.'
     },
     answers: {
-      // all answers represented as json object. eack key is
-      // a question identifier, eg:
+      // A collection of answers represented as a json object. Each object has
+      // an `id`, `value` and `commentValue`, eg:
       // {
-      //   "publisher": "Acme",
-      //   "format": ["CSV", "PSF"],
-      //   "license": "http://example.com"
+      //   "id": "collector_gov",
+      //   "value": "Yes",
+      //   "commentValue": "A comment about the government dept."
       // }
       type: DataTypes.JSONB,
-      allowNull: false
+      allowNull: false,
+      comment: 'A collection of answers for the main questions.'
+    },
+    aboutYouAnswers: {
+      // A collection of answers represented as a json object. Each object has
+      // an `id`, `value` and `commentValue`, eg:
+      // {
+      //   "id": "yourKnowledgeOpenData",
+      //   "value": "3",
+      //   "commentValue": "A comment about my Open Data knowledge."
+      // }
+      type: DataTypes.JSONB,
+      allowNull: true,
+      comment: 'A collection of answers for the About You section.'
     },
     submissionNotes: {
       type: DataTypes.TEXT,

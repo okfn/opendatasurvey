@@ -105,10 +105,13 @@ var submitPost = function(req, res, data) {
     });
   }
 
+  // errors.push({param: 'fake', msg: 'My fake error'});
+
   if (errors.length) {
     res.statusCode = 400;
     data.formData = req.body;
     data.formData.answers = JSON.parse(data.formData.answers);
+    data.formData.aboutYouAnswers = JSON.parse(data.formData.aboutYouAnswers);
     data.errors = errors;
     // Call the GET submit page with formData.
     submitGet(req, res, data);
@@ -164,7 +167,7 @@ var submitPost = function(req, res, data) {
     }
 
     objToSave.answers = JSON.parse(req.body.answers);
-    // objToSave.answers = utils.normalizedAnswers(answers);
+    objToSave.aboutYouAnswers = JSON.parse(req.body.aboutYouAnswers);
 
     let query;
     if (saveStrategy === 'create') {
@@ -274,11 +277,11 @@ var pending = function(req, res) {
         place: entry.place,
         dataset: entry.dataset,
         answers: entry.answers,
+        aboutYouAnswers: entry.aboutYouAnswers,
         details: entry.details,
         anonymous: (entry.submitterId === utils.ANONYMOUS_USER_ID) ?
           'Yes' : 'No',
         reviewComments: entry.reviewComments
-        // yourKnowledge* fields here too
       };
 
       let initialHTML = renderToString(<EntryForm questions={questions}
@@ -355,6 +358,7 @@ var reviewPost = function(req, res) {
     entry.reviewComments = req.body.reviewComments;
     entry.details = req.body.details;
     entry.answers = JSON.parse(req.body.answers);
+    entry.aboutYouAnswers = JSON.parse(req.body.aboutYouAnswers);
 
     entry.isCurrent = acceptSubmission;
     entry.reviewResult = acceptSubmission;
