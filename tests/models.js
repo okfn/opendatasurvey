@@ -107,6 +107,22 @@ describe('Question instance methods', function() {
     });
   });
 
+  it('.pass returns correctly for multiple choice value', function() {
+    return modelUtils.getData(this.dataOptions)
+    .then(data => {
+      expect(data).to.have.property('questions');
+      let formatQuestion = _.find(data.questions, {id: 'format'});
+      expect(formatQuestion.pass(['XML', 'CSV', 'HTML'])).to.be.true;
+      expect(formatQuestion.pass(['NOTOPEN', 'ANDANOTHER'])).to.be.false;
+      expect(formatQuestion.pass(['NOTOPEN', 'CSV'])).to.be.true;
+      expect(formatQuestion.pass(true)).to.be.false;
+      expect(formatQuestion.pass('No')).to.be.false;
+      expect(formatQuestion.pass(false)).to.be.false;
+      expect(formatQuestion.pass([])).to.be.false;
+      expect(formatQuestion.pass()).to.be.false;
+    });
+  });
+
   it('.scoreForAnswer returns correctly for simple expected value', function() {
     return modelUtils.getData(this.dataOptions)
     .then(data => {
@@ -203,7 +219,7 @@ describe('Dataset instance methods', function() {
       return data.dataset.score(data.entries, data.questions);
     })
     .then(score => {
-      assert.equal(score, 25);
+      assert.equal(score, 45);
     });
   });
 
@@ -215,7 +231,7 @@ describe('Dataset instance methods', function() {
       return data.dataset.score(data.entries, data.questions);
     })
     .then(score => {
-      assert.equal(score, 15);
+      assert.equal(score, 25);
     });
   });
 });
@@ -248,7 +264,7 @@ describe('Place instance methods', function() {
       return data.place.score(data.entries, data.questions);
     })
     .then(score => {
-      assert.equal(score, 25);
+      assert.equal(score, 45);
     });
   });
 
@@ -260,7 +276,7 @@ describe('Place instance methods', function() {
       return data.place.score(data.entries, data.questions);
     })
     .then(score => {
-      assert.equal(score, 25);
+      assert.equal(score, 45);
     });
   });
 });
@@ -377,7 +393,7 @@ describe('Data access layer', function() {
       with: {Entry: true, Dataset: true, Place: true, Question: true}
     };
     return modelUtils.getData(dataOptions).then(function(data) {
-      expect(data.questions).to.have.length(9);
+      expect(data.questions).to.have.length(10);
     });
   });
 
