@@ -97,7 +97,7 @@ var submitPost = function(req, res, data) {
   if (pending) {
     if (!Array.isArray(errors)) errors = [];
     let msg = util.format('There is already a queued submission for this data. ' +
-                          '<a href="/place/%s/%s">See the queued submission</a>',
+                          '<a href="/place/%s/%s">See the queued submission</a>.',
                           current.place, req.params.year);
     errors.push({
       param: 'conflict',
@@ -109,6 +109,7 @@ var submitPost = function(req, res, data) {
     res.statusCode = 400;
     data.formData = req.body;
     data.formData.answers = JSON.parse(data.formData.answers);
+    data.formData.aboutYouAnswers = JSON.parse(data.formData.aboutYouAnswers);
     data.errors = errors;
     // Call the GET submit page with formData.
     submitGet(req, res, data);
@@ -164,7 +165,7 @@ var submitPost = function(req, res, data) {
     }
 
     objToSave.answers = JSON.parse(req.body.answers);
-    // objToSave.answers = utils.normalizedAnswers(answers);
+    objToSave.aboutYouAnswers = JSON.parse(req.body.aboutYouAnswers);
 
     let query;
     if (saveStrategy === 'create') {
@@ -274,11 +275,11 @@ var pending = function(req, res) {
         place: entry.place,
         dataset: entry.dataset,
         answers: entry.answers,
+        aboutYouAnswers: entry.aboutYouAnswers,
         details: entry.details,
         anonymous: (entry.submitterId === utils.ANONYMOUS_USER_ID) ?
           'Yes' : 'No',
         reviewComments: entry.reviewComments
-        // yourKnowledge* fields here too
       };
 
       let initialHTML = renderToString(<EntryForm questions={questions}
@@ -355,6 +356,7 @@ var reviewPost = function(req, res) {
     entry.reviewComments = req.body.reviewComments;
     entry.details = req.body.details;
     entry.answers = JSON.parse(req.body.answers);
+    entry.aboutYouAnswers = JSON.parse(req.body.aboutYouAnswers);
 
     entry.isCurrent = acceptSubmission;
     entry.reviewResult = acceptSubmission;
