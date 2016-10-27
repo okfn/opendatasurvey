@@ -22,6 +22,7 @@ const baseQuestionField = QuestionField => {
       if (!this.props.visibleProps.enabled) classValue += 'disabled ';
       if (!this.props.visibleProps.visible) classValue += 'hide ';
       if (this.props.visibleProps.required) classValue += 'required ';
+      if (this.props.position === 1) classValue += 'first ';
       if (this._isSub()) classValue += 'sub ';
       return _.trim(classValue);
     },

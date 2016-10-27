@@ -6,6 +6,17 @@ var datasets = require('./dataset');
 var places = require('./place');
 var users = require('./user');
 
+const formatAnswers = [
+  {checked: true, description: 'AsciiDoc'},
+  {checked: true, description: 'CSV'},
+  {checked: false, description: 'DBF'},
+  {checked: false, description: 'GML'},
+  {checked: false, description: 'GPX'},
+  {checked: false, description: 'GRIB2'},
+  {checked: false, description: 'GeoJSON'},
+  {checked: true, description: 'HTML'}
+];
+
 function answers() {
   return {
     digital: {id: 'digital', value: true, commentValue: ''},
@@ -15,7 +26,7 @@ function answers() {
     online: {id: 'online', value: false, commentValue: ''},
     public: {id: 'public', value: false, commentValue: ''},
     publisher: {id: 'publisher', value: 'Acme', commentValue: ''},
-    format: {id: 'format', value: ['CSV', 'PSF'], commentValue: ''},
+    format: {id: 'format', value: formatAnswers, commentValue: ''},
     license: {id: 'license', value: 'http://example.com', commentValue: ''}
   };
 }
@@ -29,7 +40,7 @@ function currentAnswers() {
     online: {id: 'online', value: true, commentValue: ''},
     public: {id: 'public', value: true, commentValue: ''},
     publisher: {id: 'publisher', value: 'Acme', commentValue: ''},
-    format: {id: 'format', value: ['CSV', 'PSF'], commentValue: ''},
+    format: {id: 'format', value: formatAnswers, commentValue: ''},
     license: {id: 'license', value: 'http://example.com', commentValue: ''}
   };
 }

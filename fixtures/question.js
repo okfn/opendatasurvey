@@ -210,10 +210,20 @@ var objects = [
       'question': 'Format of data',
       'description': 'the description',
       'placeholder': 'the placeholder',
-      'type': 'text',
-      'score': 0,
+      'type': 'multiple',
+      'score': 10,
       'icon': '',
-      'openquestion': false
+      'openquestion': true,
+      'config': {
+        'score': {
+          'weight': 10,
+          'passAnyOption': true
+        },
+        'options': ['XLS', 'PX', 'CSV', 'HTML', 'JSON', 'TSV', 'XML', 'RDF', 'TXT', 'AsciiDoc', 'SHP', 'SHX', 'DBF', 'WFS', 'GeoJSON', 'GPX', 'KML', 'KMZ', 'GML', 'GRIB2'],
+        'includeOther': false,
+        'orderOptions': true,
+        'short': true
+      },
     }
   },
   {
