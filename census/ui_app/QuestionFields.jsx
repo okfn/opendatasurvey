@@ -48,7 +48,7 @@ let QuestionFieldText = React.createClass({
           </helpers.QuestionHeader>
         </div>
         <div>
-          <div className="current"></div>
+          <helpers.CurrentEntry currentValue={this.props.currentValue} />
           <div className="answer-wrapper">
             <div className="answer">
               <input type="text"
@@ -86,7 +86,7 @@ let QuestionFieldYesNo = React.createClass({
           </helpers.QuestionHeader>
         </div>
         <div>
-          <div className="current"></div>
+          <helpers.CurrentEntry currentValue={this.props.currentValue} />
           <div className="answer-wrapper">
             <div className="answer">
               <input type="radio"
@@ -166,7 +166,7 @@ let QuestionFieldLikert = React.createClass({
           </helpers.QuestionHeader>
         </div>
         <div>
-          <div className="current"></div>
+          <helpers.CurrentEntry currentValue={this.props.currentValue} />
           <div className="answer-wrapper">
             <div className="answer">
               {scaleOptionNodes}
@@ -226,6 +226,15 @@ let QuestionFieldSource = React.createClass({
     return sourceValues;
   },
 
+  componentWillMount() {
+    // Split the current value object up into a list for display by
+    // helpers.CurrentEntry.
+    this.currentValue = _.filter(this.props.currentValue, val =>
+      (val.urlValue || val.descValue));
+    this.currentValue = _.map(this.currentValue, (val, i) =>
+      <ul key={i}><li>{val.urlValue}</li><li>{val.descValue}</li></ul>);
+  },
+
   render() {
     let sourceLines = [];
     let sourceValues = this._getSourceValues();
@@ -250,7 +259,7 @@ let QuestionFieldSource = React.createClass({
           </helpers.QuestionHeader>
         </div>
         <div>
-          <div className="current"></div>
+          <helpers.CurrentEntry currentValue={this.currentValue} />
           <div className="answer-wrapper">
             <div className="answer">
               {sourceLines}
@@ -339,10 +348,11 @@ let QuestionFieldMultipleChoice = React.createClass({
     // Merge the defaultOptions with those from the value in props to
     // get the value store we'll use for the render.
     this.optionValues = _.assign(defaultOptions, this.props.value);
+    this.orderOptions = _.get(this.props.config, 'orderOptions', false);
   },
 
   render() {
-    if (_.get(this.props.config, 'orderOptions', false)) {
+    if (this.orderOptions) {
       this.optionValues = _.sortBy(this.optionValues, 'description');
     }
     let choices = _.map(this.optionValues, (option, i) => {
@@ -357,6 +367,9 @@ let QuestionFieldMultipleChoice = React.createClass({
                 {option.description}
               </QuestionFieldMultipleChoiceOption>;
     });
+    let currentValue = _.filter(this.props.currentValue, option => option.checked);
+    currentValue = _.map(currentValue, option => option.description);
+    if (this.orderOptions) currentValue = _.sortBy(currentValue);
     return (<div className={'multiple question ' + this.props.getClassValues()}>
       <div className="main">
         <div>
@@ -367,7 +380,7 @@ let QuestionFieldMultipleChoice = React.createClass({
           </helpers.QuestionHeader>
         </div>
         <div>
-          <div className="current"></div>
+          <helpers.CurrentEntry currentValue={currentValue} />
           <div className="answer-wrapper">
             <div className={this._getAnswerClassNames()}>
               <ul>
