@@ -121,7 +121,8 @@ var place = function(req, res) {
       data.year = req.params.year;
       data.submissionsAllowed = (req.params.year === req.app.get('year'));
       data.extraWidth = data.datasets.length > 12;
-      data.breadcrumbTitle = '<a href="/">Places</a> / ' + data.place.name;
+      data.breadcrumbTitle = 'Places';
+
       return res.render('place.html', data);
     }).catch(console.trace.bind(console));
 };

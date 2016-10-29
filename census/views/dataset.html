@@ -24,42 +24,9 @@
       <div class="row navigate">
 
         <div class="col-md-12">
-          <h5 {% if is_index %}class="sr-only"{% endif %}>{{ gettext("Share or embed this page") }}</h5>
-          <div class="btn-group">
-            <a href="" class="btn btn-default btn-sm embed" data-toggle="modal" data-target="#embed-instructions">
-              <i class="fa fa-code"></i> {{ gettext("Embed") }}
-            </a>
-            <a href="http://twitter.com/share?url=http://index.okfn.org/dataset/statistics/&amp;text=Check out this data from the Global Open Data Index" class="btn btn-default btn-sm twitter" target="_blank">
-              <i class="fa fa-twitter"></i> Twitter  </a>
-            <a href="http://www.facebook.com/sharer/sharer.php?u=http://index.okfn.org/dataset/statistics/" class="btn btn-default btn-sm facebook" target="_blank">
-              <i class="fa fa-facebook"></i> Facebook  </a>
-            <a href="https://plus.google.com/share?url=http://index.okfn.org/dataset/statistics/" class="btn btn-default btn-sm google-plus" target="_blank">
-              <i class="fa fa-google-plus"></i> Google+  </a>
-          </div>
-          <div class="modal fade" id="embed-instructions" tabindex="-1" role="dialog" aria-labelledby="embedLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                  <h4 class="modal-title" id="embedLabel">{{ gettext("Map embed code") }}</h4>
-                </div>
-                <div class="modal-body">
-                  <p>{{ gettext("Use the following code to embed the map visualisation into your own website.") }}</p>
-                  <pre contenteditable="true">&lt;iframe width="100%" height="360px" src="http://index.okfn.org/vis/map/embed/?embed_width=100%&embed_height=360px&filter_year=2015&filter_dataset=statistics&panel_tools=false&panel_share=false&embed_title=National Statistics ; 2015&map_place=" frameBorder="0"&gt;&lt;/iframe&gt;</pre>
-                  <p>{{ gettext("If you are a developer, you can read more about the embed options here:") }}
-                     <a href="https://github.com/okfn/opendataindex/#choropleth-map" title="{{ gettext("Embed options") }}">
-                      {{ gettext("Embed options") }}
-                     </a>
-                  </p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">{{ gettext("Close") }}</button>
-                </div>
-              </div>
-            </div>
-          </div>
+          {% include 'includes/share_buttons.html' %}
 
-          {% if is_index %}
+          {% if is_index == "true" %}
           <div class="history">
             <h6>{{ gettext("See other years") }}</h6>
             <ul>
@@ -72,10 +39,10 @@
       </div>
     </div>
 
-    {% if is_index %}
+    {% if is_index == "true" %}
     <div class="col-md-6">
       <div id="map-container">
-        <iframe src="http://index.okfn.org/vis/map/embed/?embed_width=100%&amp;embed_height=360px&amp;filter_year=2015&amp;filter_dataset=statistics&amp;panel_tools=false&amp;panel_share=false&amp;embed_title=National Statistics ; 2015&amp;map_place=" frameborder="0" height="360px" width="100%"></iframe>
+        {% include 'includes/dataviews/embed_map.html' %}
       </div>
     </div>
     {% endif %}
