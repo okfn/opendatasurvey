@@ -1,132 +1,111 @@
-{% extends "base.html" %}
-{% from 'macros/availability_keys.html' import availability_keys %}
-{% from 'macros/entry_summary_row.html' import entry_summary_row %}
-
-{% block title %}
-{{dataset.name}} &mdash; {{gettext("Datasets")}}
-{% endblock %}
-
+{% extends "page.html" %}
+{% block title %}{{ dataset.name }}{% endblock %}
 {% block content %}
-<div class="container">
 
-  <h1>
-    <a href="{{urlFor('overview')}}" data-toggle="tooltip" class="count-0" title="Return to results overview">{{gettext("Datasets")}}</a>
-    / {{ dataset.name }} {% if not cascade %}/ {{ year }}{% endif %}
-    <span class="pull-right">{% include '_snippets/share_page_buttons.html' %}</span>
-  </h1>
-  <div id="spacer"></div>
-  <div class="tabbable"> <!-- Only required for left/right tabs -->
-
-    <div class="tab-content">
-      <div class="tab-pane active" id="table-overview">
-        <div class="table">
-
-          <p>{{format("On this page you can see the state of open data for %(dataset)s in all the places for which we
-            have information.", { dataset: dataset.name}) }}</p>
-
-          {% if dataset.description %}
-          <h3>{{ gettext("Dataset Description") }}</h3>
-          {{dataset.description}}
-          {% endif %}
-
-          {% if dataset.characteristics and dataset.characteristics|length %}
-          {% include '_snippets/dataset-characteristics.html' %}
-          {% endif %}
-
-          <table class="table table-striped">
-            <colgroup>
-              <col width="20%"/>
-              <col width="7%"/>
-              <col width="15%"/>
-              <col width="7%"/>
-              <col width="15%"/>
-              <col width="15%"/>
-            </colgroup>
-            <thead>
-            <tr>
-              <th>{{gettext("Place")}}</th>
-              <th>{{gettext("Score")}}</th>
-              <th>{{gettext("Breakdown")}}</th>
-              <th>{{gettext('Year')}}</th>
-              <th>{{gettext("Location (URL)")}}</th>
-              <th>{{gettext("Information")}}</th>
-              <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for place in places %}
-            {% set entry = entries|find({'place': place.id, 'dataset': dataset.id}) %}
-            {% set submissions = pending|where({'place': place.id, 'dataset': dataset.id}) %}
-            <tr>
-              <td>
-                <a href="/place/{{place.id}}{{ urlContext }}">{{place.name}}</a>
-              </td>
-              {{ entry_summary_row.entrysummary(dataset, place, entry, questions, gettext) }}
-              <td>
-                {% if submissionsAllowed %}
-
-                <a id="submit-{{ entry.place }}" href="/submit/?dataset={{ dataset.id }}&place={{ place.id }}"
-                   class="btn btn-mini btn-primary">
-                  <!-- <i class="icon-plus"></i> -->
-
-                  {% if entry %}
-                  {{gettext("Propose Revisions")}}
-                  {% else %}
-                  {{gettext("Submit information")}}
-                  {% endif %}
-                </a>
-
-                {% else %}
-
-                <i class="muted">Closed</i>
-
-                {% endif %}
-
-              </td>
-            </tr>
-
-            {% for submission in submissions %}
-            <tr class="queued">
-              <td>
-                <strong>{{gettext("&#8627; Awaiting review")}}</strong><br/>
-                <span title="{{ gettext('Submitted by')}} {{ submission.Submitter.firstName}}" class="queued-context">
-                  <i class="icon icon-user"></i>&nbsp;{{ submission.Submitter.firstName }}
-                </span>
-                <br/>
-                <span title="{{ gettext('Submitted on')}} {{ submission.createdAt|dateformat }}" class="queued-context">
-                  <i class="icon icon-time"></i>&nbsp;{{ submission.createdAt|simpledelta }}
-                </span>
-              </td>
-              {{ entry_summary_row.entrysummary(dataset, place, submission, questions, gettext) }}
-              <td>
-                <a href="/submission/{{submission.id}}" class="btn btn-mini btn-danger">
-                  {{gettext("View Submission")}}
-                </a>
-                <script>
-                  $("#submit-{{ entry.place }}").addClass("disabled");
-                  $("#submit-{{ entry.place }}").attr("onclick", "return false");
-                  $("#submit-{{ entry.place }}").attr("href", "#");
-                  $("#submit-{{ entry.place }}").attr("data-toggle", "tooltip");
-                  $("#submit-{{ entry.place }}").attr("title",
-                      '{{gettext("Sorry, only one submission can be waiting for review at a time - please come back in a few days to submit new information")}}');
-                </script>
-              </td>
-            </tr>
-            {% endfor %}
-
-            {% endfor %}
-            </tbody>
-          </table>
-
-          {{availability_keys(gettext)}}
-        </div>
+<section id="data-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-{% if is_index %}6{% else %}12{% endif %}">
+      <h1>
+        <a href="http://index.okfn.org/dataset/statistics/" title="See more data on National Statistics in the Open Data Index">{{ dataset.name }}</a>                <span style="background-color: rgb(223, 204, 51); color: white;" class="dataset-openness" data-score="56">56% open (avg.)</span>
+      </h1>
+      {% if is_index %}
+      <div class="col-md-12 place-rank statistics">
+        <span>{{ gettext("Ranked #1 against other datasets in the Index (avg.)") }}</span>
       </div>
 
-    </div>
-  </div>
-</div>
+      <div class="row relative">
+        <div class="col-md-1 change"><i class="fa fa-minus"></i></div>
+        <div class="col-md-11">
+          {{ gettext("The Index average ranking for National Statistics is no change from #1 in 2014") }}
+        </div>
+      </div>
+      {% endif %}
+      <div class="row navigate">
 
-<script src="{{page.root}}/src/common.js?{{currentTime}}"></script>
-<script src="{{page.root}}/src/census.js?{{currentTime}}"></script>
+        <div class="col-md-12">
+          <h5 {% if is_index %}class="sr-only"{% endif %}>{{ gettext("Share or embed this page") }}</h5>
+          <div class="btn-group">
+            <a href="" class="btn btn-default btn-sm embed" data-toggle="modal" data-target="#embed-instructions">
+              <i class="fa fa-code"></i> {{ gettext("Embed") }}
+            </a>
+            <a href="http://twitter.com/share?url=http://index.okfn.org/dataset/statistics/&amp;text=Check out this data from the Global Open Data Index" class="btn btn-default btn-sm twitter" target="_blank">
+              <i class="fa fa-twitter"></i> Twitter  </a>
+            <a href="http://www.facebook.com/sharer/sharer.php?u=http://index.okfn.org/dataset/statistics/" class="btn btn-default btn-sm facebook" target="_blank">
+              <i class="fa fa-facebook"></i> Facebook  </a>
+            <a href="https://plus.google.com/share?url=http://index.okfn.org/dataset/statistics/" class="btn btn-default btn-sm google-plus" target="_blank">
+              <i class="fa fa-google-plus"></i> Google+  </a>
+          </div>
+          <div class="modal fade" id="embed-instructions" tabindex="-1" role="dialog" aria-labelledby="embedLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                  <h4 class="modal-title" id="embedLabel">{{ gettext("Map embed code") }}</h4>
+                </div>
+                <div class="modal-body">
+                  <p>{{ gettext("Use the following code to embed the map visualisation into your own website.") }}</p>
+                  <pre contenteditable="true">&lt;iframe width="100%" height="360px" src="http://index.okfn.org/vis/map/embed/?embed_width=100%&embed_height=360px&filter_year=2015&filter_dataset=statistics&panel_tools=false&panel_share=false&embed_title=National Statistics ; 2015&map_place=" frameBorder="0"&gt;&lt;/iframe&gt;</pre>
+                  <p>{{ gettext("If you are a developer, you can read more about the embed options here:") }}
+                     <a href="https://github.com/okfn/opendataindex/#choropleth-map" title="{{ gettext("Embed options") }}">
+                      {{ gettext("Embed options") }}
+                     </a>
+                  </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">{{ gettext("Close") }}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {% if is_index %}
+          <div class="history">
+            <h6>{{ gettext("See other years") }}</h6>
+            <ul>
+              <li><a href="http://index.okfn.org/dataset/statistics/2014/" title="2014">2014</a></li>
+              <li><a href="http://index.okfn.org/dataset/statistics/2013/" title="2013">2013</a></li>
+            </ul>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    {% if is_index %}
+    <div class="col-md-6">
+      <div id="map-container">
+        <iframe src="http://index.okfn.org/vis/map/embed/?embed_width=100%&amp;embed_height=360px&amp;filter_year=2015&amp;filter_dataset=statistics&amp;panel_tools=false&amp;panel_share=false&amp;embed_title=National Statistics ; 2015&amp;map_place=" frameborder="0" height="360px" width="100%"></iframe>
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+  </div>
+</section>
+
+{% if is_index %}
+<hr>
+{% endif %}
+
+{% if dataset.description %}
+<section class="dataset-about">
+  <div class="container">
+    {% if is_index %}
+    <h3>{{ gettext("About") }}</h3>
+    {% endif %}
+
+    {{dataset.description}}
+  </div>
+</section>
+{% endif %}
+
+<hr />
+
+<section id="dataset-slice-table">
+  <div class="container">
+    {% include 'includes/dataviews/table_slice_dataset.html' %}
+  </div>
+</section>
 
 {% endblock %}

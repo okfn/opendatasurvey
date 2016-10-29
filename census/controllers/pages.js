@@ -146,6 +146,8 @@ var dataset = function(req, res) {
       data.loggedin = req.session.loggedin;
       data.year = req.params.year;
       data.submissionsAllowed = req.params.year === req.app.get('year');
+      data.breadcrumbTitle = 'Dataset';
+
       return res.render('dataset.html', data);
     }).catch(console.trace.bind(console));
 };
