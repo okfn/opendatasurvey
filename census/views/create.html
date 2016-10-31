@@ -103,6 +103,7 @@
 </div>
 {% endif %}
 
+{% if datasetContext|length and (not isReview or canReview) %}
 {% if submitInstructions %}
 <div class="alert alert-info alert-dismissible" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -131,8 +132,6 @@
   </div>
 </div>
 {% endif %}
-
-{% if datasetContext|length and (not isReview or canReview) %}
 <div id="entry_form">{{ initialRenderedEntry }}</div>
 <script type="text/javascript">
   window.qsSchema = {{ qsSchema|safe }};
@@ -141,8 +140,7 @@
   window.formData = {{ formData|dump }};
   window.isReview = {{ isReview }};
 </script>
-{% endif %}
-
 <script src="/scripts/compiled/entry.js" type="text/javascript"></script>
+{% endif %}
 
 {% endblock %}
