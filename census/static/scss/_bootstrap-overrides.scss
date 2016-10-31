@@ -22,3 +22,10 @@
 .table > tfoot > tr > td {
   vertical-align: middle;
 }
+
+.alert {
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
+}
