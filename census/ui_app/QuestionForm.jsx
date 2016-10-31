@@ -17,7 +17,8 @@ const QuestionForm = React.createClass({
       return {
         id: q.id,
         value: _.get(answer, 'value', ''),
-        commentValue: _.get(answer, 'commentValue', '')
+        commentValue: _.get(answer, 'commentValue', ''),
+        currentValue: _.get(q, 'currentValue', '')
       };
     });
     return {
@@ -162,6 +163,7 @@ const QuestionForm = React.createClass({
                         visibleProps={this.getVisiblePropsForId(q.id)}
                         value={q.value}
                         commentValue={q.commentValue}
+                        currentValue={q.currentValue}
                         onChange={this.onFieldChange}
                         onCommentChange={this.onCommentChange}
                         label={this.getLabelForId(q.id)}

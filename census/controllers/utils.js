@@ -283,10 +283,19 @@ var getFormQuestions = function(req, questions) {
   return _.sortByOrder(questions, 'order', 'asc');
 };
 
-var getCurrentState = function(data, req) {
-  var match = _.merge(req.query, req.body);
-  var pending;
-  var matches;
+var getCurrentState = function(data, match, year) {
+  /*
+    Return an object containing the state of submissions for a given
+    place/dataset/year.
+
+    Returned object has `match` and `pending` properties:
+    `match`: the entry that isCurrent for the given place/dataset in the
+    `match` param obj.
+    `pending`: a boolean to detemine whether there's a pending entry for the
+    place/dataset/year.
+  */
+  let pending;
+  let matches;
 
   if (!match.place || !match.dataset) {
     match = {};
@@ -298,7 +307,7 @@ var getCurrentState = function(data, req) {
     });
     pending = _.any(data.pending, {
       isCurrent: false,
-      year: req.params.year,
+      year: year,
       place: match.place,
       dataset: match.dataset
     });
