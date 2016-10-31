@@ -40,6 +40,7 @@ var submitGet = function(req, res, data) {
   }
   Promise.join(qsSchemaPromise, questionsPromise, (qsSchema, questions) => {
     if (qsSchema === undefined) qsSchema = [];
+    let currentAnswers = _.get(data.currentState.match, 'answers');
     questions = _.map(questions, question => {
       return {
         id: question.id,
@@ -49,7 +50,8 @@ var submitGet = function(req, res, data) {
         description: nunjucks.renderString(question.description,
                                            {datasetContext: datasetContext}),
         placeholder: question.placeholder,
-        config: question.config
+        config: question.config,
+        currentValue: _.get(_.find(currentAnswers, {id: question.id}), 'value', '')
       };
     });
     // We might have form data to prefill the EntryForm with.
@@ -207,7 +209,8 @@ var submit = function(req, res) {
   });
   modelUtils.getData(dataOptions)
   .then(data => {
-    data.currentState = utils.getCurrentState(data, req);
+    let match = _.merge(req.query, req.body);
+    data.currentState = utils.getCurrentState(data, match, req.params.year);
     if (req.method === 'POST') {
       submitPost(req, res, data);
     } else {
@@ -258,6 +261,9 @@ var pending = function(req, res) {
 
     Promise.join(qsSchemaPromise, questionsPromise, (qsSchema, questions) => {
       if (qsSchema === undefined) qsSchema = [];
+      let match = {place: place.id, dataset: dataset.id};
+      data.currentState = utils.getCurrentState(data, match, req.params.year);
+      let currentAnswers = _.get(data.currentState.match, 'answers');
       questions = _.map(questions, question => {
         return {
           id: question.id,
@@ -267,7 +273,9 @@ var pending = function(req, res) {
           description: nunjucks.renderString(question.description,
                                              {datasetContext: datasetContext}),
           placeholder: question.placeholder,
-          config: question.config
+          config: question.config,
+          currentValue: _.get(_.find(currentAnswers, {id: question.id}),
+                              'value', '')
         };
       });
       // Prefill the EntryForm with entry data.

@@ -173,7 +173,7 @@ const EntryForm = React.createClass({
           <h2>Any other comments?</h2>
         </div>
         <div>
-          <div className="current"></div>
+          <helpers.CurrentEntry />
           <div className="answer-wrapper">
             <div className="answer">
               <textarea name="details" rows="5"
@@ -198,7 +198,7 @@ const EntryForm = React.createClass({
           <h2>Would you prefer your submission to remain anonymous?</h2>
         </div>
         <div>
-          <div className="current"></div>
+          <helpers.CurrentEntry />
           <div className="answer-wrapper">
             <div className="answer">
               <input type="radio" name="anonymous"

@@ -1,4 +1,20 @@
+import _ from 'lodash';
 import React from 'react';
+
+const CurrentEntry = props => {
+  if (props.currentValue && props.currentValue.length) {
+    let currentValue = (_.isArray(props.currentValue)) ?
+      props.currentValue : [props.currentValue];
+    let dds = _.map(currentValue, (cv, i) => <dd key={i}>{cv}</dd>);
+    return (<div className="current">
+      <dl>
+        <dt>Current entry</dt>
+        {dds}
+      </dl>
+    </div>);
+  }
+  return <div className="current" />;
+};
 
 const SubmitActions = props => {
   if (props.isReview) {
@@ -10,8 +26,7 @@ const SubmitActions = props => {
           <h2>Please add a short comment as to why you are accepting or rejecting this submission. <strong>Note that your message will be publically visible</strong></h2>
         </div>
         <div>
-          <div className="current">
-          </div>
+          <CurrentEntry />
           <div className="answer-wrapper">
             <div className="answer">
               <textarea name="reviewComments" rows="5" defaultValue={props.reviewComments}></textarea>
@@ -35,8 +50,7 @@ const SubmitActions = props => {
           </p>
         </div>
         <div>
-          <div className="current">
-          </div>
+          <CurrentEntry />
           <div className="answer-wrapper">
             <div className="answer">
               <form method="post" acceptCharset="utf-8" onSubmit={props.onSubmitHandler}>
@@ -60,8 +74,7 @@ const SubmitActions = props => {
           <p><small>By submitting material to the index you agreeing to <a href="http://okfn.org/terms-of-use/">terms of use</a> and also to license your contribution (to the extent there are any rights in it!) under the <a href="http://opendatacommons.org/licenses/pddl/1.0/">Open Data Commons Public Domain Dedication and License</a>.</small></p>
         </div>
         <div>
-          <div className="current">
-          </div>
+          <CurrentEntry />
           <div className="answer-wrapper">
             <div className="answer">
               <form method="post" acceptCharset="utf-8" onSubmit={props.onSubmitHandler}>
@@ -129,5 +142,6 @@ export {
   QuestionInstructions,
   QuestionComments,
   QuestionHeader,
-  SubmitActions
+  SubmitActions,
+  CurrentEntry
 };
