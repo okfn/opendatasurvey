@@ -90,13 +90,17 @@
 {%- endif %}
 
 {% if errors %}
-<div class="alert alert-error" role="alert">
-    <p>{{ gettext("The form has missing or incorrect data")}}:</p>
-    <ul>
-    {% for error in errors %}
-      <li>{{ error.param }}: {{ error.msg }} {% if error.value %}(Current is '{{ error.value }}'){% endif %}</li>
-    {% endfor %}
-    </ul>
+<div class="alert alert-warning" role="alert">
+  <div class="container">
+    <div>
+      <p>{{ gettext("The form has missing or incorrect data")}}:</p>
+      <ul>
+      {% for error in errors %}
+        <li>{{ error.param }}: {{ error.msg }} {% if error.value %}(Current is '{{ error.value }}'){% endif %}</li>
+      {% endfor %}
+      </ul>
+    </div>
+  </div>
 </div>
 {% endif %}
 
