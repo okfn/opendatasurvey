@@ -82,10 +82,7 @@
     <div class="alert alert-warning" role="alert">
       <div class="container">
         <div>
-          <p>{{gettext("If you are a reviewer, please login to review.")}}</p>
-          <div class="span2" style="text-align: right;">
-            <a class="btn btn-primary" href="{{ loginUrl }}?next=census/submission/{{ current.id }}">{{gettext("Login")}}</a>
-          </div>
+          <p>{{gettext("If you are a reviewer, please login to review.")}} <a class="btn btn-primary" href="{{ loginUrl }}?next=census/submission/{{ entry.id }}">{{gettext("Login")}}</a></p>
         </div>
       </div>
     </div>
