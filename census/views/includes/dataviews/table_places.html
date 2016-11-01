@@ -32,49 +32,77 @@
                 {% set entry = entries|find({'dataset': dataset.id , 'place': place.id }) %}
                 {% set submissions = pending|where({'dataset': dataset.id , 'place': place.id }) %}
 
-                {% if entry.year == currentYear -%}
-                  {% set badgeClass = 'label-success' %}
-                {% elif entry.year == (currentYear - 1) %}
-                  {% set badgeClass = 'label-warning' %}
-                {% else %}
-                  {% set badgeClass = 'label-important'%}
-                {%- endif %}
-
                 {% if entry -%}
                   {% if submissions|length -%}
                     {% set actionUrl = '/submission/ID'|replace('ID', submissions[0].id) %}
-                    {% set actionText = gettext("Comment") %}
+                    {% set actionText = gettext("Review") %}
                   {% else %}
                     {% set actionUrl = '/submit/?place=PL&dataset=DS'|replace('PL', place.id)|replace('DS', dataset.id) %}
-                    {% if entry -%}
-                      {% set actionText = gettext("Update") %}
-                    {% else %}
-                      {% set actionText = gettext("Add") %}
-                    {%- endif %}
+                    {% set actionText = gettext("Update") %}
                   {%- endif %}
                 {% else %}
                   {% if submissions|length -%}
                     {% set actionUrl = '/submission/ID'|replace('ID', submissions[0].id) %}
-                    {% set actionText = gettext("Comment") %}
+                    {% set actionText = gettext("Review") %}
                   {% else %}
                     {% set actionUrl = '/submit/?place=PL&dataset=DS'|replace('PL', place.id)|replace('DS', dataset.id) %}
                     {% set actionText = gettext("Add") %}
                   {%- endif %}
                 {%- endif %}
 
-                {% set popoverTitle = popovers.popover_comparison_title(dataset, place) %}
-                {% set popoverContent = popovers.popover_comparison_content(entry, place, dataset, questions, gettext, format) %}
-                <ul class="availability availability-comparative" data-toggle="popover" title="{% filter escape %}{{ popoverTitle }}{% endfilter %}" data-content="{% filter escape %}{{ popoverContent }}{% endfilter %}">
-                {% for question in questions -%}
+                {% if entry %}
+                  {% set popoverTitle = popovers.popover_comparison_title(dataset, place) %}
+                  {% set popoverContent = popovers.popover_comparison_content(entry, place, dataset, questions, gettext, format) %}
+                  <ul class="availability availability-comparative" data-toggle="popover" title="{% filter escape %}{{ popoverTitle }}{% endfilter %}" data-content="{% filter escape %}{{ popoverContent }}{% endfilter %}">
+                  {% for question in questions -%}
+                    {% if entry -%}
+                      {% set answer = entry.getAnswerValueForQuestion(question) %}
+                      {% set pass = 'yes' if question.pass(answer) else 'no' %}
+                    {% else %}
+                      {% set pass = 'maybe' %}
+                    {%- endif %}
+                    <li class="{{ pass }}" data-content="{% if (pass != 'maybe') %}{{ pass|capitalize }}{% else %}{{ gettext('No data') }}{% endif %}">&nbsp;</li>
+                  {%- endfor %}
+                  </ul>
+                {% endif %}
+
+                {% if godi != "true" -%}
                   {% if entry -%}
-                    {% set answer = entry.getAnswerValueForQuestion(question) %}
-                    {% set pass = 'yes' if question.pass(answer) else 'no' %}
+
+                    {% if entry.year == currentYear -%}
+                      {% set badgeClass = 'label-success' %}
+                    {% elif entry.year == (currentYear - 1) %}
+                      {% set badgeClass = 'label-warning' %}
+                    {% else %}
+                      {% set badgeClass = 'label-important'%}
+                    {%- endif %}
+
+                    <div class="entry-year {{ badgeClass }}" title="{{ entry.updatedAt|dateformat }} ({{ gettext("Submitted by") }} {{ entry.Submitter.fullName() }} {{ gettext("and reviewed by") }} {{ entry.Submitter.fullName() }})">{{entry.year}}</div>
+                    {% if submissionsAllowed %}
+                      {% if submissions|length %}
+                        <span class="pending badge badge-warning" title="{{ gettext("Pending submissions") }}">{{ submissions|length }}</span>
+                        <div class="hover-icon"><i class="icon-eye-open"></i></div>
+                      {% else %}
+                        <div class="hover-icon"><i class="icon-plus"></i></div>
+                      {% endif %}
+                    {% else %}
+                      <i class="muted">None</i>
+                    {% endif %}
                   {% else %}
-                    {% set pass = 'maybe' %}
+                    {% if submissionsAllowed %}
+                      <a href="{{ actionUrl }}" class="btn btn-mini">
+                        {% if submissions|length %}
+                          <span title="{{ gettext("Pending submissions") }}">({{ submissions|length }})</span>
+                        {% else %}
+                            <i class="icon-plus"></i>
+                        {% endif %}
+                        {{ actionText }}
+                      </a>
+                    {% else %}
+                      <i class="muted">None</i>
+                    {% endif %}
                   {%- endif %}
-                  <li class="{{ pass }}" data-content="{% if (pass != 'maybe') %}{{ pass|capitalize }}{% else %}{{ gettext('No data') }}{% endif %}">&nbsp;</li>
-                {%- endfor %}
-                </ul>
+                {% endif %}
               </td>
 
           {%- endfor %}
