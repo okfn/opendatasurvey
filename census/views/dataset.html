@@ -7,9 +7,10 @@
     <div class="row">
       <div class="col-md-{% if is_index %}6{% else %}12{% endif %}">
       <h1>
-        <a href="http://index.okfn.org/dataset/statistics/" title="See more data on National Statistics in the Open Data Index">{{ dataset.name }}</a>                <span style="background-color: rgb(223, 204, 51); color: white;" class="dataset-openness" data-score="56">56% open (avg.)</span>
+        <a href="http://index.okfn.org/dataset/{{ dataset.id }}/" title="{{ format("See more data on %(name)s in the Open Data Index", {name: dataset.name}) }}">{{ dataset.name }}</a>
+        <span style="background-color: rgb(223, 204, 51); color: white;" class="dataset-openness" data-score="{{ computedRelativeScore }}">{{ format("%(score)s% open (avg.)", {score: computedRelativeScore}) }}</span>
       </h1>
-      {% if is_index %}
+      {% if is_index == "true" %}
       <div class="col-md-12 place-rank statistics">
         <span>{{ gettext("Ranked #1 against other datasets in the Index (avg.)") }}</span>
       </div>
@@ -17,7 +18,7 @@
       <div class="row relative">
         <div class="col-md-1 change"><i class="fa fa-minus"></i></div>
         <div class="col-md-11">
-          {{ gettext("The Index average ranking for National Statistics is no change from #1 in 2014") }}
+          {{ format("The Index average ranking for %(name)s is no change from #1 in 2014", {name: dataset.name}) }}
         </div>
       </div>
       {% endif %}
@@ -51,14 +52,14 @@
   </div>
 </section>
 
-{% if is_index %}
+{% if is_index == "true" %}
 <hr>
 {% endif %}
 
 {% if dataset.description %}
 <section class="dataset-about">
   <div class="container">
-    {% if is_index %}
+    {% if is_index == "true" %}
     <h3>{{ gettext("About") }}</h3>
     {% endif %}
 

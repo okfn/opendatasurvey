@@ -149,6 +149,9 @@ var dataset = function(req, res) {
       data.submissionsAllowed = req.params.year === req.app.get('year');
       data.breadcrumbTitle = 'Dataset';
 
+      // TODO calculate dataset score
+      data.computedRelativeScore = 0;
+
       return res.render('dataset.html', data);
     }).catch(console.trace.bind(console));
 };
@@ -177,6 +180,10 @@ var entry = function(req, res) {
       }
       data.year = req.params.year;
       data.submissionsAllowed = req.params.year === req.app.get('year');
+
+      // TODO calculate relative score
+      data.computedRelativeScore = 0;
+
       return res.render('entry.html', data);
     }).catch(console.trace.bind(console));
 };
