@@ -82,10 +82,7 @@
     <div class="alert alert-warning" role="alert">
       <div class="container">
         <div>
-          <p>{{gettext("If you are a reviewer, please login to review.")}}</p>
-          <div class="span2" style="text-align: right;">
-            <a class="btn btn-primary" href="{{ loginUrl }}?next=census/submission/{{ current.id }}">{{gettext("Login")}}</a>
-          </div>
+          <p>{{gettext("If you are a reviewer, please login to review.")}} <a class="btn btn-primary" href="{{ loginUrl }}?next=census/submission/{{ entry.id }}">{{gettext("Login")}}</a></p>
         </div>
       </div>
     </div>
@@ -93,16 +90,21 @@
 {%- endif %}
 
 {% if errors %}
-<div class="alert alert-error" role="alert">
-    <p>{{ gettext("The form has missing or incorrect data")}}:</p>
-    <ul>
-    {% for error in errors %}
-      <li>{{ error.param }}: {{ error.msg }} {% if error.value %}(Current is '{{ error.value }}'){% endif %}</li>
-    {% endfor %}
-    </ul>
+<div class="alert alert-danger" role="alert">
+  <div class="container">
+    <div>
+      <p>{{ gettext("The form has missing or incorrect data")}}:</p>
+      <ul>
+      {% for error in errors %}
+        <li>{{ error.param }}: {{ error.msg }} {% if error.value %}(Current is '{{ error.value }}'){% endif %}</li>
+      {% endfor %}
+      </ul>
+    </div>
+  </div>
 </div>
 {% endif %}
 
+{% if datasetContext|length and (not isReview or canReview) %}
 {% if submitInstructions %}
 <div class="alert alert-info alert-dismissible" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -131,8 +133,6 @@
   </div>
 </div>
 {% endif %}
-
-{% if datasetContext|length and (not isReview or canReview) %}
 <div id="entry_form">{{ initialRenderedEntry }}</div>
 <script type="text/javascript">
   window.qsSchema = {{ qsSchema|safe }};
@@ -141,8 +141,7 @@
   window.formData = {{ formData|dump }};
   window.isReview = {{ isReview }};
 </script>
-{% endif %}
-
 <script src="/scripts/compiled/entry.js" type="text/javascript"></script>
+{% endif %}
 
 {% endblock %}
