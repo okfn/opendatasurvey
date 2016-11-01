@@ -99,7 +99,7 @@ module.exports = function(sequelize, DataTypes) {
       }
     ],
     instanceMethods: {
-      _getAnswerValueForQuestion: function(q) {
+      getAnswerValueForQuestion: function(q) {
         // Find the `value` property for the answer with `id`.
         let answer = _.result(_.find(this.answers, {id: q.id}), 'value');
         // Multiple-choice answers need special treatment to get the checked
@@ -117,12 +117,12 @@ module.exports = function(sequelize, DataTypes) {
         if (openQuestions.length === 0)
           return false;
         // All Open Questions must pass for the answers in this entry.
-        return _.all(openQuestions, q => q.pass(this._getAnswerValueForQuestion(q)));
+        return _.all(openQuestions, q => q.pass(this.getAnswerValueForQuestion(q)));
       },
       scoreForQuestions: function(questions) {
         var scores = [];
         _.each(questions, q => {
-          let answer = this._getAnswerValueForQuestion(q);
+          let answer = this.getAnswerValueForQuestion(q);
           scores.push(q.scoreForAnswer(answer));
         });
         return _.sum(scores);

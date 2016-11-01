@@ -1,34 +1,30 @@
 {% import "macros/popovers.html" as popovers %}
 
 <div class="table-responsive">
-  <div class="sexyTableContainer">
+  <div class="sexyTableContainer" style="margin: 0px 0px 20px;">
   <div class="sexyDragContainer kinetic-active kinetic-moving-left kinetic-moving-up" style="cursor: move;">
-  <table id="places_overview_table" class="table data-table sexyTable">
+  <table id="places_overview_table" class="table data-table sexyTable" style="margin: 0px;">
     <thead>
       <tr>
-        <th class="sort_rank header headerSortDown" title="{{ gettext('Sort by Rank') }}">{{ gettext('Rank') }}</th>
-        <th class="sort_place header" title="{{ gettext('Sort by A-Z') }}">{{ gettext('Place') }}</th>
+        <th class="sort_rank header headerSortDown" title="{{ gettext('Sort by Rank') }}" style="width: 71px;">{{ gettext('Rank') }}</th>
+        <th class="sort_place header" title="{{ gettext('Sort by A-Z') }}" style="width: 71px;">{{ gettext('Place') }}</th>
         {% for dataset in datasets %}
-          <th style="width: 71px;">
-            <div><span class="dataset-title-context" data-toggle="popover" title="{{ dataset.name }}" data-content="{{ dataset.description|e }}">{{ dataset.name }}</span></div>
+          <th>
+            <div><span class="dataset-title-context" data-toggle="popover" title="{{ dataset.name }}" data-content="{{ dataset.description|e }}" data-original-title="{{dataset.name}}">{{ dataset.name }}</span></div>
           </th>
         {% endfor %}
-        <th class="header" title="{{ gettext('Sort by Score') }}">{{ gettext('Score') }}</th>
+        <th class="header" title="{{ gettext('Sort by Score') }}" style="width: 72px;">{{ gettext('Score') }}</th>
       </tr>
     </thead>
     <tbody>
       {% for place in places %}
 
-        <tr data-rank="{{ place.rank }}" data-score="{{ place.computedScore }}" data-place="{{ place.id }}" data-name="{{ place.name }}">
+        <tr data-rank="{{ place.rank }}" data-score="{{ place.computedRelativeScore}}" data-place="{{ place.id }}" data-name="{{ place.name }}">
           <td class="rank" data-rank="{{ place.rank }}">
             <div>{{ place.rank }}</div>
           </td>
           <td>
-            {% if place %}
-              <a href="/place/{{ place.id }}{{ urlContext }}" title="{{ place.name }}">{{place.name}}</a>
-            {% else %}
-              <a href="submit/" data-toggle="tooltip" class="unknown no-data count-0" title="{{ gettext("Click here to add to the census!") }}">{{ gettext("Add new") }}</a>
-            {% endif %}
+            <a href="/place/{{ place.id }}{{ urlContext }}" title="{{ place.name }}">{{place.name}}</a>
           </td>
           {% for dataset in datasets -%}
 
@@ -71,18 +67,19 @@
                 <ul class="availability availability-comparative" data-toggle="popover" title="{% filter escape %}{{ popoverTitle }}{% endfilter %}" data-content="{% filter escape %}{{ popoverContent }}{% endfilter %}">
                 {% for question in questions -%}
                   {% if entry -%}
-                    {% set state = entry.answers[question.id] %}
+                    {% set answer = entry.getAnswerValueForQuestion(question) %}
+                    {% set pass = 'yes' if question.pass(answer) else 'no' %}
                   {% else %}
-                    {% set state = '' %}
+                    {% set pass = 'maybe' %}
                   {%- endif %}
-                  <li class="{% if state == 'Yes' %}yes{% elif state == 'No' %}no{% elif state == 'Unsure' %}maybe{% else %}{{ state }}{% endif %}" data-content="{% if state %}{{ state }}{% else %}{{ gettext('No data') }}{% endif %}">&nbsp;</li>
+                  <li class="{{ pass }}" data-content="{% if (pass != 'maybe') %}{{ pass|capitalize }}{% else %}{{ gettext('No data') }}{% endif %}">&nbsp;</li>
                 {%- endfor %}
                 </ul>
               </td>
 
           {%- endfor %}
           <td class="score" data-score="{{ place.computedRelativeScore }}">
-            <span>{{ place.computedScore }}</span>
+            <span>{{ place.computedRelativeScore }}</span>
           </td>
         </tr>
 
