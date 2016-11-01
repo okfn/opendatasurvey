@@ -173,7 +173,8 @@ describe('Basics', function() {
       var config = this.app.get('config');
       config.set('test:testing', true);
       config.set('test:user', {
-        userid: userFixtures[0].data.id
+        userid: userFixtures[1].data.id,
+        emails: userFixtures[1].data.emails
       });
     });
 

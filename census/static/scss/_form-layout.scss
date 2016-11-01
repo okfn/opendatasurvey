@@ -969,6 +969,14 @@ body.form {
             background-color: #fff;
             color: $text-color;
             font-weight: bold;
+            text-decoration: none;
+          }
+        }
+
+        & > ul,
+        & > ol {
+          li {
+            margin-left: $grid-gutter-width;
           }
         }
       }
