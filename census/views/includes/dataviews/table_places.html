@@ -36,23 +36,27 @@
                   {% if submissions|length -%}
                     {% set actionUrl = '/submission/ID'|replace('ID', submissions[0].id) %}
                     {% set actionText = gettext("Review") %}
+                    {% set actionClass = 'warning' %}
                   {% else %}
                     {% set actionUrl = '/submit/?place=PL&dataset=DS'|replace('PL', place.id)|replace('DS', dataset.id) %}
                     {% set actionText = gettext("Update") %}
+                    {% set actionClass = 'success' %}
                   {%- endif %}
                 {% else %}
                   {% if submissions|length -%}
                     {% set actionUrl = '/submission/ID'|replace('ID', submissions[0].id) %}
                     {% set actionText = gettext("Review") %}
+                    {% set actionClass = 'warning' %}
                   {% else %}
                     {% set actionUrl = '/submit/?place=PL&dataset=DS'|replace('PL', place.id)|replace('DS', dataset.id) %}
                     {% set actionText = gettext("Add") %}
+                    {% set actionClass = 'success' %}
                   {%- endif %}
                 {%- endif %}
 
                 {% if entry %}
                   {% set popoverTitle = popovers.popover_comparison_title(dataset, place) %}
-                  {% set popoverContent = popovers.popover_comparison_content(entry, place, dataset, questions, gettext, format) %}
+                  {% set popoverContent = popovers.popover_comparison_content(entry, place, dataset, questions, gettext, actionUrl, actionText, actionClass, submissionsAllowed) %}
                   <ul class="availability availability-comparative" data-toggle="popover" title="{% filter escape %}{{ popoverTitle }}{% endfilter %}" data-content="{% filter escape %}{{ popoverContent }}{% endfilter %}">
                   {% for question in questions -%}
                     {% if entry -%}
@@ -66,9 +70,8 @@
                   </ul>
                 {% endif %}
 
-                {% if godi != "true" -%}
+                {% if is_index != "true" -%}
                   {% if entry -%}
-
                     {% if entry.year == currentYear -%}
                       {% set badgeClass = 'label-success' %}
                     {% elif entry.year == (currentYear - 1) %}
