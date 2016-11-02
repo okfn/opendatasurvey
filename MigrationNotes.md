@@ -28,6 +28,8 @@ Some question types require extra configuration. For example, the `likert` quest
 
 Once loaded into the database, each `Dataset` has a foreignKey to the `QuestionSet` it uses. `Questions` now have a foreignKey to the parent `QuestionSet` (`Question.questionsetid`). `Questions` have altered their primaryKey to be (id, questionsetid). The `QuestionSet.id` primaryKey is a hash of the `site` + `qsurl`. This ensures that sites using a Question Set located at the same url will load into the database as distinct `QuestionSet` instances.
 
+`Questions` now have a `QuestionShort` column used as a very short version of the question text for open questions (scored questions). Values should be able to have 'It is' and 'It is not' prepended to them, e.g. Available free online.
+
 ## Question Set Schema json format
 
 A question set schema provides the structure and dependency graph for a set of `Questions`.

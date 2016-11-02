@@ -22,6 +22,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       comment: 'The question itself.'
     },
+    questionshort: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      comment: 'A very short version of the question.'
+    },
     description: {
       type: DataTypes.TEXT,
       allowNull: false,
