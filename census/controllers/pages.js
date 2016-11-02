@@ -121,7 +121,10 @@ var place = function(req, res) {
       data.year = req.params.year;
       data.submissionsAllowed = (req.params.year === req.app.get('year'));
       data.extraWidth = data.datasets.length > 12;
-      data.breadcrumbTitle = 'Places';
+      data.breadcrumbTitle = 'Place';
+
+      // TODO calculate relative score of place
+      data.computedRelativeScore = 0;
 
       return res.render('place.html', data);
     }).catch(console.trace.bind(console));
@@ -148,6 +151,9 @@ var dataset = function(req, res) {
       data.year = req.params.year;
       data.submissionsAllowed = req.params.year === req.app.get('year');
       data.breadcrumbTitle = 'Dataset';
+
+      // TODO calculate relative score od dataset
+      data.computedRelativeScore = 0;
 
       return res.render('dataset.html', data);
     }).catch(console.trace.bind(console));
@@ -177,6 +183,10 @@ var entry = function(req, res) {
       }
       data.year = req.params.year;
       data.submissionsAllowed = req.params.year === req.app.get('year');
+
+      // TODO calculate relative score of entry
+      data.computedRelativeScore = 0;
+
       return res.render('entry.html', data);
     }).catch(console.trace.bind(console));
 };

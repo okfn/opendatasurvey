@@ -1,75 +1,79 @@
 {% extends "page.html" %}
 {% block title %}{{ place.name }}{% endblock %}
 {% block content %}
-{% if is_index == "true" %}
-{% endif %}
-<header id="place-intro">
+
+<section id="data-header">
   <div class="container">
-    <h1>{{ place.name }}</h1>
-    <hr>
-
-    <div id="summary-stats" class="row">
-      <div class="stat col-md-3">
-        <strong>9%</strong>
-        <span class="percent-open-context" data-toggle="popover" title="" data-content="This is the percentage of all the dataset entries that are open as per the Open Definition. We get one dataset entry for each dataset and place (e.g. Transport Timetables for the United Kingdom is one dataset entry). For each entry we check whether the dataset is fully open as per the Open Definition, and then divide by the total number of entries to get a percentage. &lt;a href=&quot;faq/#open-data&quot;&gt;Find out more about Open Data&lt;/a&gt;" data-original-title="What does this mean?">Percent Open <i class="fa fa-question-circle"></i></span>
-        <small>Down from 12% in 2014</small>
-      </div>
-      <div class="stat col-md-3">
-        <strong>122</strong>
-        <span>Number of Places</span>
-        <small>
-          Up
-          from 97 in 2014
-        </small>
-      </div>
-      <div class="stat col-md-3">
-        <strong>1586</strong>
-        <span>Number of Entries</span>
-        <small>
-          Up
-          from 970 in 2014
-        </small>
-      </div>
-      <div class="stat col-md-3">
-        <strong>156</strong>
-        <span>Number of Open Datasets</span>
-        <small>
-          Up
-          from 124 in 2014
-        </small>
-      </div>
-    </div>
-    <hr>
-  </div>
-</header>
-
-{# page content #}
-<div class="container">
-  <div class="row">
-    <div class="col-md-4">
-      <h5>Search</h5>
-      <form role="form" class="form-inline data-table-tools">
-        <div class="form-group">
-          <input class="form-control filter-table" type="search" name="filter-table" placeholder="Search for a place">
+    <div class="row">
+      <div class="col-md-{% if is_index %}6{% else %}12{% endif %}">
+        <h1>
+          <a href="http://index.okfn.org/place/{{ dataset.id }}/" title="{{ format("See more data on %(name)s in the Open Data Index", {name: place.name}) }}">{{ dataset.name }}</a>
+          <span style="background-color: rgb(223, 204, 51); color: white;" class="dataset-openness" data-score="{{ computedRelativeScore }}">{{ format("%(score)s% open (avg.)", {score: computedRelativeScore}) }}</span>
+        </h1>
+        {% if is_index == "true" %}
+        <div class="col-md-12 place-rank statistics">
+          <span>{{ gettext("Ranked #1 against other places in the Index (avg.)") }}</span>
         </div>
-      </form>
-    </div>
-    <div class="col-md-4">
-      <h5>See other years</h5>
-      <div class="btn-group">
-        <a class="btn btn-default" href="http://index.okfn.org/place/2014/" title="2014">2014</a>
-        <a class="btn btn-default" href="http://index.okfn.org/place/2013/" title="2013">2013</a>
+
+        <div class="row relative">
+          <div class="col-md-1 change"><i class="fa fa-minus"></i></div>
+          <div class="col-md-11">
+            {{ format("The Index average ranking for %(name)s is no change from #1 in 2014", {name: place.name}) }}
+          </div>
+        </div>
+        {% endif %}
+        <div class="row navigate">
+
+          <div class="col-md-12">
+            {% include 'includes/share_buttons.html' %}
+
+            {% if is_index == "true" %}
+            <div class="history">
+              <h6>{{ gettext("See other years") }}</h6>
+              <ul>
+                <li><a href="http://index.okfn.org/place/{{ place.id }}/2014/" title="2014">2014</a></li>
+                <li><a href="http://index.okfn.org/place/{{ place.id }}/2013/" title="2013">2013</a></li>
+              </ul>
+            </div>
+            {% endif %}
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="col-md-4">
-      {% include 'includes/share_buttons.html' %}
+
+      {% if is_index == "true" %}
+      <div class="col-md-6">
+        <div id="map-container">
+          {% include 'includes/dataviews/embed_map.html' %}
+        </div>
+      </div>
+      {% endif %}
+
     </div>
   </div>
-  <hr>
-</div>
+</section>
 
-<div class="container">
-  {% include 'includes/dataviews/table_places.html' %}
-</div>
+{% if is_index == "true" %}
+<hr>
+{% endif %}
+
+{% if dataset.description %}
+<section class="dataset-about">
+  <div class="container">
+    {% if is_index == "true" %}
+    <h3>{{ gettext("About") }}</h3>
+    {% endif %}
+
+    {{dataset.description}}
+  </div>
+</section>
+{% endif %}
+
+<hr />
+
+<section id="dataset-slice-table">
+  <div class="container">
+    {% include 'includes/dataviews/table_slice_dataset.html' %}
+  </div>
+</section>
 
 {% endblock %}
