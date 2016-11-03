@@ -1,6 +1,5 @@
 define(['jquery', 'bootstrap', 'chroma', 'tablesorter', 'stickykit'],
   function($, bootstrap, chroma, tablesorter, stickykit) {
-
     var placeCount = placeCount || 260,
       colorSteps = ['#ff0000', '#edcf3b', '#7ab800'],
       colorScale = chroma.scale(colorSteps).domain([0, 100]),
@@ -14,7 +13,7 @@ define(['jquery', 'bootstrap', 'chroma', 'tablesorter', 'stickykit'],
         visible: null
       },
       tablesorterPlaceOptions = {
-        sortList: [[0, 0]],
+        sortList: [[1, 0]],
         headers: {
           2: {sorter: false},
           3: {sorter: false},
@@ -25,14 +24,14 @@ define(['jquery', 'bootstrap', 'chroma', 'tablesorter', 'stickykit'],
           8: {sorter: false},
           9: {sorter: false},
           10: {sorter: false},
-          11: {sorter: false},
+          11: {sorter: false}
         }
       },
       tablesorterDatasetOptions = {
         sortList: [[0, 0]],
         headers: {
           2: {sorter: false},
-          3: {sorter: false},
+          3: {sorter: false}
         }
       },
       tablesorterSliceOptions = {
@@ -42,7 +41,7 @@ define(['jquery', 'bootstrap', 'chroma', 'tablesorter', 'stickykit'],
           3: {sorter: false},
           4: {sorter: false},
           5: {sorter: false},
-          6: {sorter: false},
+          6: {sorter: false}
         }
       },
       sortFlag = true;
@@ -54,7 +53,7 @@ define(['jquery', 'bootstrap', 'chroma', 'tablesorter', 'stickykit'],
     $("#datasets_overview_table thead").stick_in_parent();
     $("#slice-table thead").stick_in_parent();
 
-    $('.content').on('click', '.sexyHeader .sort_rank, .sexyHeader .sort_place',
+    $('.content').on('click', '.sort_rank, .sort_place',
       function(e) {
         $("#places_overview_table").trigger("sorton",
           [[[$(e.target).hasClass('sort_place') / 1, sortFlag]]]);
@@ -151,6 +150,6 @@ define(['jquery', 'bootstrap', 'chroma', 'tablesorter', 'stickykit'],
     }
 
     return {
-      init: initializeTable,
+      init: initializeTable
     };
   });

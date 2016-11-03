@@ -1,62 +1,44 @@
 {% macro popover_comparison_title(dataset, place) -%}
-<strong>{{ dataset.name }}</strong> in <strong>{{ place.name }}</strong>
+{{ dataset.name }} in {{ place.name }}
 {%- endmacro %}
 
 
-{% macro popover_comparison_content(entry, place, dataset, questions, gettext, format) -%}
-
-{% if not entry %}
-    {{ gettext('There is no data available.') }}
+{% macro popover_comparison_content(entry,
+                                    place,
+                                    dataset,
+                                    questions,
+                                    gettext,
+                                    actionUrl,
+                                    actionText,
+                                    actionClass,
+                                    submissionsAllowed) -%}
+{% if not entry -%}
+  {{ gettext('There is no data available.') }}
 {% else %}
-<ul class="availability-popover">
+  <ul class="availability-popover">
     {% for question in questions -%}
-    {% if question.score %}
-        {% set state = entry.answers[question.id] %}
-        {% if state == 'Yes' %}
-            {% set no = '' %}
-        {% elif state == 'No' %}
-            {% set no = 'not' %}
-        {% else %}
-            {% set no = "unclear if it's" %}
-        {% endif %}
-        <li class="{% if state == 'Yes' %}yes{% elif state == 'No' %}no{% elif state == 'Unsure' %}maybe{% endif %}"><i class="fa fa-{{ question.icon }}"></i>&nbsp;
-            {% if question.id == 'exists' %}
-                {% if state == 'Y' %}
-                    {{ gettext('Data exists') }}
-                {% else %}
-                    {{ gettext('Data does not exist') }}
-                {% endif %}
-            {% elif question.id == 'digital' %}
-                {{ format("It's %(no)s digital", {no: no}) }}
-            {% elif question.id == 'public' %}
-                {{ format("It's %(no)s public", {no: no}) }}
-            {% elif question.id == 'free' %}
-                {{ format("It's %(no)s free", {no: no}) }}
-            {% elif question.id == 'online' %}
-                {{ format("It's %(no)s online", {no: no}) }}
-                {% if no == '' %}
-                    <a href="{{ entry.url }}" title="{{ gettext('%(dataset)s for %(place)s on the web', dataset=dataset.id, place=place.name) }}">{{ gettext('here') }}</a>
-                {% endif %}
-            {% elif question.id == 'machinereadable' %}
-                {{ format("It's %(no)s machine readable", {no: no}) }}
-            {% elif question.id == 'bulk' %}
-                {{ format("It's %(no)s available in bulk", {no: no}) }}
-            {% elif question.id == 'openlicense' %}
-                {{ format("It's %(no)s openly licensed", {no: no}) }}
-            {% elif question.id == 'uptodate' %}
-                {{ format("It's %(no)s up to date", {no: no}) }}
-            {% endif %}
+      {% if question.score -%}
+        {% set answer = entry.getAnswerValueForQuestion(question) %}
+        {% set pass = 'yes' if question.pass(answer) else 'no' %}
+
+        <li class="{{ pass }}" title="{{ question.question }}">
+          <i class="fa fa-{{ question.icon }}"></i>&nbsp;{% if pass == 'yes' %}It's {% elif pass == 'no' %}It's not {% endif %}{{ question.questionshort|lower }}
         </li>
-    {% endif %}
+      {%- endif %}
     {%- endfor %}
-</ul>
-<p>
-    {% if entry and entry.details %}
-    {{ entry.details|truncate(100) }}
-    {% else %}
-    {{ gettext('No additional details') }}
+  </ul>
+  {% if entry and entry.details -%}
+    <p>{{ entry.details|truncate(100) }}</p>
+  {%- endif %}
+
+  {% if is_index != "true" -%}
+    <div class='btn-group'>
     {% endif %}
-</p>
-<a class="btn btn-primary" href="/entry/{{ place.id }}/{{ dataset.id }}/">{{ gettext('Read more') }} &raquo;</a>
-{% endif %}
+    <a class="btn btn-primary" href="/entry/{{ place.id }}/{{ dataset.id }}/">Read more &raquo;</a>
+    {% if is_index != "true" and submissionsAllowed %}
+      <a class='btn btn-{{actionClass}}' href='{{actionUrl}}'>{{actionText}}</a>
+    </div>
+  {%- endif %}
+
+{%- endif %}
 {%- endmacro %}
