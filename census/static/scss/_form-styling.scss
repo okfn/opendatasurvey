@@ -287,6 +287,14 @@ body.form {
             }
           }
         }
+
+        .current {
+          dl {
+            dd {
+              border-radius: $border-radius-base;
+            }
+          }
+        }
       }
 
       &.disabled {
@@ -310,6 +318,17 @@ body.form {
                 }
                 .select {
                   border-color: $gray-light;
+                }
+
+                &.has-error {
+                  input {
+                    border-color: $brand-danger;
+                  }
+                  .error-message {
+                    margin-top: -$border-radius-base;
+                    border-top-left-radius: 0;
+                    border-top-right-radius: 0;
+                  }
                 }
               }
             }

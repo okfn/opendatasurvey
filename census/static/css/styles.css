@@ -7997,7 +7997,10 @@ button.close {
   width: 100%;
   max-height: 90%;
   position: relative;
-  margin: 0 auto; }
+  margin: 0 0 20px; }
+
+.sexyTable {
+  margin: 0; }
 
 .sexyDragContainer {
   width: 100%;
@@ -8007,8 +8010,8 @@ button.close {
 .sexyHeader {
   z-index: 2;
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   overflow: hidden;
   transition: none !important; }
 
@@ -8021,15 +8024,15 @@ button.close {
 .sexyColumn {
   z-index: 3;
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   font-size: 14px; }
 
 .sexyCorner {
   z-index: 4;
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   transition: none !important;
   font-size: 14px;
   vertical-align: bottom;
@@ -10152,6 +10155,9 @@ body.form .form-footer {
   body.form section .question.sub .current dl dd,
   body.form .form-footer .question.sub .current dl dd {
     border-radius: 4px; }
+  body.form section .question.sub .current dl dd,
+  body.form .form-footer .question.sub .current dl dd {
+    border-radius: 4px; }
   body.form section .question.disabled.scale .answer label span, body.form section .question.disabled.yes-no .answer label span,
   body.form .form-footer .question.disabled.scale .answer label span,
   body.form .form-footer .question.disabled.yes-no .answer label span {
@@ -10162,6 +10168,14 @@ body.form .form-footer {
   body.form section .question.disabled.source .answer ul li .select,
   body.form .form-footer .question.disabled.source .answer ul li .select {
     border-color: #777777; }
+  body.form section .question.disabled.source .answer ul li.has-error input,
+  body.form .form-footer .question.disabled.source .answer ul li.has-error input {
+    border-color: #ff0000; }
+  body.form section .question.disabled.source .answer ul li.has-error .error-message,
+  body.form .form-footer .question.disabled.source .answer ul li.has-error .error-message {
+    margin-top: -4px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0; }
   body.form section .question.disabled.select .answer,
   body.form .form-footer .question.disabled.select .answer {
     border-color: #777777; }
@@ -10481,5 +10495,3 @@ body.form .error-message {
       margin-bottom: 24px;
       margin-left: 24px;
       margin-right: 24px; }
-
-/*# sourceMappingURL=styles.css.map */

@@ -1,12 +1,14 @@
 {% extends "base.html" %}
 
-{% block title %}{{ this.title }}{% endblock %}
+{% block title %}
+{{ this.title }}
+{% endblock %}
 
 {% block body_class %}home{% endblock %}
 
 {% block content %}
 {% if is_index %}
-  {% include 'includes/godi-home.html' %}
+{% include 'includes/godi-home.html' %}
 {% else %}
 <div class="container">
   <ul class="summary featured">
@@ -36,50 +38,60 @@
     </li>
   </ul>
 
-  <hr />
+  <hr/>
 
   {{ customText }}
 
   <div class="row">
+
     <div class="col-md-4">
-      {#<h5>Search</h5>
+      <h5>Search</h5>
       <form role="form" class="form-inline data-table-tools">
         <div class="form-group">
           <input class="form-control filter-table" type="search" name="filter-table" placeholder="Search for a place">
         </div>
-      </form>#}
+      </form>
     </div>
+
     <div class="col-md-4">
-      {#<h5>See other years</h5>
+      <h5>See other years</h5>
       <div class="btn-group">
         <a class="btn btn-default" href="http://index.okfn.org/place/2014/" title="2014">2014</a>
         <a class="btn btn-default" href="http://index.okfn.org/place/2013/" title="2013">2013</a>
-      </div>#}
+      </div>
     </div>
+
     <div class="col-md-4">
       <h5>Share or embed this page</h5>
       <div class="btn-group">
-        <a href="http://twitter.com/share?url=http://index.okfn.org/place/&amp;text=Check out this data from the Global Open Data Index" class="btn btn-default twitter" target="_blank">
-          <i class="fa fa-twitter"></i> Twitter  </a>
-        <a href="http://www.facebook.com/sharer/sharer.php?u=http://index.okfn.org/place/" class="btn btn-default facebook" target="_blank">
-          <i class="fa fa-facebook"></i> Facebook  </a>
-        <a href="https://plus.google.com/share?url=http://index.okfn.org/place/" class="btn btn-default google-plus" target="_blank">
-          <i class="fa fa-google-plus"></i> Google+  </a>
+        <a href="http://twitter.com/share?url=http://index.okfn.org/place/&amp;text=Check out this data from the Global Open Data Index"
+           class="btn btn-default twitter" target="_blank"><i class="fa fa-twitter"></i> Twitter </a>
+        <a href="http://www.facebook.com/sharer/sharer.php?u=http://index.okfn.org/place/"
+           class="btn btn-default facebook" target="_blank"><i class="fa fa-facebook"></i> Facebook </a>
+        <a href="https://plus.google.com/share?url=http://index.okfn.org/place/" class="btn btn-default google-plus"
+           target="_blank"><i class="fa fa-google-plus"></i> Google+ </a>
       </div>
-      <div class="modal fade" id="embed-instructions" tabindex="-1" role="dialog" aria-labelledby="embedLabel" aria-hidden="true">
+      <div class="modal fade" id="embed-instructions" tabindex="-1" role="dialog" aria-labelledby="embedLabel"
+           aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                  class="sr-only">Close</span></button>
               <h4 class="modal-title" id="embedLabel">Map embed code</h4>
             </div>
             <div class="modal-body">
               <p>
-                  Use the following code to embed the map visualisation into your own website.
+                Use the following code to embed the map visualisation into your own website.
               </p>
-              <xmp contenteditable="true"><iframe width="100%" height="300px" src="http://index.okfn.org/vis/map/embed/?embed_width=100%&embed_height=300px&filter_year=2015&filter_dataset=all&panel_tools=true&panel_share=true&map_place=" frameBorder="0"></iframe></xmp>
+              <xmp contenteditable="true">
+                <iframe width="100%" height="300px"
+                        src="http://index.okfn.org/vis/map/embed/?embed_width=100%&embed_height=300px&filter_year=2015&filter_dataset=all&panel_tools=true&panel_share=true&map_place="
+                        frameBorder="0"></iframe>
+              </xmp>
               <p>
-              If you are a developer, you can read more about the embed options here: <a href="https://github.com/okfn/opendataindex/#choropleth-map" title="Embed options">Embed options</a>
+                If you are a developer, you can read more about the embed options here: <a
+                  href="https://github.com/okfn/opendataindex/#choropleth-map" title="Embed options">Embed options</a>
               </p>
             </div>
             <div class="modal-footer">
@@ -89,9 +101,15 @@
         </div>
       </div>
     </div>
+
   </div>
-  <hr />
+
+  <hr/>
+
   {% include 'includes/dataviews/table_places.html' %}
+
 </div>
+
 {% endif %}
+
 {% endblock %}

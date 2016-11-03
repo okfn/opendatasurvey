@@ -109,8 +109,8 @@ var place = function(req, res) {
       if (!data.place) {
         return res.status(404)
           .send('There is no matching place in our database. ' +
-            'Are you sure you have spelled it correctly? Please check the ' +
-            '<a href="/">overview page</a> for the list of places');
+                'Are you sure you have spelled it correctly? Please check the ' +
+                '<a href="/">overview page</a> for the list of places');
       }
 
       data.urlContext = '';
@@ -121,6 +121,11 @@ var place = function(req, res) {
       data.year = req.params.year;
       data.submissionsAllowed = (req.params.year === req.app.get('year'));
       data.extraWidth = data.datasets.length > 12;
+      data.breadcrumbTitle = 'Place';
+
+      // TODO calculate relative score of place
+      data.computedRelativeScore = 0;
+
       return res.render('place.html', data);
     }).catch(console.trace.bind(console));
 };
@@ -134,8 +139,8 @@ var dataset = function(req, res) {
       if (!data.dataset) {
         return res.status(404)
           .send('There is no matching dataset in our database. ' +
-            'Are you sure you have spelled it correctly? Please check the ' +
-            '<a href="/">overview page</a> for the list of places');
+                'Are you sure you have spelled it correctly? Please check the ' +
+                '<a href="/">overview page</a> for the list of places');
       }
 
       data.urlContext = '';
@@ -145,6 +150,11 @@ var dataset = function(req, res) {
       data.loggedin = req.session.loggedin;
       data.year = req.params.year;
       data.submissionsAllowed = req.params.year === req.app.get('year');
+      data.breadcrumbTitle = 'Dataset';
+
+      // TODO calculate relative score od dataset
+      data.computedRelativeScore = 0;
+
       return res.render('dataset.html', data);
     }).catch(console.trace.bind(console));
 };
@@ -163,8 +173,8 @@ var entry = function(req, res) {
       if (!data.entry) {
         return res.status(404)
           .send('There is no matching entry in our database. ' +
-            'Are you sure you have spelled it correctly? Please check the ' +
-            '<a href="/">overview page</a> for the list of places');
+                'Are you sure you have spelled it correctly? Please check the ' +
+                '<a href="/">overview page</a> for the list of places');
       }
 
       data.urlContext = '';
@@ -173,6 +183,10 @@ var entry = function(req, res) {
       }
       data.year = req.params.year;
       data.submissionsAllowed = req.params.year === req.app.get('year');
+
+      // TODO calculate relative score of entry
+      data.computedRelativeScore = 0;
+
       return res.render('entry.html', data);
     }).catch(console.trace.bind(console));
 };

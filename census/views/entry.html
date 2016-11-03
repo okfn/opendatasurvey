@@ -1,0 +1,168 @@
+{% extends "page.html" %}
+
+{% block title %}
+{{format("Entry for %(place)s / %(title)s", { place: place.name, title: dataset.name}) }}
+{% endblock %}
+
+{% block content %}
+
+<section id="data-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-{% if is_index %}6{% else %}12{% endif %}">
+      <h1>
+        <a href="http://index.okfn.org/dataset/{{ dataset.id }}/" title="{{ format("See more data on %(name)s in the Open Data Index", {name: dataset.name}) }}">{{ dataset.name }}</a>
+        <span class="place-openness" data-score="{{ computedRelativeScore }}" style="background-color: rgb(122, 184, 0); color: white;">{{ format("%(score)s% open", {score: computedRelativeScore}) }}</span>
+      </h1>
+      <h3>
+        <a href="http://index.okfn.org/place/{{ place.id }}{{ urlContext }}" title="{{ format("See more data on %(name)s in the Open Data Index", {name: place.name}) }}">{{ place.name }}</a>
+        <div class="open-badge"><img src="http://assets.okfn.org/images/ok_buttons/od_80x15_blue.png"></div>
+      </h3>
+
+      <div class="row navigate">
+
+        <div class="col-md-12">
+          {% include 'includes/share_buttons.html' %}
+
+          {% if is_index == "true" %}
+          <div class="history">
+            <h6>{{ gettext("See other years") }}</h6>
+            <ul>
+              <li><a href="http://index.okfn.org/place/united-kingdom/companies/2014/" title="2014">2014</a></li>
+              <li><a href="http://index.okfn.org/place/united-kingdom/companies/2013/" title="2013">2013</a></li>
+            </ul>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    {% if is_index == "true" %}
+    <div class="col-md-6">
+      <div id="map-container">
+        <iframe width="100%" height="360px" src="http://index.okfn.org/vis/map/embed/?embed_width=100%&amp;embed_height=360px&amp;filter_year=2015&amp;filter_dataset=companies&amp;panel_tools=false&amp;panel_share=false&amp;embed_title=United Kingdom ; Company Register ; 2015&amp;map_place=gb" frameborder="0"></iframe>
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+  </div>
+</section>
+
+{% if is_index == "true" %}
+<hr>
+{% endif %}
+
+<section class="dataset-about">
+  <div class="container">
+    {% if dataset.description %}
+    <div class="row">
+      <div class="col-md-12">
+        <h3>{{ gettext("What data is expected?") }}</h3>
+        <p>{{dataset.description}}</p>
+      </div>
+    </div>
+    {% endif %}
+
+    <h3>{{ gettext("What data is available?") }}</h3>
+    <ul class="availability-single">
+    {% for qu in questions %}
+    {% if qu.type == '' %}
+
+    {% set description = '' %}
+    {% set state = entry.answers[qu.id] %}
+
+    {% if state == true %}
+    {% set stateClass = 'yes' %}
+    {% set stateDisplay = 'Y' %}
+    {% elif state == false %}
+    {% set stateClass = 'no' %}
+    {% set stateDisplay = 'N' %}
+    {% elif state == null %}
+    {% set stateClass = 'maybe' %}
+    {% set stateDisplay = '?' %}
+
+    {% else %}
+
+    {% set stateClass = '' %}
+    {% set stateDisplay = 'No data' %}
+
+    {% endif %}
+
+    <li class="{{ stateClass }}">
+      <i class="fa fa-{{ qu.icon }}"
+         data-toggle="popover"
+         data-trigger="click"
+         data-placement="top"
+         data-html="true"
+         data-content="{{ qu.description|replace ('\"', '\'') }}"></i>
+        <span>{{ qu.question }}</span>
+    </li>
+    {% endif %}
+    {% endfor %}
+    </ul>
+
+    {% if entry.details %}
+    <div class="place-details">
+      <h4><strong>{{ gettext("Details") }}</strong></h4>
+      <p>{{ entry.details }}</p>
+    </div>
+    {% endif %}
+
+    <div class="place-comments">
+      <h4><strong>{{ gettext("Reviewer comments") }}</strong></h4>
+      <p>All fields satisfied, no issues. Updated title and short description and details fields.</p>
+    </div>
+
+  </div>
+</section>
+
+{% if is_index == "true" %}
+<section id="place-contributors">
+  <div class="container">
+    <h2>{{ gettext("Contributors") }}</h2>
+    <div class="row">
+
+      <div class="col-md-6">
+        <h4>{{ gettext("Reviewers") }}</h4>
+        {% if entry.Reviewer %}
+        <ul>
+          <li>{{entry.Reviewer.fullName()}}</li>
+        </ul>
+        {% endif %}
+      </div>
+
+      <div class="col-md-6">
+        <h4>{{ gettext("Submitters") }}</h4>
+        {% if entry.Submitter %}
+        <ul>
+          <li>{{ entry.Submitter.fullName() }}</li>
+        </ul>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if is_index != "true" %}
+<section class="place-meta">
+  <div class="container">
+    <h3>{{ gettext("Meta data") }}</h3>
+    <table class="table table-striped yntable">
+      <tbody>
+      <tr><td>{{ gettext("Date the data became available") }}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.answers.dateavailable %}{{ entry.answers.dateavailable }}{% else %}{{ gettext("Unknown") }}{% endif %}</td></tr>
+      <tr><td>{{ gettext("Format of data") }}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.answers.format %}{{ entry.answers.format }}{% else %}{{ gettext("Unknown") }}{% endif %}</td></tr>
+      <tr><td>{{ gettext("Reviewer") }}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.Reviewer %}{{entry.Reviewer.fullName()}}{% endif %}</td></tr>
+      <tr><td>{{ gettext("Submitters") }}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.Submitter %}{{entry.Submitter.fullName()}}{% endif %}</td></tr>
+      <tr><td>{{ gettext("Last modified") }}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.createdAt %}{{ entry.createdAt }}{% else %}{{gettext("Unknown")}}{% endif %}</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endif %}
+
+<script src="{{page.root}}/src/common.js?{{currentTime}}"></script>
+
+{% endblock %}
