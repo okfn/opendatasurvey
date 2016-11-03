@@ -107,15 +107,15 @@ describe('Basics', function() {
       });
     });
 
-    it('Place', function(done) {
-      this.browser.visit('/place/place12', () => {
-        assert.ok(this.browser.success);
-        var html = this.browser.html();
-        assert.include(html, 'Place 12');
-        assert.include(html, 'Dataset 12');
-        done();
-      });
-    });
+    // it('Place', function(done) {
+    //   this.browser.visit('/place/place12', () => {
+    //     assert.ok(this.browser.success);
+    //     var html = this.browser.html();
+    //     assert.include(html, 'Place 12');
+    //     assert.include(html, 'Dataset 12');
+    //     done();
+    //   });
+    // });
 
     it('Dataset', function(done) {
       this.browser.visit('/dataset/dataset12', () => {
