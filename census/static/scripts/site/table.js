@@ -28,14 +28,14 @@ define(['jquery', 'bootstrap', 'chroma', 'tablesorter', 'stickykit'],
         }
       },
       tablesorterDatasetOptions = {
-        sortList: [[0, 0]],
+        sortList: [[1, 0]],
         headers: {
           2: {sorter: false},
           3: {sorter: false}
         }
       },
       tablesorterSliceOptions = {
-        sortList: [[0, 0]],
+        sortList: [[1, 0]],
         headers: {
           2: {sorter: false},
           3: {sorter: false},
@@ -50,16 +50,16 @@ define(['jquery', 'bootstrap', 'chroma', 'tablesorter', 'stickykit'],
     $('#datasets_overview_table').tablesorter(tablesorterDatasetOptions);
     $('#slice-table').tablesorter(tablesorterSliceOptions);
 
-    $("#datasets_overview_table thead").stick_in_parent();
-    $("#slice-table thead").stick_in_parent();
+    $('#datasets_overview_table thead').stick_in_parent();
+    $('#slice-table thead').stick_in_parent();
 
     $('.content').on('click', '.sort_rank, .sort_place',
       function(e) {
-        $("#places_overview_table").trigger("sorton",
+        $('#places_overview_table').trigger('sorton',
           [[[$(e.target).hasClass('sort_place') / 1, sortFlag]]]);
         $('.headerSortDown').removeClass('headerSortDown');
         $('.headerSortUp').removeClass('headerSortUp');
-        $(e.target).addClass((sortFlag) ? "headerSortUp" : "headerSortDown");
+        $(e.target).addClass((sortFlag) ? 'headerSortUp' : 'headerSortDown');
         sortFlag = !sortFlag;
       });
 

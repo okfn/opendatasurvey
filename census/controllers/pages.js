@@ -132,15 +132,15 @@ var place = function(req, res) {
 
 var dataset = function(req, res) {
   /**
-   * An overview of datasets, optionally by year.
+   * An overview of a single dataset, optionally by year.
    */
   modelUtils.getData(modelUtils.getDataOptions(req))
     .then(function(data) {
       if (!data.dataset) {
         return res.status(404)
           .send('There is no matching dataset in our database. ' +
-                'Are you sure you have spelled it correctly? Please check the ' +
-                '<a href="/">overview page</a> for the list of places');
+                'Are you sure it is spelled correctly? Please check the ' +
+                '<a href="/">overview page</a> for the list of datasets.');
       }
 
       data.urlContext = '';
@@ -150,7 +150,7 @@ var dataset = function(req, res) {
       data.loggedin = req.session.loggedin;
       data.year = req.params.year;
       data.submissionsAllowed = req.params.year === req.app.get('year');
-      data.breadcrumbTitle = 'Dataset';
+      data.breadcrumbTitle = data.dataset.name;
 
       // TODO calculate relative score od dataset
       data.computedRelativeScore = 0;

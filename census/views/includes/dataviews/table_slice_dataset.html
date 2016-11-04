@@ -5,8 +5,6 @@
           <col style="width:6%">
           <col style="width:24%">
           <col style="width:23%">
-          <col style="width:24%">
-          <col style="width:12%">
           <col style="width:5%">
           <col style="width:6%">
         </colgroup>
@@ -15,8 +13,6 @@
           <col style="width:6%">
           <col style="width:20%">
           <col style="width:23%">
-          <col style="width:16%">
-          <col style="width:12%">
           <col style="width:5%">
           <col style="width:8%">
           <col style="width:6%">
@@ -25,927 +21,140 @@
         {% endif %}
 
         <thead class="" style="">
-            <tr>
-                <th>Rank</th>
-                <th>Place</th>
-                <th>Breakdown</th>
-                <th>Location (URL)</th>
-                <th>Format</th>
-                <th>Info</th>
-                {% if not is_index %}
-                <th>Year</th>
-                {% endif %}
-                <th>Score</th>
-                {% if not is_index %}
-                <th class="admin"><span class="sr-only">Admin</span></th>
-                {% endif %}
-            </tr>
+          <tr>
+            <th>Rank</th>
+            <th>Place</th>
+            <th>Breakdown</th>
+            <th>Info</th>
+            {% if not is_index %}
+            <th>Year</th>
+            {% endif %}
+            <th>Score</th>
+            {% if not is_index %}
+            <th class="admin"><span class="sr-only">Admin</span></th>
+            {% endif %}
+          </tr>
         </thead>
         <tbody>
-
-          {# row #}
-          <tr data-rank="1" data-score="100" data-place="romania">
-                  <td>
-                      1
-                  </td>
-                  <td>
-                    <a href="http://index.okfn.org/place/romania/statistics/" title="statistics in Romania">Romania</a>
-                  </td>
-                  <td>
-                      <ul class="availability availability-slice">
-                          <li data-original-title="<h4><p>Openly licensed? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>The licence must comply with the Open Definition which allows data to be freely used, reused and redistributed. The Open Definition provides a list of conformant licences. If the data uses one of these licences, it is openly licensed.</p>
-
-<p>Licences are commonly found in:</p>
-
-<ul>
-<li>the web page footer</li>
-<li>a link to Terms &amp;amp; Conditions</li>
-<li>the About section</li>
-</ul>
-
-<p>Some licences may allow re-use and redistribution but have not been assessed as conformant with the Open Definition. In this case, seek feedback on the Open Data Index discussion forum</p>"><i class="fa fa-unlock-alt"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data machine readable? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>All files are digital, but not all can be processed or parsed easily by a computer. In order to answer this question, you would need to look at the file type of the dataset. As a rule of thumb the following file types are machine readable:</p>
-
-<ul>
-<li>XLS</li>
-<li>CSV</li>
-<li>JSON</li>
-<li>XML</li>
-</ul>
-
-<p>The following formats are NOT machine readable:</p>
-
-<ul>
-<li>HTML</li>
-<li>PDF</li>
-<li>DOC</li>
-<li>JIF</li>
-<li>JPEG</li>
-<li>PPT</li>
-</ul>
-
-<p>If you have a different file type and you don’t know if it’s machine readable or not, ask in the Open Data Census forum</p>"><i class="fa fa-keyboard-o"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data available for free? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>The data is free if you don’t have to pay for it.</p>"><i class="fa fa-dollar"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Available in bulk? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Data is available in bulk if the whole dataset can be downloaded easily. It is considered non-bulk if the citizens are limited to getting parts of the dataset through an online interface.</p>
-
-<p>For example, if restricted to querying a web form and retrieving a few results at a time from a very large database.</p>"><i class="fa fa-copy"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data provided on a timely and up to date basis? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Is the data current for the census year? You can determine or estimate when the data was last updated and its update frequency by reviewing:</p>
-
-<ul>
-<li>the metadata displayed for the data in an open data portal or web page</li>
-<li>the dataset title or filename e.g. Budget 2013-14 or Election_4July2015.csv</li>
-<li>metadata tags embedded in the web page that contains the data</li>
-<li>date values within the data to find the most recent date value</li>
-<li>the timestamp on the data file (although this may not be accurate)</li>
-<li>Some data is not updated on a regular basis. e.g. Pollutant emissions may be updated daily - while postal codes may not change for many years. </li>
-</ul>
-
-<p>You may need to use your judgement to determine if the data is timely and up to date. Document your rationale in the comments section.</p>
-
-<p>If you cannot determine a date, answer, &amp;quot;NO&amp;quot; i.e. the data is not timely or up-to-date.</p>"><i class="fa fa-clock-o"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data available online? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Data is online if it can be accessed via the Internet (e.g. a website or open data portal). If the data has been emailed to you but is not accessible via the Internet, it is not considered to be available online.</p>"><i class="fa fa-download"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is data in digital form? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Data can be in a digital format, but not accessible online. For example: A country budget can be stored on a spreadsheet or otherwise on a private government network, but not on the Internet. This means that the data is digital, but not publicly available. If you know that the data is digital somewhere inside the government (e.g. a government official tells you so), then you should answer “YES” to this question and note in the comment section how you discovered the data is in digital form.</p>"><i class="fa fa-save"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Publicly available? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Can the data be accessed by the public without restrictions? Data is considered publicly available when:</p>
-
-<ul>
-<li>It can be accessed online without the need for a password or permissions.</li>
-<li>If the data is in paper form, can be accessed by the public, and there is no restrictions on the number of photocopies that can be made.</li>
-</ul>
-
-<p>Data is <strong>NOT</strong> publicly available when:</p>
-
-<ul>
-<li>It is only made available after making a request.</li>
-<li>It was availiable because of FOIA. </li>
-<li>It can only be accessed by government officials.</li>
-</ul>"><i class="fa fa-eye"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Does the data exist? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Data must come from an official resource either issued directly by the government or by a third party officially representing the government. Data offered by companies, citizen initiatives or any non-governmental organisation do not count for the Index.</p>
-
-<p>If the government has given the right to publish the data to third parties, a submission with a link a to third party site is allowed. The third-party site must explicitly state that the data has been commissioned by the government. Check if the organization has an agreement with the government to be the official source and make a note in the comment section.</p>"><i class="fa fa-file-o"></i>&nbsp;</li>
-                      </ul>
-                  </td>
-                  <td>
-                    <a href="http://www.insse.ro/cms/">http://www.insse.ro/cms/</a>
-                  </td>
-                  <td>
-                    PDF, ...
-                  </td>
-                  <td class="info-expander" title="Click for full details">
-                      <a aria-expanded="false" data-toggle="collapse" data-target="#detail-ro" class="collapsed">
-                        <i class="fa fa-info-circle"></i>
-                      </a>
-                  </td>
-                  {% if not is_index %}
-                  <td class="year">
-                    <span title="5:21pm on 16th Oct 2015 (Submitted by Stephen Gates and reviewed by Stephen Gates)">2015</span>
-                  </td>
-                  {% endif %}
-                  <td style="background-color: rgb(122, 184, 0); color: white;" class="score" data-score="100">
-                      <span>100%</span>
-                  </td>
-                  {% if not is_index %}
-                  <td class="admin">
-                    <a href="#" class="propose" title="Propose Revisions"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                  </td>
-                  {% endif %}
-              </tr>
-                <tr style="height: 0px;" aria-expanded="false" id="detail-ro" class="details collapse">
-                  <td><span style="visibility: hidden">1</span></td>
-                  <td colspan="7" class="info-content">
-                    <span style="visibility: hidden;">Romania</span>
-                    <p>The National Statistics Institute collects the data and it can be retrieved: </p>
-                    <p>(1) online, free of charge, PDF format, for the main indicators </p>
-                    <p>(2) online, interrogation of the database using the interface provided by an institution. Most data is free but it requires an account (also free). Data can't be downloaded in bulk.</p>
-                    <p>(3) Offline, <strong>data can be downloded in bulk data, for a fee, after submitting a specific request</strong> </p>
-                    <p>(4) the data are under copyright © 1998-2014 Institutul National de Statistica - ROMANIA, and it is unclear if there is a licence.</p>
-
-                    {% if is_index %}
-                    <hr />
-                      <strong>Previous (2014):</strong>
-                      <span class="rank rank-previous">#23</span>&nbsp;&nbsp;<span style="background-color: rgb(191, 197, 35); color: white;" class="score score-previous" data-score="70">70%</span>
+          {% for place in places|sort(false, false, 'name') %}
+            {% set entry = entries|find({'place': place.id, 'dataset': dataset.id}) %}
+            {% set submissions = pending|where({'place': place.id, 'dataset': dataset.id}) %}
+            <tr data-rank="{{ place.rank }}" data-score="{{ place.computedScore }}" data-place="{{ place.id }}" data-name="{{ place.name }}">
+              <td class="rank" data-rank="{{ place.rank }}">{{ place.rank }}</td>
+              <td><a href="/place/{{place.id}}{{ urlContext }}">{{place.name}}</a></td>
+              <td>
+                <ul class="availability availability-slice">
+                  {% for question in questions %}
+                    {% if entry %}
+                      {% set answer = entry.getAnswerValueForQuestion(question) %}
+                      {% set pass = 'yes' if question.pass(answer) else 'no' %}
                     {% endif %}
-                  </td>
-              </tr>
-
-              {# row #}
-              <tr data-rank="23" data-score="90" data-place="tunisia">
-                  <td>
-                      23
-                  </td>
-                  <td>
-                    <a href="http://index.okfn.org/place/tunisia/statistics/" title="statistics in Tunisia">Tunisia</a>
-                  </td>
-                  <td>
-                      <ul class="availability availability-slice">
-                          <li data-original-title="<h4><p>Openly licensed? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>The licence must comply with the Open Definition which allows data to be freely used, reused and redistributed. The Open Definition provides a list of conformant licences. If the data uses one of these licences, it is openly licensed.</p>
-
-<p>Licences are commonly found in:</p>
-
-<ul>
-<li>the web page footer</li>
-<li>a link to Terms &amp;amp; Conditions</li>
-<li>the About section</li>
-</ul>
-
-<p>Some licences may allow re-use and redistribution but have not been assessed as conformant with the Open Definition. In this case, seek feedback on the Open Data Index discussion forum</p>"><i class="fa fa-unlock-alt"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data machine readable? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>All files are digital, but not all can be processed or parsed easily by a computer. In order to answer this question, you would need to look at the file type of the dataset. As a rule of thumb the following file types are machine readable:</p>
-
-<ul>
-<li>XLS</li>
-<li>CSV</li>
-<li>JSON</li>
-<li>XML</li>
-</ul>
-
-<p>The following formats are NOT machine readable:</p>
-
-<ul>
-<li>HTML</li>
-<li>PDF</li>
-<li>DOC</li>
-<li>JIF</li>
-<li>JPEG</li>
-<li>PPT</li>
-</ul>
-
-<p>If you have a different file type and you don’t know if it’s machine readable or not, ask in the Open Data Census forum</p>"><i class="fa fa-keyboard-o"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data available for free? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>The data is free if you don’t have to pay for it.</p>"><i class="fa fa-dollar"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Available in bulk? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Data is available in bulk if the whole dataset can be downloaded easily. It is considered non-bulk if the citizens are limited to getting parts of the dataset through an online interface.</p>
-
-<p>For example, if restricted to querying a web form and retrieving a few results at a time from a very large database.</p>"><i class="fa fa-copy"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data provided on a timely and up to date basis? </p></h4>" class="no" data-toggle="popover" title="" data-content="<p>Is the data current for the census year? You can determine or estimate when the data was last updated and its update frequency by reviewing:</p>
-
-<ul>
-<li>the metadata displayed for the data in an open data portal or web page</li>
-<li>the dataset title or filename e.g. Budget 2013-14 or Election_4July2015.csv</li>
-<li>metadata tags embedded in the web page that contains the data</li>
-<li>date values within the data to find the most recent date value</li>
-<li>the timestamp on the data file (although this may not be accurate)</li>
-<li>Some data is not updated on a regular basis. e.g. Pollutant emissions may be updated daily - while postal codes may not change for many years. </li>
-</ul>
-
-<p>You may need to use your judgement to determine if the data is timely and up to date. Document your rationale in the comments section.</p>
-
-<p>If you cannot determine a date, answer, &amp;quot;NO&amp;quot; i.e. the data is not timely or up-to-date.</p>"><i class="fa fa-clock-o"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data available online? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Data is online if it can be accessed via the Internet (e.g. a website or open data portal). If the data has been emailed to you but is not accessible via the Internet, it is not considered to be available online.</p>"><i class="fa fa-download"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is data in digital form? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Data can be in a digital format, but not accessible online. For example: A country budget can be stored on a spreadsheet or otherwise on a private government network, but not on the Internet. This means that the data is digital, but not publicly available. If you know that the data is digital somewhere inside the government (e.g. a government official tells you so), then you should answer “YES” to this question and note in the comment section how you discovered the data is in digital form.</p>"><i class="fa fa-save"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Publicly available? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Can the data be accessed by the public without restrictions? Data is considered publicly available when:</p>
-
-<ul>
-<li>It can be accessed online without the need for a password or permissions.</li>
-<li>If the data is in paper form, can be accessed by the public, and there is no restrictions on the number of photocopies that can be made.</li>
-</ul>
-
-<p>Data is <strong>NOT</strong> publicly available when:</p>
-
-<ul>
-<li>It is only made available after making a request.</li>
-<li>It was availiable because of FOIA. </li>
-<li>It can only be accessed by government officials.</li>
-</ul>"><i class="fa fa-eye"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Does the data exist? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Data must come from an official resource either issued directly by the government or by a third party officially representing the government. Data offered by companies, citizen initiatives or any non-governmental organisation do not count for the Index.</p>
-
-<p>If the government has given the right to publish the data to third parties, a submission with a link a to third party site is allowed. The third-party site must explicitly state that the data has been commissioned by the government. Check if the organization has an agreement with the government to be the official source and make a note in the comment section.</p>"><i class="fa fa-file-o"></i>&nbsp;</li>
-                      </ul>
-                  </td>
-                  <td>
-<a href="http://dataportal.ins.tn">http://dataportal.ins.tn</a>                  </td>
-                  <td>
-HTML,PD ...                  </td>
-                  <td class="info-expander" title="Click for full details">
-                      <a data-toggle="collapse" data-target="#detail-tn" class="collapsed">
-                        <i class="fa fa-info-circle"></i>
-                      </a>
-                  </td>
-                  {% if not is_index %}
-                  <td class="year">
-                    <span title="5:21pm on 16th Oct 2015 (Submitted by Stephen Gates and reviewed by Stephen Gates)">2015</span>
-                  </td>
-                  {% endif %}
-                  <td style="background-color: rgb(145, 188, 11); color: white;" class="score" data-score="90">
-                      <span>90%</span>
-                  </td>
-                  {% if not is_index %}
-                  <td class="admin">
-                    <a href="#" class="propose" title="Propose Revisions"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                  </td>
-                  {% endif %}
-              </tr>
-              <tr id="detail-tn" class="details collapse">
-                  <td><span style="visibility: hidden">23</span></td>
-                  <td colspan="7">
-<span style="visibility: hidden;">Tunisia</span>
-                      <p>Population up to 2014. Unemployment up to 2012. GDP up to 2013 on this <a href="http://dataportal.ins.tn/fr/Map">data</a> portal. </p>
-                      {% if is_index %}
-                      <hr />
-                      <strong>Previous (2014):</strong>
-                      <span class="rank rank-previous">#66</span>&nbsp;&nbsp;<span style="background-color: rgb(238, 186, 53); color: white;" class="score score-previous" data-score="45">45%</span>
-                      {% endif %}
-                  </td>
-              </tr>
-
-              {# row #}
-              <tr data-rank="33" data-score="70" data-place="belgium">
-                  <td>
-                      33
-                  </td>
-                  <td>
-                    <a href="http://index.okfn.org/place/belgium/statistics/" title="statistics in Belgium">Belgium</a>
-                  </td>
-                  <td>
-                      <ul class="availability availability-slice">
-                          <li data-original-title="<h4><p>Openly licensed? </p></h4>" class="maybe" data-toggle="popover" title="" data-content="<p>The licence must comply with the Open Definition which allows data to be freely used, reused and redistributed. The Open Definition provides a list of conformant licences. If the data uses one of these licences, it is openly licensed.</p>
-
-<p>Licences are commonly found in:</p>
-
-<ul>
-<li>the web page footer</li>
-<li>a link to Terms &amp;amp; Conditions</li>
-<li>the About section</li>
-</ul>
-
-<p>Some licences may allow re-use and redistribution but have not been assessed as conformant with the Open Definition. In this case, seek feedback on the Open Data Index discussion forum</p>"><i class="fa fa-unlock-alt"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data machine readable? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>All files are digital, but not all can be processed or parsed easily by a computer. In order to answer this question, you would need to look at the file type of the dataset. As a rule of thumb the following file types are machine readable:</p>
-
-<ul>
-<li>XLS</li>
-<li>CSV</li>
-<li>JSON</li>
-<li>XML</li>
-</ul>
-
-<p>The following formats are NOT machine readable:</p>
-
-<ul>
-<li>HTML</li>
-<li>PDF</li>
-<li>DOC</li>
-<li>JIF</li>
-<li>JPEG</li>
-<li>PPT</li>
-</ul>
-
-<p>If you have a different file type and you don’t know if it’s machine readable or not, ask in the Open Data Census forum</p>"><i class="fa fa-keyboard-o"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data available for free? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>The data is free if you don’t have to pay for it.</p>"><i class="fa fa-dollar"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Available in bulk? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Data is available in bulk if the whole dataset can be downloaded easily. It is considered non-bulk if the citizens are limited to getting parts of the dataset through an online interface.</p>
-
-<p>For example, if restricted to querying a web form and retrieving a few results at a time from a very large database.</p>"><i class="fa fa-copy"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data provided on a timely and up to date basis? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Is the data current for the census year? You can determine or estimate when the data was last updated and its update frequency by reviewing:</p>
-
-<ul>
-<li>the metadata displayed for the data in an open data portal or web page</li>
-<li>the dataset title or filename e.g. Budget 2013-14 or Election_4July2015.csv</li>
-<li>metadata tags embedded in the web page that contains the data</li>
-<li>date values within the data to find the most recent date value</li>
-<li>the timestamp on the data file (although this may not be accurate)</li>
-<li>Some data is not updated on a regular basis. e.g. Pollutant emissions may be updated daily - while postal codes may not change for many years. </li>
-</ul>
-
-<p>You may need to use your judgement to determine if the data is timely and up to date. Document your rationale in the comments section.</p>
-
-<p>If you cannot determine a date, answer, &amp;quot;NO&amp;quot; i.e. the data is not timely or up-to-date.</p>"><i class="fa fa-clock-o"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data available online? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Data is online if it can be accessed via the Internet (e.g. a website or open data portal). If the data has been emailed to you but is not accessible via the Internet, it is not considered to be available online.</p>"><i class="fa fa-download"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is data in digital form? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Data can be in a digital format, but not accessible online. For example: A country budget can be stored on a spreadsheet or otherwise on a private government network, but not on the Internet. This means that the data is digital, but not publicly available. If you know that the data is digital somewhere inside the government (e.g. a government official tells you so), then you should answer “YES” to this question and note in the comment section how you discovered the data is in digital form.</p>"><i class="fa fa-save"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Publicly available? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Can the data be accessed by the public without restrictions? Data is considered publicly available when:</p>
-
-<ul>
-<li>It can be accessed online without the need for a password or permissions.</li>
-<li>If the data is in paper form, can be accessed by the public, and there is no restrictions on the number of photocopies that can be made.</li>
-</ul>
-
-<p>Data is <strong>NOT</strong> publicly available when:</p>
-
-<ul>
-<li>It is only made available after making a request.</li>
-<li>It was availiable because of FOIA. </li>
-<li>It can only be accessed by government officials.</li>
-</ul>"><i class="fa fa-eye"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Does the data exist? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Data must come from an official resource either issued directly by the government or by a third party officially representing the government. Data offered by companies, citizen initiatives or any non-governmental organisation do not count for the Index.</p>
-
-<p>If the government has given the right to publish the data to third parties, a submission with a link a to third party site is allowed. The third-party site must explicitly state that the data has been commissioned by the government. Check if the organization has an agreement with the government to be the official source and make a note in the comment section.</p>"><i class="fa fa-file-o"></i>&nbsp;</li>
-                      </ul>
-                  </td>
-                  <td>
-<a href="http://stat.nbb.be/Index.aspx?ThemeTreeId=8&amp;lang=en">http://stat.nbb.be/Index.aspx?...</a>                  </td>
-                  <td>
-Excel, ...                  </td>
-                  <td class="info-expander" title="Click for full details">
-                      <a data-toggle="collapse" data-target="#detail-be" class="collapsed">
-                        <i class="fa fa-info-circle"></i>
-                      </a>
-                  </td>
-                  {% if not is_index %}
-                  <td class="year">
-                    <span title="5:21pm on 16th Oct 2015 (Submitted by Stephen Gates and reviewed by Stephen Gates)">2015</span>
-                  </td>
-                  {% endif %}
-                  <td style="background-color: rgb(191, 197, 35); color: white;" class="score" data-score="70">
-                      <span>70%</span>
-                  </td>
-                  {% if not is_index %}
-                  <td class="admin">
-                    <a class="propose" title="Sorry, only one submission can be waiting for review at a time - please come back in a few days to submit new information"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                  </td>
-                  {% endif %}
-              </tr>
-              <tr id="detail-be" class="details collapse">
-                  <td><span style="visibility: hidden">33</span></td>
-                  <td colspan="7">
-                    <span style="visibility: hidden;">Belgium</span>
-                      <p>Many separate spreadsheets available, although some data is only available when making a selection using online report builder. </p>
-                      <p>More data is available at <a href="http://www.census2011.be/">http://www.census2011.be/</a>.</p>
-                      <p>Note that all statistics are also published by Eurostat. Where they are available in bulk. See <a href="https://ec.europa.eu/CensusHub2/query.do?step=selectHyperCube&amp;qhc=false&amp;countrycode=be">https://ec.europa.eu/CensusHub2/query.do?step=selectHyperCube&amp;qhc=false&amp;countrycode=be</a>
-                      This holds for every European Union Member state.</p>
-                      {% if is_index %}
-                      <hr />
-                      <strong>Previous (2014):</strong>
-                      <span class="rank rank-previous">#23</span>&nbsp;&nbsp;<span style="background-color: rgb(191, 197, 35); color: white;" class="score score-previous" data-score="70">70%</span>
-                      {% endif %}
-                  </td>
-              </tr>
-
+                    <li class="{{ pass }}" title="{% if pass == 'yes' %}It's {% elif pass == 'no' %}It's not {% endif %}{{ question.questionshort|lower }}"><i class="fa fa-{{ question.icon }}"></i>&nbsp;</li>
+                  {% endfor %}
+                </ul>
+              </td>
+              <td class="info-expander" title="Click for full details">
+                <a aria-expanded="false" data-toggle="collapse" data-target="#detail-{{place.id}}" class="collapsed">
+                  <i class="fa fa-info-circle"></i>
+                </a>
+              </td>
               {% if not is_index %}
-              {# row #}
-              <tr data-rank="33" data-score="70" data-place="belgium" class="queued">
-                  <td class="rank">
-                      33
-                  </td>
-                  <td class="queued-context">
-
-                    <h6><span class="icon">&#8627;</span> Awaiting review</h6>
-
-                    <span title="Submitted by anonymous" class="queued-user">
-                      <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;
-                      anonymous
-                    </span>
-                    <br>
-                    <span title="Submitted on 5:59am on 6th Jul 2016" class="queued-time">
-                      <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></i>&nbsp;
-                      22 days ago
-                    </span>
-
-                  </td>
-                  <td>
-                      <ul class="availability availability-slice">
-                          <li data-original-title="<h4><p>Openly licensed? </p></h4>" class="yes" title=""><i class="fa fa-unlock-alt"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data machine readable? </p></h4>" class="yes" title=""><i class="fa fa-keyboard-o"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data available for free? </p></h4>" class="yes" title="" data-content="<p>The data is free if you don’t have to pay for it.</p>"><i class="fa fa-dollar"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Available in bulk? </p></h4>" class="yes" data-toggle="popover" title=""><i class="fa fa-copy"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data provided on a timely and up to date basis? </p></h4>" class="yes" title=""><i class="fa fa-clock-o"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data available online? </p></h4>" class="yes" title=""><i class="fa fa-download"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is data in digital form? </p></h4>" class="yes" title=""><i class="fa fa-save"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Publicly available? </p></h4>" class="yes" title=""><i class="fa fa-eye"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Does the data exist? </p></h4>" class="yes" title=""><i class="fa fa-file-o"></i>&nbsp;</li>
-                      </ul>
-                  </td>
-                  <td>
-<a href="http://stat.nbb.be/Index.aspx?ThemeTreeId=8&amp;lang=en">http://stat.nbb.be/Index.aspx?...</a>                  </td>
-                  <td>
-Excel, ...                  </td>
-                  <td class="info-expander" title="Click for full details">
-                      <a data-toggle="collapse" data-target="#detail-be" class="collapsed">
-                        <i class="fa fa-info-circle"></i>
-                      </a>
-                  </td>
-                  {% if not is_index %}
-                  <td class="year">
-                    <span title="5:21pm on 16th Oct 2015 (Submitted by Stephen Gates and reviewed by Stephen Gates)">2016</span>
-                  </td>
-                  {% endif %}
-                  <td style="background-color: rgb(191, 197, 35); color: white;" class="score" data-score="70">
-                      <span>70%</span>
-                  </td>
-                  {% if not is_index %}
-                  <td class="admin">
-                    <a href="#" class="view" title="View Submission"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                  </td>
-                  {% endif %}
-              </tr>
-              <tr id="detail-be" class="details collapse">
-                  <td><span style="visibility: hidden">33</span></td>
-                  <td colspan="7">
-                    <span style="visibility: hidden;">Belgium</span>
-                      <p>Many separate spreadsheets available, although some data is only available when making a selection using online report builder. </p>
-                      <p>More data is available at <a href="http://www.census2011.be/">http://www.census2011.be/</a>.</p>
-                      <p>Note that all statistics are also published by Eurostat. Where they are available in bulk. See <a href="https://ec.europa.eu/CensusHub2/query.do?step=selectHyperCube&amp;qhc=false&amp;countrycode=be">https://ec.europa.eu/CensusHub2/query.do?step=selectHyperCube&amp;qhc=false&amp;countrycode=be</a>
-                      This holds for every European Union Member state.</p>
-                      {% if is_index %}
-                      <hr />
-                      <strong>Previous (2014):</strong>
-                      <span class="rank rank-previous">#23</span>&nbsp;&nbsp;<span style="background-color: rgb(191, 197, 35); color: white;" class="score score-previous" data-score="70">70%</span>
-                      {% endif %}
-                  </td>
-              </tr>
+              <td class="year">
+                {% if entry %}
+                  <span title="{{ entry.updatedAt|dateformat }} ({{ gettext('Submitted by') }} {{ entry.Submitter.fullName() }} {{ gettext('and reviewed by') }} {{ entry.Reviewer.fullName() }})">{{ entry.year }}</span>
+                {% endif %}
+              </td>
               {% endif %}
-
-              {# row #}
-              <tr data-rank="64" data-score="50" data-place="bolivia">
-                  <td>
-                      64
-                  </td>
-                  <td>
-                    <a href="http://index.okfn.org/place/bolivia/statistics/" title="statistics in Bolivia, Plurinational State of">Bolivia, Plurinational State of</a>
-                  </td>
-                  <td>
-                      <ul class="availability availability-slice">
-                          <li data-original-title="<h4><p>Openly licensed? </p></h4>" class="no" data-toggle="popover" title="" data-content="<p>The licence must comply with the Open Definition which allows data to be freely used, reused and redistributed. The Open Definition provides a list of conformant licences. If the data uses one of these licences, it is openly licensed.</p>
-
-<p>Licences are commonly found in:</p>
-
-<ul>
-<li>the web page footer</li>
-<li>a link to Terms &amp;amp; Conditions</li>
-<li>the About section</li>
-</ul>
-
-<p>Some licences may allow re-use and redistribution but have not been assessed as conformant with the Open Definition. In this case, seek feedback on the Open Data Index discussion forum</p>"><i class="fa fa-unlock-alt"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data machine readable? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>All files are digital, but not all can be processed or parsed easily by a computer. In order to answer this question, you would need to look at the file type of the dataset. As a rule of thumb the following file types are machine readable:</p>
-
-<ul>
-<li>XLS</li>
-<li>CSV</li>
-<li>JSON</li>
-<li>XML</li>
-</ul>
-
-<p>The following formats are NOT machine readable:</p>
-
-<ul>
-<li>HTML</li>
-<li>PDF</li>
-<li>DOC</li>
-<li>JIF</li>
-<li>JPEG</li>
-<li>PPT</li>
-</ul>
-
-<p>If you have a different file type and you don’t know if it’s machine readable or not, ask in the Open Data Census forum</p>"><i class="fa fa-keyboard-o"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data available for free? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>The data is free if you don’t have to pay for it.</p>"><i class="fa fa-dollar"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Available in bulk? </p></h4>" class="maybe" data-toggle="popover" title="" data-content="<p>Data is available in bulk if the whole dataset can be downloaded easily. It is considered non-bulk if the citizens are limited to getting parts of the dataset through an online interface.</p>
-
-<p>For example, if restricted to querying a web form and retrieving a few results at a time from a very large database.</p>"><i class="fa fa-copy"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data provided on a timely and up to date basis? </p></h4>" class="no" data-toggle="popover" title="" data-content="<p>Is the data current for the census year? You can determine or estimate when the data was last updated and its update frequency by reviewing:</p>
-
-<ul>
-<li>the metadata displayed for the data in an open data portal or web page</li>
-<li>the dataset title or filename e.g. Budget 2013-14 or Election_4July2015.csv</li>
-<li>metadata tags embedded in the web page that contains the data</li>
-<li>date values within the data to find the most recent date value</li>
-<li>the timestamp on the data file (although this may not be accurate)</li>
-<li>Some data is not updated on a regular basis. e.g. Pollutant emissions may be updated daily - while postal codes may not change for many years. </li>
-</ul>
-
-<p>You may need to use your judgement to determine if the data is timely and up to date. Document your rationale in the comments section.</p>
-
-<p>If you cannot determine a date, answer, &amp;quot;NO&amp;quot; i.e. the data is not timely or up-to-date.</p>"><i class="fa fa-clock-o"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data available online? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Data is online if it can be accessed via the Internet (e.g. a website or open data portal). If the data has been emailed to you but is not accessible via the Internet, it is not considered to be available online.</p>"><i class="fa fa-download"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is data in digital form? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Data can be in a digital format, but not accessible online. For example: A country budget can be stored on a spreadsheet or otherwise on a private government network, but not on the Internet. This means that the data is digital, but not publicly available. If you know that the data is digital somewhere inside the government (e.g. a government official tells you so), then you should answer “YES” to this question and note in the comment section how you discovered the data is in digital form.</p>"><i class="fa fa-save"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Publicly available? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Can the data be accessed by the public without restrictions? Data is considered publicly available when:</p>
-
-<ul>
-<li>It can be accessed online without the need for a password or permissions.</li>
-<li>If the data is in paper form, can be accessed by the public, and there is no restrictions on the number of photocopies that can be made.</li>
-</ul>
-
-<p>Data is <strong>NOT</strong> publicly available when:</p>
-
-<ul>
-<li>It is only made available after making a request.</li>
-<li>It was availiable because of FOIA. </li>
-<li>It can only be accessed by government officials.</li>
-</ul>"><i class="fa fa-eye"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Does the data exist? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Data must come from an official resource either issued directly by the government or by a third party officially representing the government. Data offered by companies, citizen initiatives or any non-governmental organisation do not count for the Index.</p>
-
-<p>If the government has given the right to publish the data to third parties, a submission with a link a to third party site is allowed. The third-party site must explicitly state that the data has been commissioned by the government. Check if the organization has an agreement with the government to be the official source and make a note in the comment section.</p>"><i class="fa fa-file-o"></i>&nbsp;</li>
-                      </ul>
-                  </td>
-                  <td>
-<a href="http://www.ine.gob.bo/default.aspx">http://www.ine.gob.bo/default....</a>                  </td>
-                  <td>
-Excel, ...                  </td>
-                  <td class="info-expander" title="Click for full details">
-                      <a data-toggle="collapse" data-target="#detail-bo" class="collapsed">
-                        <i class="fa fa-info-circle"></i>
-                      </a>
-                  </td>
-                  {% if not is_index %}
-                  <td class="year">
-                    <span title="5:21pm on 16th Oct 2015 (Submitted by Stephen Gates and reviewed by Stephen Gates)">2015</span>
-                  </td>
-                  {% endif %}
-                  <td style="background-color: rgb(237, 207, 59); color: white;" class="score" data-score="50">
-                      <span>50%</span>
-                  </td>
-                  {% if not is_index %}
-                  <td class="admin">
-                    <a href="#" class="propose" title="Propose Revisions"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                  </td>
-                  {% endif %}
-              </tr>
-              <tr id="detail-bo" class="details collapse">
-                  <td><span style="visibility: hidden">64</span></td>
-                  <td colspan="7">
-                    <span style="visibility: hidden;">Bolivia, Plurinational State of</span>
-                      <p><a href="http://www.ine.gob.bo/indice/general.aspx?codigo=40204">GDP</a> up to 2015</p>
-                      <p><a href="http://www.ine.gob.bo/indice/EstadisticaSocial.aspx?codigo=30406">Unemployment</a> up to 2010. </p>
-                      <p><a href="http://www.ine.gob.bo/indice/EstadisticaSocial.aspx?codigo=30801">Population</a> up to 2011.</p>
-                  </td>
-              </tr>
-
-              {# row #}
-              <tr data-rank="76" data-score="45" data-place="kenya">
-                  <td>
-                      76
-                  </td>
-                  <td>
-                    <a href="http://index.okfn.org/place/kenya/statistics/" title="statistics in Kenya">Kenya</a>
-                  </td>
-                  <td>
-                      <ul class="availability availability-slice">
-                          <li data-original-title="<h4><p>Openly licensed? </p></h4>" class="no" data-toggle="popover" title="" data-content="<p>The licence must comply with the Open Definition which allows data to be freely used, reused and redistributed. The Open Definition provides a list of conformant licences. If the data uses one of these licences, it is openly licensed.</p>
-
-<p>Licences are commonly found in:</p>
-
-<ul>
-<li>the web page footer</li>
-<li>a link to Terms &amp;amp; Conditions</li>
-<li>the About section</li>
-</ul>
-
-<p>Some licences may allow re-use and redistribution but have not been assessed as conformant with the Open Definition. In this case, seek feedback on the Open Data Index discussion forum</p>"><i class="fa fa-unlock-alt"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data machine readable? </p></h4>" class="no" data-toggle="popover" title="" data-content="<p>All files are digital, but not all can be processed or parsed easily by a computer. In order to answer this question, you would need to look at the file type of the dataset. As a rule of thumb the following file types are machine readable:</p>
-
-<ul>
-<li>XLS</li>
-<li>CSV</li>
-<li>JSON</li>
-<li>XML</li>
-</ul>
-
-<p>The following formats are NOT machine readable:</p>
-
-<ul>
-<li>HTML</li>
-<li>PDF</li>
-<li>DOC</li>
-<li>JIF</li>
-<li>JPEG</li>
-<li>PPT</li>
-</ul>
-
-<p>If you have a different file type and you don’t know if it’s machine readable or not, ask in the Open Data Census forum</p>"><i class="fa fa-keyboard-o"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data available for free? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>The data is free if you don’t have to pay for it.</p>"><i class="fa fa-dollar"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Available in bulk? </p></h4>" class="no" data-toggle="popover" title="" data-content="<p>Data is available in bulk if the whole dataset can be downloaded easily. It is considered non-bulk if the citizens are limited to getting parts of the dataset through an online interface.</p>
-
-<p>For example, if restricted to querying a web form and retrieving a few results at a time from a very large database.</p>"><i class="fa fa-copy"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data provided on a timely and up to date basis? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Is the data current for the census year? You can determine or estimate when the data was last updated and its update frequency by reviewing:</p>
-
-<ul>
-<li>the metadata displayed for the data in an open data portal or web page</li>
-<li>the dataset title or filename e.g. Budget 2013-14 or Election_4July2015.csv</li>
-<li>metadata tags embedded in the web page that contains the data</li>
-<li>date values within the data to find the most recent date value</li>
-<li>the timestamp on the data file (although this may not be accurate)</li>
-<li>Some data is not updated on a regular basis. e.g. Pollutant emissions may be updated daily - while postal codes may not change for many years. </li>
-</ul>
-
-<p>You may need to use your judgement to determine if the data is timely and up to date. Document your rationale in the comments section.</p>
-
-<p>If you cannot determine a date, answer, &amp;quot;NO&amp;quot; i.e. the data is not timely or up-to-date.</p>"><i class="fa fa-clock-o"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data available online? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Data is online if it can be accessed via the Internet (e.g. a website or open data portal). If the data has been emailed to you but is not accessible via the Internet, it is not considered to be available online.</p>"><i class="fa fa-download"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is data in digital form? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Data can be in a digital format, but not accessible online. For example: A country budget can be stored on a spreadsheet or otherwise on a private government network, but not on the Internet. This means that the data is digital, but not publicly available. If you know that the data is digital somewhere inside the government (e.g. a government official tells you so), then you should answer “YES” to this question and note in the comment section how you discovered the data is in digital form.</p>"><i class="fa fa-save"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Publicly available? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Can the data be accessed by the public without restrictions? Data is considered publicly available when:</p>
-
-<ul>
-<li>It can be accessed online without the need for a password or permissions.</li>
-<li>If the data is in paper form, can be accessed by the public, and there is no restrictions on the number of photocopies that can be made.</li>
-</ul>
-
-<p>Data is <strong>NOT</strong> publicly available when:</p>
-
-<ul>
-<li>It is only made available after making a request.</li>
-<li>It was availiable because of FOIA. </li>
-<li>It can only be accessed by government officials.</li>
-</ul>"><i class="fa fa-eye"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Does the data exist? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Data must come from an official resource either issued directly by the government or by a third party officially representing the government. Data offered by companies, citizen initiatives or any non-governmental organisation do not count for the Index.</p>
-
-<p>If the government has given the right to publish the data to third parties, a submission with a link a to third party site is allowed. The third-party site must explicitly state that the data has been commissioned by the government. Check if the organization has an agreement with the government to be the official source and make a note in the comment section.</p>"><i class="fa fa-file-o"></i>&nbsp;</li>
-                      </ul>
-                  </td>
-                  <td>
-<a href="http://www.knbs.or.ke/">http://www.knbs.or.ke/</a>                  </td>
-                  <td>
-n/a                  </td>
-                  <td class="info-expander" title="Click for full details">
-                      <a data-toggle="collapse" data-target="#detail-ke" class="collapsed">
-                        <i class="fa fa-info-circle"></i>
-                      </a>
-                  </td>
-                  {% if not is_index %}
-                  <td class="year">
-                    <span title="5:21pm on 16th Oct 2015 (Submitted by Stephen Gates and reviewed by Stephen Gates)">2015</span>
-                  </td>
-                  {% endif %}
-                  <td style="background-color: rgb(238, 186, 53); color: white;" class="score" data-score="45">
-                      <span>45%</span>
-                  </td>
-                  {% if not is_index %}
-                  <td class="admin">
-                    <a href="#" class="propose" title="Propose Revisions"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                  </td>
-                  {% endif %}
-              </tr>
-              <tr id="detail-ke" class="details collapse">
-                  <td><span style="visibility: hidden">76</span></td>
-                  <td colspan="7">
-                      <span style="visibility: hidden;">Kenya</span>
-                      <p>The Kenya National Bureau of statistics which is the central government agency that collects data has statistics on census, economic activities, demographics. It has many channels through which the some of the data is distributed, with links for these pages on their website, one of which is the Kenya Open Data Initiative (KODI). However there seems to be no standard for distributing data. Some are available and open e.g. KODI but some are available on the KNBS website itself but not open. Some of these are not charged while others are. KNBS applies a statistics act and a form has to be submitted for data requests. On the plus side some include metadata, background information, data description. On the Kenya Open Data portal, the datasets are mostly from KNBS but not up to date. [According to Ahmed ]</p>
-                      <p>Other areas i.e. Consumer Price Indices have regularly updated data within the site, the Statistics section has data between 2006 and 2012 which is pretty outdated at present.</p>
-                      {% if is_index %}
-                      <hr />
-                      <strong>Previous (2014):</strong>
-                      <span class="rank rank-previous">#92</span>&nbsp;&nbsp;<span style="background-color: rgb(251, 41, 11); color: white;" class="score score-previous" data-score="10">10%</span>
-                      {% endif %}
-                  </td>
-              </tr>
-
-              {# row #}
-              <tr data-rank="87" data-score="35" data-place="guernsey">
-                  <td>
-                      87
-                  </td>
-                  <td>
-                    <a href="http://index.okfn.org/place/guernsey/statistics/" title="statistics in Guernsey">Guernsey</a>
-                  </td>
-                  <td>
-                      <ul class="availability availability-slice">
-                          <li data-original-title="<h4><p>Openly licensed? </p></h4>" class="no" data-toggle="popover" title="" data-content="<p>The licence must comply with the Open Definition which allows data to be freely used, reused and redistributed. The Open Definition provides a list of conformant licences. If the data uses one of these licences, it is openly licensed.</p>
-
-<p>Licences are commonly found in:</p>
-
-<ul>
-<li>the web page footer</li>
-<li>a link to Terms &amp;amp; Conditions</li>
-<li>the About section</li>
-</ul>
-
-<p>Some licences may allow re-use and redistribution but have not been assessed as conformant with the Open Definition. In this case, seek feedback on the Open Data Index discussion forum</p>"><i class="fa fa-unlock-alt"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data machine readable? </p></h4>" class="no" data-toggle="popover" title="" data-content="<p>All files are digital, but not all can be processed or parsed easily by a computer. In order to answer this question, you would need to look at the file type of the dataset. As a rule of thumb the following file types are machine readable:</p>
-
-<ul>
-<li>XLS</li>
-<li>CSV</li>
-<li>JSON</li>
-<li>XML</li>
-</ul>
-
-<p>The following formats are NOT machine readable:</p>
-
-<ul>
-<li>HTML</li>
-<li>PDF</li>
-<li>DOC</li>
-<li>JIF</li>
-<li>JPEG</li>
-<li>PPT</li>
-</ul>
-
-<p>If you have a different file type and you don’t know if it’s machine readable or not, ask in the Open Data Census forum</p>"><i class="fa fa-keyboard-o"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data available for free? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>The data is free if you don’t have to pay for it.</p>"><i class="fa fa-dollar"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Available in bulk? </p></h4>" class="no" data-toggle="popover" title="" data-content="<p>Data is available in bulk if the whole dataset can be downloaded easily. It is considered non-bulk if the citizens are limited to getting parts of the dataset through an online interface.</p>
-
-<p>For example, if restricted to querying a web form and retrieving a few results at a time from a very large database.</p>"><i class="fa fa-copy"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data provided on a timely and up to date basis? </p></h4>" class="no" data-toggle="popover" title="" data-content="<p>Is the data current for the census year? You can determine or estimate when the data was last updated and its update frequency by reviewing:</p>
-
-<ul>
-<li>the metadata displayed for the data in an open data portal or web page</li>
-<li>the dataset title or filename e.g. Budget 2013-14 or Election_4July2015.csv</li>
-<li>metadata tags embedded in the web page that contains the data</li>
-<li>date values within the data to find the most recent date value</li>
-<li>the timestamp on the data file (although this may not be accurate)</li>
-<li>Some data is not updated on a regular basis. e.g. Pollutant emissions may be updated daily - while postal codes may not change for many years. </li>
-</ul>
-
-<p>You may need to use your judgement to determine if the data is timely and up to date. Document your rationale in the comments section.</p>
-
-<p>If you cannot determine a date, answer, &amp;quot;NO&amp;quot; i.e. the data is not timely or up-to-date.</p>"><i class="fa fa-clock-o"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data available online? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Data is online if it can be accessed via the Internet (e.g. a website or open data portal). If the data has been emailed to you but is not accessible via the Internet, it is not considered to be available online.</p>"><i class="fa fa-download"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is data in digital form? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Data can be in a digital format, but not accessible online. For example: A country budget can be stored on a spreadsheet or otherwise on a private government network, but not on the Internet. This means that the data is digital, but not publicly available. If you know that the data is digital somewhere inside the government (e.g. a government official tells you so), then you should answer “YES” to this question and note in the comment section how you discovered the data is in digital form.</p>"><i class="fa fa-save"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Publicly available? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Can the data be accessed by the public without restrictions? Data is considered publicly available when:</p>
-
-<ul>
-<li>It can be accessed online without the need for a password or permissions.</li>
-<li>If the data is in paper form, can be accessed by the public, and there is no restrictions on the number of photocopies that can be made.</li>
-</ul>
-
-<p>Data is <strong>NOT</strong> publicly available when:</p>
-
-<ul>
-<li>It is only made available after making a request.</li>
-<li>It was availiable because of FOIA. </li>
-<li>It can only be accessed by government officials.</li>
-</ul>"><i class="fa fa-eye"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Does the data exist? </p></h4>" class="yes" data-toggle="popover" title="" data-content="<p>Data must come from an official resource either issued directly by the government or by a third party officially representing the government. Data offered by companies, citizen initiatives or any non-governmental organisation do not count for the Index.</p>
-
-<p>If the government has given the right to publish the data to third parties, a submission with a link a to third party site is allowed. The third-party site must explicitly state that the data has been commissioned by the government. Check if the organization has an agreement with the government to be the official source and make a note in the comment section.</p>"><i class="fa fa-file-o"></i>&nbsp;</li>
-                      </ul>
-                  </td>
-                  <td>
-<a href="http://www.gov.gg/pru">http://www.gov.gg/pru</a>                  </td>
-                  <td>
-PDF                  </td>
-                  <td class="info-expander" title="Click for full details">
-                      <a data-toggle="collapse" data-target="#detail-gg" class="collapsed">
-                        <i class="fa fa-info-circle"></i>
-                      </a>
-                  </td>
-                  {% if not is_index %}
-                  <td class="year">
-                    <span title="5:21pm on 16th Oct 2015 (Submitted by Stephen Gates and reviewed by Stephen Gates)">2015</span>
-                  </td>
-                  {% endif %}
-                  <td style="background-color: rgb(242, 144, 41); color: white;" class="score" data-score="35">
-                      <span>35%</span>
-                  </td>
-                  {% if not is_index %}
-                  <td class="admin">
-                    <a href="#" class="propose" title="Propose Revisions"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                  </td>
-                  {% endif %}
-              </tr>
-              <tr id="detail-gg" class="details collapse">
-                  <td><span style="visibility: hidden">87</span></td>
-                  <td colspan="7">
-                      <span style="visibility: hidden;">Guernsey</span>
-                      <p>GDP - see "National accounts" <a href="http://www.gov.gg/gdp">http://www.gov.gg/gdp</a> (latest figure is an estimate for 2014, published August 2015) <a href="http://www.gov.gg/CHttpHandler.ashx?id=97340&amp;p=">http://www.gov.gg/CHttpHandler.ashx?id=97340&amp;p=</a></p>
-                      <p>Unemployment - see "Labout market" <a href="http://www.gov.gg/lmb">http://www.gov.gg/lmb</a> (latest figures are for June 2015, published September 2015) <a href="http://www.gov.gg/CHttpHandler.ashx?id=97595&amp;p=0">http://www.gov.gg/CHttpHandler.ashx?id=97595&amp;p=0</a></p>
-                      <p>Population - see <a href="http://www.gov.gg/population">http://www.gov.gg/population</a>
-                      Latest reports (for 2015) should be at <a href="http://www.gov.gg/article/116644/2015">http://www.gov.gg/article/116644/2015</a> but the page has no entries as at 28 September 2015.</p>
-                  </td>
-              </tr>
-
-              {# row #}
-              <tr data-rank="106" data-score="0" data-place="china">
-                  <td>
-                      106
-                  </td>
-                  <td>
-                    <a href="http://index.okfn.org/place/china/statistics/" title="statistics in China">China</a>
-                  </td>
-                  <td>
-                      <ul class="availability availability-slice">
-                          <li data-original-title="<h4><p>Openly licensed? </p></h4>" class="no" data-toggle="popover" title="" data-content="<p>The licence must comply with the Open Definition which allows data to be freely used, reused and redistributed. The Open Definition provides a list of conformant licences. If the data uses one of these licences, it is openly licensed.</p>
-
-<p>Licences are commonly found in:</p>
-
-<ul>
-<li>the web page footer</li>
-<li>a link to Terms &amp;amp; Conditions</li>
-<li>the About section</li>
-</ul>
-
-<p>Some licences may allow re-use and redistribution but have not been assessed as conformant with the Open Definition. In this case, seek feedback on the Open Data Index discussion forum</p>"><i class="fa fa-unlock-alt"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data machine readable? </p></h4>" class="no" data-toggle="popover" title="" data-content="<p>All files are digital, but not all can be processed or parsed easily by a computer. In order to answer this question, you would need to look at the file type of the dataset. As a rule of thumb the following file types are machine readable:</p>
-
-<ul>
-<li>XLS</li>
-<li>CSV</li>
-<li>JSON</li>
-<li>XML</li>
-</ul>
-
-<p>The following formats are NOT machine readable:</p>
-
-<ul>
-<li>HTML</li>
-<li>PDF</li>
-<li>DOC</li>
-<li>JIF</li>
-<li>JPEG</li>
-<li>PPT</li>
-</ul>
-
-<p>If you have a different file type and you don’t know if it’s machine readable or not, ask in the Open Data Census forum</p>"><i class="fa fa-keyboard-o"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data available for free? </p></h4>" class="no" data-toggle="popover" title="" data-content="<p>The data is free if you don’t have to pay for it.</p>"><i class="fa fa-dollar"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Available in bulk? </p></h4>" class="no" data-toggle="popover" title="" data-content="<p>Data is available in bulk if the whole dataset can be downloaded easily. It is considered non-bulk if the citizens are limited to getting parts of the dataset through an online interface.</p>
-
-<p>For example, if restricted to querying a web form and retrieving a few results at a time from a very large database.</p>"><i class="fa fa-copy"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data provided on a timely and up to date basis? </p></h4>" class="no" data-toggle="popover" title="" data-content="<p>Is the data current for the census year? You can determine or estimate when the data was last updated and its update frequency by reviewing:</p>
-
-<ul>
-<li>the metadata displayed for the data in an open data portal or web page</li>
-<li>the dataset title or filename e.g. Budget 2013-14 or Election_4July2015.csv</li>
-<li>metadata tags embedded in the web page that contains the data</li>
-<li>date values within the data to find the most recent date value</li>
-<li>the timestamp on the data file (although this may not be accurate)</li>
-<li>Some data is not updated on a regular basis. e.g. Pollutant emissions may be updated daily - while postal codes may not change for many years. </li>
-</ul>
-
-<p>You may need to use your judgement to determine if the data is timely and up to date. Document your rationale in the comments section.</p>
-
-<p>If you cannot determine a date, answer, &amp;quot;NO&amp;quot; i.e. the data is not timely or up-to-date.</p>"><i class="fa fa-clock-o"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is the data available online? </p></h4>" class="no" data-toggle="popover" title="" data-content="<p>Data is online if it can be accessed via the Internet (e.g. a website or open data portal). If the data has been emailed to you but is not accessible via the Internet, it is not considered to be available online.</p>"><i class="fa fa-download"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Is data in digital form? </p></h4>" class="no" data-toggle="popover" title="" data-content="<p>Data can be in a digital format, but not accessible online. For example: A country budget can be stored on a spreadsheet or otherwise on a private government network, but not on the Internet. This means that the data is digital, but not publicly available. If you know that the data is digital somewhere inside the government (e.g. a government official tells you so), then you should answer “YES” to this question and note in the comment section how you discovered the data is in digital form.</p>"><i class="fa fa-save"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Publicly available? </p></h4>" class="no" data-toggle="popover" title="" data-content="<p>Can the data be accessed by the public without restrictions? Data is considered publicly available when:</p>
-
-<ul>
-<li>It can be accessed online without the need for a password or permissions.</li>
-<li>If the data is in paper form, can be accessed by the public, and there is no restrictions on the number of photocopies that can be made.</li>
-</ul>
-
-<p>Data is <strong>NOT</strong> publicly available when:</p>
-
-<ul>
-<li>It is only made available after making a request.</li>
-<li>It was availiable because of FOIA. </li>
-<li>It can only be accessed by government officials.</li>
-</ul>"><i class="fa fa-eye"></i>&nbsp;</li>
-                          <li data-original-title="<h4><p>Does the data exist? </p></h4>" class="no" data-toggle="popover" title="" data-content="<p>Data must come from an official resource either issued directly by the government or by a third party officially representing the government. Data offered by companies, citizen initiatives or any non-governmental organisation do not count for the Index.</p>
-
-<p>If the government has given the right to publish the data to third parties, a submission with a link a to third party site is allowed. The third-party site must explicitly state that the data has been commissioned by the government. Check if the organization has an agreement with the government to be the official source and make a note in the comment section.</p>"><i class="fa fa-file-o"></i>&nbsp;</li>
-                      </ul>
-                  </td>
-                  <td>
-n/a                  </td>
-                  <td>
-n/a                  </td>
-                  <td class="info-expander" title="Click for full details">
-                      <a data-toggle="collapse" data-target="#detail-cn" class="collapsed">
-                        <i class="fa fa-info-circle"></i>
-                      </a>
-                  </td>
-                  {% if not is_index %}
-                  <td class="year">
-                    <span title="5:21pm on 16th Oct 2015 (Submitted by Stephen Gates and reviewed by Stephen Gates)">2015</span>
-                  </td>
-                  {% endif %}
-                  <td style="background-color: rgb(255, 0, 0); color: white;" class="score" data-score="0">
-                      <span>0%</span>
-                  </td>
-                  {% if not is_index %}
-                  <td class="admin">
-                    <a href="#" class="propose" title="Propose Revisions"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                  </td>
-                  {% endif %}
-              </tr>
-              <tr id="detail-cn" class="details collapse">
-                  <td><span style="visibility: hidden">106</span></td>
-                  <td colspan="7">
-                    <span style="visibility: hidden;">China</span>
-                    <p><a href="http://data.stats.gov.cn/">http://data.stats.gov.cn/</a> is the data portal managed by the National Statistics Bureau. </p>
-                    <p>It provides:
-                    1. Quarterly and Yearly GDP for the whole country
-                    2. Yearly Unemployment statistics
-                    3. Yearly population data</p>
-                    <p>However, based upon the new minimum criteria set by index (2015 version), that means China does not have the right statistic data opened up by the government.</p>
-
-                    {% if is_index %}
-                    <hr />
-                    <strong>Previous (2014):</strong>
-                    <span class="rank rank-previous">#41</span>&nbsp;&nbsp;<span style="background-color: rgb(214, 202, 47); color: white;" class="score score-previous" data-score="60">60%</span>
+              <td class="score" data-score="{% if entry %}{{ entry.computedScore }}{% endif %}">
+                {% if entry %}<span>{{ entry.computedScore }}%</span>{% endif %}
+              </td>
+              {% if not is_index %}
+                {% if submissions|length %}
+                <td class="admin">
+                  <a class="propose" title="{{ gettext('Sorry, only one submission can be waiting for review at a time - please come back in a few days to submit new information') }}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                </td>
+                {% else %}
+                <td class="admin">
+                  <a href="{{ format('/submit/?place=%(place)s&amp;dataset=%(dataset)s', {place:place.id, dataset:dataset.id}) }}" class="propose" title="{{ gettext('Propose Revisions') }}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                </td>
+                {% endif %}
+              {% endif %}
+            </tr>
+            {% if entry.details %}
+            <tr id="detail-{{ place.id }}" class="details collapse">
+              <td>{# hack around tablesorter and our row toggler #}<span style="visibility: hidden">{{ place.rank }}</span></td>
+              <td colspan="6">
+                {# hack around tablesorter and our row toggler #}<span style="visibility: hidden;">{{ place.name }}</span>
+                {% if entry.details %}
+                {{ entry.details|marked }}
+                {% endif %}
+                <br />
+              </td>
+            </tr>
+            {% endif %}
+
+            {% if not is_index %}
+            {% for submission in submissions %}
+            <tr data-rank="{{place.rank}}" data-score="{{submission.computedScore}}" data-place="{{place.name}}" class="queued">
+              <td class="rank">{{place.rank}}</td>
+              <td class="queued-context">
+                <span style="visibility: hidden;">{{ place.name }}</span>
+                <h6><span class="icon">&#8627;</span> Awaiting review</h6>
+                <span title="{{ gettext('Submitted by')}} {{ submission.Submitter.firstName}}" class="queued-user">
+                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;
+                  {{ submission.Submitter.firstName }}
+                </span>
+                <br>
+                <span title="{{ gettext('Submitted on')}} {{ submission.createdAt|dateformat }}" class="queued-time">
+                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></i>&nbsp;
+                  {{ submission.createdAt|simpledelta }}
+                </span>
+              </td>
+              <td>
+                <ul class="availability availability-slice">
+                  {% for question in questions %}
+                    {% if submission %}
+                      {% set answer = submission.getAnswerValueForQuestion(question) %}
+                      {% set pass = 'yes' if question.pass(answer) else 'no' %}
                     {% endif %}
-                  </td>
-              </tr></tbody>
+                    <li class="{{ pass }}" title="{% if pass == 'yes' %}It's {% elif pass == 'no' %}It's not {% endif %}{{ question.questionshort|lower }}"><i class="fa fa-{{ question.icon }}"></i>&nbsp;</li>
+                  {% endfor %}
+                </ul>
+              </td>
+              <td class="info-expander" title="Click for full details">
+                  <a data-toggle="collapse" data-target="#detail-{{place.id}}-{{loop.index}}" class="collapsed">
+                    <i class="fa fa-info-circle"></i>
+                  </a>
+              </td>
+              {% if not is_index %}
+              <td class="year">
+                {% if submission %}
+                  <span title="{{ submission.updatedAt|dateformat }} ({{ gettext('Submitted by') }} {{ submission.Submitter.fullName() }})">{{ submission.year }}</span>
+                {% endif %}
+              </td>
+              {% endif %}
+              <td class="score" data-score="{{submission.computedScore}}"><span>{{submission.computedScore}}%</span></td>
+              {% if not is_index %}
+              <td class="admin">
+                <a href="{{ format('/submission/%(submissionid)s', {submissionid: submission.id}) }}" class="view" title="{{ gettext('View Submission') }}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+              </td>
+              {% endif %}
+            </tr>
+            <tr id="detail-{{place.id}}-{{loop.index}}" class="details collapse">
+              <td>{# hack around tablesorter and our row toggler #}<span style="visibility: hidden">{{ place.rank }}</span></td>
+              <td colspan="6">
+                {# hack around tablesorter and our row toggler #}<span style="visibility: hidden;">{{ place.name }}</span>
+                {% if submission.details %}
+                {{ submission.details|marked }}
+                {% endif %}
+                <br />
+              </td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+
+          {% endfor %}
+
+        </tbody>
     </table>
 </div>
