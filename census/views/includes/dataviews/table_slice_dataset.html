@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <table id="slice-table" class="table data-table table-header-stuck">
+    <table id="slice-table" class="table slice-table data-table table-header-stuck">
         {% if is_index %}
         <colgroup>
           <col style="width:6%">
@@ -22,14 +22,14 @@
 
         <thead class="" style="">
           <tr>
-            <th>Rank</th>
-            <th>Place</th>
+            <th class="clickable">Rank</th>
+            <th class="clickable">Place</th>
             <th>Breakdown</th>
             <th>Info</th>
             {% if not is_index %}
             <th>Year</th>
             {% endif %}
-            <th>Score</th>
+            <th class="clickable">Score</th>
             {% if not is_index %}
             <th class="admin"><span class="sr-only">Admin</span></th>
             {% endif %}
