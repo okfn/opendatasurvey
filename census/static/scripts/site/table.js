@@ -61,7 +61,21 @@ define(['jquery', 'bootstrap', 'chroma', 'tablesorter', 'stickykit'],
         $('.headerSortUp').removeClass('headerSortUp');
         $(e.target).addClass((sortFlag) ? 'headerSortUp' : 'headerSortDown');
         sortFlag = !sortFlag;
+      }
+    );
+
+    // Ensure .details and .submissions table rows appear under their
+    // appropriate parent row, even after sorting.
+    $('.slice-table').bind('sortEnd', function() {
+      $('.slice-table .entry').each(function(i, el) {
+        $('.slice-table .submission-' + el.id).insertAfter(el);
+        $('.slice-table #detail-' + el.id).insertAfter(el);
       });
+
+      $('.slice-table .submission').each(function(i, el) {
+        $('.slice-table #detail-' + el.id).insertAfter(el);
+      });
+    });
 
     function filterTable(table, query) {
       if (query.length < 2) {
