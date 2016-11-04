@@ -15,8 +15,7 @@
   }
 }
 
-#slice-table {
-
+.slice-table {
   tr {
     &.queued {
       background-color: lighten($brand-primary, 37%);
@@ -272,19 +271,8 @@ td.previous-results {
 }
 
 
-#places_overview_table thead tr th, #datasets_overview_table thead tr th, #slice-table thead tr th {
-
-  &:first-child {
-    cursor: pointer;
-    color: lighten(black, 15%);
-  }
-
-  &:nth-child(2) {
-    cursor: pointer;
-    color: lighten(black, 15%);
-  }
-
-  &:last-child {
+#places_overview_table thead tr th, #datasets_overview_table thead tr th, .slice-table thead tr th {
+  &.clickable {
     cursor: pointer;
     color: lighten(black, 15%);
   }
