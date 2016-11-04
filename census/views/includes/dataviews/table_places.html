@@ -10,7 +10,7 @@
         <th class="sort_place header headerSortDown" title="{{ gettext('Sort by A-Z') }}" style="width: 71px;">{{ gettext('Place') }}</th>
         {% for dataset in datasets %}
           <th>
-            <div><span class="dataset-title-context" data-toggle="popover" title="{{ dataset.name }}" data-content="{{ dataset.description|e }}" data-original-title="{{dataset.name}}">{{ dataset.name }}</span></div>
+            <div><span class="dataset-title-context" data-toggle="popover" title="{{ dataset.name }}" data-content="{{ dataset.description|e }}" data-original-title="{{dataset.name}}"><a href="{{ format('/dataset/%(dataset)s', {dataset: dataset.id}) }}">{{ dataset.name }}</a></span></div>
           </th>
         {% endfor %}
         <th class="header" style="width: 72px;">{{ gettext('Score') }}</th>
