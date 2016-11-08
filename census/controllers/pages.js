@@ -102,15 +102,15 @@ var overview = function(req, res) {
 
 var place = function(req, res) {
   /**
-   * An overview of places, optionally by year.
+   * An overview of a single place, optionally by year.
    */
   modelUtils.getData(modelUtils.getDataOptions(req))
     .then(function(data) {
       if (!data.place) {
         return res.status(404)
           .send('There is no matching place in our database. ' +
-                'Are you sure you have spelled it correctly? Please check the ' +
-                '<a href="/">overview page</a> for the list of places');
+                'Are you sure it is spelled correctly? Please check the ' +
+                '<a href="/">overview page</a> for the list of places.');
       }
 
       data.urlContext = '';
@@ -121,10 +121,7 @@ var place = function(req, res) {
       data.year = req.params.year;
       data.submissionsAllowed = (req.params.year === req.app.get('year'));
       data.extraWidth = data.datasets.length > 12;
-      data.breadcrumbTitle = 'Place';
-
-      // TODO calculate relative score of place
-      data.computedRelativeScore = 0;
+      data.breadcrumbTitle = data.place.name;
 
       return res.render('place.html', data);
     }).catch(console.trace.bind(console));
@@ -132,15 +129,15 @@ var place = function(req, res) {
 
 var dataset = function(req, res) {
   /**
-   * An overview of datasets, optionally by year.
+   * An overview of a single dataset, optionally by year.
    */
   modelUtils.getData(modelUtils.getDataOptions(req))
     .then(function(data) {
       if (!data.dataset) {
         return res.status(404)
           .send('There is no matching dataset in our database. ' +
-                'Are you sure you have spelled it correctly? Please check the ' +
-                '<a href="/">overview page</a> for the list of places');
+                'Are you sure it is spelled correctly? Please check the ' +
+                '<a href="/">overview page</a> for the list of datasets.');
       }
 
       data.urlContext = '';
@@ -150,10 +147,7 @@ var dataset = function(req, res) {
       data.loggedin = req.session.loggedin;
       data.year = req.params.year;
       data.submissionsAllowed = req.params.year === req.app.get('year');
-      data.breadcrumbTitle = 'Dataset';
-
-      // TODO calculate relative score od dataset
-      data.computedRelativeScore = 0;
+      data.breadcrumbTitle = data.dataset.name;
 
       return res.render('dataset.html', data);
     }).catch(console.trace.bind(console));

@@ -1,8 +1,7 @@
 <div class="table-responsive">
-    <table id="slice-table" class="table slice-table data-table table-header-stuck">
+    <table id="place-slice-table" class="table slice-table data-table table-header-stuck">
         {% if is_index %}
         <colgroup>
-          <col style="width:6%">
           <col style="width:24%">
           <col style="width:23%">
           <col style="width:5%">
@@ -10,7 +9,6 @@
         </colgroup>
         {% else %}
         <colgroup>
-          <col style="width:6%">
           <col style="width:20%">
           <col style="width:23%">
           <col style="width:5%">
@@ -22,8 +20,7 @@
 
         <thead class="" style="">
           <tr>
-            <th class="clickable">Rank</th>
-            <th class="clickable">Place</th>
+            <th class="clickable">Dataset</th>
             <th>Breakdown</th>
             <th>Info</th>
             {% if not is_index %}
@@ -36,12 +33,14 @@
           </tr>
         </thead>
         <tbody>
-          {% for place in places|sort(false, false, 'name') %}
-            {% set entry = entries|find({'place': place.id, 'dataset': dataset.id}) %}
-            {% set submissions = pending|where({'place': place.id, 'dataset': dataset.id}) %}
-            <tr id="{{ place.id }}" class="entry" data-rank="{{ place.rank }}" data-score="{{ place.computedScore }}" data-place="{{ place.id }}" data-name="{{ place.name }}">
-              <td class="rank" data-rank="{{ place.rank }}">{{ place.rank }}</td>
-              <td><a href="/place/{{place.id}}{{ urlContext }}">{{place.name}}</a></td>
+          {% for dataset in datasets %}
+            {% set entry = entries|find({'dataset': dataset.id}) %}
+            {% set submissions = pending|where({'dataset': dataset.id, 'place': place.id, 'year': year}) %}
+            <tr id="{{ dataset.id }}" class="entry" data-rank="{{ entry.rank }}" data-score="{{ entry.computedScore }}" data-place="{{ place.id }}" data-name="{{ place.name }}">
+              <td>
+                {% if entry -%}<a href="/entry/{{place.id}}/{{dataset.id}}{{ urlContext }}">{%- endif %}
+                  {{ dataset.name }}
+                {% if entry -%}</a>{%- endif %}
               <td>
                 <ul class="availability availability-slice">
                   {% for question in questions %}
@@ -54,14 +53,14 @@
                 </ul>
               </td>
               <td class="info-expander" title="Click for full details">
-                <a aria-expanded="false" data-toggle="collapse" data-target="#detail-{{place.id}}" class="collapsed">
+                <a aria-expanded="false" data-toggle="collapse" data-target="#detail-{{ dataset.id }}" class="collapsed">
                   <i class="fa fa-info-circle"></i>
                 </a>
               </td>
               {% if not is_index %}
               <td class="year">
                 {% if entry %}
-                  <span title="{{ entry.updatedAt|dateformat }} ({{ gettext('Submitted by') }} {{ entry.Submitter.fullName() }} {{ gettext('and reviewed by') }} {{ entry.Reviewer.fullName() }})">{{ entry.year }}</span>
+                  <span title="{{ entry.updatedAt|dateformat }} ({{ gettext('Submitted by') }} {{ entry.Submitter.fullName() }}{% if entry.Reviewer %} {{ gettext('and reviewed by') }} {{ entry.Reviewer.fullName() }}{% endif %})">{{ entry.year }}</span>
                 {% endif %}
               </td>
               {% endif %}
@@ -79,10 +78,9 @@
               {% endif %}
             </tr>
             {% if entry.details %}
-            <tr id="detail-{{ place.id }}" class="details collapse">
-              <td>{# hack around tablesorter and our row toggler #}<span style="visibility: hidden">{{ place.rank }}</span></td>
+            <tr id="detail-{{ dataset.id }}" class="details collapse">
               <td colspan="6">
-                {# hack around tablesorter and our row toggler #}<span style="visibility: hidden;">{{ place.name }}</span>
+                {# hack around tablesorter and our row toggler #}<span style="visibility: hidden;">{{ dataset.name }}</span>
                 {% if entry.details %}
                 {{ entry.details|marked }}
                 {% endif %}
@@ -93,10 +91,9 @@
 
             {% if not is_index %}
             {% for submission in submissions %}
-            <tr id="submission-{{place.id}}-{{loop.index}}" data-rank="{{place.rank}}" data-score="{{submission.computedScore}}" data-place="{{place.name}}" class="queued submission submission-{{ place.id }}">
-              <td class="rank">{{place.rank}}</td>
+            <tr id="submission-{{dataset.id}}-{{loop.index}}" data-rank="{{entry.rank}}" data-score="{{submission.computedScore}}" data-place="{{place.name}}" class="queued submission submission-{{dataset.id}}">
               <td class="queued-context">
-                <span style="visibility: hidden;">{{ place.name }}</span>
+                {# hack around tablesorter and our row toggler #}<span style="visibility: hidden;">{{ dataset.name }}</span>
                 <h6><span class="icon">&#8627;</span> Awaiting review</h6>
                 <span title="{{ gettext('Submitted by')}} {{ submission.Submitter.firstName}}" class="queued-user">
                   <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;
@@ -120,7 +117,7 @@
                 </ul>
               </td>
               <td class="info-expander" title="Click for full details">
-                  <a data-toggle="collapse" data-target="#detail-submission-{{place.id}}-{{loop.index}}" class="collapsed">
+                  <a data-toggle="collapse" data-target="#detail-submission-{{dataset.id}}-{{loop.index}}" class="collapsed">
                     <i class="fa fa-info-circle"></i>
                   </a>
               </td>
@@ -131,17 +128,16 @@
                 {% endif %}
               </td>
               {% endif %}
-              <td class="score" data-score="{{submission.computedScore}}"><span>{{submission.computedScore}}%</span></td>
+              <td class="score" data-score="{{ submission.computedScore }}"><span>{{ submission.computedScore }}%</span></td>
               {% if not is_index %}
               <td class="admin">
                 <a href="{{ format('/submission/%(submissionid)s', {submissionid: submission.id}) }}" class="view" title="{{ gettext('View Submission') }}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
               </td>
               {% endif %}
             </tr>
-            <tr id="detail-submission-{{place.id}}-{{loop.index}}" class="details collapse">
-              <td>{# hack around tablesorter and our row toggler #}<span style="visibility: hidden">{{ place.rank }}</span></td>
+            <tr id="detail-submission-{{dataset.id}}-{{loop.index}}" class="details collapse">
               <td colspan="6">
-                {# hack around tablesorter and our row toggler #}<span style="visibility: hidden;">{{ place.name }}</span>
+                {# hack around tablesorter and our row toggler #}<span style="visibility: hidden;">{{ dataset.name }}</span>
                 {% if submission.details %}
                 {{ submission.details|marked }}
                 {% endif %}

@@ -28,20 +28,28 @@ define(['jquery', 'bootstrap', 'chroma', 'tablesorter', 'stickykit'],
         }
       },
       tablesorterDatasetOptions = {
-        sortList: [[0, 0]],
+        sortList: [[1, 0]],
         headers: {
           2: {sorter: false},
           3: {sorter: false}
         }
       },
       tablesorterSliceOptions = {
-        sortList: [[0, 0]],
+        sortList: [[1, 0]],
         headers: {
           2: {sorter: false},
           3: {sorter: false},
           4: {sorter: false},
-          5: {sorter: false},
           6: {sorter: false}
+        }
+      },
+      tablesorterPlaceSliceOptions = {
+        sortList: [[4, 1]],
+        headers: {
+          1: {sorter: false},
+          2: {sorter: false},
+          3: {sorter: false},
+          5: {sorter: false}
         }
       },
       sortFlag = true;
@@ -49,19 +57,34 @@ define(['jquery', 'bootstrap', 'chroma', 'tablesorter', 'stickykit'],
     $('#places_overview_table').tablesorter(tablesorterPlaceOptions);
     $('#datasets_overview_table').tablesorter(tablesorterDatasetOptions);
     $('#slice-table').tablesorter(tablesorterSliceOptions);
+    $('#place-slice-table').tablesorter(tablesorterPlaceSliceOptions);
 
-    $("#datasets_overview_table thead").stick_in_parent();
-    $("#slice-table thead").stick_in_parent();
+    $('#datasets_overview_table thead').stick_in_parent();
+    $('#slice-table thead').stick_in_parent();
 
     $('.content').on('click', '.sort_rank, .sort_place',
       function(e) {
-        $("#places_overview_table").trigger("sorton",
+        $('#places_overview_table').trigger('sorton',
           [[[$(e.target).hasClass('sort_place') / 1, sortFlag]]]);
         $('.headerSortDown').removeClass('headerSortDown');
         $('.headerSortUp').removeClass('headerSortUp');
-        $(e.target).addClass((sortFlag) ? "headerSortUp" : "headerSortDown");
+        $(e.target).addClass((sortFlag) ? 'headerSortUp' : 'headerSortDown');
         sortFlag = !sortFlag;
+      }
+    );
+
+    // Ensure .details and .submissions table rows appear under their
+    // appropriate parent row, even after sorting.
+    $('.slice-table').bind('sortEnd', function() {
+      $('.slice-table .entry').each(function(i, el) {
+        $('.slice-table .submission-' + el.id).insertAfter(el);
+        $('.slice-table #detail-' + el.id).insertAfter(el);
       });
+
+      $('.slice-table .submission').each(function(i, el) {
+        $('.slice-table #detail-' + el.id).insertAfter(el);
+      });
+    });
 
     function filterTable(table, query) {
       if (query.length < 2) {

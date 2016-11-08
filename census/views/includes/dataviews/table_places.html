@@ -2,18 +2,18 @@
 
 <div class="table-responsive">
   <div class="sexyTableContainer" style="margin: 0px 0px 20px;">
-  <div class="sexyDragContainer kinetic-active kinetic-moving-left kinetic-moving-up" style="cursor: move;">
+  <div class="sexyDragContainer kinetic-active kinetic-moving-left kinetic-moving-up">
   <table id="places_overview_table" class="table data-table sexyTable" style="margin: 0px;">
     <thead>
       <tr>
-        <th class="sort_rank header" title="{{ gettext('Sort by Rank') }}" style="width: 71px;">{{ gettext('Rank') }}</th>
-        <th class="sort_place header headerSortDown" title="{{ gettext('Sort by A-Z') }}" style="width: 71px;">{{ gettext('Place') }}</th>
+        <th class="clickable sort_rank header" title="{{ gettext('Sort by Rank') }}" style="width: 71px;">{{ gettext('Rank') }}</th>
+        <th class="clickable sort_place header headerSortDown" title="{{ gettext('Sort by A-Z') }}" style="width: 71px;">{{ gettext('Place') }}</th>
         {% for dataset in datasets %}
           <th>
-            <div><span class="dataset-title-context" data-toggle="popover" title="{{ dataset.name }}" data-content="{{ dataset.description|e }}" data-original-title="{{dataset.name}}">{{ dataset.name }}</span></div>
+            <div><span class="dataset-title-context" data-toggle="popover" title="{{ dataset.name }}" data-content="{{ dataset.description|e }}" data-original-title="{{dataset.name}}"><a href="{{ format('/dataset/%(dataset)s', {dataset: dataset.id}) }}">{{ dataset.name }}</a></span></div>
           </th>
         {% endfor %}
-        <th class="header" style="width: 72px;">{{ gettext('Score') }}</th>
+        <th class="clickable header" style="width: 72px;">{{ gettext('Score') }}</th>
       </tr>
     </thead>
     <tbody>

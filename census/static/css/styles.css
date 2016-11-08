@@ -8482,36 +8482,36 @@ blockquote {
 .data-table thead th {
   font-size: 14px; }
 
-#slice-table tr.queued {
+.slice-table tr.queued {
   background-color: #fdfbef; }
-  #slice-table tr.queued td {
+  .slice-table tr.queued td {
     opacity: 0.5;
     border-top-color: #fcf9e5; }
-    #slice-table tr.queued td.queued-context {
+    .slice-table tr.queued td.queued-context {
       opacity: 1; }
-      #slice-table tr.queued td.queued-context h6 {
+      .slice-table tr.queued td.queued-context h6 {
         margin: 0.2em 0 0 0;
         font-weight: bold; }
-        #slice-table tr.queued td.queued-context h6 .icon {
+        .slice-table tr.queued td.queued-context h6 .icon {
           font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
-      #slice-table tr.queued td.queued-context .queued-user,
-      #slice-table tr.queued td.queued-context .queued-time {
+      .slice-table tr.queued td.queued-context .queued-user,
+      .slice-table tr.queued td.queued-context .queued-time {
         font-size: 0.75em; }
-    #slice-table tr.queued td.rank {
+    .slice-table tr.queued td.rank {
       color: #fdfbef; }
-    #slice-table tr.queued td.admin {
+    .slice-table tr.queued td.admin {
       opacity: 1; }
-#slice-table tr.details {
+.slice-table tr.details {
   background-color: #f0f0f0; }
-  #slice-table tr.details td.info-content {
+  .slice-table tr.details td.info-content {
     padding-top: 15px;
     padding-bottom: 15px;
     padding-right: 70px; }
-    #slice-table tr.details td.info-content hr {
+    .slice-table tr.details td.info-content hr {
       border-top-color: rgba(51, 51, 51, 0.5);
       margin-top: 12px;
       margin-bottom: 12px; }
-#slice-table .year span {
+.slice-table .year span {
   text-align: center;
   background-color: #f0f0f0;
   opacity: 0.6;
@@ -8519,36 +8519,36 @@ blockquote {
   width: 40px;
   text-align: center;
   display: inline-block; }
-#slice-table thead:not(.is_stuck) th.admin {
+.slice-table thead:not(.is_stuck) th.admin {
   border-bottom-color: #fff; }
-#slice-table td.admin {
+.slice-table td.admin {
   border-top-color: #fff;
   text-align: right; }
-  #slice-table td.admin a {
+  .slice-table td.admin a {
     opacity: 0.3; }
-    #slice-table td.admin a:link {
+    .slice-table td.admin a:link {
       opacity: 1; }
-    #slice-table td.admin a.view {
+    .slice-table td.admin a.view {
       color: #f47c23; }
-#slice-table td.breakdown {
+.slice-table td.breakdown {
   padding: 5px 8px; }
-#slice-table td.info-expander {
+.slice-table td.info-expander {
   padding: 0;
   cursor: pointer; }
-  #slice-table td.info-expander a {
+  .slice-table td.info-expander a {
     display: block;
     cursor: pointer;
     padding: 8px;
     text-align: center;
     color: black;
     background-color: #DDD; }
-    #slice-table td.info-expander a.collapsed {
+    .slice-table td.info-expander a.collapsed {
       color: #428bca;
       background-color: transparent; }
-      #slice-table td.info-expander a.collapsed:hover, #slice-table td.info-expander a.collapsed:focus
-      #slice-table td.info-expander a.collapsed:active {
+      .slice-table td.info-expander a.collapsed:hover, .slice-table td.info-expander a.collapsed:focus
+      .slice-table td.info-expander a.collapsed:active {
         background-color: #f0f0f0; }
-#slice-table td.rank {
+.slice-table td.rank {
   background-color: transparent;
   text-align: left; }
 
@@ -8661,13 +8661,7 @@ ul.availability-popover {
 td.previous-results {
   text-align: center; }
 
-#places_overview_table thead tr th:first-child, #datasets_overview_table thead tr th:first-child, #slice-table thead tr th:first-child {
-  cursor: pointer;
-  color: #262626; }
-#places_overview_table thead tr th:nth-child(2), #datasets_overview_table thead tr th:nth-child(2), #slice-table thead tr th:nth-child(2) {
-  cursor: pointer;
-  color: #262626; }
-#places_overview_table thead tr th:last-child, #datasets_overview_table thead tr th:last-child, #slice-table thead tr th:last-child {
+#places_overview_table thead tr th.clickable, #datasets_overview_table thead tr th.clickable, .slice-table thead tr th.clickable {
   cursor: pointer;
   color: #262626; }
 
@@ -10495,3 +10489,5 @@ body.form .error-message {
       margin-bottom: 24px;
       margin-left: 24px;
       margin-right: 24px; }
+
+/*# sourceMappingURL=styles.css.map */
