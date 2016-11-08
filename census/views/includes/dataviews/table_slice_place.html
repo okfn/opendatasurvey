@@ -64,8 +64,8 @@
                 {% endif %}
               </td>
               {% endif %}
-              <td class="score" data-score="{% if entry %}{{ entry.computedScore }}{% endif %}">
-                {% if entry %}<span>{{ entry.computedScore }}%</span>{% endif %}
+              <td class="score" data-score="{% if entry %}{{ entry.computedRelativeScore }}{% endif %}">
+                {% if entry %}<span>{{ entry.computedRelativeScore }}%</span>{% endif %}
               </td>
               {% if not is_index %}
                 <td class="admin">
@@ -128,7 +128,7 @@
                 {% endif %}
               </td>
               {% endif %}
-              <td class="score" data-score="{{ submission.computedScore }}"><span>{{ submission.computedScore }}%</span></td>
+              <td class="score" data-score="{{ submission.computedRelativeScore }}"><span>{{ submission.computedRelativeScore }}%</span></td>
               {% if not is_index %}
               <td class="admin">
                 <a href="{{ format('/submission/%(submissionid)s', {submissionid: submission.id}) }}" class="view" title="{{ gettext('View Submission') }}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>

@@ -271,8 +271,10 @@ var processEntries = function(data, options) {
       return result;
     });
 
+    let questionMaxScore = options.models.Question.maxScore(data.questions);
     _.each(data.entries, function(e) {
       e.computedScore = e.scoreForQuestions(data.questions);
+      e.computedRelativeScore = Math.round(100 * e.computedScore / questionMaxScore);
       e.url = setEntryUrl(e);
     });
 
