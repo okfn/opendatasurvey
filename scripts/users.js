@@ -1,18 +1,23 @@
-var _ = require('lodash');
 var csv = require('csv');
 var fs = require('fs');
 var models = require('../census/models');
 var Promise = require('bluebird');
 var uuid = require('node-uuid');
-var fileData = fs.readFileSync(process.argv[2], {encoding: 'utf-8'});
+var fileData;
 var utils = require('./utils');
+
+try {
+  fileData = fs.readFileSync(process.argv[2], {encoding: 'utf-8'});
+} catch (err) {
+  fileData = '';
+}
 
 csv.parse(fileData, {columns: true}, function(E, D) {
   // Ensure we have our anonymous user.
   models.User.upsert({
     id: utils.anonymousUserId,
     emails: ['anonymous@example.com'],
-    providers: {'okfn': 'anonymous'},
+    providers: {okfn: 'anonymous'},
     firstName: 'anonymous',
     lastName: 'anonymous',
     anonymous: false
