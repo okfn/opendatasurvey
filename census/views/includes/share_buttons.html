@@ -1,13 +1,13 @@
-<h5 {% if is_index != "true" %}class="sr-only"{% endif %}>{{ gettext("Share or embed this page") }}</h5>
+<h5 {% if is_index != "true" %}class="sr-only"{% endif %}>{{ gettext("Share this page") }}</h5>
 <div class="btn-group">
-  <a href="" class="btn btn-default btn-sm embed" data-toggle="modal" data-target="#embed-instructions">
+{#   <a href="" class="btn btn-default btn-sm embed" data-toggle="modal" data-target="#embed-instructions">
     <i class="fa fa-code"></i> {{ gettext("Embed") }}
-  </a>
-  <a href="http://twitter.com/share?url=http://index.okfn.org/dataset/statistics/&amp;text=Check out this data from the Global Open Data Index" class="btn btn-default btn-sm twitter" target="_blank">
+  </a> #}
+  <a href="http://twitter.com/share?url={{current_url}}&amp;text=Check out this data from the {{ site.settings.title }}" class="btn btn-default btn-sm twitter" target="_blank">
     <i class="fa fa-twitter"></i> Twitter  </a>
-  <a href="http://www.facebook.com/sharer/sharer.php?u=http://index.okfn.org/dataset/statistics/" class="btn btn-default btn-sm facebook" target="_blank">
+  <a href="http://www.facebook.com/sharer/sharer.php?u={{current_url}}" class="btn btn-default btn-sm facebook" target="_blank">
     <i class="fa fa-facebook"></i> Facebook  </a>
-  <a href="https://plus.google.com/share?url=http://index.okfn.org/dataset/statistics/" class="btn btn-default btn-sm google-plus" target="_blank">
+  <a href="https://plus.google.com/share?url={{current_url}}" class="btn btn-default btn-sm google-plus" target="_blank">
     <i class="fa fa-google-plus"></i> Google+  </a>
 </div>
 <div class="modal fade" id="embed-instructions" tabindex="-1" role="dialog" aria-labelledby="embedLabel" aria-hidden="true">
