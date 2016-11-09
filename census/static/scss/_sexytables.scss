@@ -54,23 +54,6 @@
   box-sizing: border-box;
 }
 
-.sexyHeader table .place-name {
-  display: none;
-}
-
-.sexyHeader table .number + .place-name {
-  display: table-cell;
-}
-
-.span6.sorting {
-  text-align: right;
-}
-
-.span6.sorting label {
-  display: inline-block;
-  margin-left: 10px;
-}
-
 table.response-summary,
 .sexyHeader table {
   table-layout: fixed;
@@ -84,14 +67,9 @@ table.response-summary thead tr th,
   font-size: 14px;
   vertical-align: bottom;
   background-color: #fff;
-  height: 100px;
+  height: 118px;
   box-sizing: border-box;
   border-bottom: 2px solid #dddddd;
-}
-
-.sort_rank,
-.sort_place {
-  cursor: pointer;
 }
 
 .sexyCorner,
@@ -100,7 +78,8 @@ table.response-summary thead tr th,
 }
 
 .sexyCorner table,
-.sexyColumn table {
+.sexyColumn table,
+.sexyHeader table {
   width: 100%;
 }
 
@@ -119,7 +98,19 @@ table.response-summary thead tr th div,
 .sexyHeader table tr th div {
   text-align: left;
   vertical-align: bottom;
-  padding: 8px;
+}
+
+.sexyHeader table tr th.datasetHeader {
+  vertical-align: inherit;
+  div {
+    transform: rotate(-90deg) translateX(-50%);
+
+    a {
+      height: 100%;
+      width: 100%;
+      display: block;
+    }
+  }
 }
 
 table.response-summary thead tr th div span,

@@ -8039,19 +8039,6 @@ button.close {
   background-color: #fff;
   box-sizing: border-box; }
 
-.sexyHeader table .place-name {
-  display: none; }
-
-.sexyHeader table .number + .place-name {
-  display: table-cell; }
-
-.span6.sorting {
-  text-align: right; }
-
-.span6.sorting label {
-  display: inline-block;
-  margin-left: 10px; }
-
 table.response-summary,
 .sexyHeader table {
   table-layout: fixed; }
@@ -8064,20 +8051,17 @@ table.response-summary thead tr th,
   font-size: 14px;
   vertical-align: bottom;
   background-color: #fff;
-  height: 100px;
+  height: 118px;
   box-sizing: border-box;
   border-bottom: 2px solid #dddddd; }
-
-.sort_rank,
-.sort_place {
-  cursor: pointer; }
 
 .sexyCorner,
 .sexyColumn {
   display: none; }
 
 .sexyCorner table,
-.sexyColumn table {
+.sexyColumn table,
+.sexyHeader table {
   width: 100%; }
 
 .sexyColumn table tr td {
@@ -8092,8 +8076,16 @@ table.response-summary thead tr th div,
 .sexyCorner table tr td div,
 .sexyHeader table tr th div {
   text-align: left;
-  vertical-align: bottom;
-  padding: 8px; }
+  vertical-align: bottom; }
+
+.sexyHeader table tr th.datasetHeader {
+  vertical-align: inherit; }
+  .sexyHeader table tr th.datasetHeader div {
+    transform: rotate(-90deg) translateX(-50%); }
+    .sexyHeader table tr th.datasetHeader div a {
+      height: 100%;
+      width: 100%;
+      display: block; }
 
 table.response-summary thead tr th div span,
 .sexyHeader table tr th div span {
@@ -8670,7 +8662,7 @@ td.previous-results {
   #places_overview_table tr td a {
     font-size: 12px; }
 #places_overview_table thead tr th {
-  height: 100px; }
+  height: 118px; }
   #places_overview_table thead tr th .dataset-title-context {
     display: block;
     -webkit-transform: rotate(-90deg);
@@ -8678,6 +8670,14 @@ td.previous-results {
     -o-transform: rotate(-90deg);
     transform: rotate(-90deg);
     padding: 8px; }
+  #places_overview_table thead tr th.datasetHeader {
+    vertical-align: inherit; }
+    #places_overview_table thead tr th.datasetHeader div {
+      transform: rotate(-90deg) translateX(-50%); }
+      #places_overview_table thead tr th.datasetHeader div a {
+        height: 100%;
+        width: 100%;
+        display: block; }
 
 th.header.headerSortDown:after {
   font-family: FontAwesome;
@@ -8707,6 +8707,8 @@ th.header.headerSortUp:after {
 table .status {
   position: relative;
   overflow: visible; }
+  table .status a {
+    width: 100%; }
   table .status .entry-year {
     clear: left;
     height: 16px;

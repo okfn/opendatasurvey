@@ -289,12 +289,24 @@ td.previous-results {
   }
 
   thead tr th {
-    height: 100px;
+    height: 118px;
 
     .dataset-title-context {
       display: block;
       @include rotate(-90deg);
       padding: 8px;
+    }
+
+    &.datasetHeader {
+      vertical-align: inherit;
+      div {
+        transform: rotate(-90deg) translateX(-50%);
+        a {
+          height: 100%;
+          width: 100%;
+          display: block;
+        }
+      }
     }
   }
 }
@@ -339,6 +351,10 @@ table {
   .status {
     position: relative;
     overflow: visible;
+
+    a {
+      width: 100%;
+    }
 
     .entry-year {
       clear: left;

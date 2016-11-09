@@ -1,16 +1,14 @@
 {% import "macros/popovers.html" as popovers %}
 
 <div class="table-responsive">
-  <div class="sexyTableContainer" style="margin: 0px 0px 20px;">
-  <div class="sexyDragContainer kinetic-active kinetic-moving-left kinetic-moving-up">
-  <table id="places_overview_table" class="table data-table sexyTable" style="margin: 0px;">
+  <table id="places_overview_table" class="table data-table sexyTable">
     <thead>
       <tr>
         <th class="clickable sort_rank header" title="{{ gettext('Sort by Rank') }}" style="width: 71px;">{{ gettext('Rank') }}</th>
         <th class="clickable sort_place header headerSortDown" title="{{ gettext('Sort by A-Z') }}" style="width: 71px;">{{ gettext('Place') }}</th>
         {% for dataset in datasets %}
-          <th>
-            <div><span class="dataset-title-context" data-toggle="popover" title="{{ dataset.name }}" data-content="{{ dataset.description|e }}" data-original-title="{{dataset.name}}"><a href="{{ format('/dataset/%(dataset)s', {dataset: dataset.id}) }}">{{ dataset.name }}</a></span></div>
+          <th class="datasetHeader">
+            <div><a href="{{ format('/dataset/%(dataset)s', {dataset: dataset.id}) }}">{{ dataset.name }}</a></div>
           </th>
         {% endfor %}
         <th class="clickable header" style="width: 72px;">{{ gettext('Score') }}</th>
@@ -82,22 +80,19 @@
                     {% if submissionsAllowed %}
                       {% if submissions|length %}
                         <span class="pending badge badge-warning" title="{{ gettext("Pending submissions") }}">{{ submissions|length }}</span>
-                        <div class="hover-icon"><i class="icon-eye-open"></i></div>
-                      {% else %}
-                        <div class="hover-icon"><i class="icon-plus"></i></div>
                       {% endif %}
                     {% else %}
                       <i class="muted">None</i>
                     {% endif %}
                   {% else %}
                     {% if submissionsAllowed %}
-                      <a href="{{ actionUrl }}" class="btn btn-mini">
+                      <a href="{{ actionUrl }}" class="btn btn-default btn-sm"{% if submissions|length %} title="{{ gettext("Pending submissions") }}"{% endif %}>
                         {% if submissions|length %}
-                          <span title="{{ gettext("Pending submissions") }}">({{ submissions|length }})</span>
+                          <span>({{ submissions|length }})</span>
                         {% else %}
-                            <i class="icon-plus"></i>
+                            <i class="fa fa-plus"></i>
+                            {{ actionText }}
                         {% endif %}
-                        {{ actionText }}
                       </a>
                     {% else %}
                       <i class="muted">None</i>
