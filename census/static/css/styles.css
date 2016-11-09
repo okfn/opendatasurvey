@@ -8707,6 +8707,8 @@ th.header.headerSortUp:after {
 table .status {
   position: relative;
   overflow: visible; }
+  table .status a {
+    width: 100%; }
   table .status .entry-year {
     clear: left;
     height: 16px;

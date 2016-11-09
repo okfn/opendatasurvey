@@ -82,22 +82,19 @@
                     {% if submissionsAllowed %}
                       {% if submissions|length %}
                         <span class="pending badge badge-warning" title="{{ gettext("Pending submissions") }}">{{ submissions|length }}</span>
-                        <div class="hover-icon"><i class="icon-eye-open"></i></div>
-                      {% else %}
-                        <div class="hover-icon"><i class="icon-plus"></i></div>
                       {% endif %}
                     {% else %}
                       <i class="muted">None</i>
                     {% endif %}
                   {% else %}
                     {% if submissionsAllowed %}
-                      <a href="{{ actionUrl }}" class="btn btn-mini">
+                      <a href="{{ actionUrl }}" class="btn btn-default btn-sm"{% if submissions|length %} title="{{ gettext("Pending submissions") }}"{% endif %}>
                         {% if submissions|length %}
-                          <span title="{{ gettext("Pending submissions") }}">({{ submissions|length }})</span>
+                          <span>({{ submissions|length }})</span>
                         {% else %}
-                            <i class="icon-plus"></i>
+                            <i class="fa fa-plus"></i>
+                            {{ actionText }}
                         {% endif %}
-                        {{ actionText }}
                       </a>
                     {% else %}
                       <i class="muted">None</i>

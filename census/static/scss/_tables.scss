@@ -340,6 +340,10 @@ table {
     position: relative;
     overflow: visible;
 
+    a {
+      width: 100%;
+    }
+
     .entry-year {
       clear: left;
       height: 16px;
