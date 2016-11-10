@@ -16,6 +16,7 @@ var loadRegistry = function(req, res) {
   .then(() => {
     res.send({status: 'ok', message: 'ok'});
   }).catch(err => {
+    console.log(err.stack);
     res.send({status: 'error', message: err.message});
   });
 };
