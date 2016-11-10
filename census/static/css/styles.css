@@ -8661,6 +8661,9 @@ td.previous-results {
   padding: 8px 4px 8px 4px !important; }
   #places_overview_table tr td a {
     font-size: 12px; }
+  @media (max-width: 1200px) {
+    #places_overview_table tr td.status .fa {
+      display: none; } }
 #places_overview_table thead tr th {
   height: 118px; }
   #places_overview_table thead tr th .dataset-title-context {

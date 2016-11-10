@@ -286,6 +286,14 @@ td.previous-results {
     a {
       font-size: 12px;
     }
+
+    &.status {
+      @media (max-width: $screen-lg-min) {
+        .fa {
+          display: none;
+        }
+      }
+    }
   }
 
   thead tr th {
