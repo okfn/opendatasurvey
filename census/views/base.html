@@ -60,23 +60,26 @@
           <span class="user">
             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
             {% if currentUser %}
-              {{format("Logged in as %(name)s", { name: currentUser.firstName })}}
-              | <a href="{{ logoutUrl }}">{{gettext("Log out")}}</a>
+              {{ format("Logged in as %(name)s", { name: currentUser.firstName }) }}
+              | <a href="{{ logoutUrl }}">{{ gettext("Log out") }}</a>
             {% else %}
-              <a href="{{ loginUrl }}">{{gettext("Login")}}</a>
+              <a href="{{ loginUrl }}">{{ gettext("Login") }}</a>
             {% endif %}
           </span>
           {% endif %}
 
           <ul class="menu">
-            <li><a href="/about/">{{gettext("About")}}</a></li>
-            <li><a href="/changes/">{{gettext("Changes")}}</a></li>
-            <li><a href="/faq/">{{gettext("FAQ")}}</a></li>
+            <li><a href="/about/">{{ gettext("About") }}</a></li>
+            <li><a href="/changes/">{{ gettext("Changes") }}</a></li>
+            <li><a href="/faq/">{{ gettext("FAQ") }}</a></li>
+            {% if site.settings.methodology_page %}
+            <li><a href="/methodology/">{{ gettext("Methodology") }}</a></li>
+            {% endif %}
             {% if site.settings.contribute_page %}
-            <li><a href="/contribute/">{{gettext("Contribute")}}</a></li>
+            <li><a href="/contribute/">{{ gettext("Contribute") }}</a></li>
             {% endif %}
             {% if site.settings.tutorial_page %}
-            <li><a href="/tutorial/">{{gettext("Tutorial")}}</a></li>
+            <li><a href="/tutorial/">{{ gettext("Tutorial") }}</a></li>
             {% endif %}
             {% if site.settings.support_url %}
               <li><a target="_blank" href="{{ site.settings.support_url }}">{{ gettext("Support") }}</a></li>
@@ -134,10 +137,10 @@
         {% endif %}
         <div class="footer-secondary">
           <p class="pull-right">
-{#             <strong>{{ gettext("Download") }}:</strong> <a href="/api/entries.cascade.csv">{{gettext("Current (CSV)")}}</a> |
-            <a href="/api/entries.csv">{{gettext("All (CSV)")}}</a> |
-            <a href="/api/entries.cascade.json">{{gettext("Current (JSON)")}}</a> |
-            <a href="/api/entries.json">{{gettext("All (JSON)")}}</a> #}
+{#             <strong>{{ gettext("Download") }}:</strong> <a href="/api/entries.cascade.csv">{{ gettext("Current (CSV)") }}</a> |
+            <a href="/api/entries.csv">{{ gettext("All (CSV)") }}</a> |
+            <a href="/api/entries.cascade.json">{{ gettext("Current (JSON)") }}</a> |
+            <a href="/api/entries.json">{{ gettext("All (JSON)") }}</a> #}
           </p>
           <p>
             <a href="http://opendatacommons.org/licenses/pddl/1.0">Data License (Public Domain)</a>. <a href="https://github.com/okfn/opendatacensus/">Source code</a>.
@@ -146,13 +149,13 @@
         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
         {% if currentUser %}
           {{format("Logged in as %(name)s", { name: currentUser.firstName })}}
-          | <a href="{{ logoutUrl }}">{{gettext("Log out")}}</a>
+          | <a href="{{ logoutUrl }}">{{ gettext("Log out") }}</a>
         {% else %}
-          <a href="{{ loginUrl }}">{{gettext("Login")}}</a>
+          <a href="{{ loginUrl }}">{{ gettext("Login") }}</a>
         {% endif %}
         {% if locales.length > 1 %}
             <p class="lang-picker">
-            {{gettext("Change language:")}}
+            {{ gettext("Change language:") }}
             {% for locale in locales %}
               {% if locale == currentLocale %}
                 <span>{{locale.toUpperCase()}}</span>
