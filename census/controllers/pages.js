@@ -62,6 +62,15 @@ var contribute = function(req, res) {
   });
 };
 
+var methodology = function(req, res) {
+  var settingName = 'methodology_page';
+  res.render('page.html', {
+    content: marked(req.params.site.settings[settingName]),
+    title: 'Methodology',
+    breadcrumbTitle: 'Methodology'
+  });
+};
+
 var tutorial = function(req, res) {
   var settingName = 'tutorial_page';
   res.render('page.html', {
@@ -190,6 +199,7 @@ module.exports = {
   faq: faq,
   about: about,
   contribute: contribute,
+  methodology: methodology,
   tutorial: tutorial,
   changes: changes,
   place: place,
