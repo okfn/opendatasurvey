@@ -290,15 +290,17 @@ var pending = function(req, res) {
         reviewComments: entry.reviewComments
       };
 
+      let reviewersData = {place: place, dataset: dataset};
+      let reviewers = utils.getReviewers(req, reviewersData);
+      let canReview = utils.canReview(reviewers, req.user);
       let initialHTML = renderToString(<EntryForm questions={questions}
                                                   qsSchema={qsSchema}
                                                   context={datasetContext}
                                                   answers={formData}
                                                   place={entry.place}
                                                   dataset={entry.dataset}
-                                                  isReview={true} />);
-      let reviewersData = {place: place, dataset: dataset};
-      let reviewers = utils.getReviewers(req, reviewersData);
+                                                  isReview={true}
+                                                  canReview={canReview} />);
       let entryStatus = 'pending';
       if (entry.isCurrent) {
         entryStatus = 'accepted';
@@ -321,7 +323,7 @@ var pending = function(req, res) {
         isReview: true,
         entryStatus: entryStatus,
         entry: entry,
-        canReview: utils.canReview(reviewers, req.user),
+        canReview: canReview,
         reviewClosed: entry.reviewResult ||
           (entry.year !== req.app.get('year'))
       });

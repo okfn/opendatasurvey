@@ -177,7 +177,8 @@ const QuestionForm = React.createClass({
                         config={
                           this.getValueForId(q.id, 'config')
                         }
-                        context={this.props.context}>
+                        context={this.props.context}
+                        readonly={this.props.readonly || false}>
           {this.getValueForId(q.id, 'text')}
         </ComponentClass>
       );
