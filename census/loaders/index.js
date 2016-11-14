@@ -7,6 +7,7 @@ const utils = require('./utils');
 const controllerUtils = require('../controllers/utils');
 const marked = require('marked');
 const crypto = require('crypto');
+const util = require('util');
 
 var loadConfig = function(siteId, models) {
   return models.Registry.findById(siteId)
@@ -133,8 +134,12 @@ let _createQuestionSetForDatasets = function(datasets,
   });
 };
 
-var loadQuestionSets = function(siteId, models) {
+var loadQuestionSets = function(siteId, models, transaction) {
   return models.sequelize.transaction(t => {
+    if (transaction !== undefined) {
+      t = transaction;
+    }
+
     // Destroy all QuestionSets associated with siteId.
     return models.QuestionSet.destroy({
       where: {site: siteId},
@@ -161,7 +166,8 @@ var loadQuestionSets = function(siteId, models) {
       });
       // Resolve all the Promises in qsLoaders array.
       return Promise.all(qsLoaders).then(() => {
-        // console.log('All QS loaded. Resolving.');
+        console.log(util.format('All QuestionSets loaded for %s. Resolving.',
+                                siteId));
       });
     });
   });
@@ -235,6 +241,18 @@ var loadData = function(options, models) {
         createData = _.mapKeys(createData, (v, key) => key.toLowerCase());
         return options.Model.create(createData, {transaction: t});
       }));
+    })
+    .then(() => {
+      console.log(util.format('All %s loaded for %s.',
+                              options.setting,
+                              options.site));
+      if (options.setting === 'datasets') {
+        return loadQuestionSets(options.site, models, t);
+      }
+    })
+    .catch(err => {
+      console.log(err.stack);
+      throw err;
     });
   });
 };

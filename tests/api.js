@@ -108,7 +108,6 @@ describe('API', function() {
         browser.assert.success();
         var data = JSON.parse(browser.text());
         var item = data['results'][0];
-        console.log(item);
 
         // Check data is right
         assert.equal(item.reviewComments, '');
