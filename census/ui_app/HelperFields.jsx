@@ -17,7 +17,7 @@ const CurrentEntry = props => {
 };
 
 const SubmitActions = props => {
-  if (props.isReview) {
+  if (props.isReview && props.canReview) {
     return (<div>
     <div className="text question">
       <div className="main">
@@ -66,6 +66,8 @@ const SubmitActions = props => {
       <div className="comments"></div>
     </div>
     </div>);
+  } else if (props.isReview && !props.canReview) {
+    return null;
   } else {
     return (<div className="submit continuation question">
       <div className="main">
@@ -113,6 +115,8 @@ const QuestionInstructions = props => {
 
 const QuestionComments = React.createClass({
   render() {
+    let readOnlyOpts = {};
+    if (this.props.readonly) readOnlyOpts.readOnly = 'readonly';
     return (<div className="comments">
       <label htmlFor={this.props.id + '_comment'}>Comments</label>
       <textarea placeholder={this.props.placeholder || 'Add comments' }
@@ -121,7 +125,8 @@ const QuestionComments = React.createClass({
                 name={this.props.id + '_comment'}
                 value={this.props.commentValue}
                 onChange={this.handler}
-                disabled={this.props.disabled}></textarea>
+                disabled={this.props.disabled}
+                {...readOnlyOpts}></textarea>
     </div>);
   },
 

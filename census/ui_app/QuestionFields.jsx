@@ -38,6 +38,8 @@ const baseQuestionField = QuestionField => {
 
 let QuestionFieldText = React.createClass({
   render() {
+    let readOnlyOpts = {};
+    if (this.props.readonly) readOnlyOpts.readOnly = 'readonly';
     return (<div className={'text question ' + this.props.getClassValues()}>
       <div className="main">
         <div>
@@ -55,7 +57,8 @@ let QuestionFieldText = React.createClass({
                      value={this.props.value}
                      name={this.props.id}
                      onChange={this.handler}
-                     disabled={!this.props.visibleProps.enabled} />
+                     disabled={!this.props.visibleProps.enabled}
+                     {...readOnlyOpts} />
             </div>
           </div>
         </div>
@@ -64,7 +67,8 @@ let QuestionFieldText = React.createClass({
                                 placeholder={this.props.placeholder}
                                 commentValue={this.props.commentValue}
                                 onCommentChange={this.props.onCommentChange}
-                                disabled={!this.props.visibleProps.enabled} />
+                                disabled={!this.props.visibleProps.enabled}
+                                readonly={this.props.readonly} />
     </div>);
   },
 
@@ -76,6 +80,8 @@ QuestionFieldText = baseQuestionField(QuestionFieldText);
 
 let QuestionFieldYesNo = React.createClass({
   render() {
+    let readOnlyOpts = {};
+    if (this.props.readonly) readOnlyOpts.readOnly = 'readonly';
     return (<div className={'yes-no question ' + this.props.getClassValues()}>
       <div className="main">
         <div>
@@ -95,7 +101,8 @@ let QuestionFieldYesNo = React.createClass({
                      value="No"
                      checked={(this.props.value === 'No')}
                      disabled={!this.props.visibleProps.enabled}
-                     onChange={this.handler} />
+                     onChange={this.handler}
+                     {...readOnlyOpts} />
               <label htmlFor={this.props.id + '1'}>
                 <span>No</span>
               </label>
@@ -105,7 +112,8 @@ let QuestionFieldYesNo = React.createClass({
                      value="Yes"
                      checked={(this.props.value === 'Yes')}
                      disabled={!this.props.visibleProps.enabled}
-                     onChange={this.handler} />
+                     onChange={this.handler}
+                     {...readOnlyOpts} />
               <label htmlFor={this.props.id + '2'}>
                 <span>Yes</span>
               </label>
@@ -117,17 +125,22 @@ let QuestionFieldYesNo = React.createClass({
                                 placeholder={this.props.placeholder}
                                 commentValue={this.props.commentValue}
                                 onCommentChange={this.props.onCommentChange}
-                                disabled={!this.props.visibleProps.enabled} />
+                                disabled={!this.props.visibleProps.enabled}
+                                readonly={this.props.readonly} />
     </div>);
   },
 
   handler(e) {
-    this.props.onChange(this, e.target.value);
+    if (!this.props.readonly) {
+      this.props.onChange(this, e.target.value);
+    }
   }
 });
 QuestionFieldYesNo = baseQuestionField(QuestionFieldYesNo);
 
 const QuestionFieldLikertOption = props => {
+  let readOnlyOpts = {};
+  if (props.readonly) readOnlyOpts.readOnly = 'readonly';
   return (
     <span>
       <input type="radio"
@@ -136,7 +149,8 @@ const QuestionFieldLikertOption = props => {
              value={props.value}
              onChange={props.handler}
              checked={props.checked}
-             disabled={props.disabled} />
+             disabled={props.disabled}
+             {...readOnlyOpts} />
       <label htmlFor={props.id + props.value}>
         <span>{props.value}</span> <em className="description">{props.description}</em>
       </label>
@@ -154,7 +168,8 @@ let QuestionFieldLikert = React.createClass({
                                         key={this.props.id + option.value}
                                         handler={this.handler}
                                         checked={this.props.value === option.value}
-                                        disabled={!this.props.visibleProps.enabled} />;
+                                        disabled={!this.props.visibleProps.enabled}
+                                        readonly={this.props.readonly} />;
     });
     return (<div className={'scale question ' + this.props.getClassValues()}>
       <div className="main">
@@ -178,17 +193,25 @@ let QuestionFieldLikert = React.createClass({
                                 placeholder={this.props.placeholder}
                                 commentValue={this.props.commentValue}
                                 onCommentChange={this.props.onCommentChange}
-                                disabled={!this.props.visibleProps.enabled} />
+                                disabled={!this.props.visibleProps.enabled}
+                                readonly={this.props.readonly} />
     </div>);
   },
 
   handler(e) {
-    this.props.onChange(this, e.target.value);
+    if (!this.props.readonly) {
+      this.props.onChange(this, e.target.value);
+    }
   }
 });
 QuestionFieldLikert = baseQuestionField(QuestionFieldLikert);
 
 const QuestionFieldSourceLine = props => {
+  let commonOpts = {
+    onChange: props.onChange,
+    disabled: props.disabled
+  };
+  if (props.readonly) commonOpts.readOnly = 'readonly';
   return (
     <ul>
       <li>
@@ -199,8 +222,7 @@ const QuestionFieldSourceLine = props => {
                data-key={'urlValue'}
                placeholder="http://"
                value={props.urlValue}
-               onChange={props.onChange}
-               disabled={props.disabled} />
+               {...commonOpts} />
       </li>
       <li>
         <label htmlFor={props.id + '_desc'}>Source description</label>
@@ -209,8 +231,7 @@ const QuestionFieldSourceLine = props => {
                type="text"
                data-key={'descValue'}
                value={props.descValue}
-               onChange={props.onChange}
-               disabled={props.disabled} />
+               {...commonOpts} />
       </li>
     </ul>
   );
@@ -246,6 +267,7 @@ let QuestionFieldSource = React.createClass({
                                           descValue={sourceValue.descValue}
                                           onChange={this.handler.bind(this, i)}
                                           disabled={!this.props.visibleProps.enabled}
+                                          readonly={this.props.readonly}
                                            />;
       sourceLines.push(node);
     }
@@ -272,7 +294,8 @@ let QuestionFieldSource = React.createClass({
                         commentValue={this.props.commentValue}
                         onCommentChange={this.props.onCommentChange}
                         disabled={!this.props.visibleProps.enabled}
-                        disabled={!this.props.visibleProps.enabled} />
+                        disabled={!this.props.visibleProps.enabled}
+                        readonly={this.props.readonly} />
     </div>);
   },
 
@@ -287,6 +310,8 @@ let QuestionFieldSource = React.createClass({
 QuestionFieldSource = baseQuestionField(QuestionFieldSource);
 
 const QuestionFieldMultipleChoiceOption = props => {
+  let readOnlyOpts = {};
+  if (props.readonly) readOnlyOpts.readOnly = 'readonly';
   return (
     <li>
       <input type="checkbox"
@@ -295,7 +320,8 @@ const QuestionFieldMultipleChoiceOption = props => {
              value="1"
              checked={props.checked}
              onChange={props.handler}
-             disabled={props.disabled} />
+             disabled={props.disabled}
+             {...readOnlyOpts} />
       <label htmlFor={props.id}>
         <span className="letter">{props.label}</span> <span className="description">{props.children.toString()}</span>
       </label>
@@ -305,6 +331,8 @@ const QuestionFieldMultipleChoiceOption = props => {
 
 const QuestionFieldMultipleChoiceOther = props => {
   if (props.includeOther) {
+    let readOnlyOpts = {};
+    if (props.readonly) readOnlyOpts.readOnly = 'readonly';
     return (
       <div className="other text sub">
         <h3>Other</h3>
@@ -312,7 +340,8 @@ const QuestionFieldMultipleChoiceOther = props => {
           <input name={props.id}
                  value={props.value}
                  type="text"
-                 disabled={props.disabled} />
+                 disabled={props.disabled}
+                 {...readOnlyOpts} />
         </div>
       </div>
     );
@@ -363,7 +392,8 @@ let QuestionFieldMultipleChoice = React.createClass({
                                                 checked={option.checked}
                                                 label={label}
                                                 handler={this.handler.bind(this, i)}
-                                                disabled={!this.props.visibleProps.enabled}>
+                                                disabled={!this.props.visibleProps.enabled}
+                                                readonly={this.props.readonly}>
                 {option.description}
               </QuestionFieldMultipleChoiceOption>;
     });
@@ -389,7 +419,8 @@ let QuestionFieldMultipleChoice = React.createClass({
             </div>
             <QuestionFieldMultipleChoiceOther includeOther={this.props.config.includeOther}
                                               id={this.props.id + '_other'}
-                                              disabled={!this.props.visibleProps.enabled} />
+                                              disabled={!this.props.visibleProps.enabled}
+                                              readonly={this.props.readonly} />
           </div>
         </div>
       </div>
@@ -397,7 +428,8 @@ let QuestionFieldMultipleChoice = React.createClass({
                                 placeholder={this.props.placeholder}
                                 commentValue={this.props.commentValue}
                                 onCommentChange={this.props.onCommentChange}
-                                disabled={!this.props.visibleProps.enabled} />
+                                disabled={!this.props.visibleProps.enabled}
+                                readonly={this.props.readonly} />
     </div>);
   },
 
@@ -410,9 +442,11 @@ let QuestionFieldMultipleChoice = React.createClass({
   },
 
   handler(i, e) {
-    let newOptionValues = this.optionValues;
-    newOptionValues[i].checked = e.target.checked;
-    this.props.onChange(this, newOptionValues);
+    if (!this.props.readonly) {
+      let newOptionValues = this.optionValues;
+      newOptionValues[i].checked = e.target.checked;
+      this.props.onChange(this, newOptionValues);
+    }
   }
 });
 QuestionFieldMultipleChoice = baseQuestionField(QuestionFieldMultipleChoice);

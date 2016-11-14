@@ -129,6 +129,9 @@ const EntryForm = React.createClass({
   },
 
   render() {
+    let readonly = (this.props.isReview && !this.props.canReview);
+    let readOnlyOpts = {};
+    if (readonly) readOnlyOpts.readOnly = 'readonly';
     return (<div>
 <section>
   <div className="container">
@@ -141,6 +144,7 @@ const EntryForm = React.createClass({
                   qsSchema={this.yourKnowledgeQSSchema}
                   questions={this.yourKnowledgeQuestions}
                   answers={this.props.answers.aboutYouAnswers}
+                  readonly={readonly}
                   labelPrefix={'A'}
                   ref={'yourKnowledgeQuestions'} />
   </div>
@@ -156,6 +160,7 @@ const EntryForm = React.createClass({
                   qsSchema={this.props.qsSchema}
                   questions={this.props.questions}
                   answers={this.props.answers.answers}
+                  readonly={readonly}
                   labelPrefix={'B'}
                   ref={'questions'} />
   </div>
@@ -177,7 +182,8 @@ const EntryForm = React.createClass({
           <div className="answer-wrapper">
             <div className="answer">
               <textarea name="details" rows="5"
-                        defaultValue={this.props.answers.details}></textarea>
+                        defaultValue={this.props.answers.details}
+                        {...readOnlyOpts}></textarea>
             </div>
           </div>
         </div>
@@ -204,14 +210,16 @@ const EntryForm = React.createClass({
               <input type="radio" name="anonymous"
                      id="anonymousNo"
                      value="No"
-                     defaultChecked={this.props.answers.anonymous === 'No'} />
+                     defaultChecked={this.props.answers.anonymous === 'No'}
+                     {...readOnlyOpts} />
               <label htmlFor="anonymousNo">
                 <span>No</span>
               </label>
               <input type="radio" name="anonymous"
                      id="anonymousYes"
                      value="Yes"
-                     defaultChecked={this.props.answers.anonymous === 'Yes'} />
+                     defaultChecked={this.props.answers.anonymous === 'Yes'}
+                     {...readOnlyOpts} />
               <label htmlFor="anonymousYes">
                 <span>Yes</span>
               </label>
@@ -223,6 +231,7 @@ const EntryForm = React.createClass({
     </div>
 
     <helpers.SubmitActions isReview={this.props.isReview}
+                           canReview={this.props.canReview}
                            onSubmitHandler={this.onSubmitHandler}
                            reviewComments={this.props.answers.reviewComments} />
 
