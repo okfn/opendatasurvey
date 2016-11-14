@@ -50,7 +50,7 @@ var loadAllPlaces = function(req, res) {
       };
       return loaders.loadTranslatedData(options, req.app.get('models'))
       .then(() => {
-        console.log('places loaded for ' + result.id);
+        // console.log('places loaded for ' + result.id);
       })
       .catch(console.trace.bind(console));
     });
@@ -75,7 +75,7 @@ var loadAllDatasets = function(req, res) {
       };
       return loaders.loadTranslatedData(options, req.app.get('models'))
       .then(() => {
-        console.log('datasets loaded for ' + result.id);
+        // console.log('datasets loaded for ' + result.id);
       })
       .catch(console.trace.bind(console));
     });
@@ -94,7 +94,7 @@ var loadAllQuestionSets = function(req, res) {
     return Promise.each(results, result => {
       return loaders.loadQuestionSets(result.id, req.app.get('models'))
         .then(() => {
-          console.log('questionsets loaded for site: ' + result.id);
+          // console.log('questionsets loaded for site: ' + result.id);
         }).catch(console.trace.bind(console));
     });
   })

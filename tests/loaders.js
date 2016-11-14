@@ -106,7 +106,7 @@ describe('Admin page', function () {
     });
 
     before(function () {
-      return this.browser.pressButton('Reload Datasets');
+      return this.browser.pressButton('Reload Datasets (& QuestionSets)');
     });
 
     it('should load datasets', function () {
@@ -125,6 +125,36 @@ describe('Admin page', function () {
             'The third and last of the istics'
           ]);
         });
+    });
+
+    it('should create a single QuestionSet instance', function() {
+      return this.app.get('models').QuestionSet.findAll({where: {site: siteID}})
+        .then(function(qsets) {
+          assert.equal(qsets.length, 1);
+        });
+    });
+
+    it('should association QuestionSet with appropriate datasets', function() {
+      return this.app.get('models').QuestionSet.findAll({where: {site: siteID}})
+        .bind(this).then(function(qsets) {
+          let qsid = qsets[0].id;
+          return this.app.get('models').Dataset.findAll(
+            {where: {site: siteID, questionsetid: qsid}});
+        }).then(datasets => {
+          assert.equal(datasets.length, 15);
+        });
+    });
+
+    it('should load child Question instances into database', function() {
+      return this.app.get('models').QuestionSet.findAll({where: {site: siteID}})
+      .bind(this).then(qsets => {
+        let qsid = qsets[0].id;
+        return this.app.get('models').Question.findAll(
+          {where: {questionsetid: qsid}});
+      })
+      .then(questions => {
+        assert.equal(questions.length, 16);
+      });
     });
 
     it('adds a dataset.qsurl property from the Dataset sheet', function() {
@@ -291,19 +321,25 @@ describe('System Control page', function () {
 
   describe('Load Datasets button action', function () {
     beforeEach(function () {
-      return this.browser.pressButton('Load Datasets');
+      return this.browser.pressButton('Load Datasets (& QuestionSets)');
     });
 
-    it('should load datasets', function () {
+    it('should load datasets and questionsets', function () {
       this.browser.assert.success();
       let html = this.browser.resources[0].response.body;
       let jsonData = JSON.parse(html);
       assert.equal(jsonData.status, 'ok');
       assert.equal(jsonData.message, 'ok');
       return this.app.get('models').Dataset.findAll({where: {site: siteID}})
-        .then(function (data) {
-          assert.equal(data.length, 15);
-        });
+      .then(function (data) {
+        assert.equal(data.length, 15);
+      })
+      .then(() => {
+        return this.app.get('models').QuestionSet.findAll({where: {site: siteID}});
+      })
+      .then(function(qsets) {
+        assert.equal(qsets.length, 1);
+      });
     });
   });
 });
