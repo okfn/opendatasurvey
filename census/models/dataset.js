@@ -96,14 +96,18 @@ module.exports = function(sequelize, DataTypes) {
       */
       getQuestions: function() {
         return this.getQuestionSet()
-        .then(qset => qset.getQuestions());
+        .then(qset => {
+          if (qset)
+            return qset.getQuestions();
+          return undefined;
+        });
       },
       /*
       Get QuestionSetSchema object from the associated QuestionSet.
       */
       getQuestionSetSchema: function() {
         return this.getQuestionSet()
-        .then(qset => qset.qsSchema);
+        .then(qset => _.get(qset, 'qsSchema', undefined));
       }
     },
     classMethods: {
