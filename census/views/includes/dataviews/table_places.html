@@ -88,6 +88,7 @@
                     {% if submissionsAllowed %}
                       <a href="{{ actionUrl }}" class="btn btn-default btn-sm"{% if submissions|length %} title="{{ gettext("Pending submissions") }}"{% endif %}>
                         {% if submissions|length %}
+                          <span class="pending badge badge-warning" title="{{ gettext("Pending submissions") }}">{{ submissions|length }}</span>
                           <span>({{ submissions|length }})</span>
                         {% else %}
                             <i class="fa fa-plus"></i>
