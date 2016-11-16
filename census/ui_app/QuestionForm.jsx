@@ -7,7 +7,10 @@ const QuestionForm = React.createClass({
   propTypes: {
     questions: React.PropTypes.array.isRequired,
     qsSchema: React.PropTypes.array.isRequired,
-    context: React.PropTypes.object.isRequired
+    context: React.PropTypes.object.isRequired,
+    answers: React.PropTypes.array,
+    readonly: React.PropTypes.bool,
+    labelPrefix: React.PropTypes.string
   },
 
   getInitialState() {

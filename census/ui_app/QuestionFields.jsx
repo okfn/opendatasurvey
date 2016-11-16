@@ -6,6 +6,30 @@ import * as helpers from './HelperFields.jsx';
 // Fields.
 const baseQuestionField = QuestionField => {
   const BaseQuestionField = React.createClass({
+    propTypes: {
+      visibleProps: React.PropTypes.object.isRequired,
+      value: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.number,
+        React.PropTypes.object,
+        React.PropTypes.array
+      ]).isRequired,
+      commentValue: React.PropTypes.string,
+      currentValue: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.number,
+        React.PropTypes.object,
+        React.PropTypes.array
+      ]),
+      labal: React.PropTypes.string,
+      position: React.PropTypes.number.isRequired,
+      instructions: React.PropTypes.string,
+      placeholder: React.PropTypes.string,
+      config: React.PropTypes.object,
+      context: React.PropTypes.object,
+      readonly: React.PropTypes.bool
+    },
+
     _isSub() {
       /* Return a boolean to determine if the question should be considered a 'sub-
          question', based on the value of `position`.
