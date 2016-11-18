@@ -9,10 +9,14 @@ const EntryForm = React.createClass({
     // disable submit buttons
     $('.submit button').attr('disabled', 'disable');
 
+    let reviewAction =
+      $(targetForm).find('button[name=reviewAction]').val();
     let questionsValid = this.refs.questions.validate();
     let yourKnowledgeValid = this.refs.yourKnowledgeQuestions.validate();
 
-    if (questionsValid && yourKnowledgeValid) {
+    // We can proceed if the form questions are valid, or if we're rejecting
+    // the entry.
+    if ((questionsValid && yourKnowledgeValid) || reviewAction === 'reject') {
       let form = $('<form>').attr({ // eslint-disable-line quote-props
         method: 'post',
         'accept-charset': 'utf-8'
@@ -44,8 +48,6 @@ const EntryForm = React.createClass({
         }
       }
       if (this.props.isReview) {
-        let reviewAction =
-          $(targetForm).find('button[name=reviewAction]').val();
         $('<input>').attr({
           type: 'hidden',
           name: 'reviewAction',
