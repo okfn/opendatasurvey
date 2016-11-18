@@ -42,7 +42,7 @@ const baseQuestionField = QuestionField => {
     },
 
     getClassValues() {
-      var classValue = '';
+      let classValue = '';
       if (!this.props.visibleProps.enabled) classValue += 'disabled ';
       if (!this.props.visibleProps.visible) classValue += 'hide ';
       if (this.props.visibleProps.required) classValue += 'required ';
@@ -265,7 +265,8 @@ let QuestionFieldSource = React.createClass({
   emptySource: {urlValue: '', descValue: ''},
 
   _getSourceValues() {
-    let sourceValues = (_.isArray(this.props.value)) ? this.props.value : [];
+    let sourceValues =
+      (_.isArray(this.props.value)) ? _.clone(this.props.value) : [];
     if (!_.isEqual(_.last(sourceValues), this.emptySource))
       sourceValues.push(_.clone(this.emptySource));
     return sourceValues;
