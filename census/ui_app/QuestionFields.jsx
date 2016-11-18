@@ -470,6 +470,10 @@ let QuestionFieldMultipleChoice = React.createClass({
     if (!this.props.readonly) {
       let newOptionValues = this.optionValues;
       newOptionValues[i].checked = e.target.checked;
+
+      // reject all options with `checked: false`
+      newOptionValues = _.reject(newOptionValues, option => !option.checked);
+
       this.props.onChange(this, newOptionValues);
     }
   }
