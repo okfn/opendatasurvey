@@ -9,45 +9,55 @@ const EntryForm = React.createClass({
     // disable all buttons
     $('button').attr('disabled', 'disable');
 
-    let form = $('<form>').attr({ // eslint-disable-line quote-props
-      method: 'post',
-      'accept-charset': 'utf-8'
-    });
+    let questionsValid = this.refs.questions.validate();
+    let yourKnowledgeValid = this.refs.yourKnowledgeQuestions.validate();
 
-    let questionData = this.refs.questions.state.questionState;
-    $('<input>').attr({
-      type: 'hidden',
-      name: 'answers',
-      value: JSON.stringify(questionData)
-    }).appendTo(form);
+    if (questionsValid && yourKnowledgeValid) {
+      let form = $('<form>').attr({ // eslint-disable-line quote-props
+        method: 'post',
+        'accept-charset': 'utf-8'
+      });
 
-    let aboutYouQuestionData = this.refs.yourKnowledgeQuestions.state.questionState;
-    $('<input>').attr({
-      type: 'hidden',
-      name: 'aboutYouAnswers',
-      value: JSON.stringify(aboutYouQuestionData)
-    }).appendTo(form);
-
-    let additionalInputs = $('.uncontrolled-fields :input').serializeArray();
-    for (let i in additionalInputs) {
-      if (additionalInputs.hasOwnProperty(i)) {
-        $('<input>').attr({
-          type: 'hidden',
-          name: additionalInputs[i].name,
-          value: additionalInputs[i].value
-        }).appendTo(form);
-      }
-    }
-    if (this.props.isReview) {
-      let reviewAction = $(targetForm).find('button[name=reviewAction]').val();
+      let questionData = this.refs.questions.state.questionState;
       $('<input>').attr({
         type: 'hidden',
-        name: 'reviewAction',
-        value: reviewAction
+        name: 'answers',
+        value: JSON.stringify(questionData)
       }).appendTo(form);
+
+      let aboutYouQuestionData =
+        this.refs.yourKnowledgeQuestions.state.questionState;
+      $('<input>').attr({
+        type: 'hidden',
+        name: 'aboutYouAnswers',
+        value: JSON.stringify(aboutYouQuestionData)
+      }).appendTo(form);
+
+      let additionalInputs = $('.uncontrolled-fields :input').serializeArray();
+      for (let i in additionalInputs) {
+        if (additionalInputs.hasOwnProperty(i)) {
+          $('<input>').attr({
+            type: 'hidden',
+            name: additionalInputs[i].name,
+            value: additionalInputs[i].value
+          }).appendTo(form);
+        }
+      }
+      if (this.props.isReview) {
+        let reviewAction =
+          $(targetForm).find('button[name=reviewAction]').val();
+        $('<input>').attr({
+          type: 'hidden',
+          name: 'reviewAction',
+          value: reviewAction
+        }).appendTo(form);
+      }
+      form.appendTo(document.body);
+      form.submit();
+    } else {
+      // Something is invalid.
+      $('button').removeAttr('disabled');
     }
-    form.appendTo(document.body);
-    form.submit();
   },
 
   onSubmitHandler(e) {

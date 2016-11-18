@@ -1,6 +1,18 @@
 import _ from 'lodash';
 import React from 'react';
 
+const QuestionErrors = props => {
+  if (props.errors && props.errors.length) {
+    let errorItems = _.map(props.errors, (err, i) => <li key={i}>{err}</li>);
+    return (<div>
+      <ul>
+        {errorItems}
+      </ul>
+    </div>);
+  }
+  return null;
+};
+
 const CurrentEntry = props => {
   if (props.currentValue && props.currentValue.length) {
     let currentValue = (_.isArray(props.currentValue)) ?
@@ -144,6 +156,7 @@ const QuestionHeader = props => {
 };
 
 export {
+  QuestionErrors,
   QuestionInstructions,
   QuestionComments,
   QuestionHeader,

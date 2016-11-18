@@ -29,6 +29,10 @@ const QuestionForm = React.createClass({
     };
   },
 
+  onComponentWillMount() {
+    this.isValid = true;
+  },
+
   onFieldChange(field, value) {
     // Set the new value for the field
     let newQuestionsState = _.map(this.state.questionState, qState => {
@@ -138,6 +142,17 @@ const QuestionForm = React.createClass({
     let schema = this.getSchemaForId(id);
     if (schema === undefined) return;
     return schema.position;
+  },
+
+  validate() {
+    // For each question in the form, test if valid.
+    this.isValid = true;
+    _.each(this.refs, child => {
+      if (!child.validate(child.props.value)) {
+        this.isValid = false;
+      }
+    });
+    return this.isValid;
   },
 
   render() {
