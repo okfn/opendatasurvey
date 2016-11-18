@@ -6,8 +6,8 @@ import * as helpers from './HelperFields.jsx';
 const EntryForm = React.createClass({
 
   _post(targetForm) {
-    // disable all buttons
-    $('button').attr('disabled', 'disable');
+    // disable submit buttons
+    $('.submit button').attr('disabled', 'disable');
 
     let questionsValid = this.refs.questions.validate();
     let yourKnowledgeValid = this.refs.yourKnowledgeQuestions.validate();
@@ -56,7 +56,7 @@ const EntryForm = React.createClass({
       form.submit();
     } else {
       // Something is invalid.
-      $('button').removeAttr('disabled');
+      $('.submit button').removeAttr('disabled');
     }
   },
 

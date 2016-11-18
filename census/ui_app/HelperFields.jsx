@@ -4,8 +4,8 @@ import React from 'react';
 const QuestionErrors = props => {
   if (props.errors && props.errors.length) {
     let errorItems = _.map(props.errors, (err, i) => <li key={i}>{err}</li>);
-    return (<div>
-      <ul>
+    return (<div className="field-errors">
+      <ul className="error-message">
         {errorItems}
       </ul>
     </div>);
@@ -65,11 +65,11 @@ const SubmitActions = props => {
           <CurrentEntry />
           <div className="answer-wrapper">
             <div className="answer">
-              <form method="post" acceptCharset="utf-8" onSubmit={props.onSubmitHandler}>
-                <button type="submit" value="publish" name="reviewAction">Publish</button>
+              <form method="post" acceptCharset="utf-8" className="entry-form" onSubmit={props.onSubmitHandler}>
+                <button type="submit" className="btn" value="publish" name="reviewAction">Publish</button>
               </form>
-              <form method="post" acceptCharset="utf-8" onSubmit={props.onSubmitHandler}>
-                <button type="submit" value="reject" name="reviewAction" className="reject">Reject</button>
+              <form method="post" acceptCharset="utf-8" className="entry-form" onSubmit={props.onSubmitHandler}>
+                <button type="submit" className="btn" value="reject" name="reviewAction" className="reject">Reject</button>
               </form>
             </div>
           </div>
@@ -92,7 +92,7 @@ const SubmitActions = props => {
           <div className="answer-wrapper">
             <div className="answer">
               <form method="post" acceptCharset="utf-8" onSubmit={props.onSubmitHandler}>
-                <button type="submit">Submit</button>
+                <button type="submit" className="btn">Submit</button>
               </form>
             </div>
           </div>
