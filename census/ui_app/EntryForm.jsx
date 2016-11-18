@@ -55,7 +55,12 @@ const EntryForm = React.createClass({
       form.appendTo(document.body);
       form.submit();
     } else {
-      // Something is invalid.
+      // Something is invalid, scroll to the first error.
+      setTimeout(function() {
+        let firstErrorQ = $('.field-errors').first().closest('.question');
+        $('html, body').animate({scrollTop: $(firstErrorQ).offset().top}, 750);
+      }, 100);
+
       $('.submit button').removeAttr('disabled');
     }
   },
