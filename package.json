@@ -54,7 +54,7 @@
     "subdomain": "^1.2.0",
     "throng": "^4.0.0",
     "umzug": "^1.6.0",
-    "validator": "^5.7.0",
+    "validator": "^6.1.0",
     "webpack": "^1.13.2",
     "xss": "^0.2.13"
   },

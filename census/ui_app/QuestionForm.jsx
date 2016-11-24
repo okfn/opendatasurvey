@@ -7,7 +7,10 @@ const QuestionForm = React.createClass({
   propTypes: {
     questions: React.PropTypes.array.isRequired,
     qsSchema: React.PropTypes.array.isRequired,
-    context: React.PropTypes.object.isRequired
+    context: React.PropTypes.object.isRequired,
+    answers: React.PropTypes.array,
+    readonly: React.PropTypes.bool,
+    labelPrefix: React.PropTypes.string
   },
 
   getInitialState() {
@@ -24,6 +27,10 @@ const QuestionForm = React.createClass({
     return {
       questionState: questionValues
     };
+  },
+
+  onComponentWillMount() {
+    this.isValid = true;
   },
 
   onFieldChange(field, value) {
@@ -135,6 +142,17 @@ const QuestionForm = React.createClass({
     let schema = this.getSchemaForId(id);
     if (schema === undefined) return;
     return schema.position;
+  },
+
+  validate() {
+    // For each question in the form, test if valid.
+    this.isValid = true;
+    _.each(this.refs, child => {
+      if (!child.validate(child.props.value)) {
+        this.isValid = false;
+      }
+    });
+    return this.isValid;
   },
 
   render() {

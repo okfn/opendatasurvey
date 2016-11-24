@@ -332,16 +332,6 @@ describe('#validationData()', function() {
   });
 
   describe('Edge cases', function() {
-    it('should return error for exists and format (the fields are ' +
-    'not submitted)', function(done) {
-      postRoute(_.omit(submission, ['exists', 'format']), done,
-        function(errors) {
-          expect(errors).to.have.property('exists');
-          expect(errors).to.have.property('format');
-          expect(_.size(errors)).to.be.equal(2);
-        });
-    });
-
     it('should return error for openlicense (free=null => openlicense=null)',
       function(done) {
         postRoute(_.assign(submission, {

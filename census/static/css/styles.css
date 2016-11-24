@@ -9146,6 +9146,24 @@ body.form .form-footer {
             body.form .form-footer .question .instructions + h4 ~ p,
             body.form .form-footer .question .instructions + p ~ p {
               margin-left: 33.33333%; } }
+    body.form section .question .field-errors,
+    body.form .form-header .question .field-errors,
+    body.form .form-footer .question .field-errors {
+      position: relative;
+      min-height: 1px;
+      padding-left: 15px;
+      padding-right: 15px; }
+      @media (min-width: 992px) {
+        body.form section .question .field-errors,
+        body.form .form-header .question .field-errors,
+        body.form .form-footer .question .field-errors {
+          float: left;
+          width: 66.66667%; } }
+      @media (min-width: 992px) {
+        body.form section .question .field-errors,
+        body.form .form-header .question .field-errors,
+        body.form .form-footer .question .field-errors {
+          margin-left: 33.33333%; } }
     body.form section .question .current,
     body.form .form-header .question .current,
     body.form .form-footer .question .current {
@@ -9668,6 +9686,11 @@ body.form .form-footer {
       font-size: 0.8em;
       max-height: 11em;
       overflow: auto; }
+    body.form section .question.submit form,
+    body.form .form-header .question.submit form,
+    body.form .form-footer .question.submit form {
+      float: left;
+      margin-right: 15px; }
     body.form section .question.submit button,
     body.form .form-header .question.submit button,
     body.form .form-footer .question.submit button {

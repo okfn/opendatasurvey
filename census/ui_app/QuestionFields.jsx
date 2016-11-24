@@ -1,11 +1,92 @@
 import React from 'react';
 import _ from 'lodash';
 import * as helpers from './HelperFields.jsx';
+import validator from 'validator';
 
 // A base Higher-Order Component providing common behaviour for all Question
 // Fields.
 const baseQuestionField = QuestionField => {
   const BaseQuestionField = React.createClass({
+    propTypes: {
+      visibleProps: React.PropTypes.object.isRequired,
+      value: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.number,
+        React.PropTypes.object,
+        React.PropTypes.array
+      ]).isRequired,
+      commentValue: React.PropTypes.string,
+      currentValue: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.number,
+        React.PropTypes.object,
+        React.PropTypes.array
+      ]),
+      labal: React.PropTypes.string,
+      position: React.PropTypes.number.isRequired,
+      instructions: React.PropTypes.string,
+      placeholder: React.PropTypes.string,
+      config: React.PropTypes.object,
+      context: React.PropTypes.object,
+      readonly: React.PropTypes.bool,
+      validationRules: React.PropTypes.array
+    },
+
+    getInitialState() {
+      return {
+        validationErrors: []
+      };
+    },
+
+    componentWillMount() {
+      this.isValid = true;
+      // A list of rules to apply for this Question.
+      this.validationRules = this.props.validationRules || [];
+      // An object containing available validators.
+      this.validators = {
+        required: {
+          rule: value => {
+            return !validator.isEmpty(value.toString());
+          },
+          message: 'Question is required'
+        }
+      };
+      this.setState({validationErrors: []});
+    },
+
+    validate(value) {
+      /*
+        Run the value through the validation rules specified for this
+        Question, populating the `validationErrors` array and setting
+        `isValid` flag.
+
+        Return the `isValid` value and set the state for validationErrors.
+      */
+      // We want to run validation if there's a value or a value is required.
+      if (value || (this.props.visibleProps.enabled &&
+                    this.props.visibleProps.visible &&
+                    this.props.visibleProps.required)) {
+        // A local copy of the validationRules.
+        let validationRules = _.clone(this.validationRules);
+        // Add the 'required' rule if this Question is required.
+        if (this.props.visibleProps.required) {
+          validationRules.push('required');
+        }
+        let validationErrors = [];
+        this.isValid = true;
+        _.each(validationRules, ruleName => {
+          if (!this.validators[ruleName].rule(value)) {
+            // This value is invalid for the rule, so append the error message
+            // and set isValid to false.
+            validationErrors.push(this.validators[ruleName].message);
+            this.isValid = false;
+          }
+        });
+        this.setState({validationErrors: validationErrors});
+      }
+      return this.isValid;
+    },
+
     _isSub() {
       /* Return a boolean to determine if the question should be considered a 'sub-
          question', based on the value of `position`.
@@ -18,7 +99,7 @@ const baseQuestionField = QuestionField => {
     },
 
     getClassValues() {
-      var classValue = '';
+      let classValue = '';
       if (!this.props.visibleProps.enabled) classValue += 'disabled ';
       if (!this.props.visibleProps.visible) classValue += 'hide ';
       if (this.props.visibleProps.required) classValue += 'required ';
@@ -29,6 +110,8 @@ const baseQuestionField = QuestionField => {
 
     render() {
       return <QuestionField getClassValues={this.getClassValues}
+                            validate={this.validate}
+                            validationErrors={this.state.validationErrors}
                             {...this.props}
                             {...this.state} />;
     }
@@ -48,6 +131,7 @@ let QuestionFieldText = React.createClass({
           <helpers.QuestionHeader label={this.props.label}>
             {this.props.children.toString()}
           </helpers.QuestionHeader>
+          <helpers.QuestionErrors errors={this.props.validationErrors} />
         </div>
         <div>
           <helpers.CurrentEntry currentValue={this.props.currentValue} />
@@ -73,6 +157,7 @@ let QuestionFieldText = React.createClass({
   },
 
   handler(e) {
+    this.props.validate(e.target.value);
     this.props.onChange(this, e.target.value);
   }
 });
@@ -90,6 +175,7 @@ let QuestionFieldYesNo = React.createClass({
           <helpers.QuestionHeader label={this.props.label}>
             {this.props.children.toString()}
           </helpers.QuestionHeader>
+          <helpers.QuestionErrors errors={this.props.validationErrors} />
         </div>
         <div>
           <helpers.CurrentEntry currentValue={this.props.currentValue} />
@@ -132,6 +218,7 @@ let QuestionFieldYesNo = React.createClass({
 
   handler(e) {
     if (!this.props.readonly) {
+      this.props.validate(e.target.value);
       this.props.onChange(this, e.target.value);
     }
   }
@@ -179,6 +266,7 @@ let QuestionFieldLikert = React.createClass({
           <helpers.QuestionHeader label={this.props.label}>
             {this.props.children.toString()}
           </helpers.QuestionHeader>
+          <helpers.QuestionErrors errors={this.props.validationErrors} />
         </div>
         <div>
           <helpers.CurrentEntry currentValue={this.props.currentValue} />
@@ -200,6 +288,7 @@ let QuestionFieldLikert = React.createClass({
 
   handler(e) {
     if (!this.props.readonly) {
+      this.props.validate(e.target.value);
       this.props.onChange(this, e.target.value);
     }
   }
@@ -241,7 +330,8 @@ let QuestionFieldSource = React.createClass({
   emptySource: {urlValue: '', descValue: ''},
 
   _getSourceValues() {
-    let sourceValues = (_.isArray(this.props.value)) ? this.props.value : [];
+    let sourceValues =
+      (_.isArray(this.props.value)) ? _.clone(this.props.value) : [];
     if (!_.isEqual(_.last(sourceValues), this.emptySource))
       sourceValues.push(_.clone(this.emptySource));
     return sourceValues;
@@ -279,6 +369,7 @@ let QuestionFieldSource = React.createClass({
           <helpers.QuestionHeader label={this.props.label}>
             {this.props.children.toString()}
           </helpers.QuestionHeader>
+          <helpers.QuestionErrors errors={this.props.validationErrors} />
         </div>
         <div>
           <helpers.CurrentEntry currentValue={this.currentValue} />
@@ -304,6 +395,7 @@ let QuestionFieldSource = React.createClass({
     newSourceValues[i] = _.assign(newSourceValues[i],
                                   {[e.target.dataset.key]: e.target.value});
     newSourceValues = _.reject(newSourceValues, this.emptySource);
+    this.props.validate(newSourceValues);
     this.props.onChange(this, newSourceValues);
   }
 });
@@ -408,6 +500,7 @@ let QuestionFieldMultipleChoice = React.createClass({
           <helpers.QuestionHeader label={this.props.label}>
             {this.props.children.toString()}
           </helpers.QuestionHeader>
+          <helpers.QuestionErrors errors={this.props.validationErrors} />
         </div>
         <div>
           <helpers.CurrentEntry currentValue={currentValue} />
@@ -445,6 +538,11 @@ let QuestionFieldMultipleChoice = React.createClass({
     if (!this.props.readonly) {
       let newOptionValues = this.optionValues;
       newOptionValues[i].checked = e.target.checked;
+
+      // reject all options with `checked: false`
+      newOptionValues = _.reject(newOptionValues, option => !option.checked);
+
+      this.props.validate(newOptionValues);
       this.props.onChange(this, newOptionValues);
     }
   }
