@@ -70,7 +70,8 @@ const baseQuestionField = QuestionField => {
         let validationErrors = [];
         this.isValid = true;
         _.each(validationRules, ruleName => {
-          if (!validators[ruleName].rule(value)) {
+          if (_.has(validators, ruleName) &&
+              !validators[ruleName].rule(value)) {
             // This value is invalid for the rule, so append the error message
             // and set isValid to false.
             validationErrors.push(validators[ruleName].message);
