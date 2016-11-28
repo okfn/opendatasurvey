@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import * as helpers from './HelperFields.jsx';
-import validator from 'validator';
+import validators from './validators.js';
 
 // A base Higher-Order Component providing common behaviour for all Question
 // Fields.
@@ -42,15 +42,10 @@ const baseQuestionField = QuestionField => {
       this.isValid = true;
       // A list of rules to apply for this Question.
       this.validationRules = this.props.validationRules || [];
-      // An object containing available validators.
-      this.validators = {
-        required: {
-          rule: value => {
-            return !validator.isEmpty(value.toString());
-          },
-          message: 'Question is required'
-        }
-      };
+      if (_.has(this.props, 'config.validation')) {
+        this.validationRules = _.union(this.validationRules,
+                                       this.props.config.validation);
+      }
       this.setState({validationErrors: []});
     },
 
@@ -75,10 +70,11 @@ const baseQuestionField = QuestionField => {
         let validationErrors = [];
         this.isValid = true;
         _.each(validationRules, ruleName => {
-          if (!this.validators[ruleName].rule(value)) {
+          if (_.has(validators, ruleName) &&
+              !validators[ruleName].rule(value)) {
             // This value is invalid for the rule, so append the error message
             // and set isValid to false.
-            validationErrors.push(this.validators[ruleName].message);
+            validationErrors.push(validators[ruleName].message);
             this.isValid = false;
           }
         });
