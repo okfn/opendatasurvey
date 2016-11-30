@@ -1,6 +1,22 @@
 import _ from 'lodash';
 import React from 'react';
 
+const DiscussionLink = props => {
+  if (props.isReview && props.url) {
+    return (
+    <div className="submit continuation question">
+      <div className="main">
+        <div>
+          <div className="instructions"></div>
+          <p>Do you want to discuss this submission? Start a <a target="_blank" href={props.url}>new topic</a> on the forum!</p>
+        </div>
+      </div>
+    </div>
+    );
+  }
+  return null;
+};
+
 const QuestionErrors = props => {
   if (props.errors && props.errors.length) {
     let errorItems = _.map(props.errors, (err, i) => <li key={i}>{err}</li>);
@@ -156,6 +172,7 @@ const QuestionHeader = props => {
 };
 
 export {
+  DiscussionLink,
   QuestionErrors,
   QuestionInstructions,
   QuestionComments,

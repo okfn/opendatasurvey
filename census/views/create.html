@@ -140,7 +140,8 @@
   window.datasetContext = {{ datasetContext|dump }};
   window.formData = {{ formData|dump }};
   window.isReview = {{ isReview }};
-  window.canReview = {{ canReview or false}};
+  window.canReview = {{ canReview or false }};
+  window.submissionDiscussionURL = "{{ submissionDiscussionURL or '' }}";
 </script>
 <script src="/scripts/compiled/entry.js" type="text/javascript"></script>
 {% endif %}

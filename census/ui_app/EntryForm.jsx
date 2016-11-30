@@ -252,6 +252,8 @@ const EntryForm = React.createClass({
                            onSubmitHandler={this.onSubmitHandler}
                            reviewComments={this.props.answers.reviewComments} />
 
+    <helpers.DiscussionLink url={this.props.submissionDiscussionURL} isReview={this.props.isReview} />
+
   </div>
 </footer>
 </div>);
