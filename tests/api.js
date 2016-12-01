@@ -4,22 +4,33 @@ const _ = require('lodash');
 const assert = require('chai').assert;
 const testUtils = require('./utils');
 
-let checkJsonResponse = function(browser) {
+let checkJsonResponse = function(browser, expectedLength) {
   assert.ok(browser.success);
   assert.equal(browser.resources.length, 1);
   let resource = browser.resources[0].response;
   assert.include(resource.headers.get('Content-Type'), '/json');
   // JSON will contain '{}' even on completely empty results set
   assert.notEqual(resource.body, '');
+  let jsonBody = JSON.parse(resource.body);
+  assert.ok(_.has(jsonBody, 'results'));
+  if (expectedLength) {
+    assert.equal(jsonBody.count, expectedLength);
+    assert.equal(jsonBody.results.length, expectedLength);
+  }
 };
 
-let checkCsvResponse = function(browser) {
+let checkCsvResponse = function(browser, expectedLength) {
   assert.ok(browser.success);
   assert.equal(browser.resources.length, 1);
   let resource = browser.resources[0].response;
   assert.include(resource.headers.get('Content-Type'), '/csv');
   // CSV will contain headers (at least)
   assert.notEqual(resource.body, '');
+  if (expectedLength) {
+    // expectedLength + 1 (the header line)
+    assert.equal(_.trimRight(resource.body, '\n').split('\n').length,
+                 expectedLength + 1);
+  }
 };
 
 let responseFormats = {
@@ -27,7 +38,7 @@ let responseFormats = {
   csv: checkCsvResponse
 };
 
-describe('API', function() {
+describe.only('API', function() {
   before(testUtils.startApplication);
   after(testUtils.shutdownApplication);
 
@@ -120,7 +131,7 @@ describe('API', function() {
         it('All', done => {
           let browser = testUtils.browser;
           browser.visit('/api/places.' + format, () => {
-            checkResponse(browser);
+            checkResponse(browser, 2);
             done();
           });
         });
@@ -135,7 +146,7 @@ describe('API', function() {
         it('All', done => {
           let browser = testUtils.browser;
           browser.visit('/api/datasets.' + format, () => {
-            checkResponse(browser);
+            checkResponse(browser, 3);
             done();
           });
         });
