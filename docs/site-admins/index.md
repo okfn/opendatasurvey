@@ -299,6 +299,10 @@ Supply a google analytics key to use on the site
 Custom support url linked from the top-level 'Support' navigation item. If
 absent, the `discussionForum` global settings will be used instead.
 
+### submission_discussion_url
+
+A URL to a forum where users can discuss pending submissions. This URL will be linked from the bottom of the pending submission page. If the URL links to the discuss.okfn.org Discourse instance (in the format `http://discuss.okfn.org/c/<topic>/<subtopic>`), the link will be formatted to automatically create a new topic, pre-populated with a title, category, and body text linking back to the submission.
+
 [template-config]: https://docs.google.com/spreadsheets/d/1ziJAlV4F02467oAmH1CDUdWBYdRp7LlVZgDVUuJU-l8/edit#gid=2
 [template-questions]: https://docs.google.com/spreadsheets/d/1nwmk8uJEK-4K6-5SdBgoLUlUos-BhfYRgjS74YkhDGc/edit#gid=3
 [discussion-forum]: https://discuss.okfn.org/c/open-data-index
