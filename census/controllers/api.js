@@ -51,13 +51,14 @@ let questions = function(req, res) {
       'id',
       'site',
       'question',
+      'questionshort',
       'description',
       'type',
       'placeholder',
       'score',
-      'order',
-      'icon',
-      'dependants'
+      'config',
+      'openquestion',
+      'icon'
     ];
     const results = data.questions;
     let mapper = function(item) {
