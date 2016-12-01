@@ -4,6 +4,8 @@ const _ = require('lodash');
 const marked = require('marked');
 const config = require('../config');
 const uuid = require('node-uuid');
+const url = require('url');
+const querystring = require('querystring');
 const utils = require('./utils');
 const util = require('util');
 const modelUtils = require('../models').utils;
@@ -219,6 +221,39 @@ var submit = function(req, res) {
   });
 };
 
+let _getDiscussionURL = function(req, dataset, place) {
+  /*
+    If `submission_discussion_url` is defined in settings and it is in the
+    format: https://discuss.okfn.org/c/<topic>/<subtopic>, return a new topic
+    url with a prepopulated topic for place and dataset. Otherwise, return the
+    original `submission_discussion_url` without modification. If
+    `submission_discussion_url` is undefined return an empty string.
+  */
+  let submissionDiscussionURL =
+    _.get(req.params.site.settings, 'submission_discussion_url', '');
+  let parsedURL = url.parse(submissionDiscussionURL);
+  // URL is a discourse link
+  if (parsedURL.hostname === config.get('submission_discourse_hostname', '')) {
+    let splitPathName = _.trimLeft(parsedURL.pathname, '/').split('/');
+    // URL is a category link
+    if (splitPathName[0] === 'c') {
+      // Create a new topic link
+      let newTopicURL = url.parse('');
+      newTopicURL.protocol = parsedURL.protocol;
+      newTopicURL.host = parsedURL.host;
+      newTopicURL.pathname = 'new-topic';
+      newTopicURL.search = querystring.stringify({
+        title: util.format('Entry for %s / %s', dataset, place),
+        body: util.format('This is a discussion about the submission for [%s / %s](%s).',
+                          dataset, place, req.res.locals.current_url),
+        category: _.rest(splitPathName).join('/').replace(/-/g, ' ')
+      });
+      submissionDiscussionURL = url.format(newTopicURL);
+    }
+  }
+  return submissionDiscussionURL;
+};
+
 var pending = function(req, res) {
   let entryQueryParams = {
     where: {id: req.params.id},
@@ -258,7 +293,7 @@ var pending = function(req, res) {
         updateEvery: dataset.updateevery
       });
     }
-
+    let submissionDiscussionURL = _getDiscussionURL(req, dataset.name, place.name);
     Promise.join(qsSchemaPromise, questionsPromise, (qsSchema, questions) => {
       if (qsSchema === undefined) qsSchema = [];
       let match = {place: place.id, dataset: dataset.id};
@@ -300,7 +335,8 @@ var pending = function(req, res) {
                                                   place={entry.place}
                                                   dataset={entry.dataset}
                                                   isReview={true}
-                                                  canReview={canReview} />);
+                                                  canReview={canReview}
+                                                  submissionDiscussionURL={submissionDiscussionURL} />);
       let entryStatus = 'pending';
       if (entry.isCurrent) {
         entryStatus = 'accepted';
@@ -319,6 +355,7 @@ var pending = function(req, res) {
         initialRenderedEntry: initialHTML,
         breadcrumbTitle: 'Review a Submission',
         submitInstructions: config.get('review_page'),
+        submissionDiscussionURL: submissionDiscussionURL,
         errors: _.get(data, 'errors'),
         isReview: true,
         entryStatus: entryStatus,
