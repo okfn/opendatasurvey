@@ -233,7 +233,7 @@ let _getDiscussionURL = function(req, dataset, place) {
     _.get(req.params.site.settings, 'submission_discussion_url', '');
   let parsedURL = url.parse(submissionDiscussionURL);
   // URL is a discourse link
-  if (parsedURL.hostname === 'discuss.okfn.org') {
+  if (parsedURL.hostname === config.get('submission_discourse_hostname', '')) {
     let splitPathName = _.trimLeft(parsedURL.pathname, '/').split('/');
     // URL is a category link
     if (splitPathName[0] === 'c') {
