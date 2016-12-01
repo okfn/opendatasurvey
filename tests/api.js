@@ -38,7 +38,7 @@ let responseFormats = {
   csv: checkCsvResponse
 };
 
-describe.only('API', function() {
+describe('API', function() {
   before(testUtils.startApplication);
   after(testUtils.shutdownApplication);
 

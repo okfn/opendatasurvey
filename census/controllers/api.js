@@ -118,6 +118,8 @@ let datasets = function(req, res, next) {
       'site',
       'name',
       'description',
+      'characteristics',
+      'updateevery',
       'category',
       'icon',
       'order'
