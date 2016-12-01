@@ -39,6 +39,7 @@ let questions = function(req, res) {
   const dataOptions = _.merge(
     modelUtils.getDataOptions(req),
     {
+      scoredQuestionsOnly: false,
       cascade: false,
       with: {Place: false, Entry: false, Dataset: false}
     }

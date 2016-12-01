@@ -161,7 +161,7 @@ describe('API', function() {
         it('All', done => {
           let browser = testUtils.browser;
           browser.visit('/api/questions.' + format, () => {
-            checkResponse(browser);
+            checkResponse(browser, 18);
             done();
           });
         });
