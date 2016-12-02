@@ -3,7 +3,6 @@
 const csv = require('csv');
 const _ = require('lodash');
 const moment = require('moment');
-const utils = require('./utils');
 const modelUtils = require('../models').utils;
 
 let outputItemsAsJson = function(response, items, mapper) {
@@ -262,8 +261,9 @@ let entries = function(req, res, next) {
   // Make request for data, return it
   modelUtils.getData(dataOptions).then(function(data) {
     const results = data.entries;
+    const questions = data.questions;
     let mapper = function(item) {
-      const answers = utils.ynuAnswers(item.answers || {});
+      let answers = item.getSimpleAnswersForQuestions(questions);
       return {
         id: item.id,
         site: item.site,
@@ -271,21 +271,7 @@ let entries = function(req, res, next) {
         year: item.year,
         place: item.place,
         dataset: item.dataset,
-        exists: answers.exists,
-        digital: answers.digital,
-        public: answers.public,
-        online: answers.online,
-        free: answers.free,
-        machinereadable: answers.machinereadable,
-        bulk: answers.bulk,
-        openlicense: answers.openlicense,
-        uptodate: answers.uptodate,
-        url: answers.url,
-        format: answers.format,
-        licenseurl: answers.licenseurl,
-        dateavailable: answers.dateavailable,
-        officialtitle: answers.officialtitle,
-        publisher: answers.publisher,
+        answers: answers,
         reviewed: item.reviewed ? 'Yes' : 'No',
         reviewResult: item.reviewResult ? 'Yes' : 'No',
         reviewComments: item.reviewComments,
@@ -294,7 +280,8 @@ let entries = function(req, res, next) {
         isOpen: item.isOpenForQuestions(data.questions) ? 'Yes' : 'No',
         submitter: item.Submitter ? item.Submitter.fullName() : '',
         reviewer: item.Reviewer ? item.Reviewer.fullName() : '',
-        score: item.computedScore
+        score: item.computedScore,
+        relativeScore: item.computedRelativeScore
       };
     };
 
@@ -311,21 +298,7 @@ let entries = function(req, res, next) {
           'year',
           'place',
           'dataset',
-          'exists',
-          'digital',
-          'public',
-          'online',
-          'free',
-          'machinereadable',
-          'bulk',
-          'openlicence',
-          'uptodate',
-          'url',
-          'format',
-          'licenseurl',
-          'dateavailable',
-          'officialtitle',
-          'publisher',
+          'answers',
           'reviewed',
           'reviewResult',
           'reviewComments',
@@ -334,7 +307,8 @@ let entries = function(req, res, next) {
           'isOpen',
           'submitter',
           'reviewer',
-          'score'
+          'score',
+          'relativeScore'
         ];
         outputItemsAsCsv(res, results, mapper, columns);
         break;

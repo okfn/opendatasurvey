@@ -123,6 +123,15 @@ describe('API', function() {
         assert.include(['Yes', 'No'], item.reviewResult);
         assert.include(['Yes', 'No'], item.isCurrent);
         assert.include(['Yes', 'No'], item.isOpen);
+        assert.isArray(item.answers);
+        // one answer for each question
+        assert.equal(item.answers.length, 18);
+        // answer object has correct structure
+        assert.deepEqual(_.keys(item.answers[0]),
+                         ['id', 'value', 'commentValue']);
+        // check `format` answer (multiple choice question)
+        assert.deepEqual(_.find(item.answers, 'id', 'format').value,
+                         ['AsciiDoc', 'CSV', 'HTML']);
         done();
       });
     });

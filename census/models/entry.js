@@ -99,9 +99,41 @@ module.exports = function(sequelize, DataTypes) {
       }
     ],
     instanceMethods: {
+      getAnswerKeyValueForId: function(answerId, key) {
+        /*
+        Return a value corresponding with the passed `key` from the answer
+        object at `answerId.`
+        */
+        return _.result(_.find(this.answers, {id: answerId}), key);
+      },
+      getSimpleAnswersForQuestions: function(questions) {
+        /*
+        Return an answers object in a simplified form:
+
+        [
+          {
+            'id': '<question id>',
+            'value': '<answer value>',
+            'commentValue': '<comment value>'
+          },
+          {...}
+        ]
+
+        Simplifies some answer values, such as multiple choice answers to a
+        list of chosen values.
+        */
+        let answers = _.map(questions, q => {
+          return {
+            id: q.id,
+            value: this.getAnswerValueForQuestion(q),
+            commentValue: this.getAnswerKeyValueForId(q.id, 'commentValue')
+          };
+        });
+        return answers;
+      },
       getAnswerValueForQuestion: function(q) {
         // Find the `value` property for the answer with `id`.
-        let answer = _.result(_.find(this.answers, {id: q.id}), 'value');
+        let answer = this.getAnswerKeyValueForId(q.id, 'value');
         // Multiple-choice answers need special treatment to get the checked
         // answers.
         if (q.type === 'multiple') {
