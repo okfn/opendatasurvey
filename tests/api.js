@@ -27,9 +27,9 @@ let checkCsvResponse = function(browser, expectedLength) {
   // CSV will contain headers (at least)
   assert.notEqual(resource.body, '');
   if (expectedLength) {
-    // expectedLength + 1 (the header line)
-    assert.equal(_.trimRight(resource.body, '\n').split('\n').length,
-                 expectedLength + 1);
+    // actual length - 1 (the header line)
+    assert.equal(_.trimRight(resource.body, '\n').split('\n').length - 1,
+                 expectedLength);
   }
 };
 
@@ -57,31 +57,35 @@ describe('API', function() {
       describe('Format: ' + format, () => {
         this.timeout(20000);
 
-        it('All', () => {
+        it('All', done => {
           let browser = testUtils.browser;
           browser.visit('/api/entries.all.' + format, () => {
-            checkResponse(browser);
+            checkResponse(browser, 8);
+            done();
           });
         });
 
-        it('All current', () => {
+        it('All current', done => {
           let browser = testUtils.browser;
           browser.visit('/api/entries.' + format, () => {
-            checkResponse(browser);
+            checkResponse(browser, 4);
+            done();
           });
         });
 
-        it('Current cascaded', () => {
+        it('Current cascaded', done => {
           let browser = testUtils.browser;
           browser.visit('/api/entries.cascade.' + format, () => {
-            checkResponse(browser);
+            checkResponse(browser, 4);
+            done();
           });
         });
 
-        it('All current, year: ' + year, () => {
+        it('All current, year: ' + year, done => {
           let browser = testUtils.browser;
           browser.visit('/api/entries/' + year + '.' + format, () => {
-            checkResponse(browser);
+            checkResponse(browser, 3);
+            done();
           });
         });
 
@@ -89,7 +93,7 @@ describe('API', function() {
           let browser = testUtils.browser;
           browser.visit('/api/entries/' + year + '.cascade.' + format,
             () => {
-              checkResponse(browser);
+              checkResponse(browser, 4);
               done();
             });
         });
