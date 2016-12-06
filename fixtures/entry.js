@@ -18,31 +18,31 @@ const formatAnswers = [
 ];
 
 function answers() {
-  return {
-    digital: {id: 'digital', value: true, commentValue: ''},
-    exists: {id: 'exists', value: 'Yes', commentValue: ''},
-    machinereadable: {id: 'machinereadable', value: true, commentValue: ''},
-    openlicense: {id: 'openlicense', value: false, commentValue: ''},
-    online: {id: 'online', value: false, commentValue: ''},
-    public: {id: 'public', value: false, commentValue: ''},
-    publisher: {id: 'publisher', value: 'Acme', commentValue: ''},
-    format: {id: 'format', value: formatAnswers, commentValue: ''},
-    license: {id: 'license', value: 'http://example.com', commentValue: ''}
-  };
+  return [
+    {id: 'digital', value: true, commentValue: ''},
+    {id: 'exists', value: 'Yes', commentValue: ''},
+    {id: 'machinereadable', value: true, commentValue: ''},
+    {id: 'openlicense', value: false, commentValue: ''},
+    {id: 'online', value: false, commentValue: ''},
+    {id: 'public', value: false, commentValue: ''},
+    {id: 'publisher', value: 'Acme', commentValue: ''},
+    {id: 'format', value: formatAnswers, commentValue: ''},
+    {id: 'license', value: 'http://example.com', commentValue: ''}
+  ];
 }
 
 function currentAnswers() {
-  return {
-    digital: {id: 'digital', value: false, commentValue: ''},
-    exists: {id: 'exists', value: false, commentValue: ''},
-    machinereadable: {id: 'machinereadable', value: false, commentValue: ''},
-    openlicense: {id: 'openlicense', value: true, commentValue: ''},
-    online: {id: 'online', value: true, commentValue: ''},
-    public: {id: 'public', value: true, commentValue: ''},
-    publisher: {id: 'publisher', value: 'Acme', commentValue: ''},
-    format: {id: 'format', value: formatAnswers, commentValue: ''},
-    license: {id: 'license', value: 'http://example.com', commentValue: ''}
-  };
+  return [
+    {id: 'digital', value: false, commentValue: ''},
+    {id: 'exists', value: false, commentValue: ''},
+    {id: 'machinereadable', value: false, commentValue: ''},
+    {id: 'openlicense', value: true, commentValue: ''},
+    {id: 'online', value: true, commentValue: ''},
+    {id: 'public', value: true, commentValue: ''},
+    {id: 'publisher', value: 'Acme', commentValue: ''},
+    {id: 'format', value: formatAnswers, commentValue: ''},
+    {id: 'license', value: 'http://example.com', commentValue: ''}
+  ];
 }
 
 function bySite(fixtures, siteId) {

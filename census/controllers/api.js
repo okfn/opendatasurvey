@@ -1,20 +1,19 @@
 'use strict';
 
-var csv = require('csv');
-var _ = require('lodash');
-var moment = require('moment');
-var utils = require('./utils');
-var modelUtils = require('../models').utils;
+const csv = require('csv');
+const _ = require('lodash');
+const moment = require('moment');
+const modelUtils = require('../models').utils;
 
-var outputItemsAsJson = function(response, items, mapper) {
+let outputItemsAsJson = function(response, items, mapper) {
   if (_.isFunction(mapper)) {
     items = _.map(items, mapper);
   }
   response.json({count: items.length, results: items});
 };
 
-var outputItemsAsCsv = function(response, items, mapper, columns) {
-  var options = {
+let outputItemsAsCsv = function(response, items, mapper, columns) {
+  let options = {
     delimiter: ',',
     quote: '"',
     quoted: true,
@@ -27,20 +26,19 @@ var outputItemsAsCsv = function(response, items, mapper, columns) {
   if (_.isFunction(mapper)) {
     items = _.map(items, mapper);
   }
-  var stringify = csv.stringify(items, options);
+  let stringify = csv.stringify(items, options);
   response.header('Content-Type', 'text/csv');
   stringify.pipe(response);
 };
 
-var questions = function(req, res) {
-
+let questions = function(req, res) {
   // Get request params
-  var format = req.params.format;
-
+  const format = req.params.format;
   // Initial data options
-  var dataOptions = _.merge(
+  const dataOptions = _.merge(
     modelUtils.getDataOptions(req),
     {
+      scoredQuestionsOnly: false,
       cascade: false,
       with: {Place: false, Entry: false, Dataset: false}
     }
@@ -48,22 +46,22 @@ var questions = function(req, res) {
 
   // Make request for data, return it
   modelUtils.getData(dataOptions).then(function(data) {
-
-    var columns = [
+    const columns = [
       'id',
       'site',
       'question',
+      'questionshort',
       'description',
       'type',
       'placeholder',
       'score',
-      'order',
-      'icon',
-      'dependants',
+      'config',
+      'openquestion',
+      'icon'
     ];
-    var results = data.questions;
-    var mapper = function(item) {
-      var result = {};
+    const results = data.questions;
+    let mapper = function(item) {
+      let result = {};
       _.each(columns, function(name) {
         result[name] = item[name];
       });
@@ -84,32 +82,28 @@ var questions = function(req, res) {
         break;
       }
     }
-
   }).catch(console.trace.bind(console));
-
 };
 
-var datasets = function(req, res, next) {
-
+let datasets = function(req, res, next) {
   // Get request params
-  var report = req.params.report;
-  var strategy = req.params.strategy;
-  var format = req.params.format;
+  const report = req.params.report;
+  const strategy = req.params.strategy;
+  const format = req.params.format;
 
   // Report can be only `score`
-  var isScore = false;
+  let isScore = false;
   if (report === 'score') {
-    var isScore = true;
+    isScore = true;
   } else if (report) {
     return res.sendStatus(404);
   }
 
   // Initial data options
-  var dataOptions = _.merge(modelUtils.getDataOptions(req), {
-      cascade: false,
-      with: {Place: false, Entry: isScore, Question: isScore}
-    }
-  );
+  let dataOptions = _.merge(modelUtils.getDataOptions(req), {
+    cascade: false,
+    with: {Place: false, Entry: isScore, Question: isScore}
+  });
 
   // Strategy can be only `cascade`
   if (strategy === 'cascade') {
@@ -120,26 +114,27 @@ var datasets = function(req, res, next) {
 
   // Make request for data, return it
   modelUtils.getData(dataOptions).then(function(data) {
-
-    var columns = [
+    let columns = [
       'id',
       'site',
       'name',
       'description',
+      'characteristics',
+      'updateevery',
       'category',
       'icon',
-      'order',
+      'order'
     ];
     if (isScore) {
       columns = columns.concat([
         'rank',
         'score',
-        'relativeScore',
+        'relativeScore'
       ]);
     }
-    var results = data.datasets;
-    var mapper = function(item) {
-      var result = {};
+    const results = data.datasets;
+    let mapper = function(item) {
+      let result = {};
       item.score = item.computedScore;
       item.relativeScore = item.computedRelativeScore;
       _.each(columns, function(name) {
@@ -162,32 +157,28 @@ var datasets = function(req, res, next) {
         break;
       }
     }
-
   }).catch(console.trace.bind(console));
-
 };
 
-var places = function(req, res, next) {
-
+let places = function(req, res, next) {
   // Get request params
-  var report = req.params.report;
-  var strategy = req.params.strategy;
-  var format = req.params.format;
+  const report = req.params.report;
+  const strategy = req.params.strategy;
+  const format = req.params.format;
 
   // Report can be only `score`
-  var isScore = false;
+  let isScore = false;
   if (report === 'score') {
-    var isScore = true;
+    isScore = true;
   } else if (report) {
     return res.sendStatus(404);
   }
 
   // Initial data options
-  var dataOptions = _.merge(modelUtils.getDataOptions(req), {
-      cascade: false,
-      with: {Dataset: false, Entry: isScore, Question: isScore}
-    }
-  );
+  let dataOptions = _.merge(modelUtils.getDataOptions(req), {
+    cascade: false,
+    with: {Dataset: false, Entry: isScore, Question: isScore}
+  });
 
   // Strategy can be only `cascade`
   if (strategy === 'cascade') {
@@ -198,31 +189,30 @@ var places = function(req, res, next) {
 
   // Make request for data, return it
   modelUtils.getData(dataOptions).then(function(data) {
-
-    var columns = [
+    let columns = [
       'id',
       'site',
       'name',
       'slug',
       'region',
-      'continent',
+      'continent'
     ];
     if (isScore) {
       columns = columns.concat([
         'rank',
         'score',
-        'relativeScore',
+        'relativeScore'
       ]);
     }
-    var results = data.places;
-    var mapper = function(item) {
-       var result = {};
-       item.score = item.computedScore;
-       item.relativeScore = item.computedRelativeScore;
-       _.each(columns, function(name) {
-         result[name] = item[name];
-       });
-       return result;
+    const results = data.places;
+    let mapper = function(item) {
+      let result = {};
+      item.score = item.computedScore;
+      item.relativeScore = item.computedRelativeScore;
+      _.each(columns, function(name) {
+        result[name] = item[name];
+      });
+      return result;
     };
 
     switch (format) {
@@ -239,24 +229,20 @@ var places = function(req, res, next) {
         break;
       }
     }
-
   }).catch(console.trace.bind(console));
-
 };
 
-var entries = function(req, res, next) {
-
+let entries = function(req, res, next) {
   // Get request params
-  var format = req.params.format;
-  var strategy = req.params.strategy;
+  const format = req.params.format;
+  const strategy = req.params.strategy;
 
   // Initial data options
-  var dataOptions = _.merge(modelUtils.getDataOptions(req), {
-      cascade: false,
-      scoredQuestionsOnly: false,
-      with: {Dataset: false, Place: false, Question: true}
-    }
-  );
+  let dataOptions = _.merge(modelUtils.getDataOptions(req), {
+    cascade: false,
+    scoredQuestionsOnly: false,
+    with: {Dataset: false, Place: false, Question: true}
+  });
 
   // If year is implicitly set
   if (!!req.params.isYearImplicitlySet) {
@@ -274,92 +260,65 @@ var entries = function(req, res, next) {
 
   // Make request for data, return it
   modelUtils.getData(dataOptions).then(function(data) {
-
-      var results = data.entries;
-      var mapper = function(item) {
-        var answers = utils.ynuAnswers(item.answers || {});
-        return {
-          id: item.id,
-          site: item.site,
-          timestamp: moment(item.createdAt).format('YYYY-MM-DDTHH:mm:ss'),
-          year: item.year,
-          place: item.place,
-          dataset: item.dataset,
-          exists: answers.exists,
-          digital: answers.digital,
-          public: answers.public,
-          online: answers.online,
-          free: answers.free,
-          machinereadable: answers.machinereadable,
-          bulk: answers.bulk,
-          openlicense: answers.openlicense,
-          uptodate: answers.uptodate,
-          url: answers.url,
-          format: answers.format,
-          licenseurl: answers.licenseurl,
-          dateavailable: answers.dateavailable,
-          officialtitle: answers.officialtitle,
-          publisher: answers.publisher,
-          reviewed: item.reviewed ? 'Yes' : 'No',
-          reviewResult: item.reviewResult ? 'Yes' : 'No',
-          reviewComments: item.reviewComments,
-          details: item.details,
-          isCurrent: item.isCurrent ? 'Yes' : 'No',
-          isOpen: item.isOpenForQuestions(data.questions) ? 'Yes' : 'No',
-          submitter: item.Submitter ? item.Submitter.fullName() : '',
-          reviewer: item.Reviewer ? item.Reviewer.fullName() : '',
-          score: item.computedScore
-        };
+    const results = data.entries;
+    const questions = data.questions;
+    let mapper = function(item) {
+      let answers = item.getSimpleAnswersForQuestions(questions);
+      return {
+        id: item.id,
+        site: item.site,
+        timestamp: moment(item.createdAt).format('YYYY-MM-DDTHH:mm:ss'),
+        year: item.year,
+        place: item.place,
+        dataset: item.dataset,
+        answers: answers,
+        reviewed: item.reviewed ? 'Yes' : 'No',
+        reviewResult: item.reviewResult ? 'Yes' : 'No',
+        reviewComments: item.reviewComments,
+        details: item.details,
+        isCurrent: item.isCurrent ? 'Yes' : 'No',
+        isOpen: item.isOpenForQuestions(data.questions) ? 'Yes' : 'No',
+        submitter: item.Submitter ? item.Submitter.fullName() : '',
+        reviewer: item.Reviewer ? item.Reviewer.fullName() : '',
+        score: item.computedScore,
+        relativeScore: item.computedRelativeScore
       };
+    };
 
-      switch (format) {
-        case 'json': {
-          outputItemsAsJson(res, results, mapper);
-          break;
-        }
-        case 'csv': {
-          var columns = [
-            'id',
-            'site',
-            'timestamp',
-            'year',
-            'place',
-            'dataset',
-            'exists',
-            'digital',
-            'public',
-            'online',
-            'free',
-            'machinereadable',
-            'bulk',
-            'openlicence',
-            'uptodate',
-            'url',
-            'format',
-            'licenseurl',
-            'dateavailable',
-            'officialtitle',
-            'publisher',
-            'reviewed',
-            'reviewResult',
-            'reviewComments',
-            'details',
-            'isCurrent',
-            'isOpen',
-            'submitter',
-            'reviewer',
-            'score',
-          ];
-          outputItemsAsCsv(res, results, mapper, columns);
-          break;
-        }
-        default: {
-          res.sendStatus(404);
-          break;
-        }
+    switch (format) {
+      case 'json': {
+        outputItemsAsJson(res, results, mapper);
+        break;
       }
-    }).catch(console.trace.bind(console));
-
+      case 'csv': {
+        var columns = [
+          'id',
+          'site',
+          'timestamp',
+          'year',
+          'place',
+          'dataset',
+          'answers',
+          'reviewed',
+          'reviewResult',
+          'reviewComments',
+          'details',
+          'isCurrent',
+          'isOpen',
+          'submitter',
+          'reviewer',
+          'score',
+          'relativeScore'
+        ];
+        outputItemsAsCsv(res, results, mapper, columns);
+        break;
+      }
+      default: {
+        res.sendStatus(404);
+        break;
+      }
+    }
+  }).catch(console.trace.bind(console));
 };
 
 module.exports = {

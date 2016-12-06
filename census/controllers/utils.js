@@ -1,7 +1,6 @@
 'use strict';
 
 const _ = require('lodash');
-const modelUtils = require('../models/utils');
 const FIELD_SPLITTER = /[\s,]+/;
 const ANONYMOUS_USER_ID = process.env.ANONYMOUS_USER_ID ||
   '0e7c393e-71dd-4368-93a9-fcfff59f9fff';
@@ -233,56 +232,6 @@ var questionMapper = function(data, site) {
   }, data);
 };
 
-var normalizedAnswers = function(answers) {
-  var normed = {};
-  _.each(answers, function(v, k) {
-    if (v === 'true') {
-      normed[k] = true;
-    } else if (v === 'false') {
-      normed[k] = false;
-    } else if (v === 'null') {
-      normed[k] = null;
-    } else {
-      normed[k] = v;
-    }
-  });
-  return normed;
-};
-
-var ynuAnswers = function(answers) {
-  var ynu = {};
-  _.each(answers, function(v, k) {
-    if (v === null) {
-      ynu[k] = 'Unsure';
-    } else if (v === false) {
-      ynu[k] = 'No';
-    } else if (v === true) {
-      ynu[k] = 'Yes';
-    } else {
-      ynu[k] = v;
-    }
-  });
-  return ynu;
-};
-
-var getFormQuestions = function(req, questions) {
-  questions = modelUtils.translateSet(req, questions);
-  _.each(questions, function(q) {
-    if (q.dependants) {
-      _.each(q.dependants, function(d, i, l) {
-        var match = _.find(questions, function(o) {
-          return o.id === d;
-        });
-        l[i] = match;
-        questions = _.reject(questions, function(o) {
-          return o.id === match.id;
-        });
-      });
-    }
-  });
-  return _.sortByOrder(questions, 'order', 'asc');
-};
-
 var getCurrentState = function(data, match, year) {
   /*
     Return an object containing the state of submissions for a given
@@ -349,9 +298,6 @@ module.exports = {
   placeMapper: placeMapper,
   datasetMapper: datasetMapper,
   questionMapper: questionMapper,
-  normalizedAnswers: normalizedAnswers,
-  ynuAnswers: ynuAnswers,
-  getFormQuestions: getFormQuestions,
   getCurrentState: getCurrentState,
   getReviewers: getReviewers,
   canReview: canReview,

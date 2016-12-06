@@ -1,28 +1,39 @@
 'use strict';
 
-var _ = require('lodash');
-var assert = require('chai').assert;
-var testUtils = require('./utils');
+const _ = require('lodash');
+const assert = require('chai').assert;
+const testUtils = require('./utils');
 
-function checkJsonResponse(browser) {
+let checkJsonResponse = function(browser, expectedLength) {
   assert.ok(browser.success);
   assert.equal(browser.resources.length, 1);
-  var resource = browser.resources[0].response;
+  let resource = browser.resources[0].response;
   assert.include(resource.headers.get('Content-Type'), '/json');
   // JSON will contain '{}' even on completely empty results set
   assert.notEqual(resource.body, '');
-}
+  let jsonBody = JSON.parse(resource.body);
+  assert.ok(_.has(jsonBody, 'results'));
+  if (expectedLength) {
+    assert.equal(jsonBody.count, expectedLength);
+    assert.equal(jsonBody.results.length, expectedLength);
+  }
+};
 
-function checkCsvResponse(browser) {
+let checkCsvResponse = function(browser, expectedLength) {
   assert.ok(browser.success);
   assert.equal(browser.resources.length, 1);
-  var resource = browser.resources[0].response;
+  let resource = browser.resources[0].response;
   assert.include(resource.headers.get('Content-Type'), '/csv');
   // CSV will contain headers (at least)
   assert.notEqual(resource.body, '');
-}
+  if (expectedLength) {
+    // actual length - 1 (the header line)
+    assert.equal(_.trimRight(resource.body, '\n').split('\n').length - 1,
+                 expectedLength);
+  }
+};
 
-var responseFormats = {
+let responseFormats = {
   json: checkJsonResponse,
   csv: checkCsvResponse
 };
@@ -39,57 +50,57 @@ describe('API', function() {
   // 4. response should contain requested data.
 
   describe('Entries', function() {
-    var year = 2015;
-    _.forEach(_.keys(responseFormats), function(format) {
-      var checkResponse = responseFormats[format];
+    const year = 2015;
+    _.forEach(_.keys(responseFormats), format => {
+      const checkResponse = responseFormats[format];
 
-      describe('Format: ' + format, function() {
+      describe('Format: ' + format, () => {
         this.timeout(20000);
 
-        it('All', function(done) {
-          var browser = testUtils.browser;
-          browser.visit('/api/entries.all.' + format, function() {
-            checkResponse(browser);
+        it('All', done => {
+          let browser = testUtils.browser;
+          browser.visit('/api/entries.all.' + format, () => {
+            checkResponse(browser, 8);
             done();
           });
         });
 
-        it('All current', function(done) {
-          var browser = testUtils.browser;
-          browser.visit('/api/entries.' + format, function() {
-            checkResponse(browser);
+        it('All current', done => {
+          let browser = testUtils.browser;
+          browser.visit('/api/entries.' + format, () => {
+            checkResponse(browser, 4);
             done();
           });
         });
 
-        it('Current cascaded', function(done) {
-          var browser = testUtils.browser;
-          browser.visit('/api/entries.cascade.' + format, function() {
-            checkResponse(browser);
+        it('Current cascaded', done => {
+          let browser = testUtils.browser;
+          browser.visit('/api/entries.cascade.' + format, () => {
+            checkResponse(browser, 4);
             done();
           });
         });
 
-        it('All current, year: ' + year, function(done) {
-          var browser = testUtils.browser;
-          browser.visit('/api/entries/' + year + '.' + format, function() {
-            checkResponse(browser);
+        it('All current, year: ' + year, done => {
+          let browser = testUtils.browser;
+          browser.visit('/api/entries/' + year + '.' + format, () => {
+            checkResponse(browser, 3);
             done();
           });
         });
 
-        it('Current cascaded, year: ' + year, function(done) {
-          var browser = testUtils.browser;
+        it('Current cascaded, year: ' + year, done => {
+          let browser = testUtils.browser;
           browser.visit('/api/entries/' + year + '.cascade.' + format,
-            function() {
-              checkResponse(browser);
+            () => {
+              checkResponse(browser, 4);
               done();
             });
         });
 
-        it('Should fail on invalid strategy', function(done) {
-          var browser = testUtils.browser;
-          browser.visit('/api/entries.invalid.' + format, function() {
+        it('Should fail on invalid strategy', done => {
+          let browser = testUtils.browser;
+          browser.visit('/api/entries.invalid.' + format, () => {
             assert.equal(browser.status, 404);
             done();
           });
@@ -99,40 +110,41 @@ describe('API', function() {
   });
 
   describe('Entries (data)', function() {
-
-    it('All current', function(done) {
-      var browser = testUtils.browser;
-      browser.visit('/api/entries.json', function() {
-
+    it('All current', done => {
+      let browser = testUtils.browser;
+      browser.visit('/api/entries.json', () => {
         // Get first item
         browser.assert.success();
-        var data = JSON.parse(browser.text());
-        var item = data['results'][0];
-
+        const data = JSON.parse(browser.text());
+        const item = data.results[0];
         // Check data is right
         assert.equal(item.reviewComments, '');
         assert.include(['Yes', 'No'], item.reviewed);
         assert.include(['Yes', 'No'], item.reviewResult);
         assert.include(['Yes', 'No'], item.isCurrent);
         assert.include(['Yes', 'No'], item.isOpen);
-
+        assert.isArray(item.answers);
+        // one answer for each question
+        assert.equal(item.answers.length, 18);
+        // answer object has correct structure
+        assert.deepEqual(_.keys(item.answers[0]),
+                         ['id', 'value', 'commentValue']);
+        // check `format` answer (multiple choice question)
+        assert.deepEqual(_.find(item.answers, 'id', 'format').value,
+                         ['AsciiDoc', 'CSV', 'HTML']);
         done();
-
       });
     });
-
   });
 
   describe('Places', function() {
-    var year = 2015;
-    _.forEach(_.keys(responseFormats), function(format) {
-      var checkResponse = responseFormats[format];
-
-      describe('Format: ' + format, function() {
-        it('All', function(done) {
-          var browser = testUtils.browser;
-          browser.visit('/api/places.' + format, function() {
-            checkResponse(browser);
+    _.forEach(_.keys(responseFormats), format => {
+      let checkResponse = responseFormats[format];
+      describe('Format: ' + format, () => {
+        it('All', done => {
+          let browser = testUtils.browser;
+          browser.visit('/api/places.' + format, () => {
+            checkResponse(browser, 2);
             done();
           });
         });
@@ -141,15 +153,13 @@ describe('API', function() {
   });
 
   describe('Datasets', function() {
-    var year = 2015;
-    _.forEach(_.keys(responseFormats), function(format) {
-      var checkResponse = responseFormats[format];
-
-      describe('Format: ' + format, function() {
-        it('All', function(done) {
-          var browser = testUtils.browser;
-          browser.visit('/api/datasets.' + format, function() {
-            checkResponse(browser);
+    _.forEach(_.keys(responseFormats), format => {
+      let checkResponse = responseFormats[format];
+      describe('Format: ' + format, () => {
+        it('All', done => {
+          let browser = testUtils.browser;
+          browser.visit('/api/datasets.' + format, () => {
+            checkResponse(browser, 3);
             done();
           });
         });
@@ -158,15 +168,13 @@ describe('API', function() {
   });
 
   describe('Questions', function() {
-    var year = 2015;
-    _.forEach(_.keys(responseFormats), function(format) {
-      var checkResponse = responseFormats[format];
-
-      describe('Format: ' + format, function() {
-        it('All', function(done) {
-          var browser = testUtils.browser;
-          browser.visit('/api/questions.' + format, function() {
-            checkResponse(browser);
+    _.forEach(_.keys(responseFormats), format => {
+      let checkResponse = responseFormats[format];
+      describe('Format: ' + format, () => {
+        it('All', done => {
+          let browser = testUtils.browser;
+          browser.visit('/api/questions.' + format, () => {
+            checkResponse(browser, 18);
             done();
           });
         });
