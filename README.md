@@ -81,20 +81,20 @@ We run deployments on Heroku. The app should run anywhere that you can run Node.
 
 When templates change, the translations have to be changed. Extract the files by running this command:
 
-    gulp pot
+    ./node_modules/.bin/gulp pot
 
 You will need the GNU gettext commands. See [here](https://github.com/mozilla/i18n-abide/blob/master/docs/GETTEXT.md) for more information.
 
 To update the existing .po files, run:
 
-    gulp update-po
+    ./node_modules/.bin/gulp update-po
 
 To add a new language, create directory `locale/[language-code]/LC_MESSAGES` and put there translation files (*.po).
 Also, you can copy the `locale/en` directory to `locale/[language-code]` and change existing files.
 
 To update translations cache, run
 
-    gulp compile-po
+    ./node_modules/.bin/gulp compile-po
 
 ### i18n For Config
 
