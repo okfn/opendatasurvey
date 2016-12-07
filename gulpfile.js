@@ -4,6 +4,7 @@ var gulpXgettext = require('gulp-xgettext');
 var gulpReplace = require('gulp-replace');
 var gulpRename = require('gulp-rename');
 var gulpSass = require('gulp-ruby-sass');
+var gutil = require('gulp-util');
 var exec = require('child_process').exec;
 
 gulp.task('pot', pot);
@@ -13,18 +14,22 @@ gulp.task('compile-po', compilePo);
 gulp.task('compile-styles', compileStyles);
 
 function pot() {
-  return gulp.src('templates/**/*.html', {
-    base: '.'
-  }).pipe(gulpReplace(/or gettext/g, "|| gettext")).pipe(gulpXgettext({
+  return gulp.src('census/views/**/*.html', {base: 'census'})
+  // jsxgettext hates 'or' in templates, so make these special exceptions.
+  // https://github.com/zaach/jsxgettext/issues/78
+  .pipe(gulpReplace(/or gettext/g, '|| gettext'))
+  .pipe(gulpReplace(/or false/g, '|| false'))
+  .pipe(gulpReplace(/or \'\'/g, '|| \'\''))
+  .pipe(gulpXgettext({
     language: 'jinja',
     keywords: [{
-      name: '_'
-    }].concat([{
-      name: 'format'
-    }]),
+      name: 'gettext'
+    }],
     bin: 'node_modules/.bin/jsxgettext'
-  })).pipe(gulpConcatPo('messages.pot'))
-    .pipe(gulp.dest("locale/templates/LC_MESSAGES"));
+  }))
+  .on('error', gutil.log)
+  .pipe(gulpConcatPo('messages.pot'))
+  .pipe(gulp.dest('census/locale/templates/LC_MESSAGES'));
 }
 
 function updatePo() {
@@ -38,7 +43,7 @@ function compilePo() {
 
 function compileStyles() {
   return gulpSass(['census/static/scss/styles.scss'])
-    //.pipe(minifyCss({compatibility: 'ie8'}))
+    // .pipe(minifyCss({compatibility: 'ie8'}))
     .pipe(gulpRename('styles.css'))
     .pipe(gulp.dest('census/static/css'));
 }
