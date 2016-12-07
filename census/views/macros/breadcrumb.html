@@ -1,8 +1,8 @@
-{% macro breadcrumb(childTitle) %}
+{% macro breadcrumb(childTitle, gettext) %}
 <div class="breadcrumb-wrapper">
   <ol class="breadcrumb container">
     <li>
-        <a href="/">Home</a>
+        <a href="/">{{ gettext("Home") }}</a>
     </li>
     <li class="active">{{ childTitle }}</li>
   </ol>

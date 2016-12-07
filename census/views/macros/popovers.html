@@ -34,7 +34,7 @@
   {% if is_index != "true" -%}
     <div class='btn-group'>
     {% endif %}
-    <a class="btn btn-primary" href="/entry/{{ place.id }}/{{ dataset.id }}/">Read more &raquo;</a>
+    <a class="btn btn-primary" href="/entry/{{ place.id }}/{{ dataset.id }}/">{{ gettext("Read more &raquo;") }}</a>
     {% if is_index != "true" and submissionsAllowed %}
       <a class='btn btn-{{actionClass}}' href='{{actionUrl}}'>{{actionText}}</a>
     </div>

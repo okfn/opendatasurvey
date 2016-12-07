@@ -8,7 +8,7 @@
       <div class="col-md-{% if is_index %}6{% else %}12{% endif %}">
         <h1>
           <a href="http://index.okfn.org/dataset/{{ dataset.id }}/" title="{{ format("See more data on %(name)s in the Open Data Index", {name: dataset.name}) }}">{{ dataset.name }}</a>
-          <span style="background-color: rgb(223, 204, 51); color: white;" class="dataset-openness" data-score="{{ stats.openDataPercent }}">{{ format("%(score)s% open (avg.)", {score: stats.openDataPercent}) }}</span>
+          <span style="background-color: rgb(223, 204, 51); color: white;" class="dataset-openness" data-score="{{ stats.openDataPercent }}">{{ format(gettext("%(score)s% open (avg.)"), {score: stats.openDataPercent}) }}</span>
         </h1>
         {% if is_index == "true" -%}
           <div class="col-md-12 place-rank statistics">

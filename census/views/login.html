@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
 {% block title %}
-  {{gettext("Login")}}
+  {{ gettext("Login") }}
 {% endblock %}
 
 {% block content %}
 
 <div class="container">
   <div class="page-header">
-    <h1>{{gettext("Login")}}</h1>
+    <h1>{{ gettext("Login") }}</h1>
   </div>
 
   <div class="row">
@@ -18,10 +18,10 @@
 
   <div class="row">
     <div class="col-md-2 col-md-offset-4">
-      <a class="btn btn-primary" href="{{ authBase }}/google">{{gettext("Login with Google &raquo;")}}</a>
+      <a class="btn btn-primary" href="{{ authBase }}/google">{{ gettext("Login with Google &raquo;") }}</a>
     </div>
     <div class="col-md-2">
-      <a class="btn btn-primary" href="{{ authBase }}/facebook">{{gettext("Login with Facebook &raquo;")}}</a>
+      <a class="btn btn-primary" href="{{ authBase }}/facebook">{{ gettext("Login with Facebook &raquo;") }}</a>
     </div>
   </div>
 
@@ -29,9 +29,7 @@
     <p>&nbsp;</p>
     <blockquote>
       <p>
-        {{gettext("Login with your existing 3rd party account in a few seconds. We will not share your email with any
-        third party. For more information see the")}}
-        <a href="https://okfn.org/terms-of-use/" title="{{ gettext(" terms of use") }}">{{ gettext("terms of use")}}</a>
+        {{ gettext("Login with your existing 3rd party account in a few seconds. We will not share your email with any third party. For more information see the") }} <a href="https://okfn.org/terms-of-use/" title="{{ gettext("terms of use") }}">{{ gettext("terms of use") }}</a>
         .
       </p>
     </blockquote>

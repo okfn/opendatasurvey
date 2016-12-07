@@ -44,13 +44,13 @@
           {% endif %}
           <div>
             <a class="title" href="/" title="{{ gettext('Home')}}">{{ site.settings.title }}</a>
-            <span class="tagline">Powered by <a href="http://census.okfn.org">Open Data Census</a></span>
+            <span class="tagline">{{ format(gettext("Powered by <a href='%s'>Open Data Census</a>"), ['http://census.okfn.org']) }}</span>
           </div>
         </div>
         {% endif %}
 
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav">
-          <span class="sr-only">Toggle navigation</span>
+          <span class="sr-only">{{ gettext("Toggle navigation") }}</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -122,12 +122,12 @@
           <img src="https://a.okfn.org/img/oki/landscape-white-468x122.png" alt="Open Knowledge International">
           </a>
           <ul class="footer-links">
-            <li><a href="https://okfn.org/privacy-policy/">Privacy policy</a></li>
-            <li><a href="https://okfn.org/ip-policy/">IP policy</a></li>
-            <li><a href="https://okfn.org/cookie-policy/">Cookie policy</a></li>
-            <li><a href="https://okfn.org/terms-of-use/">Terms of use</a></li>
-            <li><a href="http://okfn.org/opendata/" title="More about Open Data">What is Open Data</a></li>
-            <li><a href="http://meta.census.okfn.org/">Run Your Own Local Open Data Census</a></li>
+            <li><a href="https://okfn.org/privacy-policy/">{{ gettext("Privacy policy") }}</a></li>
+            <li><a href="https://okfn.org/ip-policy/">{{ gettext("IP policy") }}</a></li>
+            <li><a href="https://okfn.org/cookie-policy/">{{ gettext("Cookie policy") }}</a></li>
+            <li><a href="https://okfn.org/terms-of-use/">{{ gettext("Terms of use") }}</a></li>
+            <li><a href="http://okfn.org/opendata/" title="More about Open Data">{{ gettext("What is Open Data") }}</a></li>
+            <li><a href="http://meta.census.okfn.org/">{{ gettext("Run Your Own Local Open Data Census") }}</a></li>
           </ul>
         </div>
         {% if site.settings.custom_footer %}
@@ -143,7 +143,7 @@
             <a href="/api/entries.json">{{ gettext("All (JSON)") }}</a>
           </p>
           <p>
-            <a href="http://opendatacommons.org/licenses/pddl/1.0">Data License (Public Domain)</a>. <a href="https://github.com/okfn/opendatacensus/">Source code</a>.
+            <a href="http://opendatacommons.org/licenses/pddl/1.0">{{ gettext("Data License (Public Domain)") }}</a>. <a href="https://github.com/okfn/opendatacensus/">{{ gettext("Source code") }}</a>.
           </p>
         </div>
         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
