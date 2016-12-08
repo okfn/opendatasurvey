@@ -111,7 +111,11 @@
   <div class="container">
     <div>
       <p>
-        {{ gettext('Please read the <a class="btn btn-sm" data-toggle="modal" data-target="#guidance">{% if isReview %}Review{% else %}Submission{% endif %} Guidance</a> before proceeding.') }}
+        {% if isReview %}
+          {{ gettext('Please read the <a class="btn btn-sm" data-toggle="modal" data-target="#guidance">Review Guidance</a> before proceeding.') }}
+        {% else %}
+          {{ gettext('Please read the <a class="btn btn-sm" data-toggle="modal" data-target="#guidance">Submission Guidance</a> before proceeding.') }}
+        {% endif %}
       </p>
     </div>
   </div>
@@ -121,7 +125,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">{{ gettext("{% if isReview %}Review{% else %}Submission{% endif %} Guidance") }}</h4>
+        <h4 class="modal-title" id="myModalLabel">{% if isReview %}{{ gettext('Review Guidance') }}{% else %}{{ gettext('Submission Guidance') }}{% endif %}</h4>
       </div>
       <div class="modal-body">
         {{ submitInstructions }}

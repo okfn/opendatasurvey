@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-08T15:23:40.826Z\n"
+"POT-Creation-Date: 2016-12-08T17:28:19.317Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: \n"
@@ -216,15 +216,23 @@ msgstr ""
 msgid "Current is '%s'"
 msgstr ""
 
-#: views/create.html:114
-msgid "Please read the <a class=\"btn btn-sm\" data-toggle=\"modal\" data-target=\"#guidance\">{% if isReview %}Review{% else %}Submission{% endif %} Guidance</a> before proceeding."
+#: views/create.html:115
+msgid "Please read the <a class=\"btn btn-sm\" data-toggle=\"modal\" data-target=\"#guidance\">Review Guidance</a> before proceeding."
 msgstr ""
 
-#: views/create.html:124
-msgid "{% if isReview %}Review{% else %}Submission{% endif %} Guidance"
+#: views/create.html:117
+msgid "Please read the <a class=\"btn btn-sm\" data-toggle=\"modal\" data-target=\"#guidance\">Submission Guidance</a> before proceeding."
 msgstr ""
 
-#: views/create.html:130
+#: views/create.html:128
+msgid "Review Guidance"
+msgstr ""
+
+#: views/create.html:128
+msgid "Submission Guidance"
+msgstr ""
+
+#: views/create.html:134
 msgid "Got it"
 msgstr ""
 
