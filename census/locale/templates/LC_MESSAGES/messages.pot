@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-08T17:28:19.317Z\n"
+"POT-Creation-Date: 2016-12-08T17:37:16.220Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: \n"
@@ -236,6 +236,22 @@ msgstr ""
 msgid "Got it"
 msgstr ""
 
+#: views/dataset.html:11
+#: views/place.html:11
+msgid "%(score)s% open (avg.)"
+msgstr ""
+
+#: views/dataset.html:15
+msgid "Ranked #1 against other datasets in the Index (avg.)"
+msgstr ""
+
+#: views/dataset.html:30
+#: views/entry.html:29
+#: views/overview.html:57
+#: views/place.html:32
+msgid "See other years"
+msgstr ""
+
 #: controllers/census.js:83
 msgid "Make a Submission"
 msgstr ""
@@ -286,22 +302,6 @@ msgstr ""
 
 #: controllers/census.js:436
 msgid "Submission marked as rejected."
-msgstr ""
-
-#: views/dataset.html:11
-#: views/place.html:11
-msgid "%(score)s% open (avg.)"
-msgstr ""
-
-#: views/dataset.html:15
-msgid "Ranked #1 against other datasets in the Index (avg.)"
-msgstr ""
-
-#: views/dataset.html:30
-#: views/entry.html:29
-#: views/overview.html:57
-#: views/place.html:32
-msgid "See other years"
 msgstr ""
 
 #: views/entry.html:15
@@ -474,6 +474,14 @@ msgstr ""
 msgid "Ranked #1 against other places in the Index (avg.)"
 msgstr ""
 
+#: views/macros/popovers.html:16
+msgid "There is no data available."
+msgstr ""
+
+#: views/macros/popovers.html:37
+msgid "Read more &raquo;"
+msgstr ""
+
 #: views/includes/godi-home.html:3
 msgid "Tracking the state of government open data."
 msgstr ""
@@ -492,14 +500,6 @@ msgstr ""
 
 #: views/includes/share_buttons.html:4
 msgid "Embed"
-msgstr ""
-
-#: views/macros/popovers.html:16
-msgid "There is no data available."
-msgstr ""
-
-#: views/macros/popovers.html:37
-msgid "Read more &raquo;"
 msgstr ""
 
 #: views/includes/dataviews/table_places.html:7
