@@ -20,15 +20,15 @@
 
         <thead class="" style="">
           <tr>
-            <th class="clickable">Dataset</th>
-            <th>Breakdown</th>
-            <th>Info</th>
+            <th class="clickable">{{ gettext("Dataset") }}</th>
+            <th>{{ gettext("Breakdown") }}</th>
+            <th>{{ gettext("Info") }}</th>
             {% if not is_index %}
-            <th>Year</th>
+            <th>{{ gettext("Year") }}</th>
             {% endif %}
-            <th class="clickable">Score</th>
+            <th class="clickable">{{ gettext("Score") }}</th>
             {% if not is_index %}
-            <th class="admin"><span class="sr-only">Admin</span></th>
+            <th class="admin"><span class="sr-only">{{ gettext("Admin") }}</span></th>
             {% endif %}
           </tr>
         </thead>
@@ -94,7 +94,7 @@
             <tr id="submission-{{dataset.id}}-{{loop.index}}" data-rank="{{entry.rank}}" data-score="{{submission.computedScore}}" data-place="{{place.name}}" class="queued submission submission-{{dataset.id}}">
               <td class="queued-context">
                 {# hack around tablesorter and our row toggler #}<span style="visibility: hidden;">{{ dataset.name }}</span>
-                <h6><span class="icon">&#8627;</span> Awaiting review</h6>
+                <h6><span class="icon">&#8627;</span> {{ gettext("Awaiting review") }}</h6>
                 <span title="{{ gettext('Submitted by')}} {{ submission.Submitter.firstName}}" class="queued-user">
                   <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;
                   {{ submission.Submitter.firstName }}

@@ -12,7 +12,7 @@
       <div class="col-md-{% if is_index %}6{% else %}12{% endif %}">
       <h1>
         <a href="http://index.okfn.org/dataset/{{ dataset.id }}/" title="{{ format("See more data on %(name)s in the Open Data Index", {name: dataset.name}) }}">{{ dataset.name }}</a>
-        <span class="place-openness" data-score="{{ computedRelativeScore }}" style="background-color: rgb(122, 184, 0); color: white;">{{ format("%(score)s% open", {score: computedRelativeScore}) }}</span>
+        <span class="place-openness" data-score="{{ computedRelativeScore }}" style="background-color: rgb(122, 184, 0); color: white;">{{ format(gettext("%(score)s% open"), {score: computedRelativeScore}) }}</span>
       </h1>
       <h3>
         <a href="http://index.okfn.org/place/{{ place.id }}{{ urlContext }}" title="{{ format("See more data on %(name)s in the Open Data Index", {name: place.name}) }}">{{ place.name }}</a>
@@ -156,7 +156,7 @@
       <tr><td>{{ gettext("Format of data") }}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.answers.format %}{{ entry.answers.format }}{% else %}{{ gettext("Unknown") }}{% endif %}</td></tr>
       <tr><td>{{ gettext("Reviewer") }}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.Reviewer %}{{entry.Reviewer.fullName()}}{% endif %}</td></tr>
       <tr><td>{{ gettext("Submitters") }}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.Submitter %}{{entry.Submitter.fullName()}}{% endif %}</td></tr>
-      <tr><td>{{ gettext("Last modified") }}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.createdAt %}{{ entry.createdAt }}{% else %}{{gettext("Unknown")}}{% endif %}</td></tr>
+      <tr><td>{{ gettext("Last modified") }}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.createdAt %}{{ entry.createdAt }}{% else %}{{ gettext("Unknown") }}{% endif %}</td></tr>
       </tbody>
     </table>
   </div>

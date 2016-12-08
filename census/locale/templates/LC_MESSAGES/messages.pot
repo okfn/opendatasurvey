@@ -2,571 +2,585 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-14 14:03+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2016-12-08T17:37:16.220Z\n"
+"PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: \n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"MIME-Version: 1.0\n"
 
-#: templates/base.html:39
+#: views/base.html:46
+#: views/macros/breadcrumb.html:5
 msgid "Home"
 msgstr ""
 
-#: templates/base.html:40
-msgid "About"
+#: views/base.html:47
+msgid "Powered by <a href='%s'>Open Data Census</a>"
 msgstr ""
 
-#: templates/base.html:41
-msgid "Changes"
+#: views/base.html:53
+msgid "Toggle navigation"
 msgstr ""
 
-#: templates/base.html:43
-msgid "FAQ"
-msgstr ""
-
-#: templates/base.html:46
-msgid "Contribute"
-msgstr ""
-
-#: templates/base.html:95
-msgid "Change language:"
-msgstr ""
-
-#: templates/base.html:106
-msgid "Open Online Software Service"
-msgstr ""
-
-#: templates/base.html:109
-#: templates/base.html:112
-msgid "Open Definition"
-msgstr ""
-
-#: templates/base.html:116
-msgid "Data License (Public Domain)"
-msgstr ""
-
-#: templates/base.html:118
-msgid "Source code"
-msgstr ""
-
-#: templates/base.html:121
-msgid "Download Data (CSV)"
-msgstr ""
-
-#: templates/base.html:123
-msgid "Download Data (JSON)"
-msgstr ""
-
-#: templates/base.html:126
-msgid "Part of the <a href=\"http://census.okfn.org/\">Open Data Census project</a> run by Open Knowledge."
-msgstr ""
-
-#: templates/base.html:129
-msgid "An Open Knowledge Project"
-msgstr ""
-
-#: templates/base.html:138
-msgid "Logged in as %(name)s."
-msgstr ""
-
-#: templates/base.html:139
+#: views/base.html:64
+#: views/base.html:152
 msgid "Log out"
 msgstr ""
 
-#: templates/base.html:141
-#: templates/login.html:4
-#: templates/login.html:9
-#: templates/submission/review.html:20
+#: views/base.html:66
+#: views/base.html:154
+#: views/create.html:85
+#: views/login.html:4
+#: views/login.html:11
 msgid "Login"
 msgstr ""
 
-#: templates/base.html:144
-msgid "More about Open Data"
+#: views/base.html:72
+#: views/dataset.html:62
+#: controllers/pages.js:87
+#: controllers/pages.js:88
+msgid "About"
 msgstr ""
 
-#: templates/base.html:144
+#: views/base.html:73
+msgid "Changes"
+msgstr ""
+
+#: views/base.html:74
+#: controllers/pages.js:36
+msgid "FAQ"
+msgstr ""
+
+#: views/base.html:76
+#: controllers/pages.js:69
+#: controllers/pages.js:70
+msgid "Methodology"
+msgstr ""
+
+#: views/base.html:79
+#: controllers/pages.js:60
+#: controllers/pages.js:61
+msgid "Contribute"
+msgstr ""
+
+#: views/base.html:82
+#: controllers/pages.js:78
+#: controllers/pages.js:79
+msgid "Tutorial"
+msgstr ""
+
+#: views/base.html:85
+#: views/base.html:87
+msgid "Support"
+msgstr ""
+
+#: views/base.html:125
+msgid "Privacy policy"
+msgstr ""
+
+#: views/base.html:126
+msgid "IP policy"
+msgstr ""
+
+#: views/base.html:127
+msgid "Cookie policy"
+msgstr ""
+
+#: views/base.html:128
+msgid "Terms of use"
+msgstr ""
+
+#: views/base.html:129
 msgid "What is Open Data"
 msgstr ""
 
-#: templates/base.html:145
-msgid "Run Your Own<br />Local Open Data Census"
+#: views/base.html:130
+msgid "Run Your Own Local Open Data Census"
 msgstr ""
 
-#: templates/changes.html:4
+#: views/base.html:140
+msgid "Download"
+msgstr ""
+
+#: views/base.html:140
+msgid "Current (CSV)"
+msgstr ""
+
+#: views/base.html:141
+msgid "All (CSV)"
+msgstr ""
+
+#: views/base.html:142
+msgid "Current (JSON)"
+msgstr ""
+
+#: views/base.html:143
+msgid "All (JSON)"
+msgstr ""
+
+#: views/base.html:146
+msgid "Data License (Public Domain)"
+msgstr ""
+
+#: views/base.html:146
+msgid "Source code"
+msgstr ""
+
+#: views/base.html:158
+msgid "Change language:"
+msgstr ""
+
+#: views/changes.html:4
+#: controllers/pages.js:51
 msgid "Recent Changes"
 msgstr ""
 
-#: templates/changes.html:8
+#: views/changes.html:9
 msgid "Changelog"
 msgstr ""
 
-#: templates/changes.html:10
+#: views/changes.html:11
 msgid "A log of the most recent submission and entry activity."
 msgstr ""
 
-#: templates/changes.html:16
-msgid "Entry"
-msgstr ""
-
-#: templates/changes.html:16
-#: templates/submission/review.html:29
-msgid "Submission"
-msgstr ""
-
-#: templates/changes.html:18
-msgid "new"
-msgstr ""
-
-#: templates/changes.html:26
-msgid "On"
-msgstr ""
-
-#: templates/changes.html:26
-msgid "submitted by"
-msgstr ""
-
-#: templates/changes.html:26
-msgid "and reviewed by"
-msgstr ""
-
-#: templates/login.html:20
-msgid "Please login to contribute to the"
-msgstr ""
-
-#: templates/login.html:25
-msgid "Login with Google &raquo;"
-msgstr ""
-
-#: templates/login.html:27
-msgid "Login with your existing Google account in a few seconds. We will not share your email with any third party. For more information see the"
-msgstr ""
-
-#: templates/login.html:27
-msgid "terms of use"
-msgstr ""
-
-#: templates/login.html:31
-msgid "&ndash; or &ndash;"
-msgstr ""
-
-#: templates/login.html:36
-msgid "Name (optional)"
-msgstr ""
-
-#: templates/login.html:37
-msgid "If you provide a name we can credit you for your contribution (if not provided you'll be listed as Anonymous)."
-msgstr ""
-
-#: templates/login.html:38
-msgid "Joe Bloggs"
-msgstr ""
-
-#: templates/login.html:40
-msgid "Continue &raquo;"
-msgstr ""
-
-#: templates/login.html:43
-msgid "Continue without logging in."
-msgstr ""
-
-#: templates/overview.html:3
-msgid "Overview"
-msgstr ""
-
-#: templates/overview.html:11
-msgid "Number of places"
-msgstr ""
-
-#: templates/overview.html:13
-msgid "Number of datasets"
-msgstr ""
-
-#: templates/overview.html:15
-msgid "Number of open datasets"
-msgstr ""
-
-#: templates/overview.html:17
-msgid "Percentage"
-msgstr ""
-
-#: templates/overview.html:17
-msgid "open"
-msgstr ""
-
-#: templates/overview.html:34
-msgid "Add information"
-msgstr ""
-
-#: templates/overview.html:50
-#: templates/overview.html:121
-msgid "Total Score"
-msgstr ""
-
-#: templates/overview.html:58
-msgid "The Census Admin needs to add some places to the Places configuration sheet"
-msgstr ""
-
-#: templates/overview.html:80
-msgid "Click here to add to the census!"
-msgstr ""
-
-#: templates/overview.html:80
-msgid "Add new"
-msgstr ""
-
-#: templates/_snippets/datasets.html:4
-#: templates/country/place.html:39
-#: templates/submission/create.html:47
-msgid "Dataset"
-msgstr ""
-
-#: templates/_snippets/datasets.html:5
-#: templates/_snippets/entry-summary-row.html:55
-#: templates/_snippets/questions.html:5
-#: templates/country/entry.html:57
-msgid "Details"
-msgstr ""
-
-#: templates/_snippets/entry-summary-row.html:36
-msgid "Date available:"
-msgstr ""
-
-#: templates/_snippets/entry-summary-row.html:38
-msgid "No date available given"
-msgstr ""
-
-#: templates/_snippets/entry-summary-row.html:47
-msgid "No data format given"
-msgstr ""
-
-#: templates/_snippets/entry-summary-row.html:59
-msgid "No details"
-msgstr ""
-
-#: templates/_snippets/key.html:2
-msgid "Key:"
-msgstr ""
-
-#: templates/_snippets/key.html:4
-#: templates/submission/form-core.html:38
-msgid "Yes"
-msgstr ""
-
-#: templates/_snippets/key.html:5
-#: templates/submission/form-core.html:39
-msgid "No"
-msgstr ""
-
-#: templates/_snippets/key.html:6
-#: templates/submission/form-core.html:40
-msgid "Unsure"
-msgstr ""
-
-#: templates/_snippets/key.html:7
-msgid "No data"
-msgstr ""
-
-#: templates/_snippets/missing_place_button.html:3
-msgid "Add new location"
-msgstr ""
-
-#: templates/_snippets/questions.html:4
-msgid "Question"
-msgstr ""
-
-#: templates/_snippets/questions.html:6
-msgid "Weighting"
-msgstr ""
-
-#: templates/_snippets/reviewer_actions.html:3
-msgid "Review"
-msgstr ""
-
-#: templates/_snippets/reviewer_actions.html:7
-msgid "Actions"
-msgstr ""
-
-#: templates/_snippets/reviewer_actions.html:8
-msgid "Please add a short comment as to why you are accepting or rejecting this submission. **Note that your message will be publicly visible**."
-msgstr ""
-
-#: templates/_snippets/reviewer_actions.html:10
-msgid "Publish"
-msgstr ""
-
-#: templates/_snippets/reviewer_actions.html:11
-msgid "Reject"
-msgstr ""
-
-#: templates/_snippets/reviewer_actions.html:15
-msgid "Important"
-msgstr ""
-
-#: templates/_snippets/reviewer_actions.html:17
-msgid "As the reviewer, your name **(%(name)s)** will be logged and displayed with the entry"
-msgstr ""
-
-#: templates/_snippets/reviewer_actions.html:18
-msgid "If this submission makes no changes to the current entry then please 'Reject' it rather than 'Accept'"
-msgstr ""
-
-#: templates/_snippets/reviewer_actions.html:19
-msgid "Note that you edit the submission before accepting it. In particular, please correct any spelling mistakes"
-msgstr ""
-
-#: templates/_snippets/reviewer_actions.html:20
-msgid "Publish will overwrite the whole current entry with the data in this form"
-msgstr ""
-
-#: templates/_snippets/share_page_buttons.html:1
-#: templates/_snippets/share_submission_buttons.html:5
-msgid "Share on Twitter"
-msgstr ""
-
-#: templates/_snippets/share_page_buttons.html:4
-#: templates/_snippets/share_submission_buttons.html:10
-msgid "Share on Facebook"
-msgstr ""
-
-#: templates/_snippets/share_page_buttons.html:7
-#: templates/_snippets/share_submission_buttons.html:14
-msgid "Share on Google+"
-msgstr ""
-
-#: templates/_snippets/share_submission_buttons.html:6
-msgid "Twitter"
-msgstr ""
-
-#: templates/_snippets/share_submission_buttons.html:11
-msgid "Facebook"
-msgstr ""
-
-#: templates/_snippets/share_submission_buttons.html:15
-msgid "Google+"
-msgstr ""
-
-#: templates/country/dataset.html:5
-#: templates/country/dataset.html:12
-msgid "Datasets"
-msgstr ""
-
-#: templates/country/dataset.html:25
-msgid "On this page you can see the state of open data for %(dataset)s in all the places for which we have information."
-msgstr ""
-
-#: templates/country/dataset.html:28
-msgid "Dataset Description"
-msgstr ""
-
-#: templates/country/dataset.html:43
-#: templates/submission/create.html:37
-msgid "Place"
-msgstr ""
-
-#: templates/country/dataset.html:44
-#: templates/country/place.html:40
-msgid "Score"
-msgstr ""
-
-#: templates/country/dataset.html:45
-#: templates/country/place.html:41
-msgid "Breakdown"
-msgstr ""
-
-#: templates/country/dataset.html:46
-#: templates/country/place.html:43
-msgid "Location (URL)"
-msgstr ""
-
-#: templates/country/dataset.html:47
-#: templates/country/place.html:44
-#: templates/submission/form-core.html:42
-msgid "Information"
-msgstr ""
-
-#: templates/country/dataset.html:64
-#: templates/country/place.html:70
-msgid "Propose Revisions"
-msgstr ""
-
-#: templates/country/dataset.html:66
-#: templates/country/place.html:74
-msgid "Submit information"
-msgstr ""
-
-#: templates/country/entry.html:4
-msgid "Entry for %(place)s / %(title)s"
-msgstr ""
-
-#: templates/country/entry.html:11
-msgid "Return to dataset overview"
-msgstr ""
-
-#: templates/country/entry.html:24
-msgid "Data Location"
-msgstr ""
-
-#: templates/country/entry.html:27
-#: templates/submission/review.html:79
-msgid "Comments"
-msgstr ""
-
-#: templates/country/entry.html:30
-msgid "Data Availability"
-msgstr ""
-
-#: templates/country/entry.html:59
-msgid "Date the data became available"
-msgstr ""
-
-#: templates/country/entry.html:59
-#: templates/country/entry.html:60
-#: templates/country/entry.html:62
-msgid "Unknown"
-msgstr ""
-
-#: templates/country/entry.html:60
-msgid "Format of data"
-msgstr ""
-
-#: templates/country/entry.html:61
-#: templates/country/place.html:119
-msgid "Contributors"
-msgstr ""
-
-#: templates/country/entry.html:61
-msgid "(Editors)"
-msgstr ""
-
-#: templates/country/entry.html:61
-msgid "(Submitters)"
-msgstr ""
-
-#: templates/country/entry.html:62
-msgid "Last modified"
-msgstr ""
-
-#: templates/country/place.html:5
-#: templates/country/place.html:12
-msgid "Places"
-msgstr ""
-
-#: templates/country/place.html:25
-msgid "This is the overview page where you can see the state of open data across each key dataset."
-msgstr ""
-
-#: templates/country/place.html:84
-msgid "&#8627; Awaiting review"
-msgstr ""
-
-#: templates/country/place.html:86
+#: views/changes.html:42
+#: views/includes/dataviews/table_places.html:79
+#: views/includes/dataviews/table_slice_dataset.html:64
+#: views/includes/dataviews/table_slice_dataset.html:101
+#: views/includes/dataviews/table_slice_dataset.html:130
+#: views/includes/dataviews/table_slice_place.html:63
+#: views/includes/dataviews/table_slice_place.html:98
+#: views/includes/dataviews/table_slice_place.html:127
 msgid "Submitted by"
 msgstr ""
 
-#: templates/country/place.html:91
-msgid "Submitted on"
+#: views/changes.html:51
+#: views/includes/dataviews/table_places.html:79
+#: views/includes/dataviews/table_slice_dataset.html:64
+#: views/includes/dataviews/table_slice_place.html:63
+msgid "and reviewed by"
 msgstr ""
 
-#: templates/country/place.html:99
-msgid "View Submission"
-msgstr ""
-
-#: templates/country/place.html:106
-msgid "Sorry, only one submission can be waiting for review at a time - please come back in a few days to submit new information"
-msgstr ""
-
-#: templates/country/place.html:120
-msgid "Editors for %(name)s:"
-msgstr ""
-
-#: templates/country/place.html:124
-msgid "With submissions from:"
-msgstr ""
-
-#: templates/submission/create.html:4
-#: templates/submission/create.html:78
+#: views/create.html:4
 msgid "Submit"
 msgstr ""
 
-#: templates/submission/create.html:9
-msgid "Make a Submission &ndash; %(sitename)s"
+#: views/create.html:17
+msgid "Select a Place"
 msgstr ""
 
-#: templates/submission/create.html:15
-msgid "The form has missing or incorrect data"
+#: views/create.html:19
+msgid "change place"
 msgstr ""
 
-#: templates/submission/create.html:34
-msgid "Place and Dataset"
+#: views/create.html:30
+msgid "Select a Dataset"
 msgstr ""
 
-#: templates/submission/create.html:39
-#: templates/submission/create.html:49
-msgid "Please select"
+#: views/create.html:32
+msgid "change dataset"
 msgstr ""
 
-#: templates/submission/create.html:65
-msgid "%(sitename)s Year"
-msgstr ""
-
-#: templates/submission/create.html:74
-msgid "Your Name &ndash; %(name)s"
-msgstr ""
-
-#: templates/submission/create.html:75
-msgid "This will be public."
-msgstr ""
-
-#: templates/submission/create.html:79
-msgid "By submitting material to the index you agreeing to <a href=\"http://okfn.org/terms-of-use/\">terms of use</a> and also to license your contribution (to the extent there are any rights in it!) under the <a href=\"http://opendatacommons.org/licenses/pddl/1.0/\">Open Data Commons Public Domain Dedication and License</a>."
-msgstr ""
-
-#: templates/submission/form-core.html:3
-msgid "Current Entry"
-msgstr ""
-
-#: templates/submission/form-core.html:9
-#: templates/submission/form-core.html:12
-#: templates/submission/form-core.html:57
-msgid "No entry"
-msgstr ""
-
-#: templates/submission/form-core.html:41
-msgid "Current"
-msgstr ""
-
-#: templates/submission/form-core.html:90
-msgid "Preview"
-msgstr ""
-
-#: templates/submission/review.html:4
-msgid "Review Submission"
-msgstr ""
-
-#: templates/submission/review.html:16
-msgid "If you are a reviewer, please login to review"
-msgstr ""
-
-#: templates/submission/review.html:44
+#: views/create.html:48
 msgid "Status"
 msgstr ""
 
-#: templates/submission/review.html:45
+#: views/create.html:50
 msgid "Submission date"
 msgstr ""
 
-#: templates/submission/review.html:46
+#: views/create.html:54
 msgid "Submitter"
 msgstr ""
 
-#: templates/submission/review.html:48
+#: views/create.html:59
+#: views/entry.html:157
 msgid "Reviewer"
 msgstr ""
 
-#: templates/submission/review.html:49
-msgid "Review comments"
+#: views/create.html:75
+msgid "You do not have permissions to review this submission."
+msgstr ""
+
+#: views/create.html:85
+msgid "If you are a reviewer, please login to review."
+msgstr ""
+
+#: views/create.html:96
+msgid "The form has missing or incorrect data"
+msgstr ""
+
+#: views/create.html:99
+msgid "Current is '%s'"
+msgstr ""
+
+#: views/create.html:115
+msgid "Please read the <a class=\"btn btn-sm\" data-toggle=\"modal\" data-target=\"#guidance\">Review Guidance</a> before proceeding."
+msgstr ""
+
+#: views/create.html:117
+msgid "Please read the <a class=\"btn btn-sm\" data-toggle=\"modal\" data-target=\"#guidance\">Submission Guidance</a> before proceeding."
+msgstr ""
+
+#: views/create.html:128
+msgid "Review Guidance"
+msgstr ""
+
+#: views/create.html:128
+msgid "Submission Guidance"
+msgstr ""
+
+#: views/create.html:134
+msgid "Got it"
+msgstr ""
+
+#: views/dataset.html:11
+#: views/place.html:11
+msgid "%(score)s% open (avg.)"
+msgstr ""
+
+#: views/dataset.html:15
+msgid "Ranked #1 against other datasets in the Index (avg.)"
+msgstr ""
+
+#: views/dataset.html:30
+#: views/entry.html:29
+#: views/overview.html:57
+#: views/place.html:32
+msgid "See other years"
+msgstr ""
+
+#: controllers/census.js:83
+msgid "Make a Submission"
+msgstr ""
+
+#: controllers/census.js:103
+msgid "There is already a queued submission for this data. <a href=\"/place/%s/%s\">See the queued submission</a>."
+msgstr ""
+
+#: controllers/census.js:187
+msgid "Thanks for your submission.%s You can check back here any time to see the current status."
+msgstr ""
+
+#: controllers/census.js:194
+msgid " It will now be reviewed by the editors."
+msgstr ""
+
+#: controllers/census.js:199
+msgid "There was an error!"
+msgstr ""
+
+#: controllers/census.js:246
+msgid "Entry for %s / %s"
+msgstr ""
+
+#: controllers/census.js:247
+msgid "This is a discussion about the submission for [%s / %s](%s)."
+msgstr ""
+
+#: controllers/census.js:269
+msgid "There is no submission with id %s"
+msgstr ""
+
+#: controllers/census.js:357
+msgid "Review a Submission"
+msgstr ""
+
+#: controllers/census.js:377
+msgid "There is no entry with id %s"
+msgstr ""
+
+#: controllers/census.js:400
+msgid "You are not allowed to review this entry."
+msgstr ""
+
+#: controllers/census.js:433
+msgid "Submission processed and entered into the census."
+msgstr ""
+
+#: controllers/census.js:436
+msgid "Submission marked as rejected."
+msgstr ""
+
+#: views/entry.html:15
+msgid "%(score)s% open"
+msgstr ""
+
+#: views/entry.html:61
+msgid "What data is expected?"
+msgstr ""
+
+#: views/entry.html:67
+msgid "What data is available?"
+msgstr ""
+
+#: views/entry.html:107
+msgid "Details"
+msgstr ""
+
+#: views/entry.html:113
+msgid "Reviewer comments"
+msgstr ""
+
+#: views/entry.html:123
+msgid "Contributors"
+msgstr ""
+
+#: views/entry.html:127
+msgid "Reviewers"
+msgstr ""
+
+#: views/entry.html:136
+#: views/entry.html:158
+msgid "Submitters"
+msgstr ""
+
+#: views/entry.html:152
+msgid "Meta data"
+msgstr ""
+
+#: views/entry.html:155
+msgid "Date the data became available"
+msgstr ""
+
+#: views/entry.html:155
+#: views/entry.html:156
+#: views/entry.html:159
+msgid "Unknown"
+msgstr ""
+
+#: views/entry.html:156
+msgid "Format of data"
+msgstr ""
+
+#: views/entry.html:159
+msgid "Last modified"
+msgstr ""
+
+#: controllers/mixins.js:46
+#: controllers/mixins.js:47
+msgid "Not found"
+msgstr ""
+
+#: controllers/mixins.js:64
+#: controllers/mixins.js:104
+msgid "There is no matching census in the registry."
+msgstr ""
+
+#: controllers/mixins.js:135
+msgid "Not allowed"
+msgstr ""
+
+#: controllers/mixins.js:159
+msgid "Not found here"
+msgstr ""
+
+#: views/login.html:15
+msgid "Please login to contribute to the Census."
+msgstr ""
+
+#: views/login.html:21
+msgid "Login with Google &raquo;"
+msgstr ""
+
+#: views/login.html:24
+msgid "Login with Facebook &raquo;"
+msgstr ""
+
+#: views/login.html:32
+msgid "Login with your existing 3rd party account in a few seconds. We will not share your email with any third party. For more information see the"
+msgstr ""
+
+#: views/login.html:32
+msgid "terms of use"
+msgstr ""
+
+#: controllers/pages.js:30
+msgid "FAQ - Frequently Asked Questions"
+msgstr ""
+
+#: controllers/pages.js:120
+msgid "There is no matching place in our database. Are you sure it is spelled correctly? Please check the <a href=\"/\">overview page</a> for the list of places."
+msgstr ""
+
+#: controllers/pages.js:147
+msgid "There is no matching dataset in our database. Are you sure it is spelled correctly? Please check the <a href=\"/\">overview page</a> for the list of datasets."
+msgstr ""
+
+#: controllers/pages.js:178
+msgid "There is no matching entry in our database. Are you sure you have spelled it correctly? Please check the <a href=\"/\">overview page</a> for the list of places"
+msgstr ""
+
+#: views/overview.html:17
+msgid "Number of places"
+msgstr ""
+
+#: views/overview.html:23
+msgid "Number of datasets"
+msgstr ""
+
+#: views/overview.html:29
+msgid "Number of open datasets"
+msgstr ""
+
+#: views/overview.html:35
+msgid "Percentage <a href='%s'>open</a>"
+msgstr ""
+
+#: views/overview.html:48
+msgid "Search"
+msgstr ""
+
+#: views/overview.html:66
+#: views/includes/share_buttons.html:1
+msgid "Share this page"
+msgstr ""
+
+#: views/overview.html:81
+#: views/overview.html:99
+#: views/includes/share_buttons.html:17
+#: views/includes/share_buttons.html:30
+msgid "Close"
+msgstr ""
+
+#: views/overview.html:82
+#: views/includes/share_buttons.html:18
+msgid "Map embed code"
+msgstr ""
+
+#: views/overview.html:86
+#: views/includes/share_buttons.html:21
+msgid "Use the following code to embed the map visualisation into your own website."
+msgstr ""
+
+#: views/overview.html:94
+#: views/includes/share_buttons.html:23
+msgid "If you are a developer, you can read more about the embed options here:"
+msgstr ""
+
+#: views/overview.html:95
+#: views/includes/share_buttons.html:24
+#: views/includes/share_buttons.html:25
+msgid "Embed options"
+msgstr ""
+
+#: views/place.html:10
+msgid "See more data on %(name)s in the Open Data Index"
+msgstr ""
+
+#: views/place.html:15
+msgid "Ranked #1 against other places in the Index (avg.)"
+msgstr ""
+
+#: views/macros/popovers.html:16
+msgid "There is no data available."
+msgstr ""
+
+#: views/macros/popovers.html:37
+msgid "Read more &raquo;"
+msgstr ""
+
+#: views/includes/godi-home.html:3
+msgid "Tracking the state of government open data."
+msgstr ""
+
+#: views/includes/godi-home.html:5
+msgid "The first initiative of its kind, the Global Open Data Index provides the most comprehensive snapshot available of the global state of open data."
+msgstr ""
+
+#: views/includes/godi-home.html:8
+msgid "Compare countries"
+msgstr ""
+
+#: views/includes/godi-home.html:12
+msgid "See insights"
+msgstr ""
+
+#: views/includes/share_buttons.html:4
+msgid "Embed"
+msgstr ""
+
+#: views/includes/dataviews/table_places.html:7
+msgid "Sort by Rank"
+msgstr ""
+
+#: views/includes/dataviews/table_places.html:7
+#: views/includes/dataviews/table_slice_dataset.html:25
+msgid "Rank"
+msgstr ""
+
+#: views/includes/dataviews/table_places.html:8
+msgid "Sort by A-Z"
+msgstr ""
+
+#: views/includes/dataviews/table_places.html:8
+#: views/includes/dataviews/table_slice_dataset.html:26
+msgid "Place"
+msgstr ""
+
+#: views/includes/dataviews/table_places.html:14
+#: views/includes/dataviews/table_slice_dataset.html:32
+#: views/includes/dataviews/table_slice_place.html:29
+msgid "Score"
+msgstr ""
+
+#: views/includes/dataviews/table_places.html:64
+msgid "No data"
+msgstr ""
+
+#: views/includes/dataviews/table_places.html:82
+#: views/includes/dataviews/table_places.html:89
+#: views/includes/dataviews/table_places.html:91
+msgid "Pending submissions"
+msgstr ""
+
+#: views/includes/dataviews/table_slice_dataset.html:27
+#: views/includes/dataviews/table_slice_place.html:24
+msgid "Breakdown"
+msgstr ""
+
+#: views/includes/dataviews/table_slice_dataset.html:28
+#: views/includes/dataviews/table_slice_place.html:25
+msgid "Info"
+msgstr ""
+
+#: views/includes/dataviews/table_slice_dataset.html:30
+#: views/includes/dataviews/table_slice_place.html:27
+msgid "Year"
+msgstr ""
+
+#: views/includes/dataviews/table_slice_dataset.html:34
+#: views/includes/dataviews/table_slice_place.html:31
+msgid "Admin"
+msgstr ""
+
+#: views/includes/dataviews/table_slice_dataset.html:74
+#: views/includes/dataviews/table_slice_place.html:73
+msgid "Sorry, only one submission can be waiting for review at a time - please come back in a few days to submit new information"
+msgstr ""
+
+#: views/includes/dataviews/table_slice_dataset.html:76
+#: views/includes/dataviews/table_slice_place.html:75
+msgid "Propose Revisions"
+msgstr ""
+
+#: views/includes/dataviews/table_slice_dataset.html:100
+#: views/includes/dataviews/table_slice_place.html:97
+msgid "Awaiting review"
+msgstr ""
+
+#: views/includes/dataviews/table_slice_dataset.html:106
+#: views/includes/dataviews/table_slice_place.html:103
+msgid "Submitted on"
+msgstr ""
+
+#: views/includes/dataviews/table_slice_dataset.html:137
+#: views/includes/dataviews/table_slice_place.html:134
+msgid "View Submission"
+msgstr ""
+
+#: views/includes/dataviews/table_slice_place.html:23
+msgid "Dataset"
 msgstr ""

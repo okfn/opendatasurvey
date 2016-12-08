@@ -14,9 +14,9 @@
       <div class="primary-meta">
         <h1>
           <span class="no-js place">
-            {{ placeName or 'Select a Place' }}
+            {{ placeName or gettext('Select a Place') }}
             {% if not isReview %}
-            <a href="#"><span>(change place)</span></a>
+            <a href="#"><span>({{ gettext("change place") }})</span></a>
             <span>
               <ul>
                 {% for place in places -%}
@@ -27,9 +27,9 @@
             {% endif %}
           </span>
           <span class="no-js dataset">
-            {{ datasetName or 'Select a Dataset'}}
+            {{ datasetName or gettext('Select a Dataset')}}
             {% if not isReview %}
-            <a href="#"><span>(change dataset)</span></a>
+            <a href="#"><span>({{ gettext("change dataset") }})</span></a>
             <span>
               <ul>
                 {% for dataset in datasets -%}
@@ -45,18 +45,18 @@
       {% if isReview -%}
         <div class="secondary-meta">
           <dl class="{{ entryStatus }}">
-            <dt class="status">Status</dt>
+            <dt class="status">{{ gettext("Status") }}</dt>
             <dd>{{ entryStatus }}</dd>
-            <dt class="date">Submission date</dt>
+            <dt class="date">{{ gettext("Submission date") }}</dt>
             <dd>
               <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> {{ entry.createdAt|dateformat }}
             </dd>
-            <dt class="submitter">Submitter</dt>
+            <dt class="submitter">{{ gettext("Submitter") }}</dt>
             <dd>
               <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {% if entry.Submitter %}{% if entry.Submitter.isAnonymous() %}{{ entry.Submitter.firstName|title }}{% else %}{{ entry.Submitter.fullName() }}{% endif %}{% endif %}
             </dd>
             {% if entry.Reviewer %}
-             <dt>Reviewer</dt>
+             <dt>{{ gettext("Reviewer") }}</dt>
              <dd><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {% if entry.Reviewer %}{% if entry.Reviewer.isAnonymous() %}{{ entry.Reviewer.firstName|title }}{% else %}{{ entry.Reviewer.fullName() }}{% endif %}{% endif %}</dd>
             {% endif %}
           </dl>
@@ -82,7 +82,7 @@
     <div class="alert alert-warning" role="alert">
       <div class="container">
         <div>
-          <p>{{gettext("If you are a reviewer, please login to review.")}} <a class="btn btn-primary" href="{{ loginUrl }}?next=census/submission/{{ entry.id }}">{{gettext("Login")}}</a></p>
+          <p>{{ gettext("If you are a reviewer, please login to review.") }} <a class="btn btn-primary" href="{{ loginUrl }}?next=census/submission/{{ entry.id }}">{{ gettext("Login") }}</a></p>
         </div>
       </div>
     </div>
@@ -96,7 +96,7 @@
       <p>{{ gettext("The form has missing or incorrect data")}}:</p>
       <ul>
       {% for error in errors %}
-        <li>{{ error.param }}: {{ error.msg }} {% if error.value %}(Current is '{{ error.value }}'){% endif %}</li>
+        <li>{{ error.param }}: {{ error.msg }} {% if error.value %}({{ format(gettext("Current is '%s'"), [error.value]) }}){% endif %}</li>
       {% endfor %}
       </ul>
     </div>
@@ -111,7 +111,11 @@
   <div class="container">
     <div>
       <p>
-        Please read the <a class="btn btn-sm" data-toggle="modal" data-target="#guidance">{% if isReview %}Review{% else %}Submission{% endif %} Guidance</a> before proceeding.
+        {% if isReview %}
+          {{ gettext('Please read the <a class="btn btn-sm" data-toggle="modal" data-target="#guidance">Review Guidance</a> before proceeding.') }}
+        {% else %}
+          {{ gettext('Please read the <a class="btn btn-sm" data-toggle="modal" data-target="#guidance">Submission Guidance</a> before proceeding.') }}
+        {% endif %}
       </p>
     </div>
   </div>
@@ -121,13 +125,13 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">{% if isReview %}Review{% else %}Submission{% endif %} Guidance</h4>
+        <h4 class="modal-title" id="myModalLabel">{% if isReview %}{{ gettext('Review Guidance') }}{% else %}{{ gettext('Submission Guidance') }}{% endif %}</h4>
       </div>
       <div class="modal-body">
         {{ submitInstructions }}
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Got it</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">{{ gettext("Got it") }}</button>
       </div>
     </div>
   </div>

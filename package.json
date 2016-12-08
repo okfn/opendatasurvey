@@ -59,6 +59,7 @@
     "xss": "^0.2.13"
   },
   "devDependencies": {
+    "babel-jsxgettext": "^0.2.0",
     "chai": "^3.5.0",
     "chai-as-promised": "^5.1.0",
     "chalk": "^1.1.0",
@@ -71,9 +72,11 @@
     "execSync": "^1.0.2",
     "gulp": "^3.8.9",
     "gulp-concat-po": "^0.1.0",
+    "gulp-filter": "^4.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
     "gulp-ruby-sass": "^2.1.0",
+    "gulp-util": "^3.0.7",
     "gulp-xgettext": "^0.5.0",
     "istanbul": "^1.1.0-alpha.1",
     "jsdom": "^9.4.2",

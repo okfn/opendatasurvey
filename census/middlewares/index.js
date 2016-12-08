@@ -3,8 +3,8 @@
 var notFound = function(req, res, next) {
   res.status(404)
     .render('404.html', {
-      title: '404: Not Found',
-      message: 'Nothing here!'
+      title: req.gettext('404: Not Found'),
+      message: req.gettext('Nothing here!')
     });
 };
 
