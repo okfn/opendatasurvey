@@ -80,7 +80,7 @@ var submitGet = function(req, res, data) {
       datasetContext: datasetContext,
       formData: formData,
       initialRenderedEntry: initialHTML,
-      breadcrumbTitle: 'Make a Submission',
+      breadcrumbTitle: req.gettext('Make a Submission'),
       submitInstructions: marked(submitInstructions),
       errors: _.get(data, 'errors'),
       isReview: false
@@ -100,9 +100,9 @@ var submitPost = function(req, res, data) {
 
   if (pending) {
     if (!Array.isArray(errors)) errors = [];
-    let msg = util.format('There is already a queued submission for this data. ' +
-                          '<a href="/place/%s/%s">See the queued submission</a>.',
-                          current.place, req.params.year);
+    let msg = req.format(req.gettext('There is already a queued submission for this data. ' +
+                                     '<a href="/place/%s/%s">See the queued submission</a>.'),
+                          [current.place, req.params.year]);
     errors.push({
       param: 'conflict',
       msg: msg
@@ -184,19 +184,19 @@ var submitPost = function(req, res, data) {
       let submissionPath;
 
       if (result) {
-        let msgTmpl = 'Thanks for your submission.%s You can check ' +
-          'back here any time to see the current status.';
+        let msgTmpl = req.gettext('Thanks for your submission.%s You can check ' +
+                  'back here any time to see the current status.');
         submissionPath = '/submission/' + result.id;
         if (result.isCurrent) {
           msg = util.format(msgTmpl, '');
           redirectPath = '/place/' + result.place;
         } else {
-          msg = util.format(msgTmpl, ' It will now be reviewed by the editors.');
+          msg = util.format(msgTmpl, req.gettext(' It will now be reviewed by the editors.'));
           redirectPath = submissionPath;
         }
         req.flash('info', msg);
       } else {
-        msg = 'There was an error!';
+        msg = req.gettext('There was an error!');
         req.flash('error', msg);
       }
 
@@ -243,8 +243,8 @@ let _getDiscussionURL = function(req, dataset, place) {
       newTopicURL.host = parsedURL.host;
       newTopicURL.pathname = 'new-topic';
       newTopicURL.search = querystring.stringify({
-        title: util.format('Entry for %s / %s', dataset, place),
-        body: util.format('This is a discussion about the submission for [%s / %s](%s).',
+        title: util.format(req.gettext('Entry for %s / %s'), dataset, place),
+        body: util.format(req.gettext('This is a discussion about the submission for [%s / %s](%s).'),
                           dataset, place, req.res.locals.current_url),
         category: _.rest(splitPathName).join('/').replace(/-/g, ' ')
       });
@@ -266,7 +266,8 @@ var pending = function(req, res) {
   req.app.get('models').Entry.findOne(entryQueryParams)
   .then(entry => {
     if (!entry) {
-      res.status(404).send('There is no submission with id ' + req.params.id);
+      res.status(404).send(util.format(req.gettext('There is no submission with id %s'),
+                           req.params.id));
       return;
     }
     let dataOptions = _.merge(modelUtils.getDataOptions(req), {
@@ -353,7 +354,7 @@ var pending = function(req, res) {
         datasetContext: datasetContext,
         formData: formData,
         initialRenderedEntry: initialHTML,
-        breadcrumbTitle: 'Review a Submission',
+        breadcrumbTitle: req.gettext('Review a Submission'),
         submitInstructions: config.get('review_page'),
         submissionDiscussionURL: submissionDiscussionURL,
         errors: _.get(data, 'errors'),
@@ -373,7 +374,8 @@ var reviewPost = function(req, res) {
   req.app.get('models').Entry.findById(req.params.id)
   .then(entry => {
     if (!entry) {
-      res.status(404).send('There is no entry with id ' + req.params.id);
+      res.status(404).send(util.format(req.gettext('There is no entry with id %s'),
+                           req.params.id));
       return;
     }
 
@@ -395,7 +397,7 @@ var reviewPost = function(req, res) {
 
     data.reviewers = utils.getReviewers(req, data);
     if (!utils.canReview(data.reviewers, req.user)) {
-      res.status(403).send('You are not allowed to review this entry.');
+      res.status(403).send(req.gettext('You are not allowed to review this entry.'));
       return;
     }
     entry.reviewerId = req.user.id;
@@ -428,10 +430,10 @@ var reviewPost = function(req, res) {
   .then(acceptSubmission => {
     // Set the flash message and redirect to homepage.
     if (acceptSubmission) {
-      let msg = 'Submission processed and entered into the census.';
+      let msg = req.gettext('Submission processed and entered into the census.');
       req.flash('info', msg);
     } else {
-      let msg = 'Submission marked as rejected.';
+      let msg = req.gettext('Submission marked as rejected.');
       req.flash('info', msg);
     }
     res.redirect('/');

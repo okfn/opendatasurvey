@@ -43,8 +43,8 @@ var requireDomain = function(req, res, next) {
 
   if (!req.params.domain) {
     res.status(404).render('404.html', {
-      title: 'Not found',
-      message: 'Not found'
+      title: req.gettext('Not found'),
+      message: req.gettext('Not found')
     });
   } else
   if (req.params.domain === req.app.get('authDomain') ||
@@ -61,7 +61,7 @@ var requireDomain = function(req, res, next) {
         if (!result) {
           res.status(404).send({
             status: 'error',
-            message: 'There is no matching census in the registry.'
+            message: req.gettext('There is no matching census in the registry.')
           });
         } else {
           req.session.activeSite = req.params.domain;
@@ -101,7 +101,7 @@ var requireDomain = function(req, res, next) {
       .catch(function() {
         res.status(404).send({
           status: 'error',
-          message: 'There is no matching census in the registry.'
+          message: req.gettext('There is no matching census in the registry.')
         });
       });
   }
@@ -132,7 +132,7 @@ var requireAdmin = function(req, res, next) {
   } else {
     res.status(403).send({
       status: 'error',
-      message: 'not allowed'
+      message: req.gettext('Not allowed')
     });
   }
 };
@@ -156,7 +156,7 @@ var requireAvailableYear = function(req, res, next) {
     if (_.indexOf(req.app.get('years'), req.params.year) === -1) {
       res.status(404).send({
         status: 'not found',
-        message: 'not found here'
+        message: req.gettext('Not found here')
       });
       return;
     }

@@ -27,13 +27,13 @@ var faq = function(req, res) {
       });
       var settingName = 'missing_place_html';
       var mContent = req.params.site.settings[settingName];
-      data.title = 'FAQ - Frequently Asked Questions';
+      data.title = req.gettext('FAQ - Frequently Asked Questions');
       settingName = 'faq_page';
       data.content = marked(req.params.site.settings[settingName])
         .replace('{{questions}}', qContent)
         .replace('{{datasets}}', dContent)
         .replace('{{missing_place}}', mContent);
-      data.breadcrumbTitle = 'FAQ';
+      data.breadcrumbTitle = req.gettext('FAQ');
       return res.render('page.html', data);
     }).catch(console.trace.bind(console));
 };
@@ -48,7 +48,7 @@ var changes = function(req, res) {
       data.items = _.sortByOrder(data.entries
         .concat(data.pending)
         .concat(data.rejected), 'updatedAt', 'desc');
-      data.breadcrumbTitle = 'Recent Changes';
+      data.breadcrumbTitle = req.gettext('Recent Changes');
       res.render('changes.html', data);
     }).catch(console.trace.bind(console));
 };
@@ -57,8 +57,8 @@ var contribute = function(req, res) {
   var settingName = 'contribute_page';
   res.render('page.html', {
     content: marked(req.params.site.settings[settingName]),
-    title: 'Contribute',
-    breadcrumbTitle: 'Contribute'
+    title: req.gettext('Contribute'),
+    breadcrumbTitle: req.gettext('Contribute')
   });
 };
 
@@ -66,8 +66,8 @@ var methodology = function(req, res) {
   var settingName = 'methodology_page';
   res.render('page.html', {
     content: marked(req.params.site.settings[settingName]),
-    title: 'Methodology',
-    breadcrumbTitle: 'Methodology'
+    title: req.gettext('Methodology'),
+    breadcrumbTitle: req.gettext('Methodology')
   });
 };
 
@@ -75,8 +75,8 @@ var tutorial = function(req, res) {
   var settingName = 'tutorial_page';
   res.render('page.html', {
     content: marked(req.params.site.settings[settingName]),
-    title: 'Tutorial',
-    breadcrumbTitle: 'Tutorial'
+    title: req.gettext('Tutorial'),
+    breadcrumbTitle: req.gettext('Tutorial')
   });
 };
 
@@ -84,8 +84,8 @@ var about = function(req, res) {
   var settingName = 'about_page';
   res.render('page.html', {
     content: marked(req.params.site.settings[settingName]),
-    title: 'About',
-    breadcrumbTitle: 'About'
+    title: req.gettext('About'),
+    breadcrumbTitle: req.gettext('About')
   });
 };
 
@@ -117,9 +117,9 @@ var place = function(req, res) {
     .then(function(data) {
       if (!data.place) {
         return res.status(404)
-          .send('There is no matching place in our database. ' +
-                'Are you sure it is spelled correctly? Please check the ' +
-                '<a href="/">overview page</a> for the list of places.');
+          .send(req.gettext('There is no matching place in our database. ' +
+                            'Are you sure it is spelled correctly? Please check the ' +
+                            '<a href="/">overview page</a> for the list of places.'));
       }
 
       data.urlContext = '';
@@ -144,9 +144,9 @@ var dataset = function(req, res) {
     .then(function(data) {
       if (!data.dataset) {
         return res.status(404)
-          .send('There is no matching dataset in our database. ' +
-                'Are you sure it is spelled correctly? Please check the ' +
-                '<a href="/">overview page</a> for the list of datasets.');
+          .send(req.gettext('There is no matching dataset in our database. ' +
+                            'Are you sure it is spelled correctly? Please check the ' +
+                            '<a href="/">overview page</a> for the list of datasets.'));
       }
 
       data.urlContext = '';
@@ -175,9 +175,9 @@ var entry = function(req, res) {
       data.entry = _.first(data.entries);
       if (!data.entry) {
         return res.status(404)
-          .send('There is no matching entry in our database. ' +
-                'Are you sure you have spelled it correctly? Please check the ' +
-                '<a href="/">overview page</a> for the list of places');
+          .send(req.gettext('There is no matching entry in our database. ' +
+                            'Are you sure you have spelled it correctly? Please check the ' +
+                            '<a href="/">overview page</a> for the list of places'));
       }
 
       data.urlContext = '';
