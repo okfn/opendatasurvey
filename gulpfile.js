@@ -6,6 +6,7 @@ const gulpXgettext = require('gulp-xgettext');
 const gulpReplace = require('gulp-replace');
 const gulpRename = require('gulp-rename');
 const gulpSass = require('gulp-ruby-sass');
+const gulpFilter = require('gulp-filter');
 const gutil = require('gulp-util');
 const exec = require('child_process').exec;
 
@@ -16,7 +17,13 @@ gulp.task('compile-po', compilePo);
 gulp.task('compile-styles', compileStyles);
 
 function pot() {
-  return gulp.src('census/views/**/*.html', {base: 'census'})
+  const jsFilter = gulpFilter('**/controllers/*.js', {restore: true});
+  const htmlFilter = gulpFilter('**/*.html', {restore: true});
+  const excludedDirs = '!(views_old|static|migrations|locale|ui_app|public)';
+
+  return gulp.src(['census/' + excludedDirs + '/**/*.{html,js}'])
+  // Filter just the html files
+  .pipe(htmlFilter)
   // jsxgettext hates 'or' in templates, so make these special exceptions.
   // https://github.com/zaach/jsxgettext/issues/78
   .pipe(gulpReplace(/or gettext/g, '|| gettext'))
@@ -24,12 +31,20 @@ function pot() {
   .pipe(gulpReplace(/or \'\'/g, '|| \'\''))
   .pipe(gulpXgettext({
     language: 'jinja',
-    keywords: [{
-      name: 'gettext'
-    }],
     bin: 'node_modules/.bin/jsxgettext'
   }))
+  // Restore all the files...
+  .pipe(htmlFilter.restore)
   .on('error', gutil.log)
+  // ... and now filter just the js files
+  .pipe(jsFilter)
+  .pipe(gulpXgettext({
+    bin: 'node_modules/.bin/jsxgettext'
+  }))
+  // Restore all the files...
+  .pipe(jsFilter.restore)
+  .on('error', gutil.log)
+  // ... concat all into the 'messages.pot' file
   .pipe(gulpConcatPo('messages.pot'))
   .pipe(gulp.dest('census/locale/templates/LC_MESSAGES'));
 }

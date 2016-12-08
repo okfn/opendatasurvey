@@ -72,6 +72,7 @@
     "execSync": "^1.0.2",
     "gulp": "^3.8.9",
     "gulp-concat-po": "^0.1.0",
+    "gulp-filter": "^4.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
     "gulp-ruby-sass": "^2.1.0",
