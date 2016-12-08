@@ -1,11 +1,13 @@
-var gulp = require('gulp');
-var gulpConcatPo = require('gulp-concat-po');
-var gulpXgettext = require('gulp-xgettext');
-var gulpReplace = require('gulp-replace');
-var gulpRename = require('gulp-rename');
-var gulpSass = require('gulp-ruby-sass');
-var gutil = require('gulp-util');
-var exec = require('child_process').exec;
+'use strict';
+
+const gulp = require('gulp');
+const gulpConcatPo = require('gulp-concat-po');
+const gulpXgettext = require('gulp-xgettext');
+const gulpReplace = require('gulp-replace');
+const gulpRename = require('gulp-rename');
+const gulpSass = require('gulp-ruby-sass');
+const gutil = require('gulp-util');
+const exec = require('child_process').exec;
 
 gulp.task('pot', pot);
 gulp.task('update-po', updatePo);
