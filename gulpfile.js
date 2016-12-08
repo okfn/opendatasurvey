@@ -35,7 +35,6 @@ function pot() {
   }))
   // Restore all the files...
   .pipe(htmlFilter.restore)
-  .on('error', gutil.log)
   // ... and now filter just the js files
   .pipe(jsFilter)
   .pipe(gulpXgettext({
@@ -43,9 +42,16 @@ function pot() {
   }))
   // Restore all the files...
   .pipe(jsFilter.restore)
+  // Concat all into the 'messages.pot' file
+  .pipe(gulpConcatPo('messages.pot', {
+    headers: {
+      'POT-Creation-Date': new Date().toISOString(),
+      'Content-Transfer-Encoding': '8bit',
+      'Project-Id-Version': 'PACKAGE VERSION',
+      'Language-Team': 'LANGUAGE <LL@li.org>',
+      'Content-Type': 'text/plain; charset=utf-8'
+    }}))
   .on('error', gutil.log)
-  // ... concat all into the 'messages.pot' file
-  .pipe(gulpConcatPo('messages.pot'))
   .pipe(gulp.dest('census/locale/templates/LC_MESSAGES'));
 }
 
