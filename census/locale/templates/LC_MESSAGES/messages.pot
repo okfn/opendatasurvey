@@ -2,15 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-07 15:57+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2016-12-08T15:23:40.826Z\n"
+"PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: \n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"MIME-Version: 1.0\n"
 
 #: views/base.html:46
 #: views/macros/breadcrumb.html:5
@@ -40,6 +39,8 @@ msgstr ""
 
 #: views/base.html:72
 #: views/dataset.html:62
+#: controllers/pages.js:87
+#: controllers/pages.js:88
 msgid "About"
 msgstr ""
 
@@ -48,18 +49,25 @@ msgid "Changes"
 msgstr ""
 
 #: views/base.html:74
+#: controllers/pages.js:36
 msgid "FAQ"
 msgstr ""
 
 #: views/base.html:76
+#: controllers/pages.js:69
+#: controllers/pages.js:70
 msgid "Methodology"
 msgstr ""
 
 #: views/base.html:79
+#: controllers/pages.js:60
+#: controllers/pages.js:61
 msgid "Contribute"
 msgstr ""
 
 #: views/base.html:82
+#: controllers/pages.js:78
+#: controllers/pages.js:79
 msgid "Tutorial"
 msgstr ""
 
@@ -125,6 +133,7 @@ msgid "Change language:"
 msgstr ""
 
 #: views/changes.html:4
+#: controllers/pages.js:51
 msgid "Recent Changes"
 msgstr ""
 
@@ -219,6 +228,58 @@ msgstr ""
 msgid "Got it"
 msgstr ""
 
+#: controllers/census.js:83
+msgid "Make a Submission"
+msgstr ""
+
+#: controllers/census.js:103
+msgid "There is already a queued submission for this data. <a href=\"/place/%s/%s\">See the queued submission</a>."
+msgstr ""
+
+#: controllers/census.js:187
+msgid "Thanks for your submission.%s You can check back here any time to see the current status."
+msgstr ""
+
+#: controllers/census.js:194
+msgid " It will now be reviewed by the editors."
+msgstr ""
+
+#: controllers/census.js:199
+msgid "There was an error!"
+msgstr ""
+
+#: controllers/census.js:246
+msgid "Entry for %s / %s"
+msgstr ""
+
+#: controllers/census.js:247
+msgid "This is a discussion about the submission for [%s / %s](%s)."
+msgstr ""
+
+#: controllers/census.js:269
+msgid "There is no submission with id %s"
+msgstr ""
+
+#: controllers/census.js:357
+msgid "Review a Submission"
+msgstr ""
+
+#: controllers/census.js:377
+msgid "There is no entry with id %s"
+msgstr ""
+
+#: controllers/census.js:400
+msgid "You are not allowed to review this entry."
+msgstr ""
+
+#: controllers/census.js:433
+msgid "Submission processed and entered into the census."
+msgstr ""
+
+#: controllers/census.js:436
+msgid "Submission marked as rejected."
+msgstr ""
+
 #: views/dataset.html:11
 #: views/place.html:11
 msgid "%(score)s% open (avg.)"
@@ -290,6 +351,24 @@ msgstr ""
 msgid "Last modified"
 msgstr ""
 
+#: controllers/mixins.js:46
+#: controllers/mixins.js:47
+msgid "Not found"
+msgstr ""
+
+#: controllers/mixins.js:64
+#: controllers/mixins.js:104
+msgid "There is no matching census in the registry."
+msgstr ""
+
+#: controllers/mixins.js:135
+msgid "Not allowed"
+msgstr ""
+
+#: controllers/mixins.js:159
+msgid "Not found here"
+msgstr ""
+
 #: views/login.html:15
 msgid "Please login to contribute to the Census."
 msgstr ""
@@ -308,6 +387,22 @@ msgstr ""
 
 #: views/login.html:32
 msgid "terms of use"
+msgstr ""
+
+#: controllers/pages.js:30
+msgid "FAQ - Frequently Asked Questions"
+msgstr ""
+
+#: controllers/pages.js:120
+msgid "There is no matching place in our database. Are you sure it is spelled correctly? Please check the <a href=\"/\">overview page</a> for the list of places."
+msgstr ""
+
+#: controllers/pages.js:147
+msgid "There is no matching dataset in our database. Are you sure it is spelled correctly? Please check the <a href=\"/\">overview page</a> for the list of datasets."
+msgstr ""
+
+#: controllers/pages.js:178
+msgid "There is no matching entry in our database. Are you sure you have spelled it correctly? Please check the <a href=\"/\">overview page</a> for the list of places"
 msgstr ""
 
 #: views/overview.html:17
@@ -369,18 +464,6 @@ msgstr ""
 
 #: views/place.html:15
 msgid "Ranked #1 against other places in the Index (avg.)"
-msgstr ""
-
-#: views/test.html:3
-msgid "hello"
-msgstr ""
-
-#: views/test.html:5
-msgid "that"
-msgstr ""
-
-#: views/test.html:7
-msgid "Submitted by %s and reviewed by %s"
 msgstr ""
 
 #: views/includes/godi-home.html:3
