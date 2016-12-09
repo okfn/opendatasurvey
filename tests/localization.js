@@ -47,11 +47,15 @@ describe('Localization', function() {
       item = browser.query('.lang-picker a');
       assert(item, 'There should be language switcher');
       var requestedLanguage = item.textContent;
+      browser.assert.text('.lang-picker span', 'EN');
+      assert.include(browser.html(), 'English Dataset 21');
 
       browser.visit(item.getAttribute('href'), function() {
         assert.ok(browser.success);
         var item = browser.query('.lang-picker span');
         assert(item, 'There should be current language indicator');
+        browser.assert.text('.lang-picker span', 'ES');
+        assert.include(browser.html(), 'Spanish Dataset 21');
         var newLanguage = item.textContent;
         assert(prevLanguage !== newLanguage,
           'New language should be different from previous');

@@ -43,11 +43,12 @@ var objects = [
     data: {
       id: 'dataset21',
       site: 'site2',
-      name: 'Dataset 21',
+      name: 'English Dataset 21',
       description: 'Description of Dataset 21',
       order: 0,
       qsurl: 'http://example.com/googlespreadsheet',
-      questionsetid: 'questionset-hash'
+      questionsetid: 'questionset-hash',
+      translations: {es: {name: 'Spanish Dataset 21'}}
     }
   },
   {
