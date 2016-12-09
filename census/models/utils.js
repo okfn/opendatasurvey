@@ -435,7 +435,7 @@ var getDataOptions = function(req) {
     year: req.params.year,
     cascade: req.params.cascade,
     scoredQuestionsOnly: true,
-    locale: req.params.locale,
+    locale: req.locale,
     with: {Entry: true, Dataset: true, Place: true, Question: true}
   };
 
