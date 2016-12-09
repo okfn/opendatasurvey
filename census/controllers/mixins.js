@@ -36,6 +36,7 @@ var setupLocalization = function(req, res, site) {
   }
   res.locals.locales = locales;
   res.locals.currentLocale = req.locale;
+  req.params.locale = req.locale;
 };
 
 var requireDomain = function(req, res, next) {
