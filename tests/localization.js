@@ -1,8 +1,7 @@
 'use strict';
 
-var _ = require('lodash');
-var assert = require('chai').assert;
-var testUtils = require('./utils');
+const assert = require('chai').assert;
+const testUtils = require('./utils');
 
 describe('Localization', function() {
   before(testUtils.startApplication);
@@ -42,21 +41,21 @@ describe('Localization', function() {
     browser.visit('/', function() {
       assert.ok(browser.success);
       var item = browser.query('.lang-picker span');
-      assert(!!item, 'There should be current language indicator');
+      assert(item, 'There should be current language indicator');
       var prevLanguage = item.textContent;
 
       item = browser.query('.lang-picker a');
-      assert(!!item, 'There should be language switcher');
+      assert(item, 'There should be language switcher');
       var requestedLanguage = item.textContent;
 
       browser.visit(item.getAttribute('href'), function() {
         assert.ok(browser.success);
         var item = browser.query('.lang-picker span');
-        assert(!!item, 'There should be current language indicator');
+        assert(item, 'There should be current language indicator');
         var newLanguage = item.textContent;
-        assert(prevLanguage != newLanguage,
+        assert(prevLanguage !== newLanguage,
           'New language should be different from previous');
-        assert(requestedLanguage == newLanguage,
+        assert(requestedLanguage === newLanguage,
           'New language should be the one that we requested');
         done();
       });
