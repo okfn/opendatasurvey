@@ -61,7 +61,7 @@
               {% if not is_index %}
               <td class="year">
                 {% if entry %}
-                  <span title="{{ entry.updatedAt|dateformat }} ({{ gettext('Submitted by') }} {{ entry.Submitter.fullName() }} {{ gettext('and reviewed by') }} {{ entry.Reviewer.fullName() }})">{{ entry.year }}</span>
+                  <span title="{{ entry.updatedAt|dateformat }} ({{ gettext('Submitted by') }} {{ entry.Submitter.fullName() }} {% if entry.Reviewer %}{{ gettext('and reviewed by') }} {{ entry.Reviewer.fullName() }}{% endif %})">{{ entry.year }}</span>
                 {% endif %}
               </td>
               {% endif %}
