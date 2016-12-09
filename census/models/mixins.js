@@ -7,7 +7,7 @@ var translated = function(locale) {
   if (this.translations && this.translations[locale]) {
     localized = this.translations[locale];
     _.forEach(localized, (value, key, list) => {
-      if (this.get(key) !== undefined) {
+      if (value && this.get(key) !== undefined) {
         this[key] = value;
       }
     });
