@@ -209,7 +209,7 @@ var datasetMapper = function(data, site) {
   return _.defaults({
     id: data.id.toLowerCase(),
     description: marked(data.description),
-    name: data.title,
+    name: data.name || data.title,
     order: data.order || 100,
     reviewers: reviewers,
     disableforyears: disableforyears,

@@ -157,7 +157,6 @@ var dataset = function(req, res) {
       data.year = req.params.year;
       data.submissionsAllowed = req.params.year === req.app.get('year');
       data.breadcrumbTitle = data.dataset.name;
-
       return res.render('dataset.html', data);
     }).catch(console.trace.bind(console));
 };

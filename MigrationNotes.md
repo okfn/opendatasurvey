@@ -10,6 +10,8 @@ Datasets also have a new `UpdateEvery` column. The value for each cell in this c
 
 The new Question Set config sheet is like the `Site` config. It has `key` and `value` columns. It expects a `questions` key, the value is the url the questions sheet, and a `question_set_schema` key, the value is the question set schema in json format (see the [Question Set Schema](#question-set-schema-json-format) section below).
 
+The Dataset property `Title` has been renamed `Name` in the spreadsheet, to reflect the database fieldname used once loaded, and allow translations to work. `Title` will continue to work as a fallback, but isn't translatable with `Title@LC`.
+
 ### Extra Question Config
 
 Some question types require extra configuration. For example, the `likert` question type has configuration to define the number of options, and description and value for each option. This will be used to setup the survey form. There is a column called 'Config' in the spreadsheet where a small snippet of json can be added. Below are example configurations for question types that require it:
