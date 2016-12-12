@@ -88,6 +88,8 @@ let _createQuestionsForQuestionSet = function(questionsUrl,
       _.map(data, dataObj => {
         // Allow custom data mapping
         let createData = controllerUtils.questionMapper(dataObj, qset.site);
+        // Map translation data
+        createData = _translationMapper(createData);
         let isOpen = _.contains(openQuestions, createData.id);
         // All Questions belong to a site and questionset
         createData = _.extend(createData, {
