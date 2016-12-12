@@ -43,6 +43,30 @@ var loadConfig = function(siteId, models) {
   });
 };
 
+/* Extend the passed `mapped` object to include translation mapping.
+
+  There may be translated fields. Map field name <name>@<language>
+  into translation: {<language>: {<name>: ..., <another name>: ..., ...}}.
+*/
+let _translationMapper = function(mapped) {
+  return _.extend(mapped, {
+    translations: _.chain(mapped)
+      .pairs()
+      .reduce(function(R, P) {
+        let fieldLang;
+        if (!(P[0].indexOf('@') + 1)) {
+          return R;
+        }
+        fieldLang = P[0].split('@');
+        // Default empty dict
+        R[fieldLang[1]] = R[fieldLang[1]] || {};
+        R[fieldLang[1]][fieldLang[0]] = P[1];
+        return R;
+      }, {})
+      .value()
+  });
+};
+
 let _createQuestionsForQuestionSet = function(questionsUrl,
                                               qsId,
                                               openQuestions,
@@ -257,37 +281,17 @@ var loadData = function(options, models) {
   });
 };
 
-/* Call loadData with a mapper for translations field.
-
-  There may be translated fields. Map field name <name>@<language>
-  into translation: {<language>: {<name>: ..., <another name>: ..., ...}}.
-*/
-var loadTranslatedData = function(options, models) {
+/* Call loadData with a mapper for translations field. */
+let loadTranslatedData = function(options, models) {
   // Avoid recursive call
-  var mapper = options.mapper;
+  let mapper = options.mapper;
 
   return models.Site.findById(options.site).then(function(site) {
     return loadData(_.extend(options, {
-      mapper: function(D) {
-        // Don't forget to call user defined mapper function
-        var mapped = _.isFunction(mapper) ? mapper(D, site) : D;
-
-        return _.extend(mapped, {
-          translations: _.chain(mapped)
-            .pairs()
-            .reduce(function(R, P) {
-              var fieldLang;
-              if (!(P[0].indexOf('@') + 1)) {
-                return R;
-              }
-              fieldLang = P[0].split('@');
-              // Default empty dict
-              R[fieldLang[1]] = R[fieldLang[1]] || {};
-              R[fieldLang[1]][fieldLang[0]] = P[1];
-              return R;
-            }, {})
-            .value()
-        });
+      mapper: function(data) {
+        // Call user defined mapper function
+        let mapped = _.isFunction(mapper) ? mapper(data, site) : data;
+        return _translationMapper(mapped);
       }
     }), models);
   });
