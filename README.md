@@ -36,7 +36,7 @@ Get a local server setup with the following steps:
       * The callBack url for Google+ API is: `http://id.dev.census.org:5000/google/callback`
     * For Facebook: [follow these steps](https://developers.facebook.com/docs/facebook-login/)
       * The callBack url for Facebook is: `http://id.dev.census.org:5000/facebook/callback`
-3. Ensure you are running the supported version of Node.js, which is [declared in the `package.json`](package.json#L75).
+3. Ensure you are running the supported version of Node.js, which is [declared in the 'engines' section of `package.json`](package.json).
 4. Create a database with `createdb opendatacensus`.
 5. Add this line to your hosts file: `127.0.0.1 demo.dev.census.org global.dev.census.org id.dev.census.org system.dev.census.org`.
 6. Create a local directory called `opendatacensus` and move into it with `cd opendatacensus`.
@@ -54,19 +54,19 @@ Now we should be ready to run the server:
 
 Other things you can do:
 
-* Run the test suite with npm test
+* Run the test suite with `npm test`
 * Check your code style with npm run jscs (according to the Google style guide)
 
 
 ### Configuration Sheets
 
-Most of the site configuration is taken from config sheets in Google Sheets. You can use [this registry sheet](https://docs.google.com/spreadsheets/d/18jINMw7ifwUoqizc4xaQE8XtF4apPfsmMN43EM-9Pmc/edit#gid=0) and its linked sheets as examples and clone them as necessary.
+Most of the site configuration is taken from config sheets in Google Sheets. You can use [this registry sheet](https://docs.google.com/spreadsheets/d/1qr0wn9JePirV1avY5DmnCJPKudbYIoX0TDAp4WZWNqU/edit#gid=0) and its linked sheets as examples and clone them as necessary.
 
 **NOTE**: Ensure your registry and all other config sheets have been published as CSV in Google Sheets (click File, Publish to the Web).
 
 ### Deployment
 
-We run deployments on Heroku. The app should run anywhere that you can run Node.js and Postgres. The important thing to remember for deployments is that the `settings.json` file you are using for local development is not available, and therefore you need to configure many settings via environment variables. The key settings you should ensure you set are:
+We run deployments on Heroku. The app should run anywhere that you can run Node.js and Postgres. The important thing to remember for deployments is that the `settings.json` file you are using for local development is not available, and therefore you need to configure several settings via environment variables. The key settings you should ensure are set:
 
 * `SESSION_SECRET`
 * `BASE_DOMAIN`
@@ -77,9 +77,9 @@ We run deployments on Heroku. The app should run anywhere that you can run Node.
 * `GOOGLE_APP_ID`
 * `GOOGLE_APP_SECRET`
 
-### i18n For Templates
+### i18n For Templates and core code
 
-When templates change, the translations have to be changed. Extract the files by running this command:
+When templates or strings in core code change, the translations have to be changed. Extract strings to the `messages.pot` file by running this command:
 
     ./node_modules/.bin/gulp pot
 
@@ -89,10 +89,9 @@ To update the existing .po files, run:
 
     ./node_modules/.bin/gulp update-po
 
-To add a new language, create directory `locale/[language-code]/LC_MESSAGES` and put there translation files (*.po).
-Also, you can copy the `locale/en` directory to `locale/[language-code]` and change existing files.
+To add a new language, create the directory `locale/[language-code]/LC_MESSAGES` and create the translation files (*.po). Alternatively, you can copy the `locale/en` directory to `locale/[language-code]` and change existing files.
 
-To update translations cache, run
+To update the translations cache, run:
 
     ./node_modules/.bin/gulp compile-po
 
