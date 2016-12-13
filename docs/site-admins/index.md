@@ -12,12 +12,12 @@ Note: it assumes that a census instance has been booted for you (and is __not__ 
 
 A Census is a survey built around 4 axes:
 
- * Place – e.g. a country of a city
+ * Place – e.g. a country or a city
  * Dataset – e.g. Timetable
  * Question – a specific question we ask about each dataset (e.g. "does it exist", "is it machine readable")
  * Time – usually a year
 
-We then ask for each Place / Dataset / Time combination for an answer to the set of "Questions".
+We then ask of each Place / Dataset / Time combination for an answer to the set of "Questions".
 
 The set of answers to the Questions for given Place / Dataset / Time combination is called a `Submission`.
 
@@ -51,29 +51,29 @@ When a `Submission` has been reviewed and deemed accurate it becomes an `Entry` 
 
 ### Configuration
 
-Configuration of a census **site** is down via Google Spreadsheets. Each spreadsheet must be "public on the web" **and** "published to the web" (see Google Spreadsheets for details on how to ensure this).
+Each Census **site** is configured via Google Spreadsheets. Each spreadsheet must be "public on the web" **and** "published to the web" (see Google Spreadsheets for details on how to ensure this).
 
 We can divide the configuration required for a **site** into two types:
 
- * **'Site config'** – the fundamental configuration for a site, such as the title, plus, links to the other config files required (e.g.: places, datasets and questions)
- * **'Census config'** – the list of Places, Datasets and Questions to use for this census. The site config contains pointers to where to find this.
+ * **'Site config'** – the fundamental configuration for a site, such as the title, plus links to the other config sheets required (e.g.: places, datasets and questions)
+ * **'Census config'** – the list of Places, Datasets and Questions to use for this census. The site config contains pointers to where to find these.
 
-Both types of configuration should be stored in publicly accessible Google spreadsheets (one file for app config and one each for places, datasets and questions).
+Both types of configuration should be stored in publicly accessible Google spreadsheets (one file for app config and one each for places, datasets and question sets).
 
-Our recommended approach is to have all of these as separate sheets in one large google spreadsheet that is made 'public on the web' (you can then access those sheets as CSV files).
+Our recommended approach is to have all of these as separate sheets in one large google spreadsheet document that is made 'public on the web' (each sheet can then be accessed as a CSV file).
 
 Here is a [Template General Config Spreadsheet][template-config].
 
-The Site config options (the first sheet in that spreadsheet) are fully documented in the Appendix below.
+The Site config options (the first sheet in that spreadsheet) are documented in the Appendix below.
 
-## Howtos
+## How-tos
 
 ### Configuring your Census
 
 For the Census to work properly you need to do some initial basic configuration:
 
  * Add a list of places for the Census to cover – see [Setting up Places](#setting-up-places) below
- * Set `title` value in your General Config as appropriate e.g. "US City Open Data Census"
+ * Set a `title` value in your General Config as appropriate e.g. "US City Open Data Census"
 
 Next steps:
 
@@ -104,7 +104,7 @@ To give a user Reviewer 'privileges' you must add them to the reviewers config �
 
 Once the system administrator has added your new Site to the registry, and you have subsequently configured your Config, Places and Datasets sheets, you need to load your data in to the database.
 
-<http://{your-census-id}.census.okfn.org/admin>
+<http://{your-census-id}.survey.okfn.org/admin>
 
 __Remember to reload your config settings here anytime you make a change, so that it is reflected in the database.__
 
@@ -112,10 +112,10 @@ __Remember to reload your config settings here anytime you make a change, so tha
 
 This section describes how to have site content presented in languages other than English.
 
-There are 2 types of material that could be localized:
+There are two types of material that can be localized:
 
- * General site content (note this content is quite limited as most text on the site comes from configurable info)
- * 'Configurable' content such as question titles and descriptions, the names and descriptions of datasets etc
+ * General site content usually defined in the website templates and core code
+ * 'Configurable' content such as question titles and descriptions, the names and descriptions of datasets, etc
 
 To have your site presented in a given language you need to:
 
@@ -124,39 +124,47 @@ To have your site presented in a given language you need to:
 
 #### Translating Questions
 
-This is about translating the question descriptors used in the submission forms etc. To translate question information:
+To translate the primary language:
 
- * Make a copy of the [standard questions spreadsheet][template-questions]
- * Add a column Question@{LANG} and Description@{LANG} where {LANG} if your 2 digit iso code
- * Enter translations of the english values of Question and Description in your new columns
- * Notify the Open Data Census Managers on the [discussion forum][discussion-forum] that the translation is done
- * The Census Managers will then incorporate your translations back in the the main questions spreadsheet
+ * Open the Questions tab of your Survey site spreadsheet
+ * Translate the Question, QuestionShort, Description, Placeholder, and Config columns into the desired primary language
+ * Reload QuestionSets from the site admin page: <http://{your-census-id}.survey.okfn.org/admin>
+
+To add another, second language (partial support for multiple languages): 
+
+ * Add a column Question@{LANG}, QuestionShort@{LANG}, Description@{LANG} where {LANG} is your 2 digit iso code (Config and Placeholder are not currently supported)
+ * Enter translations of the values for Question and Description in your new columns
+ * Reload QuestionSets from the site admin page: <http://{your-census-id}.survey.okfn.org/admin>
 
 #### Translating Datasets
 
-This is about translating the dataset information (title, descriptions etc). To translate dataset information:
+To translate the primary language:
 
- * Add a column Title@{LANG} and Description@{LANG} to the Datasets sheet – if you are running off the [default, standard set of city datasets][template-city] then make a copy of this sheet to do this
- * Translate the original title and description into your language and enter into the new columns you created
- * Notify the Open Data Census Managers on the [discussion forum[discussion-forum] that the translation is done
+ * Open the Datasets tab of your Survey site spreadsheet
+ * Translate the Name, Description, UpdateEvery, and Characteristics:n columns into the desired primary language
+ * Reload Datasets from the site admin page: <http://{your-census-id}.survey.okfn.org/admin>
+
+To add another, second language (partial support for multiple languages): 
+
+ * Add a column Name@{LANG} and Description@{LANG} to the Datasets sheet, where {LANG} is your 2 digit iso code (UpdateEvery and Characteristics:n are not currently supported)
+ * Translate the original Name and Description into your secondary language and enter into the new columns you created
+ * Reload Datasets from the site admin page: <http://{your-census-id}.survey.okfn.org/admin>
+
 
 #### Translating General Site Content
 
  * Visit the [Open Data Census translation project on Transifex][transifex]
-    * Get an account if you need one
+    * Create an account if you need one
  * Submit translations
- * Notify the Open Data Census Managers on the [discussion forum[discussion-forum] that the translation is done
+ * Notify the Open Data Census Managers on the [discussion forum][discussion-forum] when the translation is complete
 
 ### Customizing the List of Datasets
 
-Note: here is the [Standard City Datsets sheet][template-city]
-
- * Go into your Config Spreadsheet
- * Fill out the sheet named "Datasets" in your config spreadsheet following the structure provided. You can ignore the Category column.
+ * Go into your Config Spreadsheet and select the Datasets sheet
+ * Fill out the Datasets sheet following the structure provided. You can ignore the Category column.
     * It is important to add reasonably detailed descriptions for the datasets so people are clear what they are looking for and how to answer.
     * We recommend not having more than ~ 15-17 datasets in your Census
- * Copy the URL of the spreadsheet (make sure you have the Datasets sheet showing when you do this)
- * Paste this URL as the value for the datasets key in the General Config sheet (add this key if not present)
+ * Ensure the URL value used in the General Config sheet for 'datasets' points to the Datasets sheet.
  * Reload the config
 
 ## General Config Options
@@ -187,27 +195,23 @@ List of reviewer emails separated by commas.
 
 URL to a Google Spreadsheet (make sure url is to *actual* sheet you want) or online CSV file containing a list of datasets to ask questions about.
 
-The structure should follow that in the [standard city datasets][template-city].
+The structure should follow that in the [template spreadsheet][template-config].
 
 ### places
 
 URL to a Google Spreadsheet (make sure url is to the *actual* sheet you want) or online CSV file containing a list of places to ask questions about.
 
-The structure should follow that in https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=0Aon3JiuouxLUdEVHQ0c4RGlRWm9Gak54NGV0UlpfOGc&usp=drive_web#gid=7
+The structure should follow that in the [template spreadsheet][template-config].
 
 You can _optionally_ add a Reviewers column that accepts a comma separated list
 of emails. These users will then have access to approve or reject revisions
 submitted for datasets in that place.
 
-### questions
+### question_set_url
 
-__Questions are not customizable. The app will behave unexpectedly with different questions.__
+`question_set_url` must be a URL to a Google Spreadsheet (make sure url is to the *actual* sheet you want) or online CSV file containing a list of questions about.
 
-`questions` must be a URL to a Google Spreadsheet (make sure url is to the *actual* sheet you want) or online CSV file containing a list of questions about.
-
-These questions will then be used instead of the standard questions.
-
-The spreadsheet MUST follow structure as in the [default questions spreadsheet][template-questions].
+The structure should follow that in the [template spreadsheet][template-config].
 
 ### approve_first_submission
 
@@ -241,8 +245,8 @@ You can use markdown or HTML format.
 
 Note: you have access to 2 special variables that can be used in your html or markdown:
 
-  * `{{ "{{questions" }}}}` - this will be replaced by a table of all the questions
-  * `{{ "{{datasets" }}}}` - this will be replaced by a table of all the datasets
+  * `{{ questions }}` - this will be replaced by a table of all the questions
+  * `{{ datasets }}` - this will be replaced by a table of all the datasets
 
 ### about_page
 
@@ -259,6 +263,12 @@ You can use markdown or HTML format.
 ### tutorial_page
 
 Content for the tutorial page.
+
+You can use markdown or HTML format.
+
+### methodology_page
+
+Content for the methodology page.
 
 You can use markdown or HTML format.
 
@@ -303,8 +313,6 @@ absent, the `discussionForum` global settings will be used instead.
 
 A URL to a forum where users can discuss pending submissions. This URL will be linked from the bottom of the pending submission page. If the URL links to the discuss.okfn.org Discourse instance (in the format `http://discuss.okfn.org/c/<topic>/<subtopic>`), the link will be formatted to automatically create a new topic, pre-populated with a title, category, and body text linking back to the submission.
 
-[template-config]: https://docs.google.com/spreadsheets/d/1ziJAlV4F02467oAmH1CDUdWBYdRp7LlVZgDVUuJU-l8/edit#gid=2
-[template-questions]: https://docs.google.com/spreadsheets/d/1nwmk8uJEK-4K6-5SdBgoLUlUos-BhfYRgjS74YkhDGc/edit#gid=3
+[template-config]: https://docs.google.com/spreadsheets/d/1jFEjhAaY2e8hcORnBqYroYy5zKoq6nQWBNXjUYLKbYk/edit#gid=0
 [discussion-forum]: https://discuss.okfn.org/c/open-data-index
-[template-city]: https://docs.google.com/spreadsheets/d/18mw_Ig9zvwb514VQsTGfrg0WMrcUngxBIRzWSxpguho/edit#gid=0
 [transifex]: https://www.transifex.com/projects/p/open-data-census/
