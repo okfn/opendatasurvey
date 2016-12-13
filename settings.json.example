@@ -1,6 +1,6 @@
 {
   "sysAdmin": "{YOUR_EMAIL}",
-  "registryUrl": "https://docs.google.com/spreadsheets/d/18jINMw7ifwUoqizc4xaQE8XtF4apPfsmMN43EM-9Pmc/edit#gid=0",
+  "registryUrl": "https://docs.google.com/spreadsheets/d/1qr0wn9JePirV1avY5DmnCJPKudbYIoX0TDAp4WZWNqU/edit#gid=0",
   "database": {
     "username": "{DB_USERNAME}",
     "password": "{DB_PASSWORD}",
