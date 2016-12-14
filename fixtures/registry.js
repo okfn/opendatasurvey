@@ -8,7 +8,7 @@ var objects = [
       id: 'site1',
       settings: {
         adminemail: ['email1@example.com'],
-        configurl: 'https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=1PoS2loqokUbwxMEFXb1Zoe3goLISGga9RumvNf-VxGo&usp=sharing#gid=0'
+        configurl: 'https://docs.google.com/spreadsheets/d/1zKHbPdR1lRTuxvNFR32L1pQRJMWmj8C5UoKvECLsqtk/edit#gid=0'
       }
     }
   },
@@ -18,7 +18,7 @@ var objects = [
       id: 'site2',
       settings: {
         adminemail: ['email2@example.com'],
-        configurl: 'https://docs.google.com/a/okfn.org/spreadsheet/ccc?key=1PoS2loqokUbwxMEFXb1Zoe3goLISGga9RumvNf-VxGo&usp=sharing#gid=0'
+        configurl: 'https://docs.google.com/spreadsheets/d/1zKHbPdR1lRTuxvNFR32L1pQRJMWmj8C5UoKvECLsqtk/edit#gid=0'
       }
     }
   }

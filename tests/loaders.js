@@ -4,8 +4,7 @@ const _ = require('lodash');
 const assert = require('chai').assert;
 const censusConfig = require('../census/config');
 const siteID = 'site1';
-const REGISTRY_URL = 'https://docs.google.com/spreadsheets/d/1FK5dzeNeJl81oB76n' +
-  'WzhS1dAdnXDoZbbe_vTH4NlThM/edit#gid=0';
+const REGISTRY_URL = 'https://docs.google.com/spreadsheets/d/1z12rUj039pcdeldPy9eXFcw0YF18b4sIRx6EXbLy-9A/edit#gid=0';
 const testUtils = require('./utils');
 const userFixtures = require('../fixtures/user');
 const Promise = require('bluebird');
