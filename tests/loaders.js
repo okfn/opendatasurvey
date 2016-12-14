@@ -174,6 +174,16 @@ describe('Admin page', function () {
           assert.isTrue(transportInstance.qsurl.startsWith('https://docs.google.com/spreadsheets'));
         });
     });
+
+    it('populates dataset.translations with fieldname@lc columns', function() {
+      return this.app.get('models').Dataset.findById('transport-realtime',
+                                                     {where: {site: siteID}})
+        .then(transportInstance => {
+          assert.isTrue(_.has(transportInstance, 'translations.es.name'));
+          assert.equal(_.get(transportInstance, 'translations.es.name'),
+                         '(Spanish) Real-Time Transit');
+        });
+    });
   });
 
   describe('reload questionset button action', function() {
