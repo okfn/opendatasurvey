@@ -182,6 +182,10 @@ describe('Admin page', function () {
           assert.isTrue(_.has(transportInstance, 'translations.es.name'));
           assert.equal(_.get(transportInstance, 'translations.es.name'),
                          '(Spanish) Real-Time Transit');
+          assert.deepEqual(_.get(transportInstance, 'translations.es.characteristics'), [
+            '(Spanish) My first characteristic',
+            '(Spanish) Characteristic the second',
+            '(Spanish) The third and last of the istics']);
         });
     });
   });

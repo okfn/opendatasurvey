@@ -302,5 +302,6 @@ module.exports = {
   getReviewers: getReviewers,
   canReview: canReview,
   FIELD_SPLITTER: FIELD_SPLITTER,
-  ANONYMOUS_USER_ID: ANONYMOUS_USER_ID
+  ANONYMOUS_USER_ID: ANONYMOUS_USER_ID,
+  commonFieldArray: commonFieldArray
 };

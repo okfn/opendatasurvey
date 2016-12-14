@@ -49,7 +49,7 @@ var loadConfig = function(siteId, models) {
   into translation: {<language>: {<name>: ..., <another name>: ..., ...}}.
 */
 let _translationMapper = function(mapped) {
-  return _.extend(mapped, {
+  mapped = _.extend(mapped, {
     translations: _.chain(mapped)
       .pairs()
       .reduce(function(reducedValue, pair) {
@@ -65,6 +65,24 @@ let _translationMapper = function(mapped) {
       }, {})
       .value()
   });
+  // Handle characteristics for each language key
+  const characteristicsPattern = /^characteristics:\d+$/i;
+  _.forEach(mapped.translations, (transObj, key) => {
+    // Make an array of characteristics from all 'characteristics:n' keys
+    let characteristics =
+      controllerUtils.commonFieldArray(transObj, characteristicsPattern);
+    // If the characteristics array has items, add it to the translations obj.
+    if (characteristics.length) {
+      mapped.translations[key] = _.extend(mapped.translations[key], {
+        characteristics: characteristics
+      });
+    }
+    // Clean up items with 'characteristics:n' keys from translations obj.
+    mapped.translations[key] = _.omit(mapped.translations[key], (v, k) => {
+      return characteristicsPattern.test(k);
+    });
+  });
+  return mapped;
 };
 
 let _createQuestionsForQuestionSet = function(questionsUrl,
