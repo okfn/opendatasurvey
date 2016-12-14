@@ -52,16 +52,16 @@ let _translationMapper = function(mapped) {
   return _.extend(mapped, {
     translations: _.chain(mapped)
       .pairs()
-      .reduce(function(R, P) {
+      .reduce(function(reducedValue, pair) {
         let fieldLang;
-        if (!(P[0].indexOf('@') + 1)) {
-          return R;
+        if (!(pair[0].indexOf('@') + 1)) {
+          return reducedValue;
         }
-        fieldLang = P[0].split('@');
+        fieldLang = pair[0].split('@');
         // Default empty dict
-        R[fieldLang[1]] = R[fieldLang[1]] || {};
-        R[fieldLang[1]][fieldLang[0]] = P[1];
-        return R;
+        reducedValue[fieldLang[1]] = reducedValue[fieldLang[1]] || {};
+        reducedValue[fieldLang[1]][fieldLang[0]] = pair[1];
+        return reducedValue;
       }, {})
       .value()
   });
