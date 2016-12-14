@@ -38,10 +38,6 @@ describe('Admin page', function () {
     }
   });
 
-  before(function() {
-    return;
-  });
-
   describe('admin page', function() {
     before(function () {
       return this.browser.visit('/admin');
