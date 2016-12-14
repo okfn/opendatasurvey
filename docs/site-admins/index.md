@@ -146,7 +146,7 @@ To translate the primary language:
 
 To add another, second language (partial support for multiple languages): 
 
- * Add a column Name@{LANG} and Description@{LANG} to the Datasets sheet, where {LANG} is your 2 digit iso code (UpdateEvery and Characteristics:n are not currently supported)
+ * Add a column Name@{LANG}, Description@{LANG}, and Characteristics:n@{LANG} (one for each Characteristic) to the Datasets sheet, where {LANG} is your 2 digit iso code (UpdateEvery is not currently supported)
  * Translate the original Name and Description into your secondary language and enter into the new columns you created
  * Reload Datasets from the site admin page: <http://{your-census-id}.survey.okfn.org/admin>
 
