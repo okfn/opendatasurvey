@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-08T17:37:16.220Z\n"
+"POT-Creation-Date: 2016-12-15T07:32:45.713Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: \n"
@@ -22,6 +22,11 @@ msgstr ""
 
 #: views/base.html:53
 msgid "Toggle navigation"
+msgstr ""
+
+#: views/base.html:63
+#: views/base.html:151
+msgid "Logged in as %(name)s"
 msgstr ""
 
 #: views/base.html:64
@@ -163,6 +168,58 @@ msgstr ""
 msgid "and reviewed by"
 msgstr ""
 
+#: controllers/census.js:83
+msgid "Make a Submission"
+msgstr ""
+
+#: controllers/census.js:103
+msgid "There is already a queued submission for this data. <a href=\"/place/%s/%s\">See the queued submission</a>."
+msgstr ""
+
+#: controllers/census.js:187
+msgid "Thanks for your submission.%s You can check back here any time to see the current status."
+msgstr ""
+
+#: controllers/census.js:194
+msgid " It will now be reviewed by the editors."
+msgstr ""
+
+#: controllers/census.js:199
+msgid "There was an error!"
+msgstr ""
+
+#: controllers/census.js:246
+msgid "Entry for %s / %s"
+msgstr ""
+
+#: controllers/census.js:247
+msgid "This is a discussion about the submission for [%s / %s](%s)."
+msgstr ""
+
+#: controllers/census.js:269
+msgid "There is no submission with id %s"
+msgstr ""
+
+#: controllers/census.js:357
+msgid "Review a Submission"
+msgstr ""
+
+#: controllers/census.js:377
+msgid "There is no entry with id %s"
+msgstr ""
+
+#: controllers/census.js:400
+msgid "You are not allowed to review this entry."
+msgstr ""
+
+#: controllers/census.js:433
+msgid "Submission processed and entered into the census."
+msgstr ""
+
+#: controllers/census.js:436
+msgid "Submission marked as rejected."
+msgstr ""
+
 #: views/create.html:4
 msgid "Submit"
 msgstr ""
@@ -236,6 +293,24 @@ msgstr ""
 msgid "Got it"
 msgstr ""
 
+#: controllers/mixins.js:46
+#: controllers/mixins.js:47
+msgid "Not found"
+msgstr ""
+
+#: controllers/mixins.js:64
+#: controllers/mixins.js:104
+msgid "There is no matching census in the registry."
+msgstr ""
+
+#: controllers/mixins.js:135
+msgid "Not allowed"
+msgstr ""
+
+#: controllers/mixins.js:159
+msgid "Not found here"
+msgstr ""
+
 #: views/dataset.html:11
 #: views/place.html:11
 msgid "%(score)s% open (avg.)"
@@ -252,56 +327,20 @@ msgstr ""
 msgid "See other years"
 msgstr ""
 
-#: controllers/census.js:83
-msgid "Make a Submission"
+#: controllers/pages.js:30
+msgid "FAQ - Frequently Asked Questions"
 msgstr ""
 
-#: controllers/census.js:103
-msgid "There is already a queued submission for this data. <a href=\"/place/%s/%s\">See the queued submission</a>."
+#: controllers/pages.js:120
+msgid "There is no matching place in our database. Are you sure it is spelled correctly? Please check the <a href=\"/\">overview page</a> for the list of places."
 msgstr ""
 
-#: controllers/census.js:187
-msgid "Thanks for your submission.%s You can check back here any time to see the current status."
+#: controllers/pages.js:147
+msgid "There is no matching dataset in our database. Are you sure it is spelled correctly? Please check the <a href=\"/\">overview page</a> for the list of datasets."
 msgstr ""
 
-#: controllers/census.js:194
-msgid " It will now be reviewed by the editors."
-msgstr ""
-
-#: controllers/census.js:199
-msgid "There was an error!"
-msgstr ""
-
-#: controllers/census.js:246
-msgid "Entry for %s / %s"
-msgstr ""
-
-#: controllers/census.js:247
-msgid "This is a discussion about the submission for [%s / %s](%s)."
-msgstr ""
-
-#: controllers/census.js:269
-msgid "There is no submission with id %s"
-msgstr ""
-
-#: controllers/census.js:357
-msgid "Review a Submission"
-msgstr ""
-
-#: controllers/census.js:377
-msgid "There is no entry with id %s"
-msgstr ""
-
-#: controllers/census.js:400
-msgid "You are not allowed to review this entry."
-msgstr ""
-
-#: controllers/census.js:433
-msgid "Submission processed and entered into the census."
-msgstr ""
-
-#: controllers/census.js:436
-msgid "Submission marked as rejected."
+#: controllers/pages.js:177
+msgid "There is no matching entry in our database. Are you sure you have spelled it correctly? Please check the <a href=\"/\">overview page</a> for the list of places"
 msgstr ""
 
 #: views/entry.html:15
@@ -359,24 +398,6 @@ msgstr ""
 msgid "Last modified"
 msgstr ""
 
-#: controllers/mixins.js:46
-#: controllers/mixins.js:47
-msgid "Not found"
-msgstr ""
-
-#: controllers/mixins.js:64
-#: controllers/mixins.js:104
-msgid "There is no matching census in the registry."
-msgstr ""
-
-#: controllers/mixins.js:135
-msgid "Not allowed"
-msgstr ""
-
-#: controllers/mixins.js:159
-msgid "Not found here"
-msgstr ""
-
 #: views/login.html:15
 msgid "Please login to contribute to the Census."
 msgstr ""
@@ -395,22 +416,6 @@ msgstr ""
 
 #: views/login.html:32
 msgid "terms of use"
-msgstr ""
-
-#: controllers/pages.js:30
-msgid "FAQ - Frequently Asked Questions"
-msgstr ""
-
-#: controllers/pages.js:120
-msgid "There is no matching place in our database. Are you sure it is spelled correctly? Please check the <a href=\"/\">overview page</a> for the list of places."
-msgstr ""
-
-#: controllers/pages.js:147
-msgid "There is no matching dataset in our database. Are you sure it is spelled correctly? Please check the <a href=\"/\">overview page</a> for the list of datasets."
-msgstr ""
-
-#: controllers/pages.js:178
-msgid "There is no matching entry in our database. Are you sure you have spelled it correctly? Please check the <a href=\"/\">overview page</a> for the list of places"
 msgstr ""
 
 #: views/overview.html:17
@@ -474,14 +479,6 @@ msgstr ""
 msgid "Ranked #1 against other places in the Index (avg.)"
 msgstr ""
 
-#: views/macros/popovers.html:16
-msgid "There is no data available."
-msgstr ""
-
-#: views/macros/popovers.html:37
-msgid "Read more &raquo;"
-msgstr ""
-
 #: views/includes/godi-home.html:3
 msgid "Tracking the state of government open data."
 msgstr ""
@@ -500,6 +497,14 @@ msgstr ""
 
 #: views/includes/share_buttons.html:4
 msgid "Embed"
+msgstr ""
+
+#: views/macros/popovers.html:16
+msgid "There is no data available."
+msgstr ""
+
+#: views/macros/popovers.html:37
+msgid "Read more &raquo;"
 msgstr ""
 
 #: views/includes/dataviews/table_places.html:7
