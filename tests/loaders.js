@@ -4,8 +4,7 @@ const _ = require('lodash');
 const assert = require('chai').assert;
 const censusConfig = require('../census/config');
 const siteID = 'site1';
-const REGISTRY_URL = 'https://docs.google.com/spreadsheets/d/1FK5dzeNeJl81oB76n' +
-  'WzhS1dAdnXDoZbbe_vTH4NlThM/edit#gid=0';
+const REGISTRY_URL = 'https://docs.google.com/spreadsheets/d/1z12rUj039pcdeldPy9eXFcw0YF18b4sIRx6EXbLy-9A/edit#gid=0';
 const testUtils = require('./utils');
 const userFixtures = require('../fixtures/user');
 const Promise = require('bluebird');
@@ -36,10 +35,6 @@ describe('Admin page', function () {
     for (var setting in configValues) {
       censusConfig.set(setting, configValues[setting]);
     }
-  });
-
-  before(function() {
-    return;
   });
 
   describe('admin page', function() {
@@ -177,6 +172,20 @@ describe('Admin page', function () {
           assert.isDefined(transportInstance.qsurl);
           assert.notEqual(transportInstance.qsurl, '');
           assert.isTrue(transportInstance.qsurl.startsWith('https://docs.google.com/spreadsheets'));
+        });
+    });
+
+    it('populates dataset.translations with fieldname@lc columns', function() {
+      return this.app.get('models').Dataset.findById('transport-realtime',
+                                                     {where: {site: siteID}})
+        .then(transportInstance => {
+          assert.isTrue(_.has(transportInstance, 'translations.es.name'));
+          assert.equal(_.get(transportInstance, 'translations.es.name'),
+                         '(Spanish) Real-Time Transit');
+          assert.deepEqual(_.get(transportInstance, 'translations.es.characteristics'), [
+            '(Spanish) My first characteristic',
+            '(Spanish) Characteristic the second',
+            '(Spanish) The third and last of the istics']);
         });
     });
   });
