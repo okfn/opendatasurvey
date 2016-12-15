@@ -35,14 +35,14 @@ describe('<QuestionForm />', () => {
 
     it('renders QuestionFieldYesNo type', function() {
       this.wrapper =
-        mount(<QuestionForm questions={this.baseQuestions} qsSchema={this.baseQSSchema} context={{}} answers={{}} />);
+        mount(<QuestionForm questions={this.baseQuestions} qsSchema={this.baseQSSchema} context={{}} answers={[]} />);
       expect(this.wrapper.find('QuestionFieldYesNo')).to.have.length(1);
     });
     it('renders QuestionFieldText type', function() {
       // Replace `type` in baseQuestions.
       this.baseQuestions[0] = _.assign(this.baseQuestions[0], {type: 'text'});
       this.wrapper =
-        mount(<QuestionForm questions={this.baseQuestions} qsSchema={this.baseQSSchema} context={{}} answers={{}} />);
+        mount(<QuestionForm questions={this.baseQuestions} qsSchema={this.baseQSSchema} context={{}} answers={[]} />);
       expect(this.wrapper.find('QuestionFieldText')).to.have.length(1);
     });
     it('renders QuestionFieldLikert type', function() {
@@ -56,7 +56,7 @@ describe('<QuestionForm />', () => {
       }};
       this.baseQuestions[0] = _.assign(this.baseQuestions[0], question);
       this.wrapper =
-        mount(<QuestionForm questions={this.baseQuestions} qsSchema={this.baseQSSchema} context={{}} answers={{}} />);
+        mount(<QuestionForm questions={this.baseQuestions} qsSchema={this.baseQSSchema} context={{}} answers={[]} />);
       expect(this.wrapper.find('QuestionFieldLikert')).to.have.length(1);
       // Scale has three options.
       expect(this.wrapper.find('QuestionFieldLikertOption')).to.have.length(3);
@@ -66,7 +66,7 @@ describe('<QuestionForm />', () => {
       let question = {type: 'source'};
       this.baseQuestions[0] = _.assign(this.baseQuestions[0], question);
       this.wrapper =
-        mount(<QuestionForm questions={this.baseQuestions} qsSchema={this.baseQSSchema} context={{}} answers={{}} />);
+        mount(<QuestionForm questions={this.baseQuestions} qsSchema={this.baseQSSchema} context={{}} answers={[]} />);
       expect(this.wrapper.find('QuestionFieldSource')).to.have.length(1);
       // Default has one empty line.
       expect(this.wrapper.find('QuestionFieldSourceLine')).to.have.length(1);
@@ -80,7 +80,7 @@ describe('<QuestionForm />', () => {
       };
       this.baseQuestions[0] = _.assign(this.baseQuestions[0], question);
       this.wrapper =
-        mount(<QuestionForm questions={this.baseQuestions} qsSchema={this.baseQSSchema} context={{}} answers={{}} />);
+        mount(<QuestionForm questions={this.baseQuestions} qsSchema={this.baseQSSchema} context={{}} answers={[]} />);
       expect(this.wrapper.find('QuestionFieldMultipleChoice')).to.have.length(1);
       expect(this.wrapper.find('QuestionFieldMultipleChoiceOption')).to.have.length(4);
     });
@@ -96,7 +96,7 @@ describe('<QuestionForm />', () => {
       };
       this.baseQuestions[0] = _.assign(this.baseQuestions[0], question);
       this.wrapper =
-        mount(<QuestionForm questions={this.baseQuestions} qsSchema={this.baseQSSchema} context={context} answers={{}} />);
+        mount(<QuestionForm questions={this.baseQuestions} qsSchema={this.baseQSSchema} context={context} answers={[]} />);
       expect(this.wrapper.find('QuestionFieldMultipleChoice')).to.have.length(1);
       expect(this.wrapper.find('QuestionFieldMultipleChoiceOption')).to.have.length(3);
     });
@@ -222,7 +222,7 @@ describe('<QuestionForm />', () => {
   describe('QuestionFields have correct initial state', function() {
     beforeEach(function () {
       this.wrapper =
-        mount(<QuestionForm questions={questions} qsSchema={qsSchema} context={{}} answers={{}} />);
+        mount(<QuestionForm questions={questions} qsSchema={qsSchema} context={{}} answers={[]} />);
     });
 
     it('renders list of Questions', function() {
@@ -268,7 +268,7 @@ describe('<QuestionForm />', () => {
   describe('QuestionFields have correct state after Q1. "Yes"', function() {
     beforeEach(function () {
       this.wrapper =
-        mount(<QuestionForm questions={questions} qsSchema={qsSchema} context={{}} answers={{}} />);
+        mount(<QuestionForm questions={questions} qsSchema={qsSchema} context={{}} answers={[]} />);
       this.wrapper.ref('like_apples').find('input[value="Yes"]').simulate('change');
     });
 
@@ -311,7 +311,7 @@ describe('<QuestionForm />', () => {
   describe('QuestionFields have correct state after Q1. "No"', function() {
     beforeEach(function () {
       this.wrapper =
-        mount(<QuestionForm questions={questions} qsSchema={qsSchema} context={{}} answers={{}} />);
+        mount(<QuestionForm questions={questions} qsSchema={qsSchema} context={{}} answers={[]} />);
       this.wrapper.ref('like_apples').find('input[value="No"]').simulate('change');
     });
 
@@ -354,7 +354,7 @@ describe('<QuestionForm />', () => {
   describe('QuestionFields have correct state after Q1. "Yes" Q2. "Yes', function() {
     beforeEach(function () {
       this.wrapper =
-        mount(<QuestionForm questions={questions} qsSchema={qsSchema} context={{}} answers={{}} />);
+        mount(<QuestionForm questions={questions} qsSchema={qsSchema} context={{}} answers={[]} />);
       this.wrapper.ref('like_apples').find('input[value="Yes"]').simulate('change');
       this.wrapper.ref('apple_colour').find('input[value="Yes"]').simulate('change');
     });
@@ -398,7 +398,7 @@ describe('<QuestionForm />', () => {
   describe('QuestionFields have correct state after Q1. "Yes" Q2. "Yes" Q4. "Yes"', function() {
     beforeEach(function () {
       this.wrapper =
-        mount(<QuestionForm questions={questions} qsSchema={qsSchema} context={{}} answers={{}} />);
+        mount(<QuestionForm questions={questions} qsSchema={qsSchema} context={{}} answers={[]} />);
       this.wrapper.ref('like_apples').find('input[value="Yes"]').simulate('change');
       this.wrapper.ref('apple_colour').find('input[value="Yes"]').simulate('change');
       this.wrapper.ref('red_apple_today').find('input[value="Yes"]').simulate('change');
@@ -443,7 +443,7 @@ describe('<QuestionForm />', () => {
   describe('QuestionForm.canAssignProperties returns as expected', function() {
     beforeEach(function () {
       // Very basic QuestionForm
-      this.questionForm = shallow(<QuestionForm questions={[]} qsSchema={[]} context={{}} answers={{}} />);
+      this.questionForm = shallow(<QuestionForm questions={[]} qsSchema={[]} context={{}} answers={[]} />);
     });
     it('returns false if dependency and currentState are empty', function() {
       let currentState = {};
