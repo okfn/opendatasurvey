@@ -1,405 +1,586 @@
-# 
+#
 # Translators:
 # Eduardo Bejar <wonka@fundapi.org>, 2014
-# Oscar Montiel <miguel.montiel@gmail.com>, 2014
+# Oscar Montiel <oscar.montiel@okfn.org>, 2014
+# Oscar Montiel <oscar.montiel@okfn.org>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Open Data Census\n"
-"POT-Creation-Date: 2014-02-21 04:48+0000\n"
-"PO-Revision-Date: 2014-10-16 22:14+0000\n"
-"Last-Translator: Oscar Montiel <miguel.montiel@gmail.com>\n"
-"Language-Team: Spanish (Mexico) (http://www.transifex.com/projects/p/open-data-census/language/es_MX/)\n"
-"MIME-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-12-15T07:32:45.713Z\n"
+"PO-Revision-Date: 2016-12-15 15:37+0000\n"
+"Last-Translator: Oscar Montiel <oscar.montiel@okfn.org>\n"
+"Language-Team: Spanish (Mexico) (http://www.transifex.com/okfn/open-data-census/language/es_MX/)\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: es_MX\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/datasets.html:4
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:42
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/create.html:32
-msgid "Dataset"
-msgstr "Conjunto de datos"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/datasets.html:5
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/entry-summary-row.html:46
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/questions.html:5
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/entry.html:49
-msgid "Details"
-msgstr "Detalles"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/entry-summary-row.html:27
-msgid "Date available:"
-msgstr "Fecha disponible:"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/entry-summary-row.html:29
-msgid "No date available given"
-msgstr "Sin fecha disponible"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/entry-summary-row.html:38
-msgid "No data format given"
-msgstr "Sin datos de formato de fecha"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/entry-summary-row.html:50
-msgid "No details"
-msgstr "Sin detalles"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/key.html:2
-msgid "Key:"
-msgstr "Clave"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/key.html:4
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/form-core.html:8
-msgid "Yes"
-msgstr "Sí"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/key.html:5
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/form-core.html:9
-msgid "No"
-msgstr "No"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/key.html:6
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/form-core.html:10
-msgid "Unsure"
-msgstr "Inseguro"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/key.html:7
-msgid "No data"
-msgstr "Sin datos"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/missing_place_button.html:4
-msgid "Add new location"
-msgstr "Agregar nueva ubicación"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/questions.html:4
-msgid "Question"
-msgstr "Pregunta"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/_snippets/questions.html:6
-msgid "Weighting"
-msgstr "Puntaje"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:36
+#: views/base.html:46 views/macros/breadcrumb.html:5
 msgid "Home"
 msgstr "Inicio"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:37
+#: views/base.html:47
+msgid "Powered by <a href='%s'>Open Data Census</a>"
+msgstr "Funcionando con el <a href='%s'>Open Data Census</a>"
+
+#: views/base.html:53
+msgid "Toggle navigation"
+msgstr "Cambiar navegación"
+
+#: views/base.html:63 views/base.html:151
+msgid "Logged in as %(name)s"
+msgstr "Registrado como %(name)s"
+
+#: views/base.html:64 views/base.html:152
+msgid "Log out"
+msgstr "Salir"
+
+#: views/base.html:66 views/base.html:154 views/create.html:85
+#: views/login.html:4 views/login.html:11
+msgid "Login"
+msgstr "Acceder"
+
+#: views/base.html:72 views/dataset.html:62 controllers/pages.js:87
+#: controllers/pages.js:88
 msgid "About"
 msgstr "Acerca de"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:39
+#: views/base.html:73
+msgid "Changes"
+msgstr "Cambios"
+
+#: views/base.html:74 controllers/pages.js:36
 msgid "FAQ"
 msgstr "Preguntas frecuentes"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:76
-msgid "Change language:"
-msgstr "Cambiar idioma:"
+#: views/base.html:76 controllers/pages.js:69 controllers/pages.js:70
+msgid "Methodology"
+msgstr "Metodología"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:79
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:81
-msgid "locale"
-msgstr "sitio"
+#: views/base.html:79 controllers/pages.js:60 controllers/pages.js:61
+msgid "Contribute"
+msgstr "Contribuye"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:87
-msgid "Open Online Software Service"
-msgstr "Open Online Software Service"
+#: views/base.html:82 controllers/pages.js:78 controllers/pages.js:79
+msgid "Tutorial"
+msgstr "Tutorial"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:90
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:93
-msgid "Open Definition"
-msgstr "Open Definition"
+#: views/base.html:85 views/base.html:87
+msgid "Support"
+msgstr "Ayuda"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:97
-msgid "Data License (Public Domain)"
-msgstr "Licencia de Datos (Dominio Púbico)"
+#: views/base.html:125
+msgid "Privacy policy"
+msgstr "Política de Privacidad"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:99
-msgid "Source code"
-msgstr "Código fuente"
+#: views/base.html:126
+msgid "IP policy"
+msgstr "Política de IP"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:102
-msgid ""
-"This site is part of the <a href=\"http://meta.census.okfn.org/\">Open Data "
-"Census project</a> run by the Open Knowledge Foundation."
-msgstr "Este sitio es parte del <a href=\"http://meta.census.okfn.org/\"> proyecto Open Data Census </a> llevado a cabo por la Open Knowledge Foundation."
+#: views/base.html:127
+msgid "Cookie policy"
+msgstr "Política de Cookies"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:105
-msgid "An Open Knowledge Foundation Project"
-msgstr "Un Proyecto de la Open Knowledge Foundation"
+#: views/base.html:128
+msgid "Terms of use"
+msgstr "Términos de uso"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:106
-msgid "Open Knowledge Foundation logo"
-msgstr "Logo de la Open Knowledge Foundation"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:116
-#: /Users/wombleton/gunslinging/opendatacensus/templates/login.html:4
-#: /Users/wombleton/gunslinging/opendatacensus/templates/login.html:9
-msgid "Login"
-msgstr "Acceso"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:119
-msgid "More about Open Data"
-msgstr "Más sobre Datos Abiertos"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:119
+#: views/base.html:129
 msgid "What is Open Data"
 msgstr "Qué son Datos Abiertos"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/base.html:120
-msgid "Run Your Own<br />Local Open Data Census"
-msgstr "Opera tu propio<br/>Censo de Datos Abiertos Local"
+#: views/base.html:130
+msgid "Run Your Own Local Open Data Census"
+msgstr "Ten tu ptopio Censo de Datos Abiertos local"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/entry.html:10
-msgid "Return to dataset overview"
-msgstr "Volver al resumen del conjunto de datos"
+#: views/base.html:140
+msgid "Download"
+msgstr "Descarga"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/entry.html:16
-msgid "Data Location"
-msgstr "Ubicación de los datos"
+#: views/base.html:140
+msgid "Current (CSV)"
+msgstr "Actuales (CSV)"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/entry.html:19
-msgid "Comments"
-msgstr "Comentarios"
+#: views/base.html:141
+msgid "All (CSV)"
+msgstr "Todos (CSV)"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/entry.html:22
-msgid "Data Availability"
-msgstr "Disponibilidad de los datos"
+#: views/base.html:142
+msgid "Current (JSON)"
+msgstr "Actuales (JSON)"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/entry.html:51
-msgid "Date the data became available"
-msgstr "Fecha en la que se publicaron los datos"
+#: views/base.html:143
+msgid "All (JSON)"
+msgstr "Todos (JSON)"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/entry.html:51
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/entry.html:52
-msgid "Unknown"
-msgstr "Desconocido"
+#: views/base.html:146
+msgid "Data License (Public Domain)"
+msgstr "Licencia de Datos (Dominio Púbico)"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/entry.html:52
-msgid "Format of data"
-msgstr "Formato de los datos"
+#: views/base.html:146
+msgid "Source code"
+msgstr "Código fuente"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/entry.html:53
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:109
-msgid "Contributors"
-msgstr "Colaboradores"
+#: views/base.html:158
+msgid "Change language:"
+msgstr "Cambiar idioma:"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/entry.html:53
-msgid "(Editors)"
-msgstr "(Editores)"
+#: views/changes.html:4 controllers/pages.js:51
+msgid "Recent Changes"
+msgstr "Cambios Recientes"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/entry.html:53
-msgid "(Submitters)"
-msgstr "(Originadores)"
+#: views/changes.html:9
+msgid "Changelog"
+msgstr "Registro de cambios"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:5
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:12
-msgid "Places"
-msgstr "Lugares"
+#: views/changes.html:11
+msgid "A log of the most recent submission and entry activity."
+msgstr "Un registro de las entradas y la actividad más recientes"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:22
-msgid ""
-"This is the overview page where you can see the state of open data across each key dataset (displayed down the left hand side). To find out more about each dataset, click on the info icon.\n"
-"Each icon in the data availability column represents important factors indicating data accessibility or availability - mouse over the icons to see what they are and the colours correspond to yes / no / unsure / no data."
-msgstr "Esta es la página de resumen donde puedes ver el estado de los datos abiertos en cada conjunto de datos (mostrado del lado inferior izquierdo). Para conocer más sobre cada conjunto de datos, da clic sobre el ícono de información.\nCada ícono en la columna de disponibilidad representa factores importantes que indican accesibilidad a los datos o su disponibilidad - desliza el ratón sobre los íconos para ver lo que son y los colores corresponden a sí / no / inseguro / sin datos."
+#: views/changes.html:42 views/includes/dataviews/table_places.html:79
+#: views/includes/dataviews/table_slice_dataset.html:64
+#: views/includes/dataviews/table_slice_dataset.html:101
+#: views/includes/dataviews/table_slice_dataset.html:130
+#: views/includes/dataviews/table_slice_place.html:63
+#: views/includes/dataviews/table_slice_place.html:98
+#: views/includes/dataviews/table_slice_place.html:127
+msgid "Submitted by"
+msgstr "Enviado por"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:26
-msgid ""
-"Is something missing or is the data incorrect? Then please hit either "
-"'submit information' or 'propose revisions' on the right and contribute more"
-" information. We need a correct direct link to the official source of the "
-"data - so make sure to include this! Click the link icon under Location to "
-"see the current entry."
-msgstr "¿Falta algo o los datos son incorrectos? Si es así, por favor da clic en 'enviar información' o 'sugerir revisiones' del lado derecho y contribuye con más información. ¡Necesitamos un enlace directo funcional a la fuente oficial de los datos - así que asegúrate de incluirlo! Dale clic al ícono de enlace debajo de Ubicación para ver la entrada actual. "
+#: views/changes.html:51 views/includes/dataviews/table_places.html:79
+#: views/includes/dataviews/table_slice_dataset.html:64
+#: views/includes/dataviews/table_slice_place.html:63
+msgid "and reviewed by"
+msgstr "y revisado por"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:28
-msgid ""
-"Greyed out queued entries are submissions that are waiting approval by our "
-"editor team - but you can see the entry now and judge whether anything is "
-"missing."
-msgstr "Las entradas que están en gris son propuestas que deben ser aprobadas por nuestro equipo de editores - pero puedes ver la entrada y decidir si falta algo"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:43
-msgid "Score"
-msgstr "Calificación"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:44
-msgid "Breakdown"
-msgstr "Desglose"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:45
-msgid "Location (URL)"
-msgstr "Ubicación (URL)"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:46
-msgid "Information"
-msgstr "Información"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:72
-msgid "Propose Revisions"
-msgstr "Proponer Revisiones"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:76
-msgid "Submit information"
+#: controllers/census.js:83
+msgid "Make a Submission"
 msgstr "Enviar información"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:86
-msgid "&#8627; Awaiting review"
-msgstr "&#8627; Esperando revisión"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:91
-msgid "Review Now"
-msgstr "Revisar Ahora"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/country/place.html:114
-msgid "With submissions from:"
-msgstr "Con propuestas de:"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/login.html:19
-msgid "Login with Google"
-msgstr "Regístrate con Google"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/login.html:20
-msgid "Login with your existing google account in a few seconds."
-msgstr "Entra con tu cuenta existente de google en unos segundos"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/login.html:21
-msgid "Login with Google &raquo;"
-msgstr "Registrarse con Google &raquo;"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/login.html:25
-msgid "&ndash; or &ndash;"
-msgstr "&ndash; o &ndash;"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/login.html:28
-msgid "Skip Login"
-msgstr "Brincar registro"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/login.html:29
-msgid "Continue without logging in."
-msgstr "Continuar sin registrarse"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/login.html:32
-msgid "Name (optional)"
-msgstr "Nombre (opcional)"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/login.html:33
+#: controllers/census.js:103
 msgid ""
-"If you provide a name we can credit you for your contribution (if not "
-"provided you'll be listed as Anonymous)."
-msgstr "Si escribes tu nombre podremos darte crédito por tu contribución (si no lo escribes estarás registrado como Anónimo)"
+"There is already a queued submission for this data. <a "
+"href=\"/place/%s/%s\">See the queued submission</a>."
+msgstr "Ya existe información para estos datos<a href=\"/place/%s/%s\">Mira la entrada en fila</a>."
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/login.html:34
-msgid "Joe Bloggs"
-msgstr "Juan Pérez"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/login.html:36
-msgid "Continue &raquo;"
-msgstr "Continuar &raquo"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/overview.html:3
-msgid "Overview"
-msgstr "Resumen"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/overview.html:11
-msgid "Number of places"
-msgstr "Número de lugares"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/overview.html:13
-msgid "Number of datasets"
-msgstr "Número de conjuntos de datos"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/overview.html:15
-msgid "Number of open datasets"
-msgstr "Número de conjuntos de datos abiertos"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/overview.html:17
-msgid "Percentage"
-msgstr "Porcentaje"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/overview.html:17
-msgid "open"
-msgstr "abierto"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/overview.html:46
-#: /Users/wombleton/gunslinging/opendatacensus/templates/overview.html:106
-msgid "Total Score"
-msgstr "Calificación total"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/overview.html:54
+#: controllers/census.js:187
 msgid ""
-"The Census Admin needs to add some places to the Places configuration sheet"
-msgstr "El Administrador del Censo necesita agregar algunos sitios a la Hoja de configuración de lugares"
+"Thanks for your submission.%s You can check back here any time to see the "
+"current status."
+msgstr "Gracias por tu colaboración.%s Puedes volver aquí en cualquier momento para ver el estatus actual."
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/overview.html:74
-msgid "Click here to add to the census!"
-msgstr "¡Click aquí para agregar al censo!"
+#: controllers/census.js:194
+msgid " It will now be reviewed by the editors."
+msgstr "Ahora será revisada por los editores."
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/overview.html:74
-msgid "Add new"
-msgstr "Agregar nuevo "
+#: controllers/census.js:199
+msgid "There was an error!"
+msgstr "Hubo un error!"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/create.html:4
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/create.html:63
+#: controllers/census.js:246
+msgid "Entry for %s / %s"
+msgstr "Entrada para %s / %s"
+
+#: controllers/census.js:247
+msgid "This is a discussion about the submission for [%s / %s](%s)."
+msgstr "Esta es una discusión sobre la entrada de  [%s / %s](%s)."
+
+#: controllers/census.js:269
+msgid "There is no submission with id %s"
+msgstr "No hay una entrada con el id %s"
+
+#: controllers/census.js:357
+msgid "Review a Submission"
+msgstr "Revisar una Entrada"
+
+#: controllers/census.js:377
+msgid "There is no entry with id %s"
+msgstr "No existe una entrada con el id %s"
+
+#: controllers/census.js:400
+msgid "You are not allowed to review this entry."
+msgstr "No tienes permiso para revisar esta entrada."
+
+#: controllers/census.js:433
+msgid "Submission processed and entered into the census."
+msgstr "Entrada procesada e insertada en el censo."
+
+#: controllers/census.js:436
+msgid "Submission marked as rejected."
+msgstr "Entrada marcada como rechazada"
+
+#: views/create.html:4
 msgid "Submit"
 msgstr "Enviar"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/create.html:19
-msgid "Place and Dataset"
-msgstr "Lugar y Conjunto de datos "
+#: views/create.html:17
+msgid "Select a Place"
+msgstr "Selecciona un lugar"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/create.html:24
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/create.html:34
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/form-core.html:94
-msgid "Please select"
-msgstr "Por favor selecciona"
+#: views/create.html:19
+msgid "change place"
+msgstr "cambiar lugar"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/create.html:60
-msgid "This will be public."
-msgstr "Esto será público."
+#: views/create.html:30
+msgid "Select a Dataset"
+msgstr "Selecciona un Dataset"
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/create.html:64
+#: views/create.html:32
+msgid "change dataset"
+msgstr "cambiar dataset"
+
+#: views/create.html:48
+msgid "Status"
+msgstr "Estatus"
+
+#: views/create.html:50
+msgid "Submission date"
+msgstr "Fecha en envío"
+
+#: views/create.html:54
+msgid "Submitter"
+msgstr "Participante"
+
+#: views/create.html:59 views/entry.html:157
+msgid "Reviewer"
+msgstr "Revisor"
+
+#: views/create.html:75
+msgid "You do not have permissions to review this submission."
+msgstr "No tienes permiso para revisar esta entrada"
+
+#: views/create.html:85
+msgid "If you are a reviewer, please login to review."
+msgstr "Si eres un revisor, por favor accede para revisar."
+
+#: views/create.html:96
+msgid "The form has missing or incorrect data"
+msgstr "La forma tiene datos faltantes o incorrectos"
+
+#: views/create.html:99
+msgid "Current is '%s'"
+msgstr "El actual es '%s'"
+
+#: views/create.html:115
 msgid ""
-"By submitting material to the index you agreeing to <a "
-"href=\"http://okfn.org/terms-of-use/\">terms of use</a> and also to license "
-"your contribution (to the extent there are any rights in it!) under the <a "
-"href=\"http://opendatacommons.org/licenses/pddl/1.0/\">Open Data Commons "
-"Public Domain Dedication and License</a>."
-msgstr "Al enviar material al índice estás confirmando que estás de acuerdo con los <a href=\"http://okfn.org/terms-of-use/\">términos de uso</a> y también con publicar tu contribución (¡en la medida que existan derechos en ella!) bajo la licencia <a href=\"http://opendatacommons.org/licenses/pddl/1.0/\">Open Data Commons Public Domain Dedication and License</a>"
+"Please read the <a class=\"btn btn-sm\" data-toggle=\"modal\" data-"
+"target=\"#guidance\">Review Guidance</a> before proceeding."
+msgstr "Por favor lee la <a class=\"btn btn-sm\" data-toggle=\"modal\" data-target=\"#guidance\">Guía de Revisión</a> antes de continuar."
 
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/form-core.html:2
-msgid "Data Availability Questions"
-msgstr "Preguntas sobre la disponibilidad de los datos"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/form-core.html:11
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/form-core.html:40
-msgid "Current Entry"
-msgstr "Entrada actual"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/form-core.html:77
-msgid "Publisher Information"
-msgstr "Información de quien publica"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/form-core.html:87
-msgid "Data Quality"
-msgstr "Calidad de los datos"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/review.html:4
-msgid "Review Submission"
-msgstr "Revisar envío"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/review.html:30
-msgid "This will be logged and displayed"
-msgstr "Esto será registrado y mostrado"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/review.html:32
-msgid "Publish"
-msgstr "Publicar"
-
-#: /Users/wombleton/gunslinging/opendatacensus/templates/submission/review.html:40
+#: views/create.html:117
 msgid ""
-"If this submission makes no changes to the current entry then please 'Reject' it rather than 'Accept'.\n"
-"        <br />\n"
-"        Note that you edit the submission before accepting it. In particular, please correct any spelling mistakes.\n"
-"        <br />\n"
-"        <strong>Publish will overwrite the whole current entry with the data in this form.</strong>"
-msgstr "Si esta propuesta no hace cambios a la entrada actual por favor selecciona 'Rechazar' en vez de 'Aceptar'.\n<br/>\nAsegúrate de que estás editando la entrada antes de aceptarla. En particular, por favor corrige cualquier error ortográfico.\n<br/>\n<strong>Publicar sobreescribirá completamente la entrada actual con los datos del formulario. </strong>"
+"Please read the <a class=\"btn btn-sm\" data-toggle=\"modal\" data-"
+"target=\"#guidance\">Submission Guidance</a> before proceeding."
+msgstr "Por favor lee la <a class=\"btn btn-sm\" data-toggle=\"modal\" data-target=\"#guidance\">Guía de colaboración</a> antes de continuar."
+
+#: views/create.html:128
+msgid "Review Guidance"
+msgstr "Guía de revisión"
+
+#: views/create.html:128
+msgid "Submission Guidance"
+msgstr "Guía de Participación"
+
+#: views/create.html:134
+msgid "Got it"
+msgstr "Entendido"
+
+#: controllers/mixins.js:46 controllers/mixins.js:47
+msgid "Not found"
+msgstr "No encontrado"
+
+#: controllers/mixins.js:64 controllers/mixins.js:104
+msgid "There is no matching census in the registry."
+msgstr "No existe este censo en el registro."
+
+#: controllers/mixins.js:135
+msgid "Not allowed"
+msgstr "No permitido"
+
+#: controllers/mixins.js:159
+msgid "Not found here"
+msgstr "No se encuentra aquí"
+
+#: views/dataset.html:11 views/place.html:11
+msgid "%(score)s% open (avg.)"
+msgstr "%(score)s% open (avg.)"
+
+#: views/dataset.html:15
+msgid "Ranked #1 against other datasets in the Index (avg.)"
+msgstr "Clasificado #1 comparado con otros datasets en el Index (promedio)"
+
+#: views/dataset.html:30 views/entry.html:29 views/overview.html:57
+#: views/place.html:32
+msgid "See other years"
+msgstr "Ver otros años"
+
+#: controllers/pages.js:30
+msgid "FAQ - Frequently Asked Questions"
+msgstr "FAQ - Preguntas Frecuentes"
+
+#: controllers/pages.js:120
+msgid ""
+"There is no matching place in our database. Are you sure it is spelled "
+"correctly? Please check the <a href=\"/\">overview page</a> for the list of "
+"places."
+msgstr "No existe ese lugar en nuestra base de datos. ¿Lo escribiste correctamente? Por favor revisa la <a href=\"/\">página resumen</a> para la lista de lugares."
+
+#: controllers/pages.js:147
+msgid ""
+"There is no matching dataset in our database. Are you sure it is spelled "
+"correctly? Please check the <a href=\"/\">overview page</a> for the list of "
+"datasets."
+msgstr "No existe ese dataset en nuestra base de datos. ¿Lo escribiste correctamente? Por favor revisa la <a href=\"/\">página resumen</a> para la lista de datasets."
+
+#: controllers/pages.js:177
+msgid ""
+"There is no matching entry in our database. Are you sure you have spelled it"
+" correctly? Please check the <a href=\"/\">overview page</a> for the list of"
+" places"
+msgstr "No existe esa entrada en nuestra base de datos. ¿Lo escribiste correctamente? Por favor revisa la <a href=\"/\">página resumen</a> para la lista de lugares"
+
+#: views/entry.html:15
+msgid "%(score)s% open"
+msgstr "%(score)s% abierto"
+
+#: views/entry.html:61
+msgid "What data is expected?"
+msgstr "¿Qué datos se esperan?"
+
+#: views/entry.html:67
+msgid "What data is available?"
+msgstr "¿Qué datos están disponibles?"
+
+#: views/entry.html:107
+msgid "Details"
+msgstr "Detalles"
+
+#: views/entry.html:113
+msgid "Reviewer comments"
+msgstr "Comentarios del revisor"
+
+#: views/entry.html:123
+msgid "Contributors"
+msgstr "Colaboradores"
+
+#: views/entry.html:127
+msgid "Reviewers"
+msgstr "Revisores"
+
+#: views/entry.html:136 views/entry.html:158
+msgid "Submitters"
+msgstr "Participantes"
+
+#: views/entry.html:152
+msgid "Meta data"
+msgstr "Meta datos"
+
+#: views/entry.html:155
+msgid "Date the data became available"
+msgstr "Fecha en la que se publicaron los datos"
+
+#: views/entry.html:155 views/entry.html:156 views/entry.html:159
+msgid "Unknown"
+msgstr "Desconocido"
+
+#: views/entry.html:156
+msgid "Format of data"
+msgstr "Formato de los datos"
+
+#: views/entry.html:159
+msgid "Last modified"
+msgstr "Ultima modificación"
+
+#: views/login.html:15
+msgid "Please login to contribute to the Census."
+msgstr "Por favor entra para contribuir al Censo"
+
+#: views/login.html:21
+msgid "Login with Google &raquo;"
+msgstr "Entrar con Google &raquo;"
+
+#: views/login.html:24
+msgid "Login with Facebook &raquo;"
+msgstr "Entrar con Facebook &raquo;"
+
+#: views/login.html:32
+msgid ""
+"Login with your existing 3rd party account in a few seconds. We will not "
+"share your email with any third party. For more information see the"
+msgstr "Entra con una cuenta existente en segundos. No compartiremos tu correo con ningún 3ero. Para más información mira "
+
+#: views/login.html:32
+msgid "terms of use"
+msgstr "términos de uso"
+
+#: views/overview.html:17
+msgid "Number of places"
+msgstr "Lugares registrados"
+
+#: views/overview.html:23
+msgid "Number of datasets"
+msgstr "Conjuntos de datos"
+
+#: views/overview.html:29
+msgid "Number of open datasets"
+msgstr "Conjuntos de datos abiertos"
+
+#: views/overview.html:35
+msgid "Percentage <a href='%s'>open</a>"
+msgstr "Porcentaje <a href='%s'>abierto</a>"
+
+#: views/overview.html:48
+msgid "Search"
+msgstr "Buscar"
+
+#: views/overview.html:66 views/includes/share_buttons.html:1
+msgid "Share this page"
+msgstr "Compartir esta página"
+
+#: views/overview.html:81 views/overview.html:99
+#: views/includes/share_buttons.html:17 views/includes/share_buttons.html:30
+msgid "Close"
+msgstr "Cerrar"
+
+#: views/overview.html:82 views/includes/share_buttons.html:18
+msgid "Map embed code"
+msgstr "Código para embeber el mapa"
+
+#: views/overview.html:86 views/includes/share_buttons.html:21
+msgid ""
+"Use the following code to embed the map visualisation into your own website."
+msgstr "Usa este código para embeber la visualización del mapa en tu propio sitio"
+
+#: views/overview.html:94 views/includes/share_buttons.html:23
+msgid ""
+"If you are a developer, you can read more about the embed options here:"
+msgstr "Si eres desarrollador, puedes leer más sobre las opciones de embebido aquí:"
+
+#: views/overview.html:95 views/includes/share_buttons.html:24
+#: views/includes/share_buttons.html:25
+msgid "Embed options"
+msgstr "Opciones de embebido"
+
+#: views/place.html:10
+msgid "See more data on %(name)s in the Open Data Index"
+msgstr "Ver más datos sobre %(name)s en el Open Data Index"
+
+#: views/place.html:15
+msgid "Ranked #1 against other places in the Index (avg.)"
+msgstr "Clasificado #1 comparado con otros lugares en el Index (promedio)"
+
+#: views/includes/godi-home.html:3
+msgid "Tracking the state of government open data."
+msgstr "Siguiendo el estado de los datos abiertos de gobierno."
+
+#: views/includes/godi-home.html:5
+msgid ""
+"The first initiative of its kind, the Global Open Data Index provides the "
+"most comprehensive snapshot available of the global state of open data."
+msgstr "La primer iniciativa de este tipo, el Global Open Data Index, provee el panorama más amplio sobre el estado global de los datos abiertos."
+
+#: views/includes/godi-home.html:8
+msgid "Compare countries"
+msgstr "Comparar países"
+
+#: views/includes/godi-home.html:12
+msgid "See insights"
+msgstr "Ver información"
+
+#: views/includes/share_buttons.html:4
+msgid "Embed"
+msgstr "Embeber"
+
+#: views/macros/popovers.html:16
+msgid "There is no data available."
+msgstr "No hay datos disponibles"
+
+#: views/macros/popovers.html:37
+msgid "Read more &raquo;"
+msgstr "Leer más &raquo;"
+
+#: views/includes/dataviews/table_places.html:7
+msgid "Sort by Rank"
+msgstr "Ordenar por Clasificación"
+
+#: views/includes/dataviews/table_places.html:7
+#: views/includes/dataviews/table_slice_dataset.html:25
+msgid "Rank"
+msgstr "Clasificación"
+
+#: views/includes/dataviews/table_places.html:8
+msgid "Sort by A-Z"
+msgstr "Ordenar de la A-Z"
+
+#: views/includes/dataviews/table_places.html:8
+#: views/includes/dataviews/table_slice_dataset.html:26
+msgid "Place"
+msgstr "Lugar"
+
+#: views/includes/dataviews/table_places.html:14
+#: views/includes/dataviews/table_slice_dataset.html:32
+#: views/includes/dataviews/table_slice_place.html:29
+msgid "Score"
+msgstr "Calificación"
+
+#: views/includes/dataviews/table_places.html:64
+msgid "No data"
+msgstr "Sin datos"
+
+#: views/includes/dataviews/table_places.html:82
+#: views/includes/dataviews/table_places.html:89
+#: views/includes/dataviews/table_places.html:91
+msgid "Pending submissions"
+msgstr "Envíos pendientes"
+
+#: views/includes/dataviews/table_slice_dataset.html:27
+#: views/includes/dataviews/table_slice_place.html:24
+msgid "Breakdown"
+msgstr "Desglose"
+
+#: views/includes/dataviews/table_slice_dataset.html:28
+#: views/includes/dataviews/table_slice_place.html:25
+msgid "Info"
+msgstr "Información"
+
+#: views/includes/dataviews/table_slice_dataset.html:30
+#: views/includes/dataviews/table_slice_place.html:27
+msgid "Year"
+msgstr "Año"
+
+#: views/includes/dataviews/table_slice_dataset.html:34
+#: views/includes/dataviews/table_slice_place.html:31
+msgid "Admin"
+msgstr "Admin"
+
+#: views/includes/dataviews/table_slice_dataset.html:74
+#: views/includes/dataviews/table_slice_place.html:73
+msgid ""
+"Sorry, only one submission can be waiting for review at a time - please come"
+" back in a few days to submit new information"
+msgstr "Lo sentimos, sólo puede haber una entrada para revisión a la vez - por favor vuelve en unos días para enviar nueva información"
+
+#: views/includes/dataviews/table_slice_dataset.html:76
+#: views/includes/dataviews/table_slice_place.html:75
+msgid "Propose Revisions"
+msgstr "Proponer Revisiones"
+
+#: views/includes/dataviews/table_slice_dataset.html:100
+#: views/includes/dataviews/table_slice_place.html:97
+msgid "Awaiting review"
+msgstr "Esperando revisión"
+
+#: views/includes/dataviews/table_slice_dataset.html:106
+#: views/includes/dataviews/table_slice_place.html:103
+msgid "Submitted on"
+msgstr "Enviado el"
+
+#: views/includes/dataviews/table_slice_dataset.html:137
+#: views/includes/dataviews/table_slice_place.html:134
+msgid "View Submission"
+msgstr "Ver Entrada"
+
+#: views/includes/dataviews/table_slice_place.html:23
+msgid "Dataset"
+msgstr "Conjunto de datos"

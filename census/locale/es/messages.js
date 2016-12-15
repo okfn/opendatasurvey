@@ -1,91 +1,103 @@
 ;var json_locale_data = {
    "messages": {
       "": {
-         "Project-Id-Version": " Open Data Census\nPOT-Creation-Date: 2014-02-21 04:48+0000\nPO-Revision-Date: 2014-10-16 22:14+0000\nLast-Translator: Oscar Montiel <miguel.montiel@gmail.com>\nLanguage-Team: Spanish (Mexico) (http://www.transifex.com/projects/p/open-data-census/language/es_MX/)\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nLanguage: es_MX\nPlural-Forms: nplurals=2; plural=(n != 1);\n"
+         "Project-Id-Version": " Open Data Census\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2016-12-15T07:32:45.713Z\nPO-Revision-Date: 2016-12-15 15:37+0000\nLast-Translator: Oscar Montiel <oscar.montiel@okfn.org>\nLanguage-Team: Spanish (Mexico) (http://www.transifex.com/okfn/open-data-census/language/es_MX/)\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nLanguage: es_MX\nPlural-Forms: nplurals=2; plural=(n != 1);\n"
       },
-      "Dataset": [
-         null,
-         "Conjunto de datos"
-      ],
-      "Details": [
-         null,
-         "Detalles"
-      ],
-      "Date available:": [
-         null,
-         "Fecha disponible:"
-      ],
-      "No date available given": [
-         null,
-         "Sin fecha disponible"
-      ],
-      "No data format given": [
-         null,
-         "Sin datos de formato de fecha"
-      ],
-      "No details": [
-         null,
-         "Sin detalles"
-      ],
-      "Key:": [
-         null,
-         "Clave"
-      ],
-      "Yes": [
-         null,
-         "Sí"
-      ],
-      "No": [
-         null,
-         "No"
-      ],
-      "Unsure": [
-         null,
-         "Inseguro"
-      ],
-      "No data": [
-         null,
-         "Sin datos"
-      ],
-      "Add new location": [
-         null,
-         "Agregar nueva ubicación"
-      ],
-      "Question": [
-         null,
-         "Pregunta"
-      ],
-      "Weighting": [
-         null,
-         "Puntaje"
-      ],
       "Home": [
          null,
          "Inicio"
+      ],
+      "Powered by <a href='%s'>Open Data Census</a>": [
+         null,
+         "Funcionando con el <a href='%s'>Open Data Census</a>"
+      ],
+      "Toggle navigation": [
+         null,
+         "Cambiar navegación"
+      ],
+      "Logged in as %(name)s": [
+         null,
+         "Registrado como %(name)s"
+      ],
+      "Log out": [
+         null,
+         "Salir"
+      ],
+      "Login": [
+         null,
+         "Acceder"
       ],
       "About": [
          null,
          "Acerca de"
       ],
+      "Changes": [
+         null,
+         "Cambios"
+      ],
       "FAQ": [
          null,
          "Preguntas frecuentes"
       ],
-      "Change language:": [
+      "Methodology": [
          null,
-         "Cambiar idioma:"
+         "Metodología"
       ],
-      "locale": [
+      "Contribute": [
          null,
-         "sitio"
+         "Contribuye"
       ],
-      "Open Online Software Service": [
+      "Tutorial": [
          null,
-         "Open Online Software Service"
+         "Tutorial"
       ],
-      "Open Definition": [
+      "Support": [
          null,
-         "Open Definition"
+         "Ayuda"
+      ],
+      "Privacy policy": [
+         null,
+         "Política de Privacidad"
+      ],
+      "IP policy": [
+         null,
+         "Política de IP"
+      ],
+      "Cookie policy": [
+         null,
+         "Política de Cookies"
+      ],
+      "Terms of use": [
+         null,
+         "Términos de uso"
+      ],
+      "What is Open Data": [
+         null,
+         "Qué son Datos Abiertos"
+      ],
+      "Run Your Own Local Open Data Census": [
+         null,
+         "Ten tu ptopio Censo de Datos Abiertos local"
+      ],
+      "Download": [
+         null,
+         "Descarga"
+      ],
+      "Current (CSV)": [
+         null,
+         "Actuales (CSV)"
+      ],
+      "All (CSV)": [
+         null,
+         "Todos (CSV)"
+      ],
+      "Current (JSON)": [
+         null,
+         "Actuales (JSON)"
+      ],
+      "All (JSON)": [
+         null,
+         "Todos (JSON)"
       ],
       "Data License (Public Domain)": [
          null,
@@ -95,49 +107,233 @@
          null,
          "Código fuente"
       ],
-      "This site is part of the <a href=\"http://meta.census.okfn.org/\">Open Data Census project</a> run by the Open Knowledge Foundation.": [
+      "Change language:": [
          null,
-         "Este sitio es parte del <a href=\"http://meta.census.okfn.org/\"> proyecto Open Data Census </a> llevado a cabo por la Open Knowledge Foundation."
+         "Cambiar idioma:"
       ],
-      "An Open Knowledge Foundation Project": [
+      "Recent Changes": [
          null,
-         "Un Proyecto de la Open Knowledge Foundation"
+         "Cambios Recientes"
       ],
-      "Open Knowledge Foundation logo": [
+      "Changelog": [
          null,
-         "Logo de la Open Knowledge Foundation"
+         "Registro de cambios"
       ],
-      "Login": [
+      "A log of the most recent submission and entry activity.": [
          null,
-         "Acceso"
+         "Un registro de las entradas y la actividad más recientes"
       ],
-      "More about Open Data": [
+      "Submitted by": [
          null,
-         "Más sobre Datos Abiertos"
+         "Enviado por"
       ],
-      "What is Open Data": [
+      "and reviewed by": [
          null,
-         "Qué son Datos Abiertos"
+         "y revisado por"
       ],
-      "Run Your Own<br />Local Open Data Census": [
+      "Make a Submission": [
          null,
-         "Opera tu propio<br/>Censo de Datos Abiertos Local"
+         "Enviar información"
       ],
-      "Return to dataset overview": [
+      "There is already a queued submission for this data. <a href=\"/place/%s/%s\">See the queued submission</a>.": [
          null,
-         "Volver al resumen del conjunto de datos"
+         "Ya existe información para estos datos<a href=\"/place/%s/%s\">Mira la entrada en fila</a>."
       ],
-      "Data Location": [
+      "Thanks for your submission.%s You can check back here any time to see the current status.": [
          null,
-         "Ubicación de los datos"
+         "Gracias por tu colaboración.%s Puedes volver aquí en cualquier momento para ver el estatus actual."
       ],
-      "Comments": [
+      " It will now be reviewed by the editors.": [
          null,
-         "Comentarios"
+         "Ahora será revisada por los editores."
       ],
-      "Data Availability": [
+      "There was an error!": [
          null,
-         "Disponibilidad de los datos"
+         "Hubo un error!"
+      ],
+      "Entry for %s / %s": [
+         null,
+         "Entrada para %s / %s"
+      ],
+      "This is a discussion about the submission for [%s / %s](%s).": [
+         null,
+         "Esta es una discusión sobre la entrada de  [%s / %s](%s)."
+      ],
+      "There is no submission with id %s": [
+         null,
+         "No hay una entrada con el id %s"
+      ],
+      "Review a Submission": [
+         null,
+         "Revisar una Entrada"
+      ],
+      "There is no entry with id %s": [
+         null,
+         "No existe una entrada con el id %s"
+      ],
+      "You are not allowed to review this entry.": [
+         null,
+         "No tienes permiso para revisar esta entrada."
+      ],
+      "Submission processed and entered into the census.": [
+         null,
+         "Entrada procesada e insertada en el censo."
+      ],
+      "Submission marked as rejected.": [
+         null,
+         "Entrada marcada como rechazada"
+      ],
+      "Submit": [
+         null,
+         "Enviar"
+      ],
+      "Select a Place": [
+         null,
+         "Selecciona un lugar"
+      ],
+      "change place": [
+         null,
+         "cambiar lugar"
+      ],
+      "Select a Dataset": [
+         null,
+         "Selecciona un Dataset"
+      ],
+      "change dataset": [
+         null,
+         "cambiar dataset"
+      ],
+      "Status": [
+         null,
+         "Estatus"
+      ],
+      "Submission date": [
+         null,
+         "Fecha en envío"
+      ],
+      "Submitter": [
+         null,
+         "Participante"
+      ],
+      "Reviewer": [
+         null,
+         "Revisor"
+      ],
+      "You do not have permissions to review this submission.": [
+         null,
+         "No tienes permiso para revisar esta entrada"
+      ],
+      "If you are a reviewer, please login to review.": [
+         null,
+         "Si eres un revisor, por favor accede para revisar."
+      ],
+      "The form has missing or incorrect data": [
+         null,
+         "La forma tiene datos faltantes o incorrectos"
+      ],
+      "Current is '%s'": [
+         null,
+         "El actual es '%s'"
+      ],
+      "Please read the <a class=\"btn btn-sm\" data-toggle=\"modal\" data-target=\"#guidance\">Review Guidance</a> before proceeding.": [
+         null,
+         "Por favor lee la <a class=\"btn btn-sm\" data-toggle=\"modal\" data-target=\"#guidance\">Guía de Revisión</a> antes de continuar."
+      ],
+      "Please read the <a class=\"btn btn-sm\" data-toggle=\"modal\" data-target=\"#guidance\">Submission Guidance</a> before proceeding.": [
+         null,
+         "Por favor lee la <a class=\"btn btn-sm\" data-toggle=\"modal\" data-target=\"#guidance\">Guía de colaboración</a> antes de continuar."
+      ],
+      "Review Guidance": [
+         null,
+         "Guía de revisión"
+      ],
+      "Submission Guidance": [
+         null,
+         "Guía de Participación"
+      ],
+      "Got it": [
+         null,
+         "Entendido"
+      ],
+      "Not found": [
+         null,
+         "No encontrado"
+      ],
+      "There is no matching census in the registry.": [
+         null,
+         "No existe este censo en el registro."
+      ],
+      "Not allowed": [
+         null,
+         "No permitido"
+      ],
+      "Not found here": [
+         null,
+         "No se encuentra aquí"
+      ],
+      "%(score)s% open (avg.)": [
+         null,
+         "%(score)s% open (avg.)"
+      ],
+      "Ranked #1 against other datasets in the Index (avg.)": [
+         null,
+         "Clasificado #1 comparado con otros datasets en el Index (promedio)"
+      ],
+      "See other years": [
+         null,
+         "Ver otros años"
+      ],
+      "FAQ - Frequently Asked Questions": [
+         null,
+         "FAQ - Preguntas Frecuentes"
+      ],
+      "There is no matching place in our database. Are you sure it is spelled correctly? Please check the <a href=\"/\">overview page</a> for the list of places.": [
+         null,
+         "No existe ese lugar en nuestra base de datos. ¿Lo escribiste correctamente? Por favor revisa la <a href=\"/\">página resumen</a> para la lista de lugares."
+      ],
+      "There is no matching dataset in our database. Are you sure it is spelled correctly? Please check the <a href=\"/\">overview page</a> for the list of datasets.": [
+         null,
+         "No existe ese dataset en nuestra base de datos. ¿Lo escribiste correctamente? Por favor revisa la <a href=\"/\">página resumen</a> para la lista de datasets."
+      ],
+      "There is no matching entry in our database. Are you sure you have spelled it correctly? Please check the <a href=\"/\">overview page</a> for the list of places": [
+         null,
+         "No existe esa entrada en nuestra base de datos. ¿Lo escribiste correctamente? Por favor revisa la <a href=\"/\">página resumen</a> para la lista de lugares"
+      ],
+      "%(score)s% open": [
+         null,
+         "%(score)s% abierto"
+      ],
+      "What data is expected?": [
+         null,
+         "¿Qué datos se esperan?"
+      ],
+      "What data is available?": [
+         null,
+         "¿Qué datos están disponibles?"
+      ],
+      "Details": [
+         null,
+         "Detalles"
+      ],
+      "Reviewer comments": [
+         null,
+         "Comentarios del revisor"
+      ],
+      "Contributors": [
+         null,
+         "Colaboradores"
+      ],
+      "Reviewers": [
+         null,
+         "Revisores"
+      ],
+      "Submitters": [
+         null,
+         "Participantes"
+      ],
+      "Meta data": [
+         null,
+         "Meta datos"
       ],
       "Date the data became available": [
          null,
@@ -151,201 +347,177 @@
          null,
          "Formato de los datos"
       ],
-      "Contributors": [
+      "Last modified": [
          null,
-         "Colaboradores"
+         "Ultima modificación"
       ],
-      "(Editors)": [
+      "Please login to contribute to the Census.": [
          null,
-         "(Editores)"
+         "Por favor entra para contribuir al Censo"
       ],
-      "(Submitters)": [
+      "Login with Google &raquo;": [
          null,
-         "(Originadores)"
+         "Entrar con Google &raquo;"
       ],
-      "Places": [
+      "Login with Facebook &raquo;": [
          null,
-         "Lugares"
+         "Entrar con Facebook &raquo;"
       ],
-      "This is the overview page where you can see the state of open data across each key dataset (displayed down the left hand side). To find out more about each dataset, click on the info icon.\nEach icon in the data availability column represents important factors indicating data accessibility or availability - mouse over the icons to see what they are and the colours correspond to yes / no / unsure / no data.": [
+      "Login with your existing 3rd party account in a few seconds. We will not share your email with any third party. For more information see the": [
          null,
-         "Esta es la página de resumen donde puedes ver el estado de los datos abiertos en cada conjunto de datos (mostrado del lado inferior izquierdo). Para conocer más sobre cada conjunto de datos, da clic sobre el ícono de información.\nCada ícono en la columna de disponibilidad representa factores importantes que indican accesibilidad a los datos o su disponibilidad - desliza el ratón sobre los íconos para ver lo que son y los colores corresponden a sí / no / inseguro / sin datos."
+         "Entra con una cuenta existente en segundos. No compartiremos tu correo con ningún 3ero. Para más información mira "
       ],
-      "Is something missing or is the data incorrect? Then please hit either 'submit information' or 'propose revisions' on the right and contribute more information. We need a correct direct link to the official source of the data - so make sure to include this! Click the link icon under Location to see the current entry.": [
+      "terms of use": [
          null,
-         "¿Falta algo o los datos son incorrectos? Si es así, por favor da clic en 'enviar información' o 'sugerir revisiones' del lado derecho y contribuye con más información. ¡Necesitamos un enlace directo funcional a la fuente oficial de los datos - así que asegúrate de incluirlo! Dale clic al ícono de enlace debajo de Ubicación para ver la entrada actual. "
+         "términos de uso"
       ],
-      "Greyed out queued entries are submissions that are waiting approval by our editor team - but you can see the entry now and judge whether anything is missing.": [
+      "Number of places": [
          null,
-         "Las entradas que están en gris son propuestas que deben ser aprobadas por nuestro equipo de editores - pero puedes ver la entrada y decidir si falta algo"
+         "Lugares registrados"
+      ],
+      "Number of datasets": [
+         null,
+         "Conjuntos de datos"
+      ],
+      "Number of open datasets": [
+         null,
+         "Conjuntos de datos abiertos"
+      ],
+      "Percentage <a href='%s'>open</a>": [
+         null,
+         "Porcentaje <a href='%s'>abierto</a>"
+      ],
+      "Search": [
+         null,
+         "Buscar"
+      ],
+      "Share this page": [
+         null,
+         "Compartir esta página"
+      ],
+      "Close": [
+         null,
+         "Cerrar"
+      ],
+      "Map embed code": [
+         null,
+         "Código para embeber el mapa"
+      ],
+      "Use the following code to embed the map visualisation into your own website.": [
+         null,
+         "Usa este código para embeber la visualización del mapa en tu propio sitio"
+      ],
+      "If you are a developer, you can read more about the embed options here:": [
+         null,
+         "Si eres desarrollador, puedes leer más sobre las opciones de embebido aquí:"
+      ],
+      "Embed options": [
+         null,
+         "Opciones de embebido"
+      ],
+      "See more data on %(name)s in the Open Data Index": [
+         null,
+         "Ver más datos sobre %(name)s en el Open Data Index"
+      ],
+      "Ranked #1 against other places in the Index (avg.)": [
+         null,
+         "Clasificado #1 comparado con otros lugares en el Index (promedio)"
+      ],
+      "Tracking the state of government open data.": [
+         null,
+         "Siguiendo el estado de los datos abiertos de gobierno."
+      ],
+      "The first initiative of its kind, the Global Open Data Index provides the most comprehensive snapshot available of the global state of open data.": [
+         null,
+         "La primer iniciativa de este tipo, el Global Open Data Index, provee el panorama más amplio sobre el estado global de los datos abiertos."
+      ],
+      "Compare countries": [
+         null,
+         "Comparar países"
+      ],
+      "See insights": [
+         null,
+         "Ver información"
+      ],
+      "Embed": [
+         null,
+         "Embeber"
+      ],
+      "There is no data available.": [
+         null,
+         "No hay datos disponibles"
+      ],
+      "Read more &raquo;": [
+         null,
+         "Leer más &raquo;"
+      ],
+      "Sort by Rank": [
+         null,
+         "Ordenar por Clasificación"
+      ],
+      "Rank": [
+         null,
+         "Clasificación"
+      ],
+      "Sort by A-Z": [
+         null,
+         "Ordenar de la A-Z"
+      ],
+      "Place": [
+         null,
+         "Lugar"
       ],
       "Score": [
          null,
          "Calificación"
       ],
+      "No data": [
+         null,
+         "Sin datos"
+      ],
+      "Pending submissions": [
+         null,
+         "Envíos pendientes"
+      ],
       "Breakdown": [
          null,
          "Desglose"
       ],
-      "Location (URL)": [
-         null,
-         "Ubicación (URL)"
-      ],
-      "Information": [
+      "Info": [
          null,
          "Información"
+      ],
+      "Year": [
+         null,
+         "Año"
+      ],
+      "Admin": [
+         null,
+         "Admin"
+      ],
+      "Sorry, only one submission can be waiting for review at a time - please come back in a few days to submit new information": [
+         null,
+         "Lo sentimos, sólo puede haber una entrada para revisión a la vez - por favor vuelve en unos días para enviar nueva información"
       ],
       "Propose Revisions": [
          null,
          "Proponer Revisiones"
       ],
-      "Submit information": [
+      "Awaiting review": [
          null,
-         "Enviar información"
+         "Esperando revisión"
       ],
-      "&#8627; Awaiting review": [
+      "Submitted on": [
          null,
-         "&#8627; Esperando revisión"
+         "Enviado el"
       ],
-      "Review Now": [
+      "View Submission": [
          null,
-         "Revisar Ahora"
+         "Ver Entrada"
       ],
-      "With submissions from:": [
+      "Dataset": [
          null,
-         "Con propuestas de:"
-      ],
-      "Login with Google": [
-         null,
-         "Regístrate con Google"
-      ],
-      "Login with your existing google account in a few seconds.": [
-         null,
-         "Entra con tu cuenta existente de google en unos segundos"
-      ],
-      "Login with Google &raquo;": [
-         null,
-         "Registrarse con Google &raquo;"
-      ],
-      "&ndash; or &ndash;": [
-         null,
-         "&ndash; o &ndash;"
-      ],
-      "Skip Login": [
-         null,
-         "Brincar registro"
-      ],
-      "Continue without logging in.": [
-         null,
-         "Continuar sin registrarse"
-      ],
-      "Name (optional)": [
-         null,
-         "Nombre (opcional)"
-      ],
-      "If you provide a name we can credit you for your contribution (if not provided you'll be listed as Anonymous).": [
-         null,
-         "Si escribes tu nombre podremos darte crédito por tu contribución (si no lo escribes estarás registrado como Anónimo)"
-      ],
-      "Joe Bloggs": [
-         null,
-         "Juan Pérez"
-      ],
-      "Continue &raquo;": [
-         null,
-         "Continuar &raquo"
-      ],
-      "Overview": [
-         null,
-         "Resumen"
-      ],
-      "Number of places": [
-         null,
-         "Número de lugares"
-      ],
-      "Number of datasets": [
-         null,
-         "Número de conjuntos de datos"
-      ],
-      "Number of open datasets": [
-         null,
-         "Número de conjuntos de datos abiertos"
-      ],
-      "Percentage": [
-         null,
-         "Porcentaje"
-      ],
-      "open": [
-         null,
-         "abierto"
-      ],
-      "Total Score": [
-         null,
-         "Calificación total"
-      ],
-      "The Census Admin needs to add some places to the Places configuration sheet": [
-         null,
-         "El Administrador del Censo necesita agregar algunos sitios a la Hoja de configuración de lugares"
-      ],
-      "Click here to add to the census!": [
-         null,
-         "¡Click aquí para agregar al censo!"
-      ],
-      "Add new": [
-         null,
-         "Agregar nuevo "
-      ],
-      "Submit": [
-         null,
-         "Enviar"
-      ],
-      "Place and Dataset": [
-         null,
-         "Lugar y Conjunto de datos "
-      ],
-      "Please select": [
-         null,
-         "Por favor selecciona"
-      ],
-      "This will be public.": [
-         null,
-         "Esto será público."
-      ],
-      "By submitting material to the index you agreeing to <a href=\"http://okfn.org/terms-of-use/\">terms of use</a> and also to license your contribution (to the extent there are any rights in it!) under the <a href=\"http://opendatacommons.org/licenses/pddl/1.0/\">Open Data Commons Public Domain Dedication and License</a>.": [
-         null,
-         "Al enviar material al índice estás confirmando que estás de acuerdo con los <a href=\"http://okfn.org/terms-of-use/\">términos de uso</a> y también con publicar tu contribución (¡en la medida que existan derechos en ella!) bajo la licencia <a href=\"http://opendatacommons.org/licenses/pddl/1.0/\">Open Data Commons Public Domain Dedication and License</a>"
-      ],
-      "Data Availability Questions": [
-         null,
-         "Preguntas sobre la disponibilidad de los datos"
-      ],
-      "Current Entry": [
-         null,
-         "Entrada actual"
-      ],
-      "Publisher Information": [
-         null,
-         "Información de quien publica"
-      ],
-      "Data Quality": [
-         null,
-         "Calidad de los datos"
-      ],
-      "Review Submission": [
-         null,
-         "Revisar envío"
-      ],
-      "This will be logged and displayed": [
-         null,
-         "Esto será registrado y mostrado"
-      ],
-      "Publish": [
-         null,
-         "Publicar"
-      ],
-      "If this submission makes no changes to the current entry then please 'Reject' it rather than 'Accept'.\n        <br />\n        Note that you edit the submission before accepting it. In particular, please correct any spelling mistakes.\n        <br />\n        <strong>Publish will overwrite the whole current entry with the data in this form.</strong>": [
-         null,
-         "Si esta propuesta no hace cambios a la entrada actual por favor selecciona 'Rechazar' en vez de 'Aceptar'.\n<br/>\nAsegúrate de que estás editando la entrada antes de aceptarla. En particular, por favor corrige cualquier error ortográfico.\n<br/>\n<strong>Publicar sobreescribirá completamente la entrada actual con los datos del formulario. </strong>"
+         "Conjunto de datos"
       ]
    }
 }
