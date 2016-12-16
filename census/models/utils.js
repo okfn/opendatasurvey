@@ -115,7 +115,7 @@ var processStats = function(data, options) {
   } else {
     data.stats.currentEntryCount = 0;
     data.stats.currentEntryOpenCount = 0;
-    data.stats.openDataPercentCount = 0;
+    data.stats.openDataPercent = 0;
   }
 
   if (Array.isArray(data.datasets)) {
