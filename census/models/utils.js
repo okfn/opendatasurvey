@@ -111,11 +111,11 @@ var processStats = function(data, options) {
     }).length;
     data.stats.openDataPercent = parseInt(
       (data.stats.currentEntryOpenCount / data.stats.currentEntryCount) * 100,
-      10);
+      10) || 0;
   } else {
     data.stats.currentEntryCount = 0;
     data.stats.currentEntryOpenCount = 0;
-    data.stats.openDataPercentCount = 0;
+    data.stats.openDataPercent = 0;
   }
 
   if (Array.isArray(data.datasets)) {

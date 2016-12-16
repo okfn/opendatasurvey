@@ -33,6 +33,17 @@ var objects = [
         locales: ['en', 'es', 'uk']
       }
     }
+  },
+  {
+    model: 'Site',
+    data: {
+      id: 'site3',
+      settings: {
+        places: 'https://docs.google.com/spreadsheets/d/1QvZFGyICiuZmRxVll6peXkND_6QmHl7IQ_BYCw5Sso4/edit#gid=1',
+        datasets: 'https://docs.google.com/spreadsheets/d/18mw_Ig9zvwb514VQsTGfrg0WMrcUngxBIRzWSxpguho/edit#gid=0',
+        questions: 'https://docs.google.com/spreadsheets/d/1nwmk8uJEK-4K6-5SdBgoLUlUos-BhfYRgjS74YkhDGc/edit#gid=3',
+      }
+    }
   }
 ];
 
