@@ -20,7 +20,8 @@ describe('Open Data Census Tests', function() {
   it('counts all sites', function() {
     let query = models.Site.findAll();
     return query.then(results => {
-      assert.equal(results.length, 2);
+      // 3 sites loaded from fixtures
+      assert.equal(results.length, 3);
     });
   });
 

@@ -299,7 +299,7 @@ describe('System Control page', function () {
         this.app.get('models').Site.count(),
         this.app.get('models').Site.findById(siteID),
         function(count, siteData) {
-          assert.equal(count, 2);
+          assert.equal(count, 3);
           assert.isNotNull(siteData);
           assert.notEqual(siteData.places, '');
           assert.notEqual(siteData.places, '');

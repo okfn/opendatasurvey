@@ -281,6 +281,57 @@ describe('Place instance methods', function() {
   });
 });
 
+describe('Stats object', function() {
+  this.timeout(20000);
+
+  beforeEach(utils.setupFixtures);
+  afterEach(utils.dropFixtures);
+
+  before(function() {
+    this.dataOptions = {
+      models: models,
+      domain: 'site3',
+      dataset: null,
+      place: null,
+      year: null,
+      cascade: true,
+      scoredQuestionsOnly: true,
+      locale: null,
+      with: {Entry: true, Dataset: true, Place: true, Question: true}
+    };
+  });
+
+  it('has 0 openDataPercent for site with no entries', function() {
+    return modelUtils.getData(this.dataOptions)
+    .then(data => {
+      expect(data.stats).to.have.property('openDataPercent');
+      expect(data.stats.openDataPercent).to.equal(0);
+    });
+  });
+
+  it('has expected openDataPercent for site with entries', function() {
+    let dataOptions = _.assign(this.dataOptions, {domain: 'site1'});
+    return modelUtils.getData(dataOptions)
+    .then(data => {
+      expect(data.stats).to.have.property('openDataPercent');
+      expect(data.stats.openDataPercent).to.equal(25);
+    });
+  });
+
+  it('has 0 openDataPercent when entries are excluded', function() {
+    let dataOptions = _.assign(this.dataOptions,
+      {
+        domain: 'site1',
+        with: {Entry: false, Dataset: false, Place: false, Question: false}
+      });
+    return modelUtils.getData(dataOptions)
+    .then(data => {
+      expect(data.stats).to.have.property('openDataPercent');
+      expect(data.stats.openDataPercent).to.equal(0);
+    });
+  });
+});
+
 describe('Data access layer', function() {
   this.timeout(20000);
 
