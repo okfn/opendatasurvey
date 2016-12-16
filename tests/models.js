@@ -306,6 +306,7 @@ describe('Data access layer', function() {
       expect(data).to.have.property('datasets');
       expect(data).to.have.property('places');
       expect(data).to.have.property('questions');
+      expect(data).to.have.property('stats');
     });
   });
 
