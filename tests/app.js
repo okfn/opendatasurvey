@@ -4,6 +4,7 @@ var _ = require('lodash');
 var assert = require('chai').assert;
 var testUtils = require('./utils');
 var marked = require('marked');
+var tk = require('timekeeper');
 
 var entryFixtures = require('../fixtures/entry');
 var datasetFixtures = require('../fixtures/dataset');
@@ -11,6 +12,16 @@ var userFixtures = require('../fixtures/user');
 var questionSetFixtures = require('../fixtures/questionset');
 
 describe('Basics', function() {
+  before(function() {
+    // Mock date to 2016 for consistent testing
+    tk.freeze(new Date(2016, 11, 30));
+  });
+
+  after(function() {
+    // Reset date mock
+    tk.reset();
+  });
+
   before(testUtils.startApplication);
   after(testUtils.shutdownApplication);
 
@@ -95,8 +106,8 @@ describe('Basics', function() {
           this.browser.visit('/', () => {
             assert.ok(this.browser.success);
             var html = this.browser.html();
-            _.forEach(['custom_css', 'navbar_logo',
-                       'custom_footer', 'support_url'],
+            _.forEach(
+              ['custom_css', 'navbar_logo', 'custom_footer', 'support_url'],
               settingName => {
                 var textToCheck = site.settings[settingName];
                 assert.include(html, textToCheck);
