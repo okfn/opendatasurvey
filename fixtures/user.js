@@ -36,9 +36,19 @@ var objects = [
     data: {
       id: utils.userIds[3],
       emails: ['email4@example.com'],
-      providers: {'google': 'google4'},
+      providers: {google: 'google4'},
       firstName: 'First4',
       lastName: 'Last4'
+    }
+  },
+  {
+    model: 'User',
+    data: {
+      id: '0e7c393e-71dd-4368-93a9-fcfff59f9fff',
+      emails: ['anonymous@example.com'],
+      providers: {okfn: 'anonymous '},
+      firstName: 'anonymous',
+      lastName: 'anonymous'
     }
   }
 ];

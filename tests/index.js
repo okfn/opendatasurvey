@@ -28,7 +28,7 @@ describe('Open Data Census Tests', function() {
   it('counts all users', function() {
     let query = models.User.findAll();
     return query.then(results => {
-      assert.equal(results.length, 4);
+      assert.equal(results.length, 5);
     });
   });
 
