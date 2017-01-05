@@ -11,7 +11,7 @@ var redirectRoutes = require('./redirects');
 
 var pageRoutes = function(coreMiddlewares) {
   var router = express.Router();
-  var coreMixins = [mixins.requireDomain];
+  var coreMixins = [mixins.requireDomainAssets];
   var byYearMixins = coreMixins.concat(mixins.requireAvailableYear);
   var rootRouteMixins = byYearMixins.concat(mixins.requireSiteDomain);
 

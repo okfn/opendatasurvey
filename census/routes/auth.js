@@ -25,7 +25,7 @@ var authConfig = {
 };
 
 var authRoutes = function(router) {
-  var coreMixins = [mixins.requireAuthDomain, mixins.requireDomain];
+  var coreMixins = [mixins.requireAuthDomain, mixins.requireDomainAssets];
 
   router.get(utils.scoped('/login'), coreMixins, auth.login);
   router.get(utils.scoped('/loggedin'), coreMixins, auth.loggedin);

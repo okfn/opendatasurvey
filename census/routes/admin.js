@@ -7,7 +7,7 @@ var utils = require('./utils');
 
 var adminRoutes = function(coreMiddlewares) {
   var router = express.Router();
-  var coreMixins = [mixins.requireDomain, mixins.requireAuth,
+  var coreMixins = [mixins.requireDomainAssets, mixins.requireAuth,
     mixins.requireAdmin];
 
   router.use(coreMiddlewares);

@@ -91,6 +91,10 @@ var setupAuth = function() {
 };
 
 var setLocals = function(req, res, next) {
+  /*
+    Set local response variables for every request.
+  */
+
   var config = req.app.get('config');
 
   if ((config.get('test:testing') === true) &&
@@ -135,6 +139,8 @@ var setLocals = function(req, res, next) {
   res.locals.locales = config.get('locales');
   res.locals.currentLocale = req.locale;
   res.locals.currentYear = req.app.get('year');
+  // surveyYear may be overwritten by middleware
+  res.locals.surveyYear = req.app.get('year');
 
   /* eslint-disable dot-notation */
   res.locals['current_url'] = 'SCHEME://DOMAIN_PATH'

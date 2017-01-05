@@ -38,7 +38,10 @@ var setupLocalization = function(req, res, site) {
   res.locals.currentLocale = req.locale;
 };
 
-var requireDomain = function(req, res, next) {
+var requireDomainAssets = function(req, res, next) {
+  /*
+  Add domain specific properties to res.locals.
+  */
   res.locals.domain = req.params.domain;
 
   if (!req.params.domain) {
@@ -80,20 +83,25 @@ var requireDomain = function(req, res, next) {
           res.locals.siteAdmin = req.params.siteAdmin;
 
           req.app.get('models').Site.findById(req.params.domain)
-            .then(function(result) {
-              if (result) {
-                if (result.settings.reviewers) {
-                  result.settings.reviewers = _.each(result.settings.reviewers,
-                    function(e, i, l) {
-                      l[i] = e.trim();
-                    });
-                }
+          .then(function(result) {
+            if (result) {
+              if (result.settings.reviewers) {
+                result.settings.reviewers = _.each(result.settings.reviewers,
+                  function(e, i, l) {
+                    l[i] = e.trim();
+                  });
               }
-              req.params.site = result;
-              res.locals.site = result;
-              setupLocalization(req, res, result);
-              next();
-            });
+            }
+            req.params.site = result;
+            res.locals.site = result;
+            setupLocalization(req, res, result);
+
+            // set survey_year
+            if (_.has(req.params.site, 'settings.survey_year')) {
+              res.locals.surveyYear = req.params.site.settings['survey_year']; // eslint-disable-line dot-notation
+            }
+            next();
+          });
         }
       })
       .catch(function() {
@@ -141,7 +149,8 @@ var requireAvailableYear = function(req, res, next) {
    * If one is not passed, set to current year, and set cascade to true.
    */
   if (typeof req.params.year === 'undefined') {
-    req.params.year = req.app.get('year');
+    // req.params.year = req.app.get('year');
+    req.params.year = res.locals.surveyYear;
     req.params.isYearImplicitlySet = true;
     res.locals.year = req.params.year;
     req.params.cascade = true;
@@ -196,7 +205,7 @@ var requireSiteDomain = function(req, res, next) {
 };
 
 module.exports = {
-  requireDomain: requireDomain,
+  requireDomainAssets: requireDomainAssets,
   requireAuth: requireAuth,
   requireAdmin: requireAdmin,
   requireAvailableYear: requireAvailableYear,

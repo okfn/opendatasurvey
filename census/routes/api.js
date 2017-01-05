@@ -7,7 +7,7 @@ var utils = require('./utils');
 
 var apiRoutes = function(coreMiddlewares) {
   var router = express.Router();
-  var coreMixins = [mixins.requireDomain, mixins.requireAvailableYear];
+  var coreMixins = [mixins.requireDomainAssets, mixins.requireAvailableYear];
 
   router.use(coreMiddlewares);
 

@@ -6,7 +6,7 @@ var utils = require('./utils');
 
 var i18nRoutes = function(coreMiddlewares) {
   var router = express.Router();
-  var coreMixins = [mixins.requireDomain];
+  var coreMixins = [mixins.requireDomainAssets];
 
   router.use(coreMiddlewares);
 

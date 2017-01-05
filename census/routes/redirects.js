@@ -5,7 +5,7 @@ var mixins = require('../controllers/mixins');
 var utils = require('./utils');
 
 var redirectRoutes = function(router) {
-  var coreMixins = [mixins.requireDomain];
+  var coreMixins = [mixins.requireDomainAssets];
 
   router.get(utils.scoped('/country'), coreMixins, utils.makeRedirect('/'));
   router.get(utils.scoped('/country/results.json'), coreMixins,
