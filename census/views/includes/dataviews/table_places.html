@@ -68,9 +68,9 @@
 
                 {% if is_index != "true" -%}
                   {% if entry -%}
-                    {% if entry.year == currentYear -%}
+                    {% if entry.year == surveyYear -%}
                       {% set badgeClass = 'label-success' %}
-                    {% elif entry.year == (currentYear - 1) %}
+                    {% elif entry.year == (surveyYear - 1) %}
                       {% set badgeClass = 'label-warning' %}
                     {% else %}
                       {% set badgeClass = 'label-important'%}
