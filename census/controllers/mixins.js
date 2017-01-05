@@ -98,7 +98,8 @@ var requireDomainAssets = function(req, res, next) {
 
             // set survey_year
             if (_.has(req.params.site, 'settings.survey_year')) {
-              res.locals.surveyYear = req.params.site.settings['survey_year']; // eslint-disable-line dot-notation
+              res.locals.surveyYear =
+                parseInt(req.params.site.settings['survey_year'], 10); // eslint-disable-line dot-notation
             }
             next();
           });
