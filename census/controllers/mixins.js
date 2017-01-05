@@ -149,7 +149,6 @@ var requireAvailableYear = function(req, res, next) {
    * If one is not passed, set to current year, and set cascade to true.
    */
   if (typeof req.params.year === 'undefined') {
-    // req.params.year = req.app.get('year');
     req.params.year = res.locals.surveyYear;
     req.params.isYearImplicitlySet = true;
     res.locals.year = req.params.year;

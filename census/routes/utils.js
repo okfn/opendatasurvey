@@ -138,7 +138,6 @@ var setLocals = function(req, res, next) {
   res.locals.sysAdmin = req.app.get('sysAdmin');
   res.locals.locales = config.get('locales');
   res.locals.currentLocale = req.locale;
-  res.locals.currentYear = req.app.get('year');
   // surveyYear may be overwritten by middleware
   res.locals.surveyYear = req.app.get('year');
 
