@@ -5,7 +5,7 @@
   "author": "Open Knowledge Foundation",
   "repository": {
     "type": "git",
-    "url": "https://github.com/okfn/opendatacensus"
+    "url": "https://github.com/okfn/opendatasurvey"
   },
   "license": "MIT",
   "dependencies": {

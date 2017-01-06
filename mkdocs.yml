@@ -1,7 +1,7 @@
 site_name: Open Data Census
 site_description: Documentation for the Open Data Census application
 site_url: http://census.okfn.org/
-repo_url: https://github.com/okfn/opendatacensus
+repo_url: https://github.com/okfn/opendatasurvey
 pages:
   - Home: 'index.md'
   - Global Census: 'global/index.md'

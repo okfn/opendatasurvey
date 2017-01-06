@@ -1,6 +1,6 @@
 # Open Data Census
 
-[![Travis Build Status](https://travis-ci.org/okfn/opendatacensus.svg?branch=master)](https://travis-ci.org/okfn/opendatacensus)
+[![Travis Build Status](https://travis-ci.org/okfn/opendatasurvey.svg?branch=master)](https://travis-ci.org/okfn/opendatasurvey)
 [![Coverage Status](https://coveralls.io/repos/github/okfn/opendatacensus/badge.svg?branch=master)](https://coveralls.io/github/okfn/opendatacensus?branch=master)
 
 Open Data Census is a web application that supports a submission and review workflow to collect information on the state of open data.
@@ -39,8 +39,8 @@ Get a local server setup with the following steps:
 3. Ensure you are running the supported version of Node.js, which is [declared in the 'engines' section of `package.json`](package.json).
 4. Create a database with `createdb opendatacensus`.
 5. Add this line to your hosts file: `127.0.0.1 demo.dev.census.org global.dev.census.org id.dev.census.org system.dev.census.org`.
-6. Create a local directory called `opendatacensus` and move into it with `cd opendatacensus`.
-7. Clone the code with `git clone https://github.com/okfn/opendatacensus .`.
+6. Create a local directory called `opendatasurvey` and move into it with `cd opendatasurvey`.
+7. Clone the code with `git clone https://github.com/okfn/opendatasurvey .`.
 8. Install the dependencies with `npm install`.
 9. Create a copy of `settings.json.example` file and name it `settings.json` changing any values as required.
 
