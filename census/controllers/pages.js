@@ -44,7 +44,7 @@ var changes = function(req, res) {
   modelUtils.getData(dataOptions)
     .then(function(data) {
       data.loggedin = req.session.loggedin;
-      data.year = req.app.get('year');
+      data.year = res.locals.surveyYear;
       data.items = _.sortByOrder(data.entries
         .concat(data.pending)
         .concat(data.rejected), 'updatedAt', 'desc');
@@ -101,7 +101,7 @@ var overview = function(req, res) {
       if (!req.params.cascade) {
         data.urlContext += '/YEAR'.replace('YEAR', req.params.year);
       }
-      data.submissionsAllowed = (req.params.year === req.app.get('year'));
+      data.submissionsAllowed = (req.params.year === res.locals.surveyYear);
       data.extraWidth = data.datasets.length > 15;
       data.customText = req.params.site.settings[settingOverviewPage];
       data.missingPlaceText = req.params.site.settings[settingMissingPlace];
@@ -128,7 +128,7 @@ var place = function(req, res) {
       }
       data.loggedin = req.session.loggedin;
       data.year = req.params.year;
-      data.submissionsAllowed = (req.params.year === req.app.get('year'));
+      data.submissionsAllowed = (req.params.year === res.locals.surveyYear);
       data.extraWidth = data.datasets.length > 12;
       data.breadcrumbTitle = data.place.name;
 
@@ -155,7 +155,7 @@ var dataset = function(req, res) {
       }
       data.loggedin = req.session.loggedin;
       data.year = req.params.year;
-      data.submissionsAllowed = req.params.year === req.app.get('year');
+      data.submissionsAllowed = req.params.year === res.locals.surveyYear;
       data.breadcrumbTitle = data.dataset.name;
       return res.render('dataset.html', data);
     }).catch(console.trace.bind(console));
@@ -184,7 +184,7 @@ var entry = function(req, res) {
         data.urlContext += '/YEAR'.replace('YEAR', req.params.year);
       }
       data.year = req.params.year;
-      data.submissionsAllowed = req.params.year === req.app.get('year');
+      data.submissionsAllowed = req.params.year === res.locals.surveyYear;
 
       // TODO calculate relative score of entry
       data.computedRelativeScore = 0;

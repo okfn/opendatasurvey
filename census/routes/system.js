@@ -5,7 +5,7 @@ var mixins = require('../controllers/mixins');
 var utils = require('./utils');
 
 var systemRoutes = function(router) {
-  var coreMixins = [mixins.requireSystemDomain, mixins.requireDomain,
+  var coreMixins = [mixins.requireSystemDomain, mixins.requireDomainAssets,
     mixins.requireAdmin];
 
   router.get(utils.scoped('/control'), coreMixins, system.admin);

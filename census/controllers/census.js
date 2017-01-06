@@ -132,11 +132,11 @@ var submitPost = function(req, res, data) {
       place: req.body.place,
       dataset: req.body.dataset,
       details: req.body.details,
-      year: req.app.get('year'),
+      year: res.locals.surveyYear,
       submitterId: submitterId
     };
 
-    if (!current || current.year !== req.app.get('year')) {
+    if (!current || current.year !== res.locals.surveyYear) {
       console.log('We are definitely creating a new entry');
 
       objToSave = defaultObjectToSave;
@@ -363,7 +363,7 @@ var pending = function(req, res) {
         entry: entry,
         canReview: canReview,
         reviewClosed: entry.reviewResult ||
-          (entry.year !== req.app.get('year'))
+          (entry.year !== res.locals.surveyYear)
       });
     });
   }).catch(err => console.log(err.stack));

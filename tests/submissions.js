@@ -6,9 +6,13 @@ var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
 var chai = require('chai');
 var expect = chai.expect;
+var assert = chai.assert;
 var request = require('supertest');
+var tk = require('timekeeper');
+
 var validateData = require('../census/controllers/utils').validateData;
 var models = require('../census/models');
+var userFixtures = require('../fixtures/user');
 const testUtils = require('./utils');
 
 var validation = function(req, res) {
@@ -352,6 +356,159 @@ describe('#validationData()', function() {
         expect(errors).to.have.property('format');
         expect(errors).to.have.property('licenseurl');
         expect(_.size(errors)).to.be.equal(3);
+      });
+    });
+  });
+});
+
+describe('submitPost()', function() {
+  before(function() {
+    // Mock date to 2016 for consistent testing
+    tk.freeze(new Date(2016, 11, 30));
+  });
+
+  after(function() {
+    // Reset date mock
+    tk.reset();
+  });
+
+  before(testUtils.startApplication);
+  after(testUtils.shutdownApplication);
+
+  beforeEach(function() {
+    const port = testUtils.app.get('port');
+    this.site = 'http://site1.dev.census.org:' + port + '/';
+    this.app = testUtils.app;
+    const config = this.app.get('config');
+    config.set('test:testing', true);
+    config.set('test:user', {
+      userid: userFixtures[1].data.id,
+      emails: userFixtures[1].data.emails
+    });
+  });
+
+  this.timeout(20000);
+
+  it('should create new entry with calendar year', function() {
+    const siteID = 'site1';
+    return this.app.get('models').Entry.findAll({where: {site: siteID}})
+    .then(data => {
+      const originalEntryLength = data.length;
+      // minimum data necessary to create new entry
+      const newEntryData = {
+        answers: '{}',
+        aboutYouAnswers: '{}',
+        place: 'aplace',
+        dataset: 'adataset'
+      };
+      return request(this.app).post('/submit')
+      .set('Host', 'site1.dev.census.org:5000')
+      .send(newEntryData)
+      .expect(302)
+      .then(res => {
+        return [this.app.get('models').Entry.findAll({where: {site: siteID}}),
+          originalEntryLength];
+      });
+    })
+    .spread((newData, originalEntryLength) => {
+      const newEntry = _.find(newData, {place: 'aplace', dataset: 'adataset'});
+      expect(newEntry.year).to.be.equal(2016);
+      expect(newData.length).to.be.equal(originalEntryLength + 1);
+    });
+  });
+
+  it('should create new entry with survey_year year', function() {
+    const siteID = 'site1';
+    return this.app.get('models').Site.findById(siteID)
+    .then(site => {
+      // Set site1 `survey_year` to 2014.
+      let settings = _.assign(site.settings, {survey_year: '2014'});
+      return site.update({settings: settings});
+    })
+    .then(site => {
+      return this.app.get('models').Entry.findAll({where: {site: siteID}});
+    })
+    .then(entries => {
+      const originalEntryLength = entries.length;
+      // minimum data necessary to create new entry
+      const newEntryData = {
+        answers: '{}',
+        aboutYouAnswers: '{}',
+        place: 'anotherplace',
+        dataset: 'adataset'
+      };
+      return request(this.app).post('/submit')
+      .set('Host', 'site1.dev.census.org:5000')
+      .send(newEntryData)
+      .expect(302)
+      .then(res => {
+        return [this.app.get('models').Entry.findAll({where: {site: siteID}}),
+          originalEntryLength];
+      });
+    })
+    .spread((newData, originalEntryLength) => {
+      const newEntry = _.find(newData,
+        {place: 'anotherplace', dataset: 'adataset'});
+      expect(newEntry.year).to.be.equal(2014);
+      expect(newData.length).to.be.equal(originalEntryLength + 1);
+    });
+  });
+});
+
+describe('Index table shows entries and submissions', function() {
+  before(function() {
+    // Mock date to 2016 for consistent testing
+    tk.freeze(new Date(2016, 11, 30));
+  });
+
+  after(function() {
+    // Reset date mock
+    tk.reset();
+  });
+
+  before(testUtils.startApplication);
+  after(testUtils.shutdownApplication);
+
+  this.timeout(20000);
+
+  it('Site1 should have correct entries and submissions for calander date (2016)', function(done) {
+    const browser = testUtils.browser;
+    const port = testUtils.app.get('port');
+    browser.site = 'http://site1.dev.census.org:' + port + '/';
+    browser.visit('/', function() {
+      assert.ok(browser.success);
+      const acceptedEntries = browser.queryAll('.label-success');
+      const previousEntries = browser.queryAll('.label-warning, .label-important');
+      const pendingEntries = browser.queryAll('.pending');
+      assert.equal(acceptedEntries.length, 0);
+      assert.equal(previousEntries.length, 4);
+      assert.equal(pendingEntries.length, 1);
+      done();
+    });
+  });
+
+  it('Site1 should have correct entries and submissions for survey_year (2015)', function(done) {
+    const browser = testUtils.browser;
+    const port = testUtils.app.get('port');
+    const app = testUtils.app;
+    const siteID = 'site1';
+    app.get('models').Site.findById(siteID)
+    .then(site => {
+      // Set site1 `survey_year` to 2015.
+      let settings = _.assign(site.settings, {survey_year: '2015'});
+      return site.update({settings: settings});
+    })
+    .then(site => {
+      browser.site = 'http://site1.dev.census.org:' + port + '/';
+      browser.visit('/', function() {
+        assert.ok(browser.success);
+        const acceptedEntries = browser.queryAll('.label-success');
+        const previousEntries = browser.queryAll('.label-warning, .label-important');
+        const pendingEntries = browser.queryAll('.pending');
+        assert.equal(acceptedEntries.length, 2);
+        assert.equal(previousEntries.length, 1);
+        assert.equal(pendingEntries.length, 2);
+        done();
       });
     });
   });
