@@ -64,6 +64,8 @@
     "chai-as-promised": "^5.1.0",
     "chalk": "^1.1.0",
     "colors": "^1.1.0",
+    "command-line-args": "^3.0.5",
+    "command-line-commands": "^1.0.4",
     "coveralls": "^2.11.9",
     "enzyme": "^2.4.1",
     "eslint": "^3.0.1",
@@ -96,6 +98,7 @@
     "npm": "2.14.x"
   },
   "scripts": {
+    "entry-admin": "node scripts/entry-admin.js",
     "migrate_submissions": "node scripts/submissions.js",
     "migrate_entries": "node scripts/entries.js",
     "migrate_users": "node scripts/users.js",
