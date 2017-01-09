@@ -206,6 +206,18 @@ let submitPost = function(req, res, data) {
 };
 
 let submit = function(req, res) {
+  // If submissions are closed, render error template.
+  if (_.get(req.params.site, 'settings.close_submissions', false)) {
+    let msg = util.format(
+      req.gettext('Submissions are currently closed for %s.'),
+      res.locals.surveyYear);
+    res.status(403).render('404.html', {
+      title: req.gettext('Submissions closed'),
+      message: msg
+    });
+    return;
+  }
+
   let dataOptions = _.merge(modelUtils.getDataOptions(req), {
     scoredQuestionsOnly: false
   });

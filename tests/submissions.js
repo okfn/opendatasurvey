@@ -513,3 +513,76 @@ describe('Index table shows entries and submissions', function() {
     });
   });
 });
+
+describe('/submit route', function() {
+  before(function() {
+    // Mock date to 2016 for consistent testing
+    tk.freeze(new Date(2016, 11, 30));
+  });
+
+  after(function() {
+    // Reset date mock
+    tk.reset();
+  });
+
+  before(testUtils.startApplication);
+  after(testUtils.shutdownApplication);
+
+  beforeEach(function() {
+    const port = testUtils.app.get('port');
+    testUtils.browser.site = 'http://site1.dev.census.org:' + port + '/';
+    const config = testUtils.app.get('config');
+    config.set('test:testing', true);
+    config.set('test:user', {
+      userid: userFixtures[1].data.id,
+      emails: userFixtures[1].data.emails
+    });
+  });
+
+  this.timeout(20000);
+
+  it('open if close_submissions setting is absent', done => {
+    testUtils.browser.visit('/submit', () => {
+      assert.ok(testUtils.browser.success);
+      const html = testUtils.browser.html();
+      assert.include(html, 'Make a Submission');
+      done();
+    });
+  });
+
+  it('open if close_submissions setting is false', done => {
+    const siteID = 'site1';
+    testUtils.app.get('models').Site.findById(siteID)
+    .then(site => {
+      // Set site1 `survey_year` to 2015.
+      let settings = _.assign(site.settings, {close_submissions: false});
+      return site.update({settings: settings});
+    })
+    .then(site => {
+      testUtils.browser.visit('/submit', () => {
+        assert.ok(testUtils.browser.success);
+        const html = testUtils.browser.html();
+        assert.include(html, 'Make a Submission');
+        done();
+      });
+    });
+  });
+
+  it('closed if close_submissions setting is true', done => {
+    const siteID = 'site1';
+    testUtils.app.get('models').Site.findById(siteID)
+    .then(site => {
+      // Set site1 `survey_year` to 2015.
+      let settings = _.assign(site.settings, {close_submissions: true});
+      return site.update({settings: settings});
+    })
+    .then(site => {
+      testUtils.browser.visit('/submit', () => {
+        testUtils.browser.assert.status(403);
+        const html = testUtils.browser.html();
+        assert.include(html, 'Submissions are currently closed for 2016.');
+        done();
+      });
+    });
+  });
+});
