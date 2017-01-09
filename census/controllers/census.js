@@ -15,7 +15,7 @@ const React = require('react'); // eslint-disable-line no-unused-vars
 const renderToString = require('react-dom/server').renderToString;
 const EntryForm = require('../ui_app/EntryForm');
 
-var submitGet = function(req, res, data) {
+let submitGet = function(req, res, data) {
   let dataset = _.find(data.datasets,
                        {id: data.currentState.match.dataset});
   if (!dataset)
@@ -88,7 +88,7 @@ var submitGet = function(req, res, data) {
   });
 };
 
-var submitPost = function(req, res, data) {
+let submitPost = function(req, res, data) {
   let approveFirstSubmission =
     _.get(req.params.site.settings, 'approve_first_submission', false);
 
@@ -205,7 +205,19 @@ var submitPost = function(req, res, data) {
   }
 };
 
-var submit = function(req, res) {
+let submit = function(req, res) {
+  // If submissions are closed, render error template.
+  if (_.get(req.params.site, 'settings.close_submissions', false)) {
+    let msg = util.format(
+      req.gettext('Submissions are currently closed for %s.'),
+      res.locals.surveyYear);
+    res.status(403).render('404.html', {
+      title: req.gettext('Submissions closed'),
+      message: msg
+    });
+    return;
+  }
+
   let dataOptions = _.merge(modelUtils.getDataOptions(req), {
     scoredQuestionsOnly: false
   });
@@ -254,7 +266,7 @@ let _getDiscussionURL = function(req, dataset, place) {
   return submissionDiscussionURL;
 };
 
-var pending = function(req, res) {
+let pending = function(req, res) {
   let entryQueryParams = {
     where: {id: req.params.id},
     include: [
@@ -369,7 +381,7 @@ var pending = function(req, res) {
   }).catch(err => console.log(err.stack));
 };
 
-var reviewPost = function(req, res) {
+let reviewPost = function(req, res) {
   // Get the entry from the DB
   req.app.get('models').Entry.findById(req.params.id)
   .then(entry => {
@@ -440,7 +452,7 @@ var reviewPost = function(req, res) {
   }).catch(err => console.log(err.stack));
 };
 
-var review = function(req, res) {
+let review = function(req, res) {
   if (req.method === 'POST') {
     reviewPost(req, res);
   } else {

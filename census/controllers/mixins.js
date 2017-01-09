@@ -1,13 +1,13 @@
 'use strict';
 
-var _ = require('lodash');
-var utils = require('./utils');
+const _ = require('lodash');
+const utils = require('./utils');
 
-var setupLocalization = function(req, res, site) {
-  var config = req.app.get('config');
+let setupLocalization = function(req, res, site) {
+  const config = req.app.get('config');
 
   // Try to use site-specific settings + fallback to defaults
-  var requestedLocales = config.get('locales');
+  let requestedLocales = config.get('locales');
   if (_.isArray(site.settings.locales)) {
     requestedLocales = site.settings.locales;
   } else
@@ -16,8 +16,8 @@ var setupLocalization = function(req, res, site) {
   }
 
   // Sanitize locales list: remove invalid and unavailable locales
-  var availableLocales = config.get('availableLocales');
-  var locales = _.chain(requestedLocales)
+  const availableLocales = config.get('availableLocales');
+  let locales = _.chain(requestedLocales)
     .map(_.trim).filter(function(item) {
       if (item.length === 0) {
         return false;
@@ -38,7 +38,7 @@ var setupLocalization = function(req, res, site) {
   res.locals.currentLocale = req.locale;
 };
 
-var requireDomainAssets = function(req, res, next) {
+let requireDomainAssets = function(req, res, next) {
   /*
   Add domain specific properties to res.locals.
   */
@@ -55,8 +55,7 @@ var requireDomainAssets = function(req, res, next) {
     req.params.siteAdmin = [];
     next();
   } else {
-    var query = req.app.get('models').Registry.findById(req.params.domain);
-
+    const query = req.app.get('models').Registry.findById(req.params.domain);
     query
       .then(function(result) {
         if (!result) {
@@ -70,7 +69,7 @@ var requireDomainAssets = function(req, res, next) {
           req.params.flags = {characteristics: false, comments: false};
           if (result.settings.flags) {
             _.each(result.settings.flags.split(','), function(e, i, l) {
-              var feature = e.trim();
+              const feature = e.trim();
               if (_.indexOf(_.keys(req.params.flags), feature) >= 0) {
                 req.params.flags[feature] = true;
               }
@@ -114,9 +113,9 @@ var requireDomainAssets = function(req, res, next) {
   }
 };
 
-var requireAuth = function(req, res, next) {
+let requireAuth = function(req, res, next) {
   if (!req.user) {
-    var redirectTo = req.app.get('urlTmpl')
+    const redirectTo = req.app.get('urlTmpl')
       .replace('SCHEME', req.app.get('config').get('connection_scheme'))
       .replace('SUB', req.app.get('config').get('auth_subdomain'))
       .replace('DOMAIN', req.app.get('config').get('base_domain'))
@@ -130,7 +129,7 @@ var requireAuth = function(req, res, next) {
   next();
 };
 
-var requireAdmin = function(req, res, next) {
+let requireAdmin = function(req, res, next) {
   if (req.user && (
     (_.intersection(req.params.siteAdmin, req.user.emails)).length >= 1) ||
     (_.intersection(req.app.get('sysAdmin'), req.user.emails).length >= 1)
@@ -144,7 +143,7 @@ var requireAdmin = function(req, res, next) {
   }
 };
 
-var requireAvailableYear = function(req, res, next) {
+let requireAvailableYear = function(req, res, next) {
   /**
    * Set year as a request param. If one is passed explicitly, try to use it.
    * If one is not passed, set to current year, and set cascade to true.
@@ -171,7 +170,7 @@ var requireAvailableYear = function(req, res, next) {
   next();
 };
 
-var requireAuthDomain = function(req, res, next) {
+let requireAuthDomain = function(req, res, next) {
   if (req.params.domain !== req.app.get('authDomain')) {
     res.status(404).render('404.html', {
       title: 'Not found',
@@ -182,7 +181,7 @@ var requireAuthDomain = function(req, res, next) {
   next();
 };
 
-var requireSystemDomain = function(req, res, next) {
+let requireSystemDomain = function(req, res, next) {
   if (req.params.domain !== req.app.get('systemDomain')) {
     res.status(404).render('404.html', {
       title: 'Not found',
@@ -193,7 +192,7 @@ var requireSystemDomain = function(req, res, next) {
   next();
 };
 
-var requireSiteDomain = function(req, res, next) {
+let requireSiteDomain = function(req, res, next) {
   if (req.params.domain === req.app.get('authDomain') ||
     req.params.domain === req.app.get('systemDomain')
   ) {
