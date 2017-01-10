@@ -53,7 +53,8 @@ let submitGet = function(req, res, data) {
                                            {datasetContext: datasetContext}),
         placeholder: question.placeholder,
         config: question.config,
-        currentValue: _.get(_.find(currentAnswers, {id: question.id}), 'value', '')
+        currentValue:
+          _.get(_.find(currentAnswers, {id: question.id}), 'value', '')
       };
     });
     // We might have form data to prefill the EntryForm with.

@@ -36,4 +36,5 @@ rules:
     - warn
   react/jsx-uses-vars:
     - error
-
+  operator-assignment:
+    - off

@@ -45,9 +45,8 @@ var truncate = function(str, width) {
   }
   if (str.length <= width) {
     return str;
-  } else {
-    return str.substr(0,width - 1) + '...';
   }
+  return str.substr(0, width - 1) + '...';
 };
 
 // Why? Rotated Heading Cells are hard.
@@ -59,9 +58,8 @@ var rotate = function(str) {
   if (parts.length > 2) {
     return _.first(parts, split).join(' ') + '&nbsp;' +
       _.rest(parts, split).join('&nbsp;');
-  } else {
-    return str;
   }
+  return str;
 };
 
 var dateformat = function(str, lang, fmt) {
@@ -96,9 +94,8 @@ var simpledelta = function(str) {
     return 'Today';
   } else if (days === 1) {
     return 'Yesterday';
-  } else {
-    return 'COUNT days ago'.replace('COUNT', days);
   }
+  return 'COUNT days ago'.replace('COUNT', days);
 };
 
 module.exports = {

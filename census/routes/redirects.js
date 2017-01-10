@@ -1,6 +1,5 @@
 'use strict';
 
-var express = require('express');
 var mixins = require('../controllers/mixins');
 var utils = require('./utils');
 

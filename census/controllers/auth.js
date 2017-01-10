@@ -28,7 +28,6 @@ var loggedin = function(req, res) {
   } else {
     res.redirect('/');
   }
-
 };
 
 module.exports = {

@@ -14,8 +14,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.JSONB,
       allowNull: false
     }
-  },
-  {
+  }, {
     tableName: 'site'
   });
 

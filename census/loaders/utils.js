@@ -6,49 +6,6 @@ var request = require('request');
 var xss = require('xss');
 var csv = require('csv');
 
-let spreadsheetParse = function(fileUrl) {
-  return new Promise(function(resolve, reject) {
-    let csvUrl = getCsvForGoogleSheet(fileUrl);
-    getDataAsCsv(csvUrl, function(err, result) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(result);
-      }
-    });
-  });
-};
-
-var getDataAsCsv = function(url, cb) {
-  request.get(url, function(err, res, body) {
-    if (err) {
-      cb(err, false);
-    }
-    var output = [];
-    var parser = csv.parse({
-      relax: true,
-      'skip_empty_lines': true
-    });
-
-    parser
-      .on('readable', function(data) {
-        while (data = parser.read()) {
-          output.push(data);
-        }
-      })
-      .on('error', function(err) {
-        cb(err, false);
-      })
-      .on('end', function() {
-        var result = _mapParsedCsvData(output);
-        cb(false, result);
-      });
-
-    parser.write(body);
-    parser.end();
-  });
-};
-
 var _mapParsedCsvData = function(parsedData) {
   var result = [];
   var keys = [];
@@ -81,9 +38,9 @@ var getSheetParams = function(url) {
 
   matches = url.match(newPattern) || url.match(oldPattern);
 
-  if (!!matches) {
+  if (matches) {
     out.key = matches[1];
-    out.sheet = parseInt(matches[3]);
+    out.sheet = parseInt(matches[3], 10);
     if (isNaN(out.sheet)) {
       out.sheet = 0;
     }
@@ -91,20 +48,62 @@ var getSheetParams = function(url) {
   return out;
 };
 
+var getCsvFromSheetParams = function(info) {
+  var tmpl = 'https://docs.google.com/spreadsheet/pub?key=KEY&' +
+    'single=true&gid=INDEX&output=csv';
+  return tmpl.replace('KEY', info.key).replace('INDEX', info.sheet);
+};
+
 var getCsvForGoogleSheet = function(url) {
   var info = getSheetParams(url);
   if (info.key.length === 0) {
     // sheet may have already been a CSV...
     return url;
-  } else {
-    return getCsvFromSheetParams(info);
   }
+  return getCsvFromSheetParams(info);
 };
 
-var getCsvFromSheetParams = function(info) {
-  var tmpl = 'https://docs.google.com/spreadsheet/pub?key=KEY&' +
-    'single=true&gid=INDEX&output=csv';
-  return tmpl.replace('KEY', info.key).replace('INDEX', info.sheet);
+var getDataAsCsv = function(url, cb) {
+  request.get(url, function(err, res, body) {
+    if (err) {
+      cb(err, false);
+    }
+    var output = [];
+    var parser = csv.parse({
+      relax: true,
+      skip_empty_lines: true
+    });
+
+    parser
+      .on('readable', function(data) {
+        while ((data = parser.read())) {
+          output.push(data);
+        }
+      })
+      .on('error', function(err) {
+        cb(err, false);
+      })
+      .on('end', function() {
+        var result = _mapParsedCsvData(output);
+        cb(false, result);
+      });
+
+    parser.write(body);
+    parser.end();
+  });
+};
+
+let spreadsheetParse = function(fileUrl) {
+  return new Promise(function(resolve, reject) {
+    let csvUrl = getCsvForGoogleSheet(fileUrl);
+    getDataAsCsv(csvUrl, function(err, result) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
 };
 
 module.exports = {
