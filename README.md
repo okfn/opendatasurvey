@@ -55,7 +55,7 @@ Now we should be ready to run the server:
 Other things you can do:
 
 * Run the test suite with `npm test`
-* Check your code style with npm run jscs (according to the Google style guide)
+* Check your code style with `node_modules/eslint/bin/eslint.js census/<filename.js>` using the eslint config `/.eslintrc`.
 
 
 ### Configuration Sheets
