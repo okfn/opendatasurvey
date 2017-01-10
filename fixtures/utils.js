@@ -1,5 +1,9 @@
-var uuid = require('node-uuid');
-var userIds = [
+'use strict';
+
+const uuid = require('node-uuid');
+const controllerUtils = require('../census/controllers/utils');
+
+const userIds = [
   uuid.v4(),
   uuid.v4(),
   uuid.v4(),
@@ -7,5 +11,6 @@ var userIds = [
 ];
 
 module.exports = {
-  userIds: userIds
+  userIds: userIds,
+  ANONYMOUS_USER_ID: controllerUtils.ANONYMOUS_USER_ID
 };

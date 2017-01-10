@@ -1,6 +1,8 @@
-var utils = require('./utils');
+'use strict';
 
-var objects = [
+const utils = require('./utils');
+
+const objects = [
   {
     model: 'User',
     data: {
@@ -44,7 +46,7 @@ var objects = [
   {
     model: 'User',
     data: {
-      id: '0e7c393e-71dd-4368-93a9-fcfff59f9fff',
+      id: utils.ANONYMOUS_USER_ID,
       emails: ['anonymous@example.com'],
       providers: {okfn: 'anonymous '},
       firstName: 'anonymous',
