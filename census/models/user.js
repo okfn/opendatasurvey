@@ -42,8 +42,7 @@ module.exports = function(sequelize, DataTypes) {
     authenticationSalt: {
       type: DataTypes.STRING
     }
-  },
-  {
+  }, {
     instanceMethods: {
       setPassword: function(password) {
         var salt = bcrypt.genSaltSync(8);

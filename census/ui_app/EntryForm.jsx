@@ -17,8 +17,8 @@ const EntryForm = React.createClass({
     // We can proceed if the form questions are valid, or if we're rejecting
     // the entry.
     if ((questionsValid && yourKnowledgeValid) || reviewAction === 'reject') {
-      let form = $('<form>').attr({ // eslint-disable-line quote-props
-        method: 'post',
+      let form = $('<form>').attr({
+        method: 'post', // eslint-disable-line quote-props
         'accept-charset': 'utf-8'
       });
 

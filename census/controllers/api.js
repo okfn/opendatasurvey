@@ -245,7 +245,7 @@ let entries = function(req, res, next) {
   });
 
   // If year is implicitly set
-  if (!!req.params.isYearImplicitlySet) {
+  if (req.params.isYearImplicitlySet) {
     dataOptions = _.merge(dataOptions, {year: false});
   }
 

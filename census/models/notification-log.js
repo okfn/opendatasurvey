@@ -18,8 +18,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       comment: 'Datetime notification last sent'
     }
-  },
-  {
+  }, {
     tableName: 'notification_log',
     timestamps: false
   });
