@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+My overview layout.
+
+{{ is_index }}
+
+{{ gettext("Number of entries") }}: {{ foo.count }}
+
+{{ format("I need a %s here", ["Thing"]) }}
+
+{{ contents }}
+
+{% endblock content %}
+

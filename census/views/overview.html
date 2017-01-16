@@ -107,7 +107,9 @@
 
   <hr/>
 
-  {% include 'includes/dataviews/table_places.html' %}
+  {% if not is_index %}
+    {% include 'includes/dataviews/table_places.html' %}
+  {% endif %}
 
 </div>
 

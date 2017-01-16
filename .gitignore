@@ -14,3 +14,4 @@ sandbox/*
 npm-debug.log
 coverage/*
 .sass-cache/
+index/build/*
