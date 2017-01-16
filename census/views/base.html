@@ -113,7 +113,7 @@
 
     {% block breadcrumb %}{% endblock %}
 
-    {% block content %}{{content}}{% endblock %}
+    {% block content %}{{ content or contents }}{% endblock %}
 
     <footer class="site-footer">
       <div class="container">
