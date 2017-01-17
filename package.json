@@ -23,6 +23,7 @@
     "cookie-session": "^1.2.0",
     "cors": "^2.6.1",
     "csv": "^1.1.0",
+    "debug": "^2.6.0",
     "disqus-node": "^0.13.0",
     "emailjs": "^1.0.8",
     "express": "^4.12.4",
@@ -106,7 +107,7 @@
   },
   "scripts": {
     "entry-admin": "node scripts/entry-admin.js",
-    "ms_generate_dev": "DEBUG=metalsmith:* node index/generate.js",
+    "ms_generate_dev": "DEBUG=metalsmith:*,metalsmith-godi-moveresults node index/generate.js",
     "migrate_users": "node scripts/users.js",
     "start": "node server.js",
     "debug": "node-debug debug-server.js --no-preload --hidden='node_modules'",

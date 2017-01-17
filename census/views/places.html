@@ -1,47 +1,55 @@
-{% extends "base.html" %}
+{% extends "page.html" %}
 
 {% block title %}
 {{ this.title }}
 {% endblock %}
 
-{% block body_class %}home{% endblock %}
 
 {% block content %}
-{% if is_index %}
-{% include 'includes/godi-home.html' %}
-{% else %}
+<header id="place-intro">
+  <div class="container">
+    <h1>{{ gettext('Place overview') }} </h1>
+    <hr>
+
+    <div id="summary-stats" class="row">
+      <div class="stat col-md-3">
+        <strong>9%</strong>
+        <span class="percent-open-context" data-toggle="popover" title="" data-content="This is the percentage of all the dataset entries that are open as per the Open Definition. We get one dataset entry for each dataset and place (e.g. Transport Timetables for the United Kingdom is one dataset entry). For each entry we check whether the dataset is fully open as per the Open Definition, and then divide by the total number of entries to get a percentage. &lt;a href=&quot;faq/#open-data&quot;&gt;Find out more about Open Data&lt;/a&gt;" data-original-title="What does this mean?">Percent Open <i class="fa fa-question-circle"></i></span>
+        <small>
+            Down
+            from 12% in 2014
+        </small>
+      </div>
+      <div class="stat col-md-3">
+        <strong>122</strong>
+        <span>Number of Places</span>
+        <small>
+            Up
+            from 97 in 2014
+        </small>
+      </div>
+      <div class="stat col-md-3">
+        <strong>1586</strong>
+        <span>Number of Entries</span>
+        <small>
+            Up
+            from 970 in 2014
+        </small>
+      </div>
+      <div class="stat col-md-3">
+        <strong>156</strong>
+        <span>Number of Open Datasets</span>
+        <small>
+            Up
+            from 124 in 2014
+        </small>
+      </div>
+    </div>
+    <hr>
+  </div>
+</header>
+
 <div class="container content">
-  <ul class="summary featured">
-    <li>
-      <dl>
-        <dt>{{ gettext("Number of places") }}</dt>
-        <dd id="nc">{{ stats.placeCount }}</dd>
-      </dl>
-    </li>
-    <li>
-      <dl>
-        <dt>{{ gettext("Number of datasets") }}</dt>
-        <dd id="nds">{{ stats.currentEntryCount }}</dd>
-      </dl>
-    </li>
-    <li>
-      <dl>
-        <dt>{{ gettext("Number of open datasets") }}</dt>
-        <dd id="nok">{{ stats.currentEntryOpenCount }}</dd>
-      </dl>
-    </li>
-    <li>
-      <dl>
-        <dt>{{ format(gettext("Percentage <a href='%s'>open</a>"), ['http://okfn.org/opendata/']) }}</dt>
-        <dd id="nokpercent">{{ stats.openDataPercent }}%</dd>
-      </dl>
-    </li>
-  </ul>
-
-  <hr/>
-
-  {{ customText }}
-
   <div class="row">
 
     <div class="col-md-4">
@@ -110,7 +118,5 @@
   {% include 'includes/dataviews/table_places.html' %}
 
 </div>
-
-{% endif %}
 
 {% endblock %}
