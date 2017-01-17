@@ -15,7 +15,7 @@ const templateFilters = require('../census/filters');
 const nunjucks = require('nunjucks');
 const i18n = require('i18n-abide');
 
-const godiMoveResults = require('./metalsmith-godi-moveresults');
+const godiModifyData = require('./metalsmith-godi-modifydata');
 
 const templatePath = path.join(__dirname, '../census/views/');
 // const templatePath = path.join(__dirname, './layouts/');
@@ -37,11 +37,12 @@ Metalsmith(__dirname)
   })
   .use(request({
     datasets: 'http://global-test.dev.census.org:5000/api/datasets.json',
-    places: 'http://global-test.dev.census.org:5000/api/places.json'
+    places: 'http://global-test.dev.census.org:5000/api/places/score/2016.json',
+    entries: 'http://global-test.dev.census.org:5000/api/entries.json'
   }, {
     json: true
   }))
-  .use(godiMoveResults())
+  .use(godiModifyData())
   .source('./src')
   .destination('./build')
   .clean(true)

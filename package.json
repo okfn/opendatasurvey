@@ -107,7 +107,7 @@
   },
   "scripts": {
     "entry-admin": "node scripts/entry-admin.js",
-    "ms_generate_dev": "DEBUG=metalsmith:*,metalsmith-godi-moveresults node index/generate.js",
+    "ms_generate_dev": "DEBUG=metalsmith:*,metalsmith-godi-modifydata node index/generate.js",
     "migrate_users": "node scripts/users.js",
     "start": "node server.js",
     "debug": "node-debug debug-server.js --no-preload --hidden='node_modules'",
