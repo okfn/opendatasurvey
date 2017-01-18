@@ -128,7 +128,7 @@ describe('API', function() {
         assert.equal(item.answers.length, 18);
         // answer object has correct structure
         assert.deepEqual(_.keys(item.answers[0]),
-                         ['id', 'value', 'commentValue']);
+                         ['id', 'value', 'pass', 'commentValue']);
         // check `format` answer (multiple choice question)
         assert.deepEqual(_.find(item.answers, 'id', 'format').value,
                          ['AsciiDoc', 'CSV', 'HTML']);
