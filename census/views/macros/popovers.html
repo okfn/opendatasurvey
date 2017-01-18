@@ -11,16 +11,21 @@
                                     actionUrl,
                                     actionText,
                                     actionClass,
-                                    submissionsAllowed) -%}
+                                    submissionsAllowed,
+                                    is_index) -%}
 {% if not entry -%}
   {{ gettext('There is no data available.') }}
 {% else %}
   <ul class="availability-popover">
     {% for question in questions -%}
       {% if question.score -%}
-        {% set answer = entry.getAnswerValueForQuestion(question) %}
-        {% set pass = 'yes' if question.pass(answer) else 'no' %}
-
+        {% if is_index %}
+          {% set answer = entry.answers|find({'id': question.id}) %}
+          {% set pass = 'yes' if answer.pass else 'no' %}
+        {% else %}
+          {% set answer = entry.getAnswerValueForQuestion(question) %}
+          {% set pass = 'yes' if question.pass(answer) else 'no' %}
+        {% endif %}
         <li class="{{ pass }}" title="{{ question.question }}">
           <i class="fa fa-{{ question.icon }}"></i>&nbsp;{% if pass == 'yes' %}It's {% elif pass == 'no' %}It's not {% endif %}{{ question.questionshort|lower }}
         </li>
@@ -33,10 +38,12 @@
 
   {% if is_index != "true" -%}
     <div class='btn-group'>
-    {% endif %}
+  {% endif %}
     <a class="btn btn-primary" href="/entry/{{ place.id }}/{{ dataset.id }}/">{{ gettext("Read more &raquo;") }}</a>
-    {% if is_index != "true" and submissionsAllowed %}
-      <a class='btn btn-{{actionClass}}' href='{{actionUrl}}'>{{actionText}}</a>
+  {% if is_index != "true" and submissionsAllowed %}
+    <a class='btn btn-{{actionClass}}' href='{{actionUrl}}'>{{actionText}}</a>
+  {%- endif %}
+  {% if is_index != "true" -%}
     </div>
   {%- endif %}
 

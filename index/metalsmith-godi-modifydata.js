@@ -16,7 +16,7 @@ function plugin() {
   return function(files, metalsmith, done) {
     setImmediate(done);
     let metadata = metalsmith.metadata();
-    const keys = ['datasets', 'places', 'entries'];
+    const keys = ['datasets', 'places', 'entries', 'questions'];
     keys.forEach(function(key) {
       if (metadata.hasOwnProperty(key) && metadata[key].hasOwnProperty('results')) {
         debug('Modifying metadata.' + key);
@@ -32,6 +32,14 @@ function plugin() {
           place.computedRelativeScore = place.relativeScore;
           delete place.relativeScore;
         }
+      });
+    }
+
+    // Munge questions
+    if (metadata.hasOwnProperty('questions')) {
+      // We're only interested in open, scored questions.
+      metadata.questions = metadata.questions.filter(function(q) {
+        return q.openquestion && q.score > 0;
       });
     }
   };

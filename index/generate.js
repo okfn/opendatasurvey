@@ -35,17 +35,18 @@ Metalsmith(__dirname)
     // format function needs to be available in templates
     format: i18n.format
   })
+  .source('./src')
+  .destination('./build')
+  .clean(true)
   .use(request({
     datasets: 'http://global-test.dev.census.org:5000/api/datasets.json',
     places: 'http://global-test.dev.census.org:5000/api/places/score/2016.json',
-    entries: 'http://global-test.dev.census.org:5000/api/entries.json'
+    entries: 'http://global-test.dev.census.org:5000/api/entries.json',
+    questions: 'http://global-test.dev.census.org:5000/api/questions.json'
   }, {
     json: true
   }))
   .use(godiModifyData())
-  .source('./src')
-  .destination('./build')
-  .clean(true)
   .use(markdown())
   .use(permalinks())
   .use(layouts({

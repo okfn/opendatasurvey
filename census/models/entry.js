@@ -114,6 +114,7 @@ module.exports = function(sequelize, DataTypes) {
           {
             'id': '<question id>',
             'value': '<answer value>',
+            'pass': <boolean>,
             'commentValue': '<comment value>'
           },
           {...}
@@ -123,9 +124,11 @@ module.exports = function(sequelize, DataTypes) {
         list of chosen values.
         */
         let answers = _.map(questions, q => {
+          const answer = this.getAnswerValueForQuestion(q);
           return {
             id: q.id,
-            value: this.getAnswerValueForQuestion(q),
+            value: answer,
+            pass: q.pass(answer),
             commentValue: this.getAnswerKeyValueForId(q.id, 'commentValue')
           };
         });

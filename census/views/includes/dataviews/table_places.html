@@ -52,12 +52,17 @@
 
                 {% if entry %}
                   {% set popoverTitle = popovers.popover_comparison_title(dataset, place) %}
-                  {% set popoverContent = popovers.popover_comparison_content(entry, place, dataset, questions, gettext, actionUrl, actionText, actionClass, submissionsAllowed) %}
+                  {% set popoverContent = popovers.popover_comparison_content(entry, place, dataset, questions, gettext, actionUrl, actionText, actionClass, submissionsAllowed, is_index) %}
                   <ul class="availability availability-comparative" data-toggle="popover" title="{% filter escape %}{{ popoverTitle }}{% endfilter %}" data-content="{% filter escape %}{{ popoverContent }}{% endfilter %}">
                   {% for question in questions -%}
                     {% if entry -%}
-                      {% set answer = entry.getAnswerValueForQuestion(question) %}
-                      {% set pass = 'yes' if question.pass(answer) else 'no' %}
+                      {% if is_index %}
+                        {% set answer = entry.answers|find({'id': question.id}) %}
+                        {% set pass = 'yes' if answer.pass else 'no' %}
+                      {% else %}
+                        {% set answer = entry.getAnswerValueForQuestion(question) %}
+                        {% set pass = 'yes' if question.pass(answer) else 'no' %}
+                      {% endif %}
                     {% else %}
                       {% set pass = 'maybe' %}
                     {%- endif %}
