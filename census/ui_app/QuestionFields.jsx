@@ -440,14 +440,14 @@ const QuestionFieldMultipleChoiceOther = props => {
 let QuestionFieldMultipleChoice = React.createClass({
   getDefaultOptionValuesForOptionList(optionList) {
     return _.map(optionList, option => {
-      return {description: option, checked: false};
+      return {checked: false, description: option};
     });
   },
 
   componentWillMount() {
-    // Set the defaultOptions collection, either from a list of
-    // `options` in the Question's config, or from the context using a key
-    // defined in the Question's config (`optionsContextKey`).
+    // Set the defaultOptions collection, either from a list of `options` in
+    // the Question's config, or from the context using a key defined in the
+    // Question's config (`optionsContextKey`).
     let defaultOptions = [];
     if (_.has(this.props.config, 'optionsContextKey')) {
       // Config directs to get the value from the context for the key set in
@@ -462,9 +462,22 @@ let QuestionFieldMultipleChoice = React.createClass({
       defaultOptions =
         this.getDefaultOptionValuesForOptionList(this.props.config.options);
     }
-    // Merge the defaultOptions with those from the value in props to
-    // get the value store we'll use for the render.
-    this.optionValues = _.assign(defaultOptions, this.props.value);
+    // Merge the defaultOptions with those from the value in props to get the
+    // value store we'll use for the render.
+    this.optionValues = defaultOptions;
+    if (this.props.value.length) {
+      // upsert optionValues with the provided props.values based on
+      // `description` key
+      _.each(this.props.value, o => {
+        const match = _.find(this.optionValues, {description: o.description});
+        if (match) {
+          const i = _.indexOf(this.optionValues, match);
+          this.optionValues.splice(i, 1, o);
+        } else {
+          this.optionValues.push(o);
+        }
+      });
+    }
     this.orderOptions = _.get(this.props.config, 'orderOptions', false);
   },
 
