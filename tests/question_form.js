@@ -20,13 +20,13 @@ describe('<QuestionForm />', () => {
             required: true,
             visible: true
           },
-          id: 'yesno_question',
+          id: 'base_question',
           position: 1
         }
       ];
       this.baseQuestions = [
         {
-          id: 'yesno_question',
+          id: 'base_question',
           text: 'Is this a yesno question?',
           type: 'yesno'
         }
@@ -88,17 +88,100 @@ describe('<QuestionForm />', () => {
       let question = {
         type: 'multiple',
         config: {
-          optionsContextKey: 'characteristics'
+          optionsContextKey: 'myContextOptions'
         }
       };
       let context = {
-        characteristics: ['txt', 'json', 'xml']
+        myContextOptions: ['txt', 'json', 'xml']
       };
       this.baseQuestions[0] = _.assign(this.baseQuestions[0], question);
       this.wrapper =
         mount(<QuestionForm questions={this.baseQuestions} qsSchema={this.baseQSSchema} context={context} answers={[]} />);
       expect(this.wrapper.find('QuestionFieldMultipleChoice')).to.have.length(1);
       expect(this.wrapper.find('QuestionFieldMultipleChoiceOption')).to.have.length(3);
+    });
+    it('renders QuestionFieldMultipleChoice type in correct order with no answer', function() {
+      let question = {
+        type: 'multiple',
+        config: {
+          optionsContextKey: 'myContextOptions'
+        }
+      };
+      let context = {
+        myContextOptions: ['txt', 'json', 'xml']
+      };
+      let answers = [];
+      this.baseQuestions[0] = _.assign(this.baseQuestions[0], question);
+      this.wrapper =
+        mount(<QuestionForm questions={this.baseQuestions} qsSchema={this.baseQSSchema} context={context} answers={answers} />);
+      expect(this.wrapper.find('QuestionFieldMultipleChoice')).to.have.length(1);
+      expect(this.wrapper.find('QuestionFieldMultipleChoiceOption')).to.have.length(3);
+      let lastOption = this.wrapper.find('QuestionFieldMultipleChoiceOption .description').last().text();
+      let firstOption = this.wrapper.find('QuestionFieldMultipleChoiceOption .description').first().text();
+      expect(firstOption).to.equal('txt');
+      expect(lastOption).to.equal('xml');
+    });
+    it('renders QuestionFieldMultipleChoice type in correct order with answer', function() {
+      let question = {
+        type: 'multiple',
+        config: {
+          optionsContextKey: 'myContextOptions'
+        }
+      };
+      let context = {
+        myContextOptions: ['txt', 'json', 'xml']
+      };
+      let answers = [{
+        id: 'base_question',
+        value: [
+          {
+            checked: true,
+            description: 'xml'
+          }
+        ],
+        commentValue: '',
+        currentValue: ''
+      }];
+      this.baseQuestions[0] = _.assign(this.baseQuestions[0], question);
+      this.wrapper =
+        mount(<QuestionForm questions={this.baseQuestions} qsSchema={this.baseQSSchema} context={context} answers={answers} />);
+      expect(this.wrapper.find('QuestionFieldMultipleChoice')).to.have.length(1);
+      expect(this.wrapper.find('QuestionFieldMultipleChoiceOption')).to.have.length(3);
+      let lastOption = this.wrapper.find('QuestionFieldMultipleChoiceOption .description').last().text();
+      let firstOption = this.wrapper.find('QuestionFieldMultipleChoiceOption .description').first().text();
+      expect(firstOption).to.equal('txt');
+      expect(lastOption).to.equal('xml');
+    });
+    it('renders QuestionFieldMultipleChoice wth added option provided by answer', function() {
+      let question = {
+        type: 'multiple',
+        config: {
+          optionsContextKey: 'myContextOptions'
+        }
+      };
+      let context = {
+        myContextOptions: ['txt', 'json', 'xml']
+      };
+      let answers = [{
+        id: 'base_question',
+        value: [
+          {
+            checked: true,
+            description: 'html'
+          }
+        ],
+        commentValue: '',
+        currentValue: ''
+      }];
+      this.baseQuestions[0] = _.assign(this.baseQuestions[0], question);
+      this.wrapper =
+        mount(<QuestionForm questions={this.baseQuestions} qsSchema={this.baseQSSchema} context={context} answers={answers} />);
+      expect(this.wrapper.find('QuestionFieldMultipleChoice')).to.have.length(1);
+      expect(this.wrapper.find('QuestionFieldMultipleChoiceOption')).to.have.length(4);
+      let lastOption = this.wrapper.find('QuestionFieldMultipleChoiceOption .description').last().text();
+      let firstOption = this.wrapper.find('QuestionFieldMultipleChoiceOption .description').first().text();
+      expect(firstOption).to.equal('txt');
+      expect(lastOption).to.equal('html');
     });
   });
 
