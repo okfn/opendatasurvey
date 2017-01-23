@@ -56,13 +56,8 @@
                   <ul class="availability availability-comparative" data-toggle="popover" title="{% filter escape %}{{ popoverTitle }}{% endfilter %}" data-content="{% filter escape %}{{ popoverContent }}{% endfilter %}">
                   {% for question in questions -%}
                     {% if entry -%}
-                      {% if is_index %}
-                        {% set answer = entry.answers|find({'id': question.id}) %}
-                        {% set pass = 'yes' if answer.pass else 'no' %}
-                      {% else %}
-                        {% set answer = entry.getAnswerValueForQuestion(question) %}
-                        {% set pass = 'yes' if question.pass(answer) else 'no' %}
-                      {% endif %}
+                      {% set answer = entry.getAnswerValueForQuestion(question) %}
+                      {% set pass = 'yes' if question.pass(answer) else 'no' %}
                     {% else %}
                       {% set pass = 'maybe' %}
                     {%- endif %}

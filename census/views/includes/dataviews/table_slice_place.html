@@ -49,17 +49,13 @@
                 {% if entry -%}<a href="/entry/{{place.id}}/{{dataset.id}}{{ urlContext }}">{%- endif %}
                   {{ dataset.name }}
                 {% if entry -%}</a>{%- endif %}
+              </td>
               <td>
                 <ul class="availability availability-slice">
                   {% for question in questions %}
                     {% if entry %}
-                        {% if is_index %}
-                          {% set answer = entry.answers|find({'id': question.id}) %}
-                          {% set pass = 'yes' if answer.pass else 'no' %}
-                        {% else %}
-                          {% set answer = entry.getAnswerValueForQuestion(question) %}
-                          {% set pass = 'yes' if question.pass(answer) else 'no' %}
-                        {% endif %}
+                      {% set answer = entry.getAnswerValueForQuestion(question) %}
+                      {% set pass = 'yes' if question.pass(answer) else 'no' %}
                     {% endif %}
                     <li class="{{ pass }}" title="{% if pass == 'yes' %}It's {% elif pass == 'no' %}It's not {% endif %}{{ question.questionshort|lower }}"><i class="fa fa-{{ question.icon }}"></i>&nbsp;</li>
                   {% endfor %}

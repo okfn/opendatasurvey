@@ -41,7 +41,6 @@
     "metalsmith-layouts": "^1.7.0",
     "metalsmith-markdown": "^0.2.1",
     "metalsmith-permalinks": "^0.5.0",
-    "metalsmith-request": "^2.0.0",
     "method-override": "^2.3.3",
     "moment": "^2.10.3",
     "morgan": "^1.5.3",
@@ -108,7 +107,7 @@
   },
   "scripts": {
     "entry-admin": "node scripts/entry-admin.js",
-    "ms_generate_dev": "DEBUG=metalsmith:*,metalsmith-godi-modifydata,metalsmith-json-to-files node index/generate.js",
+    "ms_generate_dev": "DEBUG=metalsmith-godi-* node index/generate.js",
     "migrate_users": "node scripts/users.js",
     "start": "node server.js",
     "debug": "node-debug debug-server.js --no-preload --hidden='node_modules'",

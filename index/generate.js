@@ -4,7 +4,6 @@ const path = require('path');
 
 const _ = require('lodash');
 const Metalsmith = require('metalsmith');
-const request = require('metalsmith-request');
 const layouts = require('metalsmith-layouts');
 const assets = require('metalsmith-assets');
 const markdown = require('metalsmith-markdown');
@@ -15,7 +14,7 @@ const templateFilters = require('../census/filters');
 const nunjucks = require('nunjucks');
 const i18n = require('i18n-abide');
 
-const godiModifyData = require('./metalsmith-godi-modifydata');
+const godiGetData = require('./metalsmith-godi-getdata');
 const jsonToFiles = require('metalsmith-json-to-files');
 
 const templatePath = path.join(__dirname, '../census/views/');
@@ -39,16 +38,8 @@ Metalsmith(__dirname)
   .source('./src')
   .destination('./build')
   .clean(false)
-  // Populate metadata with JSON from Survey
-  .use(request({
-    datasets: 'http://global-test.dev.census.org:5000/api/datasets.json',
-    places: 'http://global-test.dev.census.org:5000/api/places/score/2016.json',
-    entries: 'http://global-test.dev.census.org:5000/api/entries.json',
-    questions: 'http://global-test.dev.census.org:5000/api/questions.json'
-  }, {
-    json: true
-  }))
-  .use(godiModifyData())
+  // Populate metadata with data from Survey
+  .use(godiGetData({domain: 'global-test', year: 2016}))
   .use(jsonToFiles({use_metadata: true}))
   .use(markdown())
   .use(permalinks())
