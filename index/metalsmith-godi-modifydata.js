@@ -35,6 +35,21 @@ function plugin() {
       });
     }
 
+    // Munge entries
+    if (metadata.hasOwnProperty('entries')) {
+      // We have a `relativeScore`, but we need a `computedRelativeScore`.
+      metadata.entries.forEach(function(entries) {
+        if (entries.hasOwnProperty('relativeScore')) {
+          entries.computedRelativeScore = entries.relativeScore;
+          delete entries.relativeScore;
+        }
+        if (entries.hasOwnProperty('score')) {
+          entries.computedScore = entries.score;
+          delete entries.score;
+        }
+      });
+    }
+
     // Munge questions
     if (metadata.hasOwnProperty('questions')) {
       // We're only interested in open, scored questions.

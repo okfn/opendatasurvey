@@ -10,7 +10,7 @@
           <a href="http://index.okfn.org/dataset/{{ dataset.id }}/" title="{{ format("See more data on %(name)s in the Open Data Index", {name: dataset.name}) }}">{{ dataset.name }}</a>
           <span style="background-color: rgb(223, 204, 51); color: white;" class="dataset-openness" data-score="{{ stats.openDataPercent }}">{{ format(gettext("%(score)s% open (avg.)"), {score: stats.openDataPercent}) }}</span>
         </h1>
-        {% if is_index == "true" -%}
+        {% if is_index -%}
           <div class="col-md-12 place-rank statistics">
             <span>{{ gettext("Ranked #1 against other datasets in the Index (avg.)") }}</span>
           </div>
@@ -25,7 +25,7 @@
         <div class="row navigate">
           <div class="col-md-12">
             {% include 'includes/share_buttons.html' %}
-            {% if is_index == "true" -%}
+            {% if is_index -%}
               <div class="history">
                 <h6>{{ gettext("See other years") }}</h6>
                 <ul>
@@ -39,7 +39,7 @@
         </div>
       </div>
 
-      {% if is_index == "true" %}
+      {% if is_index %}
       <div class="col-md-6">
         <div id="map-container">
           {% include 'includes/dataviews/embed_map.html' %}
@@ -51,14 +51,14 @@
   </div>
 </section>
 
-{% if is_index == "true" %}
+{% if is_index %}
 <hr>
 {% endif %}
 
 {% if dataset.description %}
 <section class="dataset-about">
   <div class="container">
-    {% if is_index == "true" %}
+    {% if is_index %}
     <h3>{{ gettext("About") }}</h3>
     {% endif %}
     {{ dataset.description }}

@@ -52,12 +52,20 @@ define(['jquery', 'bootstrap', 'chroma', 'tablesorter', 'stickykit'],
           5: {sorter: false}
         }
       },
+      tablesorterPlaceSliceIndexOptions = {
+        sortList: [[3, 1]],
+        headers: {
+          1: {sorter: false},
+          2: {sorter: false}
+        }
+      },
       sortFlag = true;
 
     $('#places_overview_table').tablesorter(tablesorterPlaceOptions);
     $('#datasets_overview_table').tablesorter(tablesorterDatasetOptions);
     $('#slice-table').tablesorter(tablesorterSliceOptions);
     $('#place-slice-table').tablesorter(tablesorterPlaceSliceOptions);
+    $('#place-slice-table-index').tablesorter(tablesorterPlaceSliceIndexOptions);
 
     $('#datasets_overview_table thead').stick_in_parent();
     $('#slice-table thead').stick_in_parent();

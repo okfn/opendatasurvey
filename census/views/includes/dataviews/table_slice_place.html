@@ -1,5 +1,13 @@
+{% if not place and data -%}
+  {% set place = data %}
+{%- endif %}
+{% if is_index %}
+  {% set table_id = "place-slice-table-index" %}
+{% else %}
+  {% set table_id = "place-slice-table" %}
+{% endif %}
 <div class="table-responsive">
-    <table id="place-slice-table" class="table slice-table data-table table-header-stuck">
+    <table id="{{ table_id }}" class="table slice-table data-table table-header-stuck">
         {% if is_index %}
         <colgroup>
           <col style="width:24%">
@@ -34,7 +42,7 @@
         </thead>
         <tbody>
           {% for dataset in datasets %}
-            {% set entry = entries|find({'dataset': dataset.id}) %}
+            {% set entry = entries|find({'dataset': dataset.id, 'place': place.id}) %}
             {% set submissions = pending|where({'dataset': dataset.id, 'place': place.id, 'year': year}) %}
             <tr id="{{ dataset.id }}" class="entry" data-rank="{{ entry.rank }}" data-score="{{ entry.computedScore }}" data-place="{{ place.id }}" data-name="{{ place.name }}">
               <td>
@@ -45,8 +53,13 @@
                 <ul class="availability availability-slice">
                   {% for question in questions %}
                     {% if entry %}
-                      {% set answer = entry.getAnswerValueForQuestion(question) %}
-                      {% set pass = 'yes' if question.pass(answer) else 'no' %}
+                        {% if is_index %}
+                          {% set answer = entry.answers|find({'id': question.id}) %}
+                          {% set pass = 'yes' if answer.pass else 'no' %}
+                        {% else %}
+                          {% set answer = entry.getAnswerValueForQuestion(question) %}
+                          {% set pass = 'yes' if question.pass(answer) else 'no' %}
+                        {% endif %}
                     {% endif %}
                     <li class="{{ pass }}" title="{% if pass == 'yes' %}It's {% elif pass == 'no' %}It's not {% endif %}{{ question.questionshort|lower }}"><i class="fa fa-{{ question.icon }}"></i>&nbsp;</li>
                   {% endfor %}
@@ -79,7 +92,11 @@
             </tr>
             {% if entry.details %}
             <tr id="detail-{{ dataset.id }}" class="details collapse">
-              <td colspan="6">
+            {% if is_index %}
+            <td colspan="4">
+            {% else %}
+            <td colspan="6">
+            {% endif %}
                 {# hack around tablesorter and our row toggler #}<span style="visibility: hidden;">{{ dataset.name }}</span>
                 {% if entry.details %}
                 {{ entry.details|marked }}

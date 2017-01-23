@@ -16,6 +16,7 @@ const nunjucks = require('nunjucks');
 const i18n = require('i18n-abide');
 
 const godiModifyData = require('./metalsmith-godi-modifydata');
+const jsonToFiles = require('metalsmith-json-to-files');
 
 const templatePath = path.join(__dirname, '../census/views/');
 // const templatePath = path.join(__dirname, './layouts/');
@@ -37,7 +38,8 @@ Metalsmith(__dirname)
   })
   .source('./src')
   .destination('./build')
-  .clean(true)
+  .clean(false)
+  // Populate metadata with JSON from Survey
   .use(request({
     datasets: 'http://global-test.dev.census.org:5000/api/datasets.json',
     places: 'http://global-test.dev.census.org:5000/api/places/score/2016.json',
@@ -47,6 +49,7 @@ Metalsmith(__dirname)
     json: true
   }))
   .use(godiModifyData())
+  .use(jsonToFiles({use_metadata: true}))
   .use(markdown())
   .use(permalinks())
   .use(layouts({
