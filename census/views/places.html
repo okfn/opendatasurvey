@@ -1,14 +1,12 @@
 {% extends "page.html" %}
 
-{% block title %}
-{{ this.title }}
-{% endblock %}
+{% block title %}{{ gettext('Place overview') }}{% endblock %}
 
 
 {% block content %}
 <header id="place-intro">
   <div class="container">
-    <h1>{{ gettext('Place overview') }} </h1>
+    <h1>{{ gettext('Place overview') }}</h1>
     <hr>
 
     <div id="summary-stats" class="row">

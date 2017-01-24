@@ -28,7 +28,7 @@ define(['jquery', 'bootstrap', 'chroma', 'tablesorter', 'stickykit'],
         }
       },
       tablesorterDatasetOptions = {
-        sortList: [[1, 0]],
+        sortList: [[0, 0]],
         headers: {
           2: {sorter: false},
           3: {sorter: false}

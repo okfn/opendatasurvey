@@ -51,12 +51,13 @@ function plugin(options) {
           return q.openquestion && q.score > 0;
         });
       }
+
       return data;
     })
     .then(data => {
+      let metadata = metalsmith.metadata();
       // Request place details for each place in places. Add stats object to
       // corresponding place in metadata.places.
-      let metadata = metalsmith.metadata();
       let placesData = _.map(data.places, place => {
         const options = _.merge(defaultOptions, {place: place.id});
         return modelUtils.getData(options)
@@ -65,6 +66,7 @@ function plugin(options) {
           p.stats = placeData.stats;
         });
       });
+      debug('Adding stats to places.');
       return Promise.all(placesData);
     })
     .then(() => done())

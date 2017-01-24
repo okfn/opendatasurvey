@@ -1,0 +1,62 @@
+{# {% from 'macros.html' import popover_comparison_title,
+popover_comparison_content, history, share %} #}
+
+{% import "macros/popovers.html" as popovers %}
+
+<div class="table-responsive">
+  <table id="datasets_overview_table" class="table data-table table-header-stuck">
+    <col style="width:6%">
+    <col style="width:10%">
+    <col style="width:58%">
+    <col style="width:20%">
+    <col style="width:6%">
+    <thead>
+      <tr>
+        <th>{{ gettext('Rank') }}</th>
+        <th>{{ gettext('Title') }}</th>
+        <th>{{ gettext('Description') }}</th>
+        <th>{{ gettext('Best') }}</th>
+        <th>{{ gettext('Avg.') }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for dataset in datasets|sort(false, false, 'rank') %}
+        {% set entries = entries|find({'dataset': dataset.id}) %}
+        {# {% set entry = entries|find({'dataset': dataset.id , 'place': place.id }) %} #}
+        {% if entries %}
+          {% set top_places = [] %}
+          {% set top_entry = entries|first %}
+          {% set top_entries = entries|where('dataset', dataset.id)|where('year', page.year)|where('score', top_entry.score) %}
+          {% for entry in top_entries %}
+            {# {% do top_places.extend(places|where('id', entry.place)) %} #}
+          {% endfor %}
+
+          <tr data-rank="{{ dataset.rank }}" data-score="{{ dataset.computedScore }}" data-dataset="{{ dataset.id }}">
+            <td class="rank" data-rank="{{ dataset.rank }}">
+              {{ dataset.rank }}
+            </td>
+            <td>
+              <a href="{{ SITEURL }}/dataset/{{ dataset.id }}/" title="{{ dataset.name }}">
+                {{ dataset.name }}
+              </a>
+            </td>
+            <td>
+              {{ dataset.description }}
+            </td>
+            <td>
+              {% if top_entry %}
+                <span class="score score-top" data-score="{{ top_entry.score }}">{{ top_entry.score }}%</span>
+                {% for place in top_places %}
+                <a href="{{ SITEURL }}/place/{{ place.slug }}/{{ dataset.id }}/">{{ place.name }}</a>&nbsp;
+                {% endfor %}
+              {% endif %}
+            </td>
+            <td class="score" data-score="{{ dataset.computedRelativeScore }}">
+              <span>{{ dataset.computedRelativeScore }}%</span>
+            </td>
+          </tr>
+        {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
