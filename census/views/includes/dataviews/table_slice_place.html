@@ -1,4 +1,4 @@
-{% if not place and data -%}
+{% if is_index and not place and data -%}
   {% set place = data %}
 {%- endif %}
 {% if is_index %}

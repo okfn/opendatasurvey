@@ -67,6 +67,9 @@
           {% endif %}
 
           <ul class="menu">
+            {% if is_index %}
+            <li><a href="/place/">{{ gettext("Places") }}</a></li>
+            {% endif %}
             <li><a href="/about/">{{ gettext("About") }}</a></li>
             <li><a href="/changes/">{{ gettext("Changes") }}</a></li>
             <li><a href="/faq/">{{ gettext("FAQ") }}</a></li>

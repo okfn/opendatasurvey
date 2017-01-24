@@ -37,7 +37,7 @@ Metalsmith(__dirname)
   })
   .source('./src')
   .destination('./build')
-  .clean(false)
+  .clean(true)
   // Populate metadata with data from Survey
   .use(godiGetData({domain: 'global-test', year: 2016}))
   .use(jsonToFiles({use_metadata: true}))

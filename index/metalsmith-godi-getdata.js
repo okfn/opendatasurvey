@@ -1,6 +1,9 @@
 'use strict';
 
-const debug = require('debug')('metalsmith-godi-modifydata');
+const _ = require('lodash');
+const Promise = require('bluebird');
+
+const debug = require('debug')('metalsmith-godi-getdata');
 
 const models = require('../census/models');
 const modelUtils = require('../census/models').utils;
@@ -8,7 +11,7 @@ const modelUtils = require('../census/models').utils;
 module.exports = plugin;
 
 /**
- * GODI Metalsmith plugin to retrieve Index data and add retreived objects to
+ * GODI Metalsmith plugin to retrieve Index data and add retrieved objects to
  * the metalsmith.metadata object.
  *
  * @return {Function}
@@ -28,13 +31,13 @@ function plugin(options) {
   };
 
   return (files, metalsmith, done) => {
+    // Get all the data for the site and year.
     modelUtils.getData(defaultOptions)
     .then(data => {
       let metadata = metalsmith.metadata();
-
-      // Add keys for the retrived data directly to metalsmith.metadata.
-      const keys = ['datasets', 'places', 'entries', 'questions', 'stats'];
-      keys.forEach(function(key) {
+      // Add keys for the retrieved data directly to metalsmith.metadata.
+      const keys = ['datasets', 'dataset', 'place', 'places', 'entries', 'questions', 'stats'];
+      _.each(keys, key => {
         if (data.hasOwnProperty(key)) {
           debug('Adding ' + key + ' to metadata.');
           metadata[key] = data[key];
@@ -48,9 +51,23 @@ function plugin(options) {
           return q.openquestion && q.score > 0;
         });
       }
-
-      done();
+      return data;
     })
+    .then(data => {
+      // Request place details for each place in places. Add stats object to
+      // corresponding place in metadata.places.
+      let metadata = metalsmith.metadata();
+      let placesData = _.map(data.places, place => {
+        const options = _.merge(defaultOptions, {place: place.id});
+        return modelUtils.getData(options)
+        .then(placeData => {
+          let p = _.find(metadata.places, {id: placeData.place.id});
+          p.stats = placeData.stats;
+        });
+      });
+      return Promise.all(placesData);
+    })
+    .then(() => done())
     .catch(err => done(err));
   };
 }
