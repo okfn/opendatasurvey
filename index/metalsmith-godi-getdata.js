@@ -59,15 +59,23 @@ function plugin(options) {
       // Request place details for each place in places. Add stats object to
       // corresponding place in metadata.places.
       let placesData = _.map(data.places, place => {
-        const options = _.merge(defaultOptions, {place: place.id});
+        const options = _.merge(_.clone(defaultOptions), {place: place.id});
         return modelUtils.getData(options)
         .then(placeData => {
           let p = _.find(metadata.places, {id: placeData.place.id});
           p.stats = placeData.stats;
         });
       });
-      debug('Adding stats to places.');
-      return Promise.all(placesData);
+      let datasetsData = _.map(data.datasets, dataset => {
+        const options = _.merge(_.clone(defaultOptions), {dataset: dataset.id});
+        return modelUtils.getData(options)
+        .then(datasetData => {
+          let d = _.find(metadata.datasets, {id: datasetData.dataset.id});
+          d.stats = datasetData.stats;
+        });
+      });
+      debug('Adding stats to places and datasets.');
+      return Promise.all(placesData.concat(datasetsData));
     })
     .then(() => done())
     .catch(err => done(err));
