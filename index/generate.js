@@ -4,6 +4,7 @@ const path = require('path');
 // const util = require('util');
 
 const _ = require('lodash');
+const commandLineArgs = require('command-line-args');
 const Metalsmith = require('metalsmith');
 const layouts = require('metalsmith-layouts');
 const assets = require('metalsmith-assets');
@@ -11,6 +12,7 @@ const markdown = require('metalsmith-markdown');
 const permalinks = require('metalsmith-permalinks');
 const debug = require('metalsmith-debug');
 const paths = require('metalsmith-paths');
+const msIf = require('metalsmith-if');
 
 const templateFilters = require('../census/filters');
 const nunjucks = require('nunjucks');
@@ -20,6 +22,12 @@ const godiGetData = require('./metalsmith-godi-getdata');
 const jsonToFiles = require('metalsmith-json-to-files');
 
 const templatePath = path.join(__dirname, '../census/views/');
+
+const optionDefinitions = [
+  {name: 'clean', alias: 'c', type: Boolean, defaultValue: false},
+  {name: 'static', alias: 's', type: Boolean, defaultValue: false}
+];
+const options = commandLineArgs(optionDefinitions);
 
 const env = nunjucks.configure(templatePath,
   {watch: false, autoescape: false});
@@ -47,7 +55,7 @@ Metalsmith(__dirname)
   })
   .source('./src')
   .destination('./build')
-  .clean(true)
+  .clean(options.clean)
   // Populate metadata with data from Survey
   .use(godiGetData({domain: domain, year: 2016}))
   .use(jsonToFiles({use_metadata: true}))
@@ -60,10 +68,13 @@ Metalsmith(__dirname)
     directory: templatePath
   }))
   .use(debug())
-  .use(assets({
-    source: '../census/static', // relative to the working directory
-    destination: '.' // relative to the build directory
-  }))
+  .use(msIf(
+    options.static,
+    assets({
+      source: '../census/static', // relative to the working directory
+      destination: '.' // relative to the build directory
+    })
+  ))
   .build(function(err) {
     if (err) throw err;
   });
