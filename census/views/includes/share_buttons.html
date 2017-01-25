@@ -1,9 +1,16 @@
-<h5 {% if is_index != "true" %}class="sr-only"{% endif %}>{{ gettext("Share this page") }}</h5>
+{% if not current_url and paths and site_url %}
+  {% set current_url = site_url + paths.href %}
+{% endif %}
+{% if not site_title and site.settings.title %}
+  {% set site_title = site.settings.title %}
+{% endif %}
+
+<h5 {% if not is_index %}class="sr-only"{% endif %}>{{ gettext("Share this page") }}</h5>
 <div class="btn-group">
 {#   <a href="" class="btn btn-default btn-sm embed" data-toggle="modal" data-target="#embed-instructions">
     <i class="fa fa-code"></i> {{ gettext("Embed") }}
   </a> #}
-  <a href="http://twitter.com/share?url={{current_url}}&amp;text=Check out this data from the {{ site.settings.title }}" class="btn btn-default btn-sm twitter" target="_blank">
+  <a href="http://twitter.com/share?url={{current_url}}&amp;text=Check out this data from the {{ site_title }}" class="btn btn-default btn-sm twitter" target="_blank">
     <i class="fa fa-twitter"></i> Twitter  </a>
   <a href="http://www.facebook.com/sharer/sharer.php?u={{current_url}}" class="btn btn-default btn-sm facebook" target="_blank">
     <i class="fa fa-facebook"></i> Facebook  </a>

@@ -1,6 +1,7 @@
 'use strict';
 
 const path = require('path');
+// const util = require('util');
 
 const _ = require('lodash');
 const Metalsmith = require('metalsmith');
@@ -9,6 +10,7 @@ const assets = require('metalsmith-assets');
 const markdown = require('metalsmith-markdown');
 const permalinks = require('metalsmith-permalinks');
 const debug = require('metalsmith-debug');
+const paths = require('metalsmith-paths');
 
 const templateFilters = require('../census/filters');
 const nunjucks = require('nunjucks');
@@ -18,12 +20,18 @@ const godiGetData = require('./metalsmith-godi-getdata');
 const jsonToFiles = require('metalsmith-json-to-files');
 
 const templatePath = path.join(__dirname, '../census/views/');
-// const templatePath = path.join(__dirname, './layouts/');
+
 const env = nunjucks.configure(templatePath,
   {watch: false, autoescape: false});
 _.each(templateFilters, function(value, key, list) {
   env.addFilter(key, value);
 });
+
+const domain = 'global-test';
+const baseUrlPattern = 'http://localhost:8000';
+// const baseUrl = util.format(baseUrlPattern, domain);
+const baseUrl = baseUrlPattern;
+const siteTitle = 'Global Open Data Index';
 
 Metalsmith(__dirname)
   .metadata({
@@ -33,16 +41,19 @@ Metalsmith(__dirname)
       return str;
     },
     // format function needs to be available in templates
-    format: i18n.format
+    format: i18n.format,
+    site_url: baseUrl,
+    site_title: siteTitle
   })
   .source('./src')
   .destination('./build')
   .clean(true)
   // Populate metadata with data from Survey
-  .use(godiGetData({domain: 'global-test', year: 2016}))
+  .use(godiGetData({domain: domain, year: 2016}))
   .use(jsonToFiles({use_metadata: true}))
   .use(markdown())
   .use(permalinks())
+  .use(paths({property: 'paths', directoryIndex: 'index.html'}))
   .use(layouts({
     engine: 'nunjucks',
     rename: true,

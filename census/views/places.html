@@ -69,44 +69,7 @@
     </div>
 
     <div class="col-md-4">
-      <h5>{{ gettext("Share this page") }}</h5>
-      <div class="btn-group">
-        <a href="http://twitter.com/share?url={{current_url}}&amp;text=Check out this data from the {{ site.settings.title }}"
-           class="btn btn-default twitter" target="_blank"><i class="fa fa-twitter"></i> Twitter </a>
-        <a href="http://www.facebook.com/sharer/sharer.php?u={{current_url}}"
-           class="btn btn-default facebook" target="_blank"><i class="fa fa-facebook"></i> Facebook </a>
-        <a href="https://plus.google.com/share?url={{current_url}}" class="btn btn-default google-plus"
-           target="_blank"><i class="fa fa-google-plus"></i> Google+ </a>
-      </div>
-      <div class="modal fade" id="embed-instructions" tabindex="-1" role="dialog" aria-labelledby="embedLabel"
-           aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
-                  class="sr-only">{{ gettext("Close") }}</span></button>
-              <h4 class="modal-title" id="embedLabel">{{ gettext("Map embed code") }}</h4>
-            </div>
-            <div class="modal-body">
-              <p>
-                {{ gettext("Use the following code to embed the map visualisation into your own website.") }}
-              </p>
-              <xmp contenteditable="true">
-                <iframe width="100%" height="300px"
-                        src="http://index.okfn.org/vis/map/embed/?embed_width=100%&embed_height=300px&filter_year=2015&filter_dataset=all&panel_tools=true&panel_share=true&map_place="
-                        frameBorder="0"></iframe>
-              </xmp>
-              <p>
-                {{ gettext("If you are a developer, you can read more about the embed options here:") }} <a
-                  href="https://github.com/okfn/opendataindex/#choropleth-map" title="Embed options">{{ gettext("Embed options") }}</a>
-              </p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">{{ gettext("Close") }}</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      {% include 'includes/share_buttons.html' %}
     </div>
 
   </div>
