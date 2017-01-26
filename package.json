@@ -43,6 +43,7 @@
     "metalsmith-markdown": "^0.2.1",
     "metalsmith-paths": "^3.0.1",
     "metalsmith-permalinks": "^0.5.0",
+    "metalsmith-timer": "0.0.2",
     "method-override": "^2.3.3",
     "moment": "^2.10.3",
     "morgan": "^1.5.3",
@@ -109,7 +110,7 @@
   },
   "scripts": {
     "entry-admin": "node scripts/entry-admin.js",
-    "ms_generate_dev": "DEBUG=metalsmith:* node index/generate.js",
+    "ms_generate_dev": "DEBUG=metalsmith-godi-*,metalsmith-timer node index/generate.js",
     "migrate_users": "node scripts/users.js",
     "start": "node server.js",
     "debug": "node-debug debug-server.js --no-preload --hidden='node_modules'",

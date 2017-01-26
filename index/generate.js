@@ -11,6 +11,7 @@ const assets = require('metalsmith-assets');
 const markdown = require('metalsmith-markdown');
 const permalinks = require('metalsmith-permalinks');
 const debug = require('metalsmith-debug');
+const timer = require('metalsmith-timer');
 const paths = require('metalsmith-paths');
 const msIf = require('metalsmith-if');
 
@@ -42,6 +43,7 @@ const baseUrl = baseUrlPattern;
 const siteTitle = 'Global Open Data Index';
 
 Metalsmith(__dirname)
+  .use(timer('init'))
   .metadata({
     is_index: true,
     // Pass-through str for the moment. Can i18n-abide be used here?
@@ -75,6 +77,7 @@ Metalsmith(__dirname)
       destination: '.' // relative to the build directory
     })
   ))
+  .use(timer('finished'))
   .build(function(err) {
     if (err) throw err;
   });
