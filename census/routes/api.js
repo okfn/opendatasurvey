@@ -17,6 +17,10 @@ var apiRoutes = function(coreMiddlewares) {
     api.entries);
   router.get(utils.scoped('/entries/:year.:format'), coreMixins, api.entries);
   router.get(utils.scoped('/entries.:format'), coreMixins, api.entries);
+  router.get(utils.scoped('/pendingentries/:year.:format'),
+    coreMixins, api.pendingEntries);
+  router.get(utils.scoped('/pendingentries.:format'),
+    coreMixins, api.pendingEntries);
   router.get(utils.scoped('/datasets/:report/:year.:strategy.:format'),
     coreMixins, api.datasets);
   router.get(utils.scoped('/datasets/:report/:year.:format'),
