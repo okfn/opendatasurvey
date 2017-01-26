@@ -18,9 +18,17 @@ module.exports = plugin;
 
 function plugin(options) {
   return (files, metalsmith, done) => {
+    let metadata = metalsmith.metadata();
     debug('Updating entries, places, and dataset.');
     _.each(files, file => {
       if (_.has(file, 'metadata_key')) {
+        if (file.metadata_key === 'entries') {
+          file.entry = file.data;
+          file.place = _.find(metadata.places, {id: file.entry.place});
+          file.dataset = _.find(metadata.datasets, {id: file.entry.dataset});
+          delete file.data;
+        }
+
         if (file.metadata_key === 'places') {
           file.place = file.data;
           file.stats = file.data.stats;
@@ -34,6 +42,11 @@ function plugin(options) {
         }
       }
     });
+
+    // entries.md is added to `files` as part of build of entries. It's not
+    // needed, so delete it.
+    debug('Remove unnecessary \'entries\' file.');
+    delete files['entries.md'];
     done();
   };
 }
