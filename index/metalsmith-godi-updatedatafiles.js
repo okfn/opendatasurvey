@@ -7,11 +7,17 @@ const debug = require('debug')('metalsmith-godi-updatedatafiles');
 module.exports = plugin;
 
 /**
- * GODI Metalsmith plugin that takes the results of json-to-files and updates
- * the file data structures to what is expected by the templates.
+ * GODI Metalsmith plugin that takes the upstream results of godi-getdata and
+ * json-to-files, and updates the file data structures to what is expected by
+ * the templates.
  *
- * json-to-files puts its source data on a 'data' key. We want to be more
- * specific.
+ * json-to-files puts its source data on a 'data' key in file metadata. Move
+ * it to the specific entity name instead.
+ *
+ * Move metadata such as `stats` from `data` to top-level file metadata.
+ *
+ * For entries, find the specific entry `place` and `dataset` and add them as
+ * file metadata.
  *
  * @return {Function}
  */

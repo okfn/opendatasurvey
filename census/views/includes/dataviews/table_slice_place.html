@@ -41,12 +41,17 @@
           </tr>
         </thead>
         <tbody>
+          {% if is_index %}
+            {% set entryBaseUrl = 'place' %}
+          {% else %}
+            {% set entryBaseUrl = 'entry' %}
+          {% endif %}
           {% for dataset in datasets %}
             {% set entry = entries|find({'dataset': dataset.id, 'place': place.id}) %}
             {% set submissions = pending|where({'dataset': dataset.id, 'place': place.id, 'year': year}) %}
             <tr id="{{ dataset.id }}" class="entry" data-rank="{{ entry.rank }}" data-score="{{ entry.computedScore }}" data-place="{{ place.id }}" data-name="{{ place.name }}">
               <td>
-                {% if entry -%}<a href="/entry/{{place.id}}/{{dataset.id}}{{ urlContext }}">{%- endif %}
+                {% if entry -%}<a href="/{{ entryBaseUrl }}/{{ place.id }}/{{ dataset.id }}{{ urlContext }}">{%- endif %}
                   {{ dataset.name }}
                 {% if entry -%}</a>{%- endif %}
               </td>

@@ -30,14 +30,20 @@
     <p>{{ entry.details|truncate(100) }}</p>
   {%- endif %}
 
-  {% if is_index != "true" -%}
+{% if is_index %}
+  {% set entryBaseUrl = 'place' %}
+{% else %}
+  {% set entryBaseUrl = 'entry' %}
+{% endif %}
+
+  {% if not is_index -%}
     <div class='btn-group'>
   {% endif %}
-    <a class="btn btn-primary" href="/entry/{{ place.id }}/{{ dataset.id }}/">{{ gettext("Read more &raquo;") }}</a>
-  {% if is_index != "true" and submissionsAllowed %}
+    <a class="btn btn-primary" href="/{{ entryBaseUrl }}/{{ place.id }}/{{ dataset.id }}/">{{ gettext("Read more &raquo;") }}</a>
+  {% if not is_index and submissionsAllowed %}
     <a class='btn btn-{{actionClass}}' href='{{actionUrl}}'>{{actionText}}</a>
   {%- endif %}
-  {% if is_index != "true" -%}
+  {% if not is_index -%}
     </div>
   {%- endif %}
 
