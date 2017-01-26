@@ -232,6 +232,87 @@ let places = function(req, res, next) {
   }).catch(console.trace.bind(console));
 };
 
+let _outputEntryResults = function(results, questions, format, res) {
+  let mapper = function(item) {
+    let answers = item.getSimpleAnswersForQuestions(questions);
+    return {
+      id: item.id,
+      site: item.site,
+      timestamp: moment(item.createdAt).format('YYYY-MM-DDTHH:mm:ss'),
+      year: item.year,
+      place: item.place,
+      dataset: item.dataset,
+      answers: answers,
+      reviewed: item.reviewed ? 'Yes' : 'No',
+      reviewResult: item.reviewResult ? 'Yes' : 'No',
+      reviewComments: item.reviewComments,
+      details: item.details,
+      isCurrent: item.isCurrent ? 'Yes' : 'No',
+      isOpen: item.isOpenForQuestions(questions) ? 'Yes' : 'No',
+      submitter: item.Submitter ? item.Submitter.fullName() : '',
+      reviewer: item.Reviewer ? item.Reviewer.fullName() : '',
+      score: item.computedScore,
+      relativeScore: item.computedRelativeScore
+    };
+  };
+
+  switch (format) {
+    case 'json': {
+      outputItemsAsJson(res, results, mapper);
+      break;
+    }
+    case 'csv': {
+      var columns = [
+        'id',
+        'site',
+        'timestamp',
+        'year',
+        'place',
+        'dataset',
+        'answers',
+        'reviewed',
+        'reviewResult',
+        'reviewComments',
+        'details',
+        'isCurrent',
+        'isOpen',
+        'submitter',
+        'reviewer',
+        'score',
+        'relativeScore'
+      ];
+      outputItemsAsCsv(res, results, mapper, columns);
+      break;
+    }
+    default: {
+      res.sendStatus(404);
+      break;
+    }
+  }
+};
+
+let pendingEntries = function(req, res, next) {
+  const format = req.params.format;
+
+  let dataOptions = _.merge(modelUtils.getDataOptions(req), {
+    cascade: false,
+    scoredQuestionsOnly: false,
+    with: {Dataset: false, Place: false, Question: true}
+  });
+
+  // If year is implicitly set
+  if (req.params.isYearImplicitlySet) {
+    dataOptions = _.merge(dataOptions, {year: false});
+  }
+
+  modelUtils.getData(dataOptions)
+  .then(data => {
+    const pendingResults = data.pending;
+    const questions = data.questions;
+    _outputEntryResults(pendingResults, questions, format, res);
+  }).catch(console.trace.bind(console));
+};
+
 let entries = function(req, res, next) {
   // Get request params
   const format = req.params.format;
@@ -262,67 +343,13 @@ let entries = function(req, res, next) {
   modelUtils.getData(dataOptions).then(function(data) {
     const results = data.entries;
     const questions = data.questions;
-    let mapper = function(item) {
-      let answers = item.getSimpleAnswersForQuestions(questions);
-      return {
-        id: item.id,
-        site: item.site,
-        timestamp: moment(item.createdAt).format('YYYY-MM-DDTHH:mm:ss'),
-        year: item.year,
-        place: item.place,
-        dataset: item.dataset,
-        answers: answers,
-        reviewed: item.reviewed ? 'Yes' : 'No',
-        reviewResult: item.reviewResult ? 'Yes' : 'No',
-        reviewComments: item.reviewComments,
-        details: item.details,
-        isCurrent: item.isCurrent ? 'Yes' : 'No',
-        isOpen: item.isOpenForQuestions(data.questions) ? 'Yes' : 'No',
-        submitter: item.Submitter ? item.Submitter.fullName() : '',
-        reviewer: item.Reviewer ? item.Reviewer.fullName() : '',
-        score: item.computedScore,
-        relativeScore: item.computedRelativeScore
-      };
-    };
-
-    switch (format) {
-      case 'json': {
-        outputItemsAsJson(res, results, mapper);
-        break;
-      }
-      case 'csv': {
-        var columns = [
-          'id',
-          'site',
-          'timestamp',
-          'year',
-          'place',
-          'dataset',
-          'answers',
-          'reviewed',
-          'reviewResult',
-          'reviewComments',
-          'details',
-          'isCurrent',
-          'isOpen',
-          'submitter',
-          'reviewer',
-          'score',
-          'relativeScore'
-        ];
-        outputItemsAsCsv(res, results, mapper, columns);
-        break;
-      }
-      default: {
-        res.sendStatus(404);
-        break;
-      }
-    }
+    _outputEntryResults(results, questions, format, res);
   }).catch(console.trace.bind(console));
 };
 
 module.exports = {
   entries: entries,
+  pendingEntries: pendingEntries,
   datasets: datasets,
   places: places,
   questions: questions
