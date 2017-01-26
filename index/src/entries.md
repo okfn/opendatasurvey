@@ -1,5 +1,4 @@
 ---
-<!-- This is used to define child entries and will not be build as an index page itself. -->
 permalink: false
 json_files:
     metadata_key: entries
@@ -7,3 +6,5 @@ json_files:
     as_permalink: true
     layout: entry.html
 ---
+
+<!-- This source file is just used to define child entries and will not be built as an index page itself. -->
