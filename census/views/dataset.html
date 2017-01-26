@@ -1,12 +1,5 @@
 {% extends "page.html" %}
 
-{% if is_index and not dataset and data -%}
-  {% set dataset = data %}
-{%- endif %}
-{% if is_index and data.stats %}
-  {% set stats = data.stats %}
-{% endif %}
-
 {% block title %}{{ dataset.name }}{% endblock %}
 
 {% block content %}

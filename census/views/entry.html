@@ -1,11 +1,8 @@
 {% extends "page.html" %}
 
-{% block title %}
-{{format("Entry for %(place)s / %(title)s", { place: place.name, title: dataset.name}) }}
-{% endblock %}
+{% block title %}{{format("Entry for %(place)s / %(title)s", { place: place.name, title: dataset.name}) }}{% endblock %}
 
 {% block content %}
-
 <section id="data-header">
   <div class="container">
     <div class="row">
@@ -95,7 +92,7 @@
          data-trigger="click"
          data-placement="top"
          data-html="true"
-         data-content="{{ qu.description|replace ('\"', '\'') }}"></i>
+         data-content="{{ qu.description|replace ('\"', '\'') }}"></i> {# " #}
         <span>{{ qu.question }}</span>
     </li>
     {% endif %}

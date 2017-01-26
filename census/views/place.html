@@ -1,14 +1,8 @@
 {% extends "page.html" %}
+
 {% block title %}{{ place.name }}{% endblock %}
+
 {% block content %}
-
-{% if is_index and not place and data -%}
-  {% set place = data %}
-{%- endif %}
-{% if is_index and data.stats %}
-  {% set stats = data.stats %}
-{% endif %}
-
 <section id="data-header">
   <div class="container">
     <div class="row">
