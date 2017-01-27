@@ -9,14 +9,14 @@ const marked = require('marked');
 const crypto = require('crypto');
 const util = require('util');
 
-var loadConfig = function(siteId, models) {
+let loadConfig = function(siteId, models) {
   return models.Registry.findById(siteId)
   .then(registry => {
     return utils.spreadsheetParse(registry.settings.configurl);
   })
   .then(config => {
-    var settings = {};
-    var raw = _.object(_.zip(_.pluck(config, 'key'), _.pluck(config, 'value')));
+    let settings = {};
+    const raw = _.object(_.zip(_.pluck(config, 'key'), _.pluck(config, 'value')));
     _.each(raw, function(v, k) {
       if (v && _.trim(v.toLowerCase()) === 'true') {
         settings[k] = true;
@@ -178,7 +178,7 @@ let _createQuestionSetForDatasets = function(datasets,
   });
 };
 
-var loadQuestionSets = function(siteId, models, transaction) {
+let loadQuestionSets = function(siteId, models, transaction) {
   return models.sequelize.transaction(t => {
     if (transaction !== undefined) {
       t = transaction;
@@ -217,8 +217,8 @@ var loadQuestionSets = function(siteId, models, transaction) {
   });
 };
 
-var loadRegistry = function(models) {
-  var registryUrl = config.get('registryUrl') || false;
+let loadRegistry = function(models) {
+  let registryUrl = config.get('registryUrl') || false;
 
   return utils.spreadsheetParse(registryUrl)
   .then(registry => {
@@ -261,7 +261,7 @@ var loadRegistry = function(models) {
   url defined at setting 'datasets'. Create instances of the Model 'Dataset'
   with the retrieved data, using the optional mapper function.
   */
-var loadData = function(options, models) {
+let loadData = function(options, models) {
   return models.sequelize.transaction(function(t) {
     return models.Site.findById(options.site, {transaction: t})
     .then(site => {
