@@ -17,7 +17,7 @@ let loadConfig = function(siteId, models) {
   .then(config => {
     let settings = {};
     const raw = _.object(_.zip(_.pluck(config, 'key'), _.pluck(config, 'value')));
-    _.each(raw, function(v, k) {
+    _.each(raw, (v, k) => {
       if (v && _.trim(v.toLowerCase()) === 'true') {
         settings[k] = true;
       } else if (v && _.trim(v.toLowerCase()) === 'false') {
@@ -35,10 +35,29 @@ let loadConfig = function(siteId, models) {
         settings[k] = v;
       }
     });
-    // Insert single record — config for required site
+    return settings;
+  })
+  .then(settings => {
+    let indexConfig = {};
+    if (settings.index_config) {
+      indexConfig = utils.spreadsheetParse(settings.index_config);
+    }
+    return [settings, indexConfig];
+  })
+  .spread((settings, indexConfig) => {
+    let indexSettings = {};
+    const raw = _.object(_.zip(_.pluck(indexConfig, 'key'), _.pluck(indexConfig, 'value')));
+    _.each(raw, (v, k) => {
+      if (v && k.endsWith('_page')) {
+        indexSettings[k] = marked(v);
+      } else {
+        indexSettings[k] = v;
+      }
+    });
     return models.Site.upsert({
       id: siteId,
-      settings: settings
+      settings: settings,
+      indexSettings: indexSettings
     });
   });
 };
