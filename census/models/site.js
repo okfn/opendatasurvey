@@ -13,6 +13,10 @@ module.exports = function(sequelize, DataTypes) {
     settings: {
       type: DataTypes.JSONB,
       allowNull: false
+    },
+    indexSettings: {
+      type: DataTypes.JSONB,
+      allowNull: true
     }
   }, {
     tableName: 'site'

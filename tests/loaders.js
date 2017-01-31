@@ -63,10 +63,14 @@ describe('Admin page', function () {
       let jsonData = JSON.parse(html);
       assert.equal(jsonData.status, 'ok');
       assert.equal(jsonData.message, 'ok');
-      return this.app.get('models').Site.findById(siteID).then(function (data) {
+      return this.app.get('models').Site.findById(siteID)
+      .then(data => {
         assert.isNotNull(data);
         assert.notEqual(data.places, '');
-        assert.notEqual(data.places, '');
+        assert.equal(typeof data.settings, 'object');
+        assert.equal(typeof data.indexSettings, 'object');
+        assert.equal(data.settings.title, 'Open Data Census: Test Site 3');
+        assert.equal(data.indexSettings.title, 'Open Data Index: Test Site 3');
         assert.notEqual(data.datasets, '');
         assert.notEqual(data.questions, '');
       });
