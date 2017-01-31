@@ -54,24 +54,19 @@ exports.shutdownApplication = function(done) {
 
 exports.setupFixtures = function(done) {
   models.sequelize.getQueryInterface().dropAllTables()
-    .then(function() {
-
-      models.umzug.up().then(function() {
-
-        return Promise.each(data, function(obj) {
-          return models[obj.model].create(obj.data)
-            .then(function() {})
-            .catch(console.trace.bind(console));
-        })
-          .then(function() {
-            // console.log('fixtures loaded');
-            done();
-          })
-          .catch(console.trace.bind(console));
-
-      });
-
+  .then(() => {
+    return models.umzug.up();
+  })
+  .then(migrations => {
+    return Promise.each(data, obj => {
+      return models[obj.model].create(obj.data);
     });
+  })
+  .then(() => {
+    // console.log('fixtures loaded');
+    done();
+  })
+  .catch(console.trace.bind(console));
 };
 
 exports.dropFixtures = function(done) {
