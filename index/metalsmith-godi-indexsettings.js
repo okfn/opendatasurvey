@@ -2,18 +2,22 @@
 
 const _ = require('lodash');
 
-const debug = require('debug')('metalsmith-godi-ancillaryfiles');
+const debug = require('debug')('metalsmith-godi-indexsettings');
 
 const models = require('../census/models');
 
 module.exports = plugin;
 
 /**
- * GODI Metalsmith plugin that locates anillary page content present in the
- * Index settings object and adds each page as a file to be built by
- * Metalsmith.
+ * GODI Metalsmith plugin that works with the Index setting data loaded from
+ * the CMS.
  *
- * Ancillary pages have a key ending with `_page`, e.g. about_page.
+ * It locates anillary page content present in the Index settings object and
+ * adds each page as a file to be built by Metalsmith. Ancillary pages have a
+ * key ending with `_page`, e.g. about_page.
+ *
+ * It also adds the Google Analytics code to the metalsmith metadata for use
+ * in templates.
  *
  * @return {Function}
  */
@@ -21,6 +25,7 @@ module.exports = plugin;
 function plugin(options) {
   return (files, metalsmith, done) => {
     let metadata = metalsmith.metadata();
+
     debug('Adding ancillary pages.');
     models.Site.findById(options.domain)
     .then(site => {
@@ -40,6 +45,11 @@ function plugin(options) {
           metadata.ancillary_pages.push(keyName);
         }
       });
+
+      // Add GA code snippet to metadata
+      if (indexSettings.google_analytics_key) {
+        metadata.google_analytics_key = indexSettings.google_analytics_key;
+      }
       done();
     })
     .catch(err => done(err));

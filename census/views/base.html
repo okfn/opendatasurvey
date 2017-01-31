@@ -189,11 +189,11 @@
   </script>
   <script data-main="/scripts/site" src="/bower_components/requirejs/require.js"></script>
 
-  {% if site.settings.google_analytics_key %}
+  {% if site.settings.google_analytics_key or google_analytics_key %}
   <!-- configured google analytics specific to this deployment -->
   <script type="text/javascript">
     var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', '{{site.settings.google_analytics_key}}']);
+    _gaq.push(['_setAccount', '{{ site.settings.google_analytics_key or google_analytics_key}}']);
     _gaq.push(['_trackPageview']);
 
     (function() {
