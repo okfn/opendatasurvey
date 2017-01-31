@@ -68,25 +68,39 @@
 
           <ul class="menu">
             {% if is_index %}
-            <li><a href="/place/">{{ gettext("Places") }}</a></li>
-            <li><a href="/dataset/">{{ gettext("Datasets") }}</a></li>
+              <li><a href="/place/">{{ gettext("Places") }}</a></li>
+              <li><a href="/dataset/">{{ gettext("Datasets") }}</a></li>
+              {% if 'insights' in ancillary_pages %}
+                <li><a href="/insights/">{{ gettext("Insights") }}</a></li>
+              {% endif %}
+              {% if 'methodology' in ancillary_pages %}
+                <li><a href="/methodology/">{{ gettext("Methodology") }}</a></li>
+              {% endif %}
+              {% if 'about' in ancillary_pages %}
+                <li><a href="/about/">{{ gettext("About") }}</a></li>
+              {% endif %}
+              {% if 'press' in ancillary_pages %}
+                <li><a href="/press/">{{ gettext("Press") }}</a></li>
+              {% endif %}
             {% endif %}
-            <li><a href="/about/">{{ gettext("About") }}</a></li>
-            <li><a href="/changes/">{{ gettext("Changes") }}</a></li>
-            <li><a href="/faq/">{{ gettext("FAQ") }}</a></li>
-            {% if site.settings.methodology_page %}
-            <li><a href="/methodology/">{{ gettext("Methodology") }}</a></li>
-            {% endif %}
-            {% if site.settings.contribute_page %}
-            <li><a href="/contribute/">{{ gettext("Contribute") }}</a></li>
-            {% endif %}
-            {% if site.settings.tutorial_page %}
-            <li><a href="/tutorial/">{{ gettext("Tutorial") }}</a></li>
-            {% endif %}
-            {% if site.settings.support_url %}
-              <li><a target="_blank" href="{{ site.settings.support_url }}">{{ gettext("Support") }}</a></li>
-            {% elif discussionForum %}
-              <li><a target="_blank" href="{{ discussionForum }}">{{ gettext("Support") }}</a></li>
+            {% if not is_index %}
+              <li><a href="/about/">{{ gettext("About") }}</a></li>
+              <li><a href="/changes/">{{ gettext("Changes") }}</a></li>
+              <li><a href="/faq/">{{ gettext("FAQ") }}</a></li>
+              {% if site.settings.methodology_page %}
+                <li><a href="/methodology/">{{ gettext("Methodology") }}</a></li>
+              {% endif %}
+              {% if site.settings.contribute_page %}
+                <li><a href="/contribute/">{{ gettext("Contribute") }}</a></li>
+              {% endif %}
+              {% if site.settings.tutorial_page %}
+                <li><a href="/tutorial/">{{ gettext("Tutorial") }}</a></li>
+              {% endif %}
+              {% if site.settings.support_url %}
+                <li><a target="_blank" href="{{ site.settings.support_url }}">{{ gettext("Support") }}</a></li>
+              {% elif discussionForum %}
+                <li><a target="_blank" href="{{ discussionForum }}">{{ gettext("Support") }}</a></li>
+              {% endif %}
             {% endif %}
           </ul>
         </nav>

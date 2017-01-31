@@ -21,6 +21,7 @@ const i18n = require('i18n-abide');
 
 const godiGetData = require('./metalsmith-godi-getdata');
 const godiDataFiles = require('./metalsmith-godi-updatedatafiles');
+const godiAncillaryFiles = require('./metalsmith-godi-ancillaryfiles');
 const jsonToFiles = require('metalsmith-json-to-files');
 
 const templatePath = path.join(__dirname, '../census/views/');
@@ -62,6 +63,7 @@ Metalsmith(__dirname)
   .use(godiGetData({domain: domain, year: 2016})) // Populate metadata with data from Survey
   .use(jsonToFiles({use_metadata: true}))
   .use(godiDataFiles()) // Add file metadata to each entry file populated by json-to-files
+  .use(godiAncillaryFiles({domain: domain}))
   .use(markdown())
   .use(permalinks())
   .use(paths({property: 'paths', directoryIndex: 'index.html'}))

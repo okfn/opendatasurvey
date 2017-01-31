@@ -49,7 +49,7 @@ let loadConfig = function(siteId, models) {
     const raw = _.object(_.zip(_.pluck(indexConfig, 'key'), _.pluck(indexConfig, 'value')));
     _.each(raw, (v, k) => {
       if (v && k.endsWith('_page')) {
-        indexSettings[k] = marked(v);
+        indexSettings[k] = v;
       } else {
         indexSettings[k] = v;
       }
