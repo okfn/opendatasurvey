@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Open Knowledge">
-    <title>{% block title%}{{title}}{% endblock %} - {{ site.settings.title }}</title>
+    <title>{% block title%}{{ title }}{% endblock %} - {{ site.settings.title or site_title }}</title>
     <!--[if lt IE 9]>
     <script src="/bower_components/html5shiv/dist/html5shiv.min.js"></script>
     <![endif]-->
