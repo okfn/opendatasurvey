@@ -12,6 +12,7 @@ const markdown = require('metalsmith-markdown');
 const permalinks = require('metalsmith-permalinks');
 const debug = require('metalsmith-debug');
 const timer = require('metalsmith-timer');
+const ignore = require('metalsmith-ignore');
 const paths = require('metalsmith-paths');
 const msIf = require('metalsmith-if');
 
@@ -80,6 +81,9 @@ Metalsmith(__dirname)
       destination: '.' // relative to the build directory
     })
   ))
+  .use(ignore([
+    'scss/*'
+  ]))
   .use(timer('finished'))
   .build(function(err) {
     if (err) throw err;
