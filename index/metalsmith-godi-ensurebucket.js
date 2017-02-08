@@ -67,9 +67,9 @@ let ensureWebsite = function(bucketName) {
         debug('No website configured for bucket. Attempting to add one.');
         const createParams = _.clone(params);
         createParams.WebsiteConfiguration = {
-          // ErrorDocument: {
-          //   Key: 'STRING_VALUE' /* required */
-          // },
+          ErrorDocument: {
+            Key: '404.html'
+          },
           IndexDocument: {
             Suffix: 'index.html'
           }
