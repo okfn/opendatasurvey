@@ -162,12 +162,14 @@
             <a href="http://opendatacommons.org/licenses/pddl/1.0">{{ gettext("Data License (Public Domain)") }}</a>. <a href="https://github.com/okfn/opendatasurvey/">{{ gettext("Source code") }}</a>.
           </p>
         </div>
-        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-        {% if currentUser %}
-          {{format(gettext("Logged in as %(name)s"), { name: currentUser.firstName })}}
-          | <a href="{{ logoutUrl }}">{{ gettext("Log out") }}</a>
-        {% else %}
-          <a href="{{ loginUrl }}">{{ gettext("Login") }}</a>
+        {% if not is_index %}
+          <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+          {% if currentUser %}
+            {{format(gettext("Logged in as %(name)s"), { name: currentUser.firstName })}}
+            | <a href="{{ logoutUrl }}">{{ gettext("Log out") }}</a>
+          {% else %}
+            <a href="{{ loginUrl }}">{{ gettext("Login") }}</a>
+          {% endif %}
         {% endif %}
         {% if locales.length > 1 %}
             <p class="lang-picker">
