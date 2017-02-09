@@ -6,6 +6,7 @@ const util = require('util');
 const _ = require('lodash');
 const AWS = require('aws-sdk');
 const commandLineArgs = require('command-line-args');
+const getUsage = require('command-line-usage');
 const Metalsmith = require('metalsmith');
 const layouts = require('metalsmith-layouts');
 const assets = require('metalsmith-assets');
@@ -32,13 +33,84 @@ const jsonToFiles = require('metalsmith-json-to-files');
 
 const templatePath = path.join(__dirname, '../census/views/');
 
+// Usage instructions
+const usageSections = [
+  {
+    header: 'Index website generator',
+    content: 'Generate a static Open Data Index website from Survey data for the provided [italic]{site}.'
+  },
+  {
+    header: 'Synopsis',
+    content: [
+      '$ generate_index example-site [bold]{--local} [[bold]{--clean}] [[bold]{--static}]',
+      '$ generate_index example-site [bold]{--deploy}',
+      '$ generate_index [bold]{--help}'
+    ]
+  },
+  {
+    header: 'Options',
+    optionList: [
+      {
+        name: 'site',
+        typeLabel: '[underline]{string}',
+        defaultOption: true,
+        description: 'Name of the site to generate.'
+      },
+      {
+        name: 'local',
+        alias: 'l',
+        description: 'Write files locally to a build directory.'
+      },
+      {
+        name: 'deploy',
+        alias: 'd',
+        description: 'Write files to an S3 bucket (always includes static assets).'
+      },
+      {
+        name: 'clean',
+        alias: 'c',
+        description: 'Clean the build directory prior to build (if building locally).'
+      },
+      {
+        name: 'static',
+        alias: 's',
+        description: 'Copy the static assets directory to the build (if building locally).'
+      },
+      {
+        name: 'help',
+        alias: 'h',
+        description: 'Display this message.'
+      }
+    ]
+  }
+];
+const usage = getUsage(usageSections);
+
 // Grab cli args
 const optionDefinitions = [
+  {name: 'site', type: String, defaultOption: true},
   {name: 'clean', alias: 'c', type: Boolean, defaultValue: false},
   {name: 'static', alias: 's', type: Boolean, defaultValue: false},
-  {name: 'deploy', alias: 'd', type: Boolean, defaultValue: false}
+  {name: 'deploy', alias: 'd', type: Boolean, defaultValue: false},
+  {name: 'local', alias: 'l', type: Boolean, defaultValue: false},
+  {name: 'help', alias: 'h', type: Boolean, defaultValue: false}
 ];
 const options = commandLineArgs(optionDefinitions);
+
+// Usage validation
+if ((options.local && options.deploy) || (!options.local && !options.deploy)) {
+  console.log('Please provide either --local OR --deploy options.');
+  console.log(usage);
+  process.exit(0);
+} else if (options.help) {
+  console.log(usage);
+  process.exit(0);
+}
+if (!options.site) {
+  console.log('Please provide a site to build.');
+  console.log(usage);
+  process.exit(0);
+}
 
 // Set up Nunjucks env
 const njEnv = nunjucks.configure(templatePath,
@@ -64,7 +136,7 @@ if (options.deploy &&
 }
 
 const isGodi = false;
-const domain = 'global-test';
+const domain = options.site;
 const bucketSite = (isGodi) ? '' : util.format('%s-', domain);
 const bucketName = util.format('%sindex.okfn.org', bucketSite);
 // const baseUrl = 'http://localhost:8000';
