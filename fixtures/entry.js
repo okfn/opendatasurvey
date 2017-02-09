@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
-var uuid = require('node-uuid');
+var uuid = require('uuid');
 var datasets = require('./dataset');
 var places = require('./place');
 var users = require('./user');

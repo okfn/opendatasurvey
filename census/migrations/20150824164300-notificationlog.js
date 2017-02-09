@@ -1,11 +1,6 @@
 'use strict';
 
-var fs = require('fs');
-var path = require('path');
-var _ = require('lodash');
-var Promise = require('bluebird');
-var models = require('../models');
-var uuid = require('node-uuid');
+var uuid = require('uuid');
 
 module.exports = {
   up: function(queryInterface, Sequelize) {

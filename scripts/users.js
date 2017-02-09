@@ -2,7 +2,7 @@ var csv = require('csv');
 var fs = require('fs');
 var models = require('../census/models');
 var Promise = require('bluebird');
-var uuid = require('node-uuid');
+var uuid = require('uuid');
 var fileData;
 var utils = require('./utils');
 
