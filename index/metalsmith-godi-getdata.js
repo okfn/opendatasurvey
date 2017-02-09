@@ -32,7 +32,14 @@ function plugin(options) {
 
   return (files, metalsmith, done) => {
     // Get all the data for the site and year.
-    modelUtils.getData(defaultOptions)
+    models.Site.findById(options.domain)
+    .then(site => {
+      if (site) {
+        return modelUtils.getData(defaultOptions);
+      } else {
+        throw Error('Can\'t generate Index. Site \'' + options.domain + '\' does not exist.');
+      }
+    })
     .then(data => {
       let metadata = metalsmith.metadata();
       // Add keys for the retrieved data directly to metalsmith.metadata.
