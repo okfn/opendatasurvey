@@ -88,6 +88,10 @@ const usageSections = [
         description: 'Copy the static assets directory to the build (if building locally).'
       },
       {
+        name: 'dryrun',
+        description: 'Process the pipeline, but don\'t write or deploy the data.'
+      },
+      {
         name: 'help',
         alias: 'h',
         description: 'Display this message.'
@@ -106,6 +110,7 @@ const optionDefinitions = [
   {name: 'isgodi', alias: 'g', type: Boolean, defaultValue: false},
   {name: 'deploy', alias: 'd', type: Boolean, defaultValue: false},
   {name: 'local', alias: 'l', type: Boolean, defaultValue: false},
+  {name: 'dryrun', type: Boolean, defaultValue: false},
   {name: 'help', alias: 'h', type: Boolean, defaultValue: false}
 ];
 const options = commandLineArgs(optionDefinitions);
@@ -128,6 +133,11 @@ if (!options.year) {
   console.log('Please provide a year to build.');
   console.log(usage);
   process.exit(0);
+}
+if (options.dryrun) {
+  debug('This is a dry run. No files will be written or deployed.');
+  // Don't clean, if a dryrun
+  options.clean = false;
 }
 
 // Set up Nunjucks env
@@ -200,18 +210,18 @@ Metalsmith(__dirname)
     '.DS_Store'
   ]))
   .use(msIf(
-    options.deploy,  // We're pushing to AWS, so ensure the bucket exists.
+    options.deploy && !options.dryrun,  // We're pushing to AWS, so ensure the bucket exists.
     godiEnsureBucket({bucketName: bucketName})
   ))
-  // .use(msIf(
-  //   options.deploy,  // Push to AWS.
-  //   s3({
-  //     action: 'write',
-  //     bucket: bucketName
-  //   })
-  // ))
+  .use(msIf(
+    options.deploy && !options.dryrun,  // Push to AWS.
+    s3({
+      action: 'write',
+      bucket: bucketName
+    })
+  ))
   .use(msIf(  // If we're pushing to AWS, strip all files from the local build.
-    options.deploy,
+    options.deploy || options.dryrun,
     godiStripBuild()
   ))
   .use(msdebug())
