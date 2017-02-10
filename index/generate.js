@@ -42,8 +42,8 @@ const usageSections = [
   {
     header: 'Synopsis',
     content: [
-      '$ generate_index example-site [bold]{--local} [[bold]{--clean}] [[bold]{--static}]',
-      '$ generate_index example-site [bold]{--deploy}',
+      '$ generate_index example-site [bold]{--year=2016} [bold]{--local} [[bold]{--clean}] [[bold]{--static}]',
+      '$ generate_index example-site [bold]{--year=2016} [bold]{--deploy}',
       '$ generate_index [bold]{--help}'
     ]
   },
@@ -55,6 +55,12 @@ const usageSections = [
         typeLabel: '[underline]{string}',
         defaultOption: true,
         description: 'Name of the site to generate.'
+      },
+      {
+        name: 'year',
+        alias: 'y',
+        typeLabel: '[underline]{YYYY}',
+        description: 'Survey year to generate.'
       },
       {
         name: 'local',
@@ -94,6 +100,7 @@ const usage = getUsage(usageSections);
 // Grab cli args
 const optionDefinitions = [
   {name: 'site', type: String, defaultOption: true},
+  {name: 'year', alias: 'y', type: Number},
   {name: 'clean', alias: 'c', type: Boolean, defaultValue: false},
   {name: 'static', alias: 's', type: Boolean, defaultValue: false},
   {name: 'isgodi', alias: 'g', type: Boolean, defaultValue: false},
@@ -114,6 +121,11 @@ if ((options.local && options.deploy) || (!options.local && !options.deploy)) {
 }
 if (!options.site) {
   console.log('Please provide a site to build.');
+  console.log(usage);
+  process.exit(0);
+}
+if (!options.year) {
+  console.log('Please provide a year to build.');
   console.log(usage);
   process.exit(0);
 }
@@ -143,6 +155,7 @@ if (options.deploy &&
 
 const isGodi = options.isgodi;
 const domain = options.site;
+const year = options.year;
 const bucketSite = (isGodi) ? '' : util.format('%s-', domain);
 const bucketName = util.format('%sindex.okfn.org', bucketSite);
 // const baseUrl = 'http://localhost:8000';
@@ -163,7 +176,7 @@ Metalsmith(__dirname)
   .source('./src')
   .destination('./build')
   .clean(options.clean)
-  .use(godiGetData({domain: domain, year: 2016})) // Populate metadata with data from Survey
+  .use(godiGetData({domain: domain, year: year})) // Populate metadata with data from Survey
   .use(jsonToFiles({use_metadata: true}))
   .use(godiDataFiles()) // Add file metadata to each entry file populated by json-to-files
   .use(godiIndexSettings({domain: domain})) // Add data from Index settings.
@@ -190,13 +203,13 @@ Metalsmith(__dirname)
     options.deploy,  // We're pushing to AWS, so ensure the bucket exists.
     godiEnsureBucket({bucketName: bucketName})
   ))
-  .use(msIf(
-    options.deploy,  // Push to AWS.
-    s3({
-      action: 'write',
-      bucket: bucketName
-    })
-  ))
+  // .use(msIf(
+  //   options.deploy,  // Push to AWS.
+  //   s3({
+  //     action: 'write',
+  //     bucket: bucketName
+  //   })
+  // ))
   .use(msIf(  // If we're pushing to AWS, strip all files from the local build.
     options.deploy,
     godiStripBuild()
