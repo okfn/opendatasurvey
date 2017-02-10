@@ -50,6 +50,11 @@ function plugin(options) {
       if (indexSettings.google_analytics_key) {
         metadata.google_analytics_key = indexSettings.google_analytics_key;
       }
+
+      // Add site title to metadata
+      if (indexSettings.title) {
+        metadata.site_title = indexSettings.title;
+      }
       done();
     })
     .catch(err => done(err));
