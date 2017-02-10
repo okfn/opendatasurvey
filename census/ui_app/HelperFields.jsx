@@ -74,7 +74,10 @@ const SubmitActions = props => {
             If necessary, edit the submission before accepting it. In particular, please correct any spelling mistakes.
           </p>
           <p>
-            <span className="label label-info">Publish</span> will overwite the whole entry with the data in this form.
+            <span className="label label-info">Publish</span> will save the changes made by a reviewer and publish the submission with these changes. The previous published entry will be replaced.
+          </p>
+          <p>
+            <span className="label label-danger">Reject</span> will reject the submission and allow a new submission to be proposed. It should be used if question B1 or B2 have been answered with "No".
           </p>
         </div>
         <div>
