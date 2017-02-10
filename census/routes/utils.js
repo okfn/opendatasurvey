@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 const passport = require('passport');
-const uuid = require('node-uuid');
+const uuid = require('uuid');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const models = require('../models');
