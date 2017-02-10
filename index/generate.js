@@ -147,7 +147,6 @@ const bucketSite = (isGodi) ? '' : util.format('%s-', domain);
 const bucketName = util.format('%sindex.okfn.org', bucketSite);
 // const baseUrl = 'http://localhost:8000';
 const baseUrl = util.format('http://%s', bucketName);
-const siteTitle = 'Global Open Data Index';
 
 Metalsmith(__dirname)
   .use(timer('Start pipeline'))
@@ -159,8 +158,7 @@ Metalsmith(__dirname)
     },
     // format function needs to be available in templates
     format: i18n.format,
-    site_url: baseUrl,
-    site_title: siteTitle
+    site_url: baseUrl
   })
   .source('./src')
   .destination('./build')
