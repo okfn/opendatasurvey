@@ -1,12 +1,11 @@
+# Notice: We have changed the Census domains. All previous Census instances are now deprecated but your data is still there. If you want to run a new Census instance please contact us at index@okfn.org.
 
-<h1>
-  Get your local open data census here!
+## Get your local open data census here!
   <small>
     <p>Local data is often the most relevant to citizens on a daily basis – from rubbish collection times to local tax rates.</p>
     <p>At the moment it's hard to know what local open data is available.</p>
     <p>Help change that by reporting on the state of open data in your area with a <strong>local open data census</strong>!</p>
   </small>
-</h1>
 
 ## Get Started
 
