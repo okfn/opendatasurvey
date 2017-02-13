@@ -34,10 +34,15 @@ function plugin(options) {
     // Get all the data for the site and year.
     models.Site.findById(options.domain)
     .then(site => {
+      // Validate that there's a site and site.indexSettings
       if (site) {
-        return modelUtils.getData(defaultOptions);
+        if (_.get(site, 'indexSettings')) {
+          return modelUtils.getData(defaultOptions);
+        } else {
+          throw new Error(`Can't generate Index. Site '${options.domain}' has no index settings.`);
+        }
       } else {
-        throw Error('Can\'t generate Index. Site \'' + options.domain + '\' does not exist.');
+        throw new Error(`Can't generate Index. Site '${options.domain}' does not exist.`);
       }
     })
     .then(data => {
