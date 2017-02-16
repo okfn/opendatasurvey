@@ -95,16 +95,14 @@
     "jsdom-global": "^2.0.0",
     "jsxgettext": "^0.9.0",
     "mocha": "^3.0.2",
-    "node-inspector": "^0.12.8",
     "react-addons-test-utils": "^15.3.0",
     "rewire": "^2.5.2",
     "supertest": "^2.0.0",
     "timekeeper": "^1.0.0",
     "zombie": "^4.1.0"
   },
-  "engines": {
-    "node": "4.1.x",
-    "npm": "2.14.x"
+  "optionalDependencies": {
+    "fsevents": "*"
   },
   "scripts": {
     "entry-admin": "node scripts/entry-admin.js",
