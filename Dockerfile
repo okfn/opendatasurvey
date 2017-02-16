@@ -18,7 +18,10 @@ RUN apk add --no-cache --virtual build-dependencies \
     readline-dev \
     curl \
     gcc \
+    g++ \
     git \
+    udev \
+    libgcrypt-dev \
  && apk add --no-cache \
     bash \
     gettext \
