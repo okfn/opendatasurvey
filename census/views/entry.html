@@ -81,6 +81,51 @@
     {%- endfor %}
     </ul>
 
+    {% if not is_index %}
+      {% set answers = entry.getSimpleAnswersForQuestions(questions) %}
+      <h3>{{ gettext("All answers") }}</h3>
+      <table class="table table-striped yntable">
+        <tbody>
+          <tr>
+            <th>{{ gettext("Question")}}</th>
+            <th>{{ gettext("Answer") }}</th>
+            <th>{{ gettext("Comment")}}</th>
+          </tr>
+        {% for answer in answers %}
+          {% if answer.value %}
+          {% set question = questions|find({id: answer.id}) %}
+          {% set answerValue = '' %}
+
+          {% if question.type == 'source' %}
+          {# Special treatment for 'source' question type. #}
+            {% for source in answer.value %}
+              {% set answerValue = answerValue + source.urlValue + ' - ' + source.descValue %}
+              {% if not loop.last %}
+                {% set answerValue = answerValue + ', ' %}
+              {% endif %}
+            {% endfor %}
+            {% set answerValue = answerValue|marked %}
+          {% elif question.type == 'multiple' %}
+          {# Special treatment for 'multiple' question type. #}
+            {% set answerValue = answer.value|join(', ') %}
+          {% elif question.id == 'licence_url' %}
+          {# Special treatment for 'licence_url' question id. #}
+            {% set answerValue = answer.value|marked %}
+          {% else %}
+            {% set answerValue = answer.value %}
+          {% endif %}
+
+          <tr>
+            <td>{{question.questionshort or answer.id}}</td>
+            <td>{{answerValue}}</td>
+            <td>{{answer.commentValue}}</td>
+          </tr>
+          {% endif %}
+        {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+
     {% if entry.details %}
     <div class="place-details">
       <h4><strong>{{ gettext("Details") }}</strong></h4>
