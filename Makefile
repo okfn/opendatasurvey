@@ -2,7 +2,7 @@
 
 .DEFAULT_GOAL := help
 
-REPOSITORY := 'okfn/opendatasurvey'
+REPOSITORY := 'openknowledge/opendatasurvey'
 SHELL := /bin/bash
 
 help: # http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
@@ -10,6 +10,9 @@ help: # http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
 
 install: ## install the dependencies for the app
 	npm install --no-optional
+
+frontend: ## build the frontend assets
+	npm run build
 
 release: ## tag a release from master and push to origin
 	bash -c '[[ -z `git status -s` ]]'
