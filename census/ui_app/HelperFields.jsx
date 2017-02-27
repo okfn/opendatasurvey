@@ -77,7 +77,7 @@ const SubmitActions = props => {
             <span className="label label-info">Publish</span> will save the changes made by a reviewer and publish the submission with these changes. The previous published entry will be replaced.
           </p>
           <p>
-            <span className="label label-danger">Reject</span> will reject the submission and allow a new submission to be proposed. It should be used if question B1 or B2 have been answered with "No".
+            <span className="label label-danger">Reject</span> will reject the submission and allow a new submission to be proposed. It should be used if submitters did not find all required data characteristics, but continued the survey anyway (i.e. did not answer B2 with "No", as they correctly should have done).
           </p>
         </div>
         <div>
