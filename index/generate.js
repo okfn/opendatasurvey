@@ -117,22 +117,19 @@ const options = commandLineArgs(optionDefinitions);
 
 // Usage validation
 if ((options.local && options.deploy) || (!options.local && !options.deploy)) {
-  console.log('Please provide either --local OR --deploy options.');
-  console.log(usage);
-  process.exit(0);
+  console.error('Please provide either --local OR --deploy options.');
+  process.exit(1);
 } else if (options.help) {
   console.log(usage);
   process.exit(0);
 }
 if (!options.site) {
-  console.log('Please provide a site to build.');
-  console.log(usage);
-  process.exit(0);
+  console.error('Please provide a site to build.');
+  process.exit(1);
 }
 if (!options.year) {
-  console.log('Please provide a year to build.');
-  console.log(usage);
-  process.exit(0);
+  console.error('Please provide a year to build.');
+  process.exit(1);
 }
 if (options.dryrun) {
   debug('This is a dry run. No files will be written or deployed.');
@@ -157,9 +154,9 @@ if (options.deploy &&
       path.join(path.dirname(__dirname), '/settings_index.json'));
   } catch (err) {
     if (err.code === 'ENOENT') {
-      debug('Could not load credentials file. Please check settings_index.json.');
+      console.error('Could not load AWS credentials. Please check env or settings_index.json.');
     }
-    throw err;
+    process.exit(1);
   }
 }
 
@@ -227,5 +224,8 @@ Metalsmith(__dirname)
   .use(msdebug())
   .use(timer('finished'))
   .build(err => {
-    if (err) throw err;
+    if (err) {
+      console.error(err.message);
+      process.exit(1);
+    }
   });
