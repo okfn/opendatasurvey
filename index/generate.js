@@ -73,11 +73,6 @@ const usageSections = [
         description: 'Write files to an S3 bucket (always includes static assets).'
       },
       {
-        name: 'isgodi',
-        alias: 'g',
-        description: 'A special flag to determine whether to treat the build as GODI. Use this flag if building the Global ODI.'
-      },
-      {
         name: 'clean',
         alias: 'c',
         description: 'Clean the build directory prior to build (if building locally).'
@@ -107,7 +102,6 @@ const optionDefinitions = [
   {name: 'year', alias: 'y', type: Number},
   {name: 'clean', alias: 'c', type: Boolean, defaultValue: false},
   {name: 'static', alias: 's', type: Boolean, defaultValue: false},
-  {name: 'isgodi', alias: 'g', type: Boolean, defaultValue: false},
   {name: 'deploy', alias: 'd', type: Boolean, defaultValue: false},
   {name: 'local', alias: 'l', type: Boolean, defaultValue: false},
   {name: 'dryrun', type: Boolean, defaultValue: false},
@@ -160,7 +154,7 @@ if (options.deploy &&
   }
 }
 
-const isGodi = options.isgodi;
+const isGodi = (options.site === 'global' || options.site === 'global-test');
 const domain = options.site;
 const year = options.year;
 const bucketSite = (isGodi) ? '' : util.format('%s-', domain);
