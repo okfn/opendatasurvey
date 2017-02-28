@@ -18,6 +18,7 @@ var adminRoutes = function(coreMiddlewares) {
   router.post(utils.scoped('/load/questionsets'),
               coreMixins, admin.loadQuestionSets);
   router.post(utils.scoped('/load/config'), coreMixins, admin.loadConfig);
+  router.post(utils.scoped('/buildindex'), coreMixins, admin.buildIndexSite);
 
   return router;
 };
