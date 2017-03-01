@@ -1,3 +1,13 @@
+## Current Censuses
+
+* [Brazil City Census](http://br-cities.survey.okfn.org)
+* [Portugal City Census](http://pt-cities.survey.okfn.org)
+* [Turkey City Census](http://tr-cities.survey.okfn.org)
+* [Greece City Census](http://gr-cities.survey.okfn.org)
+* [Argentina City Census](http://ar-cities.survey.okfn.org)
+* [Canada City Census](http://ca-cities.survey.okfn.org)
+
+## Deprecated Censuses
 ### Regions
 
  * [Australian Regional Census](http://australia.census.okfn.org/)

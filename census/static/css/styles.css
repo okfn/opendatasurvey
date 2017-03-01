@@ -9249,7 +9249,7 @@ body.form .form-footer {
         body.form section .question .current dl > *,
         body.form .form-header .question .current dl > *,
         body.form .form-footer .question .current dl > * {
-          opacity: 0.2; }
+          opacity: 0.7; }
         body.form section .question .current dl:hover > *,
         body.form .form-header .question .current dl:hover > *,
         body.form .form-footer .question .current dl:hover > * {
