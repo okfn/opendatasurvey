@@ -1,7 +1,6 @@
 'use strict';
 
 const path = require('path');
-const util = require('util');
 
 const _ = require('lodash');
 const AWS = require('aws-sdk');
@@ -154,13 +153,17 @@ if (options.deploy &&
   }
 }
 
+// Suffix to append to index subdomain. Useful to differentiate between
+// development, staging and production.
+const indexDomainSuffix = (process.env.INDEX_DOMAIN_SUFFIX) ?
+  `-${process.env.INDEX_DOMAIN_SUFFIX}` : '';
 const isGodi = (options.site === 'global' || options.site === 'global-test');
 const domain = options.site;
 const year = options.year;
-const bucketSite = (isGodi) ? '' : util.format('%s-', domain);
-const bucketName = util.format('%sindex.okfn.org', bucketSite);
+const bucketSite = (isGodi) ? '' : `${domain}-`;
+const bucketName = `${bucketSite}index${indexDomainSuffix}.okfn.org`;
 // const baseUrl = 'http://localhost:8000';
-const baseUrl = util.format('http://%s', bucketName);
+const baseUrl = `http://${bucketName}`;
 
 Metalsmith(__dirname)
   .use(timer('Start pipeline'))
