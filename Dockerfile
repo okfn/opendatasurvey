@@ -1,4 +1,4 @@
-FROM node:7-alpine
+FROM node:7.6-alpine
 
 MAINTAINER Paul Walsh <paulywalsh@gmail.com>
 
