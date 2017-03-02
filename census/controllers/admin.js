@@ -1,6 +1,6 @@
 'use strict';
 
-const exec = require('child_process').exec;
+const execFile = require('child_process').execFile;
 
 const _ = require('lodash');
 
@@ -79,7 +79,7 @@ let buildIndexSite = function(req, res) {
   const env = process.env;
   // env.DEBUG = 'metalsmith-godi-*';
 
-  exec(`node index/generate.js ${res.locals.domain} -dsy ${res.locals.surveyYear}`,
+  execFile('node', ['index/generate.js', res.locals.domain, '-dsy', res.locals.surveyYear],
     {env: env}, (error, stdout, stderr) => {
       if (error) {
         console.log(`${stderr}`);
