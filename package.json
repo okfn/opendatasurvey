@@ -77,6 +77,7 @@
     "chai-as-promised": "^5.1.0",
     "command-line-args": "^3.0.5",
     "command-line-commands": "^1.0.4",
+    "command-line-usage": "^4.0.0",
     "coveralls": "^2.11.9",
     "enzyme": "^2.4.1",
     "eslint": "^3.0.1",
@@ -106,7 +107,8 @@
   },
   "scripts": {
     "entry-admin": "node scripts/entry-admin.js",
-    "ms_generate_dev": "DEBUG=metalsmith-godi-*,metalsmith-timer node index/generate.js",
+    "generate_index": "DEBUG=metalsmith-godi-*,metalsmith-timer node index/generate.js",
+    "generate_index_dev": "DEBUG=metalsmith-godi-*,metalsmith-timer INDEX_DOMAIN_SUFFIX=dev node index/generate.js",
     "migrate_users": "node scripts/users.js",
     "start": "node server.js",
     "debug": "node-debug debug-server.js --no-preload --hidden='node_modules'",

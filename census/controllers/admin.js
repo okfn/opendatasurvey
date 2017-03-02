@@ -1,6 +1,9 @@
 'use strict';
 
+const execFile = require('child_process').execFile;
+
 const _ = require('lodash');
+
 const loaders = require('../loaders');
 const modelUtils = require('../models').utils;
 const utils = require('./utils');
@@ -66,10 +69,31 @@ let loadQuestionSets = function(req, res) {
     });
 };
 
+let buildIndexSite = function(req, res) {
+  /*
+  Generate and deploy an Index site for the site specified in the request.
+  */
+
+  // Set env for process to include DEBUG option, for more comprehensive
+  // logging.
+  const env = process.env;
+  // env.DEBUG = 'metalsmith-godi-*';
+
+  execFile('node', ['index/generate.js', res.locals.domain, '-dsy', res.locals.surveyYear],
+    {env: env}, (error, stdout, stderr) => {
+      if (error) {
+        console.log(`${stderr}`);
+        return res.send({status: 'error', message: `${stderr}`});
+      }
+      return res.send({status: 'ok', message: 'Index site built for ' + req.params.domain});
+    });
+};
+
 module.exports = {
   dashboard: dashboard,
   loadConfig: loadConfig,
   loadPlaces: loadPlaces,
   loadDatasets: loadDatasets,
-  loadQuestionSets: loadQuestionSets
+  loadQuestionSets: loadQuestionSets,
+  buildIndexSite: buildIndexSite
 };

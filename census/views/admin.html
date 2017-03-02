@@ -28,6 +28,7 @@
       <li><form action="/admin/load/places" method="post"><button class="btn btn-primary" type="submit">{{ gettext('Reload Places') }}</button></form></li>
       <li><form action="/admin/load/datasets" method="post"><button class="btn btn-primary" type="submit">{{ gettext('Reload Datasets (& QuestionSets)') }}</button></form></li>
       <li><form action="/admin/load/questionsets" method="post"><button class="btn btn-primary" type="submit">{{ gettext('Reload QuestionSets') }}</button></form></li>
+      <li><form action="/admin/buildindex" method="post"><button class="btn btn-primary" type="submit" {% if not site.indexSettings %}disabled{% endif %}>{{ gettext('Build Index Website') }}</button> {% if not site.indexSettings %}(No Index Settings for site){% endif %}</form></li>
     </ul>
   </div>
 </div>

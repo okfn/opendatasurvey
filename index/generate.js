@@ -1,11 +1,11 @@
 'use strict';
 
 const path = require('path');
-const util = require('util');
 
 const _ = require('lodash');
 const AWS = require('aws-sdk');
 const commandLineArgs = require('command-line-args');
+const getUsage = require('command-line-usage');
 const Metalsmith = require('metalsmith');
 const layouts = require('metalsmith-layouts');
 const assets = require('metalsmith-assets');
@@ -32,13 +32,103 @@ const jsonToFiles = require('metalsmith-json-to-files');
 
 const templatePath = path.join(__dirname, '../census/views/');
 
+// Usage instructions
+const usageSections = [
+  {
+    header: 'Index website generator',
+    content: 'Generate a static Open Data Index website from Survey data for the provided [italic]{site}.'
+  },
+  {
+    header: 'Synopsis',
+    content: [
+      '$ generate_index example-site [bold]{--year=2016} [bold]{--local} [[bold]{--clean}] [[bold]{--static}]',
+      '$ generate_index example-site [bold]{--year=2016} [bold]{--deploy}',
+      '$ generate_index [bold]{--help}'
+    ]
+  },
+  {
+    header: 'Options',
+    optionList: [
+      {
+        name: 'site',
+        typeLabel: '[underline]{string}',
+        defaultOption: true,
+        description: 'Name of the site to generate.'
+      },
+      {
+        name: 'year',
+        alias: 'y',
+        typeLabel: '[underline]{YYYY}',
+        description: 'Survey year to generate.'
+      },
+      {
+        name: 'local',
+        alias: 'l',
+        description: 'Write files locally to a build directory.'
+      },
+      {
+        name: 'deploy',
+        alias: 'd',
+        description: 'Write files to an S3 bucket (always includes static assets).'
+      },
+      {
+        name: 'clean',
+        alias: 'c',
+        description: 'Clean the build directory prior to build (if building locally).'
+      },
+      {
+        name: 'static',
+        alias: 's',
+        description: 'Copy the static assets directory to the build (if building locally).'
+      },
+      {
+        name: 'dryrun',
+        description: 'Process the pipeline, but don\'t write or deploy the data.'
+      },
+      {
+        name: 'help',
+        alias: 'h',
+        description: 'Display this message.'
+      }
+    ]
+  }
+];
+const usage = getUsage(usageSections);
+
 // Grab cli args
 const optionDefinitions = [
+  {name: 'site', type: String, defaultOption: true},
+  {name: 'year', alias: 'y', type: Number},
   {name: 'clean', alias: 'c', type: Boolean, defaultValue: false},
   {name: 'static', alias: 's', type: Boolean, defaultValue: false},
-  {name: 'deploy', alias: 'd', type: Boolean, defaultValue: false}
+  {name: 'deploy', alias: 'd', type: Boolean, defaultValue: false},
+  {name: 'local', alias: 'l', type: Boolean, defaultValue: false},
+  {name: 'dryrun', type: Boolean, defaultValue: false},
+  {name: 'help', alias: 'h', type: Boolean, defaultValue: false}
 ];
 const options = commandLineArgs(optionDefinitions);
+
+// Usage validation
+if ((options.local && options.deploy) || (!options.local && !options.deploy)) {
+  console.error('Please provide either --local OR --deploy options.');
+  process.exit(1);
+} else if (options.help) {
+  console.log(usage);
+  process.exit(0);
+}
+if (!options.site) {
+  console.error('Please provide a site to build.');
+  process.exit(1);
+}
+if (!options.year) {
+  console.error('Please provide a year to build.');
+  process.exit(1);
+}
+if (options.dryrun) {
+  debug('This is a dry run. No files will be written or deployed.');
+  // Don't clean, if a dryrun
+  options.clean = false;
+}
 
 // Set up Nunjucks env
 const njEnv = nunjucks.configure(templatePath,
@@ -57,19 +147,23 @@ if (options.deploy &&
       path.join(path.dirname(__dirname), '/settings_index.json'));
   } catch (err) {
     if (err.code === 'ENOENT') {
-      debug('Could not load credentials file. Please check settings_index.json.');
+      console.error('Could not load AWS credentials. Please check env or settings_index.json.');
     }
-    throw err;
+    process.exit(1);
   }
 }
 
-const isGodi = false;
-const domain = 'global-test';
-const bucketSite = (isGodi) ? '' : util.format('%s-', domain);
-const bucketName = util.format('%sindex.okfn.org', bucketSite);
+// Suffix to append to index subdomain. Useful to differentiate between
+// development, staging and production.
+const indexDomainSuffix = (process.env.INDEX_DOMAIN_SUFFIX) ?
+  `-${process.env.INDEX_DOMAIN_SUFFIX}` : '';
+const isGodi = (options.site === 'global' || options.site === 'global-test');
+const domain = options.site;
+const year = options.year;
+const bucketSite = (isGodi) ? '' : `${domain}-`;
+const bucketName = `${bucketSite}index${indexDomainSuffix}.okfn.org`;
 // const baseUrl = 'http://localhost:8000';
-const baseUrl = util.format('http://%s', bucketName);
-const siteTitle = 'Global Open Data Index';
+const baseUrl = `http://${bucketName}`;
 
 Metalsmith(__dirname)
   .use(timer('Start pipeline'))
@@ -81,13 +175,12 @@ Metalsmith(__dirname)
     },
     // format function needs to be available in templates
     format: i18n.format,
-    site_url: baseUrl,
-    site_title: siteTitle
+    site_url: baseUrl
   })
   .source('./src')
   .destination('./build')
   .clean(options.clean)
-  .use(godiGetData({domain: domain, year: 2016})) // Populate metadata with data from Survey
+  .use(godiGetData({domain: domain, year: year})) // Populate metadata with data from Survey
   .use(jsonToFiles({use_metadata: true}))
   .use(godiDataFiles()) // Add file metadata to each entry file populated by json-to-files
   .use(godiIndexSettings({domain: domain})) // Add data from Index settings.
@@ -111,22 +204,25 @@ Metalsmith(__dirname)
     '.DS_Store'
   ]))
   .use(msIf(
-    options.deploy,  // We're pushing to AWS, so ensure the bucket exists.
+    options.deploy && !options.dryrun,  // We're pushing to AWS, so ensure the bucket exists.
     godiEnsureBucket({bucketName: bucketName})
   ))
   .use(msIf(
-    options.deploy,  // Push to AWS.
+    options.deploy && !options.dryrun,  // Push to AWS.
     s3({
       action: 'write',
       bucket: bucketName
     })
   ))
   .use(msIf(  // If we're pushing to AWS, strip all files from the local build.
-    options.deploy,
+    options.deploy || options.dryrun,
     godiStripBuild()
   ))
   .use(msdebug())
   .use(timer('finished'))
   .build(err => {
-    if (err) throw err;
+    if (err) {
+      console.error(err.message);
+      process.exit(1);
+    }
   });
