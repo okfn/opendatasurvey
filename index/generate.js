@@ -157,6 +157,12 @@ if (options.deploy &&
 // development, staging and production.
 const indexDomainSuffix = (process.env.INDEX_DOMAIN_SUFFIX) ?
   `-${process.env.INDEX_DOMAIN_SUFFIX}` : '';
+// If this is not the production instance, there MUST be an
+// INDEX_DOMAIN_SUFFIX set in the env.
+if (process.env.NODE_ENV !== 'production' && indexDomainSuffix === '') {
+  console.error('NODE_ENV is not \'production\', so INDEX_DOMAIN_SUFFIX must be set to prevent overwriting production sites.');
+  process.exit(1);
+}
 const isGodi = (options.site === 'global' || options.site === 'global-test');
 const domain = options.site;
 const year = options.year;

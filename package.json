@@ -111,6 +111,7 @@
     "generate_index_dev": "DEBUG=metalsmith-godi-*,metalsmith-timer INDEX_DOMAIN_SUFFIX=dev node index/generate.js",
     "migrate_users": "node scripts/users.js",
     "start": "node server.js",
+    "start_dev": "INDEX_DOMAIN_SUFFIX=dev nodemon start -e js,jsx,html,json --ignore index/",
     "debug": "node-debug debug-server.js --no-preload --hidden='node_modules'",
     "test": "NODE_ENV=test ./node_modules/istanbul/lib/cli.js cover -x '**/census/migrations/**' -x '**/scripts/**' ./node_modules/mocha/bin/_mocha -- --compilers js:babel-core/register -R spec tests/ --harmony",
     "lint": "eslint census/**/*.js census/**/*.jsx --ignore-pattern '**/census/migrations/**' --ignore-pattern '**/census/locale/**' --quiet || exit 0",
