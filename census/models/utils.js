@@ -253,8 +253,6 @@ var processEntries = function(data, options) {
       data.entries = cascadeEntries(data.entries, options.year);
     }
 
-    excludedDatasetsByYear(data);
-
     // Apply exclude filters
     data.entries = _.reject(data.entries, function(entry) {
       let result = false;
