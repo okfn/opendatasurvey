@@ -144,7 +144,7 @@ describe('API', function() {
         it('All', done => {
           let browser = testUtils.browser;
           browser.visit('/api/places.' + format, () => {
-            checkResponse(browser, 2);
+            checkResponse(browser, 3);
             done();
           });
         });

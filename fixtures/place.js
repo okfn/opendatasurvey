@@ -20,6 +20,16 @@ var objects = [
   {
     model: 'Place',
     data: {
+      id: 'place13',
+      site: 'site1',
+      name: 'Place 13',
+      slug: 'place13slug',
+      disableforyears: [2016]
+    }
+  },
+  {
+    model: 'Place',
+    data: {
       id: 'place21',
       site: 'site2',
       name: 'Place 21',

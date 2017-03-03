@@ -35,7 +35,7 @@ describe('Open Data Census Tests', function() {
   it('counts all places', function() {
     let query = models.Place.findAll();
     return query.then(results => {
-      assert.equal(results.length, 5);
+      assert.equal(results.length, 6);
     });
   });
 
