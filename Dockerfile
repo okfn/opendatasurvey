@@ -1,4 +1,4 @@
-FROM node:7.6-alpine
+FROM node:7.7-alpine
 
 MAINTAINER Paul Walsh <paulywalsh@gmail.com>
 
@@ -38,4 +38,3 @@ RUN apk add --no-cache --virtual build-dependencies \
 EXPOSE 5000
 
 CMD make server
-
