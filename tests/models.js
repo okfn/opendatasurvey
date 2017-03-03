@@ -542,7 +542,7 @@ describe('Data access layer', function() {
     });
   });
 
-  it('excludes dataset if exclude_dataset option is present', function() {
+  it('excludes dataset if exclude_datasets option is present', function() {
     var dataOptions = {
       models: models,
       domain: 'site1',
@@ -561,6 +561,25 @@ describe('Data access layer', function() {
     });
   });
 
+  it('excludes place if exclude_places option is present', function() {
+    var dataOptions = {
+      models: models,
+      domain: 'site1',
+      dataset: null,
+      place: null,
+      year: 2015,
+      cascade: true,
+      scoredQuestionsOnly: true,
+      locale: null,
+      with: {Entry: true, Dataset: true, Place: true, Question: true},
+      exclude_places: ['place11']
+    };
+    return modelUtils.getData(dataOptions).then(function(data) {
+      expect(data.entries).to.have.length(1);
+      expect(data.places).to.have.length(2);
+    });
+  });
+
   it('exclude dataset if disableforyears is set for year', function() {
     var dataOptions = {
       models: models,
@@ -576,6 +595,43 @@ describe('Data access layer', function() {
     return modelUtils.getData(dataOptions).then(function(data) {
       expect(data.entries).to.have.length(3);
       expect(data.datasets).to.have.length(2);
+    });
+  });
+
+  it('exclude place if disableforyears is set for year', function() {
+    var dataOptions = {
+      models: models,
+      domain: 'site1',
+      dataset: null,
+      place: null,
+      year: 2016,
+      cascade: true,
+      scoredQuestionsOnly: true,
+      locale: null,
+      with: {Entry: true, Dataset: true, Place: true, Question: true}
+    };
+    return modelUtils.getData(dataOptions).then(function(data) {
+      expect(data.entries).to.have.length(4);
+      expect(data.places).to.have.length(2);
+    });
+  });
+
+  it('include places if disableforyears is not set for year', function() {
+    // No place is excluded for 2015
+    var dataOptions = {
+      models: models,
+      domain: 'site1',
+      dataset: null,
+      place: null,
+      year: 2015,
+      cascade: true,
+      scoredQuestionsOnly: true,
+      locale: null,
+      with: {Entry: true, Dataset: true, Place: true, Question: true}
+    };
+    return modelUtils.getData(dataOptions).then(function(data) {
+      expect(data.entries).to.have.length(3);
+      expect(data.places).to.have.length(3);
     });
   });
 });
