@@ -241,6 +241,34 @@ var excludedDatasetsByYear = function(data) {
   return excludedDatasetsObj;
 };
 
+/* Return the ids of excluded places for each year, as defined by the
+   disableforyears field.
+
+   Returns object in the form:
+
+   {
+      <year>: [<place_id>, <place_id>, ...],
+      <year>: [<place_id>, <place_id>, ...],
+      ...
+   }
+*/
+var excludedPlacesByYear = function(data) {
+  let places = [];
+  if (data.place) {
+    places.push(data.place);
+  } else {
+    places = data.places;
+  }
+
+  let years = _.uniq(_.flatten(_.map(places, 'disableforyears')));
+  years = _.reject(years, _.isNull);
+
+  let excludedPlacesObj = _.object(years, _.map(years, year =>
+    _.map(_.filter(places, pl => _.includes(pl.disableforyears, year)), 'id')
+  ));
+  return excludedPlacesObj;
+};
+
 /*
  * Process the raw entries query.
  */
@@ -263,8 +291,11 @@ var processEntries = function(data, options) {
         result = result || _.contains(options.exclude_places, entry.place);
       }
       if (options.year) {
-        let excludedForYear = excludedDatasetsByYear(data)[options.year];
-        result = result || _.contains(excludedForYear, entry.dataset);
+        let excludedDatasetsForYear = excludedDatasetsByYear(data)[options.year];
+        result = result || _.contains(excludedDatasetsForYear, entry.dataset);
+
+        let excludedPlacesForYear = excludedPlacesByYear(data)[options.year];
+        result = result || _.contains(excludedPlacesForYear, entry.place);
       }
       return result;
     });
@@ -313,11 +344,18 @@ var processPlaces = function(data, options) {
   // Many places
   } else {
     // Apply exclude filter
-    if (options.exclude_places) {
-      data.places = _.reject(data.places, function(place) {
-        return _.contains(options.exclude_places, place.id);
-      });
-    }
+
+    data.places = _.reject(data.places, function(place) {
+      let result = false;
+      if (options.exclude_places) {
+        result = result || _.contains(options.exclude_places, place.id);
+      }
+      if (options.year) {
+        let excludedForYear = excludedPlacesByYear(data)[options.year];
+        result = result || _.contains(excludedForYear, place.id);
+      }
+      return result;
+    });
 
     // Add scores, translate
     if (Array.isArray(data.entries)) {
