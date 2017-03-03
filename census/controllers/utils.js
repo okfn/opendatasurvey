@@ -189,9 +189,12 @@ var commonFieldArray = function(data, pattern) {
 
 var placeMapper = function(data, site) {
   var reviewers = (data.reviewers) ? splitFields(data.reviewers) : [];
+  let disableforyears =
+    (data.disableforyears) ? splitFields(data.disableforyears) : [];
   return _.defaults({
     id: data.id.toLowerCase(),
-    reviewers: reviewers
+    reviewers: reviewers,
+    disableforyears: disableforyears
   }, data);
 };
 

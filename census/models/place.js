@@ -37,6 +37,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       comment: 'The continent in which this place is located.'
     },
+    disableforyears: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: true,
+      comment: 'Years for which place is disabled.'
+    },
     reviewers: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: true,
