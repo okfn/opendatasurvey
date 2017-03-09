@@ -1,13 +1,23 @@
 'use strict';
 
-var loaders = require('../loaders');
 var Promise = require('bluebird');
+
+var loaders = require('../loaders');
 var utils = require('./utils');
+const git = require('git-rev-sync');
 
 var admin = function(req, res) {
   req.app.get('models').Registry.findAll()
   .then(result => {
-    res.render('system.html', {registry: result});
+    const data = {
+      registry: result,
+      gitRev: git.short(),
+      gitBranch: git.branch()
+    };
+    return data;
+  })
+  .then(data => {
+    res.render('system.html', data);
   });
 };
 
