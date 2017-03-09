@@ -58,8 +58,9 @@ describe('#validationData()', function() {
   before(testUtils.setupFixtures);
   after(testUtils.dropFixtures);
 
-  before(function() {
+  before(function(done) {
     app.set('models', models);
+    done();
   });
 
   beforeEach(function() {

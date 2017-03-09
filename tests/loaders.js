@@ -254,7 +254,7 @@ describe('System Control page', function () {
   };
   let appSysAdmin = '';
 
-  before(function () {
+  before(function (done) {
     let config = testUtils.app.get('config');
     config.set('test:testing', true);
     config.set('test:user', {
@@ -269,22 +269,25 @@ describe('System Control page', function () {
     // temporarily change sysAdmin (reset in `after`)
     appSysAdmin = this.app.get('sysAdmin');
     this.app.set('sysAdmin', userFixtures[0].data.emails);
+    done();
   });
 
-  after(function () {
+  after(function (done) {
     for (var setting in configValues) {
       censusConfig.set(setting, configValues[setting]);
     }
     this.app.set('sysAdmin', appSysAdmin);
+    done();
   });
 
   beforeEach(function () {
     return this.browser.visit('/control');
   });
 
-  it('should load admin page successfully', function () {
+  it('should load admin page successfully', function (done) {
     this.browser.assert.success();
     this.browser.assert.text('title', 'Dashboard -');
+    done();
   });
 
   describe('Load Configs button action', function () {
