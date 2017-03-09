@@ -30,6 +30,7 @@
     "express": "^4.12.4",
     "express-session": "^1.11.2",
     "express-validator": "^2.13.0",
+    "git-rev-sync": "^1.8.0",
     "i18n-abide": "^0.0.25",
     "jquery": "^3.1.0",
     "linkifyjs": "^2.0.0-beta.4",

@@ -3,6 +3,7 @@
 const execFile = require('child_process').execFile;
 
 const _ = require('lodash');
+const git = require('git-rev-sync');
 
 const loaders = require('../loaders');
 const modelUtils = require('../models').utils;
@@ -23,9 +24,14 @@ let dashboard = function(req, res) {
     with: {Entry: false}
   });
   modelUtils.getData(dataOptions)
-    .then(function(data) {
-      res.render('admin.html', data);
-    }).catch(console.trace.bind(console));
+  .then(data => {
+    data.gitRev = git.short();
+    data.gitBranch = git.branch();
+    return data;
+  })
+  .then(data => {
+    res.render('admin.html', data);
+  }).catch(console.trace.bind(console));
 };
 
 let loadConfig = function(req, res) {
