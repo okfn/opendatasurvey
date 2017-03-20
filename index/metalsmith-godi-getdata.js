@@ -36,10 +36,10 @@ function plugin(options) {
     .then(site => {
       // Validate that there's a site and site.indexSettings
       if (site) {
-        if (_.get(site, 'indexSettings')) {
-          return modelUtils.getData(defaultOptions);
-        } else {
+        if (_.isEmpty(_.get(site, 'indexSettings'))) {
           throw new Error(`Can't generate Index. Site '${options.domain}' has no index settings.`);
+        } else {
+          return modelUtils.getData(defaultOptions);
         }
       } else {
         throw new Error(`Can't generate Index. Site '${options.domain}' does not exist.`);
