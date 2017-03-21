@@ -1,19 +1,19 @@
 # Site Admin Documentation
 
-This is a short introduction to how to administer an Open Data Census.
+This is a short introduction on how to administer an Open Data Survey.
 
-Note: it assumes that a census instance has been booted for you (and is __not__ about the technical side of deploying a census instance)
+Note: it assumes that a survey instance has been booted for you (and is __not__ about the technical side of deploying a survey instance)
 
 ## Table of contents
 
 [TOC]
 
-## Overview of How a Census is Structured
+## Overview of How a Survey is Structured
 
 A Census is a survey built around 4 axes:
 
- * Place – e.g. a country or a city
- * Dataset – e.g. Timetable
+ * Place – e.g. a country, a city or a region
+ * Dataset – e.g. Budget
  * Question – a specific question we ask about each dataset (e.g. "does it exist", "is it machine readable")
  * Time – usually a year
 
@@ -28,35 +28,47 @@ When a `Submission` has been reviewed and deemed accurate it becomes an `Entry` 
 #### New submissions
 
  * Contributors visit the `/submit/` page to make a new `Submission`
- * This `Submission` is now queued awaiting review by a reviewer (see next item for details of what that will mean)
-    * The `approve_first_submission` config variable can be set to TRUE in order to approve the first submission for a place/dataset/year automatically, without review.
-    * Reviewers can be set in three places: 
-      * In the config sheet, where the reviewers can review all data for the instance
-      * In the datasets sheet, where the reviewers can review all data for a particular dataset
-      * In the places sheet, where the reviewers can review all data for a particular place
+ * Contributors can also click on the `+` icon of a dataset
+ 
+ ![census-submit](/files/survey-add.png)
+ 
+ * This `Submission` is now queued awaiting review by a reviewer (see next item for details on what that means). You can see a submission is waiting for review because the `+`sign becomes a `1`, and the number also appears on the top right corner of the icon. 
+
+ ![census-submit](/files/survey-rev.png)
+
+
+###### Note
+ 
+   * The `approve_first_submission` config variable can be set to TRUE in order to approve the first submission for a place/dataset/year automatically, without review.
+   * **Reviewers can be set in three places:** 
+   	* In the **config sheet**, where the reviewers can review all data for the instance
+   	* In the **datasets sheet**, where the reviewers can review all data for a particular dataset
+   	* In the **places sheet**, where the reviewers can review all data for a particular place
 
 #### Reviewing a submission
 
  * A reviewer visits the place page for a given place (e.g. `/place/gb`) – normally they will do this via the front page
  * A reviewer clicks on the "View Submission" button next to a pending submission:
 
-   ![census-review](/files/census-review.png)
+   ![census-submit](/files/survey-rev.png)
 
  * A reviewer visits the review page for a submission
-    * You must be logged in to review
-    * You must be an authorized reviewer to review (see `reviewers` config option below)
  * The reviewer reviews or rejects the submission
-    * If approved the submission will now become the "entry" for that place and show up in the overview and elsewhere
-    * If rejected the submission will be marked as rejected and will no longer show up
+ * If approved the submission will now become the "entry" for that place and show up in the overview and elsewhere
+ * If rejected the submission will be marked as rejected and will no longer show up
+
+###### Note
+ * You must be logged in to review
+ * You must be an authorized reviewer to review (see `reviewers` config option below)
 
 ### Configuration
 
-Each Census **site** is configured via Google Spreadsheets. Each spreadsheet must be "public on the web" **and** "published to the web" (see Google Spreadsheets for details on how to ensure this).
+Each Survey **site** is configured via Google Spreadsheets. Each spreadsheet must be "public on the web" **and** "published to the web" (see Google Spreadsheets for details on how to ensure this).
 
 We can divide the configuration required for a **site** into two types:
 
  * **'Site config'** – the fundamental configuration for a site, such as the title, plus links to the other config sheets required (e.g.: places, datasets and questions)
- * **'Census config'** – the list of Places, Datasets and Questions to use for this census. The site config contains pointers to where to find these.
+ * **'Survey config'** – the list of Places, Datasets and Questions to use for this census. The site config contains pointers to where to find these.
 
 Both types of configuration should be stored in publicly accessible Google spreadsheets (one file for app config and one each for places, datasets and question sets).
 
@@ -68,7 +80,7 @@ The Site config options (the first sheet in that spreadsheet) are documented in 
 
 ## How-tos
 
-### Configuring your Census
+### Configure your Census
 
 For the Census to work properly you need to do some initial basic configuration:
 
@@ -77,9 +89,9 @@ For the Census to work properly you need to do some initial basic configuration:
 
 Next steps:
 
- * If you want reviewing to work you will need to configure the list of reviewers – see instructions below
+ * If you want reviews to work you will need to configure a list of reviewers – see instructions below
 
-Extras – set additional content e.g.
+####Extras – set additional content 
 
  * Add a logo – `navbar_logo` config variable
  * Some short text on the front page – 3-4 sentences about what this is – `overview_page` config variable
@@ -92,6 +104,7 @@ Extras – set additional content e.g.
  * The id column should only have lowercase ASCII alphanumeric characters and '-'. For example:
     * OK: 'sanfrancisco' or 'san-francisco'
     * Not OK: 'san francisco' (space) or 'SanFrancisco' (uppercase) or 'München' (non-Ascii character)
+ * The slug column should only have lowercase ASCII alphanumeric characters and '-'.
  * The Name column can have any characters you like (including non-ASCII)
 
 __Remember to reload the config once you have finished to have your new list of Places show up in the app.__
@@ -122,7 +135,7 @@ To have your site presented in a given language you need to:
  * Make sure the relevant content is translated (if not already done, you'll need to do it) – instructions in next sections
  * Configure your Census site so that a particular language is shown – see the locales config option in the config options section below
 
-#### Translating Questions
+#### Translating Questions (deprecated)
 
 To translate the primary language:
 
