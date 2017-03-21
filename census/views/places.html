@@ -11,36 +11,20 @@
 
     <div id="summary-stats" class="row">
       <div class="stat col-md-3">
-        <strong>9%</strong>
+        <strong>{{ stats.openDataPercent }}%</strong>
         <span class="percent-open-context" data-toggle="popover" title="" data-content="This is the percentage of all the dataset entries that are open as per the Open Definition. We get one dataset entry for each dataset and place (e.g. Transport Timetables for the United Kingdom is one dataset entry). For each entry we check whether the dataset is fully open as per the Open Definition, and then divide by the total number of entries to get a percentage. &lt;a href=&quot;faq/#open-data&quot;&gt;Find out more about Open Data&lt;/a&gt;" data-original-title="What does this mean?">Percent Open <i class="fa fa-question-circle"></i></span>
-        <small>
-            Down
-            from 12% in 2014
-        </small>
       </div>
       <div class="stat col-md-3">
-        <strong>122</strong>
+        <strong>{{ stats.placeCount }}</strong>
         <span>Number of Places</span>
-        <small>
-            Up
-            from 97 in 2014
-        </small>
       </div>
       <div class="stat col-md-3">
-        <strong>1586</strong>
+        <strong>{{ stats.currentEntryCount }}</strong>
         <span>Number of Entries</span>
-        <small>
-            Up
-            from 970 in 2014
-        </small>
       </div>
       <div class="stat col-md-3">
-        <strong>156</strong>
+        <strong>{{ stats.currentEntryOpenCount }}</strong>
         <span>Number of Open Datasets</span>
-        <small>
-            Up
-            from 124 in 2014
-        </small>
       </div>
     </div>
     <hr>
