@@ -45,7 +45,7 @@ Yes, most of the basic census site information is configurable in an easy way. C
 
 #### Can I run a local Census across multiple countries?
 
-Yes, that's possible – though we encourage people to focus on cities or regions within one country. If you want to learn about the state of open data in countries, we recommend you check the [Open Data Index][open-data-index].
+Yes, that's possible – though we encourage people to focus on cities or regions within one country. If you want to learn about the state of open data in countries, we recommend you check the [Global Open Data Index][open-data-index].
 
 #### Where can I find the list of all local censuses?
 
@@ -58,7 +58,7 @@ Its URL will be {census-name}.survey.okfn.org. It is possible to customize this 
 
 #### How did this come about?
 
-One thing clear from last year's efforts was that people wanted to be able to customise the Census. The Local Census has been quick to set up, as it re-uses the tools we designed for the original Open Data Index. We can help you get a Topical or Local Open Data Census set up quickly and easily, and you can select what datasets you want to survey for your survey too.
+One thing clear from last year's efforts was that people wanted to be able to customise the Census. The Local Census has been quick to set up, as it re-uses the tools we designed for the Global Open Data Index. We can help you get a Topical or Local Open Data Census set up quickly and easily, and you can select what datasets you want to survey for your survey too.
 
 Local data is often the most relevant to citizens on a daily basis – be it rubbish collection times, local tax rates or zoning information. However, at the moment it's difficult to know which key local datasets are openly available and where. You can help change that!
 
@@ -66,7 +66,7 @@ We know there is huge variability in how much local data is available not just a
 
 #### What's the Relation with the Global Open Data Index?
 
-The [Global Open Data Survey][national-open-data-census] assesses the availability of key datasets at the national, country, level. It has been run annually since 2012 by Open Knowledge International. It is used to produce the [Open Data Index][open-data-index], the global reference for the state of open data released by national governments.
+The [Global Open Data Survey][national-open-data-census] assesses the availability of key datasets at the national, country, level. It has been run annually since 2012 by Open Knowledge International. It is used to produce the [Global Open Data Index][open-data-index], the global reference for the state of open data released by national governments.
 
 The Index (and Census) answer questions like: which key datasets are being released? Is the available data legally and technically usable so that citizens, civil society and businesses can realise the full benefits of the information?
 
