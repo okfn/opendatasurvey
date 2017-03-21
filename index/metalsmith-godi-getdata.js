@@ -86,8 +86,16 @@ function plugin(options) {
           d.stats = datasetData.stats;
         });
       });
-      debug('Adding stats to places and datasets.');
-      return Promise.all(placesData.concat(datasetsData));
+      debug('Adding stats to each place and dataset.');
+      return Promise.all(placesData.concat(datasetsData))
+      .then(() => data);
+    })
+    .then(data => {
+      // For each file, append data.stats to file.stats.
+      _.each(files, f => {
+        f.stats = _.assign(f.stats, data.stats);
+      });
+      debug('Adding ODI stats to each file.');
     })
     .then(() => done())
     .catch(err => done(err));
