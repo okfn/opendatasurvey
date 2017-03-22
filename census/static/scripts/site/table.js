@@ -27,6 +27,21 @@ define(['jquery', 'bootstrap', 'chroma', 'tablesorter', 'stickykit'],
           11: {sorter: false}
         }
       },
+      tablesorterPlaceIndexOptions = {
+        sortList: [[0, 0]],
+        headers: {
+          2: {sorter: false},
+          3: {sorter: false},
+          4: {sorter: false},
+          5: {sorter: false},
+          6: {sorter: false},
+          7: {sorter: false},
+          8: {sorter: false},
+          9: {sorter: false},
+          10: {sorter: false},
+          11: {sorter: false}
+        }
+      },
       tablesorterDatasetOptions = {
         sortList: [[0, 0]],
         headers: {
@@ -71,6 +86,7 @@ define(['jquery', 'bootstrap', 'chroma', 'tablesorter', 'stickykit'],
       sortFlag = true;
 
     $('#places_overview_table').tablesorter(tablesorterPlaceOptions);
+    $('#places_overview_table_index').tablesorter(tablesorterPlaceIndexOptions);
     $('#datasets_overview_table').tablesorter(tablesorterDatasetOptions);
     $('#slice-table').tablesorter(tablesorterSliceOptions);
     $('#slice-table-index').tablesorter(tablesorterSliceIndexOptions);
@@ -82,7 +98,7 @@ define(['jquery', 'bootstrap', 'chroma', 'tablesorter', 'stickykit'],
 
     $('.content').on('click', '.sort_rank, .sort_place',
       function(e) {
-        $('#places_overview_table').trigger('sorton',
+        $('#places_overview_table, #places_overview_table_index').trigger('sorton',
           [[[$(e.target).hasClass('sort_place') / 1, sortFlag]]]);
         $('.headerSortDown').removeClass('headerSortDown');
         $('.headerSortUp').removeClass('headerSortUp');

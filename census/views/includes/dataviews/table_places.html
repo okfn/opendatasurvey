@@ -1,11 +1,17 @@
 {% import "macros/popovers.html" as popovers %}
-
+{% if is_index %}
+  {% set table_id = "places_overview_table_index" %}
+  {% set sortby = "rank" %}
+{% else %}
+  {% set table_id = "places_overview_table" %}
+  {% set sortby = "name" %}
+{% endif %}
 <div class="table-responsive">
-  <table id="places_overview_table" class="table data-table sexyTable">
+  <table id="{{ table_id }}" class="table data-table sexyTable">
     <thead>
       <tr>
         <th class="clickable sort_rank header" title="{{ gettext('Sort by Rank') }}" style="width: 71px;">{{ gettext('Rank') }}</th>
-        <th class="clickable sort_place header headerSortDown" title="{{ gettext('Sort by A-Z') }}" style="width: 71px;">{{ gettext('Place') }}</th>
+        <th class="clickable sort_place header" title="{{ gettext('Sort by A-Z') }}" style="width: 71px;">{{ gettext('Place') }}</th>
         {% for dataset in datasets %}
           <th class="datasetHeader">
             <div><a href="{{ format('/dataset/%(dataset)s', {dataset: dataset.id}) }}">{{ dataset.name }}</a></div>
@@ -15,7 +21,7 @@
       </tr>
     </thead>
     <tbody>
-      {% for place in places|sort(false, false, 'name') %}
+      {% for place in places|sort(false, false, sortby) %}
         <tr data-rank="{{ place.rank }}" data-score="{{ place.computedRelativeScore}}" data-place="{{ place.id }}" data-name="{{ place.name }}">
           <td class="rank" data-rank="{{ place.rank }}">
             <div>{{ place.rank }}</div>

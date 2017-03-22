@@ -271,15 +271,18 @@ td.previous-results {
 }
 
 
-#places_overview_table thead tr th, #datasets_overview_table thead tr th, .slice-table thead tr th {
+#places_overview_table thead tr th,
+#places_overview_table_index thead tr th,
+#datasets_overview_table thead tr th,
+.slice-table thead tr th {
   &.clickable {
     cursor: pointer;
     color: lighten(black, 15%);
   }
 }
 
-#places_overview_table {
-
+#places_overview_table,
+#places_overview_table_index {
   tr td {
     padding: 8px 4px 8px 4px !important;
 

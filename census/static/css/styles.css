@@ -8653,31 +8653,42 @@ ul.availability-popover {
 td.previous-results {
   text-align: center; }
 
-#places_overview_table thead tr th.clickable, #datasets_overview_table thead tr th.clickable, .slice-table thead tr th.clickable {
+#places_overview_table thead tr th.clickable,
+#places_overview_table_index thead tr th.clickable,
+#datasets_overview_table thead tr th.clickable,
+.slice-table thead tr th.clickable {
   cursor: pointer;
   color: #262626; }
 
-#places_overview_table tr td {
+#places_overview_table tr td,
+#places_overview_table_index tr td {
   padding: 8px 4px 8px 4px !important; }
-  #places_overview_table tr td a {
+  #places_overview_table tr td a,
+  #places_overview_table_index tr td a {
     font-size: 12px; }
   @media (max-width: 1200px) {
-    #places_overview_table tr td.status .fa {
+    #places_overview_table tr td.status .fa,
+    #places_overview_table_index tr td.status .fa {
       display: none; } }
-#places_overview_table thead tr th {
+#places_overview_table thead tr th,
+#places_overview_table_index thead tr th {
   height: 118px; }
-  #places_overview_table thead tr th .dataset-title-context {
+  #places_overview_table thead tr th .dataset-title-context,
+  #places_overview_table_index thead tr th .dataset-title-context {
     display: block;
     -webkit-transform: rotate(-90deg);
     -ms-transform: rotate(-90deg);
     -o-transform: rotate(-90deg);
     transform: rotate(-90deg);
     padding: 8px; }
-  #places_overview_table thead tr th.datasetHeader {
+  #places_overview_table thead tr th.datasetHeader,
+  #places_overview_table_index thead tr th.datasetHeader {
     vertical-align: inherit; }
-    #places_overview_table thead tr th.datasetHeader div {
+    #places_overview_table thead tr th.datasetHeader div,
+    #places_overview_table_index thead tr th.datasetHeader div {
       transform: rotate(-90deg) translateX(-50%); }
-      #places_overview_table thead tr th.datasetHeader div a {
+      #places_overview_table thead tr th.datasetHeader div a,
+      #places_overview_table_index thead tr th.datasetHeader div a {
         height: 100%;
         width: 100%;
         display: block; }
