@@ -1,8 +1,10 @@
 <div class="table-responsive">
     {% if is_index %}
       {% set tableId = 'slice-table-index' %}
+      {% set sortby = 'rank' %}
     {% else %}
       {% set tableId = 'slice-table' %}
+      {% set sortby = 'name' %}
     {% endif %}
     <table id="{{ tableId }}" class="table slice-table data-table table-header-stuck">
         {% if is_index %}
@@ -41,7 +43,7 @@
           </tr>
         </thead>
         <tbody>
-          {% for place in places|sort(false, false, 'name') %}
+          {% for place in places|sort(false, false, sortby) %}
             {% set entry = entries|find({'place': place.id, 'dataset': dataset.id}) %}
             {% set submissions = pending|where({'place': place.id, 'dataset': dataset.id}) %}
             <tr id="{{ place.id }}" class="entry" data-rank="{{ place.rank }}" data-score="{{ place.computedScore }}" data-place="{{ place.id }}" data-name="{{ place.name }}">
