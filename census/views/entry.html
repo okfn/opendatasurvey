@@ -2,6 +2,19 @@
 
 {% block title %}{{format("Entry for %(place)s / %(title)s", { place: place.name, title: dataset.name}) }}{% endblock %}
 
+{% block breadcrumb %}
+<div class="breadcrumb-wrapper">
+  <ol class="breadcrumb container">
+    <li><a href="/">{{ gettext("Home") }}</a></li>
+    {% if is_index %}
+    <li><a href="/place">{{ gettext("Places") }}</a></li>
+    {% endif %}
+    <li><a href="/place/{{ place.id }}">{{ place.name }}</a></li>
+    <li class="active">{{ dataset.name }}</li>
+  </ol>
+</div>
+{% endblock breadcrumb %}
+
 {% block content %}
 <section id="data-header">
   <div class="container">
