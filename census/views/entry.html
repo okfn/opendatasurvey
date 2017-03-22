@@ -94,6 +94,16 @@
     {%- endfor %}
     </ul>
 
+    {% set usability_answer = entry.getAnswerValueForQuestion({id: 'usability'}) %}
+    {% if usability_answer %}
+    <div class="row">
+      <div class="col-md-12">
+        <h3>{{ gettext("Data Usability") }} <span class="label label-warning">{{ gettext("Beta") }}</span></h3>
+        <p>{{ gettext("The submitter assessed the usability of the data as follows (3 - little to no effort needed, 1 - extensive effort needed)") }}: <strong>{{ usability_answer }}</strong></p>
+      </div>
+    </div>
+    {% endif %}
+
     {% if not is_index %}
       {% set answers = entry.getSimpleAnswersForQuestions(questions) %}
       <h3>{{ gettext("All answers") }}</h3>
