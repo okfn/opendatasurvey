@@ -2,6 +2,18 @@
 
 {% block title %}{{ dataset.name }}{% endblock %}
 
+{% block breadcrumb %}
+<div class="breadcrumb-wrapper">
+  <ol class="breadcrumb container">
+    <li><a href="/">{{ gettext("Home") }}</a></li>
+    {% if is_index %}
+    <li><a href="/dataset">{{ gettext("Datasets") }}</a></li>
+    {% endif %}
+    <li class="active">{{ dataset.name }}</li>
+  </ol>
+</div>
+{% endblock breadcrumb %}
+
 {% block content %}
 <section id="data-header">
   <div class="container">
