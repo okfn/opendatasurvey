@@ -232,8 +232,8 @@ Schema validity can be checked with online services, such as http://www.jsonsche
 
 ## Templates and Front-end dependencies
 
-The old templates directory has been renamed `views_old`. New templates have been moved to `views`. Both directories are referencec by the app as places where templates can be located, with the intension of eventually removing `views_old` completely once migration is complete.
+The old templates directory has been renamed `views_old`. New templates have been moved to `views`. Both directories are referenced by the app as places where templates can be located, with the intention of eventually removing `views_old` completely once migration is complete.
 
 Static assets have been moved from `public` to `static`.
 
-There are some small differences between the Global Index and Local site templates. This is managed by the `is_index` flag on the Global Config settings. Local sites do not need to include this setting.
+The Survey and the Index sites make use of the same templates. Differences between the two sites are managed by the `is_index` flag.
