@@ -1,5 +1,7 @@
 {% extends "page.html" %}
 
+{% import "macros/popovers.html" as popovers %}
+
 {% block title %}{{format("Entry for %(place)s / %(title)s", { place: place.name, title: dataset.name}) }}{% endblock %}
 
 {% block breadcrumb %}
@@ -81,13 +83,13 @@
     </div>
     {% endif %}
 
-    <h3>{{ gettext("What data is available?") }}</h3>
+    <h3>{{ gettext("How open is the data?") }}</h3>
     <ul class="availability-single">
     {% for question in questions -%}
       {% if question.score -%}
         {% set answer = entry.getAnswerValueForQuestion(question) %}
         {% set pass = 'yes' if question.pass(answer) else 'no' %}
-        <li class="{{ pass }}" title="{{ question.question }}">
+        <li class="{{ pass }}" title="{{ question.question }}" data-toggle="popover" data-content="{{ popovers.popover_slice_content(question.description)|escape }}" data-placement="right">
           <i class="fa fa-{{ question.icon }}"></i>&nbsp;{% if pass == 'yes' %}It's {% elif pass == 'no' %}It's not {% endif %}{{ question.questionshort|lower }}
         </li>
       {%- endif %}
@@ -208,6 +210,6 @@
 </section>
 {% endif %}
 
-<script src="{{page.root}}/src/common.js?{{currentTime}}"></script>
+<div id="popover" class="popover fade bottom in" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>
 
 {% endblock %}

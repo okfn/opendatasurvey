@@ -49,3 +49,7 @@
 
 {%- endif %}
 {%- endmacro %}
+
+{% macro popover_slice_content(description) -%}
+{{ description|marked }}
+{%- endmacro %}

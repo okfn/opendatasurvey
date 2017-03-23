@@ -1,11 +1,14 @@
+{% import "macros/popovers.html" as popovers %}
+
+{% if is_index %}
+  {% set tableId = 'slice-table-index' %}
+  {% set sortby = 'rank' %}
+{% else %}
+  {% set tableId = 'slice-table' %}
+  {% set sortby = 'name' %}
+{% endif %}
+
 <div class="table-responsive">
-    {% if is_index %}
-      {% set tableId = 'slice-table-index' %}
-      {% set sortby = 'rank' %}
-    {% else %}
-      {% set tableId = 'slice-table' %}
-      {% set sortby = 'name' %}
-    {% endif %}
     <table id="{{ tableId }}" class="table slice-table data-table table-header-stuck">
         {% if is_index %}
         <colgroup>
@@ -56,7 +59,7 @@
                       {% set answer = entry.getAnswerValueForQuestion(question) %}
                       {% set pass = 'yes' if question.pass(answer) else 'no' %}
                     {% endif %}
-                    <li class="{{ pass }}" title="{% if pass == 'yes' %}It's {% elif pass == 'no' %}It's not {% endif %}{{ question.questionshort|lower }}"><i class="fa fa-{{ question.icon }}"></i>&nbsp;</li>
+                    <li class="{{ pass }}" title="{{ question.question }}" data-toggle="popover" data-content="{{ popovers.popover_slice_content(question.description)|escape }}"><i class="fa fa-{{ question.icon }}"></i>&nbsp;</li>
                   {% endfor %}
                 </ul>
               </td>
@@ -163,3 +166,4 @@
         </tbody>
     </table>
 </div>
+<div id="popover" class="popover fade bottom in" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>
