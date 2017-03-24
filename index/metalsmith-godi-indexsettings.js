@@ -55,6 +55,12 @@ function plugin(options) {
       if (indexSettings.title) {
         metadata.site_title = indexSettings.title;
       }
+
+      // Add entry_discussion_url to metadata
+      if (indexSettings.entry_discussion_url) {
+        metadata.discussionUrl = indexSettings.entry_discussion_url;
+      }
+
       done();
     })
     .catch(err => done(err));

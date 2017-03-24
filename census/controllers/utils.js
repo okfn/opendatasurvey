@@ -7,6 +7,9 @@ const ANONYMOUS_USER_ID = process.env.ANONYMOUS_USER_ID ||
 const marked = require('marked');
 const Promise = require('bluebird');
 const config = require('../config');
+const url = require('url');
+const querystring = require('querystring');
+const util = require('util');
 
 var makeChoiceValidator = function(param) {
   return function(req) {
@@ -296,6 +299,37 @@ var canReview = function(reviewers, user) {
   return false;
 };
 
+let buildDiscussionUrl = function(submissionDiscussionURL,
+                                   gettext, pageUrl, dataset, place) {
+  /*
+    If `submissionDiscussionURL` is in the format:
+    https://discuss.okfn.org/c/<topic>/<subtopic>, return a new topic url with
+    a prepopulated topic for place and dataset. Otherwise, return the original
+    `submissionDiscussionURL` without modification.
+  */
+  let parsedURL = url.parse(submissionDiscussionURL);
+  // URL is a discourse link
+  if (parsedURL.hostname === config.get('submission_discourse_hostname', '')) {
+    let splitPathName = _.trimLeft(parsedURL.pathname, '/').split('/');
+    // URL is a category link
+    if (splitPathName[0] === 'c') {
+      // Create a new topic link
+      let newTopicURL = url.parse('');
+      newTopicURL.protocol = parsedURL.protocol;
+      newTopicURL.host = parsedURL.host;
+      newTopicURL.pathname = 'new-topic';
+      newTopicURL.search = querystring.stringify({
+        title: util.format(gettext('Entry for %s / %s'), dataset, place),
+        body: util.format(gettext('This is a discussion about the submission for [%s / %s](%s).'),
+                          dataset, place, pageUrl),
+        category: _.rest(splitPathName).join('/').replace(/-/g, ' ')
+      });
+      submissionDiscussionURL = url.format(newTopicURL);
+    }
+  }
+  return submissionDiscussionURL;
+};
+
 module.exports = {
   validateData: validateData,
   placeMapper: placeMapper,
@@ -306,5 +340,6 @@ module.exports = {
   canReview: canReview,
   FIELD_SPLITTER: FIELD_SPLITTER,
   ANONYMOUS_USER_ID: ANONYMOUS_USER_ID,
-  commonFieldArray: commonFieldArray
+  commonFieldArray: commonFieldArray,
+  buildDiscussionUrl: buildDiscussionUrl
 };
