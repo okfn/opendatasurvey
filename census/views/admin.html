@@ -4,13 +4,12 @@
 {{ gettext('Dashboard') }}
 {% endblock %}
 
-
 {% block content %}
 <div class="container">
 <h1>{{ gettext('Site Admin Dashboard') }}</h1>
 
 <div class="row">
-  <div class="span6">
+  <div class="col-md-6">
     <h2>{{ gettext('Current Config') }}</h2>
     <a target="_blank" href="{{ configUrl }}">View Spreadsheet</a><br />
     {% if site %}
@@ -21,7 +20,7 @@
     </ul>
     {% endif %}
   </div>
-  <div class="span6">
+  <div class="col-md-6">
     <h2>{{ gettext('Data actions') }}</h2>
     <ul>
       <li><form action="/admin/load/config" method="post"><button class="btn btn-primary" type="submit">{{ gettext('Reload Config') }}</button></form></li>
@@ -34,7 +33,7 @@
 </div>
 
 <div class="row">
-  <div class="span6">
+  <div class="col-md-6">
     <h2>{{ gettext('Current Places') }}</h2>
     <a target="_blank" href="{{ site.settings.places }}">View Spreadsheet</a>
     {% if places %}
@@ -47,7 +46,7 @@
     {{ gettext('No places') }}
     {% endif %}
   </div>
-  <div class="span6">
+  <div class="col-md-6">
     <h2>{{ gettext('Current Datasets') }}</h2>
     <a target="_blank" href="{{ site.settings.datasets }}">View Spreadsheet</a>
     {% if datasets %}
@@ -60,7 +59,7 @@
     {{ gettext('No datasets') }}
     {% endif %}
   </div>
-  <div class="span6">
+  <div class="col-md-6">
     <h2>{{ gettext('Current Questions') }}</h2>
     <a target="_blank" href="{{ site.settings.questions }}">View Spreadsheet</a>
     {% if questions %}
@@ -76,8 +75,10 @@
 </div>
 
 <div class="row">
-  <h3>Repository status</h3>
-  <p>git commit {{ gitRev }} on branch {{ gitBranch }}</p>
+  <div class="col-md-6">
+    <h3>Repository status</h3>
+    <p>git commit <strong>{{ gitRev }}</strong> on branch <strong>{{ gitBranch }}</strong></p>
+  </div>
 </div>
 
 </div>
