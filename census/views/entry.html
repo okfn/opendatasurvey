@@ -97,14 +97,22 @@
     </ul>
 
     {% set usability_answer = entry.getAnswerValueForQuestion({id: 'usability'}) %}
-    {% if usability_answer %}
+    {% set format_answer = entry.getAnswerValueForQuestion({id: 'format', type: 'multiple'})|join(', ') %}
     <div class="row">
-      <div class="col-md-12">
-        <h3>{{ gettext("Data Usability") }} <span class="label label-warning">{{ gettext("Beta") }}</span></h3>
+      {% if usability_answer %}
+      <div class="col-md-6">
+        <h4>{{ gettext("Data Usability") }} <span class="label label-warning">{{ gettext("Beta") }}</span></h4>
         <p>{{ gettext("The submitter assessed the usability of the data as follows (3 - little to no effort needed, 1 - extensive effort needed)") }}: <strong>{{ usability_answer }}</strong></p>
       </div>
+      {% endif %}
+      {% if format_answer %}
+      <div class="col-md-6">
+        <h4>{{ gettext("Data format") }}</h4>
+        <p>{{ format_answer }}</p>
+      </div>
+      {% endif %}
     </div>
-    {% endif %}
+
 
     {% if not is_index %}
       {% set answers = entry.getSimpleAnswersForQuestions(questions) %}
