@@ -37,7 +37,7 @@ When a `Submission` has been reviewed and deemed accurate it becomes an `Entry` 
  ![census-submit](/files/survey-rev.png)
 
 
-###### Note
+##### Note
  
    * The `approve_first_submission` config variable can be set to TRUE in order to approve the first submission for a place/dataset/year automatically, without review.
    * **Reviewers can be set in three places:** 
@@ -58,10 +58,11 @@ When a `Submission` has been reviewed and deemed accurate it becomes an `Entry` 
  * If rejected the submission will be marked as rejected and will no longer show up
 
 ###### Note
- * You must be logged in to review
+ 
  * You must be an authorized reviewer to review (see `reviewers` config option below)
+ * You must be logged in to review
 
-### Configuration
+## Configuration
 
 Each Survey **site** is configured via Google Spreadsheets. Each spreadsheet must be "public on the web" **and** "published to the web" (see Google Spreadsheets for details on how to ensure this).
 
@@ -76,7 +77,7 @@ Our recommended approach is to have all of these as separate sheets in one large
 
 Here is a [Template General Config Spreadsheet][template-config].
 
-The Site config options (the first sheet in that spreadsheet) are documented in the Appendix below.
+The Site config options (the first sheet in that spreadsheet) are documented in the Appendix below. The changes you make to the speadsheet will have to be reloaded through the admin page. Remember to always do this after configuring your survey or modifying it in any way.
 
 ## How-tos
 
@@ -154,7 +155,7 @@ To add another, second language (partial support for multiple languages):
 To translate the primary language:
 
  * Open the Datasets tab of your Survey site spreadsheet
- * Translate the Name, Description, UpdateEvery, and Characteristics:n columns into the desired primary language
+ * Translate the Name, Description, UpdateEvery, and Characteristics: columns into the desired primary language
  * Reload Datasets from the site admin page: <http://{your-census-id}.survey.okfn.org/admin>
 
 To add another, second language (partial support for multiple languages): 
@@ -163,20 +164,21 @@ To add another, second language (partial support for multiple languages):
  * Translate the original Name and Description into your secondary language and enter into the new columns you created
  * Reload Datasets from the site admin page: <http://{your-census-id}.survey.okfn.org/admin>
 
-
 #### Translating General Site Content
 
  * Visit the [Open Data Census translation project on Transifex][transifex]
     * Create an account if you need one
  * Submit translations
- * Notify the Open Data Census Managers on the [discussion forum][discussion-forum] when the translation is complete
+ * Notify the Open Data Census Managers on the [discussion forum][discussion-forum] when the translation is complete.
+
+__If you require access to the transifex project please let us know in the [discussion forum][discussion-forum]
 
 ### Customizing the List of Datasets
 
  * Go into your Config Spreadsheet and select the Datasets sheet
  * Fill out the Datasets sheet following the structure provided. You can ignore the Category column.
-    * It is important to add reasonably detailed descriptions for the datasets so people are clear what they are looking for and how to answer.
-    * We recommend not having more than ~ 15-17 datasets in your Census
+ * It is important to add reasonably detailed descriptions for the datasets so people are clear what they are looking for and how to answer.
+ * We recommend not having more than ~ 15-17 datasets in your Census. Having more datasets might create issues with the Census UI. 
  * Ensure the URL value used in the General Config sheet for 'datasets' points to the Datasets sheet.
  * Reload the config
 
@@ -202,7 +204,7 @@ Set list of language locales that should be available for your site. See [Locali
 
 ### reviewers
 
-List of reviewer emails separated by commas.
+List of reviewer emails separated by commas. Be aware that the emails need to be either a gmail account or the email that matches the facebook user the reviewer will use to login. 
 
 ### datasets
 
@@ -226,11 +228,23 @@ submitted for datasets in that place.
 
 The structure should follow that in the [template spreadsheet][template-config].
 
+Questions are defined by a JSON in the `QuestionSet` sheet in the CMS. 
+
 ### approve_first_submission
 
 Determines whether the first submission requires review by a reviewer.
 
 Default is FALSE i.e. all submission must be reviewed.
+
+### close_submissions
+
+Defines if the survey will allow users to submit new information. 
+
+Default is FALSE i.e. users can submit new data
+
+### survey_year
+
+Defines the year to be assessed. Will show a specific year of assessment.
 
 ### overview_page
 
@@ -325,6 +339,233 @@ absent, the `discussionForum` global settings will be used instead.
 ### submission_discussion_url
 
 A URL to a forum where users can discuss pending submissions. This URL will be linked from the bottom of the pending submission page. If the URL links to the discuss.okfn.org Discourse instance (in the format `http://discuss.okfn.org/c/<topic>/<subtopic>`), the link will be formatted to automatically create a new topic, pre-populated with a title, category, and body text linking back to the submission.
+
+ ## Questions and Question Sets
+
+Questions are loaded to the Survey through the `Questions` and `QuestionSet`sheets in the CMS. If you make changes to the `QuestionSet`values, make sure they validate against the JSON schema before reloading your survey. 
+
+In the old Census, Questions were associated with Datasets at the site level, i.e. one set of Questions was used for all Datasets. This is no longer a restriction. Questions are grouped in QuestionSets, and each site can configure one QuestionSet for use by all of the site's Datasets, or a QuestionSet can be defined for each Dataset individually.
+
+In the CMS, the Datasets sheet has a new `QuestionSetURL` column. The value is the url pointing to the `QuestionSet` config sheet. A site-wide Question Set url can be added to the site config page under the key `question_set_url`. A further system-wide fallback Question Set url can be set as an env var, `FALLBACK_QUESTIONSET` (this is provided for backward-compatibility to smooth migration to the new system).
+
+Datasets also have a new `UpdateEvery` column. The value for each cell in this column should be a time interval as a string in the question: "Data should be updated every {{ time interval }}." E.g. year, month, 6 months, day, second Thursday, etc. 
+
+The new Question Set config sheet is like the `Site` config. It has `key` and `value` columns. It expects a `questions` key, the value is the url the questions sheet, and a `question_set_schema` key, the value is the question set schema in json format (see the [Question Set Schema](#question-set-schema-json-format) section below).
+
+The Dataset property `Title` has been renamed `Name` in the spreadsheet, to reflect the database fieldname used once loaded, and allow translations to work. `Title` will continue to work as a fallback, but isn't translatable with `Title@LC`.
+
+### Extra Question Config
+
+Some question types require extra configuration. For example, the `likert` question type has configuration to define the number of options, and description and value for each option. This will be used to setup the survey form. There is a column called 'Config' in the spreadsheet where a small snippet of json can be added. Below are example configurations for question types that require it:
+
+#### Likert config
+
+```json
+[
+    {"description": "None", "value": "0"},
+    {"description": "Some", "value": "1"},
+    {"description": "All", "value": "2"}
+]
+```
+
+## Question Set Schema json format
+
+#####A question set schema provides the structure and dependency graph for a set of `Questions`.
+
+This decouples `Question` objects from information about the relationships and hierarchy between `Questions`, leaving `Questions` as stand-alone as possible.
+
+Here is a question set schema for this example set of questions:
+
+1. Do you like apples?
+    - 1.2. Do you like bananas instead? (shown when 1 is 'No')
+2. Do you like RED apples? (enabled if 1 is 'Yes')   
+3. Have you eaten a red apple today? (enabled if 2 is 'Yes')
+    - 3.1. Did it keep the doctor away? (shown when 3 is 'Yes')
+
+```javascript
+
+[
+    {
+        // The question is "Do you like apples?"
+        "id": "like_apples",
+        "position": 1,
+        "defaultProperties": {
+            "visible": true,
+            "enabled": true,
+            "required": true
+        }
+    },
+    {
+        // The question is "Do you like bananas instead?"
+        "id": "bananas_instead",
+        "position": 1.1,
+        "defaultProperties": {
+            "visible": false,
+            "enabled": false,
+            "required": false
+        },
+        "ifProvider": [
+            {
+                "providerId": "like_apples",
+                "value": "No",
+                "properties": {
+                    "visible": true,
+                    "enabled": true,
+                    "required": true
+                }
+            }
+        ]
+    },
+    {
+        // The question is "Do you like RED apples?"
+        "id": "apple_colour",
+        "position": 2,
+        "defaultProperties": {
+            "visible": true,
+            "enabled": false,
+            "required": false
+        },
+        "ifProvider": [
+            {
+                "providerId": "like_apples",
+                "value": "Yes",
+                "properties": {
+                    "enabled": true,
+                    "required": true
+                } 
+            }
+        ] 
+    },    
+    {
+        // The question is "Have you eaten a red apple today?"
+        "id": "red_apple_today",
+        "position": 3,
+        "defaultProperties": {
+            "visible": true,
+            "enabled": false,
+            "required": false
+        },
+        "ifProvider": [
+            {
+                "providerId": "apple_colour",
+                "value": "Yes",
+                "properties": {
+                    "enabled": true,
+                    "required": true
+                }
+            }
+        ]
+    },
+    {
+        // The question is "Did it keep the doctor away? (optional)"
+        "id": "doctor_away",
+        "position": 3.1,
+        "defaultProperties": {
+            "visible": false,
+            "enabled": false,
+            "required": false
+        },
+        "ifProvider": [
+            {
+                "providerId": "red_apple_today",
+                "value": "Yes",
+                "properties": {
+                    "visible": true,
+                    "enabled": true
+                }
+            }
+        ]
+    }
+]
+```
+
+
+
+### Question Set Schema, JSON Schema
+
+The schema above must validate against the following JSON Schema:
+
+```javascript
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+
+    "definitions": {
+        "question": {
+            "title": "Question",
+            "description": "Determines the default and dependent properties for a Question.",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "The unique identifier for a question within a question set.",
+                    "type": "string"
+                },
+                "position": {
+                    "description": "The hierarchical position of the question within",
+                    "type": "number"
+                },
+                "defaultProperties": {
+                    "description": "An object containing the default properties for the visible state of the Question if no subsequent conditions are met.",
+                    "type": "object",
+                    "properties": {
+                        "required": {"type": "boolean"},
+                        "enabled": {"type": "boolean"},
+                        "visible": {"type": "boolean"}
+                    }
+                },
+                "ifProvider": {
+                    "description": "An array of objects containing conditional logic to determine the state of Question properties dependent on the value of other 'Provider' Questions in the Question Set. First matching member takes presidents.",
+                    "type": "array",
+                    "items": {
+                        "properties": {
+                            "providerId": {
+                                "description": "The ID of the Question on which this Question depends.",
+                                "type": "string"
+                            },
+                            "value": {
+                                "description": "The expected value that will trigger this condition.",
+                                "type": ["string", "boolean", "number"]
+                            },
+                            "isNotEmpty": {
+                                "description": "A boolean to determine whether an expected value is not an empty string, array or object, triggering the condition",
+                                "type": "boolean"
+                            },
+                            "properties": {
+                                "description": "The properties to set if the Question with dependentId returns the value.",
+                                "type": "object",
+                                "properties": {
+                                    "required": {"type": "boolean"},
+                                    "enabled": {"type": "boolean"},
+                                    "visible": {"type": "boolean"}
+                                }
+                            }
+                        },
+                        "oneOf": [
+                            {"required": ["value", "providerId", "properties"]},
+                            {"required": ["isNotEmpty", "providerId", "properties"]}
+                        ]
+                    }
+                },
+                "score": {
+                    "description": "An object defining the scoring characteristics for this question.",
+                    "type": "object",
+                    "properties": {
+                        "weight": {"type": "number"}
+                    }
+                }
+            },
+            "required": ["id"]            
+        }
+    },
+
+    "title": "QuestionSet",
+    "description": "A set of Question objects.",
+    "type": "array",
+    "items": {"$ref": "#/definitions/question"}   
+}
+```
+
+Schema validity can be checked with online services, such as http://www.jsonschemavalidator.net/. And Question Set Schemas can be built with http://jeremydorn.com/json-editor/
+
 
 [template-config]: https://docs.google.com/spreadsheets/d/1jFEjhAaY2e8hcORnBqYroYy5zKoq6nQWBNXjUYLKbYk/edit#gid=0
 [discussion-forum]: https://discuss.okfn.org/c/open-data-index
