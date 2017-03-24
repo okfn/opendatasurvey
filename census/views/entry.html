@@ -98,6 +98,8 @@
 
     {% set usability_answer = entry.getAnswerValueForQuestion({id: 'usability'}) %}
     {% set format_answer = entry.getAnswerValueForQuestion({id: 'format', type: 'multiple'})|join(', ') %}
+    {% set licence_answer = entry.getAnswerValueForQuestion({id: 'licence_url'}) %}
+    {% set source_answer = entry.getAnswerValueForQuestion({id: 'location', type: 'source'}) %}
     <div class="row">
       {% if usability_answer %}
       <div class="col-md-6">
@@ -109,6 +111,33 @@
       <div class="col-md-6">
         <h4>{{ gettext("Data format") }}</h4>
         <p>{{ format_answer }}</p>
+      </div>
+      {% endif %}
+    </div>
+    <div class="row">
+      {% if licence_answer %}
+      <div class="col-md-6">
+        <h4>{{ gettext("Data licence") }}</h4>
+        <p>{{ licence_answer|urlize }}</p>
+      </div>
+      {% endif %}
+      {% if source_answer %}
+      <div class="col-md-6">
+        <h4>{{ gettext("Data Location") }}</h4>
+        {% set answerValue = '' %}
+        <ul>
+        {% for source in source_answer %}
+          {% if source.urlValue %}
+            {% set sourceValue = source.urlValue %}
+            {% if source.descValue %}
+              {% set sourceValue = sourceValue + ' - ' + source.descValue %}
+            {% endif %}
+            {% set sourceValue = '<li>' + sourceValue + '</li>' %}
+            {% set answerValue = answerValue + sourceValue %}
+          {% endif %}
+        {% endfor %}
+        </ul>
+        <p>{{ answerValue|marked }}</p>
       </div>
       {% endif %}
     </div>
@@ -137,13 +166,13 @@
                 {% set answerValue = answerValue + ', ' %}
               {% endif %}
             {% endfor %}
-            {% set answerValue = answerValue|marked %}
+            {% set answerValue = answerValue|urlize %}
           {% elif question.type == 'multiple' %}
           {# Special treatment for 'multiple' question type. #}
             {% set answerValue = answer.value|join(', ') %}
           {% elif question.id == 'licence_url' %}
           {# Special treatment for 'licence_url' question id. #}
-            {% set answerValue = answer.value|marked %}
+            {% set answerValue = answer.value|urlize %}
           {% else %}
             {% set answerValue = answer.value %}
           {% endif %}
