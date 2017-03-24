@@ -188,11 +188,11 @@ Metalsmith(__dirname)
   .clean(options.clean)
   .use(godiGetData({domain: domain, year: year})) // Populate metadata with data from Survey
   .use(jsonToFiles({use_metadata: true}))
-  .use(godiDataFiles()) // Add file metadata to each entry file populated by json-to-files
+  .use(paths({property: 'paths', directoryIndex: 'index.html'}))
   .use(godiIndexSettings({domain: domain})) // Add data from Index settings.
+  .use(godiDataFiles()) // Add file metadata to each entry file populated by json-to-files
   .use(markdown())
   .use(permalinks())
-  .use(paths({property: 'paths', directoryIndex: 'index.html'}))
   .use(layouts({
     engine: 'nunjucks',
     rename: true,

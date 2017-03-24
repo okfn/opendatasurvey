@@ -4,6 +4,9 @@ const _ = require('lodash');
 
 const debug = require('debug')('metalsmith-godi-updatedatafiles');
 
+const buildDiscussionUrl =
+  require('../census/controllers/utils.js').buildDiscussionUrl;
+
 module.exports = plugin;
 
 /**
@@ -32,6 +35,15 @@ function plugin(options) {
           file.entry = file.data;
           file.place = _.find(metadata.places, {id: file.entry.place});
           file.dataset = _.find(metadata.datasets, {id: file.entry.dataset});
+          // Add discussion_url to entry data
+          if (metadata.discussionUrl) {
+            file.discussionUrl = buildDiscussionUrl(metadata.discussionUrl,
+                                                    metadata.gettext,
+                                                    `${metadata.site_url}${file.paths.href}`,
+                                                    file.dataset.id,
+                                                    file.place.id);
+          }
+
           delete file.data;
         }
 

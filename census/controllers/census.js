@@ -4,8 +4,6 @@ const _ = require('lodash');
 const marked = require('marked');
 const config = require('../config');
 const uuid = require('uuid');
-const url = require('url');
-const querystring = require('querystring');
 const utils = require('./utils');
 const util = require('util');
 const modelUtils = require('../models').utils;
@@ -234,37 +232,18 @@ let submit = function(req, res) {
   });
 };
 
-let _getDiscussionURL = function(req, dataset, place) {
+let getDiscussionUrlForRequest = function(req, dataset, place) {
   /*
-    If `submission_discussion_url` is defined in settings and it is in the
-    format: https://discuss.okfn.org/c/<topic>/<subtopic>, return a new topic
-    url with a prepopulated topic for place and dataset. Otherwise, return the
-    original `submission_discussion_url` without modification. If
-    `submission_discussion_url` is undefined return an empty string.
+    Returns a discussion url for the submission using site settings from the
+    `req`. Most of the work is done in `buildDiscussionUrl`.
   */
   let submissionDiscussionURL =
     _.get(req.params.site.settings, 'submission_discussion_url', '');
-  let parsedURL = url.parse(submissionDiscussionURL);
-  // URL is a discourse link
-  if (parsedURL.hostname === config.get('submission_discourse_hostname', '')) {
-    let splitPathName = _.trimLeft(parsedURL.pathname, '/').split('/');
-    // URL is a category link
-    if (splitPathName[0] === 'c') {
-      // Create a new topic link
-      let newTopicURL = url.parse('');
-      newTopicURL.protocol = parsedURL.protocol;
-      newTopicURL.host = parsedURL.host;
-      newTopicURL.pathname = 'new-topic';
-      newTopicURL.search = querystring.stringify({
-        title: util.format(req.gettext('Entry for %s / %s'), dataset, place),
-        body: util.format(req.gettext('This is a discussion about the submission for [%s / %s](%s).'),
-                          dataset, place, req.res.locals.current_url),
-        category: _.rest(splitPathName).join('/').replace(/-/g, ' ')
-      });
-      submissionDiscussionURL = url.format(newTopicURL);
-    }
-  }
-  return submissionDiscussionURL;
+  return utils.buildDiscussionUrl(submissionDiscussionURL,
+                                  req.gettext,
+                                  req.res.locals.current_url,
+                                  dataset,
+                                  place);
 };
 
 let pending = function(req, res) {
@@ -307,7 +286,7 @@ let pending = function(req, res) {
         updateEvery: dataset.updateevery
       });
     }
-    let submissionDiscussionURL = _getDiscussionURL(req, dataset.name, place.name);
+    let submissionDiscussionURL = getDiscussionUrlForRequest(req, dataset.name, place.name);
     Promise.join(qsSchemaPromise, questionsPromise, (qsSchema, questions) => {
       if (qsSchema === undefined) qsSchema = [];
       let match = {place: place.id, dataset: dataset.id};
