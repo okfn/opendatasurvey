@@ -168,8 +168,8 @@ const domain = options.site;
 const year = options.year;
 const bucketSite = (isGodi) ? '' : `${domain}-`;
 const bucketName = `${bucketSite}index${indexDomainSuffix}.okfn.org`;
-// const baseUrl = 'http://localhost:8000';
-const baseUrl = `http://${bucketName}`;
+const baseUrl = 'http://localhost:8000';
+// const baseUrl = `http://${bucketName}`;
 
 /* eslint-disable camelcase */
 Metalsmith(__dirname)
