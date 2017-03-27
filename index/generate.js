@@ -171,6 +171,7 @@ const bucketName = `${bucketSite}index${indexDomainSuffix}.okfn.org`;
 // const baseUrl = 'http://localhost:8000';
 const baseUrl = `http://${bucketName}`;
 
+/* eslint-disable camelcase */
 Metalsmith(__dirname)
   .use(timer('Start pipeline'))
   .metadata({
@@ -181,7 +182,19 @@ Metalsmith(__dirname)
     },
     // format function needs to be available in templates
     format: i18n.format,
-    site_url: baseUrl
+    site_url: baseUrl,
+    map: {
+      embed_width: '100%',
+      embed_height: '300px',
+      // filter_year: filter_year,
+      filter_year: year,
+      // filter_dataset: filter_dataset,
+      filter_dataset: 'all',
+      panel_tools: 'true',
+      panel_share: 'true',
+      // map_place: map_place
+      map_place: ''
+    }
   })
   .source('./src')
   .destination('./build')
@@ -232,3 +245,4 @@ Metalsmith(__dirname)
       process.exit(1);
     }
   });
+/* eslint-enable camelcase */
