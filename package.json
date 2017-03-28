@@ -46,6 +46,7 @@
     "metalsmith-markdown": "^0.2.1",
     "metalsmith-paths": "^3.0.1",
     "metalsmith-permalinks": "^0.5.0",
+    "metalsmith-request": "^2.0.0",
     "metalsmith-s3": "github:mwishek/metalsmith-s3#9ee6df8f7a3b0bdedee616e248c5da0c3a0b2116",
     "metalsmith-timer": "0.0.2",
     "method-override": "^2.3.3",

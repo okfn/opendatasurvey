@@ -18,12 +18,14 @@ const ignore = require('metalsmith-ignore');
 const paths = require('metalsmith-paths');
 const s3 = require('metalsmith-s3');
 const msIf = require('metalsmith-if');
+const request = require('metalsmith-request');
 
 const templateFilters = require('../census/filters');
 const nunjucks = require('nunjucks');
 const i18n = require('i18n-abide');
 
 const godiGetData = require('./metalsmith-godi-getdata');
+const godiApiDataToFiles = require('./metalsmith-godi-apidatatofiles');
 const godiDataFiles = require('./metalsmith-godi-updatedatafiles');
 const godiIndexSettings = require('./metalsmith-godi-indexsettings'); // Add data from Index settings.
 const godiStripBuild = require('./metalsmith-godi-stripbuild');
@@ -168,8 +170,11 @@ const domain = options.site;
 const year = options.year;
 const bucketSite = (isGodi) ? '' : `${domain}-`;
 const bucketName = `${bucketSite}index${indexDomainSuffix}.okfn.org`;
-const baseUrl = 'http://localhost:8000';
-// const baseUrl = `http://${bucketName}`;
+let baseUrl = `http://${bucketName}`;
+if (process.env.INDEX_DOMAIN_SUFFIX === 'dev') {
+  baseUrl = 'http://localhost:8000';
+}
+const surveyUrl = `http://${domain}.survey.okfn.org`;
 
 /* eslint-disable camelcase */
 Metalsmith(__dirname)
@@ -199,6 +204,19 @@ Metalsmith(__dirname)
   .source('./src')
   .destination('./build')
   .clean(options.clean)
+  .use(request({
+    datasetsApiJson: `${surveyUrl}/api/datasets.json`,
+    entriesApiJson: `${surveyUrl}/api/entries.json`,
+    questionsApiJson: `${surveyUrl}/api/questions.json`,
+    placesApiJson: `${surveyUrl}/api/places/score/${year}.json`
+  }, {json: true}))
+  .use(request({
+    datasetsApiCsv: `${surveyUrl}/api/datasets.csv`,
+    entriesApiCsv: `${surveyUrl}/api/entries.csv`,
+    questionsApiCsv: `${surveyUrl}/api/questions.csv`,
+    placesApiCsv: `${surveyUrl}/api/places/score/${year}.csv`
+  }))
+  .use(godiApiDataToFiles()) // Set api stored on metaddata, retrieved using metalsmith-request above, to files.
   .use(godiGetData({domain: domain, year: year})) // Populate metadata with data from Survey
   .use(jsonToFiles({use_metadata: true}))
   .use(paths({property: 'paths', directoryIndex: 'index.html'}))
