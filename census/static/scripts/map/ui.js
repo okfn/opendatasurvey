@@ -1,3 +1,4 @@
+/* eslint-disable */
 define(['leaflet', 'proj4', 'proj4leaflet', 'leaflet_zoommin', 'leaflet_label', 'jquery', 'pubsub',
         'lodash', 'chroma', 'marked', 'data'],
        function(leaflet, proj4, proj4leaflet, leaflet_zoommin, leaflet_label, $, pubsub, _, chroma,
@@ -148,11 +149,12 @@ define(['leaflet', 'proj4', 'proj4leaflet', 'leaflet_zoommin', 'leaflet_label', 
     pubsub.subscribe(topics.geolayer_ready, setMapView);
 
     function rankLookup(year) {
-        if (year === dataStore.meta.currentYear) {
-            return 'rank';
-        } else {
-            return 'rank_YEAR'.replace('YEAR', year);
-        }
+        return 'rank';
+        // if (year === dataStore.meta.currentYear) {
+        //     return 'rank';
+        // } else {
+        //     return 'rank_YEAR'.replace('YEAR', year);
+        // }
     }
 
     function rankPrevious(year) {
@@ -160,11 +162,12 @@ define(['leaflet', 'proj4', 'proj4leaflet', 'leaflet_zoommin', 'leaflet_label', 
     }
 
     function scoreLookup(year) {
-        if (year === dataStore.meta.currentYear) {
-            return 'score';
-        } else {
-            return 'score_YEAR'.replace('YEAR', year);
-        }
+        return 'score';
+        // if (year === dataStore.meta.currentYear) {
+        //     return 'score';
+        // } else {
+        //     return 'score_YEAR'.replace('YEAR', year);
+        // }
     }
 
     function scorePrevious(year) {
@@ -216,10 +219,10 @@ define(['leaflet', 'proj4', 'proj4leaflet', 'leaflet_zoommin', 'leaflet_label', 
             $datasetFilter.append(datasetOptionsTmpl(context));
         });
 
-        ext_context.dataset_id = 'improvement';
-        ext_context.dataset = '* Most Improved';
-        ext_context.selected = '';
-        $datasetFilter.append(datasetOptionsTmpl(ext_context));
+        // ext_context.dataset_id = 'improvement';
+        // ext_context.dataset = '* Most Improved';
+        // ext_context.selected = '';
+        // $datasetFilter.append(datasetOptionsTmpl(ext_context));
     }
 
     function entriesHandler(topic, data) {
