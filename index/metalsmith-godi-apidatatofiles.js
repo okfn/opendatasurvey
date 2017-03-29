@@ -1,6 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
+const jsonexport = require('jsonexport');
 
 const debug = require('debug')('metalsmith-godi-apidatatofiles');
 
@@ -17,14 +18,10 @@ function plugin(options) {
     let metadata = metalsmith.metadata();
     // Metalsmith files from api data stored on metalsmith.metadata.
     const apiFiles = {
-      datasetsApiCsv: 'api/datasets.csv',
-      entriesApiCsv: 'api/entries.csv',
-      questionsApiCsv: 'api/questions.csv',
-      placesApiCsv: 'api/places.csv',
-      datasetsApiJson: 'api/datasets.json',
-      entriesApiJson: 'api/entries.json',
-      questionsApiJson: 'api/questions.json',
-      placesApiJson: 'api/places.json'
+      datasetsApi: 'api/datasets',
+      entriesApi: 'api/entries',
+      questionsApi: 'api/questions',
+      placesApi: 'api/places'
     };
     _.each(apiFiles, (filePath, key) => {
       if (metadata.hasOwnProperty(key)) {
@@ -35,15 +32,14 @@ function plugin(options) {
           contents = contents.results;
         }
 
-        if (key === 'placesApiJson') {
+        if (key === 'placesApi') {
           _.each(contents, place => {
-            // 'relativeScore' becomes 'score'
             place.score = place.relativeScore;
             delete place.relativeScore;
           });
         }
 
-        if (key === 'datasetsApiJson') {
+        if (key === 'datasetsApi') {
           _.each(contents, dataset => {
             dataset.score = dataset.relativeScore;
             delete dataset.relativeScore;
@@ -53,10 +49,19 @@ function plugin(options) {
           });
         }
 
+        let csvContents = '';
+        jsonexport(contents, function(err, csv) {
+          if (err) return console.log(err);
+          csvContents = csv;
+        });
+
         contents = JSON.stringify(contents);
 
-        files[filePath] = {
+        files[`${filePath}.json`] = {
           contents: contents
+        };
+        files[`${filePath}.csv`] = {
+          contents: csvContents
         };
       }
     });

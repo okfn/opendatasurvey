@@ -205,17 +205,11 @@ Metalsmith(__dirname)
   .destination('./build')
   .clean(options.clean)
   .use(request({
-    datasetsApiJson: `${surveyUrl}/api/datasets.json`,
-    entriesApiJson: `${surveyUrl}/api/entries.json`,
-    questionsApiJson: `${surveyUrl}/api/questions.json`,
-    placesApiJson: `${surveyUrl}/api/places/score/${year}.json`
+    datasetsApi: `${surveyUrl}/api/datasets/score/${year}.json`,
+    entriesApi: `${surveyUrl}/api/entries.json`,
+    questionsApi: `${surveyUrl}/api/questions.json`,
+    placesApi: `${surveyUrl}/api/places/score/${year}.json`
   }, {json: true}))
-  .use(request({
-    datasetsApiCsv: `${surveyUrl}/api/datasets.csv`,
-    entriesApiCsv: `${surveyUrl}/api/entries.csv`,
-    questionsApiCsv: `${surveyUrl}/api/questions.csv`,
-    placesApiCsv: `${surveyUrl}/api/places/score/${year}.csv`
-  }))
   .use(godiApiDataToFiles()) // Set api stored on metaddata, retrieved using metalsmith-request above, to files.
   .use(godiGetData({domain: domain, year: year})) // Populate metadata with data from Survey
   .use(jsonToFiles({use_metadata: true}))
