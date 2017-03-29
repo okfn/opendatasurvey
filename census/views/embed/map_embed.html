@@ -1,0 +1,129 @@
+{% extends 'embed/embed.html' %}
+
+{#{% from '_scope.html' import scope with context %}#}
+
+{% block head_css %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ site_url }}/css/map.css" />
+{% endblock head_css %}
+
+{% block content %}
+<div class="odi-vis odi-vis-choropleth">
+    <div class="odi-vis-view">
+        <div class="odi-vis-display">
+            <div id="map"></div>
+            <div class="odi-vis-title"></div>
+        </div>
+        <div class="odi-vis-meta">
+            <div class="odi-vis-meta-left">
+                <div class="odi-vis-icon">
+                    <a target="_parent" href="{{ scope.odi.sponsor.domain }}" title="{{ gettext('Go to the %(sitename)s website', sitename=scope.odi.sponsor.name) }}">
+                        <img src="{{ site_url }}/css/images/logo.png" />
+                    </a>
+                </div>
+                <a class="odi-vis-name" target="_parent" href="{{ scope.odi.sponsor.domain }}" title="{{ gettext('Go to the %(sitename)s website', sitename=scope.odi.sponsor.name) }}">{{ scope.odi.sponsor.name }}</a>
+            </div>
+            <div class="odi-vis-meta-right">
+
+                <div class="odi-vis-nav">
+                    <a class="odi-vis-nav-zoom-in" href="#" title="Zoom in">+</a>
+                    <a class="odi-vis-nav-zoom-out" href="#" title="Zoom out">-</a>
+                    <a class="odi-vis-nav-zoom-min fa fa-share-alt" href="#" title="Zoom min"></a>
+                </div>
+
+                <div class="odi-vis-tools">
+                    <i class="icon icon-filter" title="Filter the vis data"></i>
+                    <select class="odi-filter-year"></select>
+                    <select class="odi-filter-dataset">
+                        <option value="all">{{ gettext('All Datasets') }}</option>
+                    </select>
+                </div>
+
+                <div class="odi-vis-legend odi-vis-show-legend-full" title="{{ gettext('How to read this visualisation') }}">
+                    <ul>
+                        <li data-score="0">&nbsp;</li>
+                        <li data-score="30">&nbsp;</li>
+                    </ul>
+                    <ul>
+                        <li data-score="60">&nbsp;</li>
+                        <li data-score="100">&nbsp;</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="odi-vis-legend-full">
+                <div class="odi-vis-info-title">{{ gettext('How to read the map') }}<span class="odi-vis-legend-full-close"><i class="fa fa-close"></i></span></div>
+                <div class="odi-vis-info-text">
+                <span>
+                    {{ gettext('Place colouring represents the open data score for the currently selected dataset(s), from <i data-score="0">0</i> to <i data-score="100">100</i>.') }}
+                </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="odi-vis-info"></div>
+    <div class="odi-vis-place"></div>
+</div>
+
+<!--js templates-->
+<script type="text/template" class="info-box">
+    <div class="odi-vis-info-title">
+        {{ gettext('About and credits') }}
+        <span class="odi-vis-info-close"><i class="fa fa-close"></i></span>
+    </div>
+    <div class="odi-vis-info-text">
+        <p>
+            {{ gettext('The Open Data Index is an initiative lead by Open Knowledge in conjunction with the global open data community.') }}
+        </p>
+    </div>
+    <div class="odi-vis-info-section">
+        <div class="odi-vis-info-subtitle">{{ gettext('Share') }}</div>
+        <p>
+            {{ gettext('Share this visualisation with others on your preferred social network.') }}
+        </p>
+        <div class="odi-vis-share"
+             title="{{ gettext('Share this visualisation with others') }}">
+            <a target="_blank" href="http://twitter.com/share?url={{ site_url }}&text={{ scope.social_share_text }}" title="{{ gettext('Share this visualisation on Twitter') }}"><i class="fa fa-twitter-square"></i></a>&nbsp;<a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u={{ site_url }}" title="{{ gettext('Share this visualisation on Facebook') }}"><i class="fa fa-facebook-square"></i></a>&nbsp;<a target="_blank" href="https://plus.google.com/share?url={{ site_url }}" title="{{ gettext('Share this visualisation on Google+') }}"><i class="fa fa-google-plus-square"></i></a>&nbsp;
+        </div>
+    </div>
+    <div class="odi-vis-info-section">
+        <div class="odi-vis-info-subtitle">{{ gettext('Embed') }}</div>
+        <p>
+            {{ gettext('Use the following code to embed this visualisation into your own website.') }}
+        </p>
+        <div>
+            <xmp contenteditable="true"><iframe width="{{ map.embed_width }}" height="{{ map.embed_height }}" src="{{ site_url }}/{{ page.slug }}<%= state_params %>" frameBorder="0"></iframe></xmp>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" class="place-box">
+    <div class="odi-vis-place-title"><%= title %><span class="odi-vis-place-close"><i class="fa fa-close"></i></span></div>
+    <div class="odi-vis-place-text">
+        <p>
+            <%= name %> {{ gettext('is ranked at') }} <strong>#<%= rank %></strong> {{ gettext('in the') }} <%= year %> {{ gettext('Index') }} {{ gettext('with a score of') }} <strong><%= score %>&#37;</strong><% if (previous_score) { %>, (<%= previous_score %>&#37; {{ gettext('the previous year') }})<% } %>.
+        </p>
+        <a class="odi-vis-place-action" href="{{ site_url }}/place/<%= slug %>/" title="{{ gettext('More information about') }} <%= name %> {{ gettext('in the') }} <%= year %> {{ SITENAME }}">{{ gettext('Find out more') }}</a>
+    </div>
+</script>
+
+<script type="text/template" class="place-tooltip">
+    <span><%= title %>: <% if (rank) { %><span>#<%= rank %></span><% } %> </span><span><%= score %>%</span>
+</script>
+
+<script type="text/template" class="year-options">
+    <option value="<%= year %>" <%= selected %>><%= year %></option>
+</script>
+
+<script type="text/template" class="dataset-options">
+    <option value="<%= dataset_id %>" <%= selected %>><%= dataset %></option>
+</script>
+
+<script type="text/template" class="title-box">
+    <div class="title-box-text"><span class="title-box-text-name"><%= sitename %></span><br /><%= title %></div>
+</script>
+{% endblock content %}
+
+{% block body_scripts %}
+<script data-main="{{ site_url }}/scripts/map" src="{{ site_url }}/bower_components/requirejs/require.js"></script>
+{{ super() }}
+{% endblock body_scripts %}

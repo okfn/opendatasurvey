@@ -1,0 +1,457 @@
+@import (less) '../vendor/normalize.css';
+@import (less) '../vendor/font-awesome/less/font-awesome';
+@import (less) '../vendor/lato/less/lato';
+@import (less) '../vendor/leaflet.css';
+@import (less) '../vendor/L.Control.ZoomMin.css';
+@import (less) '../vendor/leaflet.label.css';
+
+@fa-font-path: '../vendor/font-awesome/fonts';
+@lato-font-path: '../vendor/lato/font';
+@color-action: rgb(68, 80, 255);
+@color-dark: #2d2d2d;
+@color-okf-black: #181818;
+@color-light: #f5f5f5;
+// RESPONSE
+@max320: ~'(max-width: 320px)';
+@max480: ~'(max-width: 480px)';
+@max568: ~'(max-width: 568px)';
+@max600: ~'(max-width: 600px)';
+@max768: ~'(max-width: 768px)';
+@max960: ~'(max-width: 960px)';
+@max1024: ~'(max-width: 1024px)';
+@min1024: ~'(min-width: 1024px)';
+@max1280: ~'(max-width: 1280px)';
+@min1280: ~'(min-width: 1280px)';
+@max1680: ~'(max-width: 1680px)';
+@min1680: ~'(min-width: 1680px)';
+@max1920: ~'(max-width: 1920px)';
+@min1920: ~'(min-width: 1920px)';
+@landscape: ~'(orientation: landscape)';
+@portait: ~'(orientation: portait)';
+
+.object() {
+    box-sizing: border-box;
+}
+
+.layout-object(@float:left; @width: 100%; @height: auto;
+               @min-height: auto; @min-width: auto) {
+    .object();
+    float: @float;
+    width: @width;
+    height: @height;
+    min-height: @min-height;
+}
+
+
+.odi-display-panel(@width: 50%; @height: 400px; @min-height: 400px) {
+    .layout-object(@width: @width; @height: @height; @min-height: @min-height);
+    padding: 16px;
+    word-wrap: break-word;
+    background-color: @color-light;
+    color: @color-dark;
+    border-radius: 5px;
+    margin: 12px;
+    font-size: 12px;
+}
+
+.odi-display-panel-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    border-bottom: 1px solid @color-light;
+}
+
+.odi-display-panel-text {
+
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    font-size: 16px;
+}
+
+xmp {
+    -ms-word-break: break-all;
+     word-break: break-all;
+     word-break: break-word;
+-webkit-hyphens: auto;
+   -moz-hyphens: auto;
+        hyphens: auto;
+}
+
+html, body, input, select, textarea {
+  font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+// NOTE: Making extensive use of nested CSS pattern in LESS
+// to provide namespacing of styles for embed scenarios
+.odi-vis.odi-vis-choropleth {
+    .layout-object(@width: 100%; @height: 100%; @min-height: 200px;
+                   @min-width: 300px);
+    position: relative;
+    padding-top: 12px;
+    padding-right: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+    background-color: @color-okf-black;
+    color: @color-light;
+
+    // shared vis styles for common elements and classes
+    a, span.odi-vis-action, .leaflet-container a {
+        text-decoration: none;
+        color: @color-action;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: none;
+            color: darken(@color-action, 10%);
+        }
+
+    }
+
+    .odi-vis-view, .odi-vis-meta {
+        .layout-object();
+        position: relative;
+    }
+
+    // the view panel; where the vis is rendered
+    .odi-vis-view {
+        width: 100%;
+        height: 90%;
+
+        min-width: 376px;
+        min-height: 200px;
+
+        .odi-vis-display {
+            .layout-object();
+            height: 100%;
+
+            #map {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+    }
+
+    // the meta panel; contains contextual tools and information for the vis
+    .odi-vis-meta {
+        width: 100%;
+        height: 32px;
+        min-width: 376px;
+        min-height: 16px;
+        //padding-top: 12px;
+        margin-top: 6px;
+        font-size: 16px;
+
+        @media @max568 {
+            padding-top: 2px;
+        }
+
+        a, span.odi-vis-action {
+            color: @color-light;
+
+            &:hover {
+                color: darken(@color-light, 10%);
+            }
+
+        }
+
+        .odi-vis-meta-right {
+            .layout-object(@width: auto; @float: right);
+            height: 100%;
+            text-align: right;
+
+            @media @max568 {
+                width: 25%;
+            }
+        }
+
+        .odi-vis-meta-left {
+            .layout-object(@width: auto);
+            height: 100%;
+            text-align: left;
+
+            @media @max568 {
+                width: 75%;
+            }
+        }
+
+        .odi-vis-icon {
+            .layout-object(@width: 20px);
+            font-size: 8px;
+            text-transform: uppercase;
+            margin-right: 5px;
+
+            img {
+                width: 22px;
+                height: 22px;
+            }
+
+            @media @max568 {
+                font-size: 8px;
+
+                img {
+                    width: 22px;
+                    height: 22px;
+                }
+            }
+        }
+
+        .odi-vis-name {
+            .layout-object(@width: auto);
+            font-size: 8px;
+            line-height: 22px;
+            text-transform: uppercase;
+            font-weight: bold;
+
+            @media @max568 {
+                font-size: 8px;
+                width: 116px;
+                line-height: 22px;
+                font-weight: bold;
+            }
+        }
+
+        .odi-vis-tools {
+            .layout-object(@width: auto, @float: right);
+            font-size: 16px;
+
+            select, option {
+                color: @color-dark
+            }
+
+            @media @max568 {
+                font-size: 12px;
+                width: 224px;
+            }
+        }
+
+        .odi-vis-share-embed {
+            .layout-object(@width: 100px; @float: right);
+            font-size: 12px;
+            text-transform: uppercase;
+
+            @media @max568 {
+                display: none;
+            }
+        }
+
+        .odi-vis-help {
+            .layout-object(@width: 28px; @float: right);
+            font-size: 16px;
+            padding: 0 0 0 12px;
+            margin-top: -3px;
+            text-align: center;
+        }
+
+        .odi-vis-nav {
+            .layout-object(@width: 82px; @float: right);
+
+            a {
+                margin-left: 5px;
+                display: block;
+                float: left;
+                width: 22px;
+                height: 22px;
+                line-height: 22px;
+                background-color: @color-light;
+                color: @color-okf-black;
+                text-align: center;
+                font-weight: bold;
+                font-size: 17px;
+            }
+        }
+
+        .odi-vis-legend {
+            .layout-object(@width: 30px; @float: right);
+            font-size: 16px;
+            padding-left: 12px;
+            cursor: pointer;
+            ul {
+                .layout-object(@width: 24px);
+                float: right;
+                height: 100%;
+                display: block;
+                padding: 0;
+                margin: 0;
+                list-style-type: none;
+            }
+
+            li {
+                .layout-object(@width: 11px; @height: 11px);
+            }
+
+            @media @max568 {
+                font-size: 12px;
+            }
+
+        }
+
+        .odi-vis-show-info {
+            // toggles .odi-vis-show
+            cursor: pointer;
+        }
+
+        .odi-vis-legend-full {
+            .odi-display-panel(@width: 350px; @height: 80px; @min-height: 80px);
+            position: absolute;
+            top: -106px;
+            right: -10px;
+
+            @media @max568 {
+                width: 83.5%;
+            }
+
+            i {
+                line-height: 20px;
+                padding: 2px 4px 2px 4px;
+                border-radius: 4px;
+                font-style: normal;
+            }
+        }
+    }
+
+    .odi-vis-info {
+        .odi-display-panel(@width: 50%; @height: auto; @min-height: auto;);
+        display: none;
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        z-index: 101;
+
+        @media @max568 {
+            width: 80%;
+        }
+
+        .odi-vis-share {
+            .layout-object();
+            font-size: 28px;
+            line-height: 16px;
+            padding: 0 12px 0 0;
+
+        }
+    }
+
+    .odi-vis-info-close, .odi-vis-place-close, .odi-vis-legend-full-close {
+        float: right;
+        cursor: pointer;
+        width: auto;
+        height: auto;
+    }
+
+    .odi-vis-info-title {
+        .odi-display-panel-title();
+    }
+
+    .odi-vis-info-iframe-code {
+        display: none;
+    }
+
+    .odi-vis-place {
+        .odi-display-panel(@width: 40%; @height: auto; @min-height: auto;);
+        display: none;
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        z-index: 100;
+    }
+
+    .odi-vis-place-title {
+        .odi-display-panel-title();
+    }
+
+    .odi-vis-place-text {
+        .odi-display-panel-text();
+    }
+
+    a.odi-vis-place-action {
+        background-color: @color-dark;
+        color: @color-light;
+        padding: 8px;
+
+        &:hover {
+        background-color: lighten(@color-dark, 5%);
+        color: @color-light;
+        }
+    }
+    // override leaflet
+    .leaflet-container {
+        font-family: 'Lato,' 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        font-size: 16px;
+        line-height: 24px;
+        background-color: #8bbee1;//@color-okf-black; // @color-dark;
+        outline: 0;
+    }
+
+    .leaflet-zoom-box {
+        border: 2px dotted #38f;
+        background: rgba(255,255,255,0.5);
+    }
+
+    a.leaflet-control-zoom-in, a.leaflet-control-zoom-out {
+        color: lighten(@color-dark, 15%);
+        background-color: @color-light;
+
+        &:hover {
+            background-color: darken(@color-light, 10%);
+        }
+    }
+
+    .leaflet-bar {
+        box-shadow: none;
+        border-radius: none;
+    }
+
+}
+
+.odi-vis-title {
+    .odi-display-panel(@width: 80%; @height: 50px; @min-height: 50px);
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 4px 0 0 0;
+    z-index: 1;
+    margin: 0;
+    background-image: url(/static/images/logo-black.png);
+    background-repeat: no-repeat;
+    line-height: 16px;
+    font-size: 14px;
+    text-align: left;
+    background-color: transparent !important;
+}
+
+.title-box-text {
+    margin-left: 48px;
+}
+
+.title-box-text-name {
+    font-weight: bold;
+}
+
+.odi-vis-info-section {
+    width: 50%;
+    float: left;
+}
+
+.odi-vis-info-subtitle {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.fa-google-plus-square {
+    color: #D34836;
+}
+
+.fa-twitter-square {
+    color: #4099FF;
+}
+
+.fa-facebook-square {
+    color: #3B5998;
+}
+
+.odi-vis-legend-full {
+    display: none;
+}

@@ -18,12 +18,14 @@ const ignore = require('metalsmith-ignore');
 const paths = require('metalsmith-paths');
 const s3 = require('metalsmith-s3');
 const msIf = require('metalsmith-if');
+const request = require('metalsmith-request');
 
 const templateFilters = require('../census/filters');
 const nunjucks = require('nunjucks');
 const i18n = require('i18n-abide');
 
 const godiGetData = require('./metalsmith-godi-getdata');
+const godiApiDataToFiles = require('./metalsmith-godi-apidatatofiles');
 const godiDataFiles = require('./metalsmith-godi-updatedatafiles');
 const godiIndexSettings = require('./metalsmith-godi-indexsettings'); // Add data from Index settings.
 const godiStripBuild = require('./metalsmith-godi-stripbuild');
@@ -168,9 +170,20 @@ const domain = options.site;
 const year = options.year;
 const bucketSite = (isGodi) ? '' : `${domain}-`;
 const bucketName = `${bucketSite}index${indexDomainSuffix}.okfn.org`;
-// const baseUrl = 'http://localhost:8000';
-const baseUrl = `http://${bucketName}`;
+let baseUrl = `http://${bucketName}`;
+// Add INDEX_STAGING_DOMAIN, if it exists.
+if (process.env.INDEX_STAGING_DOMAIN) {
+  baseUrl = `${baseUrl}.${process.env.INDEX_STAGING_DOMAIN}`;
+}
+if (process.env.INDEX_DOMAIN_SUFFIX === 'dev') {
+  baseUrl = 'http://localhost:8000';
+}
+let surveyUrl = `http://${domain}.survey.okfn.org`;
+if (process.env.BASE_DOMAIN) {
+  surveyUrl = `http://${domain}.${process.env.BASE_DOMAIN}`;
+}
 
+/* eslint-disable camelcase */
 Metalsmith(__dirname)
   .use(timer('Start pipeline'))
   .metadata({
@@ -181,11 +194,31 @@ Metalsmith(__dirname)
     },
     // format function needs to be available in templates
     format: i18n.format,
-    site_url: baseUrl
+    site_url: baseUrl,
+    map: {  // Initial map presets.
+      embed_width: '100%',
+      embed_height: '300px',
+      // filter_year: filter_year,
+      filter_year: year,
+      // filter_dataset: filter_dataset,
+      filter_dataset: 'all',
+      years: [year],
+      panel_tools: 'true',
+      panel_share: 'true',
+      // map_place: map_place
+      map_place: ''
+    }
   })
   .source('./src')
   .destination('./build')
   .clean(options.clean)
+  .use(request({
+    datasetsApi: `${surveyUrl}/api/datasets/score/${year}.json`,
+    entriesApi: `${surveyUrl}/api/entries.json`,
+    questionsApi: `${surveyUrl}/api/questions.json`,
+    placesApi: `${surveyUrl}/api/places/score/${year}.json`
+  }, {json: true}))
+  .use(godiApiDataToFiles()) // Set api stored on metaddata, retrieved using metalsmith-request above, to files.
   .use(godiGetData({domain: domain, year: year})) // Populate metadata with data from Survey
   .use(jsonToFiles({use_metadata: true}))
   .use(paths({property: 'paths', directoryIndex: 'index.html'}))
@@ -232,3 +265,4 @@ Metalsmith(__dirname)
       process.exit(1);
     }
   });
+/* eslint-enable camelcase */

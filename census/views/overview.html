@@ -84,9 +84,7 @@
                 {{ gettext("Use the following code to embed the map visualisation into your own website.") }}
               </p>
               <xmp contenteditable="true">
-                <iframe width="100%" height="300px"
-                        src="http://index.okfn.org/vis/map/embed/?embed_width=100%&embed_height=300px&filter_year=2015&filter_dataset=all&panel_tools=true&panel_share=true&map_place="
-                        frameBorder="0"></iframe>
+                {% include 'includes/dataviews/embed_map.html' %}
               </xmp>
               <p>
                 {{ gettext("If you are a developer, you can read more about the embed options here:") }} <a
