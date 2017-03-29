@@ -174,7 +174,10 @@ let baseUrl = `http://${bucketName}`;
 if (process.env.INDEX_DOMAIN_SUFFIX === 'dev') {
   baseUrl = 'http://localhost:8000';
 }
-const surveyUrl = `http://${domain}.survey.okfn.org`;
+let surveyUrl = `http://${domain}.survey.okfn.org`;
+if (process.env.BASE_DOMAIN) {
+  surveyUrl = `http://${domain}.${process.env.BASE_DOMAIN}`;
+}
 
 /* eslint-disable camelcase */
 Metalsmith(__dirname)
