@@ -171,6 +171,10 @@ const year = options.year;
 const bucketSite = (isGodi) ? '' : `${domain}-`;
 const bucketName = `${bucketSite}index${indexDomainSuffix}.okfn.org`;
 let baseUrl = `http://${bucketName}`;
+// Add INDEX_STAGING_DOMAIN, if it exists.
+if (process.env.INDEX_STAGING_DOMAIN) {
+  baseUrl = `${baseUrl}.${process.env.INDEX_STAGING_DOMAIN}`;
+}
 if (process.env.INDEX_DOMAIN_SUFFIX === 'dev') {
   baseUrl = 'http://localhost:8000';
 }
