@@ -30,9 +30,30 @@ function plugin(options) {
       if (metadata.hasOwnProperty(key)) {
         debug('Adding ' + filePath + ' to files.');
         let contents = metadata[key];
+
         if (_.has(contents, 'results')) {
-          contents = JSON.stringify(contents.results);
+          contents = contents.results;
         }
+
+        if (key === 'placesApiJson') {
+          _.each(contents, place => {
+            // 'relativeScore' becomes 'score'
+            place.score = place.relativeScore;
+            delete place.relativeScore;
+          });
+        }
+
+        if (key === 'datasetsApiJson') {
+          _.each(contents, dataset => {
+            dataset.score = dataset.relativeScore;
+            delete dataset.relativeScore;
+
+            dataset.title = dataset.name;
+            delete dataset.name;
+          });
+        }
+
+        contents = JSON.stringify(contents);
 
         files[filePath] = {
           contents: contents
