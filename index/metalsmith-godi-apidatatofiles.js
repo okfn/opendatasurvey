@@ -49,6 +49,13 @@ function plugin(options) {
           });
         }
 
+        if (key === 'entriesApi') {
+          _.each(contents, entry => {
+            entry.score = entry.relativeScore;
+            delete entry.relativeScore;
+          });
+        }
+
         let csvContents = '';
         jsonexport(contents, function(err, csv) {
           if (err) return console.log(err);

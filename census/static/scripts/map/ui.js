@@ -515,7 +515,7 @@ define(['leaflet', 'proj4', 'proj4leaflet', 'leaflet_zoommin', 'leaflet_label', 
         $datasetFilter.on('change', function() {
             $this = $(this);
             uiState.filter.dataset = $this.val();
-            uiState.filter.year = $yearFilter.val();
+            uiState.filter.year = parseInt($yearFilter.val(), 10);
 
             if ($this.val() === 'improvement') {
                 $yearFilter.val(currentYear);
@@ -529,7 +529,7 @@ define(['leaflet', 'proj4', 'proj4leaflet', 'leaflet_zoommin', 'leaflet_label', 
 
         $yearFilter.on('change', function() {
             $this = $(this);
-            uiState.filter.year = $this.val();
+            uiState.filter.year = parseInt($this.val(), 10);
             uiState.filter.dataset = $datasetFilter.val();
             pubsub.publish(topics.tool_change, uiState);
         });

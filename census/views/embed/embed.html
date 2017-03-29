@@ -13,7 +13,7 @@
           // previousYear = {{ scope.odi.previous_year|dump|safe }},
           previousYear = 2015,
           // years = {{ scope.odi.years|dump|safe }},
-          years = 2016,
+          years = {{ map.years|dump|safe }},
           // sitename = {{ SITENAME|dump|safe }},
           sitename = 'placeholder for site name',
           // sponsor = {{ scope.odi.sponsor.name|dump|safe }};

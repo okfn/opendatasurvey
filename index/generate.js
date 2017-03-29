@@ -188,13 +188,14 @@ Metalsmith(__dirname)
     // format function needs to be available in templates
     format: i18n.format,
     site_url: baseUrl,
-    map: {
+    map: {  // Initial map presets.
       embed_width: '100%',
       embed_height: '300px',
       // filter_year: filter_year,
       filter_year: year,
       // filter_dataset: filter_dataset,
       filter_dataset: 'all',
+      years: [year],
       panel_tools: 'true',
       panel_share: 'true',
       // map_place: map_place
