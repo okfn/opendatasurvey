@@ -698,7 +698,7 @@ define(['leaflet', 'proj4', 'proj4leaflet', 'leaflet_zoommin', 'leaflet_label', 
             context.year = uiState.filter.year;
             context.title = makeTitle();
             context.name = place.name;
-            context.slug = place.slug;
+            context.slug = place.id;
             context.score = score;
             context.rank = rank;
             context.previous_score = previousScore;
