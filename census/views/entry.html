@@ -54,7 +54,7 @@
     {% if is_index %}
     <div class="col-md-6">
       <div id="map-container">
-        <iframe width="100%" height="360px" src="http://index.okfn.org/vis/map/embed/?embed_width=100%&amp;embed_height=360px&amp;filter_year=2015&amp;filter_dataset=companies&amp;panel_tools=false&amp;panel_share=false&amp;embed_title=United Kingdom ; Company Register ; 2015&amp;map_place=gb" frameborder="0"></iframe>
+        {% include 'includes/dataviews/embed_map.html' %}
       </div>
     </div>
     {% endif %}
