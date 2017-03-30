@@ -14,17 +14,15 @@
           previousYear = 2015,
           // years = {{ scope.odi.years|dump|safe }},
           years = {{ map.years|dump|safe }},
-          // sitename = {{ SITENAME|dump|safe }},
-          sitename = 'placeholder for site name',
-          // sponsor = {{ scope.odi.sponsor.name|dump|safe }};
-          sponsor = 'placeholder for sponsor';
+          sitename = {{ site_title|dump|safe }},
+          sponsor = {{ map.sponsor.name|dump|safe }};
     </script>
     {% block head_scripts %}{% endblock head_scripts %}
   </head>
   <body>
       {% block content %}{% endblock content %}
       {% block body_scripts %}
-      {# {% include '_analytics.html' %} #}
+      {% include 'includes/analytics.html' %}
       {% endblock body_scripts %}
   </body>
 </html>

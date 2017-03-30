@@ -1,7 +1,5 @@
 {% extends 'embed/embed.html' %}
 
-{#{% from '_scope.html' import scope with context %}#}
-
 {% block head_css %}
 {{ super() }}
 <link rel="stylesheet" type="text/css" href="{{ site_url }}/css/map.css" />
@@ -17,11 +15,11 @@
         <div class="odi-vis-meta">
             <div class="odi-vis-meta-left">
                 <div class="odi-vis-icon">
-                    <a target="_parent" href="{{ scope.odi.sponsor.domain }}" title="{{ gettext('Go to the %(sitename)s website', sitename=scope.odi.sponsor.name) }}">
+                    <a target="_parent" href="{{ map.sponsor.domain }}" title="{{ gettext('Go to the %(sitename)s website', sitename=map.sponsor.name) }}">
                         <img src="{{ site_url }}/css/images/logo.png" />
                     </a>
                 </div>
-                <a class="odi-vis-name" target="_parent" href="{{ scope.odi.sponsor.domain }}" title="{{ gettext('Go to the %(sitename)s website', sitename=scope.odi.sponsor.name) }}">{{ scope.odi.sponsor.name }}</a>
+                <a class="odi-vis-name" target="_parent" href="{{ map.sponsor.domain }}" title="{{ gettext('Go to the %(sitename)s website', sitename=map.sponsor.name) }}">{{ map.sponsor.name }}</a>
             </div>
             <div class="odi-vis-meta-right">
 

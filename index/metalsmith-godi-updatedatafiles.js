@@ -44,18 +44,39 @@ function plugin(options) {
                                                     file.place.id);
           }
 
+          file.map = _.clone(metadata.map);
+          file.map.map_place = file.place.id;
+          file.map.filter_dataset = file.dataset.id;
+          file.map.panel_tools = false;
+          file.map.panel_share = false;
+          file.map.embed_title = `${file.place.name} ; ${file.dataset.name} ; ${file.map.filter_year}`;
+
           delete file.data;
         }
 
         if (file.metadata_key === 'places') {
           file.place = file.data;
           file.stats = file.data.stats;
+
+          file.map = _.clone(metadata.map);
+          file.map.map_place = file.place.id;
+          file.map.panel_tools = false;
+          file.map.panel_share = false;
+          file.map.embed_title = `${file.place.name} ; ${file.map.filter_year}`;
+
           delete file.data;
         }
 
         if (file.metadata_key === 'datasets') {
           file.dataset = file.data;
-          file.stats = file.data.datas;
+          file.stats = file.data.stats;
+
+          file.map = _.clone(metadata.map);
+          file.map.filter_dataset = file.dataset.id;
+          file.map.panel_tools = false;
+          file.map.panel_share = false;
+          file.map.embed_title = `${file.dataset.name} ; ${file.map.filter_year}`;
+
           delete file.data;
         }
       }

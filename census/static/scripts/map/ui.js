@@ -1,12 +1,12 @@
 /* eslint-disable */
 define(['leaflet', 'proj4', 'proj4leaflet', 'leaflet_zoommin', 'leaflet_label', 'jquery', 'pubsub',
         'lodash', 'chroma', 'marked', 'data'],
-       function(leaflet, proj4, proj4leaflet, leaflet_zoommin, leaflet_label, $, pubsub, _, chroma,
+      function(leaflet, proj4, proj4leaflet, leaflet_zoommin, leaflet_label, $, pubsub, _, chroma,
                 marked, data) {
 
            proj4.defs("EPSG:3410", "+proj=cea +lon_0=0 +lat_ts=30 +x_0=0 +y_0=0 +a=6371228 +b=6371228 +units=m +no_defs");
 
-           var $container = $('.odi-vis.odi-vis-choropleth'),
+      var $container = $('.odi-vis.odi-vis-choropleth'),
         $tools = $('.odi-vis-tools'),
         $miniLegend = $('.odi-vis-legend ul'),
         $fullLegend = $('.odi-vis-legend-full ul'),
@@ -397,7 +397,7 @@ define(['leaflet', 'proj4', 'proj4leaflet', 'leaflet_zoommin', 'leaflet_label', 
             // calculate for this dataset/year/place from entries data
             match = _.find(dataStore.entries, {
                 'place': feature.properties.iso_a2.toLowerCase(),
-                'year': uiState.filter.year,
+                'year': parseInt(uiState.filter.year, 10),
                 'dataset': uiState.filter.dataset
             });
             if (match) {
@@ -606,7 +606,7 @@ define(['leaflet', 'proj4', 'proj4leaflet', 'leaflet_zoommin', 'leaflet_label', 
                 // calculate for this dataset/year/place from entries data
                 match = _.find(dataStore.entries, {
                     'place': place.id,
-                    'year': uiState.filter.year,
+                    'year': parseInt(uiState.filter.year, 10),
                     'dataset': uiState.filter.dataset
                 });
                 if (match) {
@@ -672,7 +672,7 @@ define(['leaflet', 'proj4', 'proj4leaflet', 'leaflet_zoommin', 'leaflet_label', 
                 // calculate for this dataset/year/place from entries data
                 match = _.find(dataStore.entries, {
                     'place': properties.iso_a2.toLowerCase(),
-                    'year': uiState.filter.year,
+                    'year': parseInt(uiState.filter.year, 10),
                     'dataset': uiState.filter.dataset
                 });
                 previousMatch = _.find(dataStore.entries, {
