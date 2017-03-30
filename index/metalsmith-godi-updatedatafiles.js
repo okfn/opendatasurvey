@@ -62,7 +62,8 @@ function plugin(options) {
 
         if (file.metadata_key === 'datasets') {
           file.dataset = file.data;
-          file.stats = file.data.datas;
+          file.stats = file.data.stats;
+
           delete file.data;
         }
       }
