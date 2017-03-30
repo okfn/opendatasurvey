@@ -1,12 +1,12 @@
 /* eslint-disable */
 define(['leaflet', 'proj4', 'proj4leaflet', 'leaflet_zoommin', 'leaflet_label', 'jquery', 'pubsub',
         'lodash', 'chroma', 'marked', 'data'],
-       function(leaflet, proj4, proj4leaflet, leaflet_zoommin, leaflet_label, $, pubsub, _, chroma,
+      function(leaflet, proj4, proj4leaflet, leaflet_zoommin, leaflet_label, $, pubsub, _, chroma,
                 marked, data) {
 
            proj4.defs("EPSG:3410", "+proj=cea +lon_0=0 +lat_ts=30 +x_0=0 +y_0=0 +a=6371228 +b=6371228 +units=m +no_defs");
 
-           var $container = $('.odi-vis.odi-vis-choropleth'),
+      var $container = $('.odi-vis.odi-vis-choropleth'),
         $tools = $('.odi-vis-tools'),
         $miniLegend = $('.odi-vis-legend ul'),
         $fullLegend = $('.odi-vis-legend-full ul'),

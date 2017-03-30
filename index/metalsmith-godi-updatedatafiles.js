@@ -50,6 +50,13 @@ function plugin(options) {
         if (file.metadata_key === 'places') {
           file.place = file.data;
           file.stats = file.data.stats;
+
+          file.map = _.clone(metadata.map);
+          file.map.map_place = file.place.id;
+          file.map.panel_tools = false;
+          file.map.panel_share = false;
+          file.map.embed_title = `${file.place.name} ; ${file.map.filter_year}`;
+
           delete file.data;
         }
 

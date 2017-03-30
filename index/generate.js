@@ -195,18 +195,19 @@ Metalsmith(__dirname)
     // format function needs to be available in templates
     format: i18n.format,
     site_url: baseUrl,
-    map: {  // Initial map presets.
+    map: {  // Initial map presets. May be overridden in godiDataFiles.
       embed_width: '100%',
       embed_height: '300px',
-      // filter_year: filter_year,
       filter_year: year,
-      // filter_dataset: filter_dataset,
       filter_dataset: 'all',
       years: [year],
       panel_tools: 'true',
       panel_share: 'true',
-      // map_place: map_place
-      map_place: ''
+      map_place: '',
+      sponsor: {
+        name: 'Open Knowledge',
+        domain: 'https://okfn.org/'
+      }
     }
   })
   .source('./src')
@@ -218,7 +219,7 @@ Metalsmith(__dirname)
     questionsApi: `${surveyUrl}/api/questions.json`,
     placesApi: `${surveyUrl}/api/places/score/${year}.json`
   }, {json: true}))
-  .use(godiApiDataToFiles()) // Set api stored on metaddata, retrieved using metalsmith-request above, to files.
+  .use(godiApiDataToFiles()) // Set api stored on metadata, retrieved using metalsmith-request above, to files.
   .use(godiGetData({domain: domain, year: year})) // Populate metadata with data from Survey
   .use(jsonToFiles({use_metadata: true}))
   .use(paths({property: 'paths', directoryIndex: 'index.html'}))
