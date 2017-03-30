@@ -397,7 +397,7 @@ define(['leaflet', 'proj4', 'proj4leaflet', 'leaflet_zoommin', 'leaflet_label', 
             // calculate for this dataset/year/place from entries data
             match = _.find(dataStore.entries, {
                 'place': feature.properties.iso_a2.toLowerCase(),
-                'year': uiState.filter.year,
+                'year': parseInt(uiState.filter.year, 10),
                 'dataset': uiState.filter.dataset
             });
             if (match) {
@@ -606,7 +606,7 @@ define(['leaflet', 'proj4', 'proj4leaflet', 'leaflet_zoommin', 'leaflet_label', 
                 // calculate for this dataset/year/place from entries data
                 match = _.find(dataStore.entries, {
                     'place': place.id,
-                    'year': uiState.filter.year,
+                    'year': parseInt(uiState.filter.year, 10),
                     'dataset': uiState.filter.dataset
                 });
                 if (match) {
@@ -672,7 +672,7 @@ define(['leaflet', 'proj4', 'proj4leaflet', 'leaflet_zoommin', 'leaflet_label', 
                 // calculate for this dataset/year/place from entries data
                 match = _.find(dataStore.entries, {
                     'place': properties.iso_a2.toLowerCase(),
-                    'year': uiState.filter.year,
+                    'year': parseInt(uiState.filter.year, 10),
                     'dataset': uiState.filter.dataset
                 });
                 previousMatch = _.find(dataStore.entries, {

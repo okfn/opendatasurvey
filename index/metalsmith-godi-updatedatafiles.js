@@ -64,6 +64,12 @@ function plugin(options) {
           file.dataset = file.data;
           file.stats = file.data.stats;
 
+          file.map = _.clone(metadata.map);
+          file.map.filter_dataset = file.dataset.id;
+          file.map.panel_tools = false;
+          file.map.panel_share = false;
+          file.map.embed_title = `${file.dataset.name} ; ${file.map.filter_year}`;
+
           delete file.data;
         }
       }
