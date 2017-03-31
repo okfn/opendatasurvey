@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 const jsonexport = require('jsonexport');
-
+const JSZip = require('jszip');
 const debug = require('debug')('metalsmith-godi-apidatatofiles');
 
 module.exports = plugin;
@@ -18,14 +18,16 @@ function plugin(options) {
     let metadata = metalsmith.metadata();
     // Metalsmith files from api data stored on metalsmith.metadata.
     const apiFiles = {
-      datasetsApi: 'api/datasets',
-      entriesApi: 'api/entries',
-      questionsApi: 'api/questions',
-      placesApi: 'api/places'
+      datasetsApi: 'datasets',
+      entriesApi: 'entries',
+      questionsApi: 'questions',
+      placesApi: 'places'
     };
-    _.each(apiFiles, (filePath, key) => {
+    const baseDir = 'api';
+    let downloadZip = new JSZip();
+    _.each(apiFiles, (fileName, key) => {
       if (metadata.hasOwnProperty(key)) {
-        debug('Adding ' + filePath + ' to files.');
+        debug('Adding ' + fileName + ' to files.');
         let contents = metadata[key];
 
         if (_.has(contents, 'results')) {
@@ -64,15 +66,27 @@ function plugin(options) {
 
         contents = JSON.stringify(contents);
 
-        files[`${filePath}.json`] = {
+        downloadZip.file(`${fileName}.json`, contents);
+        downloadZip.file(`${fileName}.csv`, csvContents);
+
+        files[`${baseDir}/${fileName}.json`] = {
           contents: contents
         };
-        files[`${filePath}.csv`] = {
+        files[`${baseDir}/${fileName}.csv`] = {
           contents: csvContents
         };
       }
     });
 
-    done();
+    downloadZip.generateAsync({
+      type: 'nodebuffer',
+      compression: 'DEFLATE'
+    })
+    .then(zipData => {
+      files['download/opendataindex_data.zip'] = {
+        contents: zipData
+      };
+      done();
+    });
   };
 }

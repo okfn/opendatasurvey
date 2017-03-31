@@ -11,7 +11,7 @@
       <h3>{{ gettext('Archive') }}</h3>
       <p>{{ gettext('All data as an archive file.') }}</p>
       <p>
-        <a class="btn btn-primary btn-lg {% if ODI.forms.download %}download-action{% endif %}" href="/static/downloads/opendataindex_data_{{ TIMESTAMP }}.tar.gz" title="{{ gettext('The whole Index displayed in an easy-to-read table.') }}">
+        <a class="btn btn-primary btn-lg {% if ODI.forms.download %}download-action{% endif %}" href="/download/opendataindex_data.zip" title="{{ gettext('The whole Index displayed in an easy-to-read table.') }}">
           {{ gettext('Download all data') }}
         </a>
       </p>
