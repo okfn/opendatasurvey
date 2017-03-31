@@ -70,6 +70,7 @@
             {% if is_index %}
               <li><a href="/place/">{{ gettext("Places") }}</a></li>
               <li><a href="/dataset/">{{ gettext("Datasets") }}</a></li>
+              <li><a href="/download/">{{ gettext("Download") }}</a></li>
               {% if 'insights' in ancillary_pages %}
                 <li><a href="/insights/">{{ gettext("Insights") }}</a></li>
               {% endif %}
@@ -152,12 +153,14 @@
         </div>
         {% endif %}
         <div class="footer-secondary">
+          {% if not is_index %}
           <p class="pull-right">
             <strong>{{ gettext("Download") }}:</strong> <a href="/api/entries.cascade.csv">{{ gettext("Current (CSV)") }}</a> |
             <a href="/api/entries.csv">{{ gettext("All (CSV)") }}</a> |
             <a href="/api/entries.cascade.json">{{ gettext("Current (JSON)") }}</a> |
             <a href="/api/entries.json">{{ gettext("All (JSON)") }}</a>
           </p>
+          {% endif %}
           <p>
             <a href="http://opendatacommons.org/licenses/pddl/1.0">{{ gettext("Data License (Public Domain)") }}</a>. <a href="https://github.com/okfn/opendatasurvey/">{{ gettext("Source code") }}</a>.
           </p>
