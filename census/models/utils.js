@@ -171,42 +171,42 @@ var setEntryUrl = function(entry) {
 };
 
 /*
- * Do leaderboard ranking on places by computedScore. Places MUST be ordered
- * by descending score. Tied places have equal rank.
+ * Do leaderboard ranking on places by computedRelativeScore. Places MUST be
+ * ordered by descending score. Tied places have equal rank.
  */
 var rankPlaces = function(places) {
   var lastScore = null;
   var lastRank = 0;
 
   _.each(places, function(p, i) {
-    if (lastScore === p.computedScore) {
+    if (lastScore === p.computedRelativeScore) {
       p.rank = lastRank;
     } else {
       p.rank = i + 1;
     }
     lastRank = p.rank;
-    lastScore = p.computedScore;
+    lastScore = p.computedRelativeScore;
   });
 
   return places;
 };
 
 /*
- * Do leaderboard ranking on datasets by computedScore. Places MUST be ordered
- * by descending score. Tied places have equal rank.
+ * Do leaderboard ranking on datasets by computedRelativeScore. Places MUST be
+ * ordered by descending score. Tied places have equal rank.
  */
 var rankDatasets = function(datasets) {
   var lastScore = null;
   var lastRank = 0;
 
   _.each(datasets, function(d, i) {
-    if (lastScore === d.computedScore) {
+    if (lastScore === d.computedRelativeScore) {
       d.rank = lastRank;
     } else {
       d.rank = i + 1;
     }
     lastRank = d.rank;
-    lastScore = d.computedScore;
+    lastScore = d.computedRelativeScore;
   });
 
   return datasets;
