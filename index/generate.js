@@ -224,7 +224,7 @@ Metalsmith(__dirname)
   .use(jsonToFiles({use_metadata: true}))
   .use(paths({property: 'paths', directoryIndex: 'index.html'}))
   .use(godiIndexSettings({domain: domain})) // Add data from Index settings.
-  .use(godiDataFiles()) // Add file metadata to each entry file populated by json-to-files
+  .use(godiDataFiles({domain: domain, year: year})) // Add file metadata to each entry file populated by json-to-files
   .use(markdown())
   .use(permalinks())
   .use(layouts({
