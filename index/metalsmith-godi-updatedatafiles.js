@@ -4,6 +4,9 @@ const _ = require('lodash');
 
 const debug = require('debug')('metalsmith-godi-updatedatafiles');
 
+const models = require('../census/models');
+const modelUtils = require('../census/models').utils;
+
 const buildDiscussionUrl =
   require('../census/controllers/utils.js').buildDiscussionUrl;
 
@@ -29,7 +32,21 @@ function plugin(options) {
   return (files, metalsmith, done) => {
     let metadata = metalsmith.metadata();
     debug('Updating entries, places, and dataset.');
-    _.each(files, file => {
+
+    let datasetPromises = [];
+    let defaultOptions = {
+      models: models,
+      domain: options.domain,
+      dataset: null,
+      place: null,
+      year: options.year,
+      cascade: false,
+      scoredQuestionsOnly: false,
+      locale: null,
+      with: {Entry: true, Dataset: true, Place: true, Question: true}
+    };
+
+    _.each(files, (file, k) => {
       if (_.has(file, 'metadata_key')) {
         if (file.metadata_key === 'entries') {
           file.entry = file.data;
@@ -78,14 +95,27 @@ function plugin(options) {
           file.map.embed_title = `${file.dataset.name} ; ${file.map.filter_year}`;
 
           delete file.data;
+
+          // Get data for this dataset.
+          const options = _.merge(_.clone(defaultOptions), {dataset: file.dataset.id});
+          datasetPromises.push(
+            modelUtils.getData(options)
+            .then(datasetData => {
+              file.places = datasetData.places;
+            })
+          );
         }
       }
     });
 
-    // entries.md is added to `files` as part of build of entries. It's not
-    // needed, so delete it.
-    debug('Remove unnecessary \'entries\' file.');
-    delete files['entries.md'];
-    done();
+    // Once all dataset promises have resolved, finish up.
+    Promise.all(datasetPromises)
+    .then(() => {
+      // entries.md is added to `files` as part of build of entries. It's not
+      // needed, so delete it.
+      debug('Remove unnecessary \'entries\' file.');
+      delete files['entries.md'];
+      done();
+    });
   };
 }

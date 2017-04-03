@@ -171,45 +171,25 @@ var setEntryUrl = function(entry) {
 };
 
 /*
- * Do leaderboard ranking on places by computedRelativeScore. Places MUST be
- * ordered by descending score. Tied places have equal rank.
+ * Add `rank` to each object in `objs` based on a shared `prop` property.
+ * Order by desc and tied objects have equal rank. Used to rank places and
+ * datasets.
  */
-var rankPlaces = function(places) {
+var rankObjectsByProperty = function(objs, prop) {
   var lastScore = null;
   var lastRank = 0;
 
-  _.each(places, function(p, i) {
-    if (lastScore === p.computedRelativeScore) {
-      p.rank = lastRank;
+  _.each(objs, (o, i) => {
+    if (lastScore === o[prop]) {
+      o.rank = lastRank;
     } else {
-      p.rank = i + 1;
+      o.rank = i + 1;
     }
-    lastRank = p.rank;
-    lastScore = p.computedRelativeScore;
+    lastRank = o.rank;
+    lastScore = o[prop];
   });
 
-  return places;
-};
-
-/*
- * Do leaderboard ranking on datasets by computedRelativeScore. Places MUST be
- * ordered by descending score. Tied places have equal rank.
- */
-var rankDatasets = function(datasets) {
-  var lastScore = null;
-  var lastRank = 0;
-
-  _.each(datasets, function(d, i) {
-    if (lastScore === d.computedRelativeScore) {
-      d.rank = lastRank;
-    } else {
-      d.rank = i + 1;
-    }
-    lastRank = d.rank;
-    lastScore = d.computedRelativeScore;
-  });
-
-  return datasets;
+  return objs;
 };
 
 /* Return the ids of excluded datasets for each year, as defined by the
@@ -368,9 +348,9 @@ var processPlaces = function(data, options) {
           p.computedRelativeScore = Math.round(100 * p.computedScore / datasetMaxScore);
         }
       });
-      data.places = rankPlaces(_.sortByOrder(
+      data.places = rankObjectsByProperty(_.sortByOrder(
         translateSet(options.locale, data.places), ['computedScore', 'name'], ['desc', 'asc']
-      ));
+      ), 'computedRelativeScore');
     } else {
       data.places = translateSet(options.locale, data.places);
     }
@@ -411,9 +391,9 @@ var processDatasets = function(data, options) {
           d.computedRelativeScore = Math.round(100 * d.computedScore / placeMaxScore);
         }
       });
-      data.datasets = rankDatasets(_.sortByOrder(
+      data.datasets = rankObjectsByProperty(_.sortByOrder(
         translateSet(options.locale, data.datasets), 'computedScore', 'desc'
-      ));
+      ), 'computedRelativeScore');
     } else {
       data.datasets = translateSet(options.locale, data.datasets);
     }
