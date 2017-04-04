@@ -32,7 +32,7 @@ function start() {
   var cacheAge = 3600 * 1000; // in milliseconds
   var staticRoot = path.join(__dirname, 'static');
   var sessionSecret = process.env.SESSION_SECRET || 'dummysecret';
-  var faviconPath = path.join(__dirname, '/public/favicon.ico');
+  var faviconPath = path.join(__dirname, '/static/favicon.ico');
   var models = require('./models');
   var middlewares = require('./middlewares');
   var currentYear = new Date().getFullYear();
