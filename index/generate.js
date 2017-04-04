@@ -222,11 +222,11 @@ Metalsmith(__dirname)
   .use(godiApiDataToFiles()) // Set api stored on metadata, retrieved using metalsmith-request above, to files.
   .use(godiGetData({domain: domain, year: year})) // Populate metadata with data from Survey
   .use(jsonToFiles({use_metadata: true}))
-  .use(paths({property: 'paths', directoryIndex: 'index.html'}))
   .use(godiIndexSettings({domain: domain})) // Add data from Index settings.
+  .use(paths({property: 'paths', directoryIndex: 'index.html'}))
   .use(godiDataFiles({domain: domain, year: year})) // Add file metadata to each entry file populated by json-to-files
   .use(markdown())
-  .use(permalinks())
+  .use(permalinks({relative: false}))
   .use(layouts({
     engine: 'nunjucks',
     rename: true,

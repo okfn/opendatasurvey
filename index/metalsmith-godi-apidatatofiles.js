@@ -70,10 +70,10 @@ function plugin(options) {
         downloadZip.file(`${fileName}.csv`, csvContents);
 
         files[`${baseDir}/${fileName}.json`] = {
-          contents: contents
+          contents: new Buffer(contents)
         };
         files[`${baseDir}/${fileName}.csv`] = {
-          contents: csvContents
+          contents: new Buffer(csvContents)
         };
       }
     });
