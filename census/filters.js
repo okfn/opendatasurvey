@@ -33,17 +33,6 @@ var wordwrap = function(str, width, brk, cut) {
   return str.match(RegExp(regex, 'g')).join(brk);
 };
 
-var truncate = function(str, width) {
-  width = width || 100;
-  if (!str) {
-    return str;
-  }
-  if (str.length <= width) {
-    return str;
-  }
-  return str.substr(0, width - 1) + '...';
-};
-
 // Why? Rotated Heading Cells are hard.
 // every token after "halfway" joined with &nbsp;
 var rotate = function(str) {
@@ -97,7 +86,6 @@ module.exports = {
   find: find,
   where: where,
   wordwrap: wordwrap,
-  truncate: truncate,
   rotate: rotate,
   dateformat: dateformat,
   marked: marked,
