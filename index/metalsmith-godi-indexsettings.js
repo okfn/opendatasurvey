@@ -39,7 +39,7 @@ function plugin(options) {
             title: _.capitalize(keyName),
             layout: 'page.html',
             breadcrumbTitle: _.capitalize(keyName),
-            contents: v
+            contents: new Buffer(v)
           };
           files[keyName + '.md'] = fileData;
           metadata.ancillary_pages.push(keyName);
