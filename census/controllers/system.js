@@ -10,10 +10,14 @@ var admin = function(req, res) {
   req.app.get('models').Registry.findAll()
   .then(result => {
     const data = {
-      registry: result,
-      gitRev: git.short(),
-      gitBranch: git.branch()
+      registry: result
     };
+    try {
+      data.gitRev = git.short();
+      data.gitBranch = git.branch();
+    } catch (err) {
+      console.log(err.stack);
+    }
     return data;
   })
   .then(data => {

@@ -25,8 +25,12 @@ let dashboard = function(req, res) {
   });
   modelUtils.getData(dataOptions)
   .then(data => {
-    data.gitRev = git.short();
-    data.gitBranch = git.branch();
+    try {
+      data.gitRev = git.short();
+      data.gitBranch = git.branch();
+    } catch (err) {
+      console.log(err.stack);
+    }
     return data;
   })
   .then(data => {

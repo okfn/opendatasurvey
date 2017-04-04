@@ -27,10 +27,12 @@
     </ul>
 </div>
 
+{% if gitRev and gitBranch %}
 <div class="row">
   <h3>Repository status</h3>
   <p>git commit <strong>{{ gitRev }}</strong> on branch <strong>{{ gitBranch }}</strong></p>
 </div>
+{% endif %}
 
 <div>
 {% endblock %}
