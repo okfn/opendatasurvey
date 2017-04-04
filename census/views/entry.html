@@ -118,7 +118,7 @@
       {% if licence_answer %}
       <div class="col-md-6">
         <h4>{{ gettext("Data licence") }}</h4>
-        <p>{{ licence_answer|urlize }}</p>
+        <p>{{ licence_answer|urlize(55, true)|safe }}</p>
       </div>
       {% endif %}
       {% if source_answer %}
@@ -128,7 +128,7 @@
         <ul>
         {% for source in source_answer %}
           {% if source.urlValue %}
-            {% set sourceValue = source.urlValue %}
+            {% set sourceValue = source.urlValue|urlize(55, true)|safe %}
             {% if source.descValue %}
               {% set sourceValue = sourceValue + ' - ' + source.descValue %}
             {% endif %}
@@ -137,7 +137,7 @@
           {% endif %}
         {% endfor %}
         </ul>
-        <p>{{ answerValue|marked }}</p>
+        <p>{{ answerValue }}</p>
       </div>
       {% endif %}
     </div>
@@ -161,7 +161,7 @@
           {% if question.type == 'source' %}
           {# Special treatment for 'source' question type. #}
             {% for source in answer.value %}
-              {% set answerValue = answerValue + source.urlValue + ' - ' + source.descValue %}
+              {% set answerValue = answerValue + source.urlValue|urlize(55, true)|safe + ' - ' + source.descValue %}
               {% if not loop.last %}
                 {% set answerValue = answerValue + ', ' %}
               {% endif %}
@@ -172,7 +172,7 @@
             {% set answerValue = answer.value|join(', ') %}
           {% elif question.id == 'licence_url' %}
           {# Special treatment for 'licence_url' question id. #}
-            {% set answerValue = answer.value|urlize %}
+            {% set answerValue = answer.value|urlize(55, true)|safe %}
           {% else %}
             {% set answerValue = answer.value %}
           {% endif %}

@@ -3,7 +3,6 @@
 var _ = require('lodash');
 var moment = require('moment');
 var markedlib = require('marked');
-var linkifyStr = require('linkifyjs/string');
 
 markedlib.setOptions({
   gfm: true,
@@ -16,10 +15,6 @@ var find = function(list, args) {
 
 var where = function(list, args) {
   return _.where(list, args);
-};
-
-var urlize = function(str) {
-  return linkifyStr(str);
 };
 
 var wordwrap = function(str, width, brk, cut) {
@@ -36,17 +31,6 @@ var wordwrap = function(str, width, brk, cut) {
   var regex = '.{1,' + width + '}(\\s|$)' + (cut ? '|.{' + width +
     '}|.+$' : '|\\S+?(\\s|$)');
   return str.match(RegExp(regex, 'g')).join(brk);
-};
-
-var truncate = function(str, width) {
-  width = width || 100;
-  if (!str) {
-    return str;
-  }
-  if (str.length <= width) {
-    return str;
-  }
-  return str.substr(0, width - 1) + '...';
 };
 
 // Why? Rotated Heading Cells are hard.
@@ -101,9 +85,7 @@ var simpledelta = function(str) {
 module.exports = {
   find: find,
   where: where,
-  urlize: urlize,
   wordwrap: wordwrap,
-  truncate: truncate,
   rotate: rotate,
   dateformat: dateformat,
   marked: marked,
