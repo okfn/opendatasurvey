@@ -29,18 +29,18 @@ When a `Submission` has been reviewed and deemed accurate it becomes an `Entry` 
 
  * Contributors visit the `/submit/` page to make a new `Submission`
  * Contributors can also click on the `+` icon of a dataset
- 
+
  ![census-submit](/files/survey-add.png)
- 
- * This `Submission` is now queued awaiting review by a reviewer (see next item for details on what that means). You can see a submission is waiting for review because the `+`sign becomes a `1`, and the number also appears on the top right corner of the icon. 
+
+ * This `Submission` is now queued awaiting review by a reviewer (see next item for details on what that means). You can see a submission is waiting for review because the `+`sign becomes a `1`, and the number also appears on the top right corner of the icon.
 
  ![census-submit](/files/survey-rev.png)
 
 
 ##### Note
- 
+
    * The `approve_first_submission` config variable can be set to TRUE in order to approve the first submission for a place/dataset/year automatically, without review.
-   * **Reviewers can be set in three places:** 
+   * **Reviewers can be set in three places:**
    	* In the **config sheet**, where the reviewers can review all data for the instance
    	* In the **datasets sheet**, where the reviewers can review all data for a particular dataset
    	* In the **places sheet**, where the reviewers can review all data for a particular place
@@ -58,7 +58,7 @@ When a `Submission` has been reviewed and deemed accurate it becomes an `Entry` 
  * If rejected the submission will be marked as rejected and will no longer show up
 
 ###### Note
- 
+
  * You must be an authorized reviewer to review (see `reviewers` config option below)
  * You must be logged in to review
 
@@ -92,7 +92,7 @@ Next steps:
 
  * If you want reviews to work you will need to configure a list of reviewers – see instructions below
 
-####Extras – set additional content 
+####Extras – set additional content
 
  * Add a logo – `navbar_logo` config variable
  * Some short text on the front page – 3-4 sentences about what this is – `overview_page` config variable
@@ -144,7 +144,7 @@ To translate the primary language:
  * Translate the Question, QuestionShort, Description, Placeholder, and Config columns into the desired primary language
  * Reload QuestionSets from the site admin page: <http://{your-census-id}.survey.okfn.org/admin>
 
-To add another, second language (partial support for multiple languages): 
+To add another, second language (partial support for multiple languages):
 
  * Add a column Question@{LANG}, QuestionShort@{LANG}, Description@{LANG} where {LANG} is your 2 digit iso code (Config and Placeholder are not currently supported)
  * Enter translations of the values for Question and Description in your new columns
@@ -158,7 +158,7 @@ To translate the primary language:
  * Translate the Name, Description, UpdateEvery, and Characteristics: columns into the desired primary language
  * Reload Datasets from the site admin page: <http://{your-census-id}.survey.okfn.org/admin>
 
-To add another, second language (partial support for multiple languages): 
+To add another, second language (partial support for multiple languages):
 
  * Add a column Name@{LANG}, Description@{LANG}, and Characteristics:n@{LANG} (one for each Characteristic) to the Datasets sheet, where {LANG} is your 2 digit iso code (UpdateEvery is not currently supported)
  * Translate the original Name and Description into your secondary language and enter into the new columns you created
@@ -178,7 +178,7 @@ __If you require access to the transifex project please let us know in the [disc
  * Go into your Config Spreadsheet and select the Datasets sheet
  * Fill out the Datasets sheet following the structure provided. You can ignore the Category column.
  * It is important to add reasonably detailed descriptions for the datasets so people are clear what they are looking for and how to answer.
- * We recommend not having more than ~ 15-17 datasets in your Census. Having more datasets might create issues with the Census UI. 
+ * We recommend not having more than ~ 15-17 datasets in your Census. Having more datasets might create issues with the Census UI.
  * Ensure the URL value used in the General Config sheet for 'datasets' points to the Datasets sheet.
  * Reload the config
 
@@ -204,7 +204,7 @@ Set list of language locales that should be available for your site. See [Locali
 
 ### reviewers
 
-List of reviewer emails separated by commas. Be aware that the emails need to be either a gmail account or the email that matches the facebook user the reviewer will use to login. 
+List of reviewer emails separated by commas. Be aware that the emails need to be either a gmail account or the email that matches the facebook user the reviewer will use to login.
 
 ### datasets
 
@@ -228,7 +228,7 @@ submitted for datasets in that place.
 
 The structure should follow that in the [template spreadsheet][template-config].
 
-Questions are defined by a JSON in the `QuestionSet` sheet in the CMS. 
+Questions are defined by a JSON in the `QuestionSet` sheet in the CMS.
 
 ### approve_first_submission
 
@@ -238,7 +238,7 @@ Default is FALSE i.e. all submission must be reviewed.
 
 ### close_submissions
 
-Defines if the survey will allow users to submit new information. 
+Defines if the survey will allow users to submit new information.
 
 Default is FALSE i.e. users can submit new data
 
@@ -342,13 +342,11 @@ A URL to a forum where users can discuss pending submissions. This URL will be l
 
  ## Questions and Question Sets
 
-Questions are loaded to the Survey through the `Questions` and `QuestionSet`sheets in the CMS. If you make changes to the `QuestionSet`values, make sure they validate against the JSON schema before reloading your survey. 
+Questions are loaded to the Survey through the `Questions` and `QuestionSet` sheets in the CMS. If you make changes to the `QuestionSet` values, make sure they validate against the JSON schema before reloading your survey.
 
-In the old Census, Questions were associated with Datasets at the site level, i.e. one set of Questions was used for all Datasets. This is no longer a restriction. Questions are grouped in QuestionSets, and each site can configure one QuestionSet for use by all of the site's Datasets, or a QuestionSet can be defined for each Dataset individually.
+A site-wide Question Set url can be added to the site config page under the key `question_set_url`. A further system-wide fallback Question Set url can be set as an env var, `FALLBACK_QUESTIONSET` (this is provided for backward-compatibility to smooth migration to the new system).
 
-In the CMS, the Datasets sheet has a new `QuestionSetURL` column. The value is the url pointing to the `QuestionSet` config sheet. A site-wide Question Set url can be added to the site config page under the key `question_set_url`. A further system-wide fallback Question Set url can be set as an env var, `FALLBACK_QUESTIONSET` (this is provided for backward-compatibility to smooth migration to the new system).
-
-Datasets also have a new `UpdateEvery` column. The value for each cell in this column should be a time interval as a string in the question: "Data should be updated every {{ time interval }}." E.g. year, month, 6 months, day, second Thursday, etc. 
+Datasets also have a new `UpdateEvery` column. The value for each cell in this column should be a time interval as a string in the question: "Data should be updated every {{ time interval }}." E.g. year, month, 6 months, day, second Thursday, etc.
 
 The new Question Set config sheet is like the `Site` config. It has `key` and `value` columns. It expects a `questions` key, the value is the url the questions sheet, and a `question_set_schema` key, the value is the question set schema in json format (see the [Question Set Schema](#question-set-schema-json-format) section below).
 
@@ -432,9 +430,9 @@ Here is a question set schema for this example set of questions:
                 "properties": {
                     "enabled": true,
                     "required": true
-                } 
+                }
             }
-        ] 
+        ]
     },    
     {
         // The question is "Have you eaten a red apple today?"
