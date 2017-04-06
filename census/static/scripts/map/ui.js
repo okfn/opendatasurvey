@@ -263,6 +263,9 @@ define(['leaflet', 'proj4', 'proj4leaflet', 'leaflet_zoommin', 'leaflet_label', 
     }
 
     function setPanels(topic, data) {
+        if (!data.panel.year) {
+            $yearFilter.hide();
+        }
         if (!data.panel.tools) {
             $toolsPanel.hide();
             $('.leaflet-container').css('background-color', '#8bbee1');
@@ -337,6 +340,7 @@ define(['leaflet', 'proj4', 'proj4leaflet', 'leaflet_zoommin', 'leaflet_label', 
                 'filter_dataset',
                 'panel_name',
                 'panel_tools',
+                'panel_year',
                 'panel_help',
                 'panel_legend',
                 'map_place'
