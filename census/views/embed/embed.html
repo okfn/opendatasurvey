@@ -8,11 +8,8 @@
     {% block head_css %}{% endblock head_css %}
     <script>
       var siteUrl = {{ site_url|dump|safe }},
-          // currentYear = {{ scope.odi.current_year|dump|safe }},
           currentYear = 2016,
-          // previousYear = {{ scope.odi.previous_year|dump|safe }},
           previousYear = 2015,
-          // years = {{ scope.odi.years|dump|safe }},
           years = {{ map.years|dump|safe }},
           sitename = {{ site_title|dump|safe }},
           sponsor = {{ map.sponsor.name|dump|safe }};
