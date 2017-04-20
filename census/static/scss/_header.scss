@@ -177,7 +177,7 @@ body {
       $header-bg: $brand-primary;
       $header-fg: $gray-dark;
       background-color: $header-bg;
-      border-bottom: solid 2px darken($header-bg, 10%);
+      border-bottom: solid $brand-primary;
       color: $header-fg;
 
       .container {
@@ -198,9 +198,15 @@ body {
           @media (min-width: $screen-sm-min) {
             background-color: transparent;
             position: absolute;
+            height: 76px;
+
+            img {
+              margin-top: -31px;
+            }
 
             &:before {
               background-color: currentColor;
+              height: 80px;
             }
           }
         }
@@ -210,10 +216,20 @@ body {
         padding-top: 1.3em;
         margin-right: $grid-gutter-width;
         padding-bottom: 12px;
+        position: relative;
 
         svg {
           height: 50px;
           fill: currentColor;
+        }
+
+        .year {
+          position: absolute;
+          right: -1em;
+          top: 30px;
+          background-color: $brand-primary;
+          font-size: 0.8em;
+          line-height: 1.2;
         }
       }
 
@@ -227,8 +243,24 @@ body {
         .menu {
           @media (min-width: $screen-md-min) {
             padding-top: 1.7em;
+            text-align: right;
+            margin-right: 150px; //OK tab
           }
         }
+      }
+    }
+
+    &.last-year {
+      #header {
+        background-color: $brand-last-year;
+        border-bottom-color: $brand-last-year;
+      }
+    }
+
+    &.past-year {
+      #header {
+        background-color: $brand-past-year;
+        border-bottom-color: $brand-past-year;
       }
     }
   }
