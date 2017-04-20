@@ -1,7 +1,7 @@
 .home {
   #home-about {
     $banner-bg-colour: $brand-primary;
-    $banner-text-colour: $gray-base;
+    $banner-text-colour: $gray-dark;
     color: $banner-text-colour;
     background-color: $banner-bg-colour;
     background-image: url("images/icon-tile.png");
@@ -10,6 +10,7 @@
     margin-top: -5px;
     padding: 20px 0 $grid-gutter-width 0;
     text-align: center;
+    position: relative;
 
     @media (min-width: $screen-sm-min) {
       padding-bottom: 40px;
@@ -17,6 +18,20 @@
 
     @media (min-width: $screen-md-min) {
       margin-top: -20px;
+    }
+
+    &:before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      @include gradient-vertical($banner-bg-colour, rgba($banner-bg-colour,0), 0%, 100%);
+    }
+
+    .container {
+      position: relative;
     }
 
     h1 {
@@ -73,6 +88,7 @@
           font-style: normal;
           background-color: $text-color;
           color: #fff;
+
           &.low {
             background-color: $brand-danger;
           }
@@ -222,6 +238,26 @@
         &:last-child {
           text-align: right;
         }
+      }
+    }
+  }
+
+  &.last-year {
+    #home-about {
+      background-color: $brand-last-year;
+
+      &:before {
+        @include gradient-vertical($brand-last-year, rgba($brand-last-year,0), 0%, 100%);
+      }
+    }
+  }
+
+  &.past-year {
+    #home-about {
+      background-color: $brand-past-year;
+
+      &:before {
+        @include gradient-vertical($brand-past-year, rgba($brand-past-year,0), 0%, 100%);
       }
     }
   }
