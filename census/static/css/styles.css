@@ -10260,6 +10260,13 @@ body.form .form-header {
 body.form .error-message {
   border-radius: 4px; }
 
+@media (min-width: 768px) {
+  .home #header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1; } }
 .home #home-about {
   color: #333333;
   background-color: #EAD045;
@@ -10267,15 +10274,20 @@ body.form .error-message {
   background-position: center top;
   background-size: 350px auto;
   margin-top: -5px;
-  padding: 20px 0 30px 0;
+  padding-bottom: 30px;
   text-align: center;
   position: relative; }
   @media (min-width: 768px) {
     .home #home-about {
-      padding-bottom: 40px; } }
-  @media (min-width: 992px) {
-    .home #home-about {
-      margin-top: -20px; } }
+      min-height: 101vh;
+      padding-top: 100px;
+      padding-bottom: 40px;
+      display: table;
+      width: 100%; }
+      .home #home-about .container {
+        display: table-cell;
+        vertical-align: middle;
+        width: auto; } }
   .home #home-about:before {
     content: '';
     position: absolute;
@@ -10297,6 +10309,11 @@ body.form .error-message {
     @media (min-width: 768px) {
       .home #home-about h1 {
         margin-top: 50px; } }
+    @media (min-width: 1200px) {
+      .home #home-about h1 {
+        font-size: 3.2em; } }
+  .home #home-about a {
+    color: inherit; }
   .home #home-about .btn {
     margin: 15px 10px;
     background-color: #333333;
@@ -10314,6 +10331,57 @@ body.form .error-message {
     margin-right: auto;
     display: block;
     font-size: 1.1em; }
+    @media (min-width: 992px) {
+      .home #home-about p {
+        font-size: 1.4em;
+        max-width: 910px; } }
+    @media (min-width: 1200px) {
+      .home #home-about p {
+        font-size: 1.6em; } }
+  .home #home-about .actions {
+    margin-top: 30px; }
+    .home #home-about .actions p {
+      font-size: 1.1em; }
+    .home #home-about .actions a {
+      padding: 15px;
+      margin: 15px;
+      display: block;
+      text-decoration: none;
+      border-radius: 3px;
+      border: solid 2px #333333;
+      line-height: 1.2; }
+      .home #home-about .actions a i {
+        float: left;
+        font-size: 36px;
+        width: 36px;
+        text-align: center; }
+      .home #home-about .actions a .title,
+      .home #home-about .actions a .description {
+        margin: 0 0 0 50px;
+        display: block;
+        text-align: left; }
+      .home #home-about .actions a .title {
+        font-weight: 700;
+        margin-bottom: 0.2em; }
+      .home #home-about .actions a .description {
+        font-size: 0.8em; }
+      .home #home-about .actions a:hover {
+        background-color: #333333;
+        color: #fff; }
+    @media (min-width: 768px) {
+      .home #home-about .actions {
+        display: table;
+        width: 100%;
+        max-width: 910px;
+        margin-left: auto;
+        margin-right: auto;
+        table-layout: fixed; }
+        .home #home-about .actions p {
+          display: table-cell;
+          vertical-align: top; } }
+    @media (min-width: 992px) {
+      .home #home-about .actions {
+        margin-top: 60px; } }
 .home .summary-stats {
   text-align: center; }
   .home .summary-stats .explain span {

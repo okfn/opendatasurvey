@@ -1,4 +1,13 @@
 .home {
+  #header {
+    @media (min-width: $screen-sm-min) {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1;
+    }
+  }
   #home-about {
     $banner-bg-colour: $brand-primary;
     $banner-text-colour: $gray-dark;
@@ -8,16 +17,22 @@
     background-position: center top;
     background-size: 350px auto;
     margin-top: -5px;
-    padding: 20px 0 $grid-gutter-width 0;
+    padding-bottom: $grid-gutter-width;
     text-align: center;
     position: relative;
 
     @media (min-width: $screen-sm-min) {
+      min-height: 101vh;
+      padding-top: 100px;
       padding-bottom: 40px;
-    }
+      display: table;
+      width: 100%;
 
-    @media (min-width: $screen-md-min) {
-      margin-top: -20px;
+      .container {
+        display: table-cell;
+        vertical-align: middle;
+        width: auto;
+      }
     }
 
     &:before {
@@ -42,6 +57,13 @@
       @media (min-width: $screen-sm-min) {
         margin-top: 50px;
       }
+      @media (min-width: $screen-lg-min) {
+        font-size: 3.2em;
+      }
+    }
+
+    a {
+      color: inherit;
     }
 
     .btn {
@@ -69,6 +91,73 @@
       margin-right: auto;
       display: block;
       font-size: 1.1em;
+
+      @media (min-width: $screen-md-min) {
+        font-size: 1.4em;
+        max-width: 910px;
+      }
+      @media (min-width: $screen-lg-min) {
+        font-size: 1.6em;
+      }
+    }
+
+    .actions {
+      margin-top: $grid-gutter-width;
+
+      p {
+        font-size: 1.1em;
+      }
+
+      a {
+        padding: $grid-gutter-width/2;
+        margin: $grid-gutter-width/2;
+        display: block;
+        text-decoration: none;
+        border-radius: $border-radius-small;
+        border: solid 2px $gray-dark;
+        line-height: 1.2;
+
+        i {
+          float: left;
+          font-size: 36px;
+          width: 36px;
+          text-align: center;
+        }
+        .title,
+        .description {
+          margin: 0 0 0 50px;
+          display: block;
+          text-align: left;
+        }
+        .title {
+          font-weight: 700;
+          margin-bottom: 0.2em;
+        }
+        .description {
+          font-size: 0.8em;
+        }
+
+        &:hover {
+          background-color: $gray-dark;
+          color: #fff;
+        }
+      }
+      @media (min-width: $screen-sm-min) {
+        display: table;
+        width: 100%;
+        max-width: 910px;
+        margin-left: auto;
+        margin-right: auto;
+        table-layout: fixed;
+
+        p {
+          display: table-cell;
+          vertical-align: top;
+        }
+      }
+      @media (min-width: $screen-md-min) {
+        margin-top: $grid-gutter-width*2;
+      }
     }
   }
 
