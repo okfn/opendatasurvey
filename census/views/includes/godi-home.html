@@ -1,16 +1,32 @@
 <section id="home-about">
   <div class="container">
     <h1>{{ gettext("Tracking the state of government open data.") }}</h1>
+    <p>
+      {{ gettext("The first initiative of its kind, the Global Open Data Index provides the most comprehensive snapshot available of the global state of open data.") }}
+    </p>
+    <div class="actions">
       <p>
-        {{ gettext("The first initiative of its kind, the Global Open Data Index provides the most comprehensive snapshot available of the global state of open data.") }}
+        <a href="{{ SITEURL }}/place/">
+          <i class="fa fa-table" aria-hidden="true"></i>
+          <span class="title">Compare countries</span>
+          <span class="description">Ranked table and map views of participating countries.</span>
+        </a>
       </p>
-      <a class="btn" href="{{ SITEURL }}/place/">
-        {{ gettext("Compare countries") }}
-      </a>
-
-      <a class="btn" href="{{ SITEURL }}/insights/">
-        {{ gettext("See insights") }}
-      </a>
+      <p>
+        <a href="https://discuss.okfn.org/c/open-data-index" rel="external">
+          <i class="fa fa-comments" aria-hidden="true"></i>
+          <span class="title">Discuss findings</span>
+          <span class="description">Discuss your findings in our forum.</span>
+        </a>
+      </p>
+      <p>
+        <a href="{{ SITEURL }}/insights/">
+          <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+          <span class="title">Get the insights</span>
+          <span class="description">Insights from local and thematic perspectives.</span>
+        </a>
+      </p>
+    </div>
   </div>
 </section>
 
