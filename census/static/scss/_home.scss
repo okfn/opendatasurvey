@@ -71,6 +71,14 @@
           padding: 2px 4px 2px 4px;
           border-radius: 4px;
           font-style: normal;
+          background-color: $text-color;
+          color: #fff;
+          &.low {
+            background-color: $brand-danger;
+          }
+          &.high {
+            background-color: $brand-success;
+          }
         }
       }
     }

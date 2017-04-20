@@ -10290,7 +10290,13 @@ body.form .error-message {
       line-height: 20px;
       padding: 2px 4px 2px 4px;
       border-radius: 4px;
-      font-style: normal; }
+      font-style: normal;
+      background-color: #333333;
+      color: #fff; }
+      .home .summary-stats .explain span i.low {
+        background-color: #ff0000; }
+      .home .summary-stats .explain span i.high {
+        background-color: #7AB800; }
   .home .summary-stats .stat a {
     text-decoration: none; }
   .home .summary-stats .stat strong {
