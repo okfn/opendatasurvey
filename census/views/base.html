@@ -143,8 +143,9 @@
                 <circle r="16" cx="16" cy="16" stroke-dasharray="{{ stats.openDataPercent }} 100"; />
               </svg>
             </span>
-            <strong>{% for c in stats.openDataPercent | string %}{{ c }}{% endfor %}%</strong> of key datasets in the index are
-            <span data-container="body" data-toggle="popover" data-placement="top" data-content="This is the percentage of all the dataset entries that are open as per the Open Definition. We get one dataset entry for each dataset and place (e.g. Transport Timetables for the United Kingdom is one dataset entry). For each entry we check whether the dataset is fully open as per the Open Definition, and then divide by the total number of entries to get a percentage. &lt;a href=&quot;faq/#open-data&quot;&gt;Find out more about Open Data&lt;/a&gt;" data-original-title="What does this mean?">open</span>.<!-- TODO: figure out why popover is being placed at bottom -->
+            <strong>{% for c in stats.openDataPercent | string %}{{ c }}{% endfor %}%</strong>
+            of dataset <span data-container="body" data-toggle="popover" data-placement="top" data-content='{{ gettext("A dataset entry, for example, Taiwan - Government budget, or Australia - National statistics") }}' data-original-title="What does this mean?">entries</span> in the index are
+            <span data-container="body" data-toggle="popover" data-placement="top" data-content='Fully open, as defined by the <a href="http://opendefinition.org/">Open Definition</a>.' data-original-title="What does this mean?">open</span>.<!-- TODO: figure out why popover is being placed at bottom -->
            </li>
            <li class="stat">
              <strong>{% for c in stats.placeCount | string %}<span>{{ c }}</span>{% endfor %}</strong>
