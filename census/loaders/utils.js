@@ -9,6 +9,10 @@ var csv = require('csv');
 var _mapParsedCsvData = function(parsedData) {
   var result = [];
   var keys = [];
+  var whiteList = _.assign(xss.whiteList, {table: ['class']})
+  var xssOptions = {
+    whiteList: whiteList
+  };
   for (var i = 0; i < parsedData.length; i++) {
     if (i === 0) {
       for (var j = 0; j < parsedData[i].length; j++) {
@@ -18,7 +22,7 @@ var _mapParsedCsvData = function(parsedData) {
     } else {
       var object = {};
       for (var n = 0; n < keys.length; n++) {
-        object[keys[n]] = xss(_.trim(parsedData[i][n]));
+        object[keys[n]] = xss(_.trim(parsedData[i][n]), xssOptions);
       }
       result.push(object);
     }
