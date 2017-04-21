@@ -8276,6 +8276,60 @@ body.godi.past-year #header {
   background-color: #d7d7d7;
   border-bottom-color: #d7d7d7; }
 
+#summary-stats {
+  background-color: #222222;
+  color: rgba(255, 255, 255, 0.8); }
+  #summary-stats .stats {
+    margin: 15px 0 0 0;
+    padding: 0; }
+    #summary-stats .stats .stat {
+      display: block;
+      padding-bottom: 15px; }
+    @media (min-width: 992px) {
+      #summary-stats .stats {
+        display: table;
+        width: 100%; }
+        #summary-stats .stats .stat {
+          text-align: right;
+          display: table-cell;
+          vertical-align: middle; }
+          #summary-stats .stats .stat:first-of-type {
+            text-align: left; } }
+  #summary-stats .chart {
+    width: 46px;
+    display: inline-block;
+    height: 1em;
+    position: relative; }
+    #summary-stats .chart svg {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      transform: rotate(-90deg);
+      vertical-align: middle;
+      position: absolute;
+      top: -0.4em; }
+      #summary-stats .chart svg circle {
+        fill: rgba(255, 255, 255, 0.2);
+        stroke: #fff;
+        stroke-width: 32; }
+  #summary-stats .stat {
+    font-weight: 300; }
+    #summary-stats .stat strong {
+      color: #fff;
+      font-weight: 400; }
+      #summary-stats .stat strong span {
+        background-color: white;
+        color: #222222;
+        display: inline-block;
+        margin-right: 1px;
+        padding-left: 0.1em;
+        padding-right: 0.1em;
+        width: 1em;
+        text-align: center; }
+    #summary-stats .stat [data-toggle="popover"] {
+      border-bottom: dotted 1px rgba(255, 255, 255, 0.8); }
+
+html,
 .site-footer {
   background-color: #333; }
 
@@ -10279,7 +10333,7 @@ body.form .error-message {
   position: relative; }
   @media (min-width: 768px) {
     .home #home-about {
-      min-height: 101vh;
+      height: 101vh;
       padding-top: 100px;
       padding-bottom: 40px;
       display: table;

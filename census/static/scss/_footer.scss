@@ -1,3 +1,81 @@
+#summary-stats {
+  background-color: $gray-darker;
+  color: rgba(#fff,0.8);
+
+  .stats {
+    margin: $grid-gutter-width/2 0 0 0;
+    padding: 0;
+
+    .stat {
+      display: block;
+      padding-bottom: $grid-gutter-width/2;
+    }
+
+    @media (min-width: $screen-md-min) {
+      display: table;
+      width: 100%;
+
+      .stat {
+        text-align: right;
+        display: table-cell;
+        vertical-align: middle;
+
+        &:first-of-type {
+          text-align: left;
+        }
+      }
+    }
+  }
+
+  .chart {
+    width: 46px;
+    display: inline-block;
+    height: 1em;
+    position: relative;
+
+    svg {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      transform: rotate(-90deg);
+      vertical-align: middle;
+      position: absolute;
+      top: -0.4em;
+
+      circle {
+        fill: rgba(#fff,0.2);
+        stroke: #fff;
+        stroke-width: 32;
+      }
+    }
+  }
+
+  .stat {
+    font-weight: 300;
+
+    strong {
+      color: #fff;
+      font-weight: 400;
+
+      span {
+        background-color: rgba(#fff,1);
+        color: $gray-darker;
+        display: inline-block;
+        margin-right: 1px;
+        padding-left: 0.1em;
+        padding-right: 0.1em;
+        width: 1em;
+        text-align: center;
+      }
+    }
+
+    [data-toggle="popover"] {
+      border-bottom: dotted 1px rgba(#fff,0.8);
+    }
+  }
+}
+
+html, // match colour so less ugly when page extends beyond footer
 .site-footer {
   background-color: #333;
 }
@@ -5,78 +83,78 @@
 .site-footer {
   color: rgba(255, 255, 255, 0.6);
   padding: 30px 0;
-	font-size: 14px;
+  font-size: 14px;
 
-	a {
-		color: rgba(255, 255, 255, 0.9);
+  a {
+      color: rgba(255, 255, 255, 0.9);
 
-		&:hover {
-			color:#fff;
-		}
-	}
+      &:hover {
+          color:#fff;
+      }
+  }
 
-	.license {
-		display: block;
-		text-decoration: none;
+  .license {
+      display: block;
+      text-decoration: none;
 
-		@media (min-width: $screen-md-min) {
-			float: left;
-			margin-right: 5px;
-		}
+      @media (min-width: $screen-md-min) {
+          float: left;
+          margin-right: 5px;
+      }
 
-		svg {
-			fill: currentColor;
-			width: 16px;
-			height: 16px;
-		}
-	}
+      svg {
+          fill: currentColor;
+          width: 16px;
+          height: 16px;
+      }
+  }
 
-	.footer-primary {
-		@include make-row();
+  .footer-primary {
+      @include make-row();
 
-		.footer-logo {
-			@include make-md-column(2);
-			opacity: 0.9;
+      .footer-logo {
+          @include make-md-column(2);
+          opacity: 0.9;
 
-			&:hover {
-				opacity: 1;
-			}
+          &:hover {
+              opacity: 1;
+          }
 
-			img {
-				width: 130px;
-				max-width: 100%;
-			}
-		}
+          img {
+              width: 130px;
+              max-width: 100%;
+          }
+      }
 
-		.footer-links {
-			@include make-md-column(10);
-			margin: 10px;
+      .footer-links {
+          @include make-md-column(10);
+          margin: 10px;
 
-			@media (min-width: $screen-md-min) {
-				text-align: right;
-				margin: 0;
-			}
+          @media (min-width: $screen-md-min) {
+              text-align: right;
+              margin: 0;
+          }
 
-			li {
-				display: block;
+          li {
+              display: block;
 
-				@media (min-width: $screen-md-min) {
-					display: inline-block;
-					padding: 7px;
+              @media (min-width: $screen-md-min) {
+                  display: inline-block;
+                  padding: 7px;
 
-					&:last-child {
-						padding-right: 0;
-					}
-				}
-			}
-		}
-	}
+                  &:last-child {
+                      padding-right: 0;
+                  }
+              }
+          }
+      }
+  }
 
-	.footer-secondary {
-		font-size: 13px;
-		border-top: solid 1px rgba(255, 255, 255, 0.4);
-		margin-top: 15px;
-		padding-top: 15px;
+  .footer-secondary {
+      font-size: 13px;
+      border-top: solid 1px rgba(255, 255, 255, 0.4);
+      margin-top: 15px;
+      padding-top: 15px;
   }
 
   .user {

@@ -29,31 +29,3 @@
     </div>
   </div>
 </section>
-
-<section class="map_visualisation">
-  <div class="container">
-    <div>
-      <div class="summary-stats">
-        {% include 'includes/dataviews/alt_summary.html' %}
-      </div>
-      <div class="map">
-        {% include 'includes/dataviews/embed_map.html' %}
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="chart_visualisation">
-  <div class="container">
-    <div>
-      <div class="chart">
-        <svg viewBox="0 0 32 32">
-          <circle r="16" cx="16" cy="16" stroke-dasharray="{{ stats.openDataPercent }} 100"; />
-        </svg>
-      </div>
-      <div class="summary-stats">
-        {% include 'includes/dataviews/alt_general_stat.html' %}
-      </div>
-    </div>
-  </div>
-</section>

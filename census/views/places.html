@@ -4,63 +4,52 @@
 
 
 {% block content %}
+
 <header id="place-intro">
   <div class="container">
-    <h1>{{ gettext('Place overview') }}</h1>
-    <hr>
-
-    <div id="summary-stats" class="row">
-      <div class="stat col-md-3">
-        <strong>{{ stats.openDataPercent }}%</strong>
-        <span class="percent-open-context" data-toggle="popover" title="" data-content="This is the percentage of all the dataset entries that are open as per the Open Definition. We get one dataset entry for each dataset and place (e.g. Transport Timetables for the United Kingdom is one dataset entry). For each entry we check whether the dataset is fully open as per the Open Definition, and then divide by the total number of entries to get a percentage. &lt;a href=&quot;faq/#open-data&quot;&gt;Find out more about Open Data&lt;/a&gt;" data-original-title="What does this mean?">Percent Open <i class="fa fa-question-circle"></i></span>
+    <div class="row">
+      <div class="col-md-4">
+        <h1>{{ gettext('Place overview') }}</h1>
       </div>
-      <div class="stat col-md-3">
-        <strong>{{ stats.placeCount }}</strong>
-        <span>Number of Places</span>
+      <div class="col-md-4">
+        <h5>See other years</h5>
+        <div class="btn-group">
+          <a class="btn btn-default" href="http://index.okfn.org/place/2014/" title="2014">2014</a>
+          <a class="btn btn-default" href="http://index.okfn.org/place/2013/" title="2013">2013</a>
+        </div>
       </div>
-      <div class="stat col-md-3">
-        <strong>{{ stats.currentEntryCount }}</strong>
-        <span>Number of Entries</span>
-      </div>
-      <div class="stat col-md-3">
-        <strong>{{ stats.currentEntryOpenCount }}</strong>
-        <span>Number of Open Datasets</span>
+      <div class="col-md-4">
+        {% include 'includes/share_buttons.html' %}
       </div>
     </div>
-    <hr>
+
   </div>
 </header>
 
-<div class="container content">
-  <div class="row">
+<div class="container">
 
-    <div class="col-md-4">
-      <h5>{{ gettext("Search") }}</h5>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#table" aria-controls="table" role="tab" data-toggle="tab"><i class="fa fa-table" aria-hidden="true"></i> Table view</a></li>
+    <li role="presentation"><a href="#map" aria-controls="map" role="tab" data-toggle="tab"><i class="fa fa-map" aria-hidden="true"></i>
+ Map view</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="table">
+      <h5>Search</h5>
       <form role="form" class="form-inline data-table-tools">
         <div class="form-group">
           <input class="form-control filter-table" type="search" name="filter-table" placeholder="Search for a place">
         </div>
       </form>
+      {% include 'includes/dataviews/table_places.html' %}
     </div>
-
-    <div class="col-md-4">
-      <h5>{{ gettext("See other years") }}</h5>
-      <div class="btn-group">
-        <a class="btn btn-default" href="http://index.okfn.org/place/2013/" title="2013">2013</a>
-        <a class="btn btn-default" href="http://index.okfn.org/place/2014/" title="2014">2014</a>
-        <a class="btn btn-default" href="http://index.okfn.org/place/" title="2015">2015</a>
-      </div>
+    <div role="tabpanel" class="tab-pane" id="map">
+      {% include 'includes/dataviews/embed_map.html' %}
     </div>
-
-    <div class="col-md-4">
-      {% include 'includes/share_buttons.html' %}
-    </div>
-
   </div>
-
-  <hr/>
-
-  {% include 'includes/dataviews/table_places.html' %}
 
 </div>
 
