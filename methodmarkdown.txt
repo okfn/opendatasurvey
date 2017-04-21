@@ -88,7 +88,7 @@ Table in CSV form here: https://docs.google.com/spreadsheets/d/1kT-MRf50TP4tPwjC
     <td class="tg-yw4l">Procurement</td>
     <td class="tg-yw4l">All tenders and awards of the national/federal government aggregated by office. It does not look into procurement planning or other procurement phases such as implementation (i.e. actual money transfers, which are part of our spending category). To develop this category the Index drew on work from the [Open Contracting Partnership](http://standard.open-contracting.org/latest/en/schema/).</td>
     <td class="tg-yw4l">Open procurement data may enable fairer competition among companies, allow to detect fraud, as well as deliver better services for governments and citizens. Monitoring tenders helps new groups to participate in tenders and to increase government compliance.</td>
-    <td class="tg-yw4l">Following data must be online to qualify for assessment:**Tender phase* Tenders per government office * Tender name Tender description * Tender status**Award phase* Awards per government office * Award title * Award description * Value of the award Supplier's name</td>
+    <td class="tg-yw4l">Following data must be online to qualify for assessment:**Tender phase** * Tenders per government office * Tender name Tender description * Tender status**Award phase* Awards per government office * Award title * Award description * Value of the award Supplier's name</td>
   </tr>
   <tr>
     <td class="tg-yw4l">Election results</td>
@@ -165,7 +165,13 @@ Each dataset in each place is evaluated using a set of questions that examine th
 * Our scoring follows a rationale in which we describe why a question is important for open data. We also explain cases why we should not score a question. Further explanations can be found in the table below or here.
 * The new scoring gives in total 40 points to open licenses/public domain status and machine-readable and open file formats. These technical and legal aspects of openness are the core of the Open Definition 2.1 and we seek to maintain a strong emphasis on them. However, aspects such timely publication, data availability and accessibility are equally important to access and use open data. Questions around data accessibility receive a score of in total 60 points.
 
-<table class="tg" border="1">
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+.tg .tg-yw4l{vertical-align:top}
+</style>
+<table class="tg">
   <tr>
     <th class="tg-yw4l">Question</th>
     <th class="tg-yw4l">Description</th>
@@ -247,76 +253,69 @@ Each dataset in each place is evaluated using a set of questions that examine th
   </tr>
 </table>
 
-
-
-
-
-
 ## How to ‘read’ the final results
 As explained in the sections above, the Index looks at specific data using specific survey questions. The result is a final score that has to be read carefully. Firstly, it exclusively refers to data with mandatory characteristics. If no dataset can be found online matching these characteristics, the data will not be considered to be available (equalling a score of 0%). More explanations to this approach can be found in the section “What data does the Index look at?”.
-Furthermore, the survey questions check different aspects of data access and usability (see table below). This means that behind fairly high scores we often do not find open data, but access-controlled data, or public data in poorly structured, or not machine-readable formats. The score therefore does not not show a linear increase of openness. Instead it highlights areas where government may improve open data publication.
-An example: We may assess budget data in PDF form which may be in public domain, available online for free, but in a format making it practically unusable. This data is presented as 80% open. The score suggests a fairly high degree of openness but in fact, the data is not open. Only 100% means that the data is open.
-The reason for this is that we do not add many filters, such as exclusively considering data that is machine-readable - even though it might give a more realistic image of open data. With this approach, the Index seeks to demonstrate which data is already available and how it can be further improved. It is therefore important to carefully read how the data is published.
-Often our submitters and reviewers find multiple datasets online. Some of them are published on a website and are easily accessible. Others are downloadable from an ftp server that requires authentication or need to be paid for. In some cases we find that some parts of our data categories are available as open data. But since our reviewers assess the complete data category, they will pick the dataset that meets most of our described characteristics. This means that often reviewers need to make a decision which datasets to take as reference point. The Index results are a proxy of all available data, based on the most accessible and useful data we are able to find.
-We define two approaches to avoid bias and personal judgement:
-Reviewers
+Furthermore, the survey questions check different aspects of data access and usability (see table below). This means that behind fairly high scores we often do not find open data, but access-controlled data, or public data in poorly structured, or not machine-readable formats. The score therefore does not not show a linear increase of openness. Instead it highlights areas where government may improve open data publication.   
+An example: We may assess budget data in PDF form which may be in public domain, available online for free, but in a format making it practically unusable. This data is presented as 80% open. The score suggests a fairly high degree of openness but in fact, the data is not open. Only 100% means that the data is open. 
+The reason for this is that we do not add many filters, such as exclusively considering data that is machine-readable - even though it might give a more realistic image of open data. With this approach, the Index seeks to demonstrate which data is already available and how it can be further improved. It is therefore important to carefully read how the data is published. 
 
 Depending on what survey items are checked, we find:
-Open data
-Open data can be freely used, modified, and shared by anyone for any purpose.
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+.tg .tg-yw4l{vertical-align:top}
+</style>
+<table class="tg">
+  <tr>
+    <th class="tg-yw4l">Type</th>
+    <th class="tg-yw4l">Description</th>
+    <th class="tg-yw4l">Maximum Score</th>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Open data</td>
+    <td class="tg-yw4l">Open data can be freely used, modified, and shared by anyone for any purpose.Criteria:An open license Machine-readability Open formats Access (data must be provided as a whole. It should be downloadable online without charge).</td>
+    <td class="tg-yw4l">100%</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Public data</td>
+    <td class="tg-yw4l">Data is public if it can be seen by the public online without any restrictions (e.g. access controls). This data is not protected by any means of control (see below). Data must be readily available online. It does not matter whether data can be downloaded.Examples: Data can be openly licensed and downloadable as PDF, but not in a machine-readable format.Sometimes it is possible to download texts and other information in machine-readable formats (e.g. XML). Whilst available as open access this information is not openly licensed and hence not 100 open data.</td>
+    <td class="tg-yw4l">Up to 80%</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Access-controlled data</td>
+    <td class="tg-yw4l">Data is access-controlled if a provider regulates who can access data when and how. Access control includes:Registration/identification/authentication, An active request (often with a note what the data will be used for). A data sharing agreement (stipulating use cases) Ordering/purchasing dataThe reasons for controlled access are manifold, including traffic management, or to maintain control over how data is used. It is debated whether some registration/authentication reduce the openness of data (especially when registration is automated).</td>
+    <td class="tg-yw4l">Up to 85% (data can be open, with the limitation that users have to register online for download)</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Data gaps</td>
+    <td class="tg-yw4l">A data gap means that governments do not produce any data on a phenomenon. If the Index states that no data is provided we often see data gaps. They show that some governments still have a long way to go before they become ready to produce data.</td>
+    <td class="tg-yw4l">Maximum score: 0%</td>
+  </tr>
+</table>
 
-Criteria:
-An open license
-Machine-readability
-Open formats
-Access (data must be provided as a whole. It should be downloadable online without charge).
+##Our data collection and analysis
 
-Maximum score: 100%
-Public data
-Data is public if it can be seen by the public online without any restrictions (e.g. access controls). This data is not protected by any means of control (see below). Data must be readily available online. It does not matter whether data can be downloaded.
+The data collection of  the Index is done in three terms:
 
-Maximum score: Up to 80%
+1. Submission phase using a snowball sampling approach. It includes an interim phase to filter out countries that do not have submissions for all data.
 
-Examples: Data can be openly licensed and downloadable as PDF, but not in a machine-readable format.
+2. Review phase of one month
 
-Sometimes it is possible to download texts and other information in machine-readable formats (e.g. XML). Whilst available as open access this information is not openly licensed and hence not 100 open data.
-Access-controlled data
-Data is access-controlled if a provider regulates who can access data when and how. Access control includes:
+3. Quality assurance of review results
 
-Registration/identification/authentication,
-An active request (often with a note what the data will be used for).
-A data sharing agreement (stipulating use cases)
-Ordering/purchasing data
-
-The reasons for controlled access are manifold, including traffic management, or to maintain control over how data is used. It is debated whether some registration/authentication reduce the openness of data (especially when registration is automated).
-
-Maximum score: Up to 85% (data can be open, with the limitation that users have to register online for download)
-Data gaps
-A data gap means that governments do not produce any data on a phenomenon. If the Index states that no data is provided we often see data gaps. They show that some governments still have a long way to go before they become ready to produce data.
-
-Maximum score: 0%
-
-Our data collection and analysis
-
-The information feeding the Index is collected in three terms:
-
-1: Submission phase using a snowball sampling approach. It includes an interim phase to filter out countries that do not have submissions for all data.
-
-2: Review phase of one month
-
-3: Quality assurance of review results
-
-Submission phase
+###Submission phase
 The Index crowdsources its data. To do so, it uses a non-probability sampling technique — also known as a “snowball sample”. A snowball sample attempts to locate the subject of studies in areas that are hard to locate. In our case, we work with contributors who are interested in open government data and who can assess the availability and quality of open datasets in their respective locations. We do so not only by using referrals, but also by reaching out on social media, through regular communications our Open Government Data and Open Data Index forums, and by actively networking at conferences and events. This year, like in 2015, we also hired local coordinators, that outreached to their networks and assist in soliciting new submissions.
 This means that anyone from any place can participate and contribute to the Global Open Data Index as a contributor and make submissions, which are then reviewed. We do not have a quota on the number of places that can participate. Rather, we aim to sample as many places around the world as we can. This also has an impact on the quality of the data we collect. Contributors have diverse knowledge and backgrounds in open data and sometimes need help finding the data we are looking for. (In fact findability is a key challenge. We dedicated research to analyse data findability. The insights can be found here). The following section explains how we tried to deal with this problem.
 This year, we considered only places that had submissions to all 15 categories. Places that had partial submissions were omitted.
-Review process
-In order to provid have reliable and valid results, each submission must be reviewed again. Our reviewers are domain experts. A list of all reviewers can be found on the About page. In the past, the review was country-based. We engaged local reviewers to verify all submissions for a country. It allowed us to overcome language problems and evaluate submissions in the context of a country. This approach however led to inconsistencies. Across countries submitters evaluated datasets with sometimes very different content. This went so far that submitters evaluated the openness of data that was so highly aggregated that it was not usable. Since 2015 we therefore use a thematic review. Each reviewer gets assigned one data category and checks the submissions across all places. A thematic review has further advantages: (1) Reviewers develop a consistent approach how to assess data categories. (2) They develop a sense where a similar piece of data can usually be found. (3) They are able to collect information in which formats and quality specific data is provided. This information is used by us to refine our data categories and guidance for future editions. To do so, we document our findings in review diaries.
-Review diaries
+
+###Review process
+In order to provide reliable and valid results, each submission must be reviewed again. Our reviewers are domain experts. A list of all reviewers can be found on the About page. In the past, the review was country-based. We engaged local reviewers to verify all submissions for a country. It allowed us to overcome language problems and evaluate submissions in the context of a country. This approach however led to inconsistencies. Across countries submitters evaluated datasets with sometimes very different content. This went so far that submitters evaluated the openness of data that was so highly aggregated that it was not usable. Since 2015 we therefore use a **thematic review**. Each reviewer gets assigned one data category and checks the submissions across all places. A thematic review has further advantages: (1) Reviewers develop a consistent approach how to assess data categories. (2) They develop a sense where a similar piece of data can usually be found. (3) They are able to collect information in which formats and quality specific data is provided. This information is used by us to refine our data categories and guidance for future editions. To do so, we document our findings in review diaries.
+
+####Review diaries
 The reviewers document in diaries all problems they encountered during review, as well as proposals to improve the Index. What was hard to assess? How can data categories be improved? Review diaries are especially useful to understand how reviewers dealt with edge cases. In what cases did they have to use their personal judgement? Thereby we want to ensure the highest degree of transparency possible so others understand the steps that were taken to verify a submission. Also as advocates for open science, we wish to enable others to learn from our efforts and to improve their own research. Further information is shared on our insights page. A list of review diaries can be found here.
 
-
-Quality assurance of review
+###Quality assurance of review
 This year we did a quality assurance of the review results. Once the review results were gathered, Open Knowledge International staff members analysed all data sets scoring 100% in order to verify whether they were correctly assessed and to spot false negatives
 
 We only focussed on the top scoring data for the following reasons:
