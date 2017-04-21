@@ -243,8 +243,8 @@ Each dataset in each place is evaluated using a set of questions that examine th
 ## How to ‘read’ the final results
 As explained in the sections above, the Index looks at specific data using specific survey questions. The result is a final score that has to be read carefully. Firstly, it exclusively refers to data with mandatory characteristics. If no dataset can be found online matching these characteristics, the data will not be considered to be available (equalling a score of 0%). More explanations to this approach can be found in the section “What data does the Index look at?”.
 Furthermore, the survey questions check different aspects of data access and usability (see table below). This means that behind fairly high scores we often do not find open data, but access-controlled data, or public data in poorly structured, or not machine-readable formats. The score therefore does not not show a linear increase of openness. Instead it highlights areas where government may improve open data publication.   
-An example: We may assess budget data in PDF form which may be in public domain, available online for free, but in a format making it practically unusable. This data is presented as 80% open. The score suggests a fairly high degree of openness but in fact, the data is not open. Only 100% means that the data is open. 
-The reason for this is that we do not add many filters, such as exclusively considering data that is machine-readable - even though it might give a more realistic image of open data. With this approach, the Index seeks to demonstrate which data is already available and how it can be further improved. It is therefore important to carefully read how the data is published. 
+An example: We may assess budget data in PDF form which may be in public domain, available online for free, but in a format making it practically unusable. This data is presented as 80% open. The score suggests a fairly high degree of openness but in fact, the data is not open. Only 100% means that the data is open.
+The reason for this is that we do not add many filters, such as exclusively considering data that is machine-readable - even though it might give a more realistic image of open data. With this approach, the Index seeks to demonstrate which data is already available and how it can be further improved. It is therefore important to carefully read how the data is published.
 
 Depending on what survey items are checked, we find:
 <table class="table table-striped table-bordered">
@@ -298,21 +298,21 @@ The reviewers document in diaries all problems they encountered during review, a
 ###Quality assurance of review
 This year we did a quality assurance of the review results. Once the review results were gathered, Open Knowledge International staff members analysed all data sets scoring 100% in order to verify whether they were correctly assessed and to spot false negatives
 
-We only focussed on the top scoring data for the following reasons:
+* We only focussed on the top scoring data for the following reasons:
 100% scoring data has an important signaling function to government suggesting that data is fully open.
-Eliminating mistakes in 100% scoring data presents a realistic picture to government. It is hard to justify why a dataset, once falsely deemed open, shall not be 100% open in following years.
+* Eliminating mistakes in 100% scoring data presents a realistic picture to government. It is hard to justify why a dataset, once falsely deemed open, shall not be 100% open in following years.
 
 The quality assurance was accomplished in the following steps:
-Checking the forum for comments from our community.
-Compare with results from last year. Are the same source URLs used? Is something different this year? If so, why?
-Go into the source URL and double-check all survey questions.
-Look over the reviewer comments: Do reviewers say that the assessed data does not meet all characteristics? Does the submission maybe even have to be rejected?
-Check if an open license clearly refers to the reference dataset. Check it especially in cases where an open license was found on another website, than on the one were data is hosted. Also check if the license terms comply with the Open Definition.
-We looked into 2015 GODI results to see what changed. A frequent case: Do our reviewers refer to a different website or data portal?
+1. Checking the forum for comments from our community.
+2. Compare with results from last year. Are the same source URLs used? Is something different this year? If so, why?
+3. Go into the source URL and double-check all survey questions.
+4. Look over the reviewer comments: Do reviewers say that the assessed data does not meet all characteristics? Does the submission maybe even have to be rejected?
+5. Check if an open license clearly refers to the reference dataset. Check it especially in cases where an open license was found on another website, than on the one were data is hosted. Also check if the license terms comply with the Open Definition.
+6. We looked into 2015 GODI results to see what changed. A frequent case: Do our reviewers refer to a different website or data portal?
 
 The quality assurance phase showed us that some reviews contained some errors, which were discussed and corrected with the reviewers. We documented the findings of the quality assurance, as well as our learnings from it.
 
-Public dialogue phase
+## Public dialogue phase
 Once our results are published, we invite civil society and government to provide us with feedback about what they find useful (or not), and to tell us how they think we could strengthen the assessment. This dialogue phase will be open for one month, after which we will publish the revised data by June.
 In the past, we got approached by government and civil society alike to discuss our results. Reformers and open data decision-makers reference our data and  publicly highlight their advancement in the Index - and civil society provides constructive feedback about their country context so we can improve the assessment. This feedback is very useful for our team. But for the Index to be most effective, these points should be discussed in an open dialogue, so civil society and government can talk to one another, learn from one another, and take ownership to improve open data publication.
-Convening data providers and users is a unique and important quality of the Index. RResearch by Open Knowledge International and others ([here](http://civicus.org/thedatashift/wp-content/uploads/2017/03/from-evidence-to-action.pdf ) and [here](http://aiddata.org/governance-data-who-uses-it-and-why)) suggests that indicators must be relevant for users, actionable, resonate with the users’ priorities, and credible and robust. We are aware that striking the right balance is challenging: we need to ground the Index in the realities and priorities of governments so they can improve their scores, whilst at the same time highlighting data demands of civil society. Through an open dialogue, we want to know whether the Index is useful for both parties, want to see how open data supply and demand can match, and stimulate more constructive uptake to improve open data publication at country level.
+Convening data providers and users is a unique and important quality of the Index. Research by Open Knowledge International and others ([here](http://civicus.org/thedatashift/wp-content/uploads/2017/03/from-evidence-to-action.pdf ) and [here](http://aiddata.org/governance-data-who-uses-it-and-why)) suggests that indicators must be relevant for users, actionable, resonate with the users’ priorities, and credible and robust. We are aware that striking the right balance is challenging: we need to ground the Index in the realities and priorities of governments so they can improve their scores, whilst at the same time highlighting data demands of civil society. Through an open dialogue, we want to know whether the Index is useful for both parties, want to see how open data supply and demand can match, and stimulate more constructive uptake to improve open data publication at country level.
