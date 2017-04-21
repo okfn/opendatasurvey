@@ -41,10 +41,11 @@
           <div class="history">
             <h6>{{ gettext("See other years") }}</h6>
             <ul>
-              <li><a href="http://index.okfn.org/place/{{ place.slug }}/{{ dataset.id }}/2013/" title="2013">2013</a></li>
-              <li><a href="http://index.okfn.org/place/{{ place.slug }}/{{ dataset.id }}/2014/" title="2014">2014</a></li>
-              <li><a href="http://index.okfn.org/place/{{ place.slug }}/{{ dataset.id }}" title="2015">2015</a></li>
+              <li><a href="http://2015.index.okfn.org/place/{{ place.slug }}/{{ dataset.id }}/2013/" title="2013">2013</a></li>
+              <li><a href="http://2015.index.okfn.org/place/{{ place.slug }}/{{ dataset.id }}/2014/" title="2014">2014</a></li>
+              <li><a href="http://2015.index.okfn.org/place/{{ place.slug }}/{{ dataset.id }}" title="2015">2015</a></li>
             </ul>
+            <p><small>Note: The methodology used in the Global Open Data Index has changed over time; significantly so between 2015 and 2016. For this reason, the results are not directly comparable over time.</small></p>
           </div>
           {% endif %}
         </div>
@@ -229,18 +230,20 @@
   </div>
 </section>
 
-  {% if discussionUrl %}
-  <section>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h3>{{ gettext("Discuss this entry") }}</h3>
-          <p>Do you want to discuss this entry? Start a <a target="_blank" href="{{ discussionUrl }}">new topic</a> on the forum!</p>
-        </div>
+{% if discussionUrl %}
+  <div class="container">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <a href="{{ discussionUrl }}" rel="external">
+          <i class="fa fa-comments" aria-hidden="true"></i>
+          <strong>Discuss findings.</strong>
+        </a>
+        Head over to the <a href="{{ discussionUrl }}" rel="external">forum</a> to discuss the findings from this entry.
       </div>
     </div>
-  </section>
-  {% endif %}
+  </div>
+{% endif %}
+
 
 {% endif %}
 
@@ -264,3 +267,5 @@
 <div id="popover" class="popover fade bottom in" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>
 
 {% endblock %}
+
+{% block summarystats %}{% endblock %}

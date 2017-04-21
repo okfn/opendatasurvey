@@ -36,9 +36,9 @@
             <div class="history">
               <h6>{{ gettext("See other years") }}</h6>
               <ul>
-                <li><a href="http://index.okfn.org/place/{{ place.slug }}/2013/" title="2013">2013</a></li>
-                <li><a href="http://index.okfn.org/place/{{ place.slug }}/2014/" title="2014">2014</a></li>
-                <li><a href="http://index.okfn.org/place/{{ place.slug }}/" title="2015">2015</a></li>
+                <li><a href="http://2015.index.okfn.org/place/{{ place.slug }}/2013/" title="2013">2013</a></li>
+                <li><a href="http://2015.index.okfn.org/place/{{ place.slug }}/2014/" title="2014">2014</a></li>
+                <li><a href="http://2015.index.okfn.org/place/{{ place.slug }}/" title="2015">2015</a></li>
               </ul>
             </div>
             {% endif %}
@@ -67,3 +67,5 @@
 </section>
 
 {% endblock %}
+
+{% block summarystats %}{% endblock %}

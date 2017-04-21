@@ -197,7 +197,7 @@ Metalsmith(__dirname)
     site_url: baseUrl,
     map: {  // Initial map presets. May be overridden in godiDataFiles.
       embed_width: '100%',
-      embed_height: '300px',
+      embed_height: '600px',
       filter_year: year,
       filter_dataset: 'all',
       years: [year],

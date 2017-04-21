@@ -1,0 +1,32 @@
+.place-intro {
+  padding-bottom: $grid-gutter-width;
+
+  .container {
+    position: relative;
+  }
+
+  .share {
+
+    h5 {
+      font-weight: 400;
+      font-size: 0.9em;
+    }
+
+    @media (min-width: $screen-md-min) {
+      position: absolute;
+      text-align: right;
+      top: 50px;
+      right: 15px;
+    }
+  }
+}
+
+.place-content {
+  .data-table-tools {
+    margin-bottom: $grid-gutter-width/2;
+  }
+  .tab-content {
+    padding-top: $grid-gutter-width/2;
+    padding-bottom: $grid-gutter-width;
+  }
+}
