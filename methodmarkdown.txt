@@ -204,8 +204,8 @@ Each dataset in each place is evaluated using a set of questions that examine th
   <tr>
     <td>Is the data downloadable at once?</td>
     <td>Answer “Yes”, if you can download all data at once from the URL at which you found them. In case that downloadable data files are very large, their downloads may also be organised by month or year or broken down into sub-files.Answer “No” if if you have to do many manual steps to download the data, or if you can only retrieve very few parts of a large dataset at a time (for instance through a search interface).</td>
-    <td>15 Pointsother limits to download.</td>
-    <td></td>
+    <td>15 Points</td>
+    <td>other limits to download.</td>
   </tr>
   <tr>
     <td>Data should be updated every [Time Interval]: Is the data up-to-date?</td>
@@ -216,15 +216,14 @@ Each dataset in each place is evaluated using a set of questions that examine th
   <tr>
     <td>Is the data openly licensed/in public domain?</td>
     <td>This question measures if anyone is legally allowed to use, modify and redistribute data for any purpose. Only then data is considered truly "open"" (see Open Definition).
-    <ul>
-      <li>Answer ”Yes” if the data are openly licensed. The Open Definition provides a list of conformant licenses. Also consult the terms of use which often indicate whether data can be freely reused<li>
-      <li>Answer “Yes” if there is no open licence, but a statement that the dataset is in “public domain”. To count as public domain the dataset must not be protected by copyright, patents or similar restrictions.</li>
-      <li>If you are not sure whether an open licence or public domain notice is compliant with the Open Definition 2.1, seek feedback on the Open Data Index discussion forum.</li>
-      <li>Answer “No” whenever it is not fully evident that the license or terms of use are compliant with the Open Definition.</li>
+      <ul>
+        <li>Answer ”Yes” if the data are openly licensed. The Open Definition provides a list of conformant licenses. Also consult the terms of use which often indicate whether data can be freely reused<li>
+        <li>Answer “Yes” if there is no open licence, but a statement that the dataset is in “public domain”. To count as public domain the dataset must not be protected by copyright, patents or similar restrictions.</li>
+        <li>If you are not sure whether an open licence or public domain notice is compliant with the Open Definition 2.1, seek feedback on the Open Data Index discussion forum.</li>
+        <li>Answer “No” whenever it is not fully evident that the license or terms of use are compliant with the Open Definition.</li>
       </ul>
     <td>20 Points</td>
     <td>- Legal usability of data is a core requirement of the open definition- It is a prerequisite for unrestricted usability for everyone- Our old scoring was fairly high, emphasizing the legal usability of data- The current scoring is lowered to give us some space to stress other aspects of openness- This question will not lose its significance for openness (still scored higher than in the Open Data Barometer)</td>
-    <td></td>
   </tr>
   <tr>
     <td>Is the data in open and machine-readable file formats?</td>
