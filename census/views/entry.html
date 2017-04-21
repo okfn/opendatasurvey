@@ -229,18 +229,20 @@
   </div>
 </section>
 
-  {% if discussionUrl %}
-  <section>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h3>{{ gettext("Discuss this entry") }}</h3>
-          <p>Do you want to discuss this entry? Start a <a target="_blank" href="{{ discussionUrl }}">new topic</a> on the forum!</p>
-        </div>
+{% if discussionUrl %}
+  <div class="container">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <a href="{{ discussionUrl }}" rel="external">
+          <i class="fa fa-comments" aria-hidden="true"></i>
+          <strong>Discuss findings.</strong>
+        </a>
+        Head over to the <a href="{{ discussionUrl }}" rel="external">forum</a> to discuss the findings from this entry.
       </div>
     </div>
-  </section>
-  {% endif %}
+  </div>
+{% endif %}
+
 
 {% endif %}
 

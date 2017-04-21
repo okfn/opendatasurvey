@@ -8485,6 +8485,26 @@ blockquote {
   color: inherit;
   text-decoration: underline; }
 
+.place-intro {
+  padding-bottom: 30px; }
+  .place-intro .container {
+    position: relative; }
+  .place-intro .share h5 {
+    font-weight: 400;
+    font-size: 0.9em; }
+  @media (min-width: 992px) {
+    .place-intro .share {
+      position: absolute;
+      text-align: right;
+      top: 50px;
+      right: 15px; } }
+
+.place-content .data-table-tools {
+  margin-bottom: 15px; }
+.place-content .tab-content {
+  padding-top: 15px;
+  padding-bottom: 30px; }
+
 .history {
   font-size: 0.8em; }
   .history h6 {

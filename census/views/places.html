@@ -5,28 +5,18 @@
 
 {% block content %}
 
-<header id="place-intro">
+<header id="place-intro" class="place-intro">
   <div class="container">
-    <div class="row">
-      <div class="col-md-4">
-        <h1>{{ gettext('Place overview') }}</h1>
-      </div>
-      <div class="col-md-4">
-        <h5>See other years</h5>
-        <div class="btn-group">
-          <a class="btn btn-default" href="http://index.okfn.org/place/2014/" title="2014">2014</a>
-          <a class="btn btn-default" href="http://index.okfn.org/place/2013/" title="2013">2013</a>
-        </div>
-      </div>
-      <div class="col-md-4">
-        {% include 'includes/share_buttons.html' %}
-      </div>
-    </div>
-
+  <div class="share">
+    <h1>{{ gettext('Place overview') }}</h1>
+    {% include 'includes/share_buttons.html' %}
+  </div>
   </div>
 </header>
 
-<div class="container">
+
+{# page content #}
+<div class="place-content container">
 
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
@@ -45,6 +35,13 @@
         </div>
       </form>
       {% include 'includes/dataviews/table_places.html' %}
+      <div class="history">
+        <h6>See other years</h6>
+        <ul>
+          <li><a href="http://index.okfn.org/place/2014/" title="2014">2014</a></li>
+          <li><a href="http://index.okfn.org/place/2013/" title="2013">2013</a></li>
+        </ul>
+      </div>
     </div>
     <div role="tabpanel" class="tab-pane" id="map">
       {% include 'includes/dataviews/embed_map.html' %}
