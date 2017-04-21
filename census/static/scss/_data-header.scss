@@ -1,3 +1,36 @@
+.history {
+  font-size: 0.8em;
+
+  h6 {
+    display: inline;
+    font-size: inherit;
+
+    &:after {
+      content: ':';
+    }
+  }
+
+  ul {
+    display: inline;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    display: inline;
+    border-right: solid 1px $gray-light;
+
+    a {
+      padding-left: 0.3em;
+      padding-right: 0.3em;
+    }
+
+    &:last-of-type {
+      border: none;
+    }
+  }
+}
+
 #data-header {
   h1, h3 {
     font-weight: 300;
@@ -43,36 +76,6 @@
   .history {
     clear: left;
     margin-top: $grid-gutter-width;
-    font-size: 0.8em;
-
-    h6 {
-      display: inline;
-      font-size: inherit;
-
-      &:after {
-        content: ':';
-      }
-    }
-
-    ul {
-      display: inline;
-      margin: 0;
-      padding: 0;
-    }
-
-    li {
-      display: inline;
-      border-right: solid 1px $gray-light;
-
-      a {
-        padding-left: 0.3em;
-        padding-right: 0.3em;
-      }
-
-      &:last-of-type {
-        border: none;
-      }
-    }
   }
 
   .place-rank,
