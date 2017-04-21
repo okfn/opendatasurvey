@@ -7,10 +7,10 @@
 
 <header id="place-intro" class="place-intro">
   <div class="container">
-  <div class="share">
     <h1>{{ gettext('Place overview') }}</h1>
-    {% include 'includes/share_buttons.html' %}
-  </div>
+    <div class="share">
+      {% include 'includes/share_buttons.html' %}
+    </div>
   </div>
 </header>
 
@@ -36,11 +36,15 @@
       </form>
       {% include 'includes/dataviews/table_places.html' %}
       <div class="history">
-        <h6>See other years</h6>
+        <h6>{{ gettext("See other years") }}</h6>
         <ul>
-          <li><a href="http://index.okfn.org/place/2014/" title="2014">2014</a></li>
-          <li><a href="http://index.okfn.org/place/2013/" title="2013">2013</a></li>
+          <li><a href="http://2015.index.okfn.org/place/2013/" title="2013">2013</a></li>
+          <li><a href="http://2015.index.okfn.org/place/2014/" title="2014">2014</a></li>
+          <li><a href="http://2015.index.okfn.org/place/" title="2015">2015</a></li>
         </ul>
+        <p>
+          <small>Note: The methodology used in the Global Open Data Index has changed over time; significantly so between 2015 and 2016. For this reason, the results are not directly comparable over time.</small>
+        </p>
       </div>
     </div>
     <div role="tabpanel" class="tab-pane" id="map">
