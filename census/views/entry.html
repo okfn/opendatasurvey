@@ -97,52 +97,9 @@
     {%- endfor %}
     </ul>
 
-    {% set usability_answer = entry.getAnswerValueForQuestion({id: 'usability'}) %}
     {% set format_answer = entry.getAnswerValueForQuestion({id: 'format', type: 'multiple'})|join(', ') %}
     {% set licence_answer = entry.getAnswerValueForQuestion({id: 'licence_url'}) %}
     {% set source_answer = entry.getAnswerValueForQuestion({id: 'location', type: 'source'}) %}
-    <div class="row">
-      {% if usability_answer %}
-      <div class="col-md-6">
-        <h4>{{ gettext("Data Usability") }} <span class="label label-warning">{{ gettext("Beta") }}</span></h4>
-        <p>{{ gettext("The submitter assessed the usability of the data as follows (3 - little to no effort needed, 1 - extensive effort needed)") }}: <strong>{{ usability_answer }}</strong></p>
-      </div>
-      {% endif %}
-      {% if format_answer %}
-      <div class="col-md-6">
-        <h4>{{ gettext("Data format") }}</h4>
-        <p>{{ format_answer }}</p>
-      </div>
-      {% endif %}
-    </div>
-    <div class="row">
-      {% if licence_answer %}
-      <div class="col-md-6">
-        <h4>{{ gettext("Data licence") }}</h4>
-        <p>{{ licence_answer|urlize(55, true)|safe }}</p>
-      </div>
-      {% endif %}
-      {% if source_answer %}
-      <div class="col-md-6">
-        <h4>{{ gettext("Data Location") }}</h4>
-        {% set answerValue = '' %}
-        <ul>
-        {% for source in source_answer %}
-          {% if source.urlValue %}
-            {% set sourceValue = source.urlValue|urlize(55, true)|safe %}
-            {% if source.descValue %}
-              {% set sourceValue = sourceValue + ' - ' + source.descValue %}
-            {% endif %}
-            {% set sourceValue = '<li>' + sourceValue + '</li>' %}
-            {% set answerValue = answerValue + sourceValue %}
-          {% endif %}
-        {% endfor %}
-        </ul>
-        <p>{{ answerValue }}</p>
-      </div>
-      {% endif %}
-    </div>
-
 
     {% if not is_index %}
       {% set answers = entry.getSimpleAnswersForQuestions(questions) %}
@@ -188,49 +145,89 @@
         </tbody>
       </table>
     {% endif %}
-
-    {% if entry.details %}
-    <div class="place-details">
-      <h4><strong>{{ gettext("Details") }}</strong></h4>
-      <p>{{ entry.details }}</p>
-    </div>
-    {% endif %}
-
-    {% if entry.reviewComments %}
-    <div class="place-comments">
-      <h4><strong>{{ gettext("Reviewer comments") }}</strong></h4>
-      <p>{{ entry.reviewComments }}</p>
-    </div>
-    {% endif %}
   </div>
 </section>
 
-{% if is_index %}
-<section id="place-contributors">
+<section>
   <div class="container">
-    <h2>{{ gettext("Contributors") }}</h2>
-    <div class="row">
-      <div class="col-md-6">
-        <h4>{{ gettext("Reviewers") }}</h4>
-        {% if entry.Reviewer %}
-        <ul>
-          <li>{{entry.Reviewer.fullName()}}</li>
-        </ul>
-        {% endif %}
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    {% if entry.details %}
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="detailsHeading">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#detailsCollapse" aria-expanded="true" aria-controls="collapseOne">
+              {{ gettext("Details") }}
+            </a>
+          </h4>
+        </div>
+        <div id="detailsCollapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="detailsHeading">
+          <div class="panel-body">
+              {{ entry.details }}
+          </div>
+        </div>
       </div>
-      <div class="col-md-6">
-        <h4>{{ gettext("Submitters") }}</h4>
-        {% if entry.Submitter %}
-        <ul>
-          <li>{{ entry.Submitter.fullName() }}</li>
-        </ul>
-        {% endif %}
+    {% endif %}
+    {% if entry.reviewComments %}
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="commentsHeading">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#commentsCollapse" aria-expanded="false" aria-controls="commentsCollapse">
+              {{ gettext('Reviewer comments') }}
+            </a>
+          </h4>
+        </div>
+        <div id="commentsCollapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="commentsHeading">
+          <div class="panel-body">
+            <p>{{ entry.reviewComments }}</p>
+          </div>
+        </div>
       </div>
+    {% endif %}
+      {% if is_index %}
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="metaHeading">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#metaCollapse" aria-expanded="false" aria-controls="metaCollapse">
+              {{ gettext("Meta data") }}
+            </a>
+          </h4>
+        </div>
+        <div id="metaCollapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="metaHeading">
+          <div class="panel-body">
+            {% include 'includes/entry_metadata_table.html' %}
+          </div>
+        </div>
+      </div>
+      {% endif %}
     </div>
   </div>
 </section>
 
-{% if discussionUrl %}
+{% if is_index and discussionUrl %}
+  <section id="place-contributors">
+    <div class="container">
+      <h2>{{ gettext("Contributors") }}</h2>
+      <div class="row">
+        <div class="col-md-6">
+          <h4>{{ gettext("Reviewers") }}</h4>
+          {% if entry.Reviewer %}
+          <ul>
+            <li>{{entry.Reviewer.fullName()}}</li>
+          </ul>
+          {% endif %}
+        </div>
+        <div class="col-md-6">
+          <h4>{{ gettext("Submitters") }}</h4>
+          {% if entry.Submitter %}
+          <ul>
+            <li>{{ entry.Submitter.fullName() }}</li>
+          </ul>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+
   <div class="container">
     <div class="panel panel-default">
       <div class="panel-body">
@@ -244,22 +241,11 @@
   </div>
 {% endif %}
 
-
-{% endif %}
-
 {% if not is_index %}
 <section class="place-meta">
   <div class="container">
     <h3>{{ gettext("Meta data") }}</h3>
-    <table class="table table-striped yntable">
-      <tbody>
-      <tr><td>{{ gettext("Date the data became available") }}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.answers.dateavailable %}{{ entry.answers.dateavailable }}{% else %}{{ gettext("Unknown") }}{% endif %}</td></tr>
-      <tr><td>{{ gettext("Format of data") }}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.answers.format %}{{ entry.answers.format }}{% else %}{{ gettext("Unknown") }}{% endif %}</td></tr>
-      <tr><td>{{ gettext("Reviewer") }}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.Reviewer %}{{entry.Reviewer.fullName()}}{% endif %}</td></tr>
-      <tr><td>{{ gettext("Submitters") }}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.Submitter %}{{entry.Submitter.fullName()}}{% endif %}</td></tr>
-      <tr><td>{{ gettext("Last modified") }}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.createdAt %}{{ entry.createdAt }}{% else %}{{ gettext("Unknown") }}{% endif %}</td></tr>
-      </tbody>
-    </table>
+    {% include 'includes/entry_metadata_table.html' %}
   </div>
 </section>
 {% endif %}

@@ -8903,14 +8903,6 @@ ul.availability-single {
     ul.availability-single > li.maybe span strong {
       color: #2574a8; }
 
-.place-details,
-.place-comments,
-.place-meta {
-  margin-bottom: 30px; }
-
-#place-contributors {
-  margin-bottom: 30px; }
-
 .story-preview {
   text-align: right;
   margin-top: 20px; }
