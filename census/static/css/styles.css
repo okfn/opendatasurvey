@@ -8210,7 +8210,8 @@ body .breadcrumb-wrapper {
     body .breadcrumb-wrapper {
       display: block;
       position: absolute;
-      width: 100%; }
+      width: 100%;
+      z-index: 1; }
       body .breadcrumb-wrapper .breadcrumb {
         background-color: inherit;
         margin-bottom: 0;
@@ -10336,13 +10337,6 @@ body.form .form-header {
 body.form .error-message {
   border-radius: 4px; }
 
-@media (min-width: 768px) {
-  .home #header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1; } }
 .home #home-about {
   color: #333333;
   background-color: #EAD045;
@@ -10623,6 +10617,13 @@ body.form .error-message {
     background-image: linear-gradient(to bottom, #d7d7d7 0%, rgba(215, 215, 215, 0) 100%);
     background-repeat: repeat-x;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFD7D7D7', endColorstr='#00D7D7D7', GradientType=0); }
+@media (min-width: 768px) {
+  .home.godi #header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1; } }
 
 .quality-assessments ul {
   display: table;

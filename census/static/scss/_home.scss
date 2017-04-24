@@ -1,13 +1,4 @@
 .home {
-  #header {
-    @media (min-width: $screen-sm-min) {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1;
-    }
-  }
   #home-about {
     $banner-bg-colour: $brand-primary;
     $banner-text-colour: $gray-dark;
@@ -347,6 +338,18 @@
 
       &:before {
         @include gradient-vertical($brand-past-year, rgba($brand-past-year,0), 0%, 100%);
+      }
+    }
+  }
+
+  &.godi {
+    #header {
+      @media (min-width: $screen-sm-min) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1;
       }
     }
   }
