@@ -1,0 +1,25 @@
+<table class="table table-striped yntable">
+  <tbody>
+  {% if source_answer -%}
+    {% set sourceAnswerValue = '' %}
+    {% for source in source_answer %}
+      {% if source.urlValue %}
+        {% set sourceValue = source.urlValue|urlize(55, true)|safe %}
+        {% if source.descValue %}
+          {% set sourceValue = '&nbsp;&nbsp;&nbsp;' + sourceValue + ' - ' + source.descValue %}
+        {% endif %}
+        {% if not loop.last %}
+          {% set sourceValue = sourceValue + '<br>' %}
+        {% endif %}
+        {% set sourceAnswerValue = sourceAnswerValue + sourceValue %}
+      {% endif %}
+    {%- endfor %}
+  {% endif %}
+    <tr><td>{{ gettext("Data location") }}</td><td>{% if source_answer %}{{ sourceAnswerValue }}{% else %}&nbsp;&nbsp;&nbsp;{{ gettext("Unknown") }}{% endif %}</td></tr>
+    <tr><td>{{ gettext("Data licence") }}</td><td>&nbsp;&nbsp;&nbsp;{% if licence_answer %}{{ licence_answer|urlize(55, true)|safe }}{% else %}{{ gettext("Unknown") }}{% endif %}</td></tr>
+    <tr><td>{{ gettext("Data format") }}</td><td>&nbsp;&nbsp;&nbsp;{% if format_answer %}{{ format_answer }}{% else %}{{ gettext("Unknown") }}{% endif %}</td></tr>
+    <tr><td>{{ gettext("Reviewer") }}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.Reviewer %}{{entry.Reviewer.fullName()}}{% else %}{{ gettext("Unknown") }}{% endif %}</td></tr>
+    <tr><td>{{ gettext("Submitters") }}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.Submitter %}{{entry.Submitter.fullName()}}{% else %}{{ gettext("Unknown") }}{% endif %}</td></tr>
+    <tr><td>{{ gettext("Last modified") }}</td><td>&nbsp;&nbsp;&nbsp;{% if entry.createdAt %}{{ entry.createdAt }}{% else %}{{ gettext("Unknown") }}{% endif %}</td></tr>
+  </tbody>
+</table>
