@@ -150,6 +150,7 @@ body {
       display: block;
       position: absolute;
       width: 100%;
+      z-index: 1;
 
       .breadcrumb {
         background-color: inherit;

@@ -8210,7 +8210,8 @@ body .breadcrumb-wrapper {
     body .breadcrumb-wrapper {
       display: block;
       position: absolute;
-      width: 100%; }
+      width: 100%;
+      z-index: 1; }
       body .breadcrumb-wrapper .breadcrumb {
         background-color: inherit;
         margin-bottom: 0;
