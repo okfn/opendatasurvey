@@ -8279,7 +8279,8 @@ body.godi.past-year #header {
 
 #summary-stats {
   background-color: #222222;
-  color: rgba(255, 255, 255, 0.8); }
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 30px; }
   #summary-stats .stats {
     margin: 15px 0 0 0;
     padding: 0; }
@@ -8490,21 +8491,66 @@ blockquote {
   padding-bottom: 30px; }
   .place-intro .container {
     position: relative; }
-  .place-intro .share h5 {
-    font-weight: 400;
-    font-size: 0.9em; }
-  @media (min-width: 992px) {
-    .place-intro .share {
-      position: absolute;
-      text-align: right;
-      top: 50px;
-      right: 15px; } }
+  .place-intro .share {
+    margin-bottom: 10px; }
+    .place-intro .share h5 {
+      font-weight: 400;
+      font-size: 0.9em; }
+    @media (min-width: 992px) {
+      .place-intro .share {
+        position: absolute;
+        text-align: right;
+        top: 15px;
+        right: 15px; } }
+  .place-intro .statistics {
+    margin-left: -12px;
+    margin-right: -12px;
+    padding: 12px;
+    background-color: #eeeeee; }
+    .place-intro .statistics > table {
+      width: 100%; }
+    .place-intro .statistics .rank {
+      border-right: solid 6px #eeeeee; }
+      .place-intro .statistics .rank div {
+        padding: 0.5em 1em; }
+      @media (min-width: 992px) {
+        .place-intro .statistics .rank {
+          position: absolute;
+          z-index: 1;
+          background-color: transparent;
+          border: none;
+          color: #fff; } }
+    .place-intro .statistics .status {
+      display: none; }
+      @media (min-width: 992px) {
+        .place-intro .statistics .status {
+          display: table-cell;
+          height: 100%;
+          width: 4%; } }
+      .place-intro .statistics .status .availability {
+        height: 100%;
+        cursor: default; }
+    .place-intro .statistics .open,
+    .place-intro .statistics .score {
+      border-left: solid 6px #eeeeee;
+      padding: 0.5em 1em;
+      text-align: center; }
+      .place-intro .statistics .open [data-toggle="popover"],
+      .place-intro .statistics .score [data-toggle="popover"] {
+        border-bottom: dotted 1px currentColor; }
+      @media (min-width: 992px) {
+        .place-intro .statistics .open,
+        .place-intro .statistics .score {
+          border-left-width: 12px; } }
+    @media (min-width: 992px) {
+      .place-intro .statistics {
+        font-size: 24px;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); } }
 
 .place-content .data-table-tools {
   margin-bottom: 15px; }
 .place-content .tab-content {
-  padding-top: 15px;
-  padding-bottom: 30px; }
+  padding-top: 15px; }
 
 .history {
   font-size: 0.8em; }
@@ -10329,6 +10375,13 @@ body.form .form-header {
 body.form .error-message {
   border-radius: 4px; }
 
+@media (min-width: 768px) {
+  .home #header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1; } }
 .home #home-about {
   color: #333333;
   background-color: #EAD045;
@@ -10365,12 +10418,21 @@ body.form .error-message {
   .home #home-about .container {
     position: relative; }
   .home #home-about h1 {
-    font-size: 2.8em;
-    margin-bottom: 0.3em;
-    font-weight: 400; }
+    font-size: 2.4em;
+    margin-bottom: 0.5em;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.2; }
+    .home #home-about h1 small {
+      color: inherit;
+      display: block;
+      font-size: 0.6em;
+      font-weight: 400;
+      margin-top: 0.2em; }
     @media (min-width: 768px) {
       .home #home-about h1 {
-        margin-top: 50px; } }
+        margin-top: 60px;
+        font-size: 2.8em; } }
     @media (min-width: 1200px) {
       .home #home-about h1 {
         font-size: 3.2em; } }
@@ -10443,7 +10505,9 @@ body.form .error-message {
           vertical-align: top; } }
     @media (min-width: 992px) {
       .home #home-about .actions {
-        margin-top: 60px; } }
+        margin-top: 45px; } }
+  .home #home-about + #summary-stats {
+    margin-top: 0; }
 .home .summary-stats {
   text-align: center; }
   .home .summary-stats .explain span {
@@ -10609,13 +10673,6 @@ body.form .error-message {
     background-image: linear-gradient(to bottom, #d7d7d7 0%, rgba(215, 215, 215, 0) 100%);
     background-repeat: repeat-x;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFD7D7D7', endColorstr='#00D7D7D7', GradientType=0); }
-@media (min-width: 768px) {
-  .home.godi #header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1; } }
 
 .quality-assessments ul {
   display: table;

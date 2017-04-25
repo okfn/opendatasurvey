@@ -1,4 +1,13 @@
 .home {
+  #header {
+    @media (min-width: $screen-sm-min) {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1;
+    }
+  }
   #home-about {
     $banner-bg-colour: $brand-primary;
     $banner-text-colour: $gray-dark;
@@ -41,12 +50,24 @@
     }
 
     h1 {
-      font-size: 2.8em;
-      margin-bottom: 0.3em;
-      font-weight: 400;
+      font-size: 2.4em;
+      margin-bottom: 0.5em;
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1.2;
+
+      small {
+        color: inherit;
+        display: block;
+        font-size: 0.6em;
+        //text-transform: none;
+        font-weight: 400;
+        margin-top: 0.2em;
+      }
 
       @media (min-width: $screen-sm-min) {
-        margin-top: 50px;
+        margin-top: 60px;
+        font-size: 2.8em;
       }
       @media (min-width: $screen-lg-min) {
         font-size: 3.2em;
@@ -147,8 +168,12 @@
         }
       }
       @media (min-width: $screen-md-min) {
-        margin-top: $grid-gutter-width*2;
+        margin-top: $grid-gutter-width*1.5;
       }
+    }
+
+    & + #summary-stats {
+      margin-top: 0;
     }
   }
 
@@ -338,18 +363,6 @@
 
       &:before {
         @include gradient-vertical($brand-past-year, rgba($brand-past-year,0), 0%, 100%);
-      }
-    }
-  }
-
-  &.godi {
-    #header {
-      @media (min-width: $screen-sm-min) {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 1;
       }
     }
   }
