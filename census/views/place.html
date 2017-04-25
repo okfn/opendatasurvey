@@ -15,54 +15,63 @@
 {% endblock breadcrumb %}
 
 {% block content %}
-<section id="data-header">
+<header class="place-intro">
   <div class="container">
-    <div class="row">
-      <div class="col-md-{% if is_index %}6{% else %}12{% endif %}">
-        <h1>
-          {{ place.name }}
-          <span style="background-color: rgb(223, 204, 51); color: white;" class="dataset-openness" data-score="{{ stats.openDataPercent }}">{{ format(gettext("%(score)s% open"), {score: stats.openDataPercent}) }}</span>
-        </h1>
-        {% if is_index %}
-        <div class="col-md-12 place-rank statistics">
-          <span>{{ format(gettext("Ranked #%(rank)s against other places in the Index"), {rank: place.rank}) }}</span>
-        </div>
-        {% endif %}
-        <div class="row navigate">
-          <div class="col-md-12">
-            {% include 'includes/share_buttons.html' %}
-
-            {% if is_index %}
-            <div class="history">
-              <h6>{{ gettext("See other years") }}</h6>
-              <ul>
-                <li><a href="http://2015.index.okfn.org/place/{{ place.slug }}/2013/" title="2013">2013</a></li>
-                <li><a href="http://2015.index.okfn.org/place/{{ place.slug }}/2014/" title="2014">2014</a></li>
-                <li><a href="http://2015.index.okfn.org/place/{{ place.slug }}/" title="2015">2015</a></li>
+    <h1>{{ place.name }}</h1>
+    <div class="share">
+      {% include 'includes/share_buttons.html' %}
+    </div>
+    <div class="statistics">
+      <table>
+        <tr data-rank="{{ place.rank }}" data-score="80" data-place="{{ place.id }}" data-name="{{ place.name }}">
+          {% if is_index %}
+            <td class="rank" data-rank="{{ place.rank }}">
+              <div>{{ format(gettext("Ranked #%(rank)s against other places in the Index"), {rank: place.rank}) }}</div>
+            </td>
+          {% endif %}
+          {% for dataset in datasets %}
+            {% set entry = entries|find({'dataset': dataset.id, 'place': place.id}) %}
+            <td class="status">
+              <ul class="availability availability-comparative">
+                {% for question in questions %}
+                  {% if entry %}
+                    {% set answer = entry.getAnswerValueForQuestion(question) %}
+                    {% set pass = 'yes' if question.pass(answer) else 'no' %}
+                  {% endif %}
+                  <li class="{{ pass }}" data-content="{{ pass }}">
+                {% endfor %}
               </ul>
-            </div>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-
-      {% if is_index %}
-      <div class="col-md-6">
-        <div id="map-container">
-          {% include 'includes/dataviews/embed_map.html' %}
-        </div>
-      </div>
-      {% endif %}
-
+            </td>
+          {% endfor %}
+          <td class="open place-openness" data-score="{{ stats.openDataPercent }}" style="color: white;">
+            <span>{{ stats.openDataPercent }}%</span> <small data-container="body" data-toggle="popover" data-placement="top" data-content='{{ gettext("Fully open, as defined by the [Open Definition](http://opendefinition.org/).")|marked }}' data-original-title="{{ gettext('What does this mean?') }}">{{ gettext('Open') }}</small>
+          </td>
+          <td class="score place-openness" data-score="{{ place.computedRelativeScore }}" style="color: white;">
+            <span>{{ place.computedRelativeScore }}%</span> <small data-container="body" data-toggle="popover" data-placement="top" data-content='{{ gettext("Ranking score, based on weighted questions, displayed as a percentage of the maximum possible score.") }}' data-original-title="{{ gettext('What does this mean?') }}">{{ gettext('Score') }}</small>
+          </td>
+        </tr>
+      </table>
     </div>
   </div>
-</section>
-
-<hr />
+</header>
 
 <section id="dataset-slice-table">
   <div class="container">
+    <h3>{{ gettext("Breakdown") }}</h3>
     {% include 'includes/dataviews/table_slice_place.html' %}
+    {% if is_index %}
+      <div class="history">
+        <h6>{{ gettext("See other years") }}</h6>
+        <ul>
+          <li><a href="http://2015.index.okfn.org/place/{{ place.slug }}/2013/" title="2013">2013</a></li>
+          <li><a href="http://2015.index.okfn.org/place/{{ place.slug }}/2014/" title="2014">2014</a></li>
+          <li><a href="http://2015.index.okfn.org/place/{{ place.slug }}/" title="2015">2015</a></li>
+        </ul>
+        <p>
+          <small>Note: The methodology used in the Global Open Data Index has changed over time; significantly so between 2015 and 2016. For this reason, the results are not directly comparable over time.</small>
+        </p>
+      </div>
+    {% endif %}
   </div>
 </section>
 

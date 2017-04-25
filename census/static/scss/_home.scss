@@ -147,8 +147,12 @@
         }
       }
       @media (min-width: $screen-md-min) {
-        margin-top: $grid-gutter-width*2;
+        margin-top: $grid-gutter-width*1.5;
       }
+    }
+
+    & + #summary-stats {
+      margin-top: 0;
     }
   }
 
@@ -338,18 +342,6 @@
 
       &:before {
         @include gradient-vertical($brand-past-year, rgba($brand-past-year,0), 0%, 100%);
-      }
-    }
-  }
-
-  &.godi {
-    #header {
-      @media (min-width: $screen-sm-min) {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 1;
       }
     }
   }
