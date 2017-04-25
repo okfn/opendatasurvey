@@ -10375,6 +10375,13 @@ body.form .form-header {
 body.form .error-message {
   border-radius: 4px; }
 
+@media (min-width: 768px) {
+  .home #header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1; } }
 .home #home-about {
   color: #333333;
   background-color: #EAD045;
@@ -10411,12 +10418,21 @@ body.form .error-message {
   .home #home-about .container {
     position: relative; }
   .home #home-about h1 {
-    font-size: 2.8em;
-    margin-bottom: 0.3em;
-    font-weight: 400; }
+    font-size: 2.4em;
+    margin-bottom: 0.5em;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.2; }
+    .home #home-about h1 small {
+      color: inherit;
+      display: block;
+      font-size: 0.6em;
+      font-weight: 400;
+      margin-top: 0.2em; }
     @media (min-width: 768px) {
       .home #home-about h1 {
-        margin-top: 50px; } }
+        margin-top: 60px;
+        font-size: 2.8em; } }
     @media (min-width: 1200px) {
       .home #home-about h1 {
         font-size: 3.2em; } }
