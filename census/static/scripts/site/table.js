@@ -6,12 +6,7 @@ define(['jquery', 'bootstrap', 'chroma', 'tablesorter', 'stickykit'],
       naString = 'n/a',
       $dataTable = $('.data-table'),
       $scoreDisplay = $('.score'),
-      popover = $('#popover'),
-      popoverProps = {
-        title: popover.find('.popover-title'),
-        content: popover.find('.popover-content'),
-        visible: null
-      },
+      popover_tmpl = '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
       tablesorterPlaceOptions = {
         sortList: [[1, 0]],
         headers: {
@@ -136,42 +131,36 @@ define(['jquery', 'bootstrap', 'chroma', 'tablesorter', 'stickykit'],
 
     function setInteractions() {
 
-      var popovers = $('[data-toggle="popover"]');
       $("[data-toggle='tooltip']").tooltip({html: true});
-
-      popovers.on('click', function(e) {
-
-        var target = $(e.target.parentNode),
-          offset;
-
-        // in case popover already visible, it will propagate event to body
-        // and hide this element
-        if (popoverProps.visible && popoverProps.visible.is(target)) {
-          return true;
-        }
-
-        e.preventDefault();
-        e.stopPropagation();
-
-        popoverProps.visible = target;
-
-        offset = target.offset();
-
-        popoverProps.title.html(target.attr('title'));
-        popoverProps.content.html(target.data('content'));
-
-        popover.css({
-          top: offset.top + target.height(),
-          left: offset.left + target.width() / 2 - popover.width() / 2,
-          display: 'block'
-        });
-
-        return false;
+      $('[data-toggle="popover"]').popover({
+          trigger: 'click',
+          'placement': 'bottom',
+          'html': true,
+          'show': true,
+          'template': popover_tmpl
       });
 
-      $('body').on('click', function() {
-        popoverProps.visible = null;
-        popover.hide();
+      $('[data-toggle="popover"]').on('click', function() {
+          $('[data-toggle="popover"]').not(this).popover('hide');
+      });
+
+      $('body').on('click', 'td.showpopover', function() {
+          var $this = $(this);
+
+          // check if the one clicked is now shown
+          if ($this.data('popover').tip().hasClass('in')) {
+
+              // if another was showing, hide it
+              if ($visiblePopover) {
+                  $visiblePopover.popover('hide');
+              }
+
+              // then store reference to current popover
+              $visiblePopover = $this;
+
+          } else { // if it was hidden, then nothing must be showing
+              $visiblePopover = '';
+          }
       });
 
       $('.filter-table').on('keyup', function() {
