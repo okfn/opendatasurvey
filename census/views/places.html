@@ -2,9 +2,7 @@
 
 {% block title %}{{ gettext('Place overview') }}{% endblock %}
 
-
 {% block content %}
-
 <header id="place-intro" class="place-intro">
   <div class="container">
     <h1>{{ gettext('Place overview') }}</h1>
@@ -20,9 +18,9 @@
 
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#table" aria-controls="table" role="tab" data-toggle="tab"><i class="fa fa-table" aria-hidden="true"></i> Table view</a></li>
+    <li role="presentation" class="active"><a href="#table" aria-controls="table" role="tab" data-toggle="tab"><i class="fa fa-table" aria-hidden="true"></i> {{ gettext('Table view') }}</a></li>
     <li role="presentation"><a href="#map" aria-controls="map" role="tab" data-toggle="tab"><i class="fa fa-map" aria-hidden="true"></i>
- Map view</a></li>
+ {{ gettext('Map view')}} </a></li>
   </ul>
 
   <!-- Tab panes -->
@@ -42,9 +40,7 @@
           <li><a href="http://2015.index.okfn.org/place/2014/" title="2014">2014</a></li>
           <li><a href="http://2015.index.okfn.org/place/" title="2015">2015</a></li>
         </ul>
-        <p>
-          <small>Note: The methodology used in the Global Open Data Index has changed over time; significantly so between 2015 and 2016. For this reason, the results are not directly comparable over time.</small>
-        </p>
+        <p><small>Note: The methodology used in the Global Open Data Index has changed over time; significantly so between 2015 and 2016. For this reason, the results are not directly comparable over time.</small></p>
       </div>
     </div>
     <div role="tabpanel" class="tab-pane" id="map">
@@ -53,5 +49,4 @@
   </div>
 
 </div>
-
 {% endblock %}
