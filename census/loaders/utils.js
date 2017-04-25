@@ -9,7 +9,7 @@ var csv = require('csv');
 var _mapParsedCsvData = function(parsedData) {
   var result = [];
   var keys = [];
-  var whiteList = _.assign(xss.whiteList, {table: ['class']})
+  var whiteList = _.assign(xss.whiteList, {table: ['class']});
   var xssOptions = {
     whiteList: whiteList
   };

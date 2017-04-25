@@ -271,7 +271,8 @@ var processEntries = function(data, options) {
         result = result || _.contains(options.exclude_places, entry.place);
       }
       if (options.year) {
-        let excludedDatasetsForYear = excludedDatasetsByYear(data)[options.year];
+        let excludedDatasetsForYear =
+          excludedDatasetsByYear(data)[options.year];
         result = result || _.contains(excludedDatasetsForYear, entry.dataset);
 
         let excludedPlacesForYear = excludedPlacesByYear(data)[options.year];
@@ -283,7 +284,8 @@ var processEntries = function(data, options) {
     let questionMaxScore = options.models.Question.maxScore(data.questions);
     _.each(data.entries, function(e) {
       e.computedScore = e.scoreForQuestions(data.questions);
-      e.computedRelativeScore = Math.round(100 * e.computedScore / questionMaxScore);
+      e.computedRelativeScore =
+        Math.round(100 * e.computedScore / questionMaxScore);
       e.url = setEntryUrl(e);
     });
 
@@ -319,6 +321,18 @@ var processEntries = function(data, options) {
 var processPlaces = function(data, options) {
   // Single place
   if (data.place) {
+    if (Array.isArray(data.entries)) {
+      let questionMaxScore = options.models.Question.maxScore(data.questions);
+      let datasetMaxScore =
+        options.models.Dataset.maxScore(data.entries, questionMaxScore);
+      data.place.computedScore = data.place.score(data.entries, data.questions);
+      data.place.computedRelativeScore = 0;
+      if (datasetMaxScore) {
+        data.place.computedRelativeScore =
+          Math.round(100 * data.place.computedScore / datasetMaxScore);
+      }
+    }
+
     // Translate
     data.place = data.place.translated(options.locale);
   // Many places
@@ -340,17 +354,20 @@ var processPlaces = function(data, options) {
     // Add scores, translate
     if (Array.isArray(data.entries)) {
       var questionMaxScore = options.models.Question.maxScore(data.questions);
-      var datasetMaxScore = options.models.Dataset.maxScore(data.entries, questionMaxScore);
+      var datasetMaxScore =
+        options.models.Dataset.maxScore(data.entries, questionMaxScore);
       _.each(data.places, function(p) {
         p.computedScore = p.score(data.entries, data.questions);
         p.computedRelativeScore = 0;
         if (datasetMaxScore) {
-          p.computedRelativeScore = Math.round(100 * p.computedScore / datasetMaxScore);
+          p.computedRelativeScore =
+            Math.round(100 * p.computedScore / datasetMaxScore);
         }
       });
       data.places = rankObjectsByProperty(_.sortByOrder(
-        translateSet(options.locale, data.places), ['computedScore', 'name'], ['desc', 'asc']
-      ), 'computedRelativeScore');
+        translateSet(options.locale, data.places),
+        ['computedScore', 'name'], ['desc', 'asc']),
+        'computedRelativeScore');
     } else {
       data.places = translateSet(options.locale, data.places);
     }
@@ -383,12 +400,14 @@ var processDatasets = function(data, options) {
     // Add scores, translate
     if (Array.isArray(data.entries)) {
       var questionMaxScore = options.models.Question.maxScore(data.questions);
-      var placeMaxScore = options.models.Place.maxScore(data.entries, questionMaxScore);
+      var placeMaxScore =
+        options.models.Place.maxScore(data.entries, questionMaxScore);
       _.each(data.datasets, function(d) {
         d.computedScore = d.score(data.entries, data.questions);
         d.computedRelativeScore = 0;
         if (placeMaxScore) {
-          d.computedRelativeScore = Math.round(100 * d.computedScore / placeMaxScore);
+          d.computedRelativeScore =
+            Math.round(100 * d.computedScore / placeMaxScore);
         }
       });
       data.datasets = rankObjectsByProperty(_.sortByOrder(
