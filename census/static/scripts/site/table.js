@@ -137,7 +137,8 @@ define(['jquery', 'bootstrap', 'chroma', 'tablesorter', 'stickykit'],
           'placement': 'bottom',
           'html': true,
           'show': true,
-          'template': popover_tmpl
+          'template': popover_tmpl,
+          'container': 'body'
       });
 
       $('[data-toggle="popover"]').on('click', function() {
