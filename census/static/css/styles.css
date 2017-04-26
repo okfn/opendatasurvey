@@ -8181,13 +8181,13 @@ body #header {
         color: #fff; }
     body #header nav .menu {
       margin: 0;
-      margin-left: -10px;
+      margin-left: -6px;
       padding: 0 0 0.5em 0;
       font-size: 16px; }
       @media (min-width: 992px) {
         body #header nav .menu {
           margin-left: 0;
-          margin-right: -10px;
+          margin-right: -6px;
           padding-top: 0.5em; } }
       body #header nav .menu li {
         display: block; }
@@ -8196,7 +8196,7 @@ body #header {
             display: inline-block; } }
         body #header nav .menu li a {
           display: block;
-          padding: 8px 10px;
+          padding: 8px 6px;
           border-radius: 4px; }
           @media (min-width: 992px) {
             body #header nav .menu li a {
