@@ -49,33 +49,27 @@ define(['jquery', 'bootstrap', 'chroma', 'tablesorter', 'stickykit'],
         headers: {
           2: {sorter: false},
           3: {sorter: false},
-          4: {sorter: false},
-          6: {sorter: false}
+          5: {sorter: false}
         }
       },
       tablesorterSliceIndexOptions = {
         sortList: [[0, 0]],
         headers: {
-          2: {sorter: false},
-          3: {sorter: false},
-          4: {sorter: false},
-          6: {sorter: false}
+          2: {sorter: false}
         }
       },
       tablesorterPlaceSliceOptions = {
-        sortList: [[4, 1]],
-        headers: {
-          1: {sorter: false},
-          2: {sorter: false},
-          3: {sorter: false},
-          5: {sorter: false}
-        }
-      },
-      tablesorterPlaceSliceIndexOptions = {
         sortList: [[3, 1]],
         headers: {
           1: {sorter: false},
-          2: {sorter: false}
+          2: {sorter: false},
+          4: {sorter: false}
+        }
+      },
+      tablesorterPlaceSliceIndexOptions = {
+        sortList: [[2, 1]],
+        headers: {
+          1: {sorter: false}
         }
       },
       sortFlag = true;

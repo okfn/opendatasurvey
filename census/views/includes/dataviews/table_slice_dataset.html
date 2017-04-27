@@ -15,7 +15,6 @@
           <col style="width:6%">
           <col style="width:24%">
           <col style="width:23%">
-          <col style="width:5%">
           <col style="width:6%">
         </colgroup>
         {% else %}
@@ -23,7 +22,6 @@
           <col style="width:6%">
           <col style="width:20%">
           <col style="width:23%">
-          <col style="width:5%">
           <col style="width:8%">
           <col style="width:6%">
           <col style="width:4%">
@@ -35,7 +33,6 @@
             <th class="clickable">{{ gettext("Rank") }}</th>
             <th class="clickable">{{ gettext("Place") }}</th>
             <th>{{ gettext("Breakdown") }}</th>
-            <th>{{ gettext("Info") }}</th>
             {% if not is_index %}
             <th>{{ gettext("Year") }}</th>
             {% endif %}
@@ -63,11 +60,6 @@
                   {% endfor %}
                 </ul>
               </td>
-              <td class="info-expander" title="Click for full details">
-                <a aria-expanded="false" data-toggle="collapse" data-target="#detail-{{place.id}}" class="collapsed">
-                  <i class="fa fa-info-circle"></i>
-                </a>
-              </td>
               {% if not is_index %}
               <td class="year">
                 {% if entry %}
@@ -88,18 +80,6 @@
                 </td>
               {% endif %}
             </tr>
-            {% if entry.details %}
-            <tr id="detail-{{ place.id }}" class="details collapse">
-              <td>{# hack around tablesorter and our row toggler #}<span style="visibility: hidden">{{ place.rank }}</span></td>
-              <td colspan="6">
-                {# hack around tablesorter and our row toggler #}<span style="visibility: hidden;">{{ place.name }}</span>
-                {% if entry.details %}
-                {{ entry.details|marked }}
-                {% endif %}
-                <br />
-              </td>
-            </tr>
-            {% endif %}
 
             {% if not is_index %}
             {% for submission in submissions %}
@@ -129,11 +109,6 @@
                   {% endfor %}
                 </ul>
               </td>
-              <td class="info-expander" title="Click for full details">
-                  <a data-toggle="collapse" data-target="#detail-submission-{{place.id}}-{{loop.index}}" class="collapsed">
-                    <i class="fa fa-info-circle"></i>
-                  </a>
-              </td>
               {% if not is_index %}
               <td class="year">
                 {% if submission %}
@@ -147,16 +122,6 @@
                 <a href="{{ format('/submission/%(submissionid)s', {submissionid: submission.id}) }}" class="view" title="{{ gettext('View Submission') }}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
               </td>
               {% endif %}
-            </tr>
-            <tr id="detail-submission-{{place.id}}-{{loop.index}}" class="details collapse">
-              <td>{# hack around tablesorter and our row toggler #}<span style="visibility: hidden">{{ place.rank }}</span></td>
-              <td colspan="6">
-                {# hack around tablesorter and our row toggler #}<span style="visibility: hidden;">{{ place.name }}</span>
-                {% if submission.details %}
-                {{ submission.details|marked }}
-                {% endif %}
-                <br />
-              </td>
             </tr>
             {% endfor %}
             {% endif %}
