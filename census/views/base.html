@@ -149,7 +149,7 @@
             </span>
             <strong>{% for c in stats.openDataPercent | string %}{{ c }}{% endfor %}%</strong>
             of dataset <span data-container="body" data-toggle="popover" data-placement="top" data-content='{{ gettext("A dataset entry, for example, Taiwan - Government budget, or Australia - National statistics") }}' data-original-title="What does this mean?">entries</span> in the index are
-            <span data-container="body" data-toggle="popover" data-placement="top" data-content='Fully open, as defined by the <a href="http://opendefinition.org/">Open Definition</a>.' data-original-title="What does this mean?">open</span>.<!-- TODO: figure out why popover is being placed at bottom -->
+            <span data-container="body" data-toggle="popover" data-placement="top" data-content='the ratio of datasets in a place that are fully open, as defined by the <a href="http://opendefinition.org/">Open Definition</a>.' data-original-title="What does this mean?">open</span>.<!-- TODO: figure out why popover is being placed at bottom -->
            </li>
            <li class="stat">
              <strong>{% for c in stats.placeCount | string %}<span>{{ c }}</span>{% endfor %}</strong>
