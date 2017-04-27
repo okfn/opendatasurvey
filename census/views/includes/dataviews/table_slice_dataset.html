@@ -56,7 +56,7 @@
                       {% set answer = entry.getAnswerValueForQuestion(question) %}
                       {% set pass = 'yes' if question.pass(answer) else 'no' %}
                     {% endif %}
-                    <li class="{{ pass }}" title="{{ question.questionshort }}" data-toggle="popover" data-content="{{ popovers.popover_slice_content(question.description)|escape }}"><i class="fa fa-{{ question.icon }}"></i>&nbsp;</li>
+                    <li class="{{ pass }}" title="{{ question.questionshort }}" data-toggle="tooltip"><i class="fa fa-{{ question.icon }}"></i>&nbsp;</li>
                   {% endfor %}
                 </ul>
               </td>
