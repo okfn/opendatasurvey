@@ -11,7 +11,7 @@ var _mapParsedCsvData = function(parsedData) {
   var keys = [];
   var whiteList = _.clone(xss.whiteList);
   whiteList.table = _.union(whiteList.table, ['class']);
-  whiteList.img = _.union(whiteList.img, ['style', 'align']);
+  whiteList.img = _.union(whiteList.img, ['style', 'align', 'class']);
   var xssOptions = {
     whiteList: whiteList
   };
