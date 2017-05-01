@@ -2,7 +2,7 @@
 
 The Global Open Data Index (GODI) is a tool to educate civil society and governments about open data publication. It is also supposed to spark debate about the state of open government data. We do so through the presentation of different information, including  ranking and scores for each data category per place and comments by our submitters and reviewers. The image below shows some of these elements in a country results page (here for Taiwan).
 
-<img src="images/Taiwan place page.png" alt="Taiwan page" class="img-responsive center-block" style="width: 700px;">
+<img src="/images/Taiwan place page.png" alt="Taiwan page" class="img-responsive center-block" style="width: 700px;">
 
 
 Even though we try to make this assessment as understandable and transparent as possible, it is not always easy to interpret the results. While open data has a very strict definition, scoring of any index is an arbitrary action. In real life, you can't be partly open - the published data either fits the criteria or it does not. So, what does the final score mean? How to interpret scores that vary between 0%, 40% or 70%? Here is some guidance on how best to read our results.
@@ -32,12 +32,12 @@ Data is publicly accessible if the public can find it and view it online without
 
 This image shows a search interface of a company register. It allows for targeted searches for individual companies, but does not enable the user to retrieve all data at once. Individual search results (non-bulk) are displayed in HTML format and can then be downloaded in PDF format (not machine-readable). Therefore, the score is 70% .
 
-<img src="images/searchinterface.png" alt=Search interface" class="img-responsive center-block" style="width: 700px;">
+<img src="/images/searchinterface.png" alt=Search interface" class="img-responsive center-block" style="width: 700px;">
 
 In the image below, we are able to view weather forecast data available in HTML. The data is publicly accessible, but cannot be downloaded without using a “scraper” tool that would automatically retrieve the values from the website. Some of the values, like the temperature graph cannot be retrieved at all. Also the data is legally protected by copyright and cannot be reused. The scoring: 45% (not machine-readable, not downloadable, no open license).
 
 
-<img src="images/visualisationnotdata.png" alt="html scraper" class="img-responsive center-block" style="width: 700px;">
+<img src="/images/visualisationnotdata.png" alt="html scraper" class="img-responsive center-block" style="width: 700px;">
 
 
 ## Access-controlled data
@@ -51,12 +51,12 @@ The reasons for controlled access are varied, including website traffic manageme
 
 **Maximum score**: Up to 85%, indicating that all criteria of open data are met, but 15 points out of 100 deducted because users have to register online to be able to download.
 
-<img src="images/visualisationnotdata.png" alt="html scraper" class="img-responsive center-block" style="width: 700px;">
+<img src="/images/visualisationnotdata.png" alt="html scraper" class="img-responsive center-block" style="width: 700px;">
 
 
 This image shows a data request form (controlled access). The dataset is entirely hidden behind a “paywall”. Sometimes the costs are prohibitive, which prevents us from assessing the data at all. In this example, we were unable to verify the data format because the request form did not mention it. Since the data are available online, but need to be requested, the scoring amounts to 0%.
 
-<img src="images/report.png" alt="controlled access" class="img-responsive center-block" style="width: 700px;">
+<img src="/images/report.png" alt="controlled access" class="img-responsive center-block" style="width: 700px;">
 
 ## How to read a score of 0%? 
 
