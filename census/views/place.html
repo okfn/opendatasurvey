@@ -44,7 +44,7 @@
             </td>
           {% endfor %}
           <td class="open place-openness" data-score="{{ stats.openDataPercent }}" style="color: white;">
-            <span>{{ stats.openDataPercent }}%</span> <small data-container="body" data-toggle="popover" data-placement="top" data-content='{{ gettext("The percentage of datasets that are fully open, as defined by the [Open Definition](http://opendefinition.org/).")|marked }}' data-original-title="{{ gettext('What does this mean?') }}">{{ gettext('Open') }}</small>
+            <span>{{ stats.openDataPercent }}%</span> <small data-container="body" data-toggle="popover" data-placement="top" data-content='{{ gettext("The percentage of datasets in the place that are fully open, as defined by the [Open Definition](http://opendefinition.org/).")|marked }}' data-original-title="{{ gettext('What does this mean?') }}">{{ gettext('Open') }}</small>
           </td>
           <td class="score place-openness" data-score="{{ place.computedRelativeScore }}" style="color: white;">
             <span>{{ place.computedRelativeScore }}%</span> <small data-container="body" data-toggle="popover" data-placement="top" data-content='{{ gettext("Ranking score, based on weighted questions, displayed as a percentage of the maximum possible score.") }}' data-original-title="{{ gettext('What does this mean?') }}">{{ gettext('Score') }}</small>
