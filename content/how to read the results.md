@@ -61,18 +61,17 @@ This image shows a data request form (controlled access). The dataset is entirel
 ## Data gaps
 A data gap can mean that governments do not publish any data in a given category. Sometimes, if the Index shows a 0 percent score, we see data gaps. For instance, the case for Western African countries that lack air quality monitoring systems, or countries that have no established postcodes system. Data gaps indicate that the government information systems are not ready to produce open data, sometimes because resources are missing, sometimes because it is not a priority of government. 
 
-**Maximum score**: 0%
+
+## Exist, but only to governmental use
+Sometimes government has the data, but for many reasons choose not to open it to the pu
 
 ### Not granular 
 Since our criteria requires a particular level of data granularity, we considered all datasets that do not meet this requirement as not granular, and therefore  are regarded as not available. 
 For example - Great Britain has published elections results, but not at the poll station level, which is a crucial level to detect voter fraud; therefore, while there is some data for UK elections, it is not at the right level, and is considered as non existent. 
 
-**Maximum score**: 0%
-
 ###  Do not fit our criteria. 
 We are looking for particular datasets in the index. When they don't have all the characteristics we are looking for, we consider them as not available. 
 
-**Maximum score**: 0%
 
 
 
