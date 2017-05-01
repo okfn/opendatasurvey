@@ -14,14 +14,12 @@
         <colgroup>
           <col style="width:24%">
           <col style="width:23%">
-          <col style="width:5%">
           <col style="width:6%">
         </colgroup>
         {% else %}
         <colgroup>
           <col style="width:20%">
           <col style="width:23%">
-          <col style="width:5%">
           <col style="width:8%">
           <col style="width:6%">
           <col style="width:4%">
@@ -32,7 +30,6 @@
           <tr>
             <th class="clickable">{{ gettext("Dataset") }}</th>
             <th>{{ gettext("Breakdown") }}</th>
-            <th>{{ gettext("Info") }}</th>
             {% if not is_index %}
             <th>{{ gettext("Year") }}</th>
             {% endif %}
@@ -64,14 +61,9 @@
                       {% set answer = entry.getAnswerValueForQuestion(question) %}
                       {% set pass = 'yes' if question.pass(answer) else 'no' %}
                     {% endif %}
-                    <li class="{{ pass }}" title="{{ question.question }}" data-toggle="popover" data-content="{{ popovers.popover_slice_content(question.description)|escape }}"><i class="fa fa-{{ question.icon }}"></i>&nbsp;</li>
+                    <li class="{{ pass }}" title="{{ question.questionshort }}" data-toggle="tooltip"><i class="fa fa-{{ question.icon }}"></i>&nbsp;</li>
                   {% endfor %}
                 </ul>
-              </td>
-              <td class="info-expander" title="Click for full details">
-                <a aria-expanded="false" data-toggle="collapse" data-target="#detail-{{ dataset.id }}" class="collapsed">
-                  <i class="fa fa-info-circle"></i>
-                </a>
               </td>
               {% if not is_index %}
               <td class="year">
@@ -93,21 +85,6 @@
                 </td>
               {% endif %}
             </tr>
-            {% if entry.details %}
-            <tr id="detail-{{ dataset.id }}" class="details collapse">
-            {% if is_index %}
-            <td colspan="4">
-            {% else %}
-            <td colspan="6">
-            {% endif %}
-                {# hack around tablesorter and our row toggler #}<span style="visibility: hidden;">{{ dataset.name }}</span>
-                {% if entry.details %}
-                {{ entry.details|marked }}
-                {% endif %}
-                <br />
-              </td>
-            </tr>
-            {% endif %}
 
             {% if not is_index %}
             {% for submission in submissions %}
@@ -136,11 +113,6 @@
                   {% endfor %}
                 </ul>
               </td>
-              <td class="info-expander" title="Click for full details">
-                  <a data-toggle="collapse" data-target="#detail-submission-{{dataset.id}}-{{loop.index}}" class="collapsed">
-                    <i class="fa fa-info-circle"></i>
-                  </a>
-              </td>
               {% if not is_index %}
               <td class="year">
                 {% if submission %}
@@ -154,15 +126,6 @@
                 <a href="{{ format('/submission/%(submissionid)s', {submissionid: submission.id}) }}" class="view" title="{{ gettext('View Submission') }}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
               </td>
               {% endif %}
-            </tr>
-            <tr id="detail-submission-{{dataset.id}}-{{loop.index}}" class="details collapse">
-              <td colspan="6">
-                {# hack around tablesorter and our row toggler #}<span style="visibility: hidden;">{{ dataset.name }}</span>
-                {% if submission.details %}
-                {{ submission.details|marked }}
-                {% endif %}
-                <br />
-              </td>
             </tr>
             {% endfor %}
             {% endif %}
