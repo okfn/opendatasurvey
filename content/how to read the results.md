@@ -32,12 +32,12 @@ Data is publicly accessible if the public can find it and view it online without
 
 This image shows a search interface of a company register. It allows for targeted searches for individual companies, but does not enable the user to retrieve all data at once. Individual search results (non-bulk) are displayed in HTML format and can then be downloaded in PDF format (not machine-readable). Therefore, the score is 70% .
 
-<img src="https://github.com/okfn/opendatasurvey/blob/master/census/static/images/searchinterface.png?raw=true" alt="Search interface" class="img-responsive center-block" style="width: 700px;">
+<img src="https://github.com/okfn/opendatasurvey/blob/master/census/static/images/searchinterface.png?raw=true" alt="Search interface" class="img-responsive center-block" style="width: 500px;">
 
 In the image below, we are able to view weather forecast data available in HTML. The data is publicly accessible, but cannot be downloaded without using a “scraper” tool that would automatically retrieve the values from the website. Some of the values, like the temperature graph cannot be retrieved at all. Also the data is legally protected by copyright and cannot be reused. The scoring: 45% (not machine-readable, not downloadable, no open license).
 
 
-<img src="https://github.com/okfn/opendatasurvey/blob/master/census/static/images/visualisationnotdata.png?raw=true" alt="html scraper" class="img-responsive center-block" style="width: 700px;">
+<img src="https://github.com/okfn/opendatasurvey/blob/master/census/static/images/visualisationnotdata.png?raw=true" alt="html scraper" class="img-responsive center-block" style="width: 500px;">
 
 
 ## Access-controlled data
