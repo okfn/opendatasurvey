@@ -1,8 +1,8 @@
 # Methodology
 
-This page explains the methodology behind the 2016/2017 Global Open Data Index. If you have any further questions or comments about our methodology please reach to us through the [Open Data Index forum](https://discuss.okfn.org/c/open-data-index/global-open-data-index-2016).
+This page explains the methodology behind the 2016/2017 Global Open Data Index. If you have any further questions or comments about our methodology, please reach to us through the [Open Data Index forum](https://discuss.okfn.org/c/open-data-index/global-open-data-index-2016).
 
-The Global Open Data Index (GODI) is an independent assessment of open government data publication from a civic perspective. GODI enables different open data stakeholders to track government’s progress on open data publication. GODI also allows governments to get direct feedback from data users. The Index gives both parties a baseline for discussion and analysis of the open data ecosystem in their country and internationally. We encourage all interested parties to participate in an open dialogue to allow for ownership of the results  and to make the Index as relevant as possible.
+The Global Open Data Index (GODI) is an independent assessment of open government data publication from a civic perspective. GODI enables different open data stakeholders to track government’s progress on open data release. GODI also allows governments to get direct feedback from data users. The Index gives both parties a baseline for discussion and analysis of the open data ecosystem in their country and internationally. We encourage all interested parties to participate in an open dialogue to allow for ownership of the results and to make the Index as relevant as possible.
 
 ## Research scope
 Like any other benchmarking tool, GODI tries to answer a question. In our case, the question is as follows:
@@ -16,47 +16,47 @@ From this question, other important questions emerge, such as:
 In this year’s edition, we also experimented and measured aspects of “practical openness” like data findability. These are also acknowledged by the [International Open Data Charter Principles two to four](http://opendatacharter.net/principles/). The information we gained from this assessment is displayed in the results and will be available to download. It will also inform internal research which can be tracked on [GitHub](https://github.com/okfn/opendatasurvey)
 
 ### What GODI does NOT cover?
-GODI intentionally limits its inquiry to the publication of national government data. It does not look at other aspects of the common open data assessment framework such as context, use or impact. This narrow focus enables it to provide a standardized, robust, comparable assessment of open data around the world. While we are only looking at publication, we are yet to cover data quality which is a significant barrier to reuse. We hope we will be able to do this in the future.
+GODI intentionally limits its inquiry to the publication of national government data. It does not look at other aspects of the common open data assessment framework such as context, use or impact. This narrow focus enables it to provide a standardised, robust, comparable assessment of open data around the world. While we are only looking at publication, we are yet to cover data quality which is a significant barrier to reuse. We hope we will be able to do this in the future.
 
 ## Research assumptions
 This section presents the key assumptions that were taken into consideration while collecting and assessing the data.
 
 #### Assumption 1: Open data is defined by the Open Definition.
 We define open data according to the [‘Open Definition’](http://opendefinition.org/). The Open Definition is a set of principles that define openness of data and content. It is also simple and easy to operationalise.
-We note one small deviation from the current v2.1 of the Open Definition. The only part of our methodology that is not aligned with the Open Definition is our assessment of ‘open machine-readable’ formats. **We give a full score to machine-readable formats even if their source code is not open.** Instead, formats must be usable with at least one free and open source software. Thereby the Index gives preference to practical openness over the actual openness of a format.
+We note one small deviation from the current v2.1 of the Open Definition. The only part of our methodology that is not aligned with the Open Definition is our assessment of ‘open, machine-readable’ formats. **We give a full score to machine-readable formats even if their source code is not open.** Instead, formats must be usable with at least one free and open source software. Thereby the Index gives preference to practical openness over the actual openness of a format.
 
 #### Assumption 2: The role of government in publishing data.
 In the past, there have been questions about the role government should play to ensure the publication of open data (INSERT LINK TO DISCUSS). Government services may be privatised, which means the data can be owned and produced by a company and not the state. We assume that for the key data categories we survey, the government has a responsibility to ensure their publication, even if it is held and managed by a third-party.
 #### Assumption 3: The Global Open Data Index is a ‘national’ indicator.
-We acknowledge that not all countries have the same political structure. It is possible that not all of the sub-national governments produce the same data as they are potentially subject to different laws and/or procedures. GODI therefore does not only assess data publication of national government, but data publication at the national level. “National” publication of open data can take three forms:
+We acknowledge that not all countries have the same political structure. It is possible that not all of the sub-national governments produce the same data as they are potentially subject to different laws and procedures. GODI, therefore, does not only assess data publication of national government but data publication at the national level. “National” publication of open data can take three forms:
 * The data describes national government processes or procedures (government entities operating on the highest administrative level).
 * The data is collected or produced by national government or a national government agency (on highest administrative level).
-* The data describes national parameters and public services for the entire national territory, but is collected by sub-national actors.
-For example we check if budgets are available for the national government of a federal state, or if air quality data exists for all country regions. **Only in cases where we see legal and administrative autonomy from a higher government, GODI will look into sub-national territories individually** (see assumption 4).
+* The data describes national parameters and public services for the entire national territory but is collected by sub-national actors.
+For example, we check if budgets are available for the national government of a federal state, or if air quality data exists for all country regions. **Only in cases where we see legal and administrative autonomy from a higher government, GODI will look into sub-national territories individually** (see assumption 4).
 
 #### Assumption 4: GODI assesses ‘places’ instead of ‘countries’.
 GODI seeks to be a **meaningful and actionable indicator for government**. Therefore, GODI 2016 ranks ‘Places’ and not ‘Countries’.
-For years GODI struggled to assess countries with devolved power. In some cases, such as Northern Ireland, sub-national governments mainly operate autonomously from higher national government, and are granted administrative and legislative autonomy.  In order to be a relevant indicator, we experimented how to better assess data on a sub-national level in a comparable way. As a test case, the Index assesses Northern Ireland separately from Great Britain this year. By separating Northern Ireland, we seek to address those government bodies that are actually responsible for publishing open data, and open up the debate how to understand open data on a subnational level. A short explanation why we regard Northern Ireland separately, can be found [here](https://docs.google.com/document/d/1bP5nZdEgtgfM36ShmE-r9RWsnWTyAx6c-d_eDKk_zuU/edit#). We would love to hear your feedback in the discuss.okfn.org forum.
+For years GODI struggled to assess countries with devolved power. In some cases, such as Northern Ireland, sub-national governments mainly operate autonomously from the higher national government and are granted administrative and legislative autonomy.  To be a relevant indicator, we experimented how to better assess data on a sub-national level in a comparable way. As a test case, the Index assesses Northern Ireland separately from Great Britain this year. By separating Northern Ireland, we seek to address those government bodies that are actually responsible for publishing open data, and open up the debate how to understand open data on a subnational level. A short explanation why we regard Northern Ireland separately can be found [here](https://docs.google.com/document/d/1bP5nZdEgtgfM36ShmE-r9RWsnWTyAx6c-d_eDKk_zuU/edit#). We would love to hear your feedback in the discuss.okfn.org forum.
 Furthermore, the British Crown Dependencies (Isle of Man, Jersey, Guernsey) are regarded individually because they are not part of the UK government and operate largely autonomously. In other cases, we receive submissions for places that are not officially recognised as independent countries (such as Kosovo).
 
 ## What data does the Index look at?
-GODI measures the openness of clearly defined data categories. Any open data that does not fall within these categories is **not regarded** for  our assessment.  All Index scores exclusively refer to our data categories and should be understood as **a proxy for the availability of open government data at large**.
-This has three reasons. Firstly, **GODI assesses open government data that has proven to be useful for the public**. User stories helped us to define categories that are most useful for the public. Secondly, **GODI is a comparative indicator**. In the past we have used broader categories and compared very different datasets, at the expense of comparability. Thirdly, a **standardized procedure supports our researchers to reduce bias and personal judgement**.
+GODI measures the openness of clearly defined data categories. Any open data that does not fall within these categories is **not regarded** for our assessment.  All Index scores exclusively refer to our data categories and should be understood as **a proxy for the availability of open government data at large**.
+This has three reasons. Firstly, **GODI assesses open government data that has proven to be useful for the public**. User stories helped us to define categories that are most useful for the public. Secondly, **GODI is a comparative indicator**. In the past, we have used broader categories and compared very different datasets, at the expense of comparability. Thirdly, a **standardised procedure supports our researchers to reduce bias and personal judgement**.
 
 Each data category contains the following information:
-* **A minimum of 3 characteristics:** The data characteristics describe the mandatory content of a dataset. Usually all data characteristics are required in order to qualify for assessment.  *Usually if a dataset is missing one of the characteristic, it will be considered that the dataset is not published.*
+* **A minimum of 3 characteristics:** The data characteristics describe the mandatory content of a dataset. Usually, all data characteristics are required to qualify for assessment.  *Usually if a dataset is missing one of the characteristics, it will be considered that the dataset is not published.*
 For two categories - water quality and draft legislation we have lowered the bar by making some characteristics optional. This is because we are trying to understand better what data is out there and to improve definitions for these datasets in the future.
 * **Aggregation level:** Some data is available in different levels of aggregation. For example, water quality data can exist for each individual water source, or it can be presented as total annual pollution for regions or the country. *In most cases GODI assesses detailed, disaggregated data.*
-Detailed data increases the use cases and broadens the insights people can draw from it. [The International Open Data Charter](http://opendatacharter.net/) also emphasizes that the data should be published in its raw, original format as disaggregated data. Being clear about the aggregation level helps to guide our researchers looking for the correct dataset.
+Comprehensive data increases the use cases and broadens the insights people can draw from it. [The International Open Data Charter](http://opendatacharter.net/) also emphasises that the data should be published in its raw, original format as disaggregated data. Being clear about the aggregation level helps to guide our researchers looking for the correct dataset.
 * **Time intervals:** Different datasets are updated in different time intervals. Our survey includes the question “This data should be updated every [TIME INTERVAL]. Is it up-to-date?” to assess whether data is up-to-date. Data that is not up-to-date often is less useful.
 
-Government often publishes data on multiple websites, and in many files and formats. To make an informed and consistent decision about which data to pick, reviewers followed two approaches:
+Governments often publish data on multiple websites, and in many files and formats. To make an informed and consistent decision about which data to pick, reviewers followed two approaches:
 
 1. **Choosing one reference dataset:** Reviewers find one reference dataset or file that contains all relevant characteristics. They answer the survey using this dataset. This can be a CSV file, a shapefile, or data presented on a website. If reviewers have to choose between two or more similar datasets, they should choose the one that scores highest and document their choice in a comment.
-2. **Referencing multiple datasets (if one reference file is not available):** Reviewers could not find a reference dataset, because the data is split across many files, formats and places. In this case, they refer the survey to different files. It is important that the sum of these files contains all required data characteristics. Example: if one dataset displays votes on bills and is in a machine-readable format, but another one contains bill texts and is not machine-readable, then the data is not considered to be machine-readable.
+2. **Referencing multiple datasets (if one reference file is not available):** Reviewers could not find a reference dataset because the data is split across many files, formats and places. In this case, they refer the survey to different files. It is important that the sum of these files contains all required data characteristics. Example: if one dataset displays vote on bills and are in a machine-readable format, but another one contains bill texts and is not machine-readable, then the data is not considered to be machine-readable.
 
 ## The list of data categories
-Our data categories reflect key data that is relevant for civil society at large. The categories have been developed in partnership with domain experts, including organisations championing open data in their respective fields. In some cases we base our definition on international data production and reporting standards used by governments around the world. Each year we refine our definitions to reflect learnings from these experts.
+Our data categories reflect key data that is relevant for civil society at large. The categories have been developed in partnership with domain experts, including organisations championing open data in their respective fields. In some cases, we base our definition on international data production and reporting standards used by governments around the world. Each year we refine our definitions to reflect learnings from these experts.
 Table in CSV form here: https://docs.google.com/spreadsheets/d/1kT-MRf50TP4tPwjCOttvmftQPE0YkXr9hrt-YMWnK_s/edit#gid=0
 
 <table class="table table-striped table-bordered">
@@ -70,85 +70,215 @@ Table in CSV form here: https://docs.google.com/spreadsheets/d/1kT-MRf50TP4tPwjC
     <td>Budget</td>
     <td>National government budget at a high level. This is planned government expenditure for the upcoming year, and not the actual expenditure.To develop this category the Index drew on work from [Open Spending](next.openspending.org).</td>
     <td>Open budget data allows for well-informed publics. It showing what money is spent on, how public funds develop over time, and why certain activities are funded. See here a list of cases how budget data has been used in the past.</td>
-    <td>Following data must be online to qualify for assessment:* Budget for each national government department* ministry, or agency. * Descriptions for budget sectionsLevel of granularityBudget separated into sub-department, political program, or expenditure type</td>
+    <td><p>Following data must be online to qualify for assessment:
+      <ul>
+      <li> Budget for each national government department</li>
+      <li>ministry, or agency</li>
+      <li>Descriptions for budget sectionsLevel of granularityBudget separated into sub-department, political program, or expenditure type
+      </li>
+    </p></td>
   </tr>
   <tr>
     <td>Spending</td>
-    <td>Records of actual (past) national government spending at a detailed transactional level. Data must display ongoing expenditure, including transactions. A database of contracts awarded or similar willnotbe considered sufficient. Also a database only showing subsidies will not be sufficient. To develop this category the Index drew on work from [Open Spending](next.openspending.org).</td>
-    <td>Open spending data shows whether public money is efficiently and effectively used. It helps to understand spending patterns, and to display corruption, misuse, and waste.</td>
-    <td>Following data must be online to qualify for assessment:* Government office which had the transaction * Date of transaction Name of vendor * Nominal amount of individual transactionLevel of granularityIndividual record of each transaction</td>
+    <td>Records of actual (past) national government spending at a detailed transactional level. Data must display ongoing expenditure, including transactions. A database of contracts awarded or similar will not be considered sufficient. Also, a database only showing subsidies will not be sufficient. To develop this category the Index drew on work from [Open Spending](next.openspending.org).</td>
+    <td>Open spending data shows whether public money is efficiently and effectively used. It helps to understand spending patterns and to display corruption, misuse, and waste.</td>
+    <td>
+      <p>Following data must be online to qualify for assessment:
+        <ul>
+          <li>Government office which had the transaction</li>
+          <li>Date of transaction Name of vendor</li>
+          <li>Nominal amount of individual transactionLevel of granularity</li>
+          <li>Individual record of each transaction</li>
+        </ul>
+      </p>
+    </td>
   </tr>
   <tr>
     <td>Procurement</td>
-    <td>All tenders and awards of the national/federal government aggregated by office. It does not look into procurement planning or other procurement phases such as implementation (i.e. actual money transfers, which are part of our spending category). To develop this category the Index drew on work from the [Open Contracting Partnership](http://standard.open-contracting.org/latest/en/schema/).</td>
+    <td>All tenders and awards of the national/federal government aggregated by an office. It does not look into procurement planning or other procurement phases such as implementation (i.e. actual money transfers, which are part of our spending category). To develop this category the Index drew on work from the [Open Contracting Partnership](http://standard.open-contracting.org/latest/en/schema/).</td>
     <td>Open procurement data may enable fairer competition among companies, allow to detect fraud, as well as deliver better services for governments and citizens. Monitoring tenders helps new groups to participate in tenders and to increase government compliance.</td>
-    <td>Following data must be online to qualify for assessment:**Tender phase** * Tenders per government office * Tender name Tender description * Tender status**Award phase* Awards per government office * Award title * Award description * Value of the award Supplier's name</td>
+    <td>
+      <p><Following data must be online to qualify for assessment:</p>
+      <p><b>Tender phase</b>
+        <ul>
+          <li>Tenders per government office</li>
+          <li>Tender name Tender description</li>
+          <li>Tender status</li>
+        </ul>
+      </p>
+      <p><b>Award phase</b>
+        <ul>
+          <li>Awards per government office</li>
+          <li>Award title</li>
+          <li>Award description</li>
+          <li>Value of the award Supplier's name</li>
+        </ul>
+      </p>
+    </td>
   </tr>
   <tr>
     <td>Election results</td>
-    <td>This data category looks at results for all major national electoral contests. Election data informs about voting outcomes and voting process. What are electoral majorities and minorities? How many votes are registered, invalid, or spoilt? The Index consulted the National Democratic Institute (NDI) to develop this data category, but didnt take their latest recommendation which will be consider for the next edition. For more information, see the NDI’s [Open Elections Data Initiative](http://openelectiondata.net/en/guide/key-categories/polling-stations/).</td>
-    <td>To enable highest transparency, the Index assesses polling station data. Data for electoral zones does not suffice. Polling stations are the locations voters are assigned to leave their vote. Having this data allows for more varied analyses, e.g. whether voters can reach a polling station.</td>
-    <td>Following data must be online to qualify for assessment:Results for major national electoral contests (such as general elections)This data needs to include:* Number of registered votes * Number of invalid votes * Number of spoiled votes (not required, if a digital voting system is assessed, that does not recognize spoiled votes)Level of granularityData available at polling station level</td>
+    <td>This data category looks at results for the latest national electoral contest. Election data informs about voting outcomes and voting process. What are electoral majorities and minorities? How many votes are registered, invalid, or spoilt? The Index consulted the National Democratic Institute (NDI) to develop this data category, but did not take their latest recommendation which will be considered for the next edition. For more information, see the NDI’s [Open Elections Data Initiative](http://openelectiondata.net/en/guide/key-categories/election-results/).</td>
+    <td>To enable the highest level of transparency, the Index assesses polling station-level data. Polling stations are the locations at which voters cast their vote. Having this data allows for independent scrutiny of each stage of the voting and counting process. It also helps electoral stakeholders better target their voter education and mobilization efforts for the next elections.</td>
+    <td>
+      <p>Following data must be online to qualify for assessment:
+        <ul>
+          <li>Results for major national electoral contests (such as general elections)</li>
+          <li>Number of registered votes</li>
+          <li>Number of invalid votes</li>
+          <li>Number of spoiled votes (not required, if a digital voting system is assessed, that does not recognize spoiled votes) Level of granularity</li>
+          <li>Data available at polling station level</li>
+        </ul>
+      </p>
+        </td>
   </tr>
   <tr>
     <td>Company register</td>
     <td>Lists of registered (limited liability) companies. The submissions in this data category do not need to include detailed financial data such as balance sheets.This category draws on the work of [OpenCorporates](http://api.opencorporates.com/documentation/API-Reference).</td>
     <td>Open data from company registers may be used to many ends: enabling customers and businesses to see with whom they deal, or to see where a company has registered offices.</td>
-    <td>Following data must be online to qualify for assessment:* Name of company Company address* Unique identifier of the company * Register available for entire country (usually assessed through sample: it is answered with „Yes“ if a register indicates companies in different regions).</td>
+    <td>
+      <p>Following data must be online to qualify for assessment:
+        <ul>
+          <li>Name of company Company address* Unique identifier of the company</li> 
+          <li>Register available for entire country (usually assessed through sample: it is answered with „Yes“ if a register indicates companies in different regions)</li>
+        </ul>
+      </p>
+    </td>
   </tr>
   <tr>
     <td>Land ownership</td>
     <td>Maps of lands with parcel layer that displays boundaries. Also a land registry with information on registered parcels of land.The assessment criteria were developed in collaboration with Cadasta Foundation. For more information on land ownership datasets, see [Cadasta Foundation's Data Overview](http://cadasta.org/open-data/overview-of-property-rights-data/).</td>
     <td>The Index focuses on assessing open land tenure data (describing the rules and processes of land property). Responsible use may enable tenure security and increase the transparency of land transactions.</td>
-    <td>The following characteristics must be included in cadastral and registry information submitted.* Parcel boundaries * Parcel ID Property Value (price paid for transaction or tax value) * Tenure Type (public, private, customary, etc.)</td>
+    <td>
+      <p>The following characteristics must be included in cadastral and registry information submitted.
+        <ul>
+          <li>Parcel boundaries</li>
+          <li>Parcel ID Property Value (price paid for transaction or tax value)</li> 
+          <li>Tenure Type (public, private, customary, etc.)</li>
+        </ul>
+      </p>
+    </td>
   </tr>
   <tr>
     <td>National maps</td>
-    <td>A geographical map of the country including national traffic routes, stretches of water, and markings of heights. The map must at least be provided at a scale of 1:250,000 (1 cm = 2.5km), a scale feasible for most countries. The Index developed this category based [on a landmark report of the United Nations Commitee of Experts on Global Geospatial Information Management (UNGGIM)](http://www.isprs.org/documents/reports/The_Status_of_Topographic_Mapping_in_the_World.pdf).</td>
+    <td>A geographical map of the country including national traffic routes, stretches of water, and markings of heights. The map must at least be provided at a scale of 1:250,000 (1 cm = 2.5km), a scale feasible for most countries. The Index developed this category based [on a landmark report of the United Nations Committee of Experts on Global Geospatial Information Management (UNGGIM)](http://www.isprs.org/documents/reports/The_Status_of_Topographic_Mapping_in_the_World.pdf).</td>
     <td>Geographic information is instrumental for many use cases, including journey planning, the mapping of topography, as well as demographic indicators.</td>
-    <td>Following data must be online to qualify for assessment:* Markings of national traffic routes * Markings of relief/heights * Markings of water stretches * National borders Coordinates Note: To qualify, data must contain geographic projections that enable to interpret coordinates</td>
+    <td>
+      <p>Following data must be online to qualify for assessment:
+        <ul>
+          <li>Markings of national traffic routes</li>
+          <li>Markings of relief/heights</li> 
+          <li>Markings of water stretches * National borders Coordinates Note: To qualify, data must contain geographic projections that enable to interpret coordinates</li>
+        </ul>
+      </p>
+    </td>
   </tr>
   <tr>
     <td>Administrative Boundaries</td>
     <td>Data on administrative units or areas defined for the purpose of administration by a (local) government.The development of this category draws on work of  [FAO Global Administrative Unit Layers (GAUL)project]((http://www.fao.org/geonetwork/srv/en/metadata.show?id=12691&amp;currTab=simple), as well as the [UNGIWG](http://www.ungiwg.org/coreDB).</td>
-    <td>Open data about administrative zones has many use cases: Who are the politicians candidating in my region? Which government bodies administer my region? How is wealth distributed across regions? The Index assesses two administrative boundary levels (e.g. federal states = level 1, and municipalities = level 2).</td>
-    <td>Following data must be online to qualify for assessment:* Boundary level 1 * Boundary level 2 (not required, if country has only one level)* Coordinates of administrative zone (latitude, longitude)*  Name of polygon Borders of polygon Note: To qualify, data must contain geographic projections that enable to interpret coordinates</td>
+    <td>Open data about administrative zones has many use cases: Who are the candidates in my region? Which government bodies administer my region? How is wealth distributed across regions? The Index assesses two administrative boundary levels (e.g. federal states = level 1, and municipalities = level 2).</td>
+    <td>
+      <p>Following data must be online to qualify for assessment:
+        <ul>
+          <li>Boundary level 1</li>
+          <li>Boundary level 2 (not required, if country has only one level)</li>
+          <li>Coordinates of administrative zone (latitude, longitude)</li>  
+          <li>Name of polygon Borders of polygon Note: To qualify, data must contain geographic projections that enable to interpret coordinates</li>
+        </ul>
+      </p>
+    </td>
   </tr>
   <tr>
     <td>Locations</td>
-    <td>A database of postcodes/zipcodes and the corresponding spatial locations in terms of latitude and longitude (or similar coordinates in an openly published coordinate system). The data has to be available for the entire country. The Index drew on work of the [Universal Postal Union](http://www.upu.int/fileadmin/documentsFiles/activities/addressingAssistance/manualAddressingAddressingAndPostcodeManualEn.pdf) to develop this category.</td>
+    <td>A database of postcodes/zipcodes and the corresponding spatial locations regarding latitude and longitude (or similar coordinates in an openly published coordinate system). The data has to be available for the entire country. The Index drew on work of the [Universal Postal Union](http://www.upu.int/fileadmin/documentsFiles/activities/addressingAssistance/manualAddressingAddressingAndPostcodeManualEn.pdf) to develop this category.</td>
     <td>Open location data shows the addresses of public and private buildings. While mainly used to route postal services, this data has many use cases: to calculate the number of persons in a city district, to provide homes with services, or for direct mailing and marketing.</td>
-    <td>Following data must be online to qualify for assessment:* Zipcodes Addresses (required, if zip code does not include the address) * Coordinates (latitude, longitude) * Data available for entire countryNote: To qualify, data must contain geographic projections that enable to interpret coordinates</td>
+    <td>
+      <p>Following data must be online to qualify for assessment:
+        <ul>
+          <li>Zipcodes Addresses (required, if zip code does not include the address)</li> 
+          <li>Coordinates (latitude, longitude)</li>
+          <li>Data available for entire countryNote: To qualify, data must contain geographic projections that enable to interpret coordinates</li>
+        </ul>
+      </p>
+    </td>
   </tr>
   <tr>
     <td>National statistics</td>
     <td>Key national statistics on demographic and economic indicators such as Gross Domestic Product (GDP), or unemployment and population statistics. These statistics can be published as aggregates for the entire country.</td>
-    <td>As Open Data Watch states "official statistics provide an indispensable element in the information system of a democratic society, serving the Government, the economy and the public with data about the economic, demographic, social and environmental situation."</td>
-    <td>Following data must be online to qualify for assessment:* Country population (Required: census data, updated every year, Optional: vital statistics of birth and death) * Gross Domestic Product (measured in current or constant prices, updated quarterly, last update must not be more than 3 months ago)*  National unemployment (absolute numbers, or expressed as percentage of entire population, updated quarterly, last update must not be more than 3 months ago)</td>
+    <td>As Open Data Watch states "Official statistics provide an indispensable element in the information system of a democratic society, serving the Government, the economy and the public with data about the economic, demographic, social and environmental situation."</td>
+    <td>
+      <p>Following data must be online to qualify for assessment:
+        <ul>
+          <li>Country Population (Required: census data, updated every year, Optional: vital statistics of birth and death)</li>
+          <li>Gross Domestic Product (measured in current or constant prices, updated quarterly, last update must not be more than 3 months ago)</li> 
+          <li>National unemployment (absolute numbers, or expressed as percentage of entire population, updated quarterly, last update must not be more than 3 months ago)</li>
+        </ul>
+    </td>
   </tr>
   <tr>
     <td>Draft legislation</td>
-    <td>Data about the bills discussed within national parliament as well as votings on bills (not to mix with passed national law). Data on bills must be available for the current legislation period.This data category draws on work by the National Democratic Institute (NDI)and the [Declaration of Parliamentary Openness](https://openingparliament.org/declaration/).</td>
-    <td>Open data on the law-making process is crucial for parliamentary transparency: What does a bill text say and how does it change over time? Who introduces a bill? Who votes for and against it? Where is a bill discussed next, so the public can participate in debates?</td>
-    <td>Following data is required. It must be online for the data to qualify for assessment:* Content of bill * Author of bill * Status of bill * Available for current legislation periodFollowing data is assessed optionally (only if available):* Votes on bill per member of parliament * Transcripts of debates on billNote on optional data:This category is newly added in 2016. Not all data needs to be available online in order to qualify. The Index team used minimum requirements to explores how much data is currently available online. In future editions the category may require more data elements.</td>
+    <td>Data about the bills discussed within national parliament as well as votes on bills (not to mix with passed national law). Data on bills must be available for the current legislation period.This data category draws on work by the National Democratic Institute (NDI) and the [Declaration of Parliamentary Openness](https://openingparliament.org/declaration/).</td>
+    <td>Open data on the law-making process is crucial for parliamentary transparency: What does a bill text say and how does it change over time? Who introduces a bill? Who votes for and against it? Where is a bill discussed next so that the public can participate in debates?</td>
+    <td>
+      <p>Following data is required. It must be online for the data to qualify for assessment:
+        <ul>
+          <li>Content of bill</li>
+          <li>Author of bill * Status of bill</li>
+          <li>Available for current legislation period</li>
+        </ul>
+          Following data is assessed optionally (only if available):
+            <ul>
+              <li>Votes on bill per member of parliament</li>
+              <li>Transcripts of debates on bill<li>
+            </ul> 
+      </p>
+      <p>Note on optional data: This category is newly added in 2016. Not all data needs to be available online to qualify. The Index team used minimum requirements to explores how much data is currently available online. In future editions, the category may require more data elements.</p>
+      </td>
   </tr>
   <tr>
     <td>National law</td>
     <td>This data category requires all national laws and statutes to be available online, although it is not a requirement that information on legislative behaviour e.g. voting records is available.This data category draws on work by the National Democratic Institute (NDI) and the [Declaration of Parliamentary Openness](https://openingparliament.org/declaration/).</td>
     <td>Access to open data on a country's legal code (i.e. national law) supports compliance with law, enables to keep track of legal changes, and also enables public deliberation around a law.</td>
-    <td>Following data must be online to qualify for assessment:* Content of the law / status* Date of last amendment Amendments to the law (if applicable)</td>
+    <td>
+      <p>Following data must be online to qualify for assessment:
+        <ul>
+          <li>Content of the law / status</li>
+          <li>Date of last amendment Amendments to the law (if applicable)</li>
+        </ul>
+      </p>  
+  </td>
   </tr>
   <tr>
     <td>Air quality</td>
     <td>Data about the daily mean concentration of air pollutants, especially those potentially harmful to human health. Data should be available for all air monitoring stations or zones in a country, but at least for 3 major cities.The Index evaluates the openness of key pollutants as defined by the [World Health Organisation (WHO)](http://www.who.int/phe/health_topics/outdoorair/outdoorair_aqg/en/).</td>
     <td>Air quality is a key factor for human health and environment.</td>
-    <td>Following data must be online to qualify for assessment:* Particulate matter (PM) * Sulphur oxides (SOx) * Nitrogen oxides (NOx) * Carbon monoxide (CO) * Ozone (O3) * Available per air monitoring station (at least for 3 major cities)Following data is assessed optionally (if available):Volatile organic compounds (VOCs)</td>
+    <td>
+      <p>Following data must be online to qualify for assessment:
+        <ul>
+          <li>Particulate matter (PM)</li> 
+          <li>Sulphur oxides (SOx)</li> 
+          <li>Nitrogen oxides (NOx)</li> 
+          <li>Carbon monoxide (CO)</li>
+          <li>Ozone (O3)</li>
+          <li>Available per air monitoring station (at least for 3 major cities</li>
+        </ul>
+      </p>
+    <p>Following data is assessed optionally (if available):Volatile organic compounds (VOCs)<p></td>
   </tr>
   <tr>
     <td>Water quality</td>
-    <td>Water quality data by water source.The data category regards the quality of designated drinking water sources. If data on designated drinking water sources is not available, it refers to environmental water sources (lakes, rivers, groundwater).Data per each individual water source is desirable. But for this year the Index also accepted if a country only published country-wide aggregated reports. As the review shows, we either find local and granular data, or aggregated national reports.</td>
+    <td>Water quality data by water source.The data category regards the quality of designated drinking water sources. If data on designated drinking water sources is not available, it refers to environmental water sources (lakes, rivers, groundwater).Data per each water source is desirable. But for this year the Index also accepted if a country only published country-wide aggregated reports. As the review shows, we either find local and granular data or aggregated national reports.</td>
     <td>This information is essential for both the delivery of services and the prevention of diseases.</td>
-    <td>In order to satisfy the minimum requirements for this category, data should be available on level of the following chemicals:* Fecal coliform * Arsene Fluorides * Nitrate Total Dissolved Solids Available for the entire countryLevel of granularity* Data per water source (optional) * National water quality report (if national dataset by water source is not available)</td>
+    <td>
+      <p>In order to satisfy the minimum requirements for this category, data should be available on level of the following chemicals:
+        <ul>
+          <li>Fecal coliform</li> 
+          <li>Arsene Fluorides</li>
+          <li>Nitrate Total Dissolved Solids Available for the entire countryLevel of granularity* Data per water source (optional)</li> 
+          <li>National water quality report (if national dataset by water source is not available)</li>
+        </ul>
+      </p>
+    </td>
   </tr>
 </table>
 
@@ -156,7 +286,7 @@ Table in CSV form here: https://docs.google.com/spreadsheets/d/1kT-MRf50TP4tPwjC
 Each dataset in each place is evaluated using a set of questions that examine the openness of the datasets based on the Open Definition and the Open Data Charter. In 2016, we introduced a new survey. The new scoring follows three ideas:
 * Each survey question measures a crucial aspect of either the legal, technical, or practical ‘openness’ of data. With this approach, we aim to reduce the potential bias towards single aspects of openness.
 * Our scoring follows a rationale in which we describe why a question is important for open data. We also explain cases why we should not score a question. Further explanations can be found in the table below or here.
-* The new scoring gives in total 40 points to open licenses/public domain status and machine-readable and open file formats. These technical and legal aspects of openness are the core of the Open Definition 2.1 and we seek to maintain a strong emphasis on them. However, aspects such timely publication, data availability and accessibility are equally important to access and use open data. Questions around data accessibility receive a score of in total 60 points.
+* The new scoring gives in total 40 points to open licenses/public domain status and machine-readable and open file formats. These technical and legal aspects of openness are the core of the Open Definition 2.1, and we seek to maintain a strong emphasis on them. However, aspects such timely publication, data availability and accessibility are equally important to access and use open data. Questions around data accessibility receive a score of in total 60 points.
 
 <table class="table table-striped table-bordered">
   <tr>
@@ -167,21 +297,21 @@ Each dataset in each place is evaluated using a set of questions that examine th
   </tr>
   <tr>
     <td>Is the data collected by government (or a third-party related or linked to government)?</td>
-    <td>Answer “Yes” if the chosen data are collected by government, or a third party officially representing government. This is the case for state-owned-enterprises or contractors delivering public services for government.Answer “No” if one of the following cases apply:The data is collected by organisations that do not represent government The data is collected but not for the relevant government level The data is not collected at all</td>
+    <td>Answer “Yes” if the chosen data is collected by the government, or a third party is officially representing the government. This is the case for state-owned-enterprises or contractors delivering public services for government.Answer “No” if one of the following cases apply: The data is collected by organisations that do not represent government The data is collected but not for the relevant government level The data is not collected at all</td>
     <td>Not scored</td>
-    <td> - Data collection by itself is not a characteristic of ‘open’ data.- Our knowledge of edge cases, exceptions from therule, etc. is too limited to make valid statements about a reasonable scoring.</td>
+    <td> - Data collection by itself is not a characteristic of ‘open’ data.- Our knowledge of edge cases, exceptions from the rule, etc. is too limited to make valid statements about a reasonable scoring.</td>
   </tr>
   <tr>
     <td>Is the data available online without the need to register or request access to the data?</td>
-    <td>Answer “Yes”, if the data is made available by the government on a public website. Answer “No” if the data areNOTavailable online or are available online only after registering, requesting the data from a civil servant via email, completing a contact form or another similar administrative process.</td>
+    <td>Answer “Yes”, if the data is made available by the government on a public website. Answer “No” if the data are NOT  available online or are available online only after registering, requesting the data from a civil servant via email, completing a contact form or another similar administrative process.</td>
     <td>15 points</td>
-    <td>- Online availability is a necessary requirement for openness: everyone has to have immediate access to specific data- It is a condition for all following questions- Mandatory registration can deter people from using data(focus on user perspective)- We put emphasis on the additional requirement that data must also be available without mandatory registration</td>
+    <td>- Online availability is a requirement for openness: everyone has to have immediate access to specific data- It is a condition for all following questions- Mandatory registration can deter people from using data(focus on user perspective)- We put emphasis on the additional requirement that data must also be available without mandatory registration</td>
   </tr>
   <tr>
     <td>Is the data available online at all?</td>
     <td>Tell us if the data is available online at all (after registering, after getting authentication.</td>
     <td>Not scored</td>
-    <td> - We currently do not aim to rewardmandatoryregistration- Administrative processes entail some features that contradict open data: such as agreeing to terms of use.- No score / missing out on points is a clear sign to governments that their way of online publication is not ideal for all user groups.</td>
+    <td> - We currently do not aim to reward mandatory registration- Administrative processes entail some features that contradict open data: such as agreeing to terms of use.- No score / missing out on points is a clear sign to governments that their way of online publication is not ideal for all user groups.</td>
   </tr>
   <tr>
     <td>Is the data available free of charge?</td>
@@ -197,13 +327,13 @@ Each dataset in each place is evaluated using a set of questions that examine th
   </tr>
   <tr>
     <td>How much do you agree with the following statement: “It was easy for me to find the data.”</td>
-    <td>Submitters answer with a likert scale.</td>
+    <td>Submitters answer with a Likert scale.</td>
     <td>Not scored</td>
     <td>Subjective assessment that suppose to help data publishers to understand the findabillity aspect of the data.</td>
   </tr>
   <tr>
     <td>Is the data downloadable at once?</td>
-    <td>Answer “Yes”, if you can download all data at once from the URL at which you found them. In case that downloadable data files are very large, their downloads may also be organised by month or year or broken down into sub-files.Answer “No” if if you have to do many manual steps to download the data, or if you can only retrieve very few parts of a large dataset at a time (for instance through a search interface).</td>
+    <td>Answer “Yes”, if you can download all data at once from the URL at which you found them. In case that downloadable data files are very large, their downloads may also be organised by month or year or broken down into sub-files.Answer “No” if-if you have to do many manual steps to download the data, or if you can only retrieve very few parts of a large dataset at a time (for instance through a search interface).</td>
     <td>15 Points</td>
     <td>other limits to download.</td>
   </tr>
@@ -211,14 +341,14 @@ Each dataset in each place is evaluated using a set of questions that examine th
     <td>Data should be updated every [Time Interval]: Is the data up-to-date?</td>
     <td>Please base your answer on the date at which you answer this question. Answer “No” if you cannot determine a date, or if the data are outdated.</td>
     <td>15 Points</td>
-    <td>(this replaces the bulk question from previous index)- We score if a complete or partial dataset can downloaded at once. This question therefore rewards the technical possibility to retrieve all data from the internet without having to download dozens of small pieces of information, getting access to data through a search interface only, sending requests, having captchas or - Some of the data we assess are most valuable right after their release - such as weather forecasts, election data or budget data. Timely provision with these data is therefore crucial- However, some data is not that time sensitive. We could tend to overly score them, if the scoring is too high.</td>
+    <td>(this replaces the bulk question from the previous index)- We score if a complete or partial dataset can download at once. This question therefore rewards the technical possibility to retrieve all data from the internet without having to download dozens of small pieces of information, getting access to data through a search interface only, sending requests, having captchas or - Some of the data we assess are most valuable right after their releases - such as weather forecasts, election data or budget data. Timely provision of these data is, therefore, crucial- However, some data is not that time sensitive. We could tend to overly score them if the scoring is too high.</td>
   </tr>
   <tr>
     <td>Is the data openly licensed/in public domain?</td>
     <td>This question measures if anyone is legally allowed to use, modify and redistribute data for any purpose. Only then data is considered truly "open"" (see Open Definition).
       <ul>
-        <li>Answer ”Yes” if the data are openly licensed. The Open Definition provides a list of conformant licenses. Also consult the terms of use which often indicate whether data can be freely reused<li>
-        <li>Answer “Yes” if there is no open licence, but a statement that the dataset is in “public domain”. To count as public domain the dataset must not be protected by copyright, patents or similar restrictions.</li>
+        <li>Answer ”Yes” if the data are openly licensed. The Open Definition provides a list of conformant licenses. Also, consult the terms of use which often indicate whether data can be freely reused<li>
+        <li>Answer “Yes” if there is no open license, but a statement that the dataset is in “public domain”. To count as public domain, the dataset must not be protected by copyright, patents or similar restrictions.</li>
         <li>If you are not sure whether an open licence or public domain notice is compliant with the Open Definition 2.1, seek feedback on the Open Data Index discussion forum.</li>
         <li>Answer “No” whenever it is not fully evident that the license or terms of use are compliant with the Open Definition.</li>
       </ul>
@@ -227,7 +357,7 @@ Each dataset in each place is evaluated using a set of questions that examine th
   </tr>
   <tr>
     <td>Is the data in open and machine-readable file formats?</td>
-    <td>We automatically compare them against alist of file formatsthat are considered machine-readable and open. A file format is called machine-readable if your computer can process, access, and modify single elements in a data file.The Index considers formats to be “open” if they can be fully processed with at least one free and open-source software tool. Potentially these formats allow more people to use the data, because people do not need to buy specific software to open it. The source code of these format does not have to be open.</td>
+    <td>We automatically compare them against alist of file formats that are considered machine-readable and open. A file format is called machine-readable if your computer can process, access, and modify single elements in a data file.The Index considers formats to be “open” if they can be fully processed with at least one free and open-source software tool. Potentially these formats allow more people to use the data because people do not need to buy specific software to open it. The source code of these format does not have to be open.</td>
     <td>20 points</td>
     <td>- Both features (machine-readable and open format) are key aspects of the open definition- Machine-readability is a major enhancement of technical usability. However, if a file is only usable with proprietary software (such as ArcGIS) ‘normal’ users are exempt from using them- Open formats put no copyright, monetary restrictions or other restrictions on their use (important for people who cannot / do not want to afford proprietary software).</td>
   </tr>
@@ -235,15 +365,15 @@ Each dataset in each place is evaluated using a set of questions that examine th
     <td>How much human effort is required to use the data. (1 = little to no effort is required, 3 = extensive effort is required)</td>
     <td>The submitters tell us their use case and the steps they took to make the data usable (example: “I have to reformat the data”).</td>
     <td>Not scored</td>
-    <td>Thequestion is a subjective user self-assessment. Also usability depends on context and the purposes for which a person wants to use the data</td>
+    <td>The question is a subjective user self-assessment. Also usability depends on context and the purposes for which a person wants to use the data</td>
   </tr>
 </table>
 
 ## How to ‘read’ the final results
 As explained in the sections above, the Index looks at specific data using specific survey questions. The result is a final score that has to be read carefully. Firstly, it exclusively refers to data with mandatory characteristics. If no dataset can be found online matching these characteristics, the data will not be considered to be available (equalling a score of 0%). More explanations to this approach can be found in the section “What data does the Index look at?”.
-Furthermore, the survey questions check different aspects of data access and usability (see table below). This means that behind fairly high scores we often do not find open data, but access-controlled data, or public data in poorly structured, or not machine-readable formats. The score therefore does not not show a linear increase of openness. Instead it highlights areas where government may improve open data publication.   
-An example: We may assess budget data in PDF form which may be in public domain, available online for free, but in a format making it practically unusable. This data is presented as 80% open. The score suggests a fairly high degree of openness but in fact, the data is not open. Only 100% means that the data is open.
-The reason for this is that we do not add many filters, such as exclusively considering data that is machine-readable - even though it might give a more realistic image of open data. With this approach, the Index seeks to demonstrate which data is already available and how it can be further improved. It is therefore important to carefully read how the data is published.
+Furthermore, the survey questions check different aspects of data access and usability (see table below). This means that behind fairly high scores we often do not find open data, but access-controlled data, or public data in poorly structured, or not machine-readable formats. The score, therefore, does not show a linear increase of openness. Instead, it highlights areas where the government may improve open data publication.
+An example: We may assess budget data in PDF form which may be in public domain, available online for free, but in a format making it practically unusable. This data is presented as 80% open. The score suggests a fairly high degree of openness, but in fact, the data is not open. Only 100% means that the data is open.
+The reason for this is that we do not add many filters, such as exclusively considering data that is machine-readable - even though it might give a more realistic image of open data. With this approach, the Index seeks to demonstrate which data is already available and how it can be further improved. It is, therefore, important to carefully read how the data is published.
 
 Depending on what survey items are checked, we find:
 <table class="table table-striped table-bordered">
@@ -259,7 +389,7 @@ Depending on what survey items are checked, we find:
   </tr>
   <tr>
     <td>Public data</td>
-    <td>Data is public if it can be seen by the public online without any restrictions (e.g. access controls). This data is not protected by any means of control (see below). Data must be readily available online. It does not matter whether data can be downloaded.Examples: Data can be openly licensed and downloadable as PDF, but not in a machine-readable format.Sometimes it is possible to download texts and other information in machine-readable formats (e.g. XML). Whilst available as open access this information is not openly licensed and hence not 100 open data.</td>
+    <td>Data is public if it can be seen by the public online without any restrictions (e.g. access controls). This data is not protected by any means of control (see below). Data must be readily available online. It does not matter whether data can be downloaded.Examples: Data can be openly licensed and downloadable as PDF, but not in a machine-readable format.Sometimes it is possible to download texts and other information in machine-readable formats (e.g. XML). While available as open access this information is not openly licensed and hence not 100 open data.</td>
     <td>Up to 80%</td>
   </tr>
   <tr>
@@ -289,29 +419,29 @@ The Index crowdsources its data. To do so, it uses a [non-probability sampling t
 This means that anyone from any place can participate and contribute to the Global Open Data Index as a contributor and make submissions, which are then reviewed. We do not have a quota on the number of places that can participate. Rather, we aim to sample as many places around the world as we can. This year, we considered only places that had submissions to all 15 categories. Places that had partial submissions were omitted. Data findability also has an impact on the quality of the data we collect. Contributors have diverse knowledge and backgrounds in open data and sometimes need help finding the data we are looking for. The following section explains how we tried to deal with this problem.
 
 ###Review process
-In order to provide reliable and valid results, each submission must be reviewed again. Our reviewers are domain experts. A list of all reviewers can be found on the About page. In the past, the review was country-based. We engaged local reviewers to verify all submissions for a country. It allowed us to overcome language problems and evaluate submissions in the context of a country. This approach however led to inconsistencies. Across countries submitters evaluated datasets with sometimes very different content. This went so far that submitters evaluated the openness of data that was so highly aggregated that it was not usable. Since 2015 we therefore use a **thematic review**. Each reviewer gets assigned one data category and checks the submissions across all places. A thematic review has further advantages: (1) Reviewers develop a consistent approach how to assess data categories. (2) They develop a sense where a similar piece of data can usually be found. (3) They are able to collect information in which formats and quality specific data is provided. This information is used by us to refine our data categories and guidance for future editions. To do so, we document our findings in review diaries.
+To provide reliable and valid results, each submission must be reviewed again. Our reviewers are domain experts. A list of all reviewers can be found on the About page. In the past, the review was country-based. We engaged local reviewers to verify all submissions for a country. It allowed us to overcome language problems and evaluate submissions in the context of a country. This approach, however, led to inconsistencies. Across countries, submitters evaluated datasets with sometimes very different content. This went so far that submitters evaluated the openness of data that was so highly aggregated that it was not usable. Since 2015 we, therefore, use a **thematic review**. Each reviewer gets assigned one data category and checks the submissions across all places. A thematic review has further advantages: (1) Reviewers develop a consistent approach how to assess data categories. (2) They develop a sense where a similar piece of data can usually be found. (3) They can collect information in which formats and quality specific data are provided. This information is used by us to refine our data categories and guidance for future editions. To do so, we document our findings in review diaries.
 
-####Review diaries
-The reviewers document in diaries all problems they encountered during review, as well as proposals to improve the Index. What was hard to assess? How can data categories be improved? Review diaries are especially useful to understand how reviewers dealt with edge cases. In what cases did they have to use their personal judgement? Thereby we want to ensure the highest degree of transparency possible so others understand the steps that were taken to verify a submission. Also as advocates for open science, we wish to enable others to learn from our efforts and to improve their own research. Further information is shared on our insights page. A list of review diaries can be found [here](https://drive.google.com/drive/folders/0B5j55T4ZyssBUTlRbkdvYzhOSkU).
+####Review Diaries
+The reviewers document in diaries all problems they encountered during the review, as well as proposals to improve the Index. What was hard to assess? How can data categories be improved? Review diaries are especially useful to understand how reviewers dealt with edge cases. In what cases did they have to use their personal judgement? Thereby we want to ensure the highest degree of transparency possible, so others understand the steps that were taken to verify a submission. Also as advocates for open science, we wish to enable others to learn from our efforts and to improve their own research. Further information is shared on our insights page. A list of review diaries can be found [here](https://drive.google.com/drive/folders/0B5j55T4ZyssBUTlRbkdvYzhOSkU).
 
 ###Quality assurance of review
-This year we did a quality assurance of the review results. Once the review results were gathered, Open Knowledge International staff members analysed all data sets scoring 100% in order to verify whether they were correctly assessed and to spot false negatives
+This year we did a quality assurance of the review results. Once the review results were gathered, Open Knowledge International staff members analysed all data sets scoring 100% to verify whether they were correctly assessed and to spot false negatives
 
 * We only focussed on the top scoring data for the following reasons:
-100% scoring data has an important signaling function to government suggesting that data is fully open.
-* Eliminating mistakes in 100% scoring data presents a realistic picture to government. It is hard to justify why a dataset, once falsely deemed open, shall not be 100% open in following years.
+100% scoring data has an important signalling function to the government suggesting that data is fully open.
+* Eliminating mistakes in 100% scoring data presents a realistic picture to the government. It is hard to justify why a dataset, once falsely deemed open, shall not be 100% open in following years.
 
 The quality assurance was accomplished in the following steps:
 1. Checking the forum for comments from our community.
 2. Compare with results from last year. Are the same source URLs used? Is something different this year? If so, why?
-3. Go into the source URL and double-check all survey questions.
-4. Look over the reviewer comments: Do reviewers say that the assessed data does not meet all characteristics? Does the submission maybe even have to be rejected?
-5. Check if an open license clearly refers to the reference dataset. Check it especially in cases where an open license was found on another website, than on the one were data is hosted. Also check if the license terms comply with the Open Definition.
+3. Go to the source URL and double-check all survey questions.
+4. Look at the reviewer comments: Do reviewers say that the assessed data does not meet all characteristics? Does the submission maybe even have to be rejected?
+5. Check if an open license clearly refers to the reference dataset. Check it especially in cases where an open license was found on another website, than on the one were data is hosted. Also, check if the license terms comply with the Open Definition.
 6. We looked into 2015 GODI results to see what changed. A frequent case: Do our reviewers refer to a different website or data portal?
 
 The quality assurance phase showed us that some reviews contained some errors, which were discussed and corrected with the reviewers. We documented the findings of the quality assurance, as well as our learnings from it.
 
 ## Public dialogue phase
-Once our results are published, we invite civil society and government to provide us with feedback about what they find useful (or not), and to tell us how they think we could strengthen the assessment. This dialogue phase will be open for one month, after which we will publish the revised data by June.
-In the past, we got approached by government and civil society alike to discuss our results. Reformers and open data decision-makers reference our data and  publicly highlight their advancement in the Index - and civil society provides constructive feedback about their country context so we can improve the assessment. This feedback is very useful for our team. But for the Index to be most effective, these points should be discussed in an open dialogue, so civil society and government can talk to one another, learn from one another, and take ownership to improve open data publication.
-Convening data providers and users is a unique and important quality of the Index. Research by Open Knowledge International and others ([here](http://civicus.org/thedatashift/wp-content/uploads/2017/03/from-evidence-to-action.pdf ) and [here](http://aiddata.org/governance-data-who-uses-it-and-why)) suggests that indicators must be relevant for users, actionable, resonate with the users’ priorities, and credible and robust. We are aware that striking the right balance is challenging: we need to ground the Index in the realities and priorities of governments so they can improve their scores, whilst at the same time highlighting data demands of civil society. Through an open dialogue, we want to know whether the Index is useful for both parties, want to see how open data supply and demand can match, and stimulate more constructive uptake to improve open data publication at country level.
+Once our results are published, we invite civil society and government to provide us with feedback about what they find useful (or not) and to tell us how they think we could strengthen the assessment. This dialogue phase will be open for one month, after which we will publish the revised data by June.
+In the past, we got approached by governments and civil society alike to discuss our results. Reformers and open data decision-makers reference our data and publicly highlight their advancement in the Index - and civil society provides constructive feedback about their country context so we can improve the assessment. This feedback is very useful for our team. But for the Index to be most effective, these points should be discussed in an open dialogue, so civil society and government can talk to one another, learn from one another, and take ownership to improve open data publication.
+Convening data providers and users is a unique and important quality of the Index. Research by Open Knowledge International and others ([here](http://civicus.org/thedatashift/wp-content/uploads/2017/03/from-evidence-to-action.pdf ) and [here](http://aiddata.org/governance-data-who-uses-it-and-why)) suggests that indicators must be relevant for users, actionable, resonate with the users’ priorities, and credible and robust. We are aware that striking the right balance is challenging: we need to ground the Index in the realities and priorities of governments so they can improve their scores, while at the same time highlighting data demands of civil society. Through open dialogue, we want to know whether the Index is useful for both parties, want to see how open data supply and demand can match, and stimulate more constructive uptake to improve open data publication at country level.
