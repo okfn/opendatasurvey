@@ -5,7 +5,7 @@ The Global Open Data Index (GODI) is a tool to educate civil society and governm
 <img src="https://github.com/okfn/opendatasurvey/blob/master/census/static/images/Taiwan%20place%20page.png?raw=true" alt="Taiwan page" class="img-responsive center-block" style="width: 700px;">
 
 
-Even though we try to make this assessment as understandable and transparent as possible, it is not always easy to interpret the results. While open data has a very strict definition, scoring of any index is an arbitrary action. In real life, you can't be partly open - the published data either fits the criteria or it does not. So, what does the final score mean? How to interpret scores that vary between 0%, 40% or 70%? Here is some guidance on how best to read our results.
+Even though we try to make this assessment as understandable and transparent as possible, it is not always easy to interpret the results. While open data has a very strict definition, scoring of any index can be randomly set, depending on the criteria applied. In real life, you can't be partly open - the published data either fits the criteria or it does not. So, what does the final score mean? How to interpret scores that vary between 0%, 40% or 70%? Here is some guidance on how best to read our results.
 
 ## What does a score of 0% mean? 
 
