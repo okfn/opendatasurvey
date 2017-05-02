@@ -297,63 +297,63 @@ Each dataset in each place is evaluated using a set of questions that examine th
   </tr>
   <tr>
     <td>Is the data collected by government (or a third-party related or linked to government)?</td>
-    <td>Answer “Yes” if the chosen data is collected by the government, or a third party is officially representing the government. This is the case for state-owned-enterprises or contractors delivering public services for government.Answer “No” if one of the following cases apply: The data is collected by organisations that do not represent government The data is collected but not for the relevant government level The data is not collected at all</td>
+    <td>Answer “Yes” if the chosen data is collected by the government, or a third party is officially representing the government. This is the case for state-owned-enterprises or contractors delivering public services for government. Answer “No” if one of the following cases apply: i) The data is collected by organisations that do not represent government; ii) The data is collected but not for the relevant government level; iii) The data is not collected at all</td>
     <td>Not scored</td>
-    <td> - Data collection by itself is not a characteristic of ‘open’ data.- Our knowledge of edge cases, exceptions from the rule, etc. is too limited to make valid statements about a reasonable scoring.</td>
+    <td> - Data collection by itself is not a characteristic of ‘open’ data. - Our knowledge of edge cases or exceptions from the rule (such as legal arrangements of data publication in cases of public-private partnerships) is too limited to develop valid statements about a reasonable scoring.</td>
   </tr>
   <tr>
     <td>Is the data available online without the need to register or request access to the data?</td>
     <td>Answer “Yes”, if the data is made available by the government on a public website. Answer “No” if the data are NOT  available online or are available online only after registering, requesting the data from a civil servant via email, completing a contact form or another similar administrative process.</td>
     <td>15 points</td>
-    <td>- Online availability is a requirement for openness: everyone has to have immediate access to specific data- It is a condition for all following questions- Mandatory registration can deter people from using data(focus on user perspective)- We put emphasis on the additional requirement that data must also be available without mandatory registration</td>
+    <td>- Online availability is a requirement for openness: everyone has to have online access to specific data. - It is a condition for all following questions. - Mandatory registration can deter people from using data (focus on user perspective). - We put emphasis on the additional requirement that data must also be available without mandatory registration</td>
   </tr>
   <tr>
     <td>Is the data available online at all?</td>
     <td>Tell us if the data is available online at all (after registering, after getting authentication.</td>
     <td>Not scored</td>
-    <td> - We currently do not aim to reward mandatory registration- Administrative processes entail some features that contradict open data: such as agreeing to terms of use.- No score / missing out on points is a clear sign to governments that their way of online publication is not ideal for all user groups.</td>
+    <td> - We currently do not aim to reward mandatory registration. - Administrative processes may entail terms of use that contradict open data: such as agreeing to terms of use. - A zero score is a indicates to governments that their way of online publication is not ideal for all user groups.</td>
   </tr>
   <tr>
     <td>Is the data available free of charge?</td>
     <td>The data is free if you don’t have to pay for it.</td>
     <td>15 Points</td>
-    <td> - Data has to be for free in order to be accessible to everyone- We cannot expect users to pay for datasets in order to evaluate them for us- Some data (especially when provided in machine-readable file formats) have to be paid for. With a higher scoring we can trigger change here</td>
+    <td> - Data has to be for free in order to be accessible to everyone. - We cannot expect users to pay for datasets in order to evaluate them for us. - Some data (especially when provided in machine-readable file formats) have to be paid for.</td>
   </tr>
   <tr>
     <td>Where did you find the data?</td>
-    <td>Indicate a URL + description of the URLExample: If you find data on a financial department website, please fill in: “website of National Department of Finances”. Sometimes you can find data in a lot of places in the web.To limit your search, tell us the first 5 URLs you can easily find for each source type. Make sure the URLs are from an official government source.</td>
+    <td>Indicate a URL and a description of the URL. Example: If you find data on a financial department website, please fill in: “Website of National Department of Finances”. Sometimes you can find data in a lot of places in the web. To limit your search, tell us the first 5 URLs you can easily find for each source type. Make sure the URLs are from an official government source.</td>
     <td>Not scored</td>
-    <td>This is a subjective assessment and depended is the this field was found.</td>
+    <td>This is a subjective assessment. The results may be affected by a submitter's topical expertise or familiarity with government websites.</td>
   </tr>
   <tr>
     <td>How much do you agree with the following statement: “It was easy for me to find the data.”</td>
     <td>Submitters answer with a Likert scale.</td>
     <td>Not scored</td>
-    <td>Subjective assessment that suppose to help data publishers to understand the findabillity aspect of the data.</td>
+    <td>This is a subjective assessment. The results may be affected by a submitter's topical expertise or familiarity with government websites. We experiment with the results to develop a better findabillity assessment.</td>
   </tr>
   <tr>
     <td>Is the data downloadable at once?</td>
-    <td>Answer “Yes”, if you can download all data at once from the URL at which you found them. In case that downloadable data files are very large, their downloads may also be organised by month or year or broken down into sub-files.Answer “No” if-if you have to do many manual steps to download the data, or if you can only retrieve very few parts of a large dataset at a time (for instance through a search interface).</td>
+    <td>Answer “Yes”, if you can download all data at once from the URL at which you found them. In case that downloadable data files are very large, their downloads may also be organised by month or year or broken down into sub-files. Answer “No” if you have to do many manual steps to download the data, or if you can only retrieve very few parts of a large dataset at a time (for instance through a search interface).</td>
     <td>15 Points</td>
-    <td>We score if a complete or partial dataset can downloaded at once. This question therefore rewards the technical possibility to retrieve all data from the internet without having to download dozens of small pieces of information, getting access to data through a search interface only, sending requests, having captchas or other limits to download.</td>
+    <td>We score if a dataset can be downloaded at once. This question therefore rewards the technical possibility to retrieve all data from the internet without having to download dozens of small pieces of information, getting access to data through a search interface only, sending requests, having captchas or other limits to download. Important note: data may be split into smaller sub-sets. This applies for instance for long time series, or large geospatial data. It is important that these sub-sets are logically linked, and that it is possible to retrieve data automatically from one or several URLs. </td>
   </tr>
   <tr>
     <td>Data should be updated every [Time Interval]: Is the data up-to-date?</td>
     <td>Please base your answer on the date at which you answer this question. Answer “No” if you cannot determine a date, or if the data are outdated.</td>
     <td>15 Points</td>
-    <td>(this replaces the bulk question from the previous index)- We score if a complete or partial dataset can download at once. This question therefore rewards the technical possibility to retrieve all data from the internet without having to download dozens of small pieces of information, getting access to data through a search interface only, sending requests, having captchas or - Some of the data we assess are most valuable right after their releases - such as weather forecasts, election data or budget data. Timely provision of these data is, therefore, crucial- However, some data is not that time sensitive. We could tend to overly score them if the scoring is too high.</td>
+    <td>Some of the data we assess are most valuable right after their releases such as short-term weather forecasts, election results or budget data. Timely provision of these data is crucial. - Some data is not as time sensitive as others. Our scoring wants to strike a balance between both cases and therefore amounts to 15 points, in order not to avoid an over-emphasis of this category.</td>
   </tr>
   <tr>
     <td>Is the data openly licensed/in public domain?</td>
     <td>This question measures if anyone is legally allowed to use, modify and redistribute data for any purpose. Only then data is considered truly "open"" (see Open Definition).
       <ul>
-        <li>Answer ”Yes” if the data are openly licensed. The Open Definition provides a list of conformant licenses. Also, consult the terms of use which often indicate whether data can be freely reused<li>
+        <li>Answer ”Yes” if the data are openly licensed. The Open Definition provides a list of conformant licenses. Also, consult the terms of use which often indicate whether data can be freely reused</li>
         <li>Answer “Yes” if there is no open license, but a statement that the dataset is in “public domain”. To count as public domain, the dataset must not be protected by copyright, patents or similar restrictions.</li>
         <li>If you are not sure whether an open licence or public domain notice is compliant with the Open Definition 2.1, seek feedback on the Open Data Index discussion forum.</li>
         <li>Answer “No” whenever it is not fully evident that the license or terms of use are compliant with the Open Definition.</li>
       </ul>
     <td>20 Points</td>
-    <td>- Legal usability of data is a core requirement of the open definition- It is a prerequisite for unrestricted usability for everyone- Our old scoring was fairly high, emphasizing the legal usability of data- The current scoring is lowered to give us some space to stress other aspects of openness- This question will not lose its significance for openness (still scored higher than in the Open Data Barometer)</td>
+    <td>- Legal usability of data is a core requirement of the open definition. - It is a prerequisite for unrestricted usability for everyone. - Our old scoring was fairly high, emphasizing the legal usability of data. - The current scoring is lowered to give us some space to stress other aspects of openness. - This question will not lose its significance for openness (still scored higher than in the Open Data Barometer)</td>
   </tr>
   <tr>
     <td>Is the data in open and machine-readable file formats?</td>
@@ -365,11 +365,11 @@ Each dataset in each place is evaluated using a set of questions that examine th
     <td>How much human effort is required to use the data. (1 = little to no effort is required, 3 = extensive effort is required)</td>
     <td>The submitters tell us their use case and the steps they took to make the data usable (example: “I have to reformat the data”).</td>
     <td>Not scored</td>
-    <td>The question is a subjective user self-assessment. Also usability depends on context and the purposes for which a person wants to use the data</td>
+    <td>The question is a subjective assessment. Furthermore, usability depends on context and the purposes for which a person wants to use the data.</td>
   </tr>
 </table>
 
-## How to ‘read’ the final results
+## How to read the final results
 As explained in the sections above, the Index looks at specific data using specific survey questions. The result is a final score that has to be read carefully. Firstly, it exclusively refers to data with mandatory characteristics. If no dataset can be found online matching these characteristics, the data will not be considered to be available (equalling a score of 0%). More explanations to this approach can be found in the section “What data does the Index look at?”.
 Furthermore, the survey questions check different aspects of data access and usability (see table below). This means that behind fairly high scores we often do not find open data, but access-controlled data, or public data in poorly structured, or not machine-readable formats. The score, therefore, does not show a linear increase of openness. Instead, it highlights areas where the government may improve open data publication.
 An example: We may assess budget data in PDF form which may be in public domain, available online for free, but in a format making it practically unusable. This data is presented as 80% open. The score suggests a fairly high degree of openness, but in fact, the data is not open. Only 100% means that the data is open.
@@ -414,17 +414,17 @@ The data collection of  the Index is done in three terms:
 
 3. Quality assurance of review results
 
-###Submission phase
+### Submission phase
 The Index crowdsources its data. To do so, it uses a [non-probability sampling technique](https://www.thoughtco.com/sampling-designs-used-in-sociology-3026562) — also known as a “snowball sample”. A snowball sample attempts to locate the subject of studies in areas that are hard to locate. In our case, we work with contributors who are interested in open government data and who can assess the availability and quality of open datasets in their respective locations. We do so not only by using referrals, but also by reaching out on social media, through regular communications our Open Government Data and [Open Data Index forums](https://discuss.okfn.org/c/open-data-index/global-open-data-index-2015), and by actively networking at conferences and events. This year, like in 2015, we also hired local coordinators, that outreached to their networks and assist in soliciting new submissions.
 This means that anyone from any place can participate and contribute to the Global Open Data Index as a contributor and make submissions, which are then reviewed. We do not have a quota on the number of places that can participate. Rather, we aim to sample as many places around the world as we can. This year, we considered only places that had submissions to all 15 categories. Places that had partial submissions were omitted. Data findability also has an impact on the quality of the data we collect. Contributors have diverse knowledge and backgrounds in open data and sometimes need help finding the data we are looking for. The following section explains how we tried to deal with this problem.
 
-###Review process
+### Review process
 To provide reliable and valid results, each submission must be reviewed again. Our reviewers are domain experts. A list of all reviewers can be found on the About page. In the past, the review was country-based. We engaged local reviewers to verify all submissions for a country. It allowed us to overcome language problems and evaluate submissions in the context of a country. This approach, however, led to inconsistencies. Across countries, submitters evaluated datasets with sometimes very different content. This went so far that submitters evaluated the openness of data that was so highly aggregated that it was not usable. Since 2015 we, therefore, use a **thematic review**. Each reviewer gets assigned one data category and checks the submissions across all places. A thematic review has further advantages: (1) Reviewers develop a consistent approach how to assess data categories. (2) They develop a sense where a similar piece of data can usually be found. (3) They can collect information in which formats and quality specific data are provided. This information is used by us to refine our data categories and guidance for future editions. To do so, we document our findings in review diaries.
 
-####Review Diaries
+#### Review Diaries
 The reviewers document in diaries all problems they encountered during the review, as well as proposals to improve the Index. What was hard to assess? How can data categories be improved? Review diaries are especially useful to understand how reviewers dealt with edge cases. In what cases did they have to use their personal judgement? Thereby we want to ensure the highest degree of transparency possible, so others understand the steps that were taken to verify a submission. Also as advocates for open science, we wish to enable others to learn from our efforts and to improve their own research. Further information is shared on our insights page. A list of review diaries can be found [here](https://drive.google.com/drive/folders/0B5j55T4ZyssBUTlRbkdvYzhOSkU).
 
-###Quality assurance of review
+### Quality assurance of review
 This year we did a quality assurance of the review results. Once the review results were gathered, Open Knowledge International staff members analysed all data sets scoring 100% to verify whether they were correctly assessed and to spot false negatives
 
 * We only focussed on the top scoring data for the following reasons:
