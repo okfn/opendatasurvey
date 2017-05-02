@@ -293,7 +293,7 @@ Each dataset in each place is evaluated using a set of questions that examine th
     <th>Question</th>
     <th>Description</th>
     <th>Score</th>
-    <th>Rational</th>
+    <th>Rationale</th>
   </tr>
   <tr>
     <td>Is the data collected by government (or a third-party related or linked to government)?</td>
@@ -335,7 +335,7 @@ Each dataset in each place is evaluated using a set of questions that examine th
     <td>Is the data downloadable at once?</td>
     <td>Answer “Yes”, if you can download all data at once from the URL at which you found them. In case that downloadable data files are very large, their downloads may also be organised by month or year or broken down into sub-files.Answer “No” if-if you have to do many manual steps to download the data, or if you can only retrieve very few parts of a large dataset at a time (for instance through a search interface).</td>
     <td>15 Points</td>
-    <td>other limits to download.</td>
+    <td>We score if a complete or partial dataset can downloaded at once. This question therefore rewards the technical possibility to retrieve all data from the internet without having to download dozens of small pieces of information, getting access to data through a search interface only, sending requests, having captchas or other limits to download.</td>
   </tr>
   <tr>
     <td>Data should be updated every [Time Interval]: Is the data up-to-date?</td>
