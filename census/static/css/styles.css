@@ -8404,6 +8404,32 @@ html,
     border-top: solid 1px rgba(255, 255, 255, 0.4);
     margin-top: 15px;
     padding-top: 15px; }
+    .site-footer .footer-secondary .footer-logo {
+      position: relative;
+      min-height: 1px;
+      padding-left: 15px;
+      padding-right: 15px;
+      float: right !important;
+      opacity: 0.9;
+      max-width: 100%;
+      max-height: 100%;
+      height: 60px;
+      min-width: 120px; }
+      @media (min-width: 992px) {
+        .site-footer .footer-secondary .footer-logo {
+          float: left;
+          width: 16.66667%; } }
+      .site-footer .footer-secondary .footer-logo:hover {
+        opacity: 1; }
+      .site-footer .footer-secondary .footer-logo img {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: 130px;
+        max-width: 100%; }
   .site-footer .user {
     display: block;
     padding-top: 15px;

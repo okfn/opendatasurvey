@@ -172,10 +172,10 @@
     <footer class="site-footer">
       <div class="container">
         <div class="footer-primary">
-          <a class="footer-logo" href="https://okfn.org/">
-          <img src="https://a.okfn.org/img/oki/landscape-white-468x122.png" alt="Open Knowledge International">
-          </a>
-          <ul class="footer-links">
+        {% if not is_index %}
+          <a class="footer-logo" href="https://okfn.org/"><img src="https://a.okfn.org/img/oki/landscape-white-468x122.png" alt="Open Knowledge International"></a>
+        {% endif %}
+          <ul class="footer-links pull-right">
             <li><a href="https://okfn.org/privacy-policy/">{{ gettext("Privacy policy") }}</a></li>
             <li><a href="https://okfn.org/ip-policy/">{{ gettext("IP policy") }}</a></li>
             <li><a href="https://okfn.org/cookie-policy/">{{ gettext("Cookie policy") }}</a></li>
@@ -196,6 +196,11 @@
             <a href="/api/entries.csv">{{ gettext("All (CSV)") }}</a> |
             <a href="/api/entries.cascade.json">{{ gettext("Current (JSON)") }}</a> |
             <a href="/api/entries.json">{{ gettext("All (JSON)") }}</a>
+          </p>
+          {% else %}
+          <p>
+            <a class="footer-logo" href="https://okfn.org/"><img src="https://a.okfn.org/img/oki/landscape-white-468x122.png" alt="Open Knowledge International"></a>
+            <a href="http://od4d.net/" class="footer-logo"><img src="/images/Logo_Monochrome-transparent-for-dark-backgrounds.png" alt="Supported by Open Data for Development"></a>
           </p>
           {% endif %}
           <p>
