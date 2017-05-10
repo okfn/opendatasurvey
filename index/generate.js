@@ -188,6 +188,7 @@ if (process.env.BASE_DOMAIN) {
 Metalsmith(__dirname)
   .use(timer('Start pipeline'))
   .metadata({
+    currentTime: Date.now(),
     is_index: true,
     // Pass-through str for the moment. Can i18n-abide be used here?
     gettext: function(str) {
