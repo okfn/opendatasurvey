@@ -1,6 +1,8 @@
 'use strict';
 
 var _ = require('lodash');
+var nunjucks = require('nunjucks');
+
 var mixins = require('./mixins');
 
 module.exports = function(sequelize, DataTypes) {
@@ -123,6 +125,16 @@ module.exports = function(sequelize, DataTypes) {
       isScored: function() {
         /* Return a boolean to determine whether the question contributes to scoring.*/
         return this.score > 0;
+      },
+      renderedQuestionText: function(dataset) {
+        /* Return transformed question text in the presence of a context object. */
+        const context = {
+          datasetContext: {
+            updateEvery: dataset.updateevery
+          }
+        };
+        let renderedString = nunjucks.renderString(this.question, context);
+        return renderedString;
       }
     },
     classMethods: {
