@@ -6,6 +6,8 @@
 * [Greece City Census](http://gr-cities.survey.okfn.org)
 * [Argentina City Census](http://ar-cities.survey.okfn.org)
 * [Canada City Census](http://ca-cities.survey.okfn.org)
+* [Australia Region Census](http://au-region.survey.okfn.org/)
+* [Nepal Cities Census](http://np-cities.survey.okfn.org/)
 
 ## Deprecated Censuses
 ### Regions
