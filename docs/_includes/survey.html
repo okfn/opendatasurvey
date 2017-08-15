@@ -34,12 +34,13 @@
         <div class="container">
             <header>
                 <h1 class="text-center">Survey Flow</h1>
+                <p>The new survey has a standardized flow, which can be modified, based on the needs of the user</p>
             </header>
 
-            <h2 class="page-header">Question 1: Does the data exist?</h2>
+            <h2 class="page-header">Question A1: Rate your knowledge of Government [Dataset name]</h2>
             <div class="row">
                 <div class="col-xs-12">
-                    <p class="lead text-center bg-info btn text-info center-block">Does the exist and come from an official resource either issued directly by the government or by a third party officially representing the government?</p>
+                    <p class="lead text-center bg-info btn text-info center-block">These questions are for context only</p>
                     <div class="row">
                         <div class="col-xs-6 text-center">
                             <p class="btn"><span class="glyphicon glyphicon-arrow-down"></span></p>
@@ -52,21 +53,21 @@
             </div>
             <div class="row">
                 <div class="col-xs-6 text-center">
-                    <p class="center-block"><span class="btn btn-success btn-lg">Yes</span></p>
-                     <p class="btn center-block"><span class="glyphicon glyphicon-arrow-down"></span></p>
-                    <p class="bg-warning text-warning btn">Please provide the data publisher (optional)</p>
+                    <p class="center-block"><span class="btn btn-success btn-lg">1 (I'm not familiar at all with the field)</span></p>
                     <p class="btn center-block"><span class="glyphicon glyphicon-arrow-down"></span></p>
-                    <p class="bg-info text-info btn">Proceed to question 2.</p>
                 </div>
                 <div class="col-xs-6 text-center">
-                    <p class="center-block"><span class="btn btn-danger btn-lg">No</span></p>
+                    <p class="center-block"><span class="btn btn-success btn-lg">2</span></p>
                     <p class="btn center-block"><span class="glyphicon glyphicon-arrow-down"></span></p>
-                    <p class="bg-danger text-danger btn">Answer <em>all</em> questions with "<strong>No</strong>"</p>
-
+                    <p class="bg-info text-info btn">Proceed to question A2.</p>
+                </div>
+                <div class="col-xs-6 text-center">
+                    <p class="center-block"><span class="btn btn-success btn-lg">3 (I have advanced knowledge in this field)</span></p>
+                    <p class="btn center-block"><span class="glyphicon glyphicon-arrow-down"></span></p>
                 </div>
             </div>
 
-            <h2 class="page-header">Question 2: Is data in digital form?</h2>
+            <h2 class="page-header">Question A2: Rate your knowledge of open data.</h2>
             <div class="row">
                 <div class="col-xs-12">
                     <p class="lead text-center bg-info btn text-info center-block">Is the data in a digital format?</p>
@@ -82,33 +83,25 @@
             </div>
             <div class="row">
                 <div class="col-xs-6 text-center">
-                    <p class="center-block"><span class="btn btn-success btn-lg">Yes</span></p>
+                    <p class="center-block"><span class="btn btn-success btn-lg">1 (I'm not familiar at all with open data)</span></p>
                     <p class="btn center-block"><span class="glyphicon glyphicon-arrow-down"></span></p>
-                    <p class="bg-info text-info btn">Proceed to question 3.</p>
                 </div>
                 <div class="col-xs-6 text-center">
-                    <p class="center-block"><span class="btn btn-danger btn-lg">No</span></p>
+                    <p class="center-block"><span class="btn btn-success btn-lg">2</span></p>
                     <p class="btn center-block"><span class="glyphicon glyphicon-arrow-down"></span></p>
-                    <p class="bg-danger text-danger btn">Answer question 5 - "<em>Is the data available online?"</em> with "<strong>No</strong>"</p>
+                    <p class="bg-info text-info btn">Proceed to section B.</p>
+                </div>
+                <div class="col-xs-6 text-center">
+                    <p class="center-block"><span class="btn btn-success btn-lg">3 (I have advanced knowledge)</span></p>
                     <p class="btn center-block"><span class="glyphicon glyphicon-arrow-down"></span></p>
-                    <p class="bg-danger text-danger btn">Answer question 6 - "<em>Is the data machine readable?"</em> with "<strong>No</strong>"</p>
-                    <p class="btn center-block"><span class="glyphicon glyphicon-arrow-down"></span></p>
-
-                    <p class="bg-danger text-danger btn">Answer question 8 - "<em>Available in bulk?"</em> with "<strong>No</strong>"</p>
-                    <p class="btn center-block"><span class="glyphicon glyphicon-arrow-down"></span></p>
-                    <p class="bg-info text-info btn">Proceed to question 3.</p>
                 </div>
             </div>
 
 
-            <h2 class="page-header">Question 3: Publicly available?</h2>
+            <h2 class="page-header">Question B1: Are the data collected by the government (or an official third party on behalf of the government)?</h2>
             <div class="row">
                 <div class="col-xs-12">
-                    <p class="lead text-center bg-info btn text-info center-block">Can the data be accessed by the public without restrictions?</p>
                     <div class="row">
-                        <div class="col-xs-6 text-center">
-                            <p class="btn"><span class="glyphicon glyphicon-arrow-down"></span></p>
-                        </div>
                         <div class="col-xs-6 text-center">
                             <p class="btn"><span class="glyphicon glyphicon-arrow-down"></span></p>
                         </div>
@@ -119,21 +112,16 @@
                 <div class="col-xs-6 text-center">
                     <p class="center-block"><span class="btn btn-success btn-lg">Yes</span></p>
                     <p class="btn center-block"><span class="glyphicon glyphicon-arrow-down"></span></p>
-                    <p class="bg-info text-info btn">Proceed to question 4.</p>
+                    <p class="bg-danger text-danger btn">Answer question B1.1 - Please provide the name of the government agency or organisation that collects the data.</p>
+                                        <p class="btn center-block"><span class="glyphicon glyphicon-arrow-down"></span></p>
+
                 </div>
                 <div class="col-xs-6 text-center">
                     <p class="center-block"><span class="btn btn-danger btn-lg">No</span></p>
                     <p class="btn center-block"><span class="glyphicon glyphicon-arrow-down"></span></p>
-                    <p class="bg-danger text-danger btn">Answer question 4 - "<em>Is the data available for free?"</em> with "<strong>No</strong>"</p>
-                    <p class="btn center-block"><span class="glyphicon glyphicon-arrow-down"></span></p>
-                    <p class="bg-danger text-danger btn">Answer question 5 - "<em>Is the data available online?"</em> with "<strong>No</strong>"</p>
-                    <p class="btn center-block"><span class="glyphicon glyphicon-arrow-down"></span></p>
-                    <p class="bg-danger text-danger btn">Answer question 7 - "<em>Openly licensed?"</em> with "<strong>No</strong>"</p>
+                    <p class="bg-danger text-danger btn">Answer question B1.2 - Please provide the reason that the data are not collected by the government</p>
                                         <p class="btn center-block"><span class="glyphicon glyphicon-arrow-down"></span></p>
-
-                    <p class="bg-danger text-danger btn">Answer question 8 - "<em>Available in bulk?"</em> with "<strong>No</strong>"</p>
-                    <p class="btn center-block"><span class="glyphicon glyphicon-arrow-down"></span></p>
-                    <p class="bg-info text-info btn">Proceed to question 6.</p>
+                    <p class="bg-info text-info btn">Proceed to question B2.</p>
                 </div>
             </div>
 
