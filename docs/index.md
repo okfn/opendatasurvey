@@ -1,10 +1,18 @@
-# Notice: We have changed the Census domains. All previous Census instances are now deprecated but your data is still there. If you want to run a new Census instance please contact us at index@okfn.org.
+# Notice: We have changed the Census domains. All previous Census instances are now deprecated but your data is still there. If you want to run a new Census instance please contact us at [index@okfn.org](mailto:index@okfn.org).
 
-## Get your local open data census here!
+##So what is the Survey, Census and Index
+The Open Data Survey is the tool we use to capture the information and calculate the rankings and percentages of every measuring instance. It is open source and can be reused and repurposed from its[ Github repository](https://github.com/okfn/opendatasurvey/).
+
+This tool is used to power two different tools: 
+
+* The __Global Open Data Index (GODI)__, which is our a global assessment of the status of government open data in countries. This is run by OKI and can be found [here](https://index.okfn.org/) 
+* The __Open Data Census__, which is used to compare the progress made by different cities and local areas in releasing Open Data. The documentation found here describes how you can request and customize your own instance of the Census. You can also find the different instances of the Census that our Network and partners have used.
+
+## Why an Open Data Census?
   
-__Local data is often the most relevant to citizens on a daily basis – from rubbish collection times to local tax rates.
+Local data is often the most relevant to citizens on a daily basis – from rubbish collection times to local tax rates.
     At the moment it's hard to know what local open data is available.
-   Help change that by reporting on the state of open data in your area with a local open data census.__
+   Help change that by reporting on the state of open data in your area with a local open data census
 
 
 ## Get Started
