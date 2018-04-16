@@ -1,7 +1,7 @@
 # Frequently Asked Questions
 
 ### What is the Global Open Data Index?
-The Global Open Data Index is Open Knowledge annual benchmark for open government data publication. It measures the openness of 15 datasets and compares them against to the [Open Definition](http://opendefinition.org/). Read more about it on the [methodology](LINK) page
+The Global Open Data Index is Open Knowledge annual benchmark for open government data publication. It measures the openness of 15 datasets and compares them against to the [Open Definition](http://opendefinition.org/). Read more about it on the [methodology](https://index.okfn.org/methodology/) page.  
 
 ### What period does GODI refer to?
 In the past, GODI used to collect the data between August and September and review the results between October to November. This year, we started the data collection later between November 2016 to January 2017 and considered the data between February-March 2017. This means that the data refers to the periods of 2016 until March 2017. 
@@ -36,7 +36,7 @@ GODI uses a snowball sample by crowdsourcing submissions. How many places we ass
 These scores measure different things. On our places page, we show a score to rank the places according to their openness. This score adds all points together that a place receives in each data category. The final score is used to compare the openness across places. Also, we show another score on each place page. This score shows how many of the 15 data categories are fully open in a place like Great Britain, India, or elsewhere. 
 
 ### Where can I learn more about the Index results?
-The Index has several pages to show which place ranks highest, or how open data is provided in a particular place. Also, we provide context and analysis: If you are interested how different regions in the world perform, visit our [findings page](LINK). On the findings page, we also answer questions such as “What is the state of open licensing in the world?”; “How do I distinguish an open spending dataset from an open procurement dataset?” or “What are the challenges of open data across data categories?”. If you only want to understand how to correctly read the Index results check this [blogpost](LINK). 
+The Index has several pages to show which place ranks highest, or how open data is provided in a particular place. Also, we provide context and analysis: If you are interested how different regions in the world perform, visit our [findings page](https://index.okfn.org/insights/). On the findings page, we also answer questions such as “What is the state of open licensing in the world?”; “How do I distinguish an open spending dataset from an open procurement dataset?” or “What are the challenges of open data across data categories?”. If you only want to understand how to correctly read the Index results check this [blogpost](https://index.okfn.org/interpretation/). 
 
 How can I get involved in next year’s Index?
 Follow the [OK discuss forum](https://discuss.okfn.org/c/open-data-index) to get updates about the next GODI! 
@@ -45,9 +45,8 @@ Follow the [OK discuss forum](https://discuss.okfn.org/c/open-data-index) to get
 Sure! The survey is easy to replicate and customise. See more information about it on the [survey page](http://census.okfn.org/en/latest/).  
 
 ### Can I download the data?
-For sure! See the [Download page](LINK)
+For sure! See the [Download page](https://index.okfn.org/download/)
 
 ### Can I reuse the data?
 Absolutely, the content on this website is licensed under Creative Commons 4.0 
-
 
