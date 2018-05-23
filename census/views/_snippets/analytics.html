@@ -1,0 +1,21 @@
+{% if site.settings.google_analytics_key %}
+<!-- configured goolge analytics specific to this deployment -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', '{{site.settings.google_analytics_key}}']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+{% endif %}
+
+<!-- common tracking code for all -->
+<script type="text/javascript" >
+  var okiConsent = {
+    analyticsTrackingID: "UA-33874954-24"
+  };
+</script>
+<script type='text/javascript' src='https://a.okfn.org/html/oki/consent/assets/js/consent.js'></script>
