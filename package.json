@@ -100,6 +100,7 @@
     "jsdom-global": "^2.0.0",
     "jsxgettext": "^0.9.0",
     "mocha": "^3.0.2",
+    "nodemon": "^1.17.4",
     "react-addons-test-utils": "^15.3.0",
     "rewire": "^2.5.2",
     "supertest": "^2.0.0",
