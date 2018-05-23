@@ -5,4 +5,7 @@
 ./tmp/
 ./log/
 ./node_modules/
+./coverage/
 
+./.sass-cache/
+./index/build/
