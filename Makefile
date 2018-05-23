@@ -51,6 +51,7 @@ server: ## command to run the command as queue or server
 	npm start
 
 ci-push: ci-login  ## push tagged and latest images to DockerHub (used by Travis)
+	docker build -t ${IMG} -t ${LATEST} .
 	docker push ${IMG}
 	docker push ${LATEST}
 
