@@ -18,6 +18,8 @@
     <style type="text/css">
       {{ site.settings.custom_css }}
     </style>
+
+    {% include 'includes/analytics.html' %}
   </head>
 
   <body class="{% if is_index %}godi {% endif %}{% block body_class %}{% endblock %}">
@@ -235,8 +237,5 @@
     var siteUrl = "/";
   </script>
   <script data-main="/scripts/site" src="/bower_components/requirejs/require.js"></script>
-
-  {% include 'includes/analytics.html' %}
-
   </body>
 </html>
