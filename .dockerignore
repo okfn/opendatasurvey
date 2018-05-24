@@ -1,2 +1,12 @@
 *.db
 *.log
+settings.json
+
+./.git/
+./tmp/
+./log/
+./node_modules/
+./coverage/
+
+./.sass-cache/
+./index/build/
