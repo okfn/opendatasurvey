@@ -1,6 +1,6 @@
 'use strict';
 
-const Sequelize = require('Sequelize');
+const Sequelize = require('sequelize');
 const program = require('commander');
 var Promise = require('bluebird');
 
