@@ -99,6 +99,15 @@ To update the translations cache, run:
 
 Any column can be internationalised by adding another column with `@locale` after it. For example, the `description` column can be translated to German by adding a column of `description@de`. Only languages which have template translations created for them are valid. The `locales` setting in the config document can be used to restrict the number of locales available. The first locale in the list is the default locale.
 
+### Removing a user
+
+A script is provided to remove users by provider id. Removing a user will update entries where the user is a submitter or reviewer (changing the user id to the anonymous user), then remove the user.
+
+`$ npm run anonymize_user -- <provider-id>`
+
+Use `-d` to perform a dry run, which will print the user id, and entry ids which will be affected (where the user is either a submitter or reviewer).
+
+
 ### Running Tests
 
 ```
@@ -106,8 +115,4 @@ createdb opendatacensus_test
 npm test
 ```
 
-------
 
-## Heroku Deployment
-
-TBD: This section needs to be updated. The basics of deployment now are just to use the normal heroku commands, as now, one codebase powers multiple census sites.
