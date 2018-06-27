@@ -115,4 +115,3 @@ createdb opendatacensus_test
 npm test
 ```
 
-
