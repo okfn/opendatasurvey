@@ -299,16 +299,16 @@ let _outputFlatEntryResults = function(results, questions, format, res) {
   let maxLocations = 0
   for (const item of results) {
     let answers = item.getSimpleAnswersForQuestions(questions);
-    let getAnswerById = id => answers.find(answer => answer.id === id)
-    maxFormats = Math.max(maxFormats, getAnswerById('format').value.length)
-    maxCharacts = Math.max(maxCharacts, getAnswerById('characteristics').value.length)
-    maxLocations = Math.max(maxLocations, getAnswerById('location').value.length)
+    let getAnswerById = id => answers.find(answer => answer.id === id) || {}
+    maxFormats = Math.max(maxFormats, (getAnswerById('format').value || []).length)
+    maxCharacts = Math.max(maxCharacts, (getAnswerById('characteristics').value || []).length)
+    maxLocations = Math.max(maxLocations, (getAnswerById('location').value || []).length)
   }
 
   // Mapper
   let mapper = function(item) {
     let answers = item.getSimpleAnswersForQuestions(questions);
-    let getAnswerById = id => answers.find(answer => answer.id === id)
+    let getAnswerById = id => answers.find(answer => answer.id === id) || {}
     let result = {}
 
     // General

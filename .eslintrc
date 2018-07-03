@@ -12,7 +12,7 @@ parserOptions:
 rules:
   max-len:
     - error
-    - code: 90
+    - code: 100
       ignoreStrings: true
   strict:
     - error
