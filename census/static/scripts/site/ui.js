@@ -12,7 +12,7 @@ define(['jquery', 'bootstrap', 'sexyTables'], function($, bootstrap, sexy) {
         });
 
         $(document).ready(function() {
-            sexyTables();
+          sexyTables();
         })
     }
 
