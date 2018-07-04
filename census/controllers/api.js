@@ -291,6 +291,174 @@ let _outputEntryResults = function(results, questions, format, res) {
   }
 };
 
+let _outputFlatEntryResults = function(results, questions, format, res) {
+
+  // Count
+  let maxFormats = 0
+  let maxCharacts = 0
+  let maxLocations = 0
+  for (const item of results) {
+    let answers = item.getSimpleAnswersForQuestions(questions);
+    let getAnswerById = id => answers.find(answer => answer.id === id) || {}
+    maxFormats = Math.max(maxFormats, (getAnswerById('format').value || []).length)
+    maxCharacts = Math.max(maxCharacts, (getAnswerById('characteristics').value || []).length)
+    maxLocations = Math.max(maxLocations, (getAnswerById('location').value || []).length)
+  }
+
+  // Mapper
+  let mapper = function(item) {
+    let answers = item.getSimpleAnswersForQuestions(questions);
+    let getAnswerById = id => answers.find(answer => answer.id === id) || {}
+    let result = {}
+
+    // General
+    Object.assign(result, {
+      'id': item.id,
+      'site': item.site,
+      'timestamp': moment(item.createdAt).format('YYYY-MM-DDTHH:mm:ss'),
+      'year': item.year,
+      'place': item.place,
+      'dataset': item.dataset,
+    })
+
+    // License
+    let openLicence = getAnswerById('open_licence')
+    let licenceURL = getAnswerById('licence_url')
+    Object.assign(result, {
+      'Openly licenced?': openLicence.value,
+      'Comments licence': openLicence.commentValue,
+      'Licence URL': licenceURL.value,
+      'Comments Licence URL': licenceURL.commentValue,
+    })
+
+    // Publicly available
+    let onlineFree = getAnswerById('online_free')
+    Object.assign(result, {
+      'Publicly available online (no access controls)': onlineFree.value,
+      'Comments publicly available': onlineFree.commentValue,
+    })
+
+    // Online otherwise
+    let onlineOtherwise = getAnswerById('online_otherwise')
+    Object.assign(result, {
+      'Online_otherwise?': onlineOtherwise.value,
+      'Comments online_otherwise': onlineOtherwise.commentValue,
+    })
+
+    // Collector gov
+    let collectorGov = getAnswerById('collector_gov')
+    let collectorName = getAnswerById('collector_name')
+    Object.assign(result, {
+      'Collector_Gov': collectorGov.value,
+      'Comment_gov collector': collectorGov.commentValue,
+      'Collector name': collectorName.value,
+      'Comments collector name': collectorName.commentValue,
+    })
+
+    // Collector non-gov
+    let collectorNonGov = getAnswerById('collector_non_gov')
+    Object.assign(result, {
+      'Collector_non-gov': collectorNonGov.value,
+      'Comment_non-gov': collectorNonGov.commentValue,
+    })
+
+    // Findable
+    let findable = getAnswerById('findable')
+    let findableSteps = getAnswerById('findable_steps')
+    Object.assign(result, {
+      'Findable': findable.value,
+      'Findable_comment': findable.commentValue,
+      'Findable_steps taken': findableSteps.value,
+      'Comments_steps taken': findableSteps.commentValue,
+    })
+
+    // Timely
+    let timely = getAnswerById('timely')
+    Object.assign(result, {
+      'Timely': timely.value,
+      'Timely_comment': timely.commentValue,
+    })
+
+    // Free
+    let free = getAnswerById('free')
+    Object.assign(result, {
+      'Free': free.value,
+      'Free_comment': free.commentValue,
+    })
+
+    // Usability
+    let usability = getAnswerById('usability')
+    Object.assign(result, {
+      'Usability': usability.value,
+      'Usability_comment': usability.commentValue,
+    })
+
+    // Bulk
+    let bulk = getAnswerById('bulk')
+    Object.assign(result, {
+      'Downloadable at once': bulk.value,
+      'Downloadable at once comment': bulk.commentValue,
+    })
+
+    // Format
+    let format = getAnswerById('format')
+    for (const index of _.range(maxFormats)) {
+      result[`Format ${index + 1}`] = format.value[index]
+    }
+    result['Format comment'] = format.commentValue
+
+    // Characteristics
+    let characts = getAnswerById('characteristics')
+    for (const index of _.range(maxCharacts)) {
+      result[`Data element ${index + 1}`] = characts.value[index]
+    }
+    result['Data element comment'] = characts.commentValue
+
+    // Location
+    let location = getAnswerById('location')
+    for (const index of _.range(maxLocations)) {
+      const data = location.value[index]
+      result[`URL ${index + 1}`] = data ? data.urlValue : ''
+      result[`Description URL ${index + 1}`] = data ? data.descValue : ''
+    }
+    result['URL comment'] = location.commentValue
+
+    // Metadata
+    Object.assign(result, {
+      'reviewed': item.reviewed ? 'Yes' : 'No',
+      'reviewResult': item.reviewResult ? 'Yes' : 'No',
+      'reviewComments': item.reviewComments,
+      'details': item.details,
+      'isCurrent': item.isCurrent ? 'Yes' : 'No',
+      'isOpen': item.isOpenForQuestions(questions) ? 'Yes' : 'No',
+      'submitter': item.Submitter ? item.Submitter.fullName() : '',
+      'reviewer': item.Reviewer ? item.Reviewer.fullName() : '',
+      'score': item.computedScore,
+      'relativeScore': item.computedRelativeScore
+    })
+
+    return result
+  };
+
+  // Response
+  switch (format) {
+    case 'json': {
+      outputItemsAsJson(res, results, mapper);
+      break;
+    }
+    case 'csv': {
+      const columns = (results.length) ? Object.keys(mapper(results[0])) : []
+      outputItemsAsCsv(res, results, mapper, columns);
+      break;
+    }
+    default: {
+      res.sendStatus(404);
+      break;
+    }
+  }
+
+};
+
 let pendingEntries = function(req, res, next) {
   const format = req.params.format;
 
@@ -317,6 +485,7 @@ let entries = function(req, res, next) {
   // Get request params
   const format = req.params.format;
   const strategy = req.params.strategy;
+  const modifier = req.params.modifier;
 
   // Initial data options
   let dataOptions = _.merge(modelUtils.getDataOptions(req), {
@@ -339,11 +508,21 @@ let entries = function(req, res, next) {
     return res.sendStatus(404);
   }
 
+  // Modifier can be only `flat` or `undefined`
+  let outputFunction
+  if (modifier === 'flat') {
+    outputFunction = _outputFlatEntryResults
+  } else if (modifier === undefined) {
+    outputFunction = _outputEntryResults
+  } else {
+    return res.sendStatus(404);
+  }
+
   // Make request for data, return it
   modelUtils.getData(dataOptions).then(function(data) {
     const results = data.entries;
     const questions = data.questions;
-    _outputEntryResults(results, questions, format, res);
+    outputFunction(results, questions, format, res);
   }).catch(console.trace.bind(console));
 };
 

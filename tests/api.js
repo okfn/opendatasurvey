@@ -81,6 +81,14 @@ describe('API', function() {
           });
         });
 
+        it('Current cascaded flat', done => {
+          let browser = testUtils.browser;
+          browser.visit('/api/entries.cascade.flat.' + format, () => {
+            checkResponse(browser, 4);
+            done();
+          });
+        });
+
         it('All current, year: ' + year, done => {
           let browser = testUtils.browser;
           browser.visit('/api/entries/' + year + '.' + format, () => {
@@ -132,6 +140,21 @@ describe('API', function() {
         // check `format` answer (multiple choice question)
         assert.deepEqual(_.find(item.answers, 'id', 'format').value,
                          ['AsciiDoc', 'CSV', 'HTML']);
+        done();
+      });
+    });
+  });
+
+  describe('Flat entries (data)', function() {
+    it('Cascade current', done => {
+      let browser = testUtils.browser;
+      browser.visit('/api/entries.cascade.flat.json', () => {
+        browser.assert.success();
+        const data = JSON.parse(browser.text());
+        const item = data.results[0];
+        assert.deepEqual(item['Format 1'], 'AsciiDoc')
+        assert.deepEqual(item['Format 2'], 'CSV')
+        assert.deepEqual(item['Format 3'], 'HTML')
         done();
       });
     });

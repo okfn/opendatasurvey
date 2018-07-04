@@ -23,6 +23,7 @@
     "app_id": "{FACEBOOK_APP_ID}",
     "app_secret": "{FACEBOOK_APP_SECRET}"
   },
+  "fallback_questionset": "https://docs.google.com/spreadsheets/d/1UKpnHBqwKfpZCTRPTTwpYHE3Dx6QV7M8uWmEeDTNWPM/edit#gid=1999457872",
   "auth_subdomain": "id",
   "system_subdomain": "system",
   "sentry_dsn": "",

@@ -10,6 +10,10 @@ env:
 parserOptions:
   sourceType: script
 rules:
+  max-len:
+    - error
+    - code: 100
+      ignoreStrings: true
   strict:
     - error
     - safe

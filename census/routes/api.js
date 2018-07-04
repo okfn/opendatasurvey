@@ -11,6 +11,8 @@ var apiRoutes = function(coreMiddlewares) {
 
   router.use(coreMiddlewares);
 
+  router.get(utils.scoped('/entries.:strategy.:modifier.:format'), coreMixins,
+    api.entries);
   router.get(utils.scoped('/entries.:strategy.:format'), coreMixins,
     api.entries);
   router.get(utils.scoped('/entries/:year.:strategy.:format'), coreMixins,
