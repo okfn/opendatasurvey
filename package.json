@@ -7,6 +7,9 @@
     "type": "git",
     "url": "https://github.com/okfn/opendatasurvey"
   },
+  "engines": {
+    "node": "^7.7.0"
+  },
   "license": "MIT",
   "dependencies": {
     "aws-sdk": "^2.9.0",
