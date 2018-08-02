@@ -152,9 +152,9 @@ describe('API', function() {
         browser.assert.success();
         const data = JSON.parse(browser.text());
         const item = data.results[0];
-        assert.deepEqual(item['Format 1'], 'AsciiDoc')
-        assert.deepEqual(item['Format 2'], 'CSV')
-        assert.deepEqual(item['Format 3'], 'HTML')
+        assert.deepEqual(item['Format 1'], 'AsciiDoc');
+        assert.deepEqual(item['Format 2'], 'CSV');
+        assert.deepEqual(item['Format 3'], 'HTML');
         done();
       });
     });
