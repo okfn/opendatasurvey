@@ -304,6 +304,22 @@ let _outputFlatEntryResults = function(results, questions, format, res) {
     maxLocations = Math.max(maxLocations, (getAnswerById('location').value || []).length);
   }
 
+  // These question ids are excluded from general handling, and are handled
+  // specially.
+  const excludeFromGeneralHandling = [
+    'format',
+    'characteristics',
+    'location'
+  ];
+
+  // Slightly nicer question labels for some column headings.
+  const questionLabelMapping = {
+    open_licence: 'Openly licenced?',
+    licence_url: 'Licence URL',
+    online_free: 'Publicly available online (no access controls)',
+    bulk: 'Downloadable at once'
+  };
+
   // Mapper
   let mapper = function(item) {
     let answers = item.getSimpleAnswersForQuestions(questions);
@@ -320,84 +336,20 @@ let _outputFlatEntryResults = function(results, questions, format, res) {
       dataset: item.dataset
     });
 
-    // License
-    let openLicence = getAnswerById('open_licence');
-    let licenceURL = getAnswerById('licence_url');
-    Object.assign(result, {
-      'Openly licenced?': openLicence.value,
-      'Comments licence': openLicence.commentValue,
-      'Licence URL': licenceURL.value,
-      'Comments Licence URL': licenceURL.commentValue
-    });
+    // Create question objects
 
-    // Publicly available
-    let onlineFree = getAnswerById('online_free');
-    Object.assign(result, {
-      'Publicly available online (no access controls)': onlineFree.value,
-      'Comments publicly available': onlineFree.commentValue
-    });
+    for (let q of questions) {
+      if (!excludeFromGeneralHandling.includes(q.id)) {
+        let answer = getAnswerById(q.id);
+        let label = _.get(questionLabelMapping, q.id, q.id);
+        Object.assign(result, {
+          [label]: answer.value,
+          [label + ' comments']: answer.commentValue
+        });
+      }
+    }
 
-    // Online otherwise
-    let onlineOtherwise = getAnswerById('online_otherwise');
-    Object.assign(result, {
-      'Online_otherwise?': onlineOtherwise.value,
-      'Comments online_otherwise': onlineOtherwise.commentValue
-    });
-
-    // Collector gov
-    let collectorGov = getAnswerById('collector_gov');
-    let collectorName = getAnswerById('collector_name');
-    Object.assign(result, {
-      'Collector_Gov': collectorGov.value,
-      'Comment_gov collector': collectorGov.commentValue,
-      'Collector name': collectorName.value,
-      'Comments collector name': collectorName.commentValue
-    });
-
-    // Collector non-gov
-    let collectorNonGov = getAnswerById('collector_non_gov');
-    Object.assign(result, {
-      'Collector_non-gov': collectorNonGov.value,
-      'Comment_non-gov': collectorNonGov.commentValue
-    });
-
-    // Findable
-    let findable = getAnswerById('findable');
-    let findableSteps = getAnswerById('findable_steps');
-    Object.assign(result, {
-      'Findable': findable.value,
-      'Findable_comment': findable.commentValue,
-      'Findable_steps taken': findableSteps.value,
-      'Comments_steps taken': findableSteps.commentValue
-    });
-
-    // Timely
-    let timely = getAnswerById('timely');
-    Object.assign(result, {
-      Timely: timely.value,
-      Timely_comment: timely.commentValue
-    });
-
-    // Free
-    let free = getAnswerById('free');
-    Object.assign(result, {
-      Free: free.value,
-      Free_comment: free.commentValue
-    });
-
-    // Usability
-    let usability = getAnswerById('usability');
-    Object.assign(result, {
-      Usability: usability.value,
-      Usability_comment: usability.commentValue
-    });
-
-    // Bulk
-    let bulk = getAnswerById('bulk');
-    Object.assign(result, {
-      'Downloadable at once': bulk.value,
-      'Downloadable at once comment': bulk.commentValue
-    });
+    // Special handling for some base questions.
 
     // Format
     let format = getAnswerById('format');
