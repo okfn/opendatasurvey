@@ -1,31 +1,32 @@
-# Notice: We have changed the Census domains. All previous Census instances are now deprecated but your data is still there. If you want to run a new Census instance please contact us at [index@okfn.org](mailto:index@okfn.org).
+*Notice: We have changed the Census domains. All previous Census instances are now deprecated but your data is still there. If you want to run a new Census instance please contact us through
+[index@okfn.org](mailto:index@okfn.org).*
 
-##So what is the Survey, Census and Index
-The Open Data Survey is the tool we use to capture the information and calculate the rankings and percentages of every measuring instance. It is open source and can be reused and repurposed from its[ Github repository](https://github.com/okfn/opendatasurvey/).
+##What is the Open Data Survey?
+The Open Data Survey is the tool we use to capture the information and calculate the rankings and percentages of every measuring instance. It is open source and can be reused and repurposed from its [Github repository](https://github.com/okfn/opendatasurvey/).
 
-This tool is used to power two different tools: 
+This tool is used to power different projects that assess data from different sources: 
 
-* The __Global Open Data Index (GODI)__, which is our a global assessment of the status of government open data in countries. This is run by OKI and can be found [here](https://index.okfn.org/) 
+* The __Global Open Data Index (GODI)__. A global assessment of the status of government open data at a national level. This is run by Open Knowledge International and can be found [here](https://index.okfn.org/) 
 * The __Open Data Census__, which is used to compare the progress made by different cities and local areas in releasing Open Data. The documentation found here describes how you can request and customize your own instance of the Census. You can also find the different instances of the Census that our Network and partners have used.
+* Topical data projects. Projects measuring data availability for specific topics or issues. These projects don't assess open data by per se but use the Open Data Survey interface. In some of these cases the survey is only a part of a bigger project or research. 
 
-## Why an Open Data Census?
+## Why a local Open Data Census?
   
 Local data is often the most relevant to citizens on a daily basis – from rubbish collection times to local tax rates.
     At the moment it's hard to know what local open data is available.
-   Help change that by reporting on the state of open data in your area with a local open data census
-
+   People can help change that by reporting on the state of open data in their area with a local open data census.
 
 ## Get Started
 
-We've created the Local Open Data Survey to survey and compare the progress made by different cities and local areas in releasing Open Data. You can help by tracking down Open Data from a city or region where you live or that you're interested in. Starting this year, we have changed the survey tool and the old Censuses are for archive only you can see te list here:
+We've created the Open Data Survey to be easily deployed. It will allow you to assess and compare the progress made by different cities and local areas in releasing Open Data. If you think the Survey can be useful for another topic, please let us know.  You can see the instances (old and new) below:
 
 {!_includes/local_census_instances.md!}
 
-If you don't see your country in the list or need a new instance, all you need to do is __register your interest in this form__ and we'll get your Local Open Data Survey set up and ready to use.
+If you don't see your country in the list or need a new instance, all you need to do is __register your interest in this form__ and we'll contact you to get your Open Data Survey set up and ready to use.
 
 <iframe src="https://docs.google.com/forms/d/1kbASV4sc6ElLieyj009gNAGGfpMJ8pDek7zNBC52x9c/viewform?embedded=true" width="640" height="850" frameborder="0" marginheight="0" marginwidth="0">Loading&#8230;</iframe>
 
-If you only need to deploy a new instance of your old census send us an email us to census@okfn.org, 
+If you only need to deploy a new instance of your old census send us an email us to census@okfn.org. 
 
 ## FAQs
 
@@ -33,11 +34,11 @@ If you only need to deploy a new instance of your old census send us an email us
 
 #### Will the Survey be hosted for me?
 
-Yes, we'll host the census for you.
+Yes, we'll host the census for you. If you know how to, you can re-deploy the code following the instructions in the [repository](https://github.com/okfn/opendatasurvey). 
 
 #### Will I be able to compare cities (or regions) in my country?
  
-Yes, you will. That's exactly what the local survey will allow you to do!
+Yes, you will. That's exactly what the local survey is intended to do!
 
 #### Can I have separate city and region censuses for my country?
 
@@ -45,7 +46,7 @@ Yes. For example, for the United States you might want a census for cities and a
 
 #### Can I customize the list of datasets that are surveyed?
 
-Yes, you can. The list of datasets is fully customizable. If you want to add more datasets or change the list of datasets for your local census, you can, just edit the backend spreadsheet. Be aware that the more datasets you add, the more screen space required for them and the more bulky your survey entries might look. Check the [site-admins][site-admins] section for more specific information. 
+Yes, you can! The list of datasets is fully customizable. If you want to add more datasets or change the list of datasets for your local census, you can, just edit the backend. Be aware that the more datasets you add, the more screen space required for them and the more bulky your survey entries might look. Check the [site-admins](site-admins) section for more specific information. 
 
 #### Can I configure basic information (e.g. site name and title)?
 
@@ -66,25 +67,23 @@ Its URL will be {census-name}.survey.okfn.org. It is possible to customize this 
 
 #### How did this come about?
 
-One thing clear from last year's efforts was that people wanted to be able to customise the Census. The Local Census has been quick to set up, as it re-uses the tools we designed for the Global Open Data Index. We can help you get a Topical or Local Open Data Census set up quickly and easily, and you can select what datasets you want to survey for your survey too.
-
-Local data is often the most relevant to citizens on a daily basis – be it rubbish collection times, local tax rates or zoning information. However, at the moment it's difficult to know which key local datasets are openly available and where. You can help change that!
+After the first edition of the Global Open Data Index people wanted to be able to customise their own Census. Local Censuses are quick to set up, since they reuse the tools we designed for the Global Open Data Index. We can help you get a Topical or Local Open Data Census set up quickly and easily, and you can select what datasets you want to survey for your survey too.
 
 We know there is huge variability in how much local data is available not just across countries but within countries, with some cities and municipalities making major open data efforts, while in others there's little or no progress visible. If we can find out what open data is out there, we can encourage more cities to open up key information, helping businesses and citizens understand their cities and making life easier.
 
-#### What's the Relation with the Global Open Data Index?
+#### What's the relation with the Global Open Data Index?
 
-The [Global Open Data Survey][national-open-data-census] assesses the availability of key datasets at the national, country, level. It has been run annually since 2012 by Open Knowledge International. It is used to produce the [Global Open Data Index][open-data-index], the global reference for the state of open data released by national governments.
+The [Global Open Data Survey][national-open-data-census] assesses the availability of key datasets at the national level. It has been run annually since 2012 by Open Knowledge International. It is used to produce the [Global Open Data Index][open-data-index], the global reference for the state of open data released by national governments.
 
 The Index (and Census) answer questions like: which key datasets are being released? Is the available data legally and technically usable so that citizens, civil society and businesses can realise the full benefits of the information?
 
 #### Can I do a topical Census focused on a particular topic (e.g. transport data) rather than a local census?
 
-Yes you can! We are also supporting topical censuses – [contact us][contact-us] if you are interested.
+Yes you can! There are a couple instances running that aren't focused on a specific geographical region. [Contact us][contact-us] if you are interested.
 
 #### Who's running this?
 
-This site and the Open Data Census platform is run by [Open Knowledge International][okf]. Each individual census is run by its specific team and community who are responsible for its content and validity.
+This site and the Open Data Census platform is run by [Open Knowledge International][okf]. Each individual census is run by its specific team and community who are responsible for its content, methodology and validity.
 
 #### This is great! Can I make a donation?
 
