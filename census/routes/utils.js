@@ -54,6 +54,8 @@ var resolveProfile = function(profile, provider, done) {
 };
 
 var setupAuth = function() {
+
+  // TODO: update
   passport.use(new GoogleStrategy({
     clientID: config.get('google:app_id'),
     clientSecret: config.get('google:app_secret'),
