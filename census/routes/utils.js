@@ -62,6 +62,7 @@ var setupAuth = function() {
       .replace('SUB', config.get('auth_subdomain'))
       .replace('DOMAIN', config.get('base_domain'))
       .replace('PATH', 'google/callback'),
+    userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo',
     profileFields: ['id', 'displayName', 'name', 'username', 'emails', 'photos']
   }, function(accessToken, refreshToken, profile, done) {
     resolveProfile(profile, 'google', done);

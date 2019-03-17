@@ -32,7 +32,7 @@ Get a local server setup with the following steps:
 
 1. Install Postgres 9.4 on your machine.
 2. Setup to appropriate credentials on Google and Facebook so they are OAuth providers for your app.
-    * For Google: [follow these steps](https://developers.google.com/identity/protocols/OpenIDConnect) and then enable the Google+ API.
+    * For Google: [follow these steps](https://developers.google.com/identity/protocols/OpenIDConnect)
       * The callBack url for Google+ API is: `http://id.dev.census.org:5000/google/callback`
     * For Facebook: [follow these steps](https://developers.facebook.com/docs/facebook-login/)
       * The callBack url for Facebook is: `http://id.dev.census.org:5000/facebook/callback`
