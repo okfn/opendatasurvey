@@ -6,7 +6,7 @@ The Open Data Survey is the tool we use to capture the information and calculate
 
 This tool is used to power different projects that assess data from different sources: 
 
-* The __Global Open Data Index (GODI)__. A global assessment of the status of government open data at a national level. This is run by Open Knowledge International and can be found [here](https://index.okfn.org/) 
+* The __Global Open Data Index (GODI)__. A global assessment of the status of government open data at a national level. This is run by Open Knowledge Foundation and can be found [here](https://index.okfn.org/) 
 * The __Open Data Census__, which is used to compare the progress made by different cities and local areas in releasing Open Data. The documentation found here describes how you can request and customize your own instance of the Census. You can also find the different instances of the Census that our Network and partners have used.
 * Topical data projects. Projects measuring data availability for specific topics or issues. These projects don't assess open data by per se but use the Open Data Survey interface. In some of these cases the survey is only a part of a bigger project or research. 
 
@@ -73,7 +73,7 @@ We know there is huge variability in how much local data is available not just a
 
 #### What's the relation with the Global Open Data Index?
 
-The [Global Open Data Survey][national-open-data-census] assesses the availability of key datasets at the national level. It has been run annually since 2012 by Open Knowledge International. It is used to produce the [Global Open Data Index][open-data-index], the global reference for the state of open data released by national governments.
+The [Global Open Data Survey][national-open-data-census] assesses the availability of key datasets at the national level. It has been run annually since 2012 by Open Knowledge Foundation. It is used to produce the [Global Open Data Index][open-data-index], the global reference for the state of open data released by national governments.
 
 The Index (and Census) answer questions like: which key datasets are being released? Is the available data legally and technically usable so that citizens, civil society and businesses can realise the full benefits of the information?
 
@@ -83,11 +83,11 @@ Yes you can! There are a couple instances running that aren't focused on a speci
 
 #### Who's running this?
 
-This site and the Open Data Census platform is run by [Open Knowledge International][okf]. Each individual census is run by its specific team and community who are responsible for its content, methodology and validity.
+This site and the Open Data Census platform is run by [Open Knowledge Foundation][okf]. Each individual census is run by its specific team and community who are responsible for its content, methodology and validity.
 
 #### This is great! Can I make a donation?
 
-Open Knowledge International is a non-profit and we appreciate any and all donations. Support the running of censuses by donating now via Paypal!
+Open Knowledge Foundation is a non-profit and we appreciate any and all donations. Support the running of censuses by donating now via Paypal!
 
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 <input type="hidden" name="cmd" value="_s-xclick" />
