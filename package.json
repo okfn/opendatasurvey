@@ -69,7 +69,7 @@
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
     "request": "^2.56.0",
-    "sequelize": "^3.1.1",
+    "sequelize": "^5.15.1",
     "serve-favicon": "^2.2.1",
     "subdomain": "^1.2.0",
     "throng": "^4.0.0",
