@@ -14,7 +14,7 @@ msgstr ""
 #: templates/_snippets/datasets.html:4 templates/country/place.html:35
 #: templates/submission/create.html:32
 msgid "Dataset"
-msgstr "Dataset"
+msgstr "Σύνολο Δεδομένων"
 
 #: templates/_snippets/datasets.html:5
 #: templates/_snippets/entry-summary-row.html:55
