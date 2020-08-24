@@ -20,7 +20,7 @@ msgstr "Σύνολο Δεδομένων"
 #: templates/_snippets/entry-summary-row.html:55
 #: templates/_snippets/questions.html:5 templates/country/entry.html:49
 msgid "Details"
-msgstr "Details"
+msgstr "Λεπτομέρειες"
 
 #: templates/_snippets/entry-summary-row.html:36
 msgid "Date available:"
@@ -36,7 +36,7 @@ msgstr "No data format given"
 
 #: templates/_snippets/entry-summary-row.html:59
 msgid "No details"
-msgstr "No details"
+msgstr "Δεν υπάρχουν λεπτομέρειες"
 
 #: templates/_snippets/key.html:2
 msgid "Key:"
@@ -44,11 +44,11 @@ msgstr "Key:"
 
 #: templates/_snippets/key.html:4 templates/submission/form-core.html:8
 msgid "Yes"
-msgstr "Yes"
+msgstr "Ναι"
 
 #: templates/_snippets/key.html:5 templates/submission/form-core.html:9
 msgid "No"
-msgstr "No"
+msgstr "Όχι"
 
 #: templates/_snippets/key.html:6 templates/submission/form-core.html:10
 msgid "Unsure"
@@ -56,7 +56,7 @@ msgstr "Unsure"
 
 #: templates/_snippets/key.html:7
 msgid "No data"
-msgstr "No data"
+msgstr "Δεν υπάρχουν δεδομένα"
 
 #: templates/_snippets/missing_place_button.html:3
 msgid "Add new location"
@@ -64,7 +64,7 @@ msgstr "Add new location"
 
 #: templates/_snippets/questions.html:4
 msgid "Question"
-msgstr "Question"
+msgstr "Ερώτηση"
 
 #: templates/_snippets/questions.html:6
 msgid "Weighting"
@@ -72,19 +72,19 @@ msgstr "Weighting"
 
 #: templates/base.html:36
 msgid "Home"
-msgstr "Home"
+msgstr "Αρχική"
 
 #: templates/base.html:37
 msgid "About"
-msgstr "About"
+msgstr "Σχετικά"
 
 #: templates/base.html:39
 msgid "FAQ"
-msgstr "Faq"
+msgstr "Συχνές Ερωτήσεις"
 
 #: templates/base.html:76
 msgid "Change language:"
-msgstr "Change language:"
+msgstr "Γλώσσα:"
 
 #: templates/base.html:87
 msgid "Open Online Software Service"
@@ -96,19 +96,19 @@ msgstr "Open Definition"
 
 #: templates/base.html:97
 msgid "Data License (Public Domain)"
-msgstr "Data License (Public Domain)"
+msgstr "Άδεια δεδομένων (Κοινού Κτήματος)"
 
 #: templates/base.html:99
 msgid "Source code"
-msgstr "Source code"
+msgstr "Πηγαίος Κώδικας"
 
 #: templates/base.html:102
 msgid "Download Data (CSV)"
-msgstr "Download Data (CSV)"
+msgstr "Λήψη δεδομένων (CSV)"
 
 #: templates/base.html:104
 msgid "Download Data (JSON)"
-msgstr "Download Data (JSON)"
+msgstr "Λήψη δεδομένων (JSON)"
 
 #: templates/base.html:107
 msgid ""
@@ -116,31 +116,31 @@ msgid ""
 "Census project</a> run by the Open Knowledge Foundation."
 msgstr ""
 "This site is part of the <a href=\"http://meta.census.okfn.org/\">Open Data "
-"Census project</a> run by the Open Knowledge Foundation."
+"Census project</a> run του Ιδρύματος Ανοικτής Γνώσης"
 
 #: templates/base.html:110
 msgid "An Open Knowledge Foundation Project"
-msgstr "An Open Knowledge Foundation Project"
+msgstr "Έργο του Ιδρύματος Ανοικτής Γνώσης"
 
 #: templates/base.html:111
 msgid "Open Knowledge Foundation logo"
-msgstr "Open Knowledge Foundation logo"
+msgstr "Λογότυπο Ιδρύματος Ανοικτής Γνώσης"
 
 #: templates/base.html:120
 msgid "Log out"
-msgstr "Log out"
+msgstr "Αποσύνδεση"
 
 #: templates/base.html:122 templates/login.html:4 templates/login.html:9
 msgid "Login"
-msgstr "Login"
+msgstr "Σύνδεση"
 
 #: templates/base.html:125
 msgid "More about Open Data"
-msgstr "More about Open Data"
+msgstr "Περισσότερα για τα Ανοικτά Δεδομένα"
 
 #: templates/base.html:125
 msgid "What is Open Data"
-msgstr "What is Open Data"
+msgstr "Τι είναι τα Ανοικτά Δεδομένα"
 
 #: templates/base.html:126
 msgid "Run Your Own<br />Local Open Data Census"
@@ -149,7 +149,7 @@ msgstr "Run Your Own<br />Local Open Data Census"
 #: templates/changes.html:4
 #, fuzzy
 msgid "Recent Changes"
-msgstr "Percentage"
+msgstr "Πρόσφατες αλλαγές"
 
 #: templates/changes.html:8
 msgid "Submissions to be reviewed"
@@ -169,19 +169,19 @@ msgstr ""
 
 #: templates/country/dataset.html:5 templates/country/dataset.html:12
 msgid "Datasets"
-msgstr "Datasets"
+msgstr "Σύνολα Δεδομένων"
 
 #: templates/country/dataset.html:24
 msgid "Dataset Description"
-msgstr "Dataset Description"
+msgstr "Πληροφορίες Συνόλου Δεδομένων"
 
 #: templates/country/dataset.html:39 templates/submission/create.html:22
 msgid "Place"
-msgstr "Place"
+msgstr "Περιοχή"
 
 #: templates/country/dataset.html:40 templates/country/place.html:36
 msgid "Score"
-msgstr "Score"
+msgstr "Σκορ"
 
 #: templates/country/dataset.html:41 templates/country/place.html:37
 msgid "Breakdown"
@@ -282,7 +282,7 @@ msgstr "With submissions from:"
 
 #: templates/login.html:19
 msgid "Login with Google"
-msgstr "Login with Google"
+msgstr "Σύνδεση με λογαριασμό Google"
 
 #: templates/login.html:20
 msgid "Login with your existing google account in a few seconds."
@@ -290,7 +290,7 @@ msgstr "Login with your existing google account in a few seconds."
 
 #: templates/login.html:21
 msgid "Login with Google &raquo;"
-msgstr "Login with Google &raquo;"
+msgstr "Σύνδεση με λογαριασμό Google &raquo;"
 
 #: templates/login.html:25
 msgid "&ndash; or &ndash;"
@@ -298,15 +298,15 @@ msgstr "&ndash; or &ndash;"
 
 #: templates/login.html:28
 msgid "Skip Login"
-msgstr "Skip Login"
+msgstr "Παράλειψη σύνδεσης"
 
 #: templates/login.html:29
 msgid "Continue without logging in."
-msgstr "Continue without logging in."
+msgstr "Συνέχεια χωρίς σύνδεση."
 
 #: templates/login.html:32
 msgid "Name (optional)"
-msgstr "Name (optional)"
+msgstr "Όνομα (Προαιρετικό)"
 
 #: templates/login.html:33
 msgid ""
