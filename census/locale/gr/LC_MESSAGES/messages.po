@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2014-07-23 10:29+0000\n"
 "PO-Revision-Date: 2014-07-23 10:29+0000\n"
-"Last-Translator: Automatically generated\n"
+"Last-Translator: Koupidis Kleanthis <koupidis@okfn.gr>\n"
 "Language-Team: none\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
@@ -24,11 +24,11 @@ msgstr "Λεπτομέρειες"
 
 #: templates/_snippets/entry-summary-row.html:36
 msgid "Date available:"
-msgstr "Date available:"
+msgstr "Διαθέσιμη ημερομηνία:"
 
 #: templates/_snippets/entry-summary-row.html:38
 msgid "No date available given"
-msgstr "No date available given"
+msgstr "Δεν υπάρχει διαθέσιμη ημερομηνία"
 
 #: templates/_snippets/entry-summary-row.html:47
 msgid "No data format given"
@@ -52,7 +52,7 @@ msgstr "Όχι"
 
 #: templates/_snippets/key.html:6 templates/submission/form-core.html:10
 msgid "Unsure"
-msgstr "Unsure"
+msgstr "Δεν είμαι σίγουρος/η"
 
 #: templates/_snippets/key.html:7
 msgid "No data"
@@ -60,7 +60,7 @@ msgstr "Δεν υπάρχουν δεδομένα"
 
 #: templates/_snippets/missing_place_button.html:3
 msgid "Add new location"
-msgstr "Add new location"
+msgstr "Προσθήκη νέας τοποθεσίας"
 
 #: templates/_snippets/questions.html:4
 msgid "Question"
@@ -205,11 +205,11 @@ msgstr "Υποβολή πληροφοριών"
 
 #: templates/country/entry.html:10
 msgid "Return to dataset overview"
-msgstr "Return to dataset overview"
+msgstr "Επιστροφή στην επισκόπηση δεδομένων"
 
 #: templates/country/entry.html:16
 msgid "Data Location"
-msgstr "Data Location"
+msgstr "Τοποθεσία Δεδομένων"
 
 #: templates/country/entry.html:19
 msgid "Comments"
@@ -221,7 +221,7 @@ msgstr "Διαθεσιμότητα Δεδομένων"
 
 #: templates/country/entry.html:51
 msgid "Date the data became available"
-msgstr "Date the data became available"
+msgstr "Ημερομηνία διάθεσης δεδομένων"
 
 #: templates/country/entry.html:51 templates/country/entry.html:52
 #: templates/country/entry.html:54
@@ -234,11 +234,11 @@ msgstr "Μορφότυπος Δεδομένων"
 
 #: templates/country/entry.html:53 templates/country/place.html:103
 msgid "Contributors"
-msgstr "Συνεισφέροντες"
+msgstr "Συντελεστές"
 
 #: templates/country/entry.html:53
 msgid "(Editors)"
-msgstr "(Editors)"
+msgstr "(Συντάκτες)"
 
 #: templates/country/entry.html:53
 msgid "(Submitters)"
@@ -257,8 +257,7 @@ msgid ""
 "This is the overview page where you can see the state of open data across "
 "each key dataset."
 msgstr ""
-"This is the overview page where you can see the state of open data across "
-"each key dataset."
+"Επισκόπηση δεδομένων για κάθε κατηγορία δεδομένων."
 
 #: templates/country/place.html:80
 msgid "&#8627; Awaiting review"
@@ -273,8 +272,8 @@ msgid ""
 "Sorry, only one submission can be waiting for review at a time - please come "
 "back in a few days to submit new information"
 msgstr ""
-"Sorry, only one submission can be waiting for review at a time - please come "
-"back in a few days to submit new information"
+"Λυπούμαστε αλλά μόνο μία υποβολή μπορεί να εξετασθεί τη φορά."
+"Δοκιμάστε ξανά μόλις ολοκληρωθεί η αναθεώρηση."
 
 #: templates/country/place.html:108
 msgid "With submissions from:"
@@ -286,7 +285,7 @@ msgstr "Σύνδεση με λογαριασμό Google"
 
 #: templates/login.html:20
 msgid "Login with your existing google account in a few seconds."
-msgstr "Login with your existing google account in a few seconds."
+msgstr "Συνδεθείτε με τον υπάρχοντα λογαριασμό σας Google σε λίγα δευτερόλεπτα."
 
 #: templates/login.html:21
 msgid "Login with Google &raquo;"
@@ -313,8 +312,8 @@ msgid ""
 "If you provide a name we can credit you for your contribution (if not "
 "provided you'll be listed as Anonymous)."
 msgstr ""
-"If you provide a name we can credit you for your contribution (if not "
-"provided you'll be listed as Anonymous)."
+"Εάν δώσετε ένα όνομα, μπορούμε να σας αναφέρουμε για τη συνεισφορά σας. "
+"(διαφορετικά, θα εμφανίζεστε ως Ανώνυμος)"
 
 #: templates/login.html:34
 msgid "Joe Bloggs"
@@ -356,7 +355,7 @@ msgstr "Συνολικό Σκορ"
 msgid ""
 "The Census Admin needs to add some places to the Places configuration sheet"
 msgstr ""
-"The Census Admin needs to add some places to the Places configuration sheet"
+"Ο διαχειριστής πρέπει να προσθέσει μερικές περιοχές στο φύλλο διαμόρφωσης περιοχών (Places configuration sheet)"
 
 #: templates/overview.html:79
 msgid "Click here to add to the census!"
@@ -364,7 +363,7 @@ msgstr "Click here to add to the census!"
 
 #: templates/overview.html:79
 msgid "Add new"
-msgstr "Add new"
+msgstr "Προσθήκη"
 
 #: templates/submission/create.html:4 templates/submission/create.html:63
 msgid "Submit"
@@ -377,7 +376,7 @@ msgstr "Περιοχή και Σύνολο Δεδομένων"
 #: templates/submission/create.html:24 templates/submission/create.html:34
 #: templates/submission/form-core.html:94
 msgid "Please select"
-msgstr "Please select"
+msgstr "Παρακαλώ επιλέξτε"
 
 #: templates/submission/create.html:60
 msgid "This will be public."
@@ -391,9 +390,9 @@ msgid ""
 "opendatacommons.org/licenses/pddl/1.0/\">Open Data Commons Public Domain "
 "Dedication and License</a>."
 msgstr ""
-"By submitting material to the index you agreeing to <a href=\"http://okfn."
-"org/terms-of-use/\">terms of use</a> and also to license your contribution "
-"(to the extent there are any rights in it!) under the <a href=\"http://"
+"Υποβάλλοντας υλικό εδώ αποδέχεστε τους <a href=\"http://okfn."
+"org/terms-of-use/\">όρους χρήσης</a> και την αδειοδότηση της συνεισφοράς σας "
+"(στο βαθμό που είναι εφικτό!) με την άδεια χρήσης <a href=\"http://"
 "opendatacommons.org/licenses/pddl/1.0/\">Open Data Commons Public Domain "
 "Dedication and License</a>."
 
@@ -425,7 +424,7 @@ msgstr "Αξιολόγηση υποβολής"
 
 #: templates/submission/review.html:35
 msgid "This will be logged and displayed"
-msgstr "This will be logged and displayed"
+msgstr "Καταγραφή και προβολή"
 
 #: templates/submission/review.html:37
 msgid "Publish"
