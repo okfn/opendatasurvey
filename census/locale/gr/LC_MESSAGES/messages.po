@@ -32,7 +32,7 @@ msgstr "No date available given"
 
 #: templates/_snippets/entry-summary-row.html:47
 msgid "No data format given"
-msgstr "No data format given"
+msgstr "Δεν έχει καταχωρηθεί η μορφή των δεδομένων"
 
 #: templates/_snippets/entry-summary-row.html:59
 msgid "No details"
@@ -115,8 +115,8 @@ msgid ""
 "This site is part of the <a href=\"http://meta.census.okfn.org/\">Open Data "
 "Census project</a> run by the Open Knowledge Foundation."
 msgstr ""
-"This site is part of the <a href=\"http://meta.census.okfn.org/\">Open Data "
-"Census project</a> run του Ιδρύματος Ανοικτής Γνώσης"
+"Ο ιστότοπος αυτός είναι μέρος του έργου της <a href=\"http://meta.census.okfn.org/\">Απογραφής Ανοικτών "
+"Δεδομένων</a> του Ιδρύματος Ανοικτής Γνώσης"
 
 #: templates/base.html:110
 msgid "An Open Knowledge Foundation Project"
@@ -144,7 +144,7 @@ msgstr "Τι είναι τα Ανοικτά Δεδομένα"
 
 #: templates/base.html:126
 msgid "Run Your Own<br />Local Open Data Census"
-msgstr "Run Your Own<br />Local Open Data Census"
+msgstr "Διοργανώστε την δικιά σας Απογραφή<br />Ανοικτών Δεδομένων σε τοπική εμβέλεια"
 
 #: templates/changes.html:4
 #, fuzzy
@@ -193,15 +193,15 @@ msgstr "Location (URL)"
 
 #: templates/country/dataset.html:43 templates/country/place.html:40
 msgid "Information"
-msgstr "Information"
+msgstr "Πληροφορίες"
 
 #: templates/country/dataset.html:60 templates/country/place.html:66
 msgid "Propose Revisions"
-msgstr "Propose Revisions"
+msgstr "Προτείνετε αναθεωρήσεις"
 
 #: templates/country/dataset.html:62 templates/country/place.html:70
 msgid "Submit information"
-msgstr "Submit information"
+msgstr "Υποβολή πληροφοριών"
 
 #: templates/country/entry.html:10
 msgid "Return to dataset overview"
@@ -213,11 +213,11 @@ msgstr "Data Location"
 
 #: templates/country/entry.html:19
 msgid "Comments"
-msgstr "Comments"
+msgstr "Σχόλια"
 
 #: templates/country/entry.html:22
 msgid "Data Availability"
-msgstr "Data Availability"
+msgstr "Διαθεσιμότητα Δεδομένων"
 
 #: templates/country/entry.html:51
 msgid "Date the data became available"
@@ -226,15 +226,15 @@ msgstr "Date the data became available"
 #: templates/country/entry.html:51 templates/country/entry.html:52
 #: templates/country/entry.html:54
 msgid "Unknown"
-msgstr "Unknown"
+msgstr "Άγνωστο"
 
 #: templates/country/entry.html:52
 msgid "Format of data"
-msgstr "Format of data"
+msgstr "Μορφότυπος Δεδομένων"
 
 #: templates/country/entry.html:53 templates/country/place.html:103
 msgid "Contributors"
-msgstr "Contributors"
+msgstr "Συνεισφέροντες"
 
 #: templates/country/entry.html:53
 msgid "(Editors)"
@@ -242,15 +242,15 @@ msgstr "(Editors)"
 
 #: templates/country/entry.html:53
 msgid "(Submitters)"
-msgstr "(Submitters)"
+msgstr "(Υποβολείς)"
 
 #: templates/country/entry.html:54
 msgid "Last modified"
-msgstr "Last modified"
+msgstr "Τελευταία τροποποίηση"
 
 #: templates/country/place.html:5 templates/country/place.html:12
 msgid "Places"
-msgstr "Places"
+msgstr "Περιοχές"
 
 #: templates/country/place.html:21
 msgid ""
@@ -262,11 +262,11 @@ msgstr ""
 
 #: templates/country/place.html:80
 msgid "&#8627; Awaiting review"
-msgstr "&#8627; Awaiting review"
+msgstr "&#8627; Αναμονή αναθεώρησης"
 
 #: templates/country/place.html:85
 msgid "View Submission"
-msgstr "View Submission"
+msgstr "Προβολή υποβολής"
 
 #: templates/country/place.html:90
 msgid ""
@@ -278,7 +278,7 @@ msgstr ""
 
 #: templates/country/place.html:108
 msgid "With submissions from:"
-msgstr "With submissions from:"
+msgstr "Με υποβολές από:"
 
 #: templates/login.html:19
 msgid "Login with Google"
@@ -322,27 +322,27 @@ msgstr "Joe Bloggs"
 
 #: templates/login.html:36
 msgid "Continue &raquo;"
-msgstr "Continue &raquo;"
+msgstr "Συνέχεια &raquo;"
 
 #: templates/overview.html:3
 msgid "Overview"
-msgstr "Overview"
+msgstr "Επισκόπηση"
 
 #: templates/overview.html:11
 msgid "Number of places"
-msgstr "Number of places"
+msgstr "Πλήθος περιοχών"
 
 #: templates/overview.html:13
 msgid "Number of datasets"
-msgstr "Number of datasets"
+msgstr "Πλήθος Συνόλων Δεδομένων"
 
 #: templates/overview.html:15
 msgid "Number of open datasets"
-msgstr "Number of open datasets"
+msgstr "Πλήθος Ανοικτών Συνόλων Δεδομένων"
 
 #: templates/overview.html:17
 msgid "Percentage"
-msgstr "Percentage"
+msgstr "Ποσοστό"
 
 #: templates/overview.html:17
 msgid "open"
@@ -350,7 +350,7 @@ msgstr "open"
 
 #: templates/overview.html:50 templates/overview.html:121
 msgid "Total Score"
-msgstr "Total Score"
+msgstr "Συνολικό Σκορ"
 
 #: templates/overview.html:58
 msgid ""
@@ -368,11 +368,11 @@ msgstr "Add new"
 
 #: templates/submission/create.html:4 templates/submission/create.html:63
 msgid "Submit"
-msgstr "Submit"
+msgstr "Υποβολή"
 
 #: templates/submission/create.html:19
 msgid "Place and Dataset"
-msgstr "Place and Dataset"
+msgstr "Περιοχή και Σύνολο Δεδομένων"
 
 #: templates/submission/create.html:24 templates/submission/create.html:34
 #: templates/submission/form-core.html:94
@@ -381,7 +381,7 @@ msgstr "Please select"
 
 #: templates/submission/create.html:60
 msgid "This will be public."
-msgstr "This will be public."
+msgstr "Αυτό θα είναι δημόσιο."
 
 #: templates/submission/create.html:64
 msgid ""
@@ -399,29 +399,29 @@ msgstr ""
 
 #: templates/submission/form-core.html:2
 msgid "Data Availability Questions"
-msgstr "Data Availability Questions"
+msgstr "Ερωτήσεις Διαθεσιμότητας Δεδομένων"
 
 #: templates/submission/form-core.html:11
 #: templates/submission/form-core.html:39
 msgid "Current Entry"
-msgstr "Current Entry"
+msgstr "Τρέχουσα Καταχώρηση"
 
 #: templates/submission/form-core.html:45
 #: templates/submission/form-core.html:48
 msgid "No entry"
-msgstr "No entry"
+msgstr "Καμία καταχώρηση"
 
 #: templates/submission/form-core.html:84
 msgid "Publisher Information"
-msgstr "Publisher Information"
+msgstr "Πληροφορίες Εκδότη"
 
 #: templates/submission/form-core.html:87
 msgid "Data Quality"
-msgstr "Data Quality"
+msgstr "Ποιότητα Δεδομένων"
 
 #: templates/submission/review.html:4
 msgid "Review Submission"
-msgstr "Review Submission"
+msgstr "Αξιολόγηση υποβολής"
 
 #: templates/submission/review.html:35
 msgid "This will be logged and displayed"
@@ -429,7 +429,7 @@ msgstr "This will be logged and displayed"
 
 #: templates/submission/review.html:37
 msgid "Publish"
-msgstr "Publish"
+msgstr "Δημοσίευση"
 
 #: templates/submission/review.html:41
 msgid ""
@@ -442,11 +442,10 @@ msgid ""
 " <strong>Publish will overwrite the whole current entry with the data in "
 "this form.</strong>"
 msgstr ""
-"If this submission makes no changes to the current entry then please "
-"'Reject' it rather than 'Accept'.\n"
+"Εάν αυτή η υποβολή που πραγματοποιείτε δεν περιλαμβάνει επιπλέον αλλαγές τότε παρακαλείσθε να επιλέξετε "
+"'Απόρριψη' και όχι 'Αποδοχή'.\n"
 " <br />\n"
-" Note that you edit the submission before accepting it. In particular, "
-"please correct any spelling mistakes.\n"
+" Μπορείτε να επεξεργαστείτε τις πληροφορίες της υποβολής σας πριν την οριστικοποιήσετε. Συγκεκριμένα, "
+"μπορείτε να διορθώσετε τυχόν ορθογραφικά λάθη.\n"
 " <br />\n"
-" <strong>Publish will overwrite the whole current entry with the data in "
-"this form.</strong>"
+" <strong>Η Δημοσίευση θα αντικαταστήσει την τρέχουσα καταχώρηση.</strong>"
