@@ -92,7 +92,7 @@ Next steps:
 
  * If you want reviews to work you will need to configure a list of reviewers – see instructions below
 
-####Extras – set additional content
+#### Extras – set additional content
 
  * Add a logo – `navbar_logo` config variable
  * Some short text on the front page – 3-4 sentences about what this is – `overview_page` config variable
