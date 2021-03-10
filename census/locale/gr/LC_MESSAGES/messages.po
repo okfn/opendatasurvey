@@ -24,7 +24,7 @@ msgstr "Λεπτομέρειες"
 
 #: templates/_snippets/entry-summary-row.html:36
 msgid "Date available:"
-msgstr "Διαθέσιμη ημερομηνία:"
+msgstr "Ημερομηνία Διαθεσιμότητας:"
 
 #: templates/_snippets/entry-summary-row.html:38
 msgid "No date available given"
@@ -173,7 +173,7 @@ msgstr "Σύνολα Δεδομένων"
 
 #: templates/country/dataset.html:24
 msgid "Dataset Description"
-msgstr "Πληροφορίες Συνόλου Δεδομένων"
+msgstr "Περιγραφή Συνόλου Δεδομένων"
 
 #: templates/country/dataset.html:39 templates/submission/create.html:22
 msgid "Place"
@@ -181,7 +181,7 @@ msgstr "Περιοχή"
 
 #: templates/country/dataset.html:40 templates/country/place.html:36
 msgid "Score"
-msgstr "Σκορ"
+msgstr "Βαθμολογία"
 
 #: templates/country/dataset.html:41 templates/country/place.html:37
 msgid "Breakdown"
@@ -349,7 +349,7 @@ msgstr "open"
 
 #: templates/overview.html:50 templates/overview.html:121
 msgid "Total Score"
-msgstr "Συνολικό Σκορ"
+msgstr "Συνολική Βαθμολογία"
 
 #: templates/overview.html:58
 msgid ""
