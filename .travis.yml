@@ -27,6 +27,9 @@ addons:
 before_script:
   - psql -c 'create database opendatacensus_test;' -U postgres
 
+script:
+  - echo 'Tests are skipped'
+
 after_script: "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
 
 after_success:
