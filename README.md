@@ -114,4 +114,3 @@ Use `-d` to perform a dry run, which will print the user id, and entry ids which
 createdb opendatacensus_test
 npm test
 ```
-
