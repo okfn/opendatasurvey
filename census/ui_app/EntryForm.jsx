@@ -79,19 +79,19 @@ const EntryForm = React.createClass({
         text: 'Rate your knowledge of ' + this.props.context.datasetName + '.',
         description: '',
         type: 'likert',
-        placeholder: 'Click here to tell us more about your background. What is your knowledge about the data category, the government in your country, and Open Data in general?',
+        placeholder: 'Κάντε κλικ εδώ για να μας πείτε περισσότερα για το ιστορικό σας. Ποια είναι η γνώση σας για αυτή την κατηγορία δεδομένων και γενικά τα ανοιχτά δεδομένα;',
         config: {
           options: [
             {
-              description: 'I\'m not familiar at all with the field',
+              description: 'Δεν είμαι εξοικειωμένος καθόλου με το αντικείμενο αυτό',
               value: '1'
             },
             {
-              description: 'I have some knowledge about the field',
+              description: 'Έχω κάποιες γνώσεις για το αντικείμενο αυτό',
               value: '2'
             },
             {
-              description: 'I have advanced knowledge in this field',
+              description: 'Έχω προχωρημένες γνώσεις για το αντικείμενο αυτό',
               value: '3'
             }
           ]
@@ -99,22 +99,22 @@ const EntryForm = React.createClass({
       },
       {
         id: 'yourKnowledgeOpenData',
-        text: 'Rate your knowledge of open data.',
+        text: 'Αξιολογήστε τις γνώσεις σας για τα ανοιχτά δεδομένα.',
         description: '',
         type: 'likert',
         placeholder: '',
         config: {
           options: [
             {
-              description: 'I\'m not familiar at all with open data',
+              description: 'Δεν είμαι εξοικειωμένος καθόλου με τα ανοικτά δεδομένα',
               value: '1'
             },
             {
-              description: 'I have some knowledge about open data',
+              description: 'Έχω κάποιες γνώσεις για τα ανοικτά δεδομένα',
               value: '2'
             },
             {
-              description: 'I have advanced knowledge',
+              description: 'Έχω προχωρημένες γνώσεις για τα ανοικτά δεδομένα',
               value: '3'
             }
           ]
@@ -153,8 +153,8 @@ const EntryForm = React.createClass({
 <section>
   <div className="container">
     <div className="intro">
-      <h1>Section A - About you</h1>
-      <p>This section is not scored, but could provide valuable insights.</p>
+      <h1>Ενότητα A - Σχετικά με εσάς</h1>
+      <p>Αυτή η ενότητα δεν βαθμολογείται.</p>
     </div>
 
     <QuestionForm context={this.props.context}
@@ -170,7 +170,7 @@ const EntryForm = React.createClass({
 <section>
   <div className="container">
     <div className="intro">
-      <h1>Section B - About the data</h1>
+      <h1>Ενότητα B - Σχετικά με τα δεδομένα</h1>
     </div>
 
     <QuestionForm context={this.props.context}
@@ -192,7 +192,7 @@ const EntryForm = React.createClass({
       <div className="main">
         <div>
           <div className="instructions"></div>
-          <h2>Any other comments?</h2>
+          <h2>Έχετε κάποια άλλα σχόλια; </h2>
         </div>
         <div>
           <helpers.CurrentEntry />
@@ -218,7 +218,7 @@ const EntryForm = React.createClass({
             </div>
             <a className="toggle" role="button" data-toggle="collapse" href="#instructionsAttribution" aria-expanded="false" aria-controls="instructionsAttribution"><span className="sr-only">Help</span><span className="icon">?</span></a>
           </div>
-          <h2>Would you prefer your submission to remain anonymous?</h2>
+          <h2>Θα προτιμούσατε την υποβολή σας να παραμείνει ανώνυμη;</h2>
         </div>
         <div>
           <helpers.CurrentEntry />
