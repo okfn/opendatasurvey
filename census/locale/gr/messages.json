@@ -1,8 +1,12 @@
 {
    "messages": {
       "": {
-         "Project-Id-Version": " PACKAGE VERSION\nPOT-Creation-Date: 2014-07-23 10:29+0000\nPO-Revision-Date: 2014-07-23 10:29+0000\nLast-Translator: Automatically generated\nLanguage-Team: none\nLanguage: en\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\n"
+         "Project-Id-Version": " PACKAGE VERSION\nPOT-Creation-Date: 2014-07-23 10:29+0000\nPO-Revision-Date: 2014-07-23 10:29+0000\nLast-Translator: Koupidis Kleanthis <koupidis@okfn.gr>\nLanguage-Team: none\nLanguage: en\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\n"
       },
+      "Search": [
+         null,
+         "Search (test)"
+      ],
       "Dataset": [
          null,
          "Σύνολο Δεδομένων"
@@ -13,11 +17,11 @@
       ],
       "Date available:": [
          null,
-         "Ημερομηνία Διαθεσιμότητας:"
+         "Διαθέσιμη ημερομηνία:"
       ],
       "No date available given": [
          null,
-         "Δεν έχει καταχωρηθεί η μορφή των δεδομένων"
+         "Δεν υπάρχει διαθέσιμη ημερομηνία"
       ],
       "No data format given": [
          null,
@@ -101,7 +105,7 @@
       ],
       "This site is part of the <a href=\"http://meta.census.okfn.org/\">Open Data Census project</a> run by the Open Knowledge Foundation.": [
          null,
-         "Ο ιστότοπος αυτός είναι μέρος του έργου της <a href=\"http://meta.census.okfn.org/\">Απογραφής Ανοικτών Δεδομένων</a> του Ιδρύματος Ανοικτής Γνώσης."
+         "Ο ιστότοπος αυτός είναι μέρος του έργου της <a href=\"http://meta.census.okfn.org/\">Απογραφής Ανοικτών Δεδομένων</a> του Ιδρύματος Ανοικτής Γνώσης"
       ],
       "An Open Knowledge Foundation Project": [
          null,
@@ -157,7 +161,7 @@
       ],
       "Dataset Description": [
          null,
-         "Περιγραφή Συνόλου Δεδομένων"
+         "Πληροφορίες Συνόλου Δεδομένων"
       ],
       "Place": [
          null,
@@ -165,7 +169,7 @@
       ],
       "Score": [
          null,
-         "Βαθμολογία"
+         "Σκορ"
       ],
       "Breakdown": [
          null,
@@ -205,7 +209,7 @@
       ],
       "Date the data became available": [
          null,
-         "Date the data became available"
+         "Ημερομηνία διάθεσης δεδομένων"
       ],
       "Unknown": [
          null,
@@ -241,7 +245,7 @@
       ],
       "&#8627; Awaiting review": [
          null,
-         "&#8627; Αναμονή αναθεώρησης:"
+         "&#8627; Αναμονή αναθεώρησης"
       ],
       "View Submission": [
          null,
@@ -249,7 +253,7 @@
       ],
       "Sorry, only one submission can be waiting for review at a time - please come back in a few days to submit new information": [
          null,
-         "Λυπούμαστε αλλά μόνο μία υποβολή μπορεί να εξετασθεί τη φορά - Δοκιμάστε ξανά μόλις ολοκληρωθεί η αναθεώρηση."
+         "Λυπούμαστε αλλά μόνο μία υποβολή μπορεί να εξετασθεί τη φορά.Δοκιμάστε ξανά μόλις ολοκληρωθεί η αναθεώρηση."
       ],
       "With submissions from:": [
          null,
@@ -261,7 +265,7 @@
       ],
       "Login with your existing google account in a few seconds.": [
          null,
-         "Login with your existing google account in a few seconds."
+         "Συνδεθείτε με τον υπάρχοντα λογαριασμό σας Google σε λίγα δευτερόλεπτα."
       ],
       "Login with Google &raquo;": [
          null,
@@ -285,7 +289,7 @@
       ],
       "If you provide a name we can credit you for your contribution (if not provided you'll be listed as Anonymous).": [
          null,
-         "Εάν δώσετε ένα όνομα, μπορούμε να σας αναφέρουμε για τη συνεισφορά σας.(διαφορετικά, θα εμφανίζεστε ως Ανώνυμος)"
+         "Εάν δώσετε ένα όνομα, μπορούμε να σας αναφέρουμε για τη συνεισφορά σας. (διαφορετικά, θα εμφανίζεστε ως Ανώνυμος)"
       ],
       "Joe Bloggs": [
          null,
@@ -321,7 +325,7 @@
       ],
       "Total Score": [
          null,
-         "Συνολική Βαθμολογία"
+         "Συνολικό Σκορ"
       ],
       "The Census Admin needs to add some places to the Places configuration sheet": [
          null,
