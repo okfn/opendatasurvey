@@ -5,7 +5,7 @@
       },
       "Search": [
          null,
-         "Search (gr)"
+         "Search (test)"
       ],
       "Dataset": [
          null,

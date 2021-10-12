@@ -12,7 +12,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Search"
-msgstr "Search (gr)"
+msgstr "Search (test)"
 
 #: templates/_snippets/datasets.html:4 templates/country/place.html:35
 #: templates/submission/create.html:32
