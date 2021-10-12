@@ -301,7 +301,7 @@
       ],
       "Number of places": [
          null,
-         "Πλήθος περιοχών"
+         "Πλήθος περιοχών (test)"
       ],
       "Number of datasets": [
          null,

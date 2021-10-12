@@ -329,7 +329,7 @@ msgstr "Επισκόπηση"
 
 #: templates/overview.html:11
 msgid "Number of places"
-msgstr "Πλήθος περιοχών"
+msgstr "Πλήθος περιοχών (test)"
 
 #: templates/overview.html:13
 msgid "Number of datasets"
