@@ -11,6 +11,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgid "Search"
+msgstr "Search (gr)"
+
 #: templates/_snippets/datasets.html:4 templates/country/place.html:35
 #: templates/submission/create.html:32
 msgid "Dataset"
@@ -329,7 +332,7 @@ msgstr "Επισκόπηση"
 
 #: templates/overview.html:11
 msgid "Number of places"
-msgstr "Πλήθος περιοχών (test)"
+msgstr "Πλήθος περιοχών"
 
 #: templates/overview.html:13
 msgid "Number of datasets"
