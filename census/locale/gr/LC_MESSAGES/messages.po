@@ -12,7 +12,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Search"
-msgstr "Search (test)"
+msgstr "Αναζήτηση"
 
 #: templates/_snippets/datasets.html:4 templates/country/place.html:35
 #: templates/submission/create.html:32
@@ -55,7 +55,7 @@ msgstr "Όχι"
 
 #: templates/_snippets/key.html:6 templates/submission/form-core.html:10
 msgid "Unsure"
-msgstr "Δεν είμαι σίγουρος/η"
+msgstr "Δεν γνωρίζω"
 
 #: templates/_snippets/key.html:7
 msgid "No data"
@@ -63,7 +63,7 @@ msgstr "Δεν υπάρχουν δεδομένα"
 
 #: templates/_snippets/missing_place_button.html:3
 msgid "Add new location"
-msgstr "Προσθήκη νέας τοποθεσίας"
+msgstr "Προσθήκη"
 
 #: templates/_snippets/questions.html:4
 msgid "Question"
@@ -99,7 +99,7 @@ msgstr "Open Definition"
 
 #: templates/base.html:97
 msgid "Data License (Public Domain)"
-msgstr "Άδεια δεδομένων (Κοινού Κτήματος)"
+msgstr "Άδεια δεδομένων (Public Domain)"
 
 #: templates/base.html:99
 msgid "Source code"
@@ -147,7 +147,7 @@ msgstr "Τι είναι τα Ανοικτά Δεδομένα"
 
 #: templates/base.html:126
 msgid "Run Your Own<br />Local Open Data Census"
-msgstr "Διοργανώστε την δικιά σας Απογραφή<br />Ανοικτών Δεδομένων σε τοπική εμβέλεια"
+msgstr "Διοργανώστε την δικιά σας Απογραφή<br />Ανοικτών Δεδομένων"
 
 #: templates/changes.html:4
 #, fuzzy
@@ -156,19 +156,19 @@ msgstr "Πρόσφατες αλλαγές"
 
 #: templates/changes.html:8
 msgid "Submissions to be reviewed"
-msgstr ""
+msgstr "Υποβολές προς αξιολόγηση"
 
 #: templates/changes.html:19
 msgid "There are no submissions awaiting review."
-msgstr ""
+msgstr "Δεν υπάρχουν υποβολές προς αξιολόγηση"
 
 #: templates/changes.html:22
 msgid "Recent Entries"
-msgstr ""
+msgstr "Πρόσφατες καταχωρήσεις"
 
 #: templates/changes.html:33
 msgid "There are no entries in this census."
-msgstr ""
+msgstr "Δεν υπάρχουν καταχωρήσεις"
 
 #: templates/country/dataset.html:5 templates/country/dataset.html:12
 msgid "Datasets"
@@ -180,11 +180,11 @@ msgstr "Πληροφορίες Συνόλου Δεδομένων"
 
 #: templates/country/dataset.html:39 templates/submission/create.html:22
 msgid "Place"
-msgstr "Περιοχή"
+msgstr "Πόλη"
 
 #: templates/country/dataset.html:40 templates/country/place.html:36
 msgid "Score"
-msgstr "Σκορ"
+msgstr "Βαθμολογία"
 
 #: templates/country/dataset.html:41 templates/country/place.html:37
 msgid "Breakdown"
@@ -192,7 +192,7 @@ msgstr "Breakdown"
 
 #: templates/country/dataset.html:42 templates/country/place.html:39
 msgid "Location (URL)"
-msgstr "Location (URL)"
+msgstr "Ιστότοπος (URL)"
 
 #: templates/country/dataset.html:43 templates/country/place.html:40
 msgid "Information"
@@ -253,7 +253,7 @@ msgstr "Τελευταία τροποποίηση"
 
 #: templates/country/place.html:5 templates/country/place.html:12
 msgid "Places"
-msgstr "Περιοχές"
+msgstr "Πόλεις"
 
 #: templates/country/place.html:21
 msgid ""
@@ -332,7 +332,7 @@ msgstr "Επισκόπηση"
 
 #: templates/overview.html:11
 msgid "Number of places"
-msgstr "Πλήθος περιοχών"
+msgstr "Πλήθος Πόλεων"
 
 #: templates/overview.html:13
 msgid "Number of datasets"
@@ -352,7 +352,7 @@ msgstr "open"
 
 #: templates/overview.html:50 templates/overview.html:121
 msgid "Total Score"
-msgstr "Συνολικό Σκορ"
+msgstr "Συνολική Βαθμολογία"
 
 #: templates/overview.html:58
 msgid ""
@@ -411,7 +411,7 @@ msgstr "Τρέχουσα Καταχώρηση"
 #: templates/submission/form-core.html:45
 #: templates/submission/form-core.html:48
 msgid "No entry"
-msgstr "Καμία καταχώρηση"
+msgstr "Δεν υπάρχει καταχώρηση"
 
 #: templates/submission/form-core.html:84
 msgid "Publisher Information"
