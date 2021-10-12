@@ -32,7 +32,7 @@ jobs:
         image: postgres:12
         env:
           POSTGRES_DB: opendatacensus_test
-          # POSTGRES_PASSWORD: test
+          POSTGRES_PASSWORD: test
         ports:
           - 5432:5432
         options: >-
