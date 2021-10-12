@@ -1,7 +1,6 @@
 # Open Data Census
 
-[![Travis Build Status](https://travis-ci.org/okfn/opendatasurvey.svg?branch=master)](https://travis-ci.org/okfn/opendatasurvey)
-[![Coverage Status](https://coveralls.io/repos/github/okfn/opendatacensus/badge.svg?branch=master)](https://coveralls.io/github/okfn/opendatacensus?branch=master)
+[![Build](https://img.shields.io/github/workflow/status/okfn/opendatasurvey/general/master)](https://github.com/okfn/opendatasurvey/actions)
 
 Open Data Census is a web application that supports a submission and reviews workflow to collect information on the state of open data.
 
@@ -114,4 +113,3 @@ Use `-d` to perform a dry run, which will print the user id, and entry ids which
 createdb opendatacensus_test
 npm test
 ```
-
