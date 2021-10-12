@@ -51,6 +51,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Push image
         run: make ci-push
-        with:
+        env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
