@@ -1,31 +1,31 @@
 {
    "messages": {
       "": {
-         "Project-Id-Version": " PACKAGE VERSION\nPOT-Creation-Date: 2014-07-23 10:29+0000\nPO-Revision-Date: 2014-07-23 10:29+0000\nLast-Translator: Automatically generated\nLanguage-Team: none\nLanguage: en\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\n"
+         "Project-Id-Version": " PACKAGE VERSION\nPOT-Creation-Date: 2014-07-23 10:29+0000\nPO-Revision-Date: 2014-07-23 10:29+0000\nLast-Translator: Koupidis Kleanthis <koupidis@okfn.gr>\nLanguage-Team: none\nLanguage: en\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\n"
       },
       "Dataset": [
          null,
-         "Dataset"
+         "Σύνολο Δεδομένων"
       ],
       "Details": [
          null,
-         "Details"
+         "Λεπτομέρειες"
       ],
       "Date available:": [
          null,
-         "Date available:"
+         "Διαθέσιμη ημερομηνία:"
       ],
       "No date available given": [
          null,
-         "No date available given"
+         "Δεν υπάρχει διαθέσιμη ημερομηνία"
       ],
       "No data format given": [
          null,
-         "No data format given"
+         "Δεν έχει καταχωρηθεί η μορφή των δεδομένων"
       ],
       "No details": [
          null,
-         "No details"
+         "Δεν υπάρχουν λεπτομέρειες"
       ],
       "Key:": [
          null,
@@ -33,27 +33,27 @@
       ],
       "Yes": [
          null,
-         "Yes"
+         "Ναι"
       ],
       "No": [
          null,
-         "No"
+         "Όχι"
       ],
       "Unsure": [
          null,
-         "Unsure"
+         "Δεν είμαι σίγουρος/η"
       ],
       "No data": [
          null,
-         "No data"
+         "Δεν υπάρχουν δεδομένα"
       ],
       "Add new location": [
          null,
-         "Add new location"
+         "Προσθήκη νέας τοποθεσίας"
       ],
       "Question": [
          null,
-         "Question"
+         "Ερώτηση"
       ],
       "Weighting": [
          null,
@@ -61,19 +61,19 @@
       ],
       "Home": [
          null,
-         "Home"
+         "Αρχική"
       ],
       "About": [
          null,
-         "About"
+         "Σχετικά"
       ],
       "FAQ": [
          null,
-         "Faq"
+         "Συχνές Ερωτήσεις"
       ],
       "Change language:": [
          null,
-         "Change language:"
+         "Γλώσσα:"
       ],
       "Open Online Software Service": [
          null,
@@ -85,55 +85,55 @@
       ],
       "Data License (Public Domain)": [
          null,
-         "Data License (Public Domain)"
+         "Άδεια δεδομένων (Κοινού Κτήματος)"
       ],
       "Source code": [
          null,
-         "Source code"
+         "Πηγαίος Κώδικας"
       ],
       "Download Data (CSV)": [
          null,
-         "Download Data (CSV)"
+         "Λήψη δεδομένων (CSV)"
       ],
       "Download Data (JSON)": [
          null,
-         "Download Data (JSON)"
+         "Λήψη δεδομένων (JSON)"
       ],
       "This site is part of the <a href=\"http://meta.census.okfn.org/\">Open Data Census project</a> run by the Open Knowledge Foundation.": [
          null,
-         "This site is part of the <a href=\"http://meta.census.okfn.org/\">Open Data Census project</a> run by the Open Knowledge Foundation."
+         "Ο ιστότοπος αυτός είναι μέρος του έργου της <a href=\"http://meta.census.okfn.org/\">Απογραφής Ανοικτών Δεδομένων</a> του Ιδρύματος Ανοικτής Γνώσης"
       ],
       "An Open Knowledge Foundation Project": [
          null,
-         "An Open Knowledge Foundation Project"
+         "Έργο του Ιδρύματος Ανοικτής Γνώσης"
       ],
       "Open Knowledge Foundation logo": [
          null,
-         "Open Knowledge Foundation logo"
+         "Λογότυπο Ιδρύματος Ανοικτής Γνώσης"
       ],
       "Log out": [
          null,
-         "Log out"
+         "Αποσύνδεση"
       ],
       "Login": [
          null,
-         "Login"
+         "Σύνδεση"
       ],
       "More about Open Data": [
          null,
-         "More about Open Data"
+         "Περισσότερα για τα Ανοικτά Δεδομένα"
       ],
       "What is Open Data": [
          null,
-         "What is Open Data"
+         "Τι είναι τα Ανοικτά Δεδομένα"
       ],
       "Run Your Own<br />Local Open Data Census": [
          null,
-         "Run Your Own<br />Local Open Data Census"
+         "Διοργανώστε την δικιά σας Απογραφή<br />Ανοικτών Δεδομένων σε τοπική εμβέλεια"
       ],
       "Recent Changes": [
          null,
-         "Percentage"
+         "Πρόσφατες αλλαγές"
       ],
       "Submissions to be reviewed": [
          null,
@@ -153,19 +153,19 @@
       ],
       "Datasets": [
          null,
-         "Datasets"
+         "Σύνολα Δεδομένων"
       ],
       "Dataset Description": [
          null,
-         "Dataset Description"
+         "Πληροφορίες Συνόλου Δεδομένων"
       ],
       "Place": [
          null,
-         "Place"
+         "Περιοχή"
       ],
       "Score": [
          null,
-         "Score"
+         "Σκορ"
       ],
       "Breakdown": [
          null,
@@ -177,95 +177,95 @@
       ],
       "Information": [
          null,
-         "Information"
+         "Πληροφορίες"
       ],
       "Propose Revisions": [
          null,
-         "Propose Revisions"
+         "Προτείνετε αναθεωρήσεις"
       ],
       "Submit information": [
          null,
-         "Submit information"
+         "Υποβολή πληροφοριών"
       ],
       "Return to dataset overview": [
          null,
-         "Return to dataset overview"
+         "Επιστροφή στην επισκόπηση δεδομένων"
       ],
       "Data Location": [
          null,
-         "Data Location"
+         "Τοποθεσία Δεδομένων"
       ],
       "Comments": [
          null,
-         "Comments"
+         "Σχόλια"
       ],
       "Data Availability": [
          null,
-         "Data Availability"
+         "Διαθεσιμότητα Δεδομένων"
       ],
       "Date the data became available": [
          null,
-         "Date the data became available"
+         "Ημερομηνία διάθεσης δεδομένων"
       ],
       "Unknown": [
          null,
-         "Unknown"
+         "Άγνωστο"
       ],
       "Format of data": [
          null,
-         "Format of data"
+         "Μορφότυπος Δεδομένων"
       ],
       "Contributors": [
          null,
-         "Contributors"
+         "Συντελεστές"
       ],
       "(Editors)": [
          null,
-         "(Editors)"
+         "(Συντάκτες)"
       ],
       "(Submitters)": [
          null,
-         "(Submitters)"
+         "(Υποβολείς)"
       ],
       "Last modified": [
          null,
-         "Last modified"
+         "Τελευταία τροποποίηση"
       ],
       "Places": [
          null,
-         "Places"
+         "Περιοχές"
       ],
       "This is the overview page where you can see the state of open data across each key dataset.": [
          null,
-         "This is the overview page where you can see the state of open data across each key dataset."
+         "Επισκόπηση δεδομένων για κάθε κατηγορία δεδομένων."
       ],
       "&#8627; Awaiting review": [
          null,
-         "&#8627; Awaiting review"
+         "&#8627; Αναμονή αναθεώρησης"
       ],
       "View Submission": [
          null,
-         "View Submission"
+         "Προβολή υποβολής"
       ],
       "Sorry, only one submission can be waiting for review at a time - please come back in a few days to submit new information": [
          null,
-         "Sorry, only one submission can be waiting for review at a time - please come back in a few days to submit new information"
+         "Λυπούμαστε αλλά μόνο μία υποβολή μπορεί να εξετασθεί τη φορά.Δοκιμάστε ξανά μόλις ολοκληρωθεί η αναθεώρηση."
       ],
       "With submissions from:": [
          null,
-         "With submissions from:"
+         "Με υποβολές από:"
       ],
       "Login with Google": [
          null,
-         "Login with Google"
+         "Σύνδεση με λογαριασμό Google"
       ],
       "Login with your existing google account in a few seconds.": [
          null,
-         "Login with your existing google account in a few seconds."
+         "Συνδεθείτε με τον υπάρχοντα λογαριασμό σας Google σε λίγα δευτερόλεπτα."
       ],
       "Login with Google &raquo;": [
          null,
-         "Login with Google &raquo;"
+         "Σύνδεση με λογαριασμό Google &raquo;"
       ],
       "&ndash; or &ndash;": [
          null,
@@ -273,19 +273,19 @@
       ],
       "Skip Login": [
          null,
-         "Skip Login"
+         "Παράλειψη σύνδεσης"
       ],
       "Continue without logging in.": [
          null,
-         "Continue without logging in."
+         "Συνέχεια χωρίς σύνδεση."
       ],
       "Name (optional)": [
          null,
-         "Name (optional)"
+         "Όνομα (Προαιρετικό)"
       ],
       "If you provide a name we can credit you for your contribution (if not provided you'll be listed as Anonymous).": [
          null,
-         "If you provide a name we can credit you for your contribution (if not provided you'll be listed as Anonymous)."
+         "Εάν δώσετε ένα όνομα, μπορούμε να σας αναφέρουμε για τη συνεισφορά σας. (διαφορετικά, θα εμφανίζεστε ως Ανώνυμος)"
       ],
       "Joe Bloggs": [
          null,
@@ -293,27 +293,27 @@
       ],
       "Continue &raquo;": [
          null,
-         "Continue &raquo;"
+         "Συνέχεια &raquo;"
       ],
       "Overview": [
          null,
-         "Overview"
+         "Επισκόπηση"
       ],
       "Number of places": [
          null,
-         "Number of places"
+         "Πλήθος περιοχών"
       ],
       "Number of datasets": [
          null,
-         "Number of datasets"
+         "Πλήθος Συνόλων Δεδομένων"
       ],
       "Number of open datasets": [
          null,
-         "Number of open datasets"
+         "Πλήθος Ανοικτών Συνόλων Δεδομένων"
       ],
       "Percentage": [
          null,
-         "Percentage"
+         "Ποσοστό"
       ],
       "open": [
          null,
@@ -321,11 +321,11 @@
       ],
       "Total Score": [
          null,
-         "Total Score"
+         "Συνολικό Σκορ"
       ],
       "The Census Admin needs to add some places to the Places configuration sheet": [
          null,
-         "The Census Admin needs to add some places to the Places configuration sheet"
+         "Ο διαχειριστής πρέπει να προσθέσει μερικές περιοχές στο φύλλο διαμόρφωσης περιοχών (Places configuration sheet)"
       ],
       "Click here to add to the census!": [
          null,
@@ -333,63 +333,63 @@
       ],
       "Add new": [
          null,
-         "Add new"
+         "Προσθήκη"
       ],
       "Submit": [
          null,
-         "Submit"
+         "Υποβολή"
       ],
       "Place and Dataset": [
          null,
-         "Place and Dataset"
+         "Περιοχή και Σύνολο Δεδομένων"
       ],
       "Please select": [
          null,
-         "Please select"
+         "Παρακαλώ επιλέξτε"
       ],
       "This will be public.": [
          null,
-         "This will be public."
+         "Αυτό θα είναι δημόσιο."
       ],
       "By submitting material to the index you agreeing to <a href=\"http://okfn.org/terms-of-use/\">terms of use</a> and also to license your contribution (to the extent there are any rights in it!) under the <a href=\"http://opendatacommons.org/licenses/pddl/1.0/\">Open Data Commons Public Domain Dedication and License</a>.": [
          null,
-         "By submitting material to the index you agreeing to <a href=\"http://okfn.org/terms-of-use/\">terms of use</a> and also to license your contribution (to the extent there are any rights in it!) under the <a href=\"http://opendatacommons.org/licenses/pddl/1.0/\">Open Data Commons Public Domain Dedication and License</a>."
+         "Υποβάλλοντας υλικό εδώ αποδέχεστε τους <a href=\"http://okfn.org/terms-of-use/\">όρους χρήσης</a> και την αδειοδότηση της συνεισφοράς σας (στο βαθμό που είναι εφικτό!) με την άδεια χρήσης <a href=\"http://opendatacommons.org/licenses/pddl/1.0/\">Open Data Commons Public Domain Dedication and License</a>."
       ],
       "Data Availability Questions": [
          null,
-         "Data Availability Questions"
+         "Ερωτήσεις Διαθεσιμότητας Δεδομένων"
       ],
       "Current Entry": [
          null,
-         "Current Entry"
+         "Τρέχουσα Καταχώρηση"
       ],
       "No entry": [
          null,
-         "No entry"
+         "Καμία καταχώρηση"
       ],
       "Publisher Information": [
          null,
-         "Publisher Information"
+         "Πληροφορίες Εκδότη"
       ],
       "Data Quality": [
          null,
-         "Data Quality"
+         "Ποιότητα Δεδομένων"
       ],
       "Review Submission": [
          null,
-         "Review Submission"
+         "Αξιολόγηση υποβολής"
       ],
       "This will be logged and displayed": [
          null,
-         "This will be logged and displayed"
+         "Καταγραφή και προβολή"
       ],
       "Publish": [
          null,
-         "Publish"
+         "Δημοσίευση"
       ],
       "If this submission makes no changes to the current entry then please 'Reject' it rather than 'Accept'.\n <br />\n Note that you edit the submission before accepting it. In particular, please correct any spelling mistakes.\n <br />\n <strong>Publish will overwrite the whole current entry with the data in this form.</strong>": [
          null,
-         "If this submission makes no changes to the current entry then please 'Reject' it rather than 'Accept'.\n <br />\n Note that you edit the submission before accepting it. In particular, please correct any spelling mistakes.\n <br />\n <strong>Publish will overwrite the whole current entry with the data in this form.</strong>"
+         "Εάν αυτή η υποβολή που πραγματοποιείτε δεν περιλαμβάνει επιπλέον αλλαγές τότε παρακαλείσθε να επιλέξετε 'Απόρριψη' και όχι 'Αποδοχή'.\n <br />\n Μπορείτε να επεξεργαστείτε τις πληροφορίες της υποβολής σας πριν την οριστικοποιήσετε. Συγκεκριμένα, μπορείτε να διορθώσετε τυχόν ορθογραφικά λάθη.\n <br />\n <strong>Η Δημοσίευση θα αντικαταστήσει την τρέχουσα καταχώρηση.</strong>"
       ]
    }
 }
