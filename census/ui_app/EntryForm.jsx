@@ -146,7 +146,7 @@ const EntryForm = React.createClass({
   },
 
   render() {
-    const isGreek = window.location.host === "gr-cities.survey.okfn.org"
+    const isGreek = (location.host === 'gr-cities.survey.okfn.org');
     let readonly = (this.props.isReview && !this.props.canReview);
     let readOnlyOpts = {};
     if (readonly) readOnlyOpts.readOnly = 'readonly';
