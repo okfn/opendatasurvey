@@ -146,7 +146,6 @@ const EntryForm = React.createClass({
   },
 
   render() {
-    const isGreek = (location.host === 'gr-cities.survey.okfn.org');
     let readonly = (this.props.isReview && !this.props.canReview);
     let readOnlyOpts = {};
     if (readonly) readOnlyOpts.readOnly = 'readonly';
@@ -154,7 +153,7 @@ const EntryForm = React.createClass({
 <section>
   <div className="container">
     <div className="intro">
-      <h1>{isGreek ? 'Section A - About you (gr)' : 'Section A - About you'}</h1>
+      <h1>{this.props.lang === 'gr' ? 'Section A - About you (gr)' : 'Section A - About you'}</h1>
       <p>This section is not scored, but could provide valuable insights.</p>
     </div>
 

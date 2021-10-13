@@ -9,6 +9,7 @@ let answers = window.formData;
 let isReview = window.isReview;
 let canReview = window.canReview || false;
 let submissionDiscussionURL = window.submissionDiscussionURL;
+let lang = window.lang;
 
 // Main QuestionSet, section B.
 render(<EntryForm questions={questions}
@@ -19,5 +20,6 @@ render(<EntryForm questions={questions}
                   dataset={answers.dataset}
                   isReview={isReview}
                   canReview={canReview}
-                  submissionDiscussionURL={submissionDiscussionURL} />,
+                  submissionDiscussionURL={submissionDiscussionURL}
+                  lang={lang} />,
        document.getElementById('entry_form'));
