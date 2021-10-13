@@ -3,6 +3,10 @@
       "": {
          "Project-Id-Version": " PACKAGE VERSION\nPOT-Creation-Date: 2014-07-23 10:29+0000\nPO-Revision-Date: 2014-07-23 10:29+0000\nLast-Translator: Koupidis Kleanthis <koupidis@okfn.gr>\nLanguage-Team: none\nLanguage: en\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\n"
       },
+      "Section A - About you": [
+         null,
+         "Section A - About you (gr)"
+      ],
       "Search": [
          null,
          "Search (test)"
