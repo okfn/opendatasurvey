@@ -507,3 +507,18 @@ msgstr "Οδηγός"
 
 msgid "Changes"
 msgstr "Αλλαγές"
+
+msgid "Add"
+msgstr "Προσθήκη"
+
+msgid "Search (test)"
+msgstr "Αναζήτηση"
+
+msgid "See other years"
+msgstr "Άλλες χρονιές"
+
+msgid "Share this page"
+msgstr "Κοινοποίηση"
+
+msgid "Percentage <a href=\"http://okfn.org/terms-of-use/\">open</a>"
+msgstr "Ποσοστό <a href=\"https://okfn.gr/what-is-open/\">ανοικτότητας</a>"
