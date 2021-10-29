@@ -454,3 +454,56 @@ msgstr ""
 
 msgid "Section A - About you"
 msgstr "Ενότητα Α - Σχετικά με εσάς"
+
+msgid "This section is not scored, but could provide valuable insights."
+msgstr "Αυτή η ενότητα δεν βαθμολογείται."
+
+msgid "Rate your knowledge of"
+msgstr "Βαθμολογήστε τις γνώσεις σας για:"
+
+msgid "I'm not familiar at all with the field "
+msgstr "Δεν είμαι καθόλου εξοικειωμένος με αυτό το αντικείμενο"
+
+msgid "I have advanced knowledge in this field  "
+msgstr "Γνωρίζω πάρα πολύ καλά το αντικείμενο αυτό"
+
+msgid "Rate your knowledge of open data"
+msgstr "Βαθμολογήστε τις γνώσεις σας για τα ανοιχτά δεδομένα  "
+
+msgid "I'm not familiar at all with open data"
+msgstr "Δεν είμαι καθόλου εξοικειωμένος με τα ανοικτά δεδομένα"
+
+msgid "I have advanced knowledge"
+msgstr "Γνωρίζω πάρα πολύ καλά το αντικείμενο αυτό"
+
+msgid "Section A - About you"
+msgstr "Ενότητα Α - Σχετικά με εσάς"
+
+msgid "Section B - About the data"
+msgstr "Ενότητα Β - Σχετικά με τα δεδομένα"
+
+msgid "Any other comments?"
+msgstr "Έχετε κάποια άλλα σχόλια;"
+
+msgid "Would you prefer your submission to remain anonymous?"
+msgstr "Θα προτιμούσατε η υποβολή σας να παραμείνει ανώνυμη;"
+
+msgid "Instructions
+
+By default, submissions to the census are credited to the submitter. If you would prefer to remain anonymous, please indicate so by checking the box."
+msgstr "Οδηγίες
+
+Εάν προτιμάτε να παραμείνετε ανώνυμοι, δηλώστε το επιλέγοντας Ναι."
+
+msgid "By submitting material to the index you agreeing to <a href=\"http://okfn.org/terms-of-use/\">terms of use</a> and also to license your contribution (to the extent there are any rights in it!) under the <a href=\"http://opendatacommons.org/licenses/pddl/1.0/\">Open Data Commons Public Domain Dedication and License</a>.""
+msgstr "Υποβάλλοντας υλικό εδώ αποδέχεστε τους <a href=\"http://okfn.org/terms-of-use/\">όρους χρήσης</a> και την αδειοδότηση της συνεισφοράς σας (στο βαθμό που είναι εφικτό!) με την άδεια χρήσης <a href=\"http://opendatacommons.org/licenses/pddl/1.0/\">Open Data Commons Public Domain Dedication and License</a>.""
+
+
+msgid "Methodology"
+msgstr "Μεθοδολογία"
+
+msgid "Tutorial"
+msgstr "Οδηγός"
+
+msgid "Changes"
+msgstr "Αλλαγές"
