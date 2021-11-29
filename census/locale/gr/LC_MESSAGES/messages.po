@@ -476,7 +476,7 @@ msgstr "Δεν είμαι καθόλου εξοικειωμένος με τα α
 msgid "I have advanced knowledge"
 msgstr "Γνωρίζω πάρα πολύ καλά το αντικείμενο αυτό"
 
-msgid "Section A - About you"
+msgid "Section A - About you (gr)"
 msgstr "Ενότητα Α - Σχετικά με εσάς"
 
 msgid "Section B - About the data"
@@ -522,3 +522,9 @@ msgstr "Κοινοποίηση"
 
 msgid "Percentage <a href=\"http://okfn.org/terms-of-use/\">open</a>"
 msgstr "Ποσοστό <a href=\"https://okfn.gr/what-is-open/\">ανοικτότητας</a>"
+
+msgid "Yes"
+msgstr "Ναι"
+
+msgid "No"
+msgstr "Όχι"
