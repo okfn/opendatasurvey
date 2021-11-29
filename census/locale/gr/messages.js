@@ -3,9 +3,13 @@
       "": {
          "Project-Id-Version": " PACKAGE VERSION\nPOT-Creation-Date: 2014-07-23 10:29+0000\nPO-Revision-Date: 2014-07-23 10:29+0000\nLast-Translator: Koupidis Kleanthis <koupidis@okfn.gr>\nLanguage-Team: none\nLanguage: en\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\n"
       },
+      "Section A - About you": [
+         null,
+         "Ενότητα Α - Σχετικά με εσάς"
+      ],
       "Search": [
          null,
-         "Search (test)"
+         "Αναζήτηση"
       ],
       "Dataset": [
          null,
@@ -45,7 +49,7 @@
       ],
       "Unsure": [
          null,
-         "Δεν είμαι σίγουρος/η"
+         "Δεν γνωρίζω"
       ],
       "No data": [
          null,
@@ -53,7 +57,7 @@
       ],
       "Add new location": [
          null,
-         "Προσθήκη νέας τοποθεσίας"
+         "Προσθήκη"
       ],
       "Question": [
          null,
@@ -89,7 +93,7 @@
       ],
       "Data License (Public Domain)": [
          null,
-         "Άδεια δεδομένων (Κοινού Κτήματος)"
+         "Άδεια δεδομένων (Public Domain)"
       ],
       "Source code": [
          null,
@@ -133,7 +137,7 @@
       ],
       "Run Your Own<br />Local Open Data Census": [
          null,
-         "Διοργανώστε την δικιά σας Απογραφή<br />Ανοικτών Δεδομένων σε τοπική εμβέλεια"
+         "Διοργανώστε την δικιά σας Απογραφή<br />Ανοικτών Δεδομένων"
       ],
       "Recent Changes": [
          null,
@@ -141,19 +145,19 @@
       ],
       "Submissions to be reviewed": [
          null,
-         ""
+         "Υποβολές προς αξιολόγηση"
       ],
       "There are no submissions awaiting review.": [
          null,
-         ""
+         "Δεν υπάρχουν υποβολές προς αξιολόγηση"
       ],
       "Recent Entries": [
          null,
-         ""
+         "Πρόσφατες καταχωρήσεις"
       ],
       "There are no entries in this census.": [
          null,
-         ""
+         "Δεν υπάρχουν καταχωρήσεις"
       ],
       "Datasets": [
          null,
@@ -165,11 +169,11 @@
       ],
       "Place": [
          null,
-         "Περιοχή"
+         "Πόλη"
       ],
       "Score": [
          null,
-         "Σκορ"
+         "Βαθμολογία"
       ],
       "Breakdown": [
          null,
@@ -177,7 +181,7 @@
       ],
       "Location (URL)": [
          null,
-         "Location (URL)"
+         "Ιστότοπος (URL)"
       ],
       "Information": [
          null,
@@ -237,7 +241,7 @@
       ],
       "Places": [
          null,
-         "Περιοχές"
+         "Πόλεις"
       ],
       "This is the overview page where you can see the state of open data across each key dataset.": [
          null,
@@ -305,7 +309,7 @@
       ],
       "Number of places": [
          null,
-         "Πλήθος περιοχών"
+         "Πλήθος Πόλεων"
       ],
       "Number of datasets": [
          null,
@@ -325,7 +329,7 @@
       ],
       "Total Score": [
          null,
-         "Συνολικό Σκορ"
+         "Συνολική Βαθμολογία"
       ],
       "The Census Admin needs to add some places to the Places configuration sheet": [
          null,
@@ -369,7 +373,7 @@
       ],
       "No entry": [
          null,
-         "Καμία καταχώρηση"
+         "Δεν υπάρχει καταχώρηση"
       ],
       "Publisher Information": [
          null,
@@ -394,6 +398,82 @@
       "If this submission makes no changes to the current entry then please 'Reject' it rather than 'Accept'.\n <br />\n Note that you edit the submission before accepting it. In particular, please correct any spelling mistakes.\n <br />\n <strong>Publish will overwrite the whole current entry with the data in this form.</strong>": [
          null,
          "Εάν αυτή η υποβολή που πραγματοποιείτε δεν περιλαμβάνει επιπλέον αλλαγές τότε παρακαλείσθε να επιλέξετε 'Απόρριψη' και όχι 'Αποδοχή'.\n <br />\n Μπορείτε να επεξεργαστείτε τις πληροφορίες της υποβολής σας πριν την οριστικοποιήσετε. Συγκεκριμένα, μπορείτε να διορθώσετε τυχόν ορθογραφικά λάθη.\n <br />\n <strong>Η Δημοσίευση θα αντικαταστήσει την τρέχουσα καταχώρηση.</strong>"
+      ],
+      "This section is not scored, but could provide valuable insights.": [
+         null,
+         "Αυτή η ενότητα δεν βαθμολογείται."
+      ],
+      "Rate your knowledge of": [
+         null,
+         "Βαθμολογήστε τις γνώσεις σας για:"
+      ],
+      "I'm not familiar at all with the field ": [
+         null,
+         "Δεν είμαι καθόλου εξοικειωμένος με αυτό το αντικείμενο"
+      ],
+      "I have advanced knowledge in this field  ": [
+         null,
+         "Γνωρίζω πάρα πολύ καλά το αντικείμενο αυτό"
+      ],
+      "Rate your knowledge of open data": [
+         null,
+         "Βαθμολογήστε τις γνώσεις σας για τα ανοιχτά δεδομένα  "
+      ],
+      "I'm not familiar at all with open data": [
+         null,
+         "Δεν είμαι καθόλου εξοικειωμένος με τα ανοικτά δεδομένα"
+      ],
+      "I have advanced knowledge": [
+         null,
+         "Γνωρίζω πάρα πολύ καλά το αντικείμενο αυτό"
+      ],
+      "Section B - About the data": [
+         null,
+         "Ενότητα Β - Σχετικά με τα δεδομένα"
+      ],
+      "Any other comments?": [
+         null,
+         "Έχετε κάποια άλλα σχόλια;"
+      ],
+      "Would you prefer your submission to remain anonymous?": [
+         null,
+         "Θα προτιμούσατε η υποβολή σας να παραμείνει ανώνυμη;"
+      ],
+      "By submitting material to the index you agreeing to <a href=\"http://okfn.org/terms-of-use/\">terms of use</a> and also to license your contribution (to the extent there are any rights in it!) under the <a href=\"http://opendatacommons.org/licenses/pddl/1.0/\">Open Data Commons Public Domain Dedication and License</a>.\"": [
+         null,
+         "Υποβάλλοντας υλικό εδώ αποδέχεστε τους <a href=\"http://okfn.org/terms-of-use/\">όρους χρήσης</a> και την αδειοδότηση της συνεισφοράς σας (στο βαθμό που είναι εφικτό!) με την άδεια χρήσης <a href=\"http://opendatacommons.org/licenses/pddl/1.0/\">Open Data Commons Public Domain Dedication and License</a>.\""
+      ],
+      "Methodology": [
+         null,
+         "Μεθοδολογία"
+      ],
+      "Tutorial": [
+         null,
+         "Οδηγός"
+      ],
+      "Changes": [
+         null,
+         "Αλλαγές"
+      ],
+      "Add": [
+         null,
+         "Προσθήκη"
+      ],
+      "Search (test)": [
+         null,
+         "Αναζήτηση"
+      ],
+      "See other years": [
+         null,
+         "Άλλες χρονιές"
+      ],
+      "Share this page": [
+         null,
+         "Κοινοποίηση"
+      ],
+      "Percentage <a href=\"http://okfn.org/terms-of-use/\">open</a>": [
+         null,
+         "Ποσοστό <a href=\"https://okfn.gr/what-is-open/\">ανοικτότητας</a>"
       ]
    }
 }

@@ -11,6 +11,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgid "Section A - About you"
+msgstr "Section A - About you (gr)"
+
 msgid "Search"
 msgstr "Αναζήτηση"
 
