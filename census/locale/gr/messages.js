@@ -3,10 +3,6 @@
       "": {
          "Project-Id-Version": " PACKAGE VERSION\nPOT-Creation-Date: 2014-07-23 10:29+0000\nPO-Revision-Date: 2014-07-23 10:29+0000\nLast-Translator: Koupidis Kleanthis <koupidis@okfn.gr>\nLanguage-Team: none\nLanguage: en\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\n"
       },
-      "Section A - About you": [
-         null,
-         "Ενότητα Α - Σχετικά με εσάς"
-      ],
       "Search": [
          null,
          "Αναζήτηση"
@@ -325,7 +321,7 @@
       ],
       "open": [
          null,
-         "open"
+         "ανοίξετε"
       ],
       "Total Score": [
          null,
@@ -398,6 +394,10 @@
       "If this submission makes no changes to the current entry then please 'Reject' it rather than 'Accept'.\n <br />\n Note that you edit the submission before accepting it. In particular, please correct any spelling mistakes.\n <br />\n <strong>Publish will overwrite the whole current entry with the data in this form.</strong>": [
          null,
          "Εάν αυτή η υποβολή που πραγματοποιείτε δεν περιλαμβάνει επιπλέον αλλαγές τότε παρακαλείσθε να επιλέξετε 'Απόρριψη' και όχι 'Αποδοχή'.\n <br />\n Μπορείτε να επεξεργαστείτε τις πληροφορίες της υποβολής σας πριν την οριστικοποιήσετε. Συγκεκριμένα, μπορείτε να διορθώσετε τυχόν ορθογραφικά λάθη.\n <br />\n <strong>Η Δημοσίευση θα αντικαταστήσει την τρέχουσα καταχώρηση.</strong>"
+      ],
+      "Section A - About you": [
+         null,
+         "Ενότητα Α - Σχετικά με εσάς"
       ],
       "This section is not scored, but could provide valuable insights.": [
          null,
