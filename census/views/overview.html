@@ -30,7 +30,10 @@
     </li>
     <li>
       <dl>
-        <dt>{{ format(gettext("Percentage <a href='%s'>open</a>"), ['http://okfn.org/opendata/']) }}</dt>
+        <dt>
+          {{ gettext("Percentage") }}
+          <a href="http://okfn.org/opendata/">{{ gettext("open") }}</a>
+        </dt>
         <dd id="nokpercent">{{ stats.openDataPercent }}%</dd>
       </dl>
     </li>
