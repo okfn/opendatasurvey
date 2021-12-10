@@ -4,9 +4,7 @@
 
 Open Data Census is a web application that supports a submission and reviews workflow to collect information on the state of open data.
 
-Some presentation of data is supported, along with partitioning results by year.
-
-The code base supports multiple censuses in a multi-tenant configuration, where each tenant runs a census from a subdomain.
+Some presentation of data is supported, along with partitioning results by year. The code base supports multiple censuses in a multi-tenant configuration, where each tenant runs a census from a subdomain.
 
 Tenant administrators can customize parts of the app, from look and feel to key texts on various views.
 
