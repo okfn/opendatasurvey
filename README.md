@@ -1,3 +1,7 @@
+# Deprecation notice
+
+OKFN no longer maintains this app
+
 # Open Data Census
 
 [![Build](https://img.shields.io/github/workflow/status/okfn/opendatasurvey/general/master)](https://github.com/okfn/opendatasurvey/actions)
